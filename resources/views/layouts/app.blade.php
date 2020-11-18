@@ -94,7 +94,7 @@
                 <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(../assets/media//bg/bg-4.jpg);">
                     <div class="kt-grid__item">
                         <a href="#" class="kt-login__logo">
-                            <img src="../assets/media/logos/logo-4.png">
+                            <img src="../assets/media/logos/minisatlogo.jpeg">
                         </a>
                     </div>
                     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
