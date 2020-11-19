@@ -5,9 +5,9 @@
 <div class="kt-login__form">
 
     <div class="kt-login__title">
-        <h3>Login</h3>
+        <h3>{{ __('Login') }}</h3>
     </div>
-    <form class="kt-form" action="" novalidate="novalidate">
+    <form  method="POST" action="{{ route('login') }}">
         @csrf
         <div class="form-group">
             <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>

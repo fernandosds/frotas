@@ -16,6 +16,8 @@ class CreateContractsTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->integer('stock_id');
+            $table->integer('shipment_id');
+            $table->integer('custumer_id');
             $table->enum('type', ['Retornavel', 'Descartavel']);
             $table->string('validity', 255);        
             $table->timestamps();

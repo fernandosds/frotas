@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/logout', function () {
+    \illuminate\Support\Facades\Auth::logout();
+    return redirect('home');
+})->name('logout');

@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Shipment extends Model
+{
+
+    /**
+     * @var string
+     */
+    protected $table = 'shipments';
+
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'user_id',
+        'customer_id',
+        'contract_id',
+        'stock_id',
+        'lure_id',
+        'accommodation_location_id',
+        'test',
+        'active'
+    ];
+
+    /**
+     * @return array
+     */
+    public function format()
+    {
+        return [
+            'id'                            => $this->id,
+            'user_id'                       => $this->user_id,
+            'customer_id'                   => $this->customer_id,
+            'contract_id'                   => $this->contract_id,
+            'stock_id'                      => $this->stock_id,
+            'lure_id'                       => $this->lure_id,
+            'accommodation_location_id'     => $this->accommodation_location_id,
+            'test'                          => $this->test,
+            'active'                        => $this->active,
+        ];
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function User()
+    {
+        return $this->BelongsTo('App\Models\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->BelongsTo('App\Models\Customer');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contract()
+    {
+        return $this->BelongsTo('App\Models\Contract');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function stock()
+    {
+        return $this->BelongsTo('App\Models\Stocks');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function lure()
+    {
+        return $this->BelongsTo('App\Models\Lure');
+    }
+}

@@ -17,6 +17,7 @@ class CreateShipmentsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('customer_id');
+            $table->integer('contract_id');
             $table->integer('stock_id');
             $table->integer('lure_id');
             $table->integer('accommodation_location_id');

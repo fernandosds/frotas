@@ -16,8 +16,6 @@ class CreateCustormersTable extends Migration
 
         Schema::create('custormers', function (Blueprint $table) {
             $table->id();
-            $table->integer('contract_id');
-            $table->integer('stock_id');
             $table->string('name', 255);
             $table->string('cpf_cnpj', 18);
             $table->enum('type', ['Embarcado', 'Transportadora', 'Cliente']);
@@ -25,10 +23,11 @@ class CreateCustormersTable extends Migration
             $table->string('address', 255);
             $table->string('complement', 255);
             $table->string('number', 100);
+            $table->string('city', 100);
             $table->string('neighborhood', 255);
+            $table->string('state', 255);
             $table->timestamps();
-        });
-    
+        });    
     }
 
     /**

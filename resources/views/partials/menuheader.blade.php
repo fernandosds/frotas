@@ -76,7 +76,7 @@
         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
             <div class="kt-header__topbar-user">
                 <span class="kt-header__topbar-welcome kt-hidden-mobile">Olá,</span>
-                <span class="kt-header__topbar-username kt-hidden-mobile">user</span>
+                <span class="kt-header__topbar-username kt-hidden-mobile">{{ Auth::user()->name }}</span>
 
             </div>
         </div>
@@ -84,9 +84,11 @@
 
             <!--begin: Navigation -->
             <div class="kt-notification">
-                <div class="kt-notification__custom">
-                    <a href="custom_user_login-v2.html" arget="_blank" class="btn btn-label-brand btn-sm btn-bold float-right">Logout</a>
-                </div>
+                <nav class="d-flex justify-content-between">
+                    <div class="kt-notification__custom">
+                        <a href="{{ route('logout') }}" class="text danger">{{ __('Logout') }}</a>
+                    </div>
+                </nav>
             </div>
 
             <!--end: Navigation -->
@@ -110,4 +112,4 @@
     <!-- begin:: Content -->
     <div>
     </div>
-<!-- OBS: NÃO FECHAR ESTA DIV -->
+    <!-- OBS: NÃO FECHAR ESTA DIV -->
