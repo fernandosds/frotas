@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Http\Requests\UserRequest;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,20 +23,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()->orderBy('id')->get();
-        return view('user.index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-        $dados = User::query()->orderBy('id')->get();
-        return view('user.newuser', compact('dados'));
+        //return response()->json($this->userService->all());
+        $users = $this->userService->all();
+        return response()->view('user.index', compact('users'));
+       
     }
 
     /**
@@ -36,62 +35,40 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => $request['password'],
-            'type' => $request['type'],
-            'status' => $request['status']
-            
-        ]);
-        
-        return redirect()->route('index');
+        return response()->json($this->userService->store($request));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(User $user)
+    public function show(Int $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
+        return response()->json($this->userService->show($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Int $id)
     {
-        //
+        return response()->json($this->userService->update($request, $id));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Int $id)
     {
-        //
+        return $this->userService->delete($id);
     }
 }
