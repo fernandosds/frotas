@@ -89,6 +89,12 @@
                         <a href="{{ route('logout') }}" class="text danger">{{ __('Logout') }}</a>
                     </div>
                 </nav>
+
+                <nav class="d-flex justify-content-between">
+                    <div class="kt-notification__custom">
+                        <a href="{{route('register') }}" class="text danger">{{ __('Cadastrar novo usuário') }}</a>
+                    </div>
+                </nav>
             </div>
 
             <!--end: Navigation -->
@@ -99,17 +105,8 @@
 </div>
 
 <!-- end:: Header Topbar -->
-</div>
+
 
 <!-- end:: Header -->
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
-    <!-- begin:: Subheader -->
-    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-    </div>
-    <!-- end:: Subheader -->
 
-    <!-- begin:: Content -->
-    <div>
-    </div>
-    <!-- OBS: NÃO FECHAR ESTA DIV -->
