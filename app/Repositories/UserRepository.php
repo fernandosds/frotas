@@ -16,6 +16,5 @@ class UserRepository extends AbstractRepository
     {
         $this->model = $model;
     }
-   
 
 }

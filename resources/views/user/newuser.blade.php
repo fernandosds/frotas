@@ -6,7 +6,7 @@
     <div class="form-group row">
         <div class="col-sm-10">
             <label for="validationServer01">Nome</label>
-            <input type="text" class="form-control is-valid" id="validationServer01" name="name" placeholder="Nome" value="Mark" required>
+            <input type="text" value="{{$user->name}} ? ''"  class="form-control is-valid" id="validationServer01" name="name" placeholder="Nome" required>
             <div class="valid-feedback">
                 Tudo certo!
             </div>
@@ -17,7 +17,7 @@
     <div class="form-group">
         <label for="type">Tipo</label>
         <select name="type" class="custom-select" required>
-            <option value="">Abra este menu select</option>
+            <option value="">Selecione um nível de usuário</option>
             <option value="sat">SAT</option>
             <option value="transportadora">TRANSPORTADORA</option>
             <option value="dono_carga">DONO DE CARGA</option>
@@ -36,18 +36,18 @@
             <option value="1">ATIVO</option>
             <option value="2">INATIVO</option>
         </select>
-        <div class="invalid-feedback">Exemplo de feedback invalido para o select</div>
+        <div class="invalid-feedback">Selecione um status</div>
     </div>
 
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
-            <input type="email" class="form-control is-valid" id="validationServer01" placeholder="Email" name="email" value="nome@nome.com.br" required></div>
+            <input value="@{{$user->email}}" type="email" class="form-control is-valid" id="validationServer01" placeholder="Email" name="email" required></div>
     </div>
     <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Senha</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword" placeholder="Senha" name="password">
+            <input value="@{{$user->password}}" type="password" class="form-control" id="inputPassword" placeholder="Senha" name="password">
         </div>
     </div>
 

@@ -92,7 +92,7 @@
 
                 <nav class="d-flex justify-content-between">
                     <div class="kt-notification__custom">
-                        <a href="{{route('register') }}" class="text danger">{{ __('Cadastrar novo usuário') }}</a>
+                        <a href="{{route('register_user') }}" class="text danger">{{ __('Cadastrar novo usuário') }}</a>
                     </div>
                 </nav>
             </div>

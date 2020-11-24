@@ -18,19 +18,22 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
+
+
+
 Route::group(['middleware' => 'auth'], function () {
 
     //Route User
     Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/users', [UserController::class, 'users'])->name('users');
     Route::get('/user/new', [UserController::class, 'create']);
-    Route::post('/user/new', [UserController::class, 'store'])->name('register');
-    
-    /**
-    Route::post('/user/new', function () {
-        return view('newuser')->name('register');
-    }); 
-     */
-    
+    Route::post('/user/new', [UserController::class, 'store'])->name('register_user');
+    Route::get('/update/{id}', [UserController::class, 'read'])->name('edit.user');
+    Route::put('/update/{id}', [UserController::class, 'update'])->name('update.user');
+    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
+
+
 
     //Route::get('/home', 'HomeController@index')->name('index');
     Route::get('/logout', function () {

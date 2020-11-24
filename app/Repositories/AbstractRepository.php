@@ -79,8 +79,9 @@ class AbstractRepository
      * @param int $id
      * @return bool
      */
-    public function delete(int $id): bool
+    public function delete(int $id)
     {
-        return $this->model->findOrFail($id)->delete();
+        //return $this->model->findOrFail($id)->delete();
+        return $this->model->find($id)->delete();
     }
 }

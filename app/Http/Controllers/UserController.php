@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use App\User;
+
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -23,11 +26,26 @@ class UserController extends Controller
      */
     public function index()
     {
-        //return response()->json($this->userService->all());
-        $users = $this->userService->all();
-        return response()->view('user.index', compact('users'));
-       
+        return response()->view('user.index');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function users()
+    {
+
+        $users = $this->userService->all();
+        return response()->view('user.users', compact('users'));
+    }
+
+    public function create(Request $request)
+    {
+        return view('user.newuser');
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,9 +53,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        return response()->json($this->userService->store($request));
+        $users = $this->userService->store($request);
+
+        return redirect()->route('index');
     }
 
     /**
@@ -58,8 +78,22 @@ class UserController extends Controller
      */
     public function update(Request $request, Int $id)
     {
-        return response()->json($this->userService->update($request, $id));
+
+        $post = $this->userService->update($request, $id);
+        
+        return redirect()->route('index');
+
+        //return response()->json($this->userService->update($request, $id));
     }
+
+    public function read($id)
+    {
+
+        $user = $this->userService->read($id);
+
+        return view('user.newuser', compact('user'));
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -69,6 +103,7 @@ class UserController extends Controller
      */
     public function destroy(Int $id)
     {
-        return $this->userService->delete($id);
+        $this->userService->destroy($id);
+        return back()->with(['status' => 'Deleted successfully']);
     }
 }
