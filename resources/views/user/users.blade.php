@@ -2,7 +2,8 @@
 
 @section('content')
 
-<table class="table">
+
+<table class="table table-dark">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -22,14 +23,14 @@
                 <td>
                     <form action="{{route('edit.user', $user->id)}}" method="GET">
                         <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Update"><button class="btn btn-success btn-xs"><span class="fa fa-pencil fa-fw"></span></button></p>
+                        <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-outline-info"><span class="fa fa-fw fa-edit"></span></button></p>
                         </td>
                     </form>
                     <form action="{{route('destroy', $user->id)}}" method="POST">
                         {{ csrf_field() }}
                         {{method_field('DELETE')}}
                         <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs"><span class="fa fa-fw fa-trash"></span></button></p>
+                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-outline-danger"><span class="fa fa-fw fa-trash"></span></button></p>
                         </td>
                     </form>
                 </td>

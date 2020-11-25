@@ -2,7 +2,7 @@
     <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
         <div class="kt-aside__brand-logo">
             <a href="/">
-                <img alt="Logo" src="../assets/media/logos/logo-light.png" />
+                <img alt="Logo" src="../assets/media/logos/minisatlogo-removebg-preview.png" />
             </a>
         </div>
         <div class="kt-aside__brand-tools">
@@ -50,10 +50,9 @@
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                         <ul class="kt-menu__subnav">
                             <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route ('users')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Usuários cadastrados</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route ('users')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Usuários cadastrados</span></a></li>                           
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('register_user') }}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Cadastro Usuário</span></a></li>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Usuários deletados</span></a></li>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Tabbed Nav</span></a></li>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Classic</span></a></li>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">None</span></a></li>
                         </ul>
                     </div>

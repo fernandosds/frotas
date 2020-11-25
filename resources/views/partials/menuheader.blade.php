@@ -82,22 +82,17 @@
         </div>
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
 
-            <!--begin: Navigation -->
-            <div class="kt-notification">
-                <nav class="d-flex justify-content-between">
-                    <div class="kt-notification__custom">
-                        <a href="{{ route('logout') }}" class="text danger">{{ __('Logout') }}</a>
-                    </div>
-                </nav>
+            <!--begin: Head -->
+            <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(../assets/media/misc/bg-1.jpg)">
 
-                <nav class="d-flex justify-content-between">
-                    <div class="kt-notification__custom">
-                        <a href="{{route('register_user') }}" class="text danger">{{ __('Cadastrar novo usuário') }}</a>
-                    </div>
-                </nav>
+                <div class="kt-user-card__name">
+                    {{ Auth::user()->name }}
+                </div>
+                <div class="kt-user-card__badge">
+                    <a href="{{ route('logout') }}" target="_blank" class="btn btn-danger btn-elevate btn-pill btn-sm">{{ __('Logout') }}</a>
+                </div>
             </div>
 
-            <!--end: Navigation -->
         </div>
     </div>
 
@@ -108,5 +103,3 @@
 
 
 <!-- end:: Header -->
-
-

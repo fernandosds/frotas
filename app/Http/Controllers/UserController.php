@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        return view('user.newuser');
+        return view('user.formuser');
     }
 
 
@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         $users = $this->userService->store($request);
 
-        return redirect()->route('index');
+        return redirect()->route('users');
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
 
         $post = $this->userService->update($request, $id);
         
-        return redirect()->route('index');
+        return redirect()->route('users');
 
         //return response()->json($this->userService->update($request, $id));
     }
@@ -91,7 +91,7 @@ class UserController extends Controller
 
         $user = $this->userService->read($id);
 
-        return view('user.newuser', compact('user'));
+        return view('user.formuser', compact('user'));
     }
 
 
