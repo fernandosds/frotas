@@ -11,8 +11,15 @@
     <meta name="description" content="Invoice example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+    <!--begin::Fonts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
     <!--begin::Fonts -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
     <script>
         WebFont.load({
             google: {
@@ -22,6 +29,37 @@
                 sessionStorage.fonts = true;
             }
         });
+
+        $(function() {
+
+$('form[name="formUser"]').submit(function(event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: "{{route('register_user')}}",
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+            Swal.fire({
+                type: 'success',
+                title: 'Sucesso!',
+                text: 'Cadastro feito com sucesso!',
+                footer: ' '
+            })
+        },
+        error: function(error) {
+            Swal.fire({
+                type: 'success',
+                title: 'Erro!',
+                text: 'Cadastro não efetuado!',
+                footer: ' '
+            })
+        }
+    });
+});
+
+});
     </script>
 
     <!--end::Fonts -->
@@ -198,6 +236,8 @@
             <!--end:: Global Mandatory Vendors -->
 
             <!--begin:: Global Optional Vendors -->
+
+
             <script src="{{ asset('assets/vendors/general/jquery-form/dist/jquery.form.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('assets/vendors/general/block-ui/jquery.blockUI.js') }}" type="text/javascript"></script>
             <script src="{{ asset('assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
@@ -258,6 +298,7 @@
 
             <!--begin::Global App Bundle(used by all pages) -->
             <script src="{{ asset('assets/app/bundle/app.bundle.js') }}" type="text/javascript"></script>
+
         </div>
 
         @yield('scripts')

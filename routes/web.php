@@ -31,10 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'users'], function () {
 
         Route::get('/', [UserController::class, 'users'])->name('users');
-        Route::get('/new', [UserController::class, 'create']);
+        Route::get('/create', [UserController::class, 'create'])->name('form_cad_user');
         Route::post('/new', [UserController::class, 'store'])->name('register_user');
-        Route::get('/update/{id}', [UserController::class, 'read'])->name('edit.user');
-        Route::put('/update/{id}', [UserController::class, 'update'])->name('update.user');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
+        Route::post('/edit/{id}', [UserController::class, 'update'])->name('update.user');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
     });
 

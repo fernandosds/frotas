@@ -2,10 +2,13 @@
 
 @section('content')
 
+@section('title')
+@if(isset($user)) Editar @else Cadastrar @endif
+@endsection
 
 <!--begin::Portlet-->
 <!--begin::Form-->
-<form class="kt-form kt-form--label-right" id="kt_form_1" method="POST">
+<form class="kt-form kt-form--label-right" id="form-create-user" name="formUser">
     @csrf
     <div class="kt-portlet__body">
         <div class="form-group form-group-last kt-hide">
@@ -24,13 +27,13 @@
         <div class="form-group row">
             <label class="col-form-label col-lg-3 col-sm-12">Nome</label>
             <div class="col-lg-9 col-md-9 col-sm-12">
-                <input type="text" class="form-control" name="name" placeholder="Entre com o nome" value="{{ $user->name ?? '' }}">
+                <input type="text" class="form-control" name="name" placeholder="Entre com o nome" value="{{ $user->name ?? '' }}" required="True">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-form-label col-lg-3 col-sm-12">Email *</label>
             <div class="col-lg-9 col-md-9 col-sm-12">
-                <input type="text" class="form-control" name="email" placeholder="Entre com o email" value="{{ $user->email ?? '' }}">
+                <input type="text" class="form-control" name="email" placeholder="Entre com o email" value="{{ $user->email ?? '' }}" required="True">
                 <span class="form-text text-muted">Nunca compartilharemos seu e-mail com mais ninguém.</span>
             </div>
         </div>
@@ -61,7 +64,7 @@
         <div class="form-group row">
             <label class="col-form-label col-lg-3 col-sm-12">Senha</label>
             <div class="col-lg-9 col-md-9 col-sm-12">
-                <input type="password" class="form-control" name="password" placeholder="Digite sua senha para alterar" value="{{ $user->password ?? '' }}">
+                <input type="password" class="form-control" name="password" placeholder="Digite sua senha" value="{{ $user->password ?? '' }}">
             </div>
         </div>
 
@@ -70,7 +73,7 @@
         <div class="kt-form__actions">
             <div class="row">
                 <div class="col-lg-9 ml-lg-auto">
-                    <button type="submit" class="btn btn-brand">Confirmar</button>
+                    <button type="submit" class="btn btn-brand" id="btn-cadastro-user">Confirmar</button>
                     <a href="{{route('users')}}" class="btn btn-secondary">Voltar</a>
                 </div>
             </div>
@@ -85,3 +88,10 @@
 <!--end::Portlet-->
 
 @endsection
+
+@section('scripts')
+
+
+<script>
+    
+</script>

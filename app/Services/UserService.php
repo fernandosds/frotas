@@ -82,7 +82,7 @@ class UserService
        
     }
 
-    public function read($id)
+    public function edit($id)
     {
         return $this->user->find($id);
     }

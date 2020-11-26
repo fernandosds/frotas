@@ -69,10 +69,10 @@ class UserController extends Controller
         return response()->json($this->userService->show($id));
     }
 
-    public function read($id)
+    public function edit($id)
     {
 
-        $user = $this->userService->read($id);
+        $user = $this->userService->edit($id);
 
         return view('user.formuser', compact('user'));
     }
