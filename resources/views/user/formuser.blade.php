@@ -12,7 +12,7 @@
             <div class="alert alert-danger" role="alert" id="kt_form_1_msg">
                 <div class="alert-icon"><i class="flaticon-warning"></i></div>
                 <div class="alert-text">
-                    Oh snap! Change a few things up and try submitting again.
+                    Altere algumas coisas e tente enviar novamente.
                 </div>
                 <div class="alert-close">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -71,7 +71,7 @@
             <div class="row">
                 <div class="col-lg-9 ml-lg-auto">
                     <button type="submit" class="btn btn-brand">Confirmar</button>
-                    <a href="/" target="_blank" class="btn btn-secondary">Voltar</a>
+                    <a href="{{route('users')}}" class="btn btn-secondary">Voltar</a>
                 </div>
             </div>
         </div>

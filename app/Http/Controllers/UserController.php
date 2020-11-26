@@ -69,6 +69,14 @@ class UserController extends Controller
         return response()->json($this->userService->show($id));
     }
 
+    public function read($id)
+    {
+
+        $user = $this->userService->read($id);
+
+        return view('user.formuser', compact('user'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -86,15 +94,7 @@ class UserController extends Controller
         //return response()->json($this->userService->update($request, $id));
     }
 
-    public function read($id)
-    {
-
-        $user = $this->userService->read($id);
-
-        return view('user.formuser', compact('user'));
-    }
-
-
+    
     /**
      * Remove the specified resource from storage.
      *

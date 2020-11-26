@@ -69,7 +69,7 @@ class AbstractRepository
      */
     public function update(int $id, array $data): bool
     {
-        return $this->findOrFail($id)->update($data);
+        return $this->find($id)->update($data);
     }
 
 
