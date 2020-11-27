@@ -82,16 +82,17 @@
         </div>
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
 
-            <!--begin: Navigation -->
-            <div class="kt-notification">
-                <nav class="d-flex justify-content-between">
-                    <div class="kt-notification__custom">
-                        <a href="{{ route('logout') }}" class="text danger">{{ __('Logout') }}</a>
-                    </div>
-                </nav>
+            <!--begin: Head -->
+            <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(../assets/media/misc/bg-1.jpg)">
+
+                <div class="kt-user-card__name">
+                    {{ Auth::user()->name }}
+                </div>
+                <div class="kt-user-card__badge">
+                    <a href="{{ route('logout') }}" target="_blank" class="btn btn-danger btn-elevate btn-pill btn-sm">{{ __('Logout') }}</a>
+                </div>
             </div>
 
-            <!--end: Navigation -->
         </div>
     </div>
 
@@ -99,17 +100,6 @@
 </div>
 
 <!-- end:: Header Topbar -->
-</div>
+
 
 <!-- end:: Header -->
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-
-    <!-- begin:: Subheader -->
-    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-    </div>
-    <!-- end:: Subheader -->
-
-    <!-- begin:: Content -->
-    <div>
-    </div>
-    <!-- OBS: NÃO FECHAR ESTA DIV -->
