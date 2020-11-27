@@ -30,36 +30,7 @@
             }
         });
 
-        $(function() {
-
-$('form[name="formUser"]').submit(function(event) {
-    event.preventDefault();
-
-    $.ajax({
-        url: "{{route('register_user')}}",
-        type: 'POST',
-        data: $(this).serialize(),
-        dataType: 'json',
-        success: function(response) {
-            Swal.fire({
-                type: 'success',
-                title: 'Sucesso!',
-                text: 'Cadastro feito com sucesso!',
-                footer: ' '
-            })
-        },
-        error: function(error) {
-            Swal.fire({
-                type: 'success',
-                title: 'Erro!',
-                text: 'Cadastro não efetuado!',
-                footer: ' '
-            })
-        }
-    });
-});
-
-});
+        
     </script>
 
     <!--end::Fonts -->

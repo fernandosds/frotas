@@ -21,20 +21,10 @@
                 <td>{{$user->type}}</td>
                 <td>{{$user->status}}</td>
                 <td>
-                    <form action="{{route('edit.user', $user->id)}}">
-                        {{csrf_field()}}
-                        
-                <td>
-                    <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-outline-info"><span class="fa fa-fw fa-edit"></span></button></p>
-                </td>
-                </form>
-                <form action="{{route('destroy', $user->id)}}" method="POST">
-                    {{ csrf_field() }}
-                    {{method_field('DELETE')}}
-                    <td>
-                        <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-outline-danger"><span class="fa fa-fw fa-trash"></span></button></p>
-                    </td>
-                </form>
+                    <div class="pull-right">
+                        <a href="{{route('edit.user', $user->id)}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                        <a href="{{route('destroy', $user->id)}}" class="btn btn-sm  btn-outline-danger"><span class="fa fa-fw fa-trash"></span> Deletar</a>
+                    </div>
                 </td>
             </tr>
 

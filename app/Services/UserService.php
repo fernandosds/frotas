@@ -47,15 +47,6 @@ class UserService
         return $user;
     }
 
-
-    public function show(Int $id)
-    {
-
-        $user =  $this->user->find($id);
-
-        return ($user) ? $user : abort(404);
-    }
-
     /**
      * @param Request $request
      * @param $id
@@ -72,6 +63,17 @@ class UserService
         return $user;
     }
 
+
+
+    public function show(Int $id)
+    {
+
+        $user =  $this->user->find($id);
+
+        return ($user) ? $user : abort(404);
+    }
+
+
     /**
      * @param Int $id
      */
@@ -79,7 +81,6 @@ class UserService
     {
 
         return $this->user->delete($id);
-       
     }
 
     public function edit($id)

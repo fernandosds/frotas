@@ -55,9 +55,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $users = $this->userService->store($request);
+        return "ok";//redirect()->route('users');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Int $id)
+    {
+
+        $post = $this->userService->update($request, $id);
 
         return redirect()->route('users');
+
+        //return response()->json($this->userService->update($request, $id));
     }
 
     /**
@@ -77,24 +94,7 @@ class UserController extends Controller
         return view('user.formuser', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Int $id)
-    {
 
-        $post = $this->userService->update($request, $id);
-        
-        return redirect()->route('users');
-
-        //return response()->json($this->userService->update($request, $id));
-    }
-
-    
     /**
      * Remove the specified resource from storage.
      *

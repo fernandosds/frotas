@@ -8,7 +8,7 @@
 
 <!--begin::Portlet-->
 <!--begin::Form-->
-<form class="kt-form kt-form--label-right" id="form-create-user" name="formUser">
+<form class="kt-form kt-form--label-right" id="form-create-user" >
     @csrf
     <div class="kt-portlet__body">
         <div class="form-group form-group-last kt-hide">
@@ -73,7 +73,7 @@
         <div class="kt-form__actions">
             <div class="row">
                 <div class="col-lg-9 ml-lg-auto">
-                    <button type="submit" class="btn btn-brand" id="btn-cadastro-user">Confirmar</button>
+                    <button type="button" class="btn btn-brand" id="btn-cadastro-user">Confirmar</button>
                     <a href="{{route('users')}}" class="btn btn-secondary">Voltar</a>
                 </div>
             </div>
@@ -93,5 +93,35 @@
 
 
 <script>
-    
+    $(function() {
+
+        $('#btn-cadastro-user').click(function(event) {
+
+
+            
+            $.ajax({
+                url: "{{route('register_user')}}",
+                type: 'POST',
+                data: $('#form-create-user').serialize(),
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Sucesso!',
+                        text: response,
+                        footer: ' '
+                    })
+                },
+                error: function(error) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        text: 'Não executuado!',
+                        footer: ' '
+                    })
+                }
+            });
+        });
+
+});
 </script>
+@endsection
