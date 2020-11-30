@@ -130,7 +130,7 @@
                         })
                     },
                     error: function(error) {
-                        console.log(error.responseJSON)
+                        //console.log(error.responseJSON)
                         Swal.fire({
                             type: 'error',
                             title: 'Erro!',

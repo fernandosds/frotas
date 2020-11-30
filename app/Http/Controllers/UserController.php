@@ -54,8 +54,10 @@ class UserController extends Controller
      */
     public function save(Request $request)
     {
-        //print_r($request->input());die;
-        return $this->userService->save($request);
+        //print_r($request->input());
+        //die();
+        $validated = $request->validated();
+        return $this->userService->save($request, $validated);
     }
 
     /**

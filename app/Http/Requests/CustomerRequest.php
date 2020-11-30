@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class User extends FormRequest
+class CustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class User extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class User extends FormRequest
     public function rules()
     {
         return [
-            //
+            'cpf_cnpj' => 'required|unique',
+            
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'cpf_cnpj.required' => 'CNPJ / CPF deve ser único.',
         ];
     }
 }

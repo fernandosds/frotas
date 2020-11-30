@@ -32,8 +32,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nome</th>
+                    <th scope="col">CPF/CNPJ</th>
                     <th scope="col">Tipo</th>
-                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +41,8 @@
                     <tr id="_tr_user_{{$customer->id}}">
                         <th scope="row">{{$customer->id}}</th>
                         <td>{{$customer->name}}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{$customer->cpf_cnpj}}/td>
+                        <td>{{$customer->type}}</td>
                         <td>
                             <div class="pull-right">
                                 <a href="{{url('customers/edit')}}/{{$customer->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
