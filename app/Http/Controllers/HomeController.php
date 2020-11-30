@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    private $data;
+
     /**
      * Create a new controller instance.
      *
@@ -13,7 +16,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->data = [
+            'icon' => 'flaticon-home-2',
+            'title' => 'Home',
+            'url' => ''
+        ];
     }
 
     /**
@@ -23,6 +30,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+
+        $data = $this->data;
+
+        return view('index', $data);
     }
 }

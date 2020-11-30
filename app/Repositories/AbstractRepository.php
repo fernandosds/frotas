@@ -47,6 +47,14 @@ class AbstractRepository
         return $this->model->all();
     }
 
+    /**
+     * @param Int $limit
+     * @return mixed
+     */
+    public function paginate(Int $limit = 10)
+    {
+        return $this->model->paginate($limit);
+    }
 
     /**
      * Create new register

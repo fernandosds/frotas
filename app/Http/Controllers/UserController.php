@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-
-use App\User;
-
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
 
     private $userService;
+    private $data;
 
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+
+        $this->data = [
+            'icon' => 'flaticon-user',
+            'title' => 'Usuários',
+        ];
     }
 
     /**
@@ -26,24 +30,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        return response()->view('user.index');
+        $data = $this->data;
+        $data['users'] = $this->userService->paginate();
+
+        return response()->view('user.list', $data);
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function users()
+    public function new()
     {
 
-        $users = $this->userService->all();
-        return response()->view('user.users', compact('users'));
-    }
-
-    public function create(Request $request)
-    {
-        return view('user.formuser');
+        $data = $this->data;
+        return view('user.new', $data);
     }
 
 
@@ -53,11 +53,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function save(Request $request)
     {
 
-        $users = $this->userService->store($request);
-        return "ok";//redirect()->route('users');
+        return $this->userService->save($request);
+    }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Int $id)
+    {
+
+        $data = $this->data;
+        $data['user'] = $this->userService->show($id);
+
+        return view('user.new', $data);
     }
 
     /**
@@ -67,32 +79,26 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Int $id)
-    {
+    //ublic function update(Request $request, Int $id)
+    //
 
-        $post = $this->userService->update($request, $id);
+    //   $post = $this->userService->update($request, $id);
 
-        return redirect()->route('users');
+    //   return redirect()->route('users');
 
-        //return response()->json($this->userService->update($request, $id));
-    }
+    //   //return response()->json($this->userService->update($request, $id));
+    //
 
     /**
      * @param Int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Int $id)
-    {
-        return response()->json($this->userService->show($id));
-    }
+    //public function show(Int $id)
+    //{
+    //    return response()->json($this->userService->show($id));
+    //}
 
-    public function edit($id)
-    {
 
-        $user = $this->userService->edit($id);
-
-        return view('user.formuser', compact('user'));
-    }
 
 
     /**

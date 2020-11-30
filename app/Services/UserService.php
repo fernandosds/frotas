@@ -22,6 +22,19 @@ class UserService
         return $this->user->all();
     }
 
+    /**
+     * @param Int $limit
+     * @return mixed
+     */
+    public function paginate(Int $limit = 15)
+    {
+        return $this->user->paginate($limit);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function create(Request $request)
     {
 
@@ -35,9 +48,10 @@ class UserService
      * @param Request $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function save(Request $request)
     {
 
+        print_r($request->input());die;
 
         $request->merge(['password' => Hash::make($request->password)]);
         $user = $this->user->create($request->all());
