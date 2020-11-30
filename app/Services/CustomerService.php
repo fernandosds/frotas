@@ -7,7 +7,7 @@ use App\Repositories\CustomerRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class CustumerService
+class CustomerService
 {
     public function __construct(CustomerRepository $customer)
     {

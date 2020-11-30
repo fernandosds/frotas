@@ -17,7 +17,7 @@ class CreateContractsTable extends Migration
             $table->id();
             $table->integer('stock_id');
             $table->integer('shipment_id');
-            $table->integer('custumer_id');
+            $table->integer('customer_id');
             $table->enum('type', ['Retornavel', 'Descartavel']);
             $table->string('validity', 255);        
             $table->timestamps();
