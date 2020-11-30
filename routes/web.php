@@ -20,19 +20,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/save', 'UserController@save');
         Route::get('/edit/{id}', 'UserController@edit');
         Route::get('/delete/{id}', 'UserController@destroy');
-
-/*
-        Route::get('/create', 'UserController@create');
-        Route::post('/new', 'UserController@store');
-        Route::get('/edit/{id}', 'UserController@edit');
-        Route::post('/edit', 'UserController@update');
-        Route::get('/delete/{id}', 'UserController@destroy');
-*/
     });
+
+    /**
+     * Clients routes
+     */
+    Route::group(['prefix' => 'customers'], function () {
+
+        Route::get('/', 'CustomerController@index');
+        Route::get('/new', 'CustomerController@new');
+        Route::post('/save', 'CustomerController@save');
+        Route::get('/edit/{id}', 'CustomerController@edit');
+        Route::get('/delete/{id}', 'CustomerController@destroy');
+    });
+
 
     Route::get('/logout', function () {
         \illuminate\Support\Facades\Auth::logout();
         return redirect('/');
     })->name('logout');
-
 });
