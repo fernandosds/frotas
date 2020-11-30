@@ -16,7 +16,7 @@ class CustomerController extends Controller
         $this->customerService = $customerService;
 
         $this->data = [
-            'icon' => 'flaticon-user',
+            'icon' => 'flaticon-users',
             'title' => 'Clientes',
         ];
     }

@@ -16,7 +16,7 @@ class LureController extends Controller
         $this->lureService = $lureService;
 
         $this->data = [
-            'icon' => 'flaticon-user',
+            'icon' => 'flaticon-map-location',
             'title' => 'Íscas',
         ];
     }
