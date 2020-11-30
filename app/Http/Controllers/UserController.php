@@ -41,7 +41,6 @@ class UserController extends Controller
      */
     public function new()
     {
-
         $data = $this->data;
         return view('user.new', $data);
     }
@@ -55,7 +54,7 @@ class UserController extends Controller
      */
     public function save(Request $request)
     {
-
+        //print_r($request->input());die;
         return $this->userService->save($request);
     }
 

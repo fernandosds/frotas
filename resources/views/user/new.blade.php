@@ -104,6 +104,24 @@
                     type: 'POST',
                     data: $('#form-create-user').serialize(),
                     success: function(response) {
+
+                        if(response.status == "success"){
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Registro salvo com sucesso',
+                                showConfirmButton: true,
+                                timer: 3000
+                            })
+                        }else{
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Erro ao tentar excluir!',
+                                showConfirmButton: true,
+                                timer: 2500
+                            })
+                        }
+
                         Swal.fire({
                             type: 'success',
                             title: 'Sucesso!',
@@ -112,10 +130,11 @@
                         })
                     },
                     error: function(error) {
+                        console.log(error.responseJSON)
                         Swal.fire({
                             type: 'error',
                             title: 'Erro!',
-                            text: 'Não executuado!',
+                            text: 'Erro interno, consulte o administrador do sistema ('+error.responseJSON.Message+')',
                             footer: ' '
                         })
                     }

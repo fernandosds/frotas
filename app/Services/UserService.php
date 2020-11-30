@@ -51,14 +51,23 @@ class UserService
     public function save(Request $request)
     {
 
-        print_r($request->input());die;
-
         $request->merge(['password' => Hash::make($request->password)]);
-        $user = $this->user->create($request->all());
+
+        try{
+            $user = $this->user->create($request->all());
+
+            return ($user) ? ['status' => 'success', 200] : ['status' => 'error', 404];
+        }catch (\Exception $e){
+            return response()->json([
+                'Sucesso' => 'false',
+                'Message' => 'Erro ao processar informação: '.$e->getMessage()
+            ],400);
+        }
 
 
 
-        return $user;
+
+
     }
 
     /**
