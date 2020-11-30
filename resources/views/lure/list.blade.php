@@ -16,7 +16,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{url('customers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <a href="{{url('lures/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i> Novo
                     </a>
                 </div>
@@ -31,22 +31,22 @@
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">CPF/CNPJ</th>
-                    <th scope="col">Tipo</th>
+                    <th scope="col">Tipo de Isca</th>
+                    <th scope="col">Número de série</th>
+                    <th scope="col">Nível de bateria</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($customers as $customer)
-                    <tr id="_tr_user_{{$customer->id}}">
-                        <th scope="row">{{$customer->id}}</th>
-                        <td>{{$customer->name}}</td>
-                        <td>{{$customer->cpf_cnpj}}</td>
-                        <td>{{$customer->type}}</td>
+                @foreach ($lures as $lure)
+                    <tr id="_tr_user_{{$lure->id}}">
+                        <th scope="row">{{$lure->id}}</th>
+                        <td>{{$lure->type_of_lure_id}}</td>
+                        <td>{{$lure->serial_number}}</td>
+                        <td>{{$lure->batery_level}}</td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('customers/edit')}}/{{$customer->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-customer" data-id="{{$customer->id}}">
+                                <a href="{{url('lures/edit')}}/{{$lure->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-lure" data-id="{{$lure->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
                             </div>
@@ -57,7 +57,7 @@
         </table>
 
         <div class="d-flex justify-content-center">
-            {!! $customers->links() !!}
+            {!! $lures->links() !!}
         </div>
 
     </div>
@@ -68,9 +68,9 @@
     <script>
 
         /* Deletar */
-        $('.btn-delete-customer').click(function(){
+        $('.btn-delete-lure').click(function(){
             var id = $(this).data('id');
-            var url = "{{url('customers/delete')}}/"+id;
+            var url = "{{url('lures/delete')}}/"+id;
             ajax_delete(id, url)
         })
 

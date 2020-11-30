@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerRequest;
-use App\Services\CustomerService;
 use Illuminate\Http\Request;
+use App\Http\Requests\LureRequest;
+use App\Services\LureService;
 
-class CustomerController extends Controller
+class LureController extends Controller
 {
-    private $customerService;
+    private $lureService;
     private $data;
 
-    public function __construct(CustomerService $customerService)
+    public function __construct(LureService $lureService)
     {
-        $this->customerService = $customerService;
+        $this->lureService = $lureService;
 
         $this->data = [
             'icon' => 'flaticon-user',
-            'title' => 'Clientes',
+            'title' => 'Íscas',
         ];
     }
 
@@ -29,9 +29,9 @@ class CustomerController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['customers'] = $this->customerService->paginate();
+        $data['lures'] = $this->lureService->paginate();
 
-        return response()->view('customer.list', $data);
+        return response()->view('lure.list', $data);
     }
 
     /**
@@ -41,7 +41,7 @@ class CustomerController extends Controller
     {
 
         $data = $this->data;
-        return view('customer.new', $data);
+        return view('lure.new', $data);
     }
 
 
@@ -51,10 +51,10 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function save(CustomerRequest $request)
+    public function save(LureRequest $request)
     {
 
-        return $this->customerService->save($request);
+        return $this->lureService->save($request);
     }
 
     /**
@@ -65,9 +65,9 @@ class CustomerController extends Controller
     {
 
         $data = $this->data;
-        $data['customer'] = $this->customerService->show($id);
+        $data['lureService'] = $this->lureService->show($id);
 
-        return view('customer.new', $data);
+        return view('lureService.new', $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class CustomerController extends Controller
      */
     public function destroy(Int $id)
     {
-        $this->customerService->destroy($id);
+        $this->lureService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
 }

@@ -3,15 +3,15 @@
 
 namespace App\Services;
 
-use App\Repositories\CustomerRepository;
+use App\Repositories\LureRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class CustomerService
+class LureService
 {
-    public function __construct(CustomerRepository $customer)
+    public function __construct(LureRepository $lure)
     {
-        $this->customer = $customer;
+        $this->lure = $lure;
     }
 
     /**
@@ -19,7 +19,7 @@ class CustomerService
      */
     public function all()
     {
-        return $this->customer->all();
+        return $this->lure->all();
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->customer->paginate($limit);
+        return $this->lure->paginate($limit);
     }
 
     /**
@@ -37,11 +37,9 @@ class CustomerService
      */
     public function create(Request $request)
     {
-
-        // $dados = $request->all();
         $dados = $request->all();
 
-        return $this->customer->create($dados)->orderBy('id')->get();
+        return $this->lure->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -50,11 +48,9 @@ class CustomerService
      */
     public function save(Request $request)
     {
+        $lure = $this->lure->create($request->all());
 
-        
-        $customer = $this->customer->create($request->all());
-
-        return $customer;
+        return $lure;
     }
 
     /**
@@ -64,11 +60,9 @@ class CustomerService
      */
     public function update(Request $request, $id)
     {
+        $lure = $this->customer->update($id, $request->all());
 
-        
-        $customer = $this->customer->update($id, $request->all());
-
-        return $customer;
+        return $lure;
     }
 
 
@@ -76,9 +70,9 @@ class CustomerService
     public function show(Int $id)
     {
 
-        $customer =  $this->customer->find($id);
+        $lure =  $this->lure->find($id);
 
-        return ($customer) ? $customer : abort(404);
+        return ($lure) ? $lure : abort(404);
     }
 
 
@@ -88,11 +82,11 @@ class CustomerService
     public function destroy(Int $id)
     {
 
-        return $this->customer->delete($id);
+        return $this->lure->delete($id);
     }
 
     public function edit($id)
     {
-        return $this->customer->find($id);
+        return $this->lure->find($id);
     }
 }

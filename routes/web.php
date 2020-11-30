@@ -34,7 +34,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'CustomerController@destroy');
     });
 
+    /**
+     * Lures routes
+     */
+    Route::group(['prefix' => 'lures'], function () {
 
+        Route::get('/', 'LureController@index');
+        Route::get('/new', 'LureController@new');
+        Route::post('/save', 'LureController@save');
+        Route::get('/edit/{id}', 'LureController@edit');
+        Route::get('/delete/{id}', 'LureController@destroy');
+    });
+
+
+
+
+    /**
+     * Exit router
+     */
     Route::get('/logout', function () {
         \illuminate\Support\Facades\Auth::logout();
         return redirect('/');
