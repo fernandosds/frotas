@@ -16,6 +16,7 @@ class CreatePermissionsTable extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['administrador', 'usuario']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

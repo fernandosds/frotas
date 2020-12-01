@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'UserController@destroy');
     });
 
+
     /**
      * Clients routes
      */
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'CustomerController@edit');
         Route::get('/delete/{id}', 'CustomerController@destroy');
     });
+
 
     /**
      * Lures routes
@@ -46,6 +48,31 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'LureController@destroy');
     });
 
+
+    /**
+     * Type of Loads routes
+     */
+    Route::group(['prefix' => 'typeofloads'], function () {
+
+        Route::get('/', 'TypeOfLoadController@index');
+        Route::get('/new', 'TypeOfLoadController@new');
+        Route::post('/save', 'TypeOfLoadController@save');
+        Route::get('/edit/{id}', 'TypeOfLoadController@edit');
+        Route::get('/delete/{id}', 'TypeOfLoadController@destroy');
+    });
+
+
+    /**
+     * Accommodation Locations routes
+     */
+    Route::group(['prefix' => 'accommodationlocations'], function () {
+
+        Route::get('/', 'AccommodationLocationsController@index');
+        Route::get('/new', 'AccommodationLocationsController@new');
+        Route::post('/save', 'AccommodationLocationsController@save');
+        Route::get('/edit/{id}', 'AccommodationLocationsController@edit');
+        Route::get('/delete/{id}', 'AccommodationLocationsController@destroy');
+    });
 
 
 

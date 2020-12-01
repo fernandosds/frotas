@@ -3,15 +3,15 @@
 
 namespace App\Services;
 
-use App\Repositories\LureRepository;
+use App\Repositories\TypeOfLoadRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class LureService
+class TypeOfLoadService
 {
-    public function __construct(LureRepository $lure)
+    public function __construct(TypeOfLoadRepository $typeOfLoad)
     {
-        $this->lure = $lure;
+        $this->typeOfLoad = $typeOfLoad;
     }
 
     /**
@@ -19,7 +19,7 @@ class LureService
      */
     public function all()
     {
-        return $this->lure->all();
+        return $this->typeOfLoad->all();
     }
 
     /**
@@ -28,7 +28,7 @@ class LureService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->lure->paginate($limit);
+        return $this->typeOfLoad->paginate($limit);
     }
 
     /**
@@ -39,7 +39,7 @@ class LureService
     {
         $dados = $request->all();
 
-        return $this->lure->create($dados)->orderBy('id')->get();
+        return $this->typeOfLoad->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -48,9 +48,9 @@ class LureService
      */
     public function save(Request $request)
     {
-        $lure = $this->lure->create($request->all());
+        $typeOfLoad = $this->typeOfLoad->create($request->all());
 
-        return $lure;
+        return $typeOfLoad;
     }
 
     /**
@@ -60,9 +60,9 @@ class LureService
      */
     public function update(Request $request, $id)
     {
-        $lure = $this->lure->update($id, $request->all());
+        $typeOfLoad = $this->typeOfLoad->update($id, $request->all());
 
-        return $lure;
+        return $typeOfLoad;
     }
 
 
@@ -70,9 +70,9 @@ class LureService
     public function show(Int $id)
     {
 
-        $lure =  $this->lure->find($id);
+        $typeOfLoad =  $this->typeOfLoad->find($id);
 
-        return ($lure) ? $lure : abort(404);
+        return ($typeOfLoad) ? $typeOfLoad : abort(404);
     }
 
 
@@ -82,11 +82,11 @@ class LureService
     public function destroy(Int $id)
     {
 
-        return $this->lure->delete($id);
+        return $this->typeOfLoad->delete($id);
     }
 
     public function edit($id)
     {
-        return $this->lure->find($id);
+        return $this->typeOfLoad->find($id);
     }
 }

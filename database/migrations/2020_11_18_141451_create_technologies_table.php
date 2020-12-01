@@ -17,6 +17,7 @@ class CreateTechnologiesTable extends Migration
             $table->id();
             // Type: 'Autonoma RF' / 'Isca Casada RF/GPRS'
             $table->enum('type', ['autonoma', 'casada']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

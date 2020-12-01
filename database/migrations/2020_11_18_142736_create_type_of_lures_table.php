@@ -16,6 +16,7 @@ class CreateTypeOfLuresTable extends Migration
         Schema::create('type_of_lures', function (Blueprint $table) {
             $table->id();
             $table->integer('technologie_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

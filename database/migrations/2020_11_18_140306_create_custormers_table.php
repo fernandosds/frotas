@@ -26,6 +26,7 @@ class CreateCustormersTable extends Migration
             $table->string('city', 100);
             $table->string('neighborhood', 255);
             $table->string('state', 255);
+            $table->softDeletes();
             $table->timestamps();
         });    
     }

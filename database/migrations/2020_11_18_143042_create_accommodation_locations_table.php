@@ -15,7 +15,8 @@ class CreateAccommodationLocationsTable extends Migration
     {
         Schema::create('accommodation_locations', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['container', 'transportadora']);
+            $table->string('type', 255);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
