@@ -21,6 +21,7 @@ class CreateStocksTable extends Migration
             $table->integer('lure_id');
             $table->integer('contract_id');
             $table->date('date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

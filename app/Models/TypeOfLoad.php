@@ -6,21 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Permission extends Model
+class TypeOfLoad extends Model
 {
     use Notifiable, SoftDeletes;
 
     /**
      * @var string
      */
-    protected $table = 'permissions';
+    protected $table = 'types_of_loads';
 
-     /**
-     * @var string
-     */
-    protected $with = ["users"];
-
-
+    
     /**
      * @var array
      */
@@ -35,18 +30,10 @@ class Permission extends Model
     public function format()
     {
         return [
-            'id'               => $this->id,
-            'type'             => $this->type,
-
+            'id'                            => $this->id,
+            'type'                          => $this->type,
+            
         ];
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function users()
-    {
-        return $this->HasMany('App\Models\User');
-    }
-    
 }

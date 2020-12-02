@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contract extends Model
 {
 
+    use Notifiable, SoftDeletes;
+    
     /**
      * @var string
      */
@@ -38,7 +42,7 @@ class Contract extends Model
             'id'            => $this->id,
             'stock_id'      => $this->stock_id,
             'shipment_id'   => $this->shipment_id,
-            'costumer_id'   => $this->costumer_id,
+            'customer_id'   => $this->customer_id,
             'type'          => $this->type,
             'validity'      => $this->validity,
         ];

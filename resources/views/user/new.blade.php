@@ -108,11 +108,9 @@
 
                 ajax_store(user_id, "users");
 
-
-
-
             });
 
-    });
+        });
+
     </script>
 @endsection

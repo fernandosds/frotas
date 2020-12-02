@@ -23,6 +23,7 @@ class CreateShipmentsTable extends Migration
             $table->integer('accommodation_location_id');
             $table->boolean('test');
             $table->boolean('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
