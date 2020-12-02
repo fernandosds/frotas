@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'UserController@index');
         Route::get('/new', 'UserController@new');
         Route::post('/save', 'UserController@save');
+        Route::put('/update/{id}', 'UserController@update');
         Route::get('/edit/{id}', 'UserController@edit');
         Route::get('/delete/{id}', 'UserController@destroy');
 

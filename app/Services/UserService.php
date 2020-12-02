@@ -38,7 +38,6 @@ class UserService
     public function create(Request $request)
     {
 
-        // $dados = $request->all();
         $dados = $request->all();
 
         return $this->user->create($dados)->orderBy('id')->get();
@@ -51,22 +50,11 @@ class UserService
     public function save(Request $request)
     {
 
-        $request->merge(['password' => Hash::make($request->password)]);
-
-        try{
-            $user = $this->user->create($request->all());
-
-            return ($user) ? ['status' => 'success', 200] : ['status' => 'error', 404];
-        }catch (\Exception $e){
-            return response()->json([
-                'Sucesso' => 'false',
-                'Message' => 'Erro ao processar informação: '.$e->getMessage()
-            ],400);
+        if(isset($request->password)) {
+            $request->merge(['password' => Hash::make($request->password)]);
         }
 
-
-
-
+        return $this->user->create($request->all());
 
     }
 
@@ -78,10 +66,13 @@ class UserService
     public function update(Request $request, $id)
     {
 
-        if ($request->password) {
+        if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
+            $user = $this->user->update($id, $request->all());
+        }else{
+            $user = $this->user->update($id, $request->except('password'));
         }
-        $user = $this->user->update($id, $request->all());
+
 
         return $user;
     }

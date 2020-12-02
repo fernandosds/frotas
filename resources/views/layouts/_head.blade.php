@@ -46,15 +46,15 @@
     <link href="{{asset('/assets/vendors/general/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('/assets/vendors/general/select2/dist/css/select2.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('/assets/vendors/general/ion-rangeslider/css/ion.rangeSlider.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/nouislider/distribute/nouislider.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/dropzone/dist/dropzone.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/summernote/dist/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/bootstrap-markdown/css/bootstrap-markdown.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/animate.css/animate.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/toastr/build/toastr.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/assets/vendors/general/morris.js/morris.css')}}" rel="stylesheet" type="text/css" />
+    <!--    <link href="{{asset('/assets/vendors/general/nouislider/distribute/nouislider.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/dropzone/dist/dropzone.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/summernote/dist/summernote.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/bootstrap-markdown/css/bootstrap-markdown.min.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/animate.css/animate.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/toastr/build/toastr.css')}}" rel="stylesheet" type="text/css" /> -->
+    <!--    <link href="{{asset('/assets/vendors/general/morris.js/morris.css')}}" rel="stylesheet" type="text/css" /> -->
     <link href="{{asset('/assets/vendors/general/sweetalert2/dist/sweetalert2.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('/assets/vendors/general/socicon/css/socicon.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('/assets/vendors/custom/vendors/line-awesome/css/line-awesome.css')}}" rel="stylesheet" type="text/css" />

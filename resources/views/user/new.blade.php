@@ -16,7 +16,7 @@
 
     <form class="kt-form kt-form--label-right" id="form-create-user" >
         @csrf
-        <input type="hidden" name="id" value="{{ $user->id ?? '' }}" />
+        <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
 
         <div class="kt-portlet__body">
             <div class="form-group form-group-last kt-hide">
@@ -32,17 +32,17 @@
                     </div>
                 </div>
             </div>
+
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Nome</label>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    <input type="text" class="form-control" name="name" placeholder="Entre com o nome" value="{{ $user->name ?? '' }}" required="True">
+                    <input type="text" class="form-control" name="name" placeholder="Entre com o nome" value="{{ $user->name ?? '' }}" required="required">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Email *</label>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     <input type="text" class="form-control" name="email" placeholder="Entre com o email" value="{{ $user->email ?? '' }}" required="True">
-                    <span class="form-text text-muted">Nunca compartilharemos seu e-mail com mais ninguém.</span>
                 </div>
             </div>
             <div class="form-group row">
@@ -60,19 +60,24 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label col-lg-3 col-sm-12">Tipo</label>
+                <label class="col-form-label col-lg-3 col-sm-12">Status</label>
                 <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
                     <select class="form-control" name="status">
                         <option value="1" {{ ($user->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
                         <option value="2" {{ ($user->status ?? null) == '2' ? 'selected' : ''}}>INATIVO</option>
                     </select>
-                    <span class="form-text text-muted">Status</span>
+
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Senha</label>
-                <div class="col-lg-9 col-md-9 col-sm-12">
-                    <input type="password" class="form-control" name="password" placeholder="Digite sua senha" value="{{ $user->password ?? '' }}">
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <input type="password" class="form-control" name="password" placeholder="Digite sua senha" value="">
+                    <span class="form-text text-muted">Min 6, Máx 8 dígitos</span>
+                </div>
+                <label class="col-form-label col-lg-2 col-sm-12">Confirma Senha</label>
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirme sua senha" value="">
                 </div>
             </div>
 
@@ -99,46 +104,12 @@
 
             $('#btn-user-save').click(function() {
 
-                $.ajax({
-                    url: "{{url('users/save')}}",
-                    type: 'POST',
-                    data: $('#form-create-user').serialize(),
-                    success: function(response) {
+                var user_id = $('#id').val();
 
-                        if(response.status == "success"){
-                            Swal.fire({
-                                type: 'success',
-                                title: 'Registro salvo com sucesso',
-                                showConfirmButton: true,
-                                timer: 3000
-                            })
-                        }else{
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: 'Erro ao tentar excluir!',
-                                showConfirmButton: true,
-                                timer: 2500
-                            })
-                        }
+                ajax_store(user_id, "users");
 
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Sucesso!',
-                            text: response,
-                            footer: ' '
-                        })
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            text: 'Erro interno, consulte o administrador do sistema ('+error.responseJSON.Message+')',
-                            footer: ' '
-                        })
-                    }
-                });
+
+
 
             });
 

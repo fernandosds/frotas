@@ -45,17 +45,27 @@ class UserController extends Controller
         return view('user.new', $data);
     }
 
-
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
-    public function save(Request $request)
+    public function save(UserRequest $request)
     {
-        //print_r($request->input());die;
-        return $this->userService->save($request);
+
+        try {
+
+            if (isset($request->id)) {
+                $user = $this->userService->update($request, $request->id);
+            } else {
+                $user = $this->userService->save($request);
+            }
+
+            return response()->json(['status' => 'success'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+
     }
 
     /**
@@ -72,21 +82,27 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
-    //ublic function update(Request $request, Int $id)
-    //
+    public function update(Int $id, UserRequest $request )
+    {
 
-    //   $post = $this->userService->update($request, $id);
+        try {
 
-    //   return redirect()->route('users');
+            if (isset($request->id)) {
+                $user = $this->userService->update($request, $request->id);
+            } else {
+                $user = $this->userService->save($request);
+            }
 
-    //   //return response()->json($this->userService->update($request, $id));
-    //
+            return response()->json(['status' => 'success'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+
+    }
 
     /**
      * @param Int $id

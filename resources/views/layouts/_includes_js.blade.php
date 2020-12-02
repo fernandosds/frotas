@@ -25,66 +25,66 @@
         <script src="{{asset('/assets/vendors/general/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/popper.js/dist/umd/popper.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/js-cookie/src/js.cookie.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/moment/min/moment.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js')}}" type="text/javascript"></script>
+                <script src="{{asset('/assets/vendors/general/js-cookie/src/js.cookie.js')}}" type="text/javascript"></script>
+                <script src="{{asset('/assets/vendors/general/moment/min/moment.min.js')}}" type="text/javascript"></script>
+                <script src="{{asset('/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/sticky-js/dist/sticky.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/wnumb/wNumb.js')}}" type="text/javascript"></script>
+                <script src="{{asset('/assets/vendors/general/wnumb/wNumb.js')}}" type="text/javascript"></script>
 
         <!--end:: Global Mandatory Vendors -->
 
         <!--begin:: Global Optional Vendors -->
-        <script src="{{asset('/assets/vendors/general/jquery-form/dist/jquery.form.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/block-ui/jquery.blockUI.js')}}" type="text/javascript"></script>
+                <!-- <script src="{{asset('/assets/vendors/general/jquery-form/dist/jquery.form.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/block-ui/jquery.blockUI.js')}}" type="text/javascript"></script> -->
         <script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-datepicker/init.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-timepicker/init.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/bootstrap-daterangepicker/daterangepicker.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/bootstrap-maxlength/src/bootstrap-maxlength.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/custom/vendors/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/bootstrap-switch/dist/js/bootstrap-switch.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-switch/init.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/select2/dist/js/select2.full.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/ion-rangeslider/js/ion.rangeSlider.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/handlebars/dist/handlebars.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.numeric.extensions.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/nouislider/distribute/nouislider.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/owl.carousel/dist/owl.carousel.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/autosize/dist/autosize.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/clipboard/dist/clipboard.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/dropzone/dist/dropzone.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/summernote/dist/summernote.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/markdown/lib/markdown.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/bootstrap-markdown/js/bootstrap-markdown.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-markdown/init.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/bootstrap-notify/bootstrap-notify.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-notify/init.js')}}" type="text/javascript"></script>
+                <!-- <script src="{{asset('/assets/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/bootstrap-maxlength/src/bootstrap-maxlength.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/custom/vendors/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/bootstrap-switch/dist/js/bootstrap-switch.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-switch/init.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/select2/dist/js/select2.full.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/ion-rangeslider/js/ion.rangeSlider.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/handlebars/dist/handlebars.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.numeric.extensions.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/nouislider/distribute/nouislider.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/owl.carousel/dist/owl.carousel.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/autosize/dist/autosize.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/clipboard/dist/clipboard.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/dropzone/dist/dropzone.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/summernote/dist/summernote.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/markdown/lib/markdown.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/bootstrap-markdown/js/bootstrap-markdown.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-markdown/init.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/bootstrap-notify/bootstrap-notify.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-notify/init.js')}}" type="text/javascript"></script> -->
         <script src="{{asset('/assets/vendors/general/jquery-validation/dist/jquery.validate.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/jquery-validation/dist/additional-methods.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/custom/components/vendors/jquery-validation/init.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/toastr/build/toastr.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/raphael/raphael.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/morris.js/morris.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/chart.js/dist/Chart.bundle.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/custom/vendors/bootstrap-session-timeout/dist/bootstrap-session-timeout.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/custom/vendors/jquery-idletimer/idle-timer.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/waypoints/lib/jquery.waypoints.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/counterup/jquery.counterup.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/es6-promise-polyfill/promise.min.js')}}" type="text/javascript"></script>
+                <!-- <script src="{{asset('/assets/vendors/general/toastr/build/toastr.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/raphael/raphael.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/morris.js/morris.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/chart.js/dist/Chart.bundle.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/custom/vendors/bootstrap-session-timeout/dist/bootstrap-session-timeout.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/custom/vendors/jquery-idletimer/idle-timer.min.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/waypoints/lib/jquery.waypoints.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/counterup/jquery.counterup.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/es6-promise-polyfill/promise.min.js')}}" type="text/javascript"></script> -->
         <script src="{{asset('/assets/vendors/general/sweetalert2/dist/sweetalert2.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/custom/components/vendors/sweetalert2/init.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/jquery.repeater/src/lib.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/jquery.repeater/src/jquery.input.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/jquery.repeater/src/repeater.js')}}" type="text/javascript"></script>
-        <script src="{{asset('/assets/vendors/general/dompurify/dist/purify.js')}}" type="text/javascript"></script>
+                <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/lib.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/jquery.input.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/repeater.js')}}" type="text/javascript"></script> -->
+                <!-- <script src="{{asset('/assets/vendors/general/dompurify/dist/purify.js')}}" type="text/javascript"></script> -->
 
         <!--end:: Global Optional Vendors -->
 
@@ -94,15 +94,21 @@
         <!--end::Global Theme Bundle -->
 
         <!--begin::Page Scripts(used by this page) -->
-        <script src="{{asset('/assets/app/custom/login/login-v1.js')}}" type="text/javascript"></script>
+                <script src="{{asset('/assets/app/custom/login/login-v1.js')}}" type="text/javascript"></script>
 
         <!--end::Page Scripts -->
 
         <!--begin::Global App Bundle(used by all pages) -->
-        <script src="{{asset('/assets/app/bundle/app.bundle.js')}}" type="text/javascript"></script>
+                <script src="{{asset('/assets/app/bundle/app.bundle.js')}}" type="text/javascript"></script>
+
+        <script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
 
         <script>
 
+
+                /*
+                        DELETE FUCTION
+                 */
                 function ajax_delete(id, url){
 
                         const swalWithBootstrapButtons = Swal.mixin({
@@ -148,6 +154,80 @@
 
                                 }
                         })
+                }
+
+                /*
+                INSERT FUNCTION
+                 */
+                function ajax_store(id, route){
+
+
+
+                        if(id != "" ){
+                                var url = "{{url('')}}/"+route+"/update/"+id;
+                                var method = "PUT";
+                        }else{
+                                var url = "{{url('')}}/"+route+"/save";
+                                var method = "POST";
+                        }
+
+                        $.ajax({
+                                url: url,
+                                type: method,
+                                data: $('#form-create-user').serialize(),
+                                success: function(response) {
+
+                                        if(response.status == "success"){
+                                                Swal.fire({
+                                                        type: 'success',
+                                                        title: 'Registro salvo com sucesso',
+                                                        showConfirmButton: true,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        $(location).attr('href', '{{url("")}}/'+route);
+                                                })
+
+                                        }else{
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Erro ao tentar salvar!',
+                                                        showConfirmButton: true,
+                                                        timer: 2500
+                                                })
+                                        }
+
+
+                                },
+                                error: function(error) {
+
+                                        if(error.responseJSON.status == "internal_error"){
+                                                console.log(error.responseJSON.errors)
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                                                        showConfirmButton: true,
+                                                        timer: 2500
+                                                })
+                                        }else{
+                                                var items = error.responseJSON.errors;
+                                                var errors = $.map(items, function(i) {
+                                                        return i.join('<br />');
+                                                });
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Erro!',
+                                                        html: 'Os seguintes erros foram encontrados: '+errors,
+                                                        footer: ' '
+                                                })
+                                        }
+
+
+
+                                }
+                        });
+
                 }
 
 
