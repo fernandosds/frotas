@@ -65,9 +65,26 @@ class LureController extends Controller
     {
 
         $data = $this->data;
-        $data['lureService'] = $this->lureService->show($id);
+        $data['lure'] = $this->lureService->show($id);
 
-        return view('lureService.new', $data);
+        return view('lure.new', $data);
+    }
+
+    /**
+     * @param UserRequest $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function update(Int $id, LureRequest $request)
+    {
+
+        try {
+
+            $this->lureService->update($request, $request->id);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**

@@ -37,16 +37,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($accommodationLocations as $accommodationlocation)
-                    <tr id="_tr_user_{{$accommodationlocation->id}}">
-                        <th scope="row">{{$accommodationlocation->id}}</th>
-                        <td>{{$accommodationlocation->type}}</td>
+                @foreach ($accommodationLocations as $accommodationLocation)
+                    <tr id="_tr_user_{{$accommodationLocation->id}}">
+                        <th scope="row">{{$accommodationLocation->id}}</th>
+                        <td>{{$accommodationLocation->type}}</td>
                         <td></td>
                         <td></td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('accommodationlocations/edit')}}/{{$accommodationlocation->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-accommodationlocation" data-id="{{$accommodationlocation->id}}">
+                                <a href="{{url('accommodationlocations/edit')}}/{{$accommodationLocation->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-accommodationlocation" data-id="{{$accommodationLocation->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
                             </div>

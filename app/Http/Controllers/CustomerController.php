@@ -59,7 +59,6 @@ class CustomerController extends Controller
             $this->customerService->save($request);
 
             return response()->json(['status' => 'success'], 200);
-
         } catch (\Exception $e) {
 
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -83,13 +82,21 @@ class CustomerController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
+    public function update(Int $id, CustomerRequest $request)
+    {
 
+        try {
+
+            $this->customerService->update($request, $request->id);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

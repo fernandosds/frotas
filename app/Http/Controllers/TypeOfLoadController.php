@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TypeOfLoadRequest;
 use App\Services\TypeOfLoadService;
 
 class TypeOfLoadController extends Controller
@@ -28,7 +29,7 @@ class TypeOfLoadController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['typeofloads'] = $this->typeOfLoadService->paginate();
+        $data['types_of_loads'] = $this->typeOfLoadService->paginate();
 
         return response()->view('typeofload.list', $data);
     }
@@ -64,7 +65,7 @@ class TypeOfLoadController extends Controller
     {
 
         $data = $this->data;
-        $data['typeOfLoadService'] = $this->typeOfLoadService->show($id);
+        $data['types_of_load'] = $this->typeOfLoadService->show($id);
 
         return view('typeofload.new', $data);
     }
@@ -77,6 +78,22 @@ class TypeOfLoadController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+     /**
+     * @param UserRequest $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function update(Int $id, TypeOfLoadRequest $request)
+    {
+
+        try {
+
+            $this->typeOfLoadService->update($request, $request->id);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -22,49 +22,54 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputName">Nome</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ $customer->name ?? '' }}">
+                <input type="text" name="name" class="form-control" value="{{ $customer->name ?? '' }}">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputCpfCnpj">CPF / CNPJ</label>
-                <input type="text" name="cpf_cnpj" class="form-control" id="cpf_cnpj" value="{{ $customer->cpf_cnpj ?? '' }}">
+                <input type="text" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputAddress">Endereço</label>
-                <input type="text" class="form-control" name="address" id="address" value="{{ $customer->address ?? '' }}">
+                <input type="text" class="form-control" name="address" value="{{ $customer->address ?? '' }}">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
+                <label for="inputAddress">CEP</label>
+                <input type="text" class="form-control" name="cep" value="{{ $customer->cep ?? '' }}">
+            </div>
+            <div class="form-group col-md-2">
                 <label for="inputComplement">Complemento</label>
-                <input type="text" class="form-control" name="complement" id="complement" value="{{ $customer->complement ?? '' }}">
+                <input type="text" class="form-control" name="complement" value="{{ $customer->complement ?? '' }}">
             </div>
             <div class="form-group col-md-2">
                 <label for="inputNumber">Número</label>
-                <input type="text" class="form-control" name="number" id="number" value="{{ $customer->number ?? '' }}">
+                <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="inpuCity">Cidade</label>
-                <input type="text" class="form-control" name="city" id="city" value="{{ $customer->city ?? '' }}">
+                <input type="text" class="form-control" name="city" value="{{ $customer->city ?? '' }}">
             </div>
             <div class="form-group col-md-4">
                 <label for="inputState">Estado</label>
-                <input type="text" class="form-control" name="state" id="state" value="{{ $customer->state ?? '' }}">
+                <input type="text" class="form-control" name="state" value="{{ $customer->state ?? '' }}">
             </div>
             <div class="form-group col-md-4">
                 <label for="inputNeighborhood">Bairro</label>
-                <input type="text" class="form-control" name="neighborhood" id="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
+                <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
             </div>
         </div>
 
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputType">Tipo</label>
-                <select id="inputType" class="form-control">
-                    <option selected  value="embarcado" {{ ($customer->type ?? null) == 'embarcado' ? 'selected' : ''}}>Embarcado</option>
-                    <option  value="transportadora" {{ ($customer->type ?? null) == 'transportadora' ? 'selected' : ''}}>Transportadora</option>
+                <label class="col-form-label">Tipo</label>
+                <select class="form-control" name="type">
+                    <option value=" ">Selecione um tipo</option>
+                    <option value="embarcado" {{ ($customer->type ?? null) == 'embarcado' ? 'selected' : ''}}>Embarcado</option>
+                    <option value="transportadora" {{ ($customer->type ?? null) == 'transportadora' ? 'selected' : ''}}>Transportadora</option>
                     <option value="cliente" {{ ($customer->type ?? null) == 'cliente' ? 'selected' : ''}}>Cliente</option>
                 </select>
             </div>

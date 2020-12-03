@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CustomerRequest extends FormRequest
+class AccommodationLocationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,11 +17,6 @@ class CustomerRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
 
@@ -29,17 +24,18 @@ class CustomerRequest extends FormRequest
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'cpf_cnpj' => 'required|unique:customers',
+                'type' => 'required|unique:accommodation_locations',
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
-                'cpf_cnpj' => [
+                'type' => [
                     'required',
-                    Rule::unique('customers')->ignore($this->id),
+                    Rule::unique('accommodation_locations')->ignore($this->id),
                 ],
             ], $return);
         }
 
         return $return;
     }
+
 }
