@@ -54,7 +54,15 @@ class TypeOfLoadController extends Controller
     public function save(Request $request)
     {
 
-        return $this->typeOfLoadService->save($request);
+        try {
+
+            $this->typeOfLoadService->save($request);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -98,7 +106,7 @@ class TypeOfLoadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\TypeOfLoad  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Int $id)

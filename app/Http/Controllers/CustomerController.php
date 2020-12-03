@@ -101,7 +101,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Customer  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Int $id)

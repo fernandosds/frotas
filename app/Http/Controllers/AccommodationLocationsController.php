@@ -54,7 +54,15 @@ class AccommodationLocationsController extends Controller
     public function save(Request $request)
     {
 
-        return $this->accommodationLocationsService->save($request);
+        try {
+
+            $this->accommodationLocationsService->save($request);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -91,7 +99,7 @@ class AccommodationLocationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\AccommodationLocation  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Int $id)
