@@ -1,55 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f00d41b-9b3e-439e-8997-290ca21d089a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/AccommodationLocationsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/LureController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/TypeOfLoadController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/CustomerRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/LureRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/TypeOfLoad.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/AccommodationLocationsRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/CustomerRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/LureRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/TypeOfLoadRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/AccommodationLocationsService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/CustomerService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/LureService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/TypeOfLoadService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_01_134804_create_types_of_loads_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/accommodationlocations/list.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/customer/list.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/lure/list.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/typeofload/list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UserRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UserRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/AccommodationLocation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/AccommodationLocation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Contract.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Contract.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Customer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Lure.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lure.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Permission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Shipment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shipment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Technologie.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Technologie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TypeOfLure.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TypeOfLure.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_19_000000_create_failed_jobs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_19_000000_create_failed_jobs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_140306_create_custormers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_140306_create_custormers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_140442_create_contracts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_140442_create_contracts_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_140839_create_shipments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_140839_create_shipments_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_141307_create_stocks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_141307_create_stocks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_141451_create_technologies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_141451_create_technologies_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_142133_create_lures_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_142133_create_lures_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_142736_create_type_of_lures_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_142736_create_type_of_lures_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_143042_create_accommodation_locations_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_143042_create_accommodation_locations_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_144443_create_permissions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_144443_create_permissions_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/menu.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/new.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/new.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="6f00d41b-9b3e-439e-8997-290ca21d089a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,17 +46,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/user/new.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="745">
-              <caret line="110" column="15" lean-forward="true" selection-start-line="110" selection-start-column="15" selection-end-line="110" selection-end-column="15" />
+            <state relative-caret-position="-3">
+              <caret line="66" column="19" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Requests/UserRequest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="881">
-              <caret line="55" column="1" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+            <state relative-caret-position="626">
+              <caret line="44" column="31" lean-forward="true" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
               <folding>
                 <element signature="e#37#50#0#PHP" expanded="true" />
               </folding>
@@ -112,14 +64,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1139">
-              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+            <state relative-caret-position="425">
+              <caret line="82" selection-start-line="82" selection-end-line="82" />
               <folding>
                 <element signature="e#40#74#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -198,6 +159,8 @@
         <option value="$PROJECT_DIR$/resources/views/user/new.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Requests/UserRequest.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
+        <option value="$USER_HOME$/Desktop/.env" />
+        <option value="$PROJECT_DIR$/.env" />
       </list>
     </option>
   </component>
@@ -435,16 +398,15 @@
       <workItem from="1606736440821" duration="19107000" />
       <workItem from="1606827405650" duration="6473000" />
       <workItem from="1606865467427" duration="4857000" />
-      <workItem from="1606910628651" duration="11133000" />
+      <workItem from="1606910628651" duration="14663000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62575000" />
+    <option name="totallyTimeSpent" value="66105000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18656716" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -622,13 +584,6 @@
       </provider>
     </entry>
     <entry file="file://W:/server_geral/server_mobile.php" />
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Repositories/AbstractRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-187">
@@ -700,27 +655,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/user/new.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="110" column="15" lean-forward="true" selection-start-line="110" selection-start-column="15" selection-end-line="110" selection-end-column="15" />
+        <state relative-caret-position="-3">
+          <caret line="66" column="19" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/UserRequest.php">
+    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="881">
-          <caret line="55" column="1" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
-          <folding>
-            <element signature="e#37#50#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="238">
+          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+        <state relative-caret-position="425">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
           <folding>
             <element signature="e#40#74#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/UserRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="626">
+          <caret line="44" column="31" lean-forward="true" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
+          <folding>
+            <element signature="e#37#50#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
