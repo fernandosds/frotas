@@ -54,7 +54,19 @@ class CustomerController extends Controller
     public function save(CustomerRequest $request)
     {
 
-        return $this->customerService->save($request);
+        try {
+
+            $this->customerService->save($request);
+
+            return response()->json(['status' => 'success'], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+
+
+        // return $this->customerService->save($request);
     }
 
     /**
@@ -77,7 +89,7 @@ class CustomerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    
+
 
     /**
      * Remove the specified resource from storage.

@@ -54,11 +54,9 @@ class UserController extends Controller
 
         try {
 
-            if (isset($request->id)) {
-                $user = $this->userService->update($request, $request->id);
-            } else {
-                $user = $this->userService->save($request);
-            }
+          
+            $this->userService->save($request);
+     
 
             return response()->json(['status' => 'success'], 200);
 
@@ -90,11 +88,9 @@ class UserController extends Controller
 
         try {
 
-            if (isset($request->id)) {
-                $user = $this->userService->update($request, $request->id);
-            } else {
-                $user = $this->userService->save($request);
-            }
+        
+            $this->userService->update($request, $request->id);
+  
 
             return response()->json(['status' => 'success'], 200);
 
