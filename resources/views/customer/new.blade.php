@@ -92,7 +92,7 @@
 
             var customer_id = $('#id').val();
 
-            ajax_store(customer_id, "customers");
+            ajax_store(customer_id, "customers", $('#form-create-customer').serialize());
 
         });
 

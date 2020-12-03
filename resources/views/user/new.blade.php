@@ -106,7 +106,7 @@
 
                 var user_id = $('#id').val();
 
-                ajax_store(user_id, "users");
+                ajax_store(user_id, "users", $('#form-create-user').serialize());
 
             });
 

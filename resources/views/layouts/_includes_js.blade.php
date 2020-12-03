@@ -159,9 +159,7 @@
                 /*
                 INSERT FUNCTION
                  */
-                function ajax_store(id, route){
-
-
+                function ajax_store(id, route, form_data){
 
                         if(id != "" ){
                                 var url = "{{url('')}}/"+route+"/update/"+id;
@@ -174,7 +172,7 @@
                         $.ajax({
                                 url: url,
                                 type: method,
-                                data: $('#form-create-user').serialize(),
+                                data: form_data,
                                 success: function(response) {
 
                                         if(response.status == "success"){
