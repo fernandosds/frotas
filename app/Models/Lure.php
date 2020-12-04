@@ -27,7 +27,7 @@ class Lure extends Model
      */
     protected $fillable = [
         'id',
-        'type_id',
+        'type_of_lure_id',
         'serial_number',
         'batery_level',        
         'validation'
@@ -40,7 +40,7 @@ class Lure extends Model
     {
         return [
             'id'               => $this->id,
-            'type_of_lure_id'  => $this->type_id,
+            'type_of_lure_id'  => $this->type_of_lure_id,
             'serial_number'    => $this->serial_number,
             'batery_level'     => $this->batery_level,
             'validation'       => $this->date,

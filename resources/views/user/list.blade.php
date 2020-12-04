@@ -40,7 +40,7 @@
                 @foreach ($users as $user)
                     <tr id="_tr_user_{{$user->id}}">
                         <th scope="row">{{$user->id}}</th>
-                        <td>{{$user->name}} - {{Auth::user()->id}}</td>
+                        <td>{{$user->name}}</td>
                         <td>{{$user->type}}</td>
                         <td>{{$user->status}}</td>
                         <td>

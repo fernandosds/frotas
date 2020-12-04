@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AccommodationLocationsService;
+use App\Http\Requests\AccommodationLocationRequest;
 
 class AccommodationLocationsController extends Controller
 {
@@ -64,20 +65,29 @@ class AccommodationLocationsController extends Controller
     {
 
         $data = $this->data;
-        $data['accommodationLocationsService'] = $this->accommodationLocationsService->show($id);
+        $data['accommodationLocation'] = $this->accommodationLocationsService->show($id);
 
         return view('accommodationlocations.new', $data);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
+    public function update(Int $id, AccommodationLocationRequest $request)
+    {
 
+        try {
 
+            $this->accommodationLocationsService->update($request, $request->id);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+ 
     /**
      * Remove the specified resource from storage.
      *

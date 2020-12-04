@@ -18,7 +18,7 @@ class CreateCustormersTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('cpf_cnpj', 18);
-            $table->enum('type', ['Embarcado', 'Transportadora', 'Cliente']);
+            $table->enum('type', ['embarcado', 'transportadora', 'cliente']);
             $table->string('cep', 9);
             $table->string('address', 255);
             $table->string('complement', 255);

@@ -16,7 +16,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{url('customers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <a href="{{url('typeofloads/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i> Novo
                     </a>
                 </div>
@@ -37,16 +37,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($typeofloads as $typeofload)
-                    <tr id="_tr_user_{{$typeofload->id}}">
-                        <th scope="row">{{$typeofload->id}}</th>
-                        <td>{{$typeofload->type}}</td>
+                @foreach ($types_of_loads as $types_of_load)
+                    <tr id="_tr_user_{{$types_of_load->id}}">
+                        <th scope="row">{{$types_of_load->id}}</th>
+                        <td>{{$types_of_load->type}}</td>
                         <td></td>
                         <td></td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('typeofloads/edit')}}/{{$typeofload->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-typeofload" data-id="{{$typeofload->id}}">
+                                <a href="{{url('typeofloads/edit')}}/{{$types_of_load->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-typeofload" data-id="{{$types_of_load->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
                             </div>
@@ -57,7 +57,7 @@
         </table>
 
         <div class="d-flex justify-content-center">
-            {!! $typeofloads->links() !!}
+            {!! $types_of_loads->links() !!}
         </div>
 
     </div>
