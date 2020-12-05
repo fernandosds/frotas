@@ -64,8 +64,9 @@
 
 
         <div class="form-row">
+
             <div class="form-group col-md-4">
-                <label class="col-form-label">Tipo</label>
+                <label class="inputType">Tipo</label>
                 <select class="form-control" name="type">
                     <option value=" ">Selecione um tipo</option>
                     <option value="embarcado" {{ ($customer->type ?? null) == 'embarcado' ? 'selected' : ''}}>Embarcado</option>
@@ -73,7 +74,17 @@
                     <option value="cliente" {{ ($customer->type ?? null) == 'cliente' ? 'selected' : ''}}>Cliente</option>
                 </select>
             </div>
+            <div class="form-group col-md-4">
+
+
+                <button type="button" class="btn btn-outline-brand btn-sm " data-toggle="modal" data-target="#kt_modal_4">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    Novo Contato
+                </button>
+            </div>
+
         </div>
+
         <div class="kt-portlet__foot">
             <div class="kt-form__actions">
                 <div class="row">
@@ -87,10 +98,116 @@
     </div>
 </form>
 
+<!--begin::Modal-->
+<div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionando contato</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-create-contact">
+                    @csrf
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label">Telefone</label>
+                        <input type="text" name="phone" class="form-control" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">Email</label>
+                        <input type="text" name="email" class="form-control" id="email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn-customer-new-contact">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end::Modal-->
+
 @endsection
 
 @section('scripts')
 <script>
+    $(function() {
+
+        $('#btn-customer-new-contact').click(function() {
+
+            var dados = $('#form-create-contact').serialize();
+            var id = $('#id').val();
+
+            $.ajax({
+                type: 'PUT',
+                dataType: 'json',
+                url: "{{url('')}}/contacts/update/" + id,
+                async: true,
+                data: dados,
+                success: function(response) {
+
+                    if (response.status == "success") {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Registro salvo com sucesso',
+                            showConfirmButton: true,
+                            timer: 3000
+                        }).then((result) => {
+                            $(location).attr('href', '{{url("")}}/' + route);
+                        })
+
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Erro ao tentar salvar!',
+                            showConfirmButton: true,
+                            timer: 2500
+                        })
+                    }
+
+
+                },
+                error: function(error) {
+
+                    if (error.responseJSON.status == "internal_error") {
+                        console.log(error.responseJSON.errors)
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                            showConfirmButton: true,
+                            timer: 2500
+                        })
+                    } else {
+                        var items = error.responseJSON.errors;
+                        var errors = $.map(items, function(i) {
+                            return i.join('<br />');
+                        });
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + errors,
+                            footer: ' '
+                        })
+                    }
+
+
+
+                }
+            });
+
+            return false;
+        });
+    });
+
+
+
+
+
     $(function() {
 
         $('#btn-customer-save').click(function() {
