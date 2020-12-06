@@ -67,7 +67,9 @@ class CustomerController extends Controller
 
         // return $this->customerService->save($request);
     }
-
+   
+    
+        
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -101,7 +103,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Customer  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Int $id)

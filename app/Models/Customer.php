@@ -19,7 +19,7 @@ class Customer extends Model
     /**
      * @var string
      */
-    protected $with = ["contracts", "stocks", "shipments"];
+    protected $with = ["contracts", "stocks", "shipments", "contacts"];
 
     /**
      * @var array
@@ -90,5 +90,13 @@ class Customer extends Model
     public function shipments()
     {
         return $this->HasMany('App\Models\Shipment');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function contacts()
+    {
+        return $this->HasMany('App\Models\Contact');
     }
 }

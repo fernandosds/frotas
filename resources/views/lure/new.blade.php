@@ -23,11 +23,16 @@
             <div class="form-group col-md-6">
                 <label for="inputSerialNumber">Número de série</label>
                 <input type="text" name="serial_number" class="form-control" value="{{ $lure->serial_number ?? '' }}">
-            </div>            
+            </div>
 
             <div class="form-group col-md-6">
-                <label for="inputTipoIsca">Tipo de isca</label>
-                <input type="text" class="form-control" name="type_of_lure_id" value="{{ $lure->type_of_lure_id ?? '' }}">
+                <label class="inputTipoIsca">Tipo de isca</label>
+                <select class="form-control" name="type_of_lure_id">
+                    <option value=" ">Selecione um tipo</option>
+                    <option value="1" {{ ($lure->type_of_lure_id ?? null) == 1 ? 'selected' : ''}}>1</option>
+                    <option value="transportadora" {{ ($clurestomer->type_of_lure_id ?? null) == 2 ? 'selected' : ''}}>2</option>
+                    <option value="cliente" {{ ($lure->type_of_lure_id ?? null) == 3 ? 'selected' : ''}}>3</option>
+                </select>
             </div>
         </div>
         <div class="form-group col-md-6">
@@ -48,6 +53,7 @@
                         <button type="button" class="btn btn-brand" id="btn-lure-save">Cadastrar</button>
                         <a href="{{url('lures')}}" class="btn btn-secondary">Voltar</a>
                     </div>
+
                 </div>
             </div>
         </div>

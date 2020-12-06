@@ -53,8 +53,16 @@ class LureController extends Controller
      */
     public function save(LureRequest $request)
     {
+    
+        try {
 
-        return $this->lureService->save($request);
+            $this->lureService->save($request);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -99,7 +107,7 @@ class LureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Lure  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Int $id)
