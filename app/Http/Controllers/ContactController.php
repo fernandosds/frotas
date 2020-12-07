@@ -22,20 +22,52 @@ class ContactController extends Controller
     }
 
 
-     /**
-     * @param Request $request
-     * @return array|\Illuminate\Http\JsonResponse
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function update(Int $id, Request $request)
+    public function index()
     {
+        $data = $this->data;
+        $data['contacts'] = $this->contactService->paginate();
+
+        return response()->view('contacts.list', $data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function save(Request $request)
+    {
+        // print_r($request->all());
+        // die;
 
         try {
 
-            $this->contactService->update($request, $request->id);
+            $this->contactService->save($request);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
+
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
+    }
+
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Contact  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Int $id)
+    {
+        $this->contactService->destroy($id);
+        return back()->with(['status' => 'Deleted successfully']);
     }
 }

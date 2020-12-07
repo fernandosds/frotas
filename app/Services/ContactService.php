@@ -66,15 +66,10 @@ class ContactService
     {
 
         
-        $contact = $this->contact->update($id, $request->all());
-
-        print_r($request->all());
-        die();
-
+        $contact = $this->contact->update($id, $request->all());        
         return $contact;
+    
     }
-
-
 
     public function show(Int $id)
     {
