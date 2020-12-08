@@ -77,11 +77,14 @@
 
 
             <div class="form-group col-md-4">
-
-
-                <button type="button" class="btn btn-outline-brand btn-sm " data-toggle="modal" data-target="#kt_modal_4">
+               
+                @if (\Request::is('customers/edit/*'))
+                    <button type="button" class="btn btn-outline-brand btn-sm " data-toggle="modal" data-target="#kt_modal_4">
                     <i class="fa fa-phone" aria-hidden="true"></i>
-                   
+
+                @endif
+
+
                 </button>
             </div>
 
@@ -102,8 +105,12 @@
     <div class="kt-portlet__body">
         <div class="form-row col md-12">
             Contatos cadastrados
+
+            @if (\Request::is('customers/edit/*'))
             @include('contacts.list')
-            
+            @endif
+
+
         </div>
     </div>
 </form>
@@ -168,7 +175,7 @@
                             showConfirmButton: true,
                             timer: 3000
                         }).then((result) => {
-                            $(location).attr('href', '{{url("")}}/' + route);
+                            $(location).attr('href', '{{url("/customers/contacts")}}');
                         })
 
                     } else {

@@ -35,6 +35,21 @@ class ContactController extends Controller
         return response()->view('contacts.list', $data);
     }
 
+    
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Int $customer_id)
+    {
+
+        $data = $this->data;
+        $data['contact'] = $this->contactService->show($customer_id);
+
+        return view('contacts.list', $data);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
