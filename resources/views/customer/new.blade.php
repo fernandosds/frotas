@@ -77,12 +77,12 @@
 
 
             <div class="form-group col-md-4">
-               
+
                 @if (\Request::is('customers/edit/*'))
-                    <button type="button" class="btn btn-outline-brand btn-sm " data-toggle="modal" data-target="#kt_modal_4">
+                <button type="button" class="btn btn-outline-brand btn-sm " data-toggle="modal" data-target="#kt_modal_4">
                     <i class="fa fa-phone" aria-hidden="true"></i>
 
-                @endif
+                    @endif
 
 
                 </button>
@@ -102,11 +102,14 @@
         </div>
     </div>
 
+
     <div class="kt-portlet__body">
         <div class="form-row col md-12" id="list_contacts">
             <i class="fa fa-spinner fa-pulse fa-5x"></i>
         </div>
     </div>
+
+
 </form>
 
 <!--begin::Modal-->
@@ -148,20 +151,35 @@
 @section('scripts')
 <script>
 
-        $.ajax({
-            type: 'GET',
-            url: "{{url('customers/contacts')}}",
-            success: function(response) {
-                $('#list_contacts').html(response)
-            }
-        })
+      /**
+     Carregar a div de contatos
+     */
+
+    $.ajax({
+        type: 'GET',
+        url: "{{url('customers/contacts')}}",
+        success: function(response) {
+            $('#list_contacts').html(response)
+        }
+
+    })
+
+    /**
+     Deletar
+     */
+
+    $("#list_contacts").on("click", ".btn-delete-contact", function() {
+
+        var id = $(this).data('id');
+        var url = "{{url('customers/contacts/delete')}}/" + id;
+        ajax_delete(id, url)
+
+    });
+
+
 
 
     $(function() {
-
-
-        
-
 
         $('#btn-customer-new-contact').click(function() {
 
@@ -183,7 +201,7 @@
                             showConfirmButton: true,
                             timer: 3000
                         }).then((result) => {
-                            $(location).attr('href', '{{url("/customers/contacts")}}');
+                            $(location).attr('href', '{{url("/customers/edit")}}/' + customer_id);
                         })
 
                     } else {

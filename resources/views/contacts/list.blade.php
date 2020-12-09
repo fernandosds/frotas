@@ -1,4 +1,3 @@
-
 <table class="table table-hover">
     <thead>
         <tr>
@@ -28,14 +27,14 @@
 </table>
 
 @section('scripts')
-    <script>
-
-        /* Deletar */
-        $('.btn-delete-contact').click(function(){
-            var id = $(this).data('id');
-            var url = "{{url('customers/contacts/delete')}}/"+id;
-            ajax_delete(id, url)
-        })
-
-    </script>
+<script>
+    /**
+     Deletar 
+    $('.btn-delete-contact').click(function() {
+        var id = $(this).data('id');
+        var url = "{{url('customers/contacts/delete')}}/" + id;
+        ajax_delete(id, url)
+    })
+    */
+</script>
 @endsection
