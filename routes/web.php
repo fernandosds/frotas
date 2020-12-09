@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/update/{id}', 'CustomerController@update');
         Route::get('/edit/{id}', 'CustomerController@edit');
         Route::get('/delete/{id}', 'CustomerController@destroy');
-        
+
         /**
          * Contact routes
          */
@@ -44,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/{customer_id}', 'ContactController@edit');
             Route::post('/new', 'ContactController@save');
             Route::get('/delete/{id}', 'ContactController@destroy');
-                   
         });
     });
 
@@ -62,6 +61,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/update/{id}', 'LureController@update');
         Route::get('/edit/{id}', 'LureController@edit');
         Route::get('/delete/{id}', 'LureController@destroy');
+
+        /**
+         * Technologies routes
+         */
+
+        Route::group(['prefix' => 'technologies'], function () {
+            Route::get('/', 'TechnologieController@index');
+            Route::get('/new', 'TechnologieController@new');
+            Route::post('/save', 'TechnologieController@save');
+            Route::put('/update/{id}', 'TechnologieController@update');
+            Route::get('/edit/{id}', 'TechnologieController@edit');
+            Route::get('/delete/{id}', 'TechnologieController@destroy');
+        });
     });
 
 

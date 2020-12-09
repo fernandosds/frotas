@@ -103,14 +103,8 @@
     </div>
 
     <div class="kt-portlet__body">
-        <div class="form-row col md-12">
-            Contatos cadastrados
-
-            @if (\Request::is('customers/edit/*'))
-            @include('contacts.list')
-            @endif
-
-
+        <div class="form-row col md-12" id="list_contacts">
+            <i class="fa fa-spinner fa-pulse fa-5x"></i>
         </div>
     </div>
 </form>
@@ -153,7 +147,21 @@
 
 @section('scripts')
 <script>
+
+        $.ajax({
+            type: 'GET',
+            url: "{{url('customers/contacts')}}",
+            success: function(response) {
+                $('#list_contacts').html(response)
+            }
+        })
+
+
     $(function() {
+
+
+        
+
 
         $('#btn-customer-new-contact').click(function() {
 
