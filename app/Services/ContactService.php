@@ -74,7 +74,7 @@ class ContactService
     public function show(Int $id)
     {
 
-        $contact =  $this->contact->find($id);
+        $contact =  $this->contact->showid($id);
 
         return ($contact) ? $contact : abort(404);
     }

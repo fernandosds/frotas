@@ -36,17 +36,18 @@ class ContactController extends Controller
     }
 
     
+    
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Int $customer_id)
+    public function show(Int $id)
     {
 
         $data = $this->data;
-        $data['contact'] = $this->contactService->show($customer_id);
-
-        return view('contacts.list', $data);
+        $data['contacts'] = $this->contactService->show($id);
+    
+        return response()->view('contacts.list', $data);
     }
 
 

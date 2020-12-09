@@ -155,14 +155,31 @@
      Carregar a div de contatos
      */
 
+    /**
     $.ajax({
         type: 'GET',
+        
         url: "{{url('customers/contacts')}}",
         success: function(response) {
             $('#list_contacts').html(response)
         }
 
     })
+    */
+ 
+    $(function() {
+        var id =  $('#id').val();
+
+        $.ajax({
+            type: 'GET',
+            url: "{{url('customers/contacts/show')}}/" + id,
+            success: function(response) {
+                $('#list_contacts').html(response)
+            }
+
+        })
+    })
+    
 
     /**
      Deletar

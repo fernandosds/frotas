@@ -3,6 +3,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Contact;
 
 class ContactRepository extends AbstractRepository
@@ -17,4 +19,16 @@ class ContactRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    public function showid(int $id)
+    {
+        $contact = DB::table('contacts')
+            ->select(DB::raw('*'))
+            ->where('customer_id', '=', $id)
+            ->where('deleted_at', null)
+            ->get();
+
+            
+
+            return $contact;
+    }
 }
