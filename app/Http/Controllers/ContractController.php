@@ -45,10 +45,15 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
-        $data['contracts'] = $this->contactService->show($id);
+        $data['contracts'] = $this->contractService->showid($id);
 
+        //print_r($data);
+        //die();
+         
         return response()->view('customer.contract.list', $data);
     }
+
+    
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

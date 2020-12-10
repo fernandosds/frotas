@@ -21,14 +21,17 @@ class ContractRepository extends AbstractRepository
 
     public function showid(int $id)
     {
-        $contact = DB::table('contacts')
+        //print_r($id);
+        //die();
+
+        $contract = DB::table('contracts')
             ->select(DB::raw('*'))
             ->where('customer_id', '=', $id)
             ->where('deleted_at', null)
             ->get();
 
-            
+       
 
-            return $contact;
+            return $contract;
     }
 }

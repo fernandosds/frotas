@@ -79,7 +79,15 @@ class ContractService
         return ($contract) ? $contract : abort(404);
     }
 
+    public function showid(Int $id)
+    {
 
+        $contract =  $this->contract->showid($id);
+
+        return ($contract) ? $contract : abort(404);
+    }
+
+    
     /**
      * @param Int $id
      */

@@ -30,13 +30,18 @@
             </div>
         </div>
         <div class="form-row">
-        <div class="form-group col-md-6">
+            <div class="form-group col-md-6">
                 <label for="inputAddress">Cliente</label>
-                <input type="text" name="customer_id" class="form-control"  value="{{ $contract->customer_id ?? '' }}">
+                <input type="text" name="customer_id" class="form-control" value="{{ $contract->customer_id ?? '' }}">
             </div>
+
             <div class="form-group col-md-2">
-                <label for="inputAddress">Tipo</label>
-                <input type="text" class="form-control" name="type" value="{{ $contract->type ?? '' }}">
+                <label class="inputTipo">Tipo de contrato</label>
+                <select class="form-control" name="type">
+                    <option value=" ">Selecione um tipo</option>
+                    <option value="Retornavel" {{ ($contract->type ?? null) == 1 ? 'selected' : ''}}>Retornavel</option>
+                    <option value="Descartavel" {{ ($clurestomer->type ?? null) == 2 ? 'selected' : ''}}>Descartavel</option>
+                </select>
             </div>
             <div class="form-group col-md-2">
                 <label for="inputComplement">Validade</label>
@@ -49,7 +54,7 @@
         </div>
 
         <div class="form-row">
-            
+
         </div>
 
         <div class="kt-portlet__foot">
@@ -75,7 +80,6 @@
 
 @section('scripts')
 <script>
-    
     $(function() {
 
         $('#btn-contract-save').click(function() {
