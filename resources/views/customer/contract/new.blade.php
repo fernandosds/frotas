@@ -1,0 +1,91 @@
+@extends('layouts.app')
+
+@section('content')
+
+<!-- HEADER -->
+<div class="kt-portlet__head kt-portlet__head--lg">
+    <div class="kt-portlet__head-label">
+        <span class="kt-portlet__head-icon">
+            <i class="kt-font-brand {{$icon}}"></i>
+        </span>
+        <h3 class="kt-portlet__head-title">
+            {{$title}} <small>Novo</small>
+        </h3>
+    </div>
+</div>
+
+<form class="kt-form kt-form--label-right" id="form-create-contract">
+    @csrf
+    <input type="hidden" name="id" id="id" value="{{ $contract->id ?? '' }}" />
+
+    <div class="kt-portlet__body">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputName">Estoque</label>
+                <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputCpfCnpj">Embarque</label>
+                <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+            </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-6">
+                <label for="inputAddress">Cliente</label>
+                <input type="text" name="customer_id" class="form-control"  value="{{ $contract->customer_id ?? '' }}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputAddress">Tipo</label>
+                <input type="text" class="form-control" name="type" value="{{ $contract->type ?? '' }}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputComplement">Validade</label>
+                <input type="date" class="form-control" name="validity" value="{{ $contract->validity ?? '' }}">
+            </div>
+
+        </div>
+        <div class="form-row">
+
+        </div>
+
+        <div class="form-row">
+            
+        </div>
+
+        <div class="kt-portlet__foot">
+            <div class="kt-form__actions">
+                <div class="row">
+                    <div class="col-lg-12 ml-lg-auto">
+                        <button type="button" class="btn btn-brand" id="btn-contract-save">Cadastrar</button>
+                        <a href="{{url('customers/contracts')}}" class="btn btn-secondary">Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</form>
+
+<!--end::Modal-->
+
+@endsection
+
+@section('scripts')
+<script>
+    
+    $(function() {
+
+        $('#btn-contract-save').click(function() {
+
+            var contract_id = $('#id').val();
+
+            ajax_store(contract_id, "customers/contracts", $('#form-create-contract').serialize());
+
+        });
+
+    });
+</script>
+@endsection
