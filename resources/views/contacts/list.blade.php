@@ -1,3 +1,5 @@
+Lista de contatos
+
 <table class="table table-hover">
     <thead>
         <tr>

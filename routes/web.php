@@ -41,11 +41,25 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::group(['prefix' => 'contacts'], function () {
             Route::get('/', 'ContactController@index');
-            //Route::get('/show/{id}', 'ContactController@edit');
             Route::get('/show/{id}', 'ContactController@show');
             Route::post('/new', 'ContactController@save');
             Route::get('/delete/{id}', 'ContactController@destroy');
         });
+
+
+        /**
+         * Contract routes
+         */
+        Route::group(['prefix' => 'contracts'], function () {
+            Route::get('/', 'ContractController@index');
+            //Route::get('/show/{id}', 'ContactController@edit');
+            Route::get('/show/{id}', 'ContractController@show');
+            Route::post('/new', 'ContractController@save');
+            Route::get('/delete/{id}', 'ContractController@destroy');
+        });
+
+
+
     });
 
 
