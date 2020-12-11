@@ -95,6 +95,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="contacts">Lista</div>
     </div>
 </form>
 
@@ -109,6 +111,9 @@
             </div>
             <div class="modal-body">
                 <form id="form-create-contact">
+
+                    <input type="hidden" name="customer_id" value="{{$customer->id ?? ''}}" />
+
                     @csrf
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">Telefone</label>
@@ -150,14 +155,11 @@
                 success: function(response) {
 
                     if (response.status == "success") {
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Registro salvo com sucesso',
-                            showConfirmButton: true,
-                            timer: 3000
-                        }).then((result) => {
-                            $(location).attr('href', '{{url("")}}/' + route);
-                        })
+
+
+                        $('#contacts').html(response);
+
+
 
                     } else {
                         Swal.fire({

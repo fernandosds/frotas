@@ -29,14 +29,14 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'customers'], function () {
 
-        Route::get('/', 'CustomerController@index');        
+        Route::get('/', 'CustomerController@index');
         Route::get('/new', 'CustomerController@new');
         Route::post('/save', 'CustomerController@save');
         Route::put('/update/{id}', 'CustomerController@update');
         Route::get('/edit/{id}', 'CustomerController@edit');
         Route::get('/delete/{id}', 'CustomerController@destroy');
 
-        
+
     });
 
     /**
@@ -44,7 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'contacts'], function () {
 
-        Route::put('/update/{id}', 'ContactController@update');
+        Route::put('/store', 'ContactController@store');
+        Route::put('/delete/{id}', 'ContactController@update');
 
     });
 

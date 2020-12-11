@@ -22,12 +22,22 @@ class ContactController extends Controller
     }
 
 
+
      /**
      * @param Request $request
      * @return array|\Illuminate\Http\JsonResponse
      */
     public function update(Int $id, Request $request)
     {
+
+       //$contact = Contact::firstOrCreate(['id' => $request->id]);
+       //$contact->number = $request->number;
+       //$contact->save();
+
+
+
+
+
 
         try {
 
