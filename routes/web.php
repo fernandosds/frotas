@@ -70,14 +70,14 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Lures routes
      */
-    Route::group(['prefix' => 'lures'], function () {
+    Route::group(['prefix' => 'devices'], function () {
 
-        Route::get('/', 'LureController@index');
-        Route::get('/new', 'LureController@new');
-        Route::post('/save', 'LureController@save');
-        Route::put('/update/{id}', 'LureController@update');
-        Route::get('/edit/{id}', 'LureController@edit');
-        Route::get('/delete/{id}', 'LureController@destroy');
+        Route::get('/', 'DeviceController@index');
+        Route::get('/new', 'DeviceController@new');
+        Route::post('/save', 'DeviceController@save');
+        Route::put('/update/{id}', 'DeviceController@update');
+        Route::get('/edit/{id}', 'DeviceController@edit');
+        Route::get('/delete/{id}', 'DeviceController@destroy');
 
         /**
          * Technologies routes
@@ -91,6 +91,20 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/edit/{id}', 'TechnologieController@edit');
             Route::get('/delete/{id}', 'TechnologieController@destroy');
         });
+
+        /**
+         * Stocks routes
+         */
+
+        Route::group(['prefix' => 'stocks'], function () {
+            Route::get('/', 'StockController@index');
+            Route::get('/new', 'StockController@new');
+            Route::post('/save', 'StockController@save');
+            Route::put('/update/{id}', 'StockController@update');
+            Route::get('/edit/{id}', 'StockController@edit');
+            Route::get('/delete/{id}', 'StockController@destroy');
+        });
+
     });
 
 

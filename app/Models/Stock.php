@@ -31,9 +31,10 @@ class Stock extends Model
         'user_id',
         'customer_id',
         'stock_id',
-        'lure_id',
+        'device_id',
         'contract_id',
-        'date'
+        'date',
+        'amount'
     ];
 
     /**
@@ -46,9 +47,10 @@ class Stock extends Model
             'user_id'          => $this->user_id,
             'customer_id'      => $this->customer_id,
             'stock_id'         => $this->stock_id,
-            'lure_id'          => $this->lure_id,
+            'device_id'        => $this->device_id,
             'contract_id'      => $this->contract_id,
             'date'             => $this->date,
+            'amount'           => $this->amount,
             
         ];
     }
@@ -80,9 +82,9 @@ class Stock extends Model
      /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-    public function lure()
+    public function device()
     {
-        return $this->belongsTo('App\Models\Lure');
+        return $this->belongsTo('App\Models\Device');
     }
 
      /**

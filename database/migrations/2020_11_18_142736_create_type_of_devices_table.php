@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLuresTable extends Migration
+class CreateTypeOfDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateLuresTable extends Migration
      */
     public function up()
     {
-        Schema::create('lures', function (Blueprint $table) {
+        Schema::create('type_of_devices', function (Blueprint $table) {
             $table->id();
-            $table->integer('type_of_lure_id');
-            $table->string('serial_number', 255);
-            $table->string('batery_level', 255);
-            $table->date('validation');
+            $table->integer('technologie_id');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +28,6 @@ class CreateLuresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lures');
+        Schema::dropIfExists('type_of_devices');
     }
 }

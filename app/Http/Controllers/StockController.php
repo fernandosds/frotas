@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\ContractService;
-//use App\Http\Requests\ContractRequest;
+use App\Services\StockService;
 
-class ContractController extends Controller
+class StockController extends Controller
 {
-    private $contactService;
+    private $stockService;
     private $data;
 
-    public function __construct(ContractService $contractService)
+    public function __construct(StockService $stockService)
     {
-        $this->contractService = $contractService;
+        $this->stockService = $stockService;
 
         $this->data = [
             'icon' => 'flaticon2-contract',
@@ -30,9 +29,9 @@ class ContractController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['contracts'] = $this->contractService->paginate();
+        $data['stocks'] = $this->stockService->paginate();
 
-        return response()->view('customer.contract.list', $data);
+        return response()->view('device.stock.list', $data);
     }
 
 
@@ -45,12 +44,12 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
-        $data['contracts'] = $this->contractService->showid($id);
+        $data['stocks'] = $this->stockService->showid($id);
 
         //print_r($data);
         //die();
          
-        return response()->view('customer.contract.list', $data);
+        return response()->view('device.stock.list', $data);
     }
 
     
@@ -63,7 +62,7 @@ class ContractController extends Controller
 
         $data = $this->data;
         
-        return view('customer.contract.new', $data);
+        return view('device.stock.new', $data);
     }
 
 
@@ -77,7 +76,7 @@ class ContractController extends Controller
     {
         try {
 
-            $this->contractService->save($request);
+            $this->stockService->save($request);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -94,13 +93,13 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
-        $data['contract'] = $this->contractService->show($id);
+        $data['stock'] = $this->stockService->show($id);
 
-        return view('customer.contract.new', $data);
+        return view('device.stock.new', $data);
     }
 
     /**
-     * @param UserRequest $request
+     * @param Request $request
      * @return array|\Illuminate\Http\JsonResponse
      */
     public function update(Int $id, Request $request)
@@ -108,7 +107,7 @@ class ContractController extends Controller
         
         try {
 
-            $this->contractService->update($request, $request->id);
+            $this->stockService->update($request, $request->id);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -122,12 +121,12 @@ class ContractController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Contact  $user
+     * @param  \App\Models\Stock  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Int $id)
     {
-        $this->contractService->destroy($id);
+        $this->stockService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
 }

@@ -6,31 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Lure extends Model
+
+class TypeOfDevice extends Model
 {
 
     use Notifiable, SoftDeletes;
+    
+    /**
+     * @var string
+     */
+    protected $table = 'type_of_devices';
 
     /**
      * @var string
      */
-    protected $table = 'lures';
-
-    /**
-     * @var string
-     */
-    protected $with = ["stocks"];
-
+    protected $with = ["devices"];
 
     /**
      * @var array
      */
     protected $fillable = [
         'id',
-        'type_of_lure_id',
-        'serial_number',
-        'batery_level',        
-        'validation'
+        'technologie_id'
     ];
 
     /**
@@ -39,30 +36,25 @@ class Lure extends Model
     public function format()
     {
         return [
-            'id'               => $this->id,
-            'type_of_lure_id'  => $this->type_of_lure_id,
-            'serial_number'    => $this->serial_number,
-            'batery_level'     => $this->batery_level,
-            'validation'       => $this->date,
+            'id'                            => $this->id,
+            'technologie_id'                => $this->technologie_id,
             
         ];
     }
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-    public function stocks()
+    public function devices()
     {
-        return $this->HasMany('App\Models\Stock');
+        return $this->HasMany('App\Models\Device');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function typeoflure()
+    public function technologie()
     {
-        return $this->BelongsTo('App\Models\TypeOfLure');
+        return $this->BelongsTo('App\Models\Technologie');
     }
-
 }

@@ -18,7 +18,8 @@ class CreateStocksTable extends Migration
             $table->integer('user_id');
             $table->integer('customer_id');
             $table->integer('stock_id');
-            $table->integer('lure_id');
+            $table->integer('device_id');
+            $table->integer('amount');
             $table->integer('contract_id');
             $table->date('date');
             $table->softDeletes();

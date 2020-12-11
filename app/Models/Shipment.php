@@ -26,7 +26,7 @@ class Shipment extends Model
         'customer_id',
         'contract_id',
         'stock_id',
-        'lure_id',
+        'device_id',
         'accommodation_location_id',
         'test',
         'active'
@@ -43,7 +43,7 @@ class Shipment extends Model
             'customer_id'                   => $this->customer_id,
             'contract_id'                   => $this->contract_id,
             'stock_id'                      => $this->stock_id,
-            'lure_id'                       => $this->lure_id,
+            'device_id'                     => $this->device_id,
             'accommodation_location_id'     => $this->accommodation_location_id,
             'test'                          => $this->test,
             'active'                        => $this->active,
@@ -85,8 +85,8 @@ class Shipment extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function lure()
+    public function device()
     {
-        return $this->BelongsTo('App\Models\Lure');
+        return $this->BelongsTo('App\Models\Device');
     }
 }

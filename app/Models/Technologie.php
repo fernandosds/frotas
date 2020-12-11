@@ -19,7 +19,7 @@ class Technologie extends Model
     /**
      * @var string
      */
-    protected $with = ["typeoflure"];
+    protected $with = ["typeofdevice"];
 
     /**
      * @var array
@@ -45,9 +45,9 @@ class Technologie extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-    public function typeoflure()
+    public function typeofdevice()
     {
-        return $this->HasMany('App\Models\TypeOfLure');
+        return $this->HasMany('App\Models\TypeOfDevice');
     }
 
 }
