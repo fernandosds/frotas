@@ -3,15 +3,15 @@
 
 namespace App\Services;
 
-use App\Repositories\ContactRepository;
+use App\Repositories\TechnologieRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class ContactService
+class TechnologieService
 {
-    public function __construct(ContactRepository $contact)
+    public function __construct(TechnologieRepository $technologie)
     {
-        $this->contact = $contact;
+        $this->technologie = $technologie;
     }
 
     /**
@@ -19,7 +19,7 @@ class ContactService
      */
     public function all()
     {
-        return $this->contact->all();
+        return $this->technologie->all();
     }
 
     /**
@@ -28,7 +28,7 @@ class ContactService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->contact->paginate($limit);
+        return $this->technologie->paginate($limit);
     }
 
     /**
@@ -37,11 +37,9 @@ class ContactService
      */
     public function create(Request $request)
     {
-
-        // $dados = $request->all();
         $dados = $request->all();
 
-        return $this->contact->create($dados)->orderBy('id')->get();
+        return $this->technologie->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -50,11 +48,9 @@ class ContactService
      */
     public function save(Request $request)
     {
+        $technologie = $this->technologie->create($request->all());
 
-        
-        $contact = $this->contact->create($request->all());
-
-        return $contact;
+        return $technologie;
     }
 
     /**
@@ -64,19 +60,19 @@ class ContactService
      */
     public function update(Request $request, $id)
     {
+        $technologie = $this->technologie->update($id, $request->all());
 
-        
-        $contact = $this->contact->update($id, $request->all());        
-        return $contact;
-    
+        return $technologie;
     }
+
+
 
     public function show(Int $id)
     {
 
-        $contact =  $this->contact->showid($id);
+        $technologie =  $this->technologie->find($id);
 
-        return ($contact) ? $contact : abort(404);
+        return ($technologie) ? $technologie : abort(404);
     }
 
 
@@ -86,11 +82,11 @@ class ContactService
     public function destroy(Int $id)
     {
 
-        return $this->contact->delete($id);
+        return $this->technologie->delete($id);
     }
 
     public function edit($id)
     {
-        return $this->contact->find($id);
+        return $this->technologie->find($id);
     }
 }

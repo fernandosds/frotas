@@ -16,7 +16,8 @@ class CreateTechnologiesTable extends Migration
         Schema::create('technologies', function (Blueprint $table) {
             $table->id();
             // Type: 'Autonoma RF' / 'Isca Casada RF/GPRS'
-            $table->enum('type', ['autonoma', 'casada']);
+            // $table->enum('type', ['autonoma', 'casada']);
+            $table->string('type', 255);
             $table->softDeletes();
             $table->timestamps();
         });

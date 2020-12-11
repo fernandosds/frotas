@@ -3,15 +3,15 @@
 
 namespace App\Services;
 
-use App\Repositories\ContactRepository;
+use App\Repositories\ContractRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class ContactService
+class ContractService
 {
-    public function __construct(ContactRepository $contact)
+    public function __construct(ContractRepository $contract)
     {
-        $this->contact = $contact;
+        $this->contract = $contract;
     }
 
     /**
@@ -19,7 +19,7 @@ class ContactService
      */
     public function all()
     {
-        return $this->contact->all();
+        return $this->contract->all();
     }
 
     /**
@@ -28,7 +28,7 @@ class ContactService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->contact->paginate($limit);
+        return $this->contract->paginate($limit);
     }
 
     /**
@@ -41,7 +41,7 @@ class ContactService
         // $dados = $request->all();
         $dados = $request->all();
 
-        return $this->contact->create($dados)->orderBy('id')->get();
+        return $this->contract->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -52,9 +52,9 @@ class ContactService
     {
 
         
-        $contact = $this->contact->create($request->all());
+        $contract = $this->contract->create($request->all());
 
-        return $contact;
+        return $contract;
     }
 
     /**
@@ -66,31 +66,39 @@ class ContactService
     {
 
         
-        $contact = $this->contact->update($id, $request->all());        
-        return $contact;
+        $contract = $this->contract->update($id, $request->all());        
+        return $contract;
     
     }
 
     public function show(Int $id)
     {
 
-        $contact =  $this->contact->showid($id);
+        $contract =  $this->contract->show($id);
 
-        return ($contact) ? $contact : abort(404);
+        return ($contract) ? $contract : abort(404);
     }
 
+    public function showid(Int $id)
+    {
 
+        $contract =  $this->contract->showid($id);
+
+        return ($contract) ? $contract : abort(404);
+    }
+
+    
     /**
      * @param Int $id
      */
     public function destroy(Int $id)
     {
 
-        return $this->contact->delete($id);
+        return $this->contract->delete($id);
     }
 
     public function edit($id)
     {
-        return $this->contact->find($id);
+        return $this->contract->find($id);
     }
 }

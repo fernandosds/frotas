@@ -1,23 +1,24 @@
+Lista de contatos
+
 <table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Nome</th>
-            <th scope="col">CPF/CNPJ</th>
-            <th scope="col">Tipo</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Email</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($customers as $customer)
-        <tr id="_tr_user_{{$customer->id}}">
-            <th scope="row">{{$customer->id}}</th>
-            <td>{{$customer->name}}</td>
-            <td>{{$customer->cpf_cnpj}}</td>
-            <td>{{$customer->type}}</td>
+        @foreach ($contacts as $contact)
+        <tr id="_tr_user_{{$contact->id}}">
+            <th scope="row">{{$contact->id}}</th>
+            <td>{{$contact->phone}}</td>
+            <td>{{$contact->email}}</td>
+            <td></td>
             <td>
                 <div class="pull-right">
-                    <a href="{{url('customers/edit')}}/{{$customer->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                    <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-customer" data-id="{{$customer->id}}">
+                    <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-contact" data-id="{{$contact->id}}">
                         <span class="fa fa-fw fa-trash"></span> Deletar
                     </button>
                 </div>
@@ -26,3 +27,16 @@
         @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+<script>
+    /**
+     Deletar 
+    $('.btn-delete-contact').click(function() {
+        var id = $(this).data('id');
+        var url = "{{url('customers/contacts/delete')}}/" + id;
+        ajax_delete(id, url)
+    })
+    */
+</script>
+@endsection

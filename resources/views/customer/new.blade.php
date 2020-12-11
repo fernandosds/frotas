@@ -74,12 +74,17 @@
                     <option value="cliente" {{ ($customer->type ?? null) == 'cliente' ? 'selected' : ''}}>Cliente</option>
                 </select>
             </div>
+
+
             <div class="form-group col-md-4">
 
-
+                @if (\Request::is('customers/edit/*'))
                 <button type="button" class="btn btn-outline-brand btn-sm " data-toggle="modal" data-target="#kt_modal_4">
                     <i class="fa fa-phone" aria-hidden="true"></i>
-                    Novo Contato
+
+                    @endif
+
+
                 </button>
             </div>
 
@@ -98,6 +103,15 @@
 
         <div id="contacts">Lista</div>
     </div>
+
+
+    <div class="kt-portlet__body">
+        <div class="form-row col md-12" id="list_contacts">
+            <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+    </div>
+
+
 </form>
 
 <!--begin::Modal-->
@@ -115,6 +129,8 @@
                     <input type="hidden" name="customer_id" value="{{$customer->id ?? ''}}" />
 
                     @csrf
+                    <input type="hidden" name="customer_id" id="id" value="{{ $customer->id ?? '' }}" />
+
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">Telefone</label>
                         <input type="text" name="phone" class="form-control" id="phone">
@@ -127,7 +143,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btn-customer-new-contact">Salvar</button>
+                <button type="submit" class="btn btn-primary" id="btn-customer-new-contact">Salvar</button>
             </div>
         </div>
     </div>
@@ -139,26 +155,77 @@
 
 @section('scripts')
 <script>
+
+      /**
+     Carregar a div de contatos
+     */
+
+    /**
+    $.ajax({
+        type: 'GET',
+        
+        url: "{{url('customers/contacts')}}",
+        success: function(response) {
+            $('#list_contacts').html(response)
+        }
+
+    })
+    */
+ 
+    $(function() {
+        var id =  $('#id').val();
+
+        $.ajax({
+            type: 'GET',
+            url: "{{url('customers/contacts/show')}}/" + id,
+            success: function(response) {
+                $('#list_contacts').html(response)
+            }
+
+        })
+    })
+    
+
+    /**
+     Deletar
+     */
+
+    $("#list_contacts").on("click", ".btn-delete-contact", function() {
+
+        var id = $(this).data('id');
+        var url = "{{url('customers/contacts/delete')}}/" + id;
+        ajax_delete(id, url)
+
+    });
+
+
+
+
     $(function() {
 
         $('#btn-customer-new-contact').click(function() {
 
             var dados = $('#form-create-contact').serialize();
-            var id = $('#id').val();
+            var customer_id = $('#id').val();
 
             $.ajax({
-                type: 'PUT',
+                type: 'POST',
                 dataType: 'json',
-                url: "{{url('')}}/contacts/update/" + id,
+                url: "{{url('')}}/customers/contacts/new",
                 async: true,
                 data: dados,
                 success: function(response) {
 
                     if (response.status == "success") {
 
-
-                        $('#contacts').html(response);
-
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Registro salvo com sucesso',
+                            showConfirmButton: true,
+                            timer: 3000
+                        }).then((result) => {
+                            $(location).attr('href', '{{url("/customers/edit")}}/' + customer_id);
+                        })
 
 
                     } else {

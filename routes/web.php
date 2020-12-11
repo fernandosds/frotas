@@ -36,18 +36,33 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'CustomerController@edit');
         Route::get('/delete/{id}', 'CustomerController@destroy');
 
+        /**
+         * Contact routes
+         */
+        Route::group(['prefix' => 'contacts'], function () {
+            Route::get('/', 'ContactController@index');
+            Route::get('/show/{id}', 'ContactController@show');
+            Route::post('/new', 'ContactController@save');
+            Route::get('/delete/{id}', 'ContactController@destroy');
+        });
+
+        
+        /**
+         * Contract routes
+         */
+        Route::group(['prefix' => 'contracts'], function () {
+            Route::get('/', 'ContractController@index');
+            Route::get('/new', 'ContractController@new');
+            Route::get('/show/{id}', 'ContractController@show');
+            Route::post('/save', 'ContractController@save');
+            Route::put('/update/{id}', 'ContractController@update');
+            Route::get('/edit/{id}', 'ContractController@edit');
+            Route::get('/delete/{id}', 'ContractController@destroy');
+        });
 
     });
 
-    /**
-     * Clients routes
-     */
-    Route::group(['prefix' => 'contacts'], function () {
 
-        Route::put('/store', 'ContactController@store');
-        Route::put('/delete/{id}', 'ContactController@update');
-
-    });
 
 
     /**
@@ -61,6 +76,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/update/{id}', 'LureController@update');
         Route::get('/edit/{id}', 'LureController@edit');
         Route::get('/delete/{id}', 'LureController@destroy');
+
+        /**
+         * Technologies routes
+         */
+
+        Route::group(['prefix' => 'technologies'], function () {
+            Route::get('/', 'TechnologieController@index');
+            Route::get('/new', 'TechnologieController@new');
+            Route::post('/save', 'TechnologieController@save');
+            Route::put('/update/{id}', 'TechnologieController@update');
+            Route::get('/edit/{id}', 'TechnologieController@edit');
+            Route::get('/delete/{id}', 'TechnologieController@destroy');
+        });
     });
 
 

@@ -5,30 +5,33 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Contact;
+use App\Models\Contract;
 
-class ContactRepository extends AbstractRepository
+class ContractRepository extends AbstractRepository
 {
 
     /**
      * UserRepository constructor.
      * @param Contact $model
      */
-    public function __construct(Contact $model)
+    public function __construct(Contract $model)
     {
         $this->model = $model;
     }
 
     public function showid(int $id)
     {
-        $contact = DB::table('contacts')
+        //print_r($id);
+        //die();
+
+        $contract = DB::table('contracts')
             ->select(DB::raw('*'))
             ->where('customer_id', '=', $id)
             ->where('deleted_at', null)
             ->get();
 
-            
+       
 
-            return $contact;
+            return $contract;
     }
 }

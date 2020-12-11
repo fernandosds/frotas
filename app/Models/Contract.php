@@ -28,7 +28,7 @@ class Contract extends Model
         'id',
         'stock_id',
         'shipment_id',
-        'custumer_id',       
+        'customer_id',       
         'type',
         'validity'
     ];
