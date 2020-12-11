@@ -60,8 +60,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/delete/{id}', 'ContractController@destroy');
         });
 
-
-
     });
 
 

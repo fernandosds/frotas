@@ -23,8 +23,6 @@ class ContactController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -61,6 +59,15 @@ class ContactController extends Controller
     {
         // print_r($request->all());
         // die;
+
+       //$contact = Contact::firstOrCreate(['id' => $request->id]);
+       //$contact->number = $request->number;
+       //$contact->save();
+
+
+
+
+
 
         try {
 
