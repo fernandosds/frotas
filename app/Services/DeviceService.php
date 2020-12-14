@@ -3,15 +3,15 @@
 
 namespace App\Services;
 
-use App\Repositories\LureRepository;
+use App\Repositories\DeviceRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class LureService
+class DeviceService
 {
-    public function __construct(LureRepository $lure)
+    public function __construct(DeviceRepository $device)
     {
-        $this->lure = $lure;
+        $this->device = $device;
     }
 
     /**
@@ -19,7 +19,7 @@ class LureService
      */
     public function all()
     {
-        return $this->lure->all();
+        return $this->device->all();
     }
 
     /**
@@ -28,7 +28,7 @@ class LureService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->lure->paginate($limit);
+        return $this->device->paginate($limit);
     }
 
     /**
@@ -39,7 +39,7 @@ class LureService
     {
         $dados = $request->all();
 
-        return $this->lure->create($dados)->orderBy('id')->get();
+        return $this->device->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -48,9 +48,9 @@ class LureService
      */
     public function save(Request $request)
     {
-        $lure = $this->lure->create($request->all());
+        $device = $this->device->create($request->all());
 
-        return $lure;
+        return $device;
     }
 
     /**
@@ -60,9 +60,9 @@ class LureService
      */
     public function update(Request $request, $id)
     {
-        $lure = $this->lure->update($id, $request->all());
+        $device = $this->device->update($id, $request->all());
 
-        return $lure;
+        return $device;
     }
 
 
@@ -70,9 +70,9 @@ class LureService
     public function show(Int $id)
     {
 
-        $lure =  $this->lure->find($id);
+        $device =  $this->device->find($id);
 
-        return ($lure) ? $lure : abort(404);
+        return ($device) ? $device : abort(404);
     }
 
 
@@ -82,11 +82,11 @@ class LureService
     public function destroy(Int $id)
     {
 
-        return $this->lure->delete($id);
+        return $this->device->delete($id);
     }
 
     public function edit($id)
     {
-        return $this->lure->find($id);
+        return $this->device->find($id);
     }
 }

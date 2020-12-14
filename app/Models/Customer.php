@@ -71,7 +71,7 @@ class Customer extends Model
     */
     public function contracts()
     {
-        return $this->HasMany('App\Models\Contract');
+        return $this->HasMany('App\Models\Contract', Contract::class);
     }
 
 

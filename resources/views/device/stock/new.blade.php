@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-lg-12 ml-lg-auto">
                         <button type="button" class="btn btn-brand" id="btn-technologie-save">Cadastrar</button>
-                        <a href="{{url('/lures/technologies')}}" class="btn btn-secondary">Voltar</a>
+                        <a href="{{url('/devices/technologies')}}" class="btn btn-secondary">Voltar</a>
                     </div>
 
                 </div>
@@ -49,7 +49,7 @@
 
             var technologie_id = $('#id').val();
 
-            ajax_store(technologie_id, "lures/technologies", $('#form-create-technologie').serialize());
+            ajax_store(technologie_id, "devices/technologies", $('#form-create-technologie').serialize());
 
         });
 

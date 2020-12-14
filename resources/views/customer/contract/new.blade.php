@@ -14,6 +14,71 @@
     </div>
 </div>
 
+<div class="kt-portlet__head kt-portlet__head--lg">
+    <h3 class="kt-portlet__head-title">
+        <small>Dados do cliente</small>
+    </h3>
+    <div class="form-group col-md-4">
+        <select class="form-control" name="type">
+            <option value=" ">Selecione um cliente</option>
+            <option value="Retornavel" {{ ($contract->type ?? null) == 1 ? 'selected' : ''}}>Retornavel</option>
+            <option value="Descartavel" {{ ($clurestomer->type ?? null) == 2 ? 'selected' : ''}}>Descartavel</option>
+        </select>
+    </div>
+</div>
+
+<div class="kt-portlet__body">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputName">Nome</label>
+            <input type="text" name="name" class="form-control" value="{{$contract->customer['name']}}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputCpfCnpj">CNPJ</label>
+            <input type="text" name="shipment_id" class="form-control" value="">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputName">Tipo</label>
+            <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputName">CEP</label>
+            <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputCpfCnpj">Endereço</label>
+            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputCpfCnpj">Número</label>
+            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputCpfCnpj">Complemento</label>
+            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputName">Cidade</label>
+            <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputCpfCnpj">UF</label>
+            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet__head kt-portlet__head--lg">
+    <h3 class="kt-portlet__head-title">
+        <small>Dados do contrato</small>
+    </h3>
+
+</div>
+
 <form class="kt-form kt-form--label-right" id="form-create-contract">
     @csrf
     <input type="hidden" name="id" id="id" value="{{ $contract->id ?? '' }}" />
@@ -30,10 +95,6 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputAddress">Cliente</label>
-                <input type="text" name="customer_id" class="form-control" value="{{ $contract->customer_id ?? '' }}">
-            </div>
 
             <div class="form-group col-md-2">
                 <label class="inputTipo">Tipo de contrato</label>

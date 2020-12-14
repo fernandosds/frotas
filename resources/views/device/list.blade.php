@@ -16,7 +16,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{url('lures/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <a href="{{url('devices/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i> Novo
                     </a>
                 </div>
@@ -37,16 +37,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($lures as $lure)
-                    <tr id="_tr_user_{{$lure->id}}">
-                        <th scope="row">{{$lure->id}}</th>
-                        <td>{{$lure->type_of_lure_id}}</td>
-                        <td>{{$lure->serial_number}}</td>
-                        <td>{{$lure->batery_level}}</td>
+                @foreach ($devices as $device)
+                    <tr id="_tr_user_{{$device->id}}">
+                        <th scope="row">{{$device->id}}</th>
+                        <td>{{$device->type_of_device_id}}</td>
+                        <td>{{$device->serial_number}}</td>
+                        <td>{{$device->batery_level}}</td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('lures/edit')}}/{{$lure->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-lure" data-id="{{$lure->id}}">
+                                <a href="{{url('devices/edit')}}/{{$device->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-device" data-id="{{$device->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
                             </div>
@@ -57,7 +57,7 @@
         </table>
 
         <div class="d-flex justify-content-center">
-            {!! $lures->links() !!}
+            {!! $devices->links() !!}
         </div>
 
     </div>
@@ -68,9 +68,9 @@
     <script>
 
         /* Deletar */
-        $('.btn-delete-lure').click(function(){
+        $('.btn-delete-device').click(function(){
             var id = $(this).data('id');
-            var url = "{{url('lures/delete')}}/"+id;
+            var url = "{{url('devices/delete')}}/"+id;
             ajax_delete(id, url)
         })
 

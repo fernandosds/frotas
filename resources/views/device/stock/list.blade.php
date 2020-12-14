@@ -16,7 +16,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{url('lures/technologies/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <a href="{{url('devices/stocks/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i> Novo
                     </a>
                 </div>
@@ -37,16 +37,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($technologies as $technologie)
-                    <tr id="_tr_user_{{$technologie->id}}">
-                        <th scope="row">{{$technologie->id}}</th>
+                @foreach ($stocks as $stock)
+                    <tr id="_tr_user_{{$stock->id}}">
+                        <th scope="row">{{$stock->id}}</th>
                         <td></td>
-                        <td>{{$technologie->type}}</td>
+                        <td></td>
                         <td></td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('lures/technologies/edit')}}/{{$technologie->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-technologie" data-id="{{$technologie->id}}">
+                                <a href="{{url('devices/stocks/edit')}}/{{$stock->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-stock" data-id="{{$stock->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
                             </div>
@@ -57,7 +57,7 @@
         </table>
 
         <div class="d-flex justify-content-center">
-            {!! $technologies->links() !!}
+            {!! $stocks->links() !!}
         </div>
 
     </div>
@@ -68,9 +68,9 @@
     <script>
 
         /* Deletar */
-        $('.btn-delete-technologie').click(function(){
+        $('.btn-delete-stock').click(function(){
             var id = $(this).data('id');
-            var url = "{{url('lures/technologies/delete')}}/"+id;
+            var url = "{{url('devices/stocks/delete')}}/"+id;
             ajax_delete(id, url)
         })
 

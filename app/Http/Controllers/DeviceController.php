@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LureRequest;
-use App\Services\LureService;
+use App\Http\Requests\DeviceRequest;
+use App\Services\DeviceService;
 
-class LureController extends Controller
+class DeviceController extends Controller
 {
-    private $lureService;
+    private $deviceService;
     private $data;
 
-    public function __construct(LureService $lureService)
+    public function __construct(DeviceService $deviceService)
     {
-        $this->lureService = $lureService;
+        $this->deviceService = $deviceService;
 
         $this->data = [
             'icon' => 'flaticon-map-location',
@@ -29,9 +29,9 @@ class LureController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['lures'] = $this->lureService->paginate();
+        $data['devices'] = $this->deviceService->paginate();
 
-        return response()->view('lure.list', $data);
+        return response()->view('device.list', $data);
     }
 
     /**
@@ -41,7 +41,7 @@ class LureController extends Controller
     {
 
         $data = $this->data;
-        return view('lure.new', $data);
+        return view('device.new', $data);
     }
 
 
@@ -51,12 +51,12 @@ class LureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function save(LureRequest $request)
+    public function save(DeviceRequest $request)
     {
     
         try {
 
-            $this->lureService->save($request);
+            $this->deviceService->save($request);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -73,21 +73,21 @@ class LureController extends Controller
     {
 
         $data = $this->data;
-        $data['lure'] = $this->lureService->show($id);
+        $data['device'] = $this->deviceService->show($id);
 
-        return view('lure.new', $data);
+        return view('device.new', $data);
     }
 
     /**
      * @param UserRequest $request
      * @return array|\Illuminate\Http\JsonResponse
      */
-    public function update(Int $id, LureRequest $request)
+    public function update(Int $id, DeviceRequest $request)
     {
 
         try {
 
-            $this->lureService->update($request, $request->id);
+            $this->deviceService->update($request, $request->id);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -112,7 +112,7 @@ class LureController extends Controller
      */
     public function destroy(Int $id)
     {
-        $this->lureService->destroy($id);
+        $this->deviceService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
 }
