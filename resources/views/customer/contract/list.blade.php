@@ -41,7 +41,7 @@
             @foreach ($contracts as $contract)
             <tr id="_tr_user_{{$contract->id}}">
                 <th scope="row">{{$contract->stock_id}}</th>
-                <td>{{$contract->customer_id}}</td>
+                <td>{{ !empty($contract->customer) ? $contract->customer->name:'' }}</td>
                 <td>{{$contract->shipment_id}}</td>
                 <td>{{$contract->type}}</td>
                 <td>

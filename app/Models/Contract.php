@@ -54,7 +54,7 @@ class Contract extends Model
      */
     public function customer()
     {
-        return $this->BelongsTo('App\Models\Customer');
+        return $this->BelongsTo('App\Models\Customer', Customer::class);
     }
 
     /**
