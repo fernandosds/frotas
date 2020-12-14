@@ -48,13 +48,12 @@ class Contract extends Model
         ];
     }
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function customer()
     {
-        return $this->BelongsTo('App\Models\Customer', Customer::class);
+        return $this->belongsTo('App\Models\Customer');
     }
 
     /**
@@ -64,7 +63,6 @@ class Contract extends Model
     {
         return $this->belongsTo('App\Models\Stock');
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

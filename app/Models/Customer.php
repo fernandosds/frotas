@@ -19,7 +19,7 @@ class Customer extends Model
     /**
      * @var string
      */
-    protected $with = ["contracts", "stocks", "shipments", "contacts"];
+    //protected $with = ["contracts", "stocks", "shipments", "contacts"];
 
     /**
      * @var array

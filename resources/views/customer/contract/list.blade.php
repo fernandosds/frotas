@@ -40,7 +40,7 @@
         <tbody>
             @foreach ($contracts as $contract)
             <tr id="_tr_user_{{$contract->id}}">
-                <th scope="row">{{$contract->stock_id}}</th>
+                <th scope="row">{{$contract->stock_id}} {{ $contract->customer->name }}</th>
                 <td>{{ !empty($contract->customer) ? $contract->customer->name:'' }}</td>
                 <td>{{$contract->shipment_id}}</td>
                 <td>{{$contract->type}}</td>

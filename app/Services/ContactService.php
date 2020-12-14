@@ -71,6 +71,10 @@ class ContactService
     
     }
 
+    /**
+     * @param Int $id
+     * @return \Illuminate\Support\Collection|void
+     */
     public function show(Int $id)
     {
 
@@ -82,6 +86,7 @@ class ContactService
 
     /**
      * @param Int $id
+     * @return bool
      */
     public function destroy(Int $id)
     {
@@ -89,6 +94,10 @@ class ContactService
         return $this->contact->delete($id);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
         return $this->contact->find($id);
