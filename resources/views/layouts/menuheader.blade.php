@@ -89,7 +89,7 @@
                     {{ Auth::user()->name }}
                 </div>
                 <div class="kt-user-card__badge">
-                    <a href="{{ route('logout') }}" target="_blank" class="btn btn-danger btn-elevate btn-pill btn-sm">{{ __('Logout') }}</a>
+                    <a href="{{ route('logout') }}" class="btn btn-danger btn-elevate btn-pill btn-sm">Sair</a>
                 </div>
             </div>
 

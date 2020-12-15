@@ -41,7 +41,7 @@
 
      @include('layouts._includes_js')
 
-        @yield('scripts')
+    @yield('scripts')
 
     </body>
 
