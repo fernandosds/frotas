@@ -32,7 +32,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['contracts'] = $this->contractService->paginate();
 
-        return response()->view('customer.contract.list', $data);
+        return response()->view('contract.list', $data);
     }
 
 
@@ -50,7 +50,7 @@ class ContractController extends Controller
         //print_r($data);
         //die();
          
-        return response()->view('customer.contract.list', $data);
+        return response()->view('contract.list', $data);
     }
 
     
@@ -63,7 +63,7 @@ class ContractController extends Controller
 
         $data = $this->data;
         
-        return view('customer.contract.new', $data);
+        return view('contract.new', $data);
     }
 
 
@@ -96,7 +96,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
 
-        return view('customer.contract.new', $data);
+        return view('contract.new', $data);
     }
 
     /**

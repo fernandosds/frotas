@@ -2,7 +2,7 @@
 
 
 namespace App\Repositories;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 
 class CustomerRepository extends AbstractRepository
@@ -15,6 +15,17 @@ class CustomerRepository extends AbstractRepository
     public function __construct(Customer $model)
     {
         $this->model = $model;
+    }
+
+    public function showid(int $id)
+    {
+        $customer = DB::table('customers')
+            ->select(DB::raw('*'))
+            ->where('id', '=', $id)
+            ->where('deleted_at', null)
+            ->first();
+
+            return $customer;
     }
 
 }

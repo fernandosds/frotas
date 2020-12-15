@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'customers'], function () {
 
         Route::get('/', 'CustomerController@index');
+        Route::get('/show/{id}', 'CustomerController@show');
         Route::get('/new', 'CustomerController@new');
         Route::post('/save', 'CustomerController@save');
         Route::put('/update/{id}', 'CustomerController@update');
@@ -45,20 +46,19 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/new', 'ContactController@save');
             Route::get('/delete/{id}', 'ContactController@destroy');
         });
+    });
 
-
-        /**
-         * Contract routes
-         */
-        Route::group(['prefix' => 'contracts'], function () {
-            Route::get('/', 'ContractController@index');
-            Route::get('/new', 'ContractController@new');
-            Route::get('/show/{id}', 'ContractController@show');
-            Route::post('/save', 'ContractController@save');
-            Route::put('/update/{id}', 'ContractController@update');
-            Route::get('/edit/{id}', 'ContractController@edit');
-            Route::get('/delete/{id}', 'ContractController@destroy');
-        });
+    /**
+     * Contract routes
+     */
+    Route::group(['prefix' => 'contracts'], function () {
+        Route::get('/', 'ContractController@index');
+        Route::get('/new', 'ContractController@new');
+        Route::get('/show/{id}', 'ContractController@show');
+        Route::post('/save', 'ContractController@save');
+        Route::put('/update/{id}', 'ContractController@update');
+        Route::get('/edit/{id}', 'ContractController@edit');
+        Route::get('/delete/{id}', 'ContractController@destroy');
     });
 
 
