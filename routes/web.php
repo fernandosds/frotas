@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/delete/{id}', 'ContactController@destroy');
         });
 
-        
+
         /**
          * Contract routes
          */
@@ -59,7 +59,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/edit/{id}', 'ContractController@edit');
             Route::get('/delete/{id}', 'ContractController@destroy');
         });
-
     });
 
 
@@ -89,20 +88,19 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/edit/{id}', 'TechnologieController@edit');
             Route::get('/delete/{id}', 'TechnologieController@destroy');
         });
+    });
 
-        /**
-         * Stocks routes
-         */
+    /**
+     * Logs routes
+     */
 
-        Route::group(['prefix' => 'stocks'], function () {
-            Route::get('/', 'StockController@index');
-            Route::get('/new', 'StockController@new');
-            Route::post('/save', 'StockController@save');
-            Route::put('/update/{id}', 'StockController@update');
-            Route::get('/edit/{id}', 'StockController@edit');
-            Route::get('/delete/{id}', 'StockController@destroy');
-        });
-
+    Route::group(['prefix' => 'logs'], function () {
+        Route::get('/', 'LogController@index');
+        Route::get('/new', 'LogController@new');
+        Route::post('/save', 'LogController@save');
+        Route::put('/update/{id}', 'LogController@update');
+        Route::get('/edit/{id}', 'LogController@edit');
+        Route::get('/delete/{id}', 'LogController@destroy');
     });
 
 

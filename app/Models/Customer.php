@@ -28,9 +28,6 @@ class Customer extends Model
 
     protected $fillable = [
         'id',
-        'contract_id',
-        'stock_id',
-        'shipment_id',
         'name',
         'cpf_cnpj',
         'type',
@@ -78,9 +75,9 @@ class Customer extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-    public function stocks()
+    public function logs()
     {
-        return $this->HasMany('App\Models\Stock');
+        return $this->HasMany('App\Models\Log');
     }
 
     

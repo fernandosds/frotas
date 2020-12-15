@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\StockService;
+use App\Services\LogService;
 
-class StockController extends Controller
+class LogController extends Controller
 {
-    private $stockService;
+    private $logService;
     private $data;
 
-    public function __construct(StockService $stockService)
+    public function __construct(LogService $logService)
     {
-        $this->stockService = $stockService;
+        $this->logService = $logService;
 
         $this->data = [
             'icon' => 'flaticon2-contract',
-            'title' => 'Contrato',
+            'title' => 'Logs do sistema',
         ];
     }
 
@@ -29,9 +29,9 @@ class StockController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['stocks'] = $this->stockService->paginate();
+        $data['logs'] = $this->logService->paginate();
 
-        return response()->view('device.stock.list', $data);
+        return response()->view('log.list', $data);
     }
 
 
@@ -44,12 +44,12 @@ class StockController extends Controller
     {
 
         $data = $this->data;
-        $data['stocks'] = $this->stockService->showid($id);
+        $data['logs'] = $this->logService->showid($id);
 
         //print_r($data);
         //die();
          
-        return response()->view('device.stock.list', $data);
+        return response()->view('log.list', $data);
     }
 
     
@@ -57,14 +57,15 @@ class StockController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    /**
     public function new()
     {
 
         $data = $this->data;
         
-        return view('device.stock.new', $data);
+        return view('device.log.new', $data);
     }
-
+ */
 
     /**
      * Store a newly created resource in storage.
@@ -76,7 +77,7 @@ class StockController extends Controller
     {
         try {
 
-            $this->stockService->save($request);
+            $this->logService->save($request);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -89,15 +90,16 @@ class StockController extends Controller
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Int $id)
+  /**
+     public function edit(Int $id)
     {
 
         $data = $this->data;
-        $data['stock'] = $this->stockService->show($id);
+        $data['log'] = $this->logService->show($id);
 
-        return view('device.stock.new', $data);
+        return view('device.log.new', $data);
     }
-
+ */
     /**
      * @param Request $request
      * @return array|\Illuminate\Http\JsonResponse
@@ -107,7 +109,7 @@ class StockController extends Controller
         
         try {
 
-            $this->stockService->update($request, $request->id);
+            $this->logService->update($request, $request->id);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -126,7 +128,7 @@ class StockController extends Controller
      */
     public function destroy(Int $id)
     {
-        $this->stockService->destroy($id);
+        $this->logService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
 }

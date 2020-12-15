@@ -25,7 +25,7 @@ class Shipment extends Model
         'user_id',
         'customer_id',
         'contract_id',
-        'stock_id',
+        'log_id',
         'device_id',
         'accommodation_location_id',
         'test',
@@ -42,7 +42,7 @@ class Shipment extends Model
             'user_id'                       => $this->user_id,
             'customer_id'                   => $this->customer_id,
             'contract_id'                   => $this->contract_id,
-            'stock_id'                      => $this->stock_id,
+            'log_id'                        => $this->log_id,
             'device_id'                     => $this->device_id,
             'accommodation_location_id'     => $this->accommodation_location_id,
             'test'                          => $this->test,
@@ -77,9 +77,9 @@ class Shipment extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function stock()
+    public function Log()
     {
-        return $this->BelongsTo('App\Models\Stocks');
+        return $this->BelongsTo('App\Models\Log');
     }
 
     /**

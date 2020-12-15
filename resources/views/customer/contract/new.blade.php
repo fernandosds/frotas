@@ -12,26 +12,15 @@
             {{$title}} <small>Novo</small>
         </h3>
     </div>
+
 </div>
 
-<div class="kt-portlet__head kt-portlet__head--lg">
-    <h3 class="kt-portlet__head-title">
-        <small>Dados do cliente</small>
-    </h3>
-    <div class="form-group col-md-4">
-        <select class="form-control" name="type">
-            <option value=" ">Selecione um cliente</option>
-            <option value="Retornavel" {{ ($contract->type ?? null) == 1 ? 'selected' : ''}}>Retornavel</option>
-            <option value="Descartavel" {{ ($clurestomer->type ?? null) == 2 ? 'selected' : ''}}>Descartavel</option>
-        </select>
-    </div>
-</div>
 
 <div class="kt-portlet__body">
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="inputName">Nome</label>
-            <input type="text" name="name" class="form-control" value="{{$contract->customer['name']}}">
+            <input type="text" name="name" class="form-control" value="{{$contract->customer_id ?? '' }}">
         </div>
         <div class="form-group col-md-4">
             <label for="inputCpfCnpj">CNPJ</label>

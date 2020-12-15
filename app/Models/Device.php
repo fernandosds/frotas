@@ -52,9 +52,9 @@ class Device extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-    public function stocks()
+    public function Logs()
     {
-        return $this->HasMany('App\Models\Stock');
+        return $this->HasMany('App\Models\Log');
     }
 
     /**
