@@ -4,18 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Stock extends Model
+class Log extends Model
 {
 
-    use Notifiable, SoftDeletes;
+    use Notifiable;
 
     
     /**
      * @var string
      */
-    protected $table = 'stocks';
+    protected $table = 'logs';
 
     
     /**
@@ -30,7 +29,6 @@ class Stock extends Model
         'id',
         'user_id',
         'customer_id',
-        'stock_id',
         'device_id',
         'contract_id',
         'date',
@@ -46,7 +44,6 @@ class Stock extends Model
             'id'               => $this->id,
             'user_id'          => $this->user_id,
             'customer_id'      => $this->customer_id,
-            'stock_id'         => $this->stock_id,
             'device_id'        => $this->device_id,
             'contract_id'      => $this->contract_id,
             'date'             => $this->date,
@@ -69,14 +66,6 @@ class Stock extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
-    }
-
-     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function stock()
-    {
-        return $this->belongsTo('App\Models\Stock');
     }
 
      /**

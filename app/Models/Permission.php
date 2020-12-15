@@ -15,11 +15,6 @@ class Permission extends Model
      */
     protected $table = 'permissions';
 
-     /**
-     * @var string
-     */
-    protected $with = ["users"];
-
 
     /**
      * @var array

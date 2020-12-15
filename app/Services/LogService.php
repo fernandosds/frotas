@@ -3,15 +3,15 @@
 
 namespace App\Services;
 
-use App\Repositories\StockRepository;
+use App\Repositories\LogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class StockService
+class LogService
 {
-    public function __construct(StockRepository $stock)
+    public function __construct(LogRepository $log)
     {
-        $this->stock = $stock;
+        $this->log = $log;
     }
 
     /**
@@ -19,7 +19,7 @@ class StockService
      */
     public function all()
     {
-        return $this->stock->all();
+        return $this->log->all();
     }
 
     /**
@@ -28,7 +28,7 @@ class StockService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->stock->paginate($limit);
+        return $this->log->paginate($limit);
     }
 
     /**
@@ -39,7 +39,7 @@ class StockService
     {
         $dados = $request->all();
 
-        return $this->stock->create($dados)->orderBy('id')->get();
+        return $this->log->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -48,9 +48,9 @@ class StockService
      */
     public function save(Request $request)
     {
-        $stock = $this->stock->create($request->all());
+        $log = $this->log->create($request->all());
 
-        return $stock;
+        return $log;
     }
 
     /**
@@ -60,9 +60,9 @@ class StockService
      */
     public function update(Request $request, $id)
     {
-        $stock = $this->stock->update($id, $request->all());
+        $log = $this->log->update($id, $request->all());
 
-        return $stock;
+        return $log;
     }
 
 
@@ -70,9 +70,9 @@ class StockService
     public function show(Int $id)
     {
 
-        $stock =  $this->stock->find($id);
+        $log =  $this->log->find($id);
 
-        return ($stock) ? $stock : abort(404);
+        return ($log) ? $log : abort(404);
     }
 
 
@@ -82,11 +82,11 @@ class StockService
     public function destroy(Int $id)
     {
 
-        return $this->stock->delete($id);
+        return $this->log->delete($id);
     }
 
     public function edit($id)
     {
-        return $this->stock->find($id);
+        return $this->log->find($id);
     }
 }

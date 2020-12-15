@@ -26,7 +26,7 @@ class Contract extends Model
      */
     protected $fillable = [
         'id',
-        'stock_id',
+        'log_id',
         'shipment_id',
         'customer_id',       
         'type',
@@ -40,7 +40,7 @@ class Contract extends Model
     {
         return [
             'id'            => $this->id,
-            'stock_id'      => $this->stock_id,
+            'log_id'        => $this->log_id,
             'shipment_id'   => $this->shipment_id,
             'customer_id'   => $this->customer_id,
             'type'          => $this->type,
@@ -59,9 +59,9 @@ class Contract extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function stock()
+    public function log()
     {
-        return $this->belongsTo('App\Models\Stock');
+        return $this->belongsTo('App\Models\Log');
     }
 
     /**
