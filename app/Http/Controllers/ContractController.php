@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 //use App\Http\Requests\ContractRequest;
@@ -9,11 +10,13 @@ use App\Services\ContractService;
 class ContractController extends Controller
 {
     private $contactService;
+    private $customerService;
     private $data;
 
-    public function __construct(ContractService $contractService)
+    public function __construct(ContractService $contractService, CustomerService $customerService)
     {
         $this->contractService = $contractService;
+        $this->customerService = $customerService;
 
         $this->data = [
             'icon' => 'flaticon2-contract',

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class UserSatCompany
 {
@@ -19,7 +20,7 @@ class UserSatCompany
         if( Auth::user()->type == 'sat' ){
             return $next($request);
         }else{
-            return redirect('danied_access');
+            return redirect('access_denied');
         }
 
     }

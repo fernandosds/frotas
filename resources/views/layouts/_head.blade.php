@@ -82,6 +82,9 @@
         .icon-menu{
             margin-right: 10px;
         }
+        .center{
+            text-align: center;
+        }
     </style>
 
 </head>

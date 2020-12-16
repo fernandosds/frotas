@@ -9,12 +9,19 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', 'HomeController@index');
+    Route::get('/access_denied', 'HomeController@accessDenied');
+
+    /**
+     * API device routes
+     */
+    Route::group(['prefix' => 'api-device'], function () {
+        Route::get('/test/{device}', 'ApiDeviceController@testDevice');
+    });
 
     /**
      * User routes
      */
-    Route::group(['prefix' => 'users'], function () {
-
+    Route::group(['middleware' => ['user.sat'], 'prefix' => 'users'], function () {
         Route::get('/', 'UserController@index');
         Route::get('/new', 'UserController@new');
         Route::post('/save', 'UserController@save');
@@ -46,7 +53,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/delete/{id}', 'ContactController@destroy');
         });
 
-
         /**
          * Contract routes
          */
@@ -58,11 +64,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/update/{id}', 'ContractController@update');
             Route::get('/edit/{id}', 'ContractController@edit');
             Route::get('/delete/{id}', 'ContractController@destroy');
+
         });
     });
-
-
-
 
     /**
      * Lures routes
@@ -79,7 +83,6 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Technologies routes
          */
-
         Route::group(['prefix' => 'technologies'], function () {
             Route::get('/', 'TechnologieController@index');
             Route::get('/new', 'TechnologieController@new');
@@ -90,10 +93,18 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
+    Route::group(['prefix' => 'boardings'], function() {
+        Route::get('/', 'BoardingController@index');
+        Route::get('/new', 'BoardingController@new');
+        Route::post('/save', 'BoardingController@save');
+        //Route::put('/update/{id}', 'BoardingController@update');
+        //Route::get('/edit/{id}', 'BoardingController@edit');
+        //Route::get('/delete/{id}', 'BoardingController@destroy');
+    });
+
     /**
      * Logs routes
      */
-
     Route::group(['prefix' => 'logs'], function () {
         Route::get('/', 'LogController@index');
         Route::get('/new', 'LogController@new');
@@ -117,7 +128,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'TypeOfLoadController@destroy');
     });
 
-
     /**
      * Accommodation Locations routes
      */
@@ -130,8 +140,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'AccommodationLocationsController@edit');
         Route::get('/delete/{id}', 'AccommodationLocationsController@destroy');
     });
-
-
 
     /**
      * Exit router
