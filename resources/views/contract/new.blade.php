@@ -16,21 +16,61 @@
 
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-wrapper">
-            <div class="kt-portlet__head-actions">                
-                <select class="form-control" name="type">
-                    <option value=" ">Selecione um cliente</option>
-                    <option value="embarcado" {{ ($customer->type ?? null) == 'embarcado' ? 'selected' : ''}}>Embarcado</option>
-                    <option value="transportadora" {{ ($customer->type ?? null) == 'transportadora' ? 'selected' : ''}}>Transportadora</option>
-                    <option value="cliente" {{ ($customer->type ?? null) == 'cliente' ? 'selected' : ''}}>Cliente</option>
-                </select>
+            <div class="kt-portlet__head-actions mx-2">
+                <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
             </div>
+            <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
         </div>
     </div>
 
 </div>
 
 
+<div class="kt-portlet__body">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputName">Nome: </label>
+            <span id="name"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputCpfCnpj">CNPJ: </label>
+            <span id="cpf_cnpj"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputName">Tipo: </label>
+            <span id="type"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputCEP">CEP: </label>
+            <span id="cep"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputAddress">Endereço: </label>
+            <span id="address"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputComplement">Complemento: </label>
+            <span id="complement"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputCpfCnpj">Número: </label>
+            <span id="number"></span>
+        </div>
 
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputCity">Cidade: </label>
+            <span id="city"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputUF">UF: </label>
+            <span id="state"></span>
+        </div>
+    </div>
+</div>
 
 <div class="kt-portlet__head kt-portlet__head--lg">
     <h3 class="kt-portlet__head-title">
@@ -88,6 +128,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-6 col-sm-6 col-md-4">
+            <div class="form-group">
+                <label>CPF/CNPJ</label>
+                <input type="text" id="teste" name="cpfCnpj" class="form-control">
+            </div>
+        </div>
+
+
     </div>
 
 
@@ -101,6 +149,53 @@
 
 @section('scripts')
 <script>
+    /** 
+     * Mask CPF / CNPJ
+     * 
+     */
+    $("#input-search").keydown(function() {
+        try {
+            $("#input-search").unmask();
+        } catch (e) {}
+
+        var tamanho = $("#input-search").val().length;
+
+        if (tamanho < 11) {
+            $("#input-search").mask("999.999.999-99");
+        } else {
+            $("#input-search").mask("99.999.999/9999-99");
+        }
+
+        // ajustando foco
+        var elem = this;
+        setTimeout(function() {
+            // mudo a posição do seletor
+            elem.selectionStart = elem.selectionEnd = 10000;
+        }, 0);
+        // reaplico o valor para mudar o foco
+        var currentValue = $(this).val();
+        $(this).val('');
+        $(this).val(currentValue);
+    });
+    /**
+     Search customers     
+     */
+
+    $(function() {
+
+        $("#btn-search").on("click", function() {
+
+            var input_search = $("#input-search").val();
+            var route = "contracts";
+
+            var customer = ajax_find_data(input_search, route);
+
+
+        });
+    });
+
+
+
     $(function() {
 
         $('#btn-contract-save').click(function() {

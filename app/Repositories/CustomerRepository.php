@@ -28,4 +28,15 @@ class CustomerRepository extends AbstractRepository
             return $customer;
     }
 
+    public function search(int $cpf_cnpj)
+    {
+        $customer = DB::table('customers')
+            ->select(DB::raw('*'))
+            ->where('cpf_cnpj', '=', $cpf_cnpj)
+            ->where('deleted_at', null)
+            ->first();
+
+            return $customer;
+    }
+
 }

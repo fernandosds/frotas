@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ContractService;
+use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
 
 class ContractController extends Controller
 {
     private $contactService;
+    private $customerService;
     private $data;
 
-    public function __construct(ContractService $contractService)
+    public function __construct(ContractService $contractService, CustomerService $customerService)
     {
         $this->contractService = $contractService;
+        $this->customerService = $customerService;
 
         $this->data = [
             'icon' => 'flaticon2-contract',
@@ -49,11 +52,23 @@ class ContractController extends Controller
 
         //print_r($data);
         //die();
-         
+
         return response()->view('contract.list', $data);
     }
 
-    
+    public function search(Int $cpf_cnpj)
+    {
+
+        $customer = $this->customerService->search($cpf_cnpj);
+
+        if ($customer) {
+            return response()->json(['status' => 'success', 'data' => $customer]);
+        } else {
+            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado']);
+        }
+    }
+
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -62,7 +77,7 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
-        
+
         return view('contract.new', $data);
     }
 
@@ -105,7 +120,7 @@ class ContractController extends Controller
      */
     public function update(Int $id, Request $request)
     {
-        
+
         try {
 
             $this->contractService->update($request, $request->id);

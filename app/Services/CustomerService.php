@@ -95,4 +95,9 @@ class CustomerService
     {
         return $this->customer->find($id);
     }
+
+    public function search($cpf_cnpj)
+    {
+        return $this->customer->search($cpf_cnpj);
+    } 
 }
