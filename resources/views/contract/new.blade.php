@@ -11,6 +11,16 @@
         <h3 class="kt-portlet__head-title">
             {{$title}} <small>Novo</small>
         </h3>
+
+    </div>
+
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-wrapper">
+            <div class="kt-portlet__head-actions mx-2">
+                <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
+            </div>
+            <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
+        </div>
     </div>
 
 </div>
@@ -19,44 +29,45 @@
 <div class="kt-portlet__body">
     <div class="form-row">
         <div class="form-group col-md-4">
-            <label for="inputName">Nome</label>
-            <input type="text" name="name" class="form-control" value="{{$contract->customer_id ?? '' }}">
+            <label for="inputName">Nome: </label>
+            <span id="name"></span>
         </div>
         <div class="form-group col-md-4">
-            <label for="inputCpfCnpj">CNPJ</label>
-            <input type="text" name="shipment_id" class="form-control" value="">
+            <label for="inputCpfCnpj">CNPJ: </label>
+            <span id="cpf_cnpj"></span>
         </div>
         <div class="form-group col-md-4">
-            <label for="inputName">Tipo</label>
-            <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+            <label for="inputName">Tipo: </label>
+            <span id="type"></span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="inputName">CEP</label>
-            <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+            <label for="inputCEP">CEP: </label>
+            <span id="cep"></span>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputCpfCnpj">Endereço</label>
-            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+            <label for="inputAddress">Endereço: </label>
+            <span id="address"></span>
         </div>
         <div class="form-group col-md-2">
-            <label for="inputCpfCnpj">Número</label>
-            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+            <label for="inputComplement">Complemento: </label>
+            <span id="complement"></span>
         </div>
         <div class="form-group col-md-2">
-            <label for="inputCpfCnpj">Complemento</label>
-            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+            <label for="inputCpfCnpj">Número: </label>
+            <span id="number"></span>
         </div>
+
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="inputName">Cidade</label>
-            <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+            <label for="inputCity">Cidade: </label>
+            <span id="city"></span>
         </div>
         <div class="form-group col-md-2">
-            <label for="inputCpfCnpj">UF</label>
-            <input type="text" name="shipment_id" class="form-control" value="{{ $contract->shipment_id ?? '' }}">
+            <label for="inputUF">UF: </label>
+            <span id="state"></span>
         </div>
     </div>
 </div>
@@ -117,6 +128,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-6 col-sm-6 col-md-4">
+            <div class="form-group">
+                <label>CPF/CNPJ</label>
+                <input type="text" id="teste" name="cpfCnpj" class="form-control">
+            </div>
+        </div>
+
+
     </div>
 
 
@@ -130,6 +149,53 @@
 
 @section('scripts')
 <script>
+    /** 
+     * Mask CPF / CNPJ
+     * 
+     */
+    $("#input-search").keydown(function() {
+        try {
+            $("#input-search").unmask();
+        } catch (e) {}
+
+        var tamanho = $("#input-search").val().length;
+
+        if (tamanho < 11) {
+            $("#input-search").mask("999.999.999-99");
+        } else {
+            $("#input-search").mask("99.999.999/9999-99");
+        }
+
+        // ajustando foco
+        var elem = this;
+        setTimeout(function() {
+            // mudo a posição do seletor
+            elem.selectionStart = elem.selectionEnd = 10000;
+        }, 0);
+        // reaplico o valor para mudar o foco
+        var currentValue = $(this).val();
+        $(this).val('');
+        $(this).val(currentValue);
+    });
+    /**
+     Search customers     
+     */
+
+    $(function() {
+
+        $("#btn-search").on("click", function() {
+
+            var input_search = $("#input-search").val();
+            var route = "contracts";
+
+            var customer = ajax_find_data(input_search, route);
+
+
+        });
+    });
+
+
+
     $(function() {
 
         $('#btn-contract-save').click(function() {

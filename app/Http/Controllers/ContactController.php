@@ -57,18 +57,6 @@ class ContactController extends Controller
      */
     public function save(Request $request)
     {
-        // print_r($request->all());
-        // die;
-
-       //$contact = Contact::firstOrCreate(['id' => $request->id]);
-       //$contact->number = $request->number;
-       //$contact->save();
-
-
-
-
-
-
         try {
 
             $this->contactService->save($request);

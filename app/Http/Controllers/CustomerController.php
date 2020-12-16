@@ -35,6 +35,22 @@ class CustomerController extends Controller
     }
 
     /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Int $id)
+    {
+
+        $data = $this->data;
+        $data['customers'] = $this->customerService->show($id);
+
+        //print_r($data);
+        //    die();
+
+        return response()->view('customer.show_list', $data);
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function new()
@@ -65,9 +81,9 @@ class CustomerController extends Controller
 
         // return $this->customerService->save($request);
     }
-   
-    
-        
+
+
+
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

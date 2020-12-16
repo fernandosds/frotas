@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
+use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
 
 class ContractController extends Controller
@@ -35,7 +36,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['contracts'] = $this->contractService->paginate();
 
-        return response()->view('customer.contract.list', $data);
+        return response()->view('contract.list', $data);
     }
 
 
@@ -52,11 +53,23 @@ class ContractController extends Controller
 
         //print_r($data);
         //die();
-         
-        return response()->view('customer.contract.list', $data);
+
+        return response()->view('contract.list', $data);
     }
 
-    
+    public function search(Int $cpf_cnpj)
+    {
+
+        $customer = $this->customerService->search($cpf_cnpj);
+
+        if ($customer) {
+            return response()->json(['status' => 'success', 'data' => $customer]);
+        } else {
+            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado']);
+        }
+    }
+
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -65,8 +78,8 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
-        
-        return view('customer.contract.new', $data);
+
+        return view('contract.new', $data);
     }
 
 
@@ -99,7 +112,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
 
-        return view('customer.contract.new', $data);
+        return view('contract.new', $data);
     }
 
     /**
@@ -108,7 +121,7 @@ class ContractController extends Controller
      */
     public function update(Int $id, Request $request)
     {
-        
+
         try {
 
             $this->contractService->update($request, $request->id);
