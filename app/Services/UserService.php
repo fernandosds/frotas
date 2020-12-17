@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+
+    /**
+     * UserService constructor.
+     * @param UserRepository $user
+     */
     public function __construct(UserRepository $user)
     {
         $this->user = $user;

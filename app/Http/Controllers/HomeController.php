@@ -35,4 +35,12 @@ class HomeController extends Controller
 
         return view('index', $data);
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function accessDenied()
+    {
+        return view('access_denied');
+    }
 }

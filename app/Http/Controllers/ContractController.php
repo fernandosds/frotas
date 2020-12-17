@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\CustomerService;
