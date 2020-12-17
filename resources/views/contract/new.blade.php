@@ -153,30 +153,19 @@
      * Mask CPF / CNPJ
      * 
      */
-    $("#input-search").keydown(function() {
-        try {
-            $("#input-search").unmask();
-        } catch (e) {}
+    $(document).on('keydown', '#input-search', function(e) {
 
-        var tamanho = $("#input-search").val().length;
+        var digit = e.key.replace(/\D/g, '');
 
-        if (tamanho < 11) {
-            $("#input-search").mask("999.999.999-99");
-        } else {
-            $("#input-search").mask("99.999.999/9999-99");
-        }
+        var value = $(this).val().replace(/\D/g, '');
 
-        // ajustando foco
-        var elem = this;
-        setTimeout(function() {
-            // mudo a posição do seletor
-            elem.selectionStart = elem.selectionEnd = 10000;
-        }, 0);
-        // reaplico o valor para mudar o foco
-        var currentValue = $(this).val();
-        $(this).val('');
-        $(this).val(currentValue);
+        var size = value.concat(digit).length;
+
+        $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
     });
+
+    
+
     /**
      Search customers     
      */

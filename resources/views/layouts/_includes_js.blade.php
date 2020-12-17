@@ -22,9 +22,6 @@
         <!-- end::Global Config -->
 
         <!--begin:: Global Mandatory Vendors -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-
         <script src="{{asset('/assets/vendors/general/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/popper.js/dist/umd/popper.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js')}}" type="text/javascript"></script>
@@ -88,7 +85,10 @@
         <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/jquery.input.js')}}" type="text/javascript"></script> -->
         <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/repeater.js')}}" type="text/javascript"></script> -->
         <!-- <script src="{{asset('/assets/vendors/general/dompurify/dist/purify.js')}}" type="text/javascript"></script> -->
-
+        
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+        
         <!--end:: Global Optional Vendors -->
 
         <!--begin::Global Theme Bundle(used by all pages) -->
@@ -107,7 +107,6 @@
         <script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
 
         <script>
-                
                 /*
                         DELETE FUCTION
                  */

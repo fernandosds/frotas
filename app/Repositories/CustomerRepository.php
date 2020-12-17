@@ -28,7 +28,7 @@ class CustomerRepository extends AbstractRepository
             return $customer;
     }
 
-    public function search(int $cpf_cnpj)
+    public function search($cpf_cnpj)
     {
         $customer = DB::table('customers')
             ->select(DB::raw('*'))

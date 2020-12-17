@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /**
-     * Lures routes
+     * Devices routes
      */
     Route::group(['prefix' => 'devices'], function () {
 

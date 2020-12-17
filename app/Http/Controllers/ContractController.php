@@ -56,7 +56,7 @@ class ContractController extends Controller
         return response()->view('contract.list', $data);
     }
 
-    public function search(Int $cpf_cnpj)
+    public function search($cpf_cnpj)
     {
 
         $customer = $this->customerService->search($cpf_cnpj);

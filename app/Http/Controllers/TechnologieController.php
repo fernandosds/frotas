@@ -31,7 +31,7 @@ class TechnologieController extends Controller
         $data = $this->data;
         $data['technologies'] = $this->technologieService->paginate();
 
-        return response()->view('lure.technologie.list', $data);
+        return response()->view('device.technologie.list', $data);
     }
 
     /**
@@ -41,7 +41,7 @@ class TechnologieController extends Controller
     {
 
         $data = $this->data;
-        return view('lure.technologie.new', $data);
+        return view('device.technologie.new', $data);
     }
 
 
@@ -75,7 +75,7 @@ class TechnologieController extends Controller
         $data = $this->data;
         $data['technologie'] = $this->technologieService->show($id);
 
-        return view('lure.technologie.new', $data);
+        return view('device.technologie.new', $data);
     }
 
     /**
