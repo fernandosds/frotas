@@ -19,6 +19,7 @@
             <div class="kt-portlet__head-actions mx-2">
                 <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
             </div>
+
             <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
         </div>
     </div>
@@ -164,7 +165,7 @@
         $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
     });
 
-    
+
 
     /**
      Search customers     

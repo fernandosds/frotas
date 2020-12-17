@@ -4,6 +4,7 @@
 namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
+use PhpParser\Node\Expr\Print_;
 
 class CustomerRepository extends AbstractRepository
 {
@@ -30,6 +31,8 @@ class CustomerRepository extends AbstractRepository
 
     public function search($cpf_cnpj)
     {
+
+        
         $customer = DB::table('customers')
             ->select(DB::raw('*'))
             ->where('cpf_cnpj', '=', $cpf_cnpj)

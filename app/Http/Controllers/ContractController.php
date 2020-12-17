@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
-use App\Services\CustomerService;
+//use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
 
 class ContractController extends Controller
@@ -65,7 +65,7 @@ class ContractController extends Controller
         if ($customer) {
             return response()->json(['status' => 'success', 'data' => $customer]);
         } else {
-            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado']);
+            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
         }
     }
 

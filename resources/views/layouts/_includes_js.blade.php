@@ -85,10 +85,10 @@
         <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/jquery.input.js')}}" type="text/javascript"></script> -->
         <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/repeater.js')}}" type="text/javascript"></script> -->
         <!-- <script src="{{asset('/assets/vendors/general/dompurify/dist/purify.js')}}" type="text/javascript"></script> -->
-        
+
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
         <!--end:: Global Optional Vendors -->
 
         <!--begin::Global Theme Bundle(used by all pages) -->
@@ -282,5 +282,72 @@
                                         timer: 2500
                                 })
                         }
+                }
+
+
+                function ajax_save_contact(dados, customer_id) {
+
+                        $.ajax({
+                                type: 'POST',
+                                dataType: 'json',
+                                url: "{{url('')}}/customers/contacts/new",
+                                async: true,
+                                data: dados,
+                                success: function(response) {
+
+                                        if (response.status == "success") {
+
+                                                Swal.fire({
+                                                        type: 'success',
+                                                        title: 'Registro salvo com sucesso',
+                                                        showConfirmButton: true,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        $(location).attr('href', '{{url("/customers/edit")}}/' + customer_id);
+                                                })
+
+
+                                        } else {
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Erro ao tentar salvar!',
+                                                        showConfirmButton: true,
+                                                        timer: 2500
+                                                })
+                                        }
+
+
+                                },
+                                error: function(error) {
+
+                                        if (error.responseJSON.status == "internal_error") {
+                                                console.log(error.responseJSON.errors)
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                                                        showConfirmButton: true,
+                                                        timer: 2500
+                                                })
+                                        } else {
+                                                var items = error.responseJSON.errors;
+                                                var errors = $.map(items, function(i) {
+                                                        return i.join('<br />');
+                                                });
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Erro!',
+                                                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                                                        footer: ' '
+                                                })
+                                        }
+
+
+
+                                }
+                        });
+
+                        return false;
                 }
         </script>

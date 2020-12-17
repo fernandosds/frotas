@@ -101,16 +101,19 @@
             </div>
         </div>
 
+        @if (\Request::is('customers/edit/*'))
         <div id="contacts">Lista</div>
+        @endif
+
     </div>
 
-
+    @if (\Request::is('customers/edit/*'))
     <div class="kt-portlet__body">
         <div class="form-row col md-12" id="list_contacts">
             <i class="fa fa-spinner fa-pulse fa-5x"></i>
         </div>
     </div>
-
+    @endif
 
 </form>
 
@@ -155,8 +158,7 @@
 
 @section('scripts')
 <script>
-
-      /**
+    /**
      Carregar a div de contatos
      */
 
@@ -171,9 +173,12 @@
 
     })
     */
- 
+
+    /**
+     Exibir contato
+     */
     $(function() {
-        var id =  $('#id').val();
+        var id = $('#id').val();
 
         $.ajax({
             type: 'GET',
@@ -184,7 +189,7 @@
 
         })
     })
-    
+
 
     /**
      Deletar
@@ -199,7 +204,9 @@
     });
 
 
-
+    /**
+    Gravar contato
+    */
 
     $(function() {
 
@@ -208,75 +215,17 @@
             var dados = $('#form-create-contact').serialize();
             var customer_id = $('#id').val();
 
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: "{{url('')}}/customers/contacts/new",
-                async: true,
-                data: dados,
-                success: function(response) {
+            ajax_save_contact(dados, customer_id);
 
-                    if (response.status == "success") {
-
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Registro salvo com sucesso',
-                            showConfirmButton: true,
-                            timer: 3000
-                        }).then((result) => {
-                            $(location).attr('href', '{{url("/customers/edit")}}/' + customer_id);
-                        })
-
-
-                    } else {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro ao tentar salvar!',
-                            showConfirmButton: true,
-                            timer: 2500
-                        })
-                    }
-
-
-                },
-                error: function(error) {
-
-                    if (error.responseJSON.status == "internal_error") {
-                        console.log(error.responseJSON.errors)
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                            showConfirmButton: true,
-                            timer: 2500
-                        })
-                    } else {
-                        var items = error.responseJSON.errors;
-                        var errors = $.map(items, function(i) {
-                            return i.join('<br />');
-                        });
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + errors,
-                            footer: ' '
-                        })
-                    }
-
-
-
-                }
-            });
-
-            return false;
         });
     });
 
 
 
 
-
+    /**
+        Gravar cliente
+    */
     $(function() {
 
         $('#btn-customer-save').click(function() {
