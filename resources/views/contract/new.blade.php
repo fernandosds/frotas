@@ -21,7 +21,7 @@
             @csrf
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions mx-2">
-                    <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="059.374.848-90">
+                    <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
                 </div>
 
                 <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
@@ -139,8 +139,7 @@
         </div>
         <div class="col-xs-6 col-sm-6 col-md-4">
             <div class="form-group">
-                <label>CPF/CNPJ</label>
-                <input type="text" id="teste" name="cpfCnpj" class="form-control">
+
             </div>
         </div>
 
@@ -162,15 +161,21 @@
      * Mask CPF / CNPJ
      * 
      */
-    $(document).on('keydown', '#input-search', function(e) {
+    $(function() {
 
-        var digit = e.key.replace(/\D/g, '');
+        //var input_cpf_cnpj = $('#input-search').val();
+        
+        $(document).on('keydown', '#input-search', function(e) {
 
-        var value = $(this).val().replace(/\D/g, '');
+            var digit = e.key.replace(/\D/g, '');
 
-        var size = value.concat(digit).length;
+            var value = $(this).val().replace(/\D/g, '');
 
-        $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+            var size = value.concat(digit).length;
+
+            $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+        });
+
     });
 
 
@@ -183,11 +188,11 @@
 
         $('#btn-search').click(function() {
 
-                var input_search = $('#input-search').val();
-                var form_search = $('#form-search-customer').serialize();
-                var route = 'contracts';
+            var input_search = $('#input-search').val();
+            var form_search = $('#form-search-customer').serialize();
+            var route = 'contracts';
 
-                ajax_find_data(input_search, form_search, route);
+            ajax_find_data(input_search, form_search, route);
 
 
         });

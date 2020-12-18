@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputCpfCnpj">CPF / CNPJ</label>
-                        <input type="text" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
+                        <input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputAddress">CEP</label>
-                        <input type="text" class="form-control" name="cep" value="{{ $customer->cep ?? '' }}">
+                        <input type="text" id="input_cep_customers" class="form-control" name="cep" value="{{ $customer->cep ?? '' }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComplement">Complemento</label>
@@ -106,27 +106,29 @@
     <div class="col-sm-4">
 
         @if (\Request::is('customers/edit/*'))
-            <div class="col-sm-12">
-                <br />
-                <button type="button" class="btn btn-outline-brand btn-sm pull-right" data-toggle="modal" data-target="#kt_modal_4">
-                    <i class="fa fa-phone" aria-hidden="true"></i> Adicionar
-                </button>
-                <h4>Contatos </h4><hr />
-            </div>
+        <div class="col-sm-12">
+            <br />
+            <button type="button" class="btn btn-outline-brand btn-sm pull-right" data-toggle="modal" data-target="#kt_modal_4">
+                <i class="fa fa-phone" aria-hidden="true"></i> Adicionar
+            </button>
+            <h4>Contatos </h4>
+            <hr />
+        </div>
 
-            <div class="form-row col md-12" id="list_contacts">
-                <i class="fa fa-spinner fa-pulse fa-5x"></i>
-            </div>
+        <div class="form-row col md-12" id="list_contacts">
+            <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
         @else
 
-            <div class="col-sm-12">
-                <br />
-                <button type="button" class="btn btn-outline-brand btn-sm pull-right" disabled>
-                    <i class="fa fa-phone" aria-hidden="true"></i> Adicionar
-                </button>
-                <h4>Contatos </h4><hr />
-            </div>
-            Antes de adicionar telefone ou email do cliente, é necessário salvar o cadastro.
+        <div class="col-sm-12">
+            <br />
+            <button type="button" class="btn btn-outline-brand btn-sm pull-right" disabled>
+                <i class="fa fa-phone" aria-hidden="true"></i> Adicionar
+            </button>
+            <h4>Contatos </h4>
+            <hr />
+        </div>
+        Antes de adicionar telefone ou email do cliente, é necessário salvar o cadastro.
         @endif
 
     </div>
@@ -211,6 +213,45 @@
 
         })
     })
+
+
+    /** 
+     * Mask CPF / CNPJ
+     * 
+     */
+    $(function() {
+
+        $(document).on('keydown', '#input_cpf_cnpj_customers', function(e) {
+
+            var digit = e.key.replace(/\D/g, '');
+
+            var value = $(this).val().replace(/\D/g, '');
+
+            var size = value.concat(digit).length;
+
+            $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+        });
+
+    });
+
+    /** 
+     * Mask CEP
+     * 
+     */
+    $(function() {
+
+        $(document).on('keydown', '#input_cep_customers', function(e) {
+
+            var digit = e.key.replace(/\D/g, '');
+
+            var value = $(this).val().replace(/\D/g, '');
+
+            var size = value.concat(digit).length;
+
+            $(this).mask(('00000-000'));
+        });
+
+    });
 
 
     /**
