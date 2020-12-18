@@ -22,9 +22,6 @@
         <!-- end::Global Config -->
 
         <!--begin:: Global Mandatory Vendors -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-
         <script src="{{asset('/assets/vendors/general/jquery/dist/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/popper.js/dist/umd/popper.js')}}" type="text/javascript"></script>
         <script src="{{asset('/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js')}}" type="text/javascript"></script>
@@ -89,6 +86,9 @@
         <!-- <script src="{{asset('/assets/vendors/general/jquery.repeater/src/repeater.js')}}" type="text/javascript"></script> -->
         <!-- <script src="{{asset('/assets/vendors/general/dompurify/dist/purify.js')}}" type="text/javascript"></script> -->
 
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
         <!--end:: Global Optional Vendors -->
 
         <!--begin::Global Theme Bundle(used by all pages) -->
@@ -107,7 +107,6 @@
         <script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
 
         <script>
-                
                 /*
                         DELETE FUCTION
                  */
@@ -234,54 +233,120 @@
                 AJAX FIND DATA
                  */
 
-                function ajax_find_data(input_search, route) {
+                function ajax_find_data(input_search, form_search, route) {
                         if (input_search !== "") {
-                                $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
+                    $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: "{{url('')}}/" + route + "/search",
+                        async: true,
+                        data: form_search,
+                        success: function(response) {
+                            console.log(response.data);
+                            if (response.status == "success") {
 
-                                //var inputsearch = $("#input-search").val();
-                                $.ajax({
-                                        url: "{{url('')}}/" + route + "/search/" + input_search,
-                                        type: "GET",
-                                        dataType: "json",
-                                        success: function(response) {
-                                                console.log(response.data);
-                                                if (response.status == "success") {
-                                                        $("#btn-search").html('<i class="fa fa-search"></i>')
-                                                        $('#name').html(response.data.name)
-                                                        $('#cpf_cnpj').html(response.data.cpf_cnpj)
-                                                        $('#type').html(response.data.type)
-                                                        $('#cep').html(response.data.cep)
-                                                        $('#address').html(response.data.address)
-                                                        $('#complement').html(response.data.complement)
-                                                        $('#number').html(response.data.number)
-                                                        $('#city').html(response.data.city)
-                                                        $('#state').html(response.data.state)
-                                                        return response.data;
+                                $("#btn-search").html('<i class="fa fa-search"></i>')
+                                $('#name').html(response.data.name)
+                                $('#cpf_cnpj').html(response.data.cpf_cnpj)
+                                $('#type').html(response.data.type)
+                                $('#cep').html(response.data.cep)
+                                $('#address').html(response.data.address)
+                                $('#complement').html(response.data.complement)
+                                $('#number').html(response.data.number)
+                                $('#city').html(response.data.city)
+                                $('#state').html(response.data.state)
+                                return response.data;
 
-                                                } else {
-                                                        Swal.fire({
-                                                                type: 'error',
-                                                                title: 'Oops...',
-                                                                text: response.message,
-                                                                showConfirmButton: true,
-                                                                timer: 2500
-                                                        })
-                                                        $("#input-search").val('')
-                                                        $("#btn-search").html('<i class="fa fa-search"></i>')
-                                                }
+                            } else {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                    showConfirmButton: true,
+                                    timer: 2500
+                                })
+                                $("#input-search").val('')
+                                $("#btn-search").html('<i class="fa fa-search"></i>')
+                            }
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Informe um CPF ou CNPJ',
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                }
+            }
+
+
+                function ajax_save_contact(dados, customer_id) {
+
+                        $.ajax({
+                                type: 'POST',
+                                dataType: 'json',
+                                url: "{{url('')}}/customers/contacts/new",
+                                async: true,
+                                data: dados,
+                                success: function(response) {
+
+                                        if (response.status == "success") {
+
+                                                Swal.fire({
+                                                        type: 'success',
+                                                        title: 'Registro salvo com sucesso',
+                                                        showConfirmButton: true,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        $(location).attr('href', '{{url("/customers/edit")}}/' + customer_id);
+                                                })
+
+
+                                        } else {
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Erro ao tentar salvar!',
+                                                        showConfirmButton: true,
+                                                        timer: 2500
+                                                })
+                                        }
+
+
+                                },
+                                error: function(error) {
+
+                                        if (error.responseJSON.status == "internal_error") {
+                                                console.log(error.responseJSON.errors)
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                                                        showConfirmButton: true,
+                                                        timer: 2500
+                                                })
+                                        } else {
+                                                var items = error.responseJSON.errors;
+                                                var errors = $.map(items, function(i) {
+                                                        return i.join('<br />');
+                                                });
+                                                Swal.fire({
+                                                        type: 'error',
+                                                        title: 'Erro!',
+                                                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                                                        footer: ' '
+                                                })
                                         }
 
 
 
-                                });
-                        } else {
-                                Swal.fire({
-                                        type: 'warning',
-                                        title: 'Oops...',
-                                        text: 'Informe um CPF ou CNPJ',
-                                        showConfirmButton: true,
-                                        timer: 2500
-                                })
-                        }
+                                }
+                        });
+
+                        return false;
                 }
         </script>

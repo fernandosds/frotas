@@ -62,7 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'ContractController@index');
         Route::get('/new', 'ContractController@new');
         Route::get('/show/{id}', 'ContractController@show');
-        Route::get('/search/{cpj_cnpj}', 'ContractController@search');
+        //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
+        Route::post('/search', 'ContractController@search');
         Route::post('/save', 'ContractController@save');
         Route::put('/update/{id}', 'ContractController@update');
         Route::get('/edit/{id}', 'ContractController@edit');
@@ -71,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * Lures routes
+     * Devices routes
      */
     Route::group(['prefix' => 'devices'], function () {
 

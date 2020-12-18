@@ -51,7 +51,7 @@ class CustomerService
     public function save(Request $request)
     {
 
-        
+
         $customer = $this->customer->create($request->all());
 
         return $customer;
@@ -65,7 +65,7 @@ class CustomerService
     public function update(Request $request, $id)
     {
 
-        
+
         $customer = $this->customer->update($id, $request->all());
 
         return $customer;
@@ -95,9 +95,15 @@ class CustomerService
     {
         return $this->customer->find($id);
     }
-
+    /**
     public function search($cpf_cnpj)
     {
         return $this->customer->search($cpf_cnpj);
     } 
+     */
+    public function search(Request $request)
+    {
+       
+        return $this->customer->search($request);
+    }
 }

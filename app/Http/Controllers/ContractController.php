@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
-use App\Services\CustomerService;
+//use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
 
 class ContractController extends Controller
 {
-    private $contactService;
+    private $contractService;
     private $customerService;
     private $data;
 
@@ -56,8 +56,8 @@ class ContractController extends Controller
 
         return response()->view('contract.list', $data);
     }
-
-    public function search(Int $cpf_cnpj)
+    /**
+    public function search($cpf_cnpj)
     {
 
         $customer = $this->customerService->search($cpf_cnpj);
@@ -65,11 +65,27 @@ class ContractController extends Controller
         if ($customer) {
             return response()->json(['status' => 'success', 'data' => $customer]);
         } else {
-            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado']);
+            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
         }
     }
 
+     */
 
+    public function search(Request $request)
+    {
+        
+        $customer = $this->customerService->search($request);
+
+        //print_r($request->cpf_cnpj);
+        //print_r($request['cpf_cnpj']);
+        //die();
+
+        if ($customer) {
+            return response()->json(['status' => 'success', 'data' => $customer]);
+        } else {
+            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
+        }
+    }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

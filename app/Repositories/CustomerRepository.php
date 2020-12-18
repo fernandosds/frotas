@@ -2,8 +2,11 @@
 
 
 namespace App\Repositories;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
+use PhpParser\Node\Expr\Print_;
 
 class CustomerRepository extends AbstractRepository
 {
@@ -25,11 +28,13 @@ class CustomerRepository extends AbstractRepository
             ->where('deleted_at', null)
             ->first();
 
-            return $customer;
+        return $customer;
     }
-
-    public function search(int $cpf_cnpj)
+    /**
+    public function search($cpf_cnpj)
     {
+
+        
         $customer = DB::table('customers')
             ->select(DB::raw('*'))
             ->where('cpf_cnpj', '=', $cpf_cnpj)
@@ -38,5 +43,24 @@ class CustomerRepository extends AbstractRepository
 
             return $customer;
     }
+     */
 
+    public function search(Request $request)
+    {
+
+        //83.838.312/0001-04
+        // print_r($request->cpf_cnpj);
+        //die();
+
+        $customer = DB::table('customers')
+            ->select(DB::raw('*'))
+            ->where('cpf_cnpj', '=', $request->cpf_cnpj)
+            ->where('deleted_at', null)
+            ->first();
+
+        //print_r($customer);
+        //die();
+
+        return $customer;
+    }
 }

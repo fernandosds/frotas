@@ -3,6 +3,8 @@
 @section('content')
 
 <!-- HEADER -->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <div class="kt-portlet__head kt-portlet__head--lg">
     <div class="kt-portlet__head-label">
         <span class="kt-portlet__head-icon">
@@ -15,18 +17,24 @@
     </div>
 
     <div class="kt-portlet__head-toolbar">
-        <div class="kt-portlet__head-wrapper">
-            <div class="kt-portlet__head-actions mx-2">
-                <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
+        <form id="form-search-customer">
+            @csrf
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions mx-2">
+                    <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="059.374.848-90">
+                </div>
+
+                <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
+
             </div>
-            <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
-        </div>
+        </form>
     </div>
 
 </div>
 
 
 <div class="kt-portlet__body">
+
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="inputName">Nome: </label>
@@ -70,6 +78,7 @@
             <span id="state"></span>
         </div>
     </div>
+
 </div>
 
 <div class="kt-portlet__head kt-portlet__head--lg">
@@ -87,7 +96,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputName">Estoque</label>
-                <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+                <input type="text" name="log_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputCpfCnpj">Embarque</label>
@@ -123,7 +132,7 @@
                 <div class="row">
                     <div class="col-lg-12 ml-lg-auto">
                         <button type="button" class="btn btn-brand" id="btn-contract-save">Cadastrar</button>
-                        <a href="{{url('customers/contracts')}}" class="btn btn-secondary">Voltar</a>
+                        <a href="{{url('contracts')}}" class="btn btn-secondary">Voltar</a>
                     </div>
                 </div>
             </div>
@@ -153,48 +162,36 @@
      * Mask CPF / CNPJ
      * 
      */
-    $("#input-search").keydown(function() {
-        try {
-            $("#input-search").unmask();
-        } catch (e) {}
+    $(document).on('keydown', '#input-search', function(e) {
 
-        var tamanho = $("#input-search").val().length;
+        var digit = e.key.replace(/\D/g, '');
 
-        if (tamanho < 11) {
-            $("#input-search").mask("999.999.999-99");
-        } else {
-            $("#input-search").mask("99.999.999/9999-99");
-        }
+        var value = $(this).val().replace(/\D/g, '');
 
-        // ajustando foco
-        var elem = this;
-        setTimeout(function() {
-            // mudo a posição do seletor
-            elem.selectionStart = elem.selectionEnd = 10000;
-        }, 0);
-        // reaplico o valor para mudar o foco
-        var currentValue = $(this).val();
-        $(this).val('');
-        $(this).val(currentValue);
+        var size = value.concat(digit).length;
+
+        $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
     });
+
+
+
     /**
      Search customers     
      */
 
     $(function() {
 
-        $("#btn-search").on("click", function() {
+        $('#btn-search').click(function() {
 
-            var input_search = $("#input-search").val();
-            var route = "contracts";
+                var input_search = $('#input-search').val();
+                var form_search = $('#form-search-customer').serialize();
+                var route = 'contracts';
 
-            var customer = ajax_find_data(input_search, route);
+                ajax_find_data(input_search, form_search, route);
 
 
         });
     });
-
-
 
     $(function() {
 
@@ -202,7 +199,7 @@
 
             var contract_id = $('#id').val();
 
-            ajax_store(contract_id, "customers/contracts", $('#form-create-contract').serialize());
+            ajax_store(contract_id, "contracts", $('#form-create-contract').serialize());
 
         });
 
