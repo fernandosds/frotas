@@ -160,7 +160,7 @@
 
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">Telefone</label>
-                        <input type="text" name="phone" class="form-control" id="phone">
+                        <input type="text" id="input_contact_customers" name="phone" class="form-control" id="phone">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="form-control-label">Email</label>
@@ -252,6 +252,27 @@
         });
 
     });
+
+    /** 
+     * Mask Contato
+     * 
+     */
+    $(function() {
+
+        $(document).on('keydown', '#input_contact_customers', function(e) {
+
+            var digit = e.key.replace(/\D/g, '');
+
+            var value = $(this).val().replace(/\D/g, '');
+
+            var size = value.concat(digit).length;
+
+            $(this).mask((size <= 10) ? '(00)0000-0000' : '(00)00000-0000');
+        });
+
+    });
+
+
 
 
     /**
