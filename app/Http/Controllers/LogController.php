@@ -17,6 +17,7 @@ class LogController extends Controller
         $this->data = [
             'icon' => 'flaticon2-contract',
             'title' => 'Logs do sistema',
+            'menu_open_logs' => 'kt-menu__item--open'
         ];
     }
 

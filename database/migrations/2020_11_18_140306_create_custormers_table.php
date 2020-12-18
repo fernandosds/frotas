@@ -21,7 +21,7 @@ class CreateCustormersTable extends Migration
             $table->enum('type', ['embarcado', 'transportadora', 'cliente']);
             $table->string('cep', 9);
             $table->string('address', 255);
-            $table->string('complement', 255);
+            $table->string('complement', 255)->nullable();
             $table->string('number', 100);
             $table->string('city', 100);
             $table->string('neighborhood', 255);

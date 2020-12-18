@@ -22,6 +22,7 @@ class ContractController extends Controller
         $this->data = [
             'icon' => 'flaticon2-contract',
             'title' => 'Contrato',
+            'menu_open_contracts' => 'kt-menu__item--open'
         ];
     }
 

@@ -18,6 +18,7 @@ class AccommodationLocationsController extends Controller
         $this->data = [
             'icon' => 'flaticon2-gear',
             'title' => 'Local de Acomodação',
+            'menu_open_locations' => 'kt-menu__item--open'
         ];
     }
 

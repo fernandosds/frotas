@@ -20,6 +20,7 @@ class UserController extends Controller
         $this->data = [
             'icon' => 'flaticon-user',
             'title' => 'Usuários',
+            'menu_open_users' => 'kt-menu__item--open'
         ];
     }
 

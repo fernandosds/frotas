@@ -41,6 +41,7 @@ class BoardingController extends Controller
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
             'title' => 'Embarque',
+            'menu_open_boarding' => 'kt-menu__item--open'
         ];
     }
 

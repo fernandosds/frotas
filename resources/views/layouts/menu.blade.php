@@ -47,7 +47,7 @@
                 </li>
 
                 <!-- EMBARQUES -->
-                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_boarding ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-shipping-fast"></i></span>
                         <span class="kt-menu__link-text">EMBARQUES</span>
@@ -66,7 +66,7 @@
                 </li>
 
                 <!-- ÍSCAS -->
-                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_devices ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-fish"></i></span>
                         <span class="kt-menu__link-text">ÍSCAS</span>
@@ -92,7 +92,7 @@
                         <i class="kt-menu__section-icon flaticon-more-v2"></i>
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_users ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
 
                         <!-- USUÁRIOS -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -110,7 +110,7 @@
                         </div>
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_customers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- CLIENTES -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-users"></i></span>
@@ -127,7 +127,7 @@
 
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_contracts ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- CONTRATOS -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-file-contract"></i></span>
@@ -144,7 +144,7 @@
 
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_tecnologies ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- TECNOLOGIA -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>
@@ -163,7 +163,7 @@
 
 
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_loads ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!--TIPO DE CARGAS -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-truck-moving"></i></span>
@@ -180,7 +180,7 @@
 
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_locations ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- LOCAIS DE ACOMODAÇÃO -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-truck-loading"></i></span>
@@ -197,7 +197,7 @@
 
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logs ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- LOGS -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>

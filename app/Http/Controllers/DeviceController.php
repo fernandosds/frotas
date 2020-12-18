@@ -18,6 +18,7 @@ class DeviceController extends Controller
         $this->data = [
             'icon' => 'flaticon-map-location',
             'title' => 'Íscas',
+            'menu_open_devices' => 'kt-menu__item--open'
         ];
     }
 

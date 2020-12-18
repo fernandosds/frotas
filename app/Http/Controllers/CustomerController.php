@@ -18,6 +18,7 @@ class CustomerController extends Controller
         $this->data = [
             'icon' => 'flaticon-users',
             'title' => 'Clientes',
+            'menu_open_customers' => 'kt-menu__item--open'
         ];
     }
 
