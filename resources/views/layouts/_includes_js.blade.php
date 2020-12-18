@@ -239,14 +239,35 @@
 
                                 //var inputsearch = $("#input-search").val();
                                 $.ajax({
-                                        url: "{{url('')}}/" + route + "/search/" + input_search,
-                                        type: "GET",
+                                        //url: "{{url('')}}/" + route + "/search/" + input_search,
+                                        //type: "GET",
+                                        type: "POST",
+                                        url: "{{url('')}}/" + route + "/search",
+                                        data: input_search[{
+                                                id: input_search['id'],
+                                                name: input_search['name'],
+                                                cpf_cnpj: input_search['cpf_cnpj'],
+                                                type: input_search['type'],
+                                                cep: input_search['cep'],
+                                                address: input_search['address'],
+                                                complement: input_search['complement'],
+                                                number: input_search['number'],
+                                                city: input_search['city'],
+                                                neighborhood: input_search['neighborhood'],
+                                                state: input_search['state'],
+                                                address: input_search['address']
+                                        }],
+                                        headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
                                         dataType: "json",
                                         success: function(response) {
-                                                console.log(response.data);
+                                                //console.log(response.data);
                                                 if (response.status == "success") {
+
+
                                                         $("#btn-search").html('<i class="fa fa-search"></i>')
-                                                        $('#name').html(response.data.name)
+                                                        $('#name').html(response.data.name.name)
                                                         $('#cpf_cnpj').html(response.data.cpf_cnpj)
                                                         $('#type').html(response.data.type)
                                                         $('#cep').html(response.data.cep)

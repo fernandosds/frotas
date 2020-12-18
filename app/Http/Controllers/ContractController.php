@@ -10,7 +10,7 @@ use App\Services\ContractService;
 
 class ContractController extends Controller
 {
-    private $contactService;
+    private $contractService;
     private $customerService;
     private $data;
 
@@ -56,7 +56,7 @@ class ContractController extends Controller
 
         return response()->view('contract.list', $data);
     }
-
+    /**
     public function search($cpf_cnpj)
     {
 
@@ -69,7 +69,19 @@ class ContractController extends Controller
         }
     }
 
+     */
 
+    public function search(Request $request)
+    {
+
+        $customer = $this->customerService->search($request);
+
+        if ($customer) {
+            return response()->json(['status' => 'success', 'data' => $customer]);
+        } else {
+            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
+        }
+    }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
