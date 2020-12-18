@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDevicesTable extends Migration
+class CreateContractDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateDevicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('contract_devices', function (Blueprint $table) {
             $table->id();
-            $table->integer('type_of_device_id');
-            $table->string('model', 255);
+            $table->integer('contract_id');
+            $table->integer('device_id');
+            $table->integer('type_id');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateDevicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('contract_devices');
     }
 }

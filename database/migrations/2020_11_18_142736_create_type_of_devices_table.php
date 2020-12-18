@@ -13,7 +13,7 @@ class CreateTypeOfDevicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_of_devices', function (Blueprint $table) {
+        Schema::create('device_types', function (Blueprint $table) {
             $table->id();
             $table->integer('technologie_id');
             $table->softDeletes();
@@ -28,6 +28,6 @@ class CreateTypeOfDevicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_of_devices');
+        Schema::dropIfExists('device_types');
     }
 }

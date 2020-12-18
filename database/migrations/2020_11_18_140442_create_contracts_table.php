@@ -18,9 +18,9 @@ class CreateContractsTable extends Migration
             $table->integer('log_id');
             $table->integer('shipment_id');
             $table->integer('customer_id');
-            $table->enum('type', ['Retornavel', 'Descartavel']);
-            $table->string('validity', 255);  
-            $table->softDeletes();      
+            $table->enum('device_type', ['Retornavel', 'Descartavel']);
+            $table->boolean('valid')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

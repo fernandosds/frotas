@@ -29,19 +29,29 @@
                 </div>
 
                 <div class="form-group col-md-2">
+                    <i class="fa fa-2x fa-microchip"></i><br />
                     <label for="">Isca</label><br />
                     <h4 for="" id="test-device-code">---</h4>
                 </div>
                 <div class="form-group col-md-2">
+
+                    <i class="fa fa-2x fa-signal"></i><br />
+
                     <label for="">Última Transmissão</label><br />
                     <h4 for="" id="last-transmission">---</h4>
                 </div>
                 <div class="form-group col-md-2">
+
+
+                    <i class="fa fa-2x fa-battery-empty" id="icon-nivel-bateria"></i><br />
+
                     <label for="">Nível de Bateria</label><br />
                     <h4 for="" id="nivel-bateria">---</h4>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="">Tipo</label><br />
+
+                    <i class="fa fa-2x fa-cube"></i><br />
+                    <label for="">Tipo de ísca</label><br />
                     <h4 for="" id="device-tipo">---</h4>
                 </div>
             </div>
@@ -82,12 +92,52 @@
 
 
                 $.ajax({
-                    type: 'GET',
-                    url: '{{url("api-device/test")}}/'+device_number,
-                    success: function(response){
+                    type: 'POST',
+                    url: '{{url("boardings/test-device")}}',
+                    data: {
+                        'device' : device_number,
+                        '_token' : '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
 
-                        $('#last-transmission').html(response.body[0].dh_gps)
-                        $('#nivel-bateria').html(response.body[0].nivel_bateria)
+                        if(response.status == "success"){
+
+                            var battery_level = response.battery_level;
+
+                            $('#last-transmission').html(response.last_transmission)
+                            $('#nivel-bateria').html(battery_level)
+
+                            if( parseInt(battery_level) < 20 ) {
+                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-empty');
+                            } else if( parseInt(battery_level) < 40 ){
+                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-quarter');
+                            }else if( parseInt(battery_level) < 60 ){
+                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-half');
+                            }else if( parseInt(battery_level) < 80 ){
+                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-three-quarters');
+                            }else {
+                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
+                            }
+
+                        }else{
+                            $("#test-device-code").html('---');
+                            $("#device-tipo").html('---');
+                            $('#last-transmission').html('---')
+                            $('#nivel-bateria').html('---')
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: response.message,
+                                showConfirmButton: true,
+                                timer: 2500
+                            })
+                        }
+
+
+                        /*
+
+*/
+
                     }
                 })
 
