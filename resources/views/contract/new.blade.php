@@ -17,67 +17,68 @@
     </div>
 
     <div class="kt-portlet__head-toolbar">
+        <form id="form-search-customer">
+            @csrf
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions mx-2">
+                    <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="059.374.848-90">
+                </div>
 
+                <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
+
+            </div>
+        </form>
     </div>
 
 </div>
 
 
 <div class="kt-portlet__body">
-    <form id="form-search-customer">
-        @csrf
-        <div class="kt-portlet__head-wrapper">
-            <div class="kt-portlet__head-actions mx-2">
-                <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
-            </div>
 
-            <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputName">Nome: </label>
+            <span id="name"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputCpfCnpj">CNPJ: </label>
+            <span id="cpf_cnpj"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputName">Tipo: </label>
+            <span id="type"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputCEP">CEP: </label>
+            <span id="cep"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputAddress">Endereço: </label>
+            <span id="address"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputComplement">Complemento: </label>
+            <span id="complement"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputCpfCnpj">Número: </label>
+            <span id="number"></span>
         </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="inputName">Nome: </label>
-                <span id="name"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="inputCpfCnpj">CNPJ: </label>
-                <span id="cpf_cnpj"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="inputName">Tipo: </label>
-                <span id="type"></span>
-            </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputCity">Cidade: </label>
+            <span id="city"></span>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-2">
-                <label for="inputCEP">CEP: </label>
-                <span id="cep"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputAddress">Endereço: </label>
-                <span id="address"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="inputComplement">Complemento: </label>
-                <span id="complement"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="inputCpfCnpj">Número: </label>
-                <span id="number"></span>
-            </div>
+        <div class="form-group col-md-2">
+            <label for="inputUF">UF: </label>
+            <span id="state"></span>
+        </div>
+    </div>
 
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-2">
-                <label for="inputCity">Cidade: </label>
-                <span id="city"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="inputUF">UF: </label>
-                <span id="state"></span>
-            </div>
-        </div>
-    </form>
 </div>
 
 <div class="kt-portlet__head kt-portlet__head--lg">
@@ -95,7 +96,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputName">Estoque</label>
-                <input type="text" name="stock_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
+                <input type="text" name="log_id" class="form-control" value="{{ $contract->stock_id ?? '' }}">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputCpfCnpj">Embarque</label>
@@ -131,7 +132,7 @@
                 <div class="row">
                     <div class="col-lg-12 ml-lg-auto">
                         <button type="button" class="btn btn-brand" id="btn-contract-save">Cadastrar</button>
-                        <a href="{{url('customers/contracts')}}" class="btn btn-secondary">Voltar</a>
+                        <a href="{{url('contracts')}}" class="btn btn-secondary">Voltar</a>
                     </div>
                 </div>
             </div>
@@ -180,19 +181,17 @@
 
     $(function() {
 
-        $("#btn-search").on("click", function() {
+        $('#btn-search').click(function() {
 
-            //var input_search = $("#input-search").val();
-            var input_search = $("#form-search-customer").serialize();
-            var route = "contracts";
+                var input_search = $('#input-search').val();
+                var form_search = $('#form-search-customer').serialize();
+                var route = 'contracts';
 
-            var customer = ajax_find_data(input_search, route);
+                ajax_find_data(input_search, form_search, route);
 
 
         });
     });
-
-
 
     $(function() {
 
@@ -200,7 +199,7 @@
 
             var contract_id = $('#id').val();
 
-            ajax_store(contract_id, "customers/contracts", $('#form-create-contract').serialize());
+            ajax_store(contract_id, "contracts", $('#form-create-contract').serialize());
 
         });
 

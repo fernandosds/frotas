@@ -233,77 +233,55 @@
                 AJAX FIND DATA
                  */
 
-                function ajax_find_data(input_search, route) {
+                function ajax_find_data(input_search, form_search, route) {
                         if (input_search !== "") {
-                                $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
+                    $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: "{{url('')}}/" + route + "/search",
+                        async: true,
+                        data: form_search,
+                        success: function(response) {
+                            console.log(response.data);
+                            if (response.status == "success") {
 
-                                //var inputsearch = $("#input-search").val();
-                                $.ajax({
-                                        //url: "{{url('')}}/" + route + "/search/" + input_search,
-                                        //type: "GET",
-                                        type: "POST",
-                                        url: "{{url('')}}/" + route + "/search",
-                                        data: input_search[{
-                                                id: input_search['id'],
-                                                name: input_search['name'],
-                                                cpf_cnpj: input_search['cpf_cnpj'],
-                                                type: input_search['type'],
-                                                cep: input_search['cep'],
-                                                address: input_search['address'],
-                                                complement: input_search['complement'],
-                                                number: input_search['number'],
-                                                city: input_search['city'],
-                                                neighborhood: input_search['neighborhood'],
-                                                state: input_search['state'],
-                                                address: input_search['address']
-                                        }],
-                                        headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        dataType: "json",
-                                        success: function(response) {
-                                                //console.log(response.data);
-                                                if (response.status == "success") {
+                                $("#btn-search").html('<i class="fa fa-search"></i>')
+                                $('#name').html(response.data.name)
+                                $('#cpf_cnpj').html(response.data.cpf_cnpj)
+                                $('#type').html(response.data.type)
+                                $('#cep').html(response.data.cep)
+                                $('#address').html(response.data.address)
+                                $('#complement').html(response.data.complement)
+                                $('#number').html(response.data.number)
+                                $('#city').html(response.data.city)
+                                $('#state').html(response.data.state)
+                                return response.data;
 
-
-                                                        $("#btn-search").html('<i class="fa fa-search"></i>')
-                                                        $('#name').html(response.data.name.name)
-                                                        $('#cpf_cnpj').html(response.data.cpf_cnpj)
-                                                        $('#type').html(response.data.type)
-                                                        $('#cep').html(response.data.cep)
-                                                        $('#address').html(response.data.address)
-                                                        $('#complement').html(response.data.complement)
-                                                        $('#number').html(response.data.number)
-                                                        $('#city').html(response.data.city)
-                                                        $('#state').html(response.data.state)
-                                                        return response.data;
-
-                                                } else {
-                                                        Swal.fire({
-                                                                type: 'error',
-                                                                title: 'Oops...',
-                                                                text: response.message,
-                                                                showConfirmButton: true,
-                                                                timer: 2500
-                                                        })
-                                                        $("#input-search").val('')
-                                                        $("#btn-search").html('<i class="fa fa-search"></i>')
-                                                }
-                                        }
-
-
-
-                                });
-                        } else {
+                            } else {
                                 Swal.fire({
-                                        type: 'warning',
-                                        title: 'Oops...',
-                                        text: 'Informe um CPF ou CNPJ',
-                                        showConfirmButton: true,
-                                        timer: 2500
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                    showConfirmButton: true,
+                                    timer: 2500
                                 })
+                                $("#input-search").val('')
+                                $("#btn-search").html('<i class="fa fa-search"></i>')
+                            }
                         }
+                    });
+
+                } else {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Informe um CPF ou CNPJ',
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
                 }
+            }
 
 
                 function ajax_save_contact(dados, customer_id) {

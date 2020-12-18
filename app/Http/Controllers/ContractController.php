@@ -73,8 +73,12 @@ class ContractController extends Controller
 
     public function search(Request $request)
     {
-
+        
         $customer = $this->customerService->search($request);
+
+        //print_r($request->cpf_cnpj);
+        //print_r($request['cpf_cnpj']);
+        //die();
 
         if ($customer) {
             return response()->json(['status' => 'success', 'data' => $customer]);
