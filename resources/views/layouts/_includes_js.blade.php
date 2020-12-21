@@ -235,53 +235,53 @@
 
                 function ajax_find_data(input_search, form_search, route) {
                         if (input_search !== "") {
-                    $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
-                    $.ajax({
-                        type: 'POST',
-                        dataType: 'json',
-                        url: "{{url('')}}/" + route + "/search",
-                        async: true,
-                        data: form_search,
-                        success: function(response) {
-                            console.log(response.data);
-                            if (response.status == "success") {
+                                $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
+                                $.ajax({
+                                        type: 'POST',
+                                        dataType: 'json',
+                                        url: "{{url('')}}/" + route + "/search",
+                                        async: true,
+                                        data: form_search,
+                                        success: function(response) {
+                                                console.log(response.data);
+                                                if (response.status == "success") {
 
-                                $("#btn-search").html('<i class="fa fa-search"></i>')
-                                $('#name').html(response.data.name)
-                                $('#cpf_cnpj').html(response.data.cpf_cnpj)
-                                $('#type').html(response.data.type)
-                                $('#cep').html(response.data.cep)
-                                $('#address').html(response.data.address)
-                                $('#complement').html(response.data.complement)
-                                $('#number').html(response.data.number)
-                                $('#city').html(response.data.city)
-                                $('#state').html(response.data.state)
-                                return response.data;
+                                                        $("#btn-search").html('<i class="fa fa-search"></i>')
+                                                        $('#name').html(response.data.name)
+                                                        $('#cpf_cnpj').html(response.data.cpf_cnpj)
+                                                        $('#type').html(response.data.type)
+                                                        $('#cep').html(response.data.cep)
+                                                        $('#address').html(response.data.address)
+                                                        $('#complement').html(response.data.complement)
+                                                        $('#number').html(response.data.number)
+                                                        $('#city').html(response.data.city)
+                                                        $('#state').html(response.data.state)
+                                                        return response.data;
 
-                            } else {
+                                                } else {
+                                                        Swal.fire({
+                                                                type: 'error',
+                                                                title: 'Oops...',
+                                                                text: response.message,
+                                                                showConfirmButton: true,
+                                                                timer: 2500
+                                                        })
+                                                        $("#input-search").val('')
+                                                        $("#btn-search").html('<i class="fa fa-search"></i>')
+                                                }
+                                        }
+                                });
+
+                        } else {
                                 Swal.fire({
-                                    type: 'error',
-                                    title: 'Oops...',
-                                    text: response.message,
-                                    showConfirmButton: true,
-                                    timer: 2500
+                                        type: 'warning',
+                                        title: 'Oops...',
+                                        text: 'Informe um CPF ou CNPJ',
+                                        showConfirmButton: true,
+                                        timer: 2500
                                 })
-                                $("#input-search").val('')
-                                $("#btn-search").html('<i class="fa fa-search"></i>')
-                            }
                         }
-                    });
-
-                } else {
-                    Swal.fire({
-                        type: 'warning',
-                        title: 'Oops...',
-                        text: 'Informe um CPF ou CNPJ',
-                        showConfirmButton: true,
-                        timer: 2500
-                    })
                 }
-            }
 
 
                 function ajax_save_contact(dados, customer_id) {
@@ -348,5 +348,11 @@
                         });
 
                         return false;
+                }
+
+
+                function mask_cpf_cnpj(input_cpf_cnpj) {
+
+                       // 
                 }
         </script>
