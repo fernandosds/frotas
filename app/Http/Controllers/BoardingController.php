@@ -77,6 +77,7 @@ class BoardingController extends Controller
 
             $return['device_type'] = $device['data']->device_type;
             $return['model'] = $device['data']->model;
+            $return['device_id'] = $device['data']->id;
 
             $test_device = $this->apiDeviceServic->testDevice($request->device);
 

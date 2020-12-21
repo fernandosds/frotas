@@ -59,16 +59,16 @@
                     <span class="form-text text-muted">Selecione o nível de acesso do usuário.</span>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-form-label col-lg-3 col-sm-12">Status</label>
-                <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
-                    <select class="form-control" name="status">
-                        <option value="1" {{ ($user->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
-                        <option value="2" {{ ($user->status ?? null) == '2' ? 'selected' : ''}}>INATIVO</option>
-                    </select>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-3 col-sm-12">Status</label>
+                    <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
+                        <select class="form-control" name="status" @if(isset($user)) @if($user->id == Auth::user()->id) disabled="" @endif @endif>
+                            <option value="1" {{ ($user->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
+                            <option value="2" {{ ($user->status ?? null) == '2' ? 'selected' : ''}}>INATIVO</option>
+                        </select>
 
+                    </div>
                 </div>
-            </div>
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Senha</label>
                 <div class="col-lg-2 col-md-2 col-sm-12">

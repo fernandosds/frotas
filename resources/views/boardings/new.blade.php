@@ -17,6 +17,8 @@
     <form class="kt-form kt-form--label-right" id="form-create-device">
         @csrf
 
+        <input type="hidden" name="device_id" id="device_id" />
+
         <div class="kt-portlet__body">
             <div class="form-row">
                 <div class="form-group col-md-2">
@@ -68,6 +70,15 @@
                 </div>
             </div>
         </div>
+
+
+
+        <!-- ----- -->
+
+
+
+
+
     </form>
 
 @endsection
@@ -78,69 +89,77 @@
 
             $('#btn-find-device').click(function(){
 
-                var loading = '<i class="fa fa-spinner fa-pulse"></i>';
-                $("#test-device-code").html(loading);
-                $("#device-tipo").html(loading);
-                $('#last-transmission').html(loading)
-                $('#nivel-bateria').html(loading)
+                if( $('#device_number').val() != "" ){
 
-                var device_number = $('#device_number').val();
-                var device_tipo = 'Autônoma';
+                    var loading = '<i class="fa fa-spinner fa-pulse"></i>';
+                    $("#test-device-code").html(loading);
+                    $("#device-tipo").html(loading);
+                    $('#last-transmission').html(loading)
+                    $('#nivel-bateria').html(loading)
 
-                $("#test-device-code").html(device_number);
-                $("#device-tipo").html(device_tipo);
+                    var device_number = $('#device_number').val();
+                    var device_tipo = $('#device-tipo').val();;
 
+                    //
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{{url("boardings/test-device")}}',
-                    data: {
-                        'device' : device_number,
-                        '_token' : '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{url("boardings/test-device")}}',
+                        data: {
+                            'device' : device_number,
+                            '_token' : '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
 
-                        if(response.status == "success"){
+                            if(response.status == "success"){
 
-                            var battery_level = response.battery_level;
+                                $('#device_id').val(response.device_id);
 
-                            $('#last-transmission').html(response.last_transmission)
-                            $('#nivel-bateria').html(battery_level)
+                                var battery_level = response.battery_level;
 
-                            if( parseInt(battery_level) < 20 ) {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-empty');
-                            } else if( parseInt(battery_level) < 40 ){
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-quarter');
-                            }else if( parseInt(battery_level) < 60 ){
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-half');
-                            }else if( parseInt(battery_level) < 80 ){
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-three-quarters');
-                            }else {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
+                                $("#test-device-code").html(response.model);
+                                $('#last-transmission').html(response.last_transmission)
+                                $('#nivel-bateria').html(battery_level)
+                                $('#device-tipo').html(response.device_type)
+
+                                if( parseInt(battery_level) < 20 ) {
+                                    $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-empty');
+                                } else if( parseInt(battery_level) < 40 ){
+                                    $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-quarter');
+                                }else if( parseInt(battery_level) < 60 ){
+                                    $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-half');
+                                }else if( parseInt(battery_level) < 80 ){
+                                    $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-three-quarters');
+                                }else {
+                                    $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
+                                }
+
+                            }else{
+                                $("#test-device-code").html('---');
+                                $("#device-tipo").html('---');
+                                $('#last-transmission').html('---')
+                                $('#nivel-bateria').html('---')
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                    showConfirmButton: true,
+                                    timer: 2500
+                                })
                             }
 
-                        }else{
-                            $("#test-device-code").html('---');
-                            $("#device-tipo").html('---');
-                            $('#last-transmission').html('---')
-                            $('#nivel-bateria').html('---')
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: response.message,
-                                showConfirmButton: true,
-                                timer: 2500
-                            })
                         }
+                    })
 
-
-                        /*
-
-*/
-
-                    }
-                })
-
+                }else{
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Informe o número da Ísca',
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                }
 
             })
 
