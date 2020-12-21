@@ -89,4 +89,12 @@ class AccommodationLocationsService
     {
         return $this->accommodationLocation->find($id);
     }
+
+    /**
+     * @return mixed
+     */
+    public function search()
+    {
+        return $this->accommodationLocation->search();
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\ApiDeviceService;
 use App\Services\BoardingService;
 use App\Services\DeviceService;
+use App\Services\TypeOfLoadService;
+use App\Services\AccommodationLocationsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,16 +29,30 @@ class BoardingController extends Controller
     private $apiDeviceServic;
 
     /**
+     * @var TypeOfLoadService
+     */
+    private $typeOfLoadService;
+
+    /**
+     * @var AccommodationLocationsService
+     */
+    private $accommodationLocationsService;
+
+    /**
      * BoardingController constructor.
      * @param BoardingService $boardingService
      * @param DeviceService $deviceService
      * @param ApiDeviceService $apiDeviceServic
+     * @param TypeOfLoadService $typeOfLoadService
+     * @param AccommodationLocationsService $accommodationLocationsService
      */
-    public function __construct(BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic)
+    public function __construct(BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic, TypeOfLoadService $typeOfLoadService, AccommodationLocationsService $accommodationLocationsService)
     {
         $this->boardingService = $boardingService;
         $this->deviceService = $deviceService;
         $this->apiDeviceServic = $apiDeviceServic;
+        $this->typeOfLoadService = $typeOfLoadService;
+        $this->accommodationLocationsService = $accommodationLocationsService;
 
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
@@ -65,7 +81,11 @@ class BoardingController extends Controller
     {
 
         $data = $this->data;
-        return response()->view('boardings.new', $data);
+        $typeOfLoads = $this->typeOfLoadService->all();
+        $accommodationlocations = $this->accommodationLocationsService->search();
+        
+
+        return response()->view('boardings.new', $data, $accommodationlocations);
     }
 
     public function testDevice(Request $request)
