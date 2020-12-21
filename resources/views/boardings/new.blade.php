@@ -62,103 +62,113 @@
 
 
         <input type="hidden" name="id" id="id" value="" />
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="kt-portlet__body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputName">Origem</label>
+                            <input type="text" name="name" class="form-control" value="{{ $customer->name ?? '' }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputState">Ordem de Transporte</label>
+                            <input type="text" class="form-control" name="state" value="{{ $customer->state ?? '' }}">
+                        </div>
+                    </div>
 
-        <div class="kt-portlet__body">
-            <div class="form-row  col-md-3">
-                <div class="form-group col-md-2">
-                    <label for="inputName">Origem</label>
-                    <input type="text" name="name" class="form-control" value="{{ $customer->name ?? '' }}">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputCpfCnpj">Destino</label>
-                    <input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputAddress">Transportador</label>
-                    <input type="text" class="form-control" name="address" value="{{ $customer->address ?? '' }}">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputAddress">Telefone</label>
-                    <input type="text" id="input_cep_customers" class="form-control" name="cep" value="{{ $customer->cep ?? '' }}">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputComplement">Placa</label>
-                    <input type="text" class="form-control" name="complement" value="{{ $customer->complement ?? '' }}">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputNumber">Chassis</label>
-                    <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inpuCity">Placas carretas</label>
-                    <input type="text" class="form-control" name="city" value="{{ $customer->city ?? '' }}">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Ordem de Transporte</label>
-                    <input type="text" class="form-control" name="state" value="{{ $customer->state ?? '' }}">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputNeighborhood">Valor Transportado</label>
-                    <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
-                </div>
-            </div>
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <label for="inputCpfCnpj">Destino</label><input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputNeighborhood">Valor Transportado</label>
+                            <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
+                        </div>
+                    </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inpuCity">CPF/CNPJ</label>
-                    <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Tel. Cel:</label>
-                    <input type="text" class="form-control mask_input_contact" name="state" value="{{ $customer->state ?? '' }}">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputNeighborhood">Marca</label>
-                    <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
-                </div>
-            </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress">Transportador</label>
+                            <input type="text" class="form-control" name="address" value="{{ $customer->address ?? '' }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inpuCity">CPF/CNPJ</label>
+                            <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                        </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inpuCity">Modelo</label>
-                    <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress">Telefone</label>
+                            <input type="text" id="input_cep_customers" class="form-control mask_input_contact" name="cep" value="{{ $customer->cep ?? '' }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputState">Tel. Cel:</label>
+                            <input type="text" class="form-control mask_input_contact" name="state" value="{{ $customer->state ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputComplement">Placa</label>
+                            <input type="text" class="form-control" name="complement" value="{{ $customer->complement ?? '' }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputNeighborhood">Marca</label>
+                            <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputNumber">Chassis</label>
+                            <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inpuCity">Modelo</label>
+                            <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Tecnologia Redundante</label>
-                    <input type="text" class="form-control" name="state" value="{{ $customer->state ?? '' }}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputNumber">Placas carretas</label>
+                        <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inpuCity">Tecnologia Redundante</label>
+                        <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-row">
-
-                <div class="form-group col-md-4">
-                    <label class="inputType">Tipo de Carga</label>
-                    <select class="form-control" name="type">
-                        <option value=" ">Selecione um tipo</option>
-                        <option value="embarcado">Embarcado</option>
-                        <option value="transportadora">Transportadora</option>
-                        <option value="cliente">Cliente</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label class="inputType">Local de Acomodação</label>
-                    <select class="form-control" name="type">
-                        <option value=" ">Selecione um tipo</option>
-                        <option value="embarcado">Embarcado</option>
-                        <option value="transportadora">Transportadora</option>
-                        <option value="cliente">Cliente</option>
-                    </select>
-                </div>
-
 
             </div>
 
+
+            <div class="col-sm-4">
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label class="inputType">Tipo de Carga</label>
+                        <select class="form-control" name="type">
+                            <option value=" ">Selecione um tipo</option>
+                            <option value="embarcado">Embarcado</option>
+                            <option value="transportadora">Transportadora</option>
+                            <option value="cliente">Cliente</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="inputType">Local de Acomodação</label>
+                        <select id="accommodation_location_id" class="form-control" name="accommodation_location_id">
+                            <option value=" ">Selecione um tipo</option>
+                            @foreach ($accommodationlocations as $accommodationlocation)
+                            <option value="{{$accommodationlocation->id}}">{{$accommodationlocation->type}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
 
 
         <div class="kt-portlet__foot">
