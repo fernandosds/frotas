@@ -107,6 +107,47 @@
         <script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
 
         <script>
+                /** 
+                 * Mask CEP
+                 * 
+                 */
+                $('.cep').mask(('00000-000'));
+
+
+                /** 
+                 * Mask CPF / CNPJ
+                 * 
+                 */
+
+                $(document).on('keydown', '.input_cpf_cnpj', function(e) {
+
+                        var digit = e.key.replace(/\D/g, '');
+
+                        var value = $(this).val().replace(/\D/g, '');
+
+                        var size = value.concat(digit).length;
+
+                        $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+                });
+                
+                /** 
+                 * Mask Contato
+                 * 
+                 */
+
+                $(document).on('keydown', '.mask_input_contact', function(e) {
+
+                        var digit = e.key.replace(/\D/g, '');
+
+                        var value = $(this).val().replace(/\D/g, '');
+
+                        var size = value.concat(digit).length;
+
+                        $(this).mask((size <= 10) ? '(00)0000-0000' : '(00)00000-0000');
+                });
+
+
+
                 /*
                         DELETE FUCTION
                  */
@@ -353,6 +394,6 @@
 
                 function mask_cpf_cnpj(input_cpf_cnpj) {
 
-                       // 
+                        // 
                 }
         </script>

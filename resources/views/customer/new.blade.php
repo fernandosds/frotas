@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputCpfCnpj">CPF / CNPJ</label>
-                        <input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
+                        <input type="text" id="input_cpf_cnpj_customers" name="input_cpf_cnpj" class="form-control input_cpf_cnpj" value="{{ $customer->cpf_cnpj ?? '' }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputAddress">CEP</label>
-                        <input type="text" id="input_cep_customers" class="form-control" name="cep" value="{{ $customer->cep ?? '' }}">
+                        <input type="text" id="input_cep_customers" class="form-control cep" name="cep" value="{{ $customer->cep ?? '' }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComplement">Complemento</label>
@@ -160,7 +160,7 @@
 
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">Telefone</label>
-                        <input type="text" id="input_contact_customers" name="phone" class="form-control" id="phone">
+                        <input type="text" id="input_contact_customers" name="phone" class="form-control mask_input_contact" id="phone">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="form-control-label">Email</label>
@@ -213,66 +213,6 @@
 
         })
     })
-
-
-    /** 
-     * Mask CPF / CNPJ
-     * 
-     */
-    $(function() {
-
-        $(document).on('keydown', '#input_cpf_cnpj_customers', function(e) {
-
-            var digit = e.key.replace(/\D/g, '');
-
-            var value = $(this).val().replace(/\D/g, '');
-
-            var size = value.concat(digit).length;
-
-            $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
-        });
-
-    });
-
-    /** 
-     * Mask CEP
-     * 
-     */
-    $(function() {
-
-        $(document).on('keydown', '#input_cep_customers', function(e) {
-
-            var digit = e.key.replace(/\D/g, '');
-
-            var value = $(this).val().replace(/\D/g, '');
-
-            var size = value.concat(digit).length;
-
-            $(this).mask(('00000-000'));
-        });
-
-    });
-
-    /** 
-     * Mask Contato
-     * 
-     */
-    $(function() {
-
-        $(document).on('keydown', '#input_contact_customers', function(e) {
-
-            var digit = e.key.replace(/\D/g, '');
-
-            var value = $(this).val().replace(/\D/g, '');
-
-            var size = value.concat(digit).length;
-
-            $(this).mask((size <= 10) ? '(00)0000-0000' : '(00)00000-0000');
-        });
-
-    });
-
-
 
 
     /**

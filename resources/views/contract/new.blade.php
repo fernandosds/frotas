@@ -21,7 +21,7 @@
             @csrf
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions mx-2">
-                    <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control" value="">
+                    <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control input_cpf_cnpj" value="">
                 </div>
 
                 <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
@@ -157,28 +157,7 @@
 
 @section('scripts')
 <script>
-    /** 
-     * Mask CPF / CNPJ
-     * 
-     */
-    $(function() {
-
-        //var input_cpf_cnpj = $('#input-search').val();
-        
-        $(document).on('keydown', '#input-search', function(e) {
-
-            var digit = e.key.replace(/\D/g, '');
-
-            var value = $(this).val().replace(/\D/g, '');
-
-            var size = value.concat(digit).length;
-
-            $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
-        });
-
-    });
-
-
+    
 
     /**
      Search customers     
