@@ -83,10 +83,10 @@ class BoardingController extends Controller
 
         $data = $this->data;
         $typeOfLoads = $this->typeOfLoadService->all();
-        $accommodationlocations = $this->accommodationLocationsService->search();
+        $data['accommodationlocations'] = $this->accommodationLocationsService->search();
         
 
-        return response()->view('boardings.new', $data, $accommodationlocations);
+        return response()->view('boardings.new', $data);
     }
 
     /**
