@@ -16,11 +16,7 @@ class AccommodationLocation extends Model
      */
     protected $table = 'accommodation_locations';
 
-    /**
-     * @var string
-     */
-    protected $with = ["shipments"];
-
+   
 
     /**
      * @var array
@@ -46,13 +42,5 @@ class AccommodationLocation extends Model
         ];
     }
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function shipments()
-    {
-        return $this->HasMany('App\Models\Shipment');
-    }
 
 }

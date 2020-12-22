@@ -3,6 +3,8 @@
 @section('content')
 
 <!-- HEADER -->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <div class="kt-portlet__head kt-portlet__head--lg">
     <div class="kt-portlet__head-label">
         <span class="kt-portlet__head-icon">
@@ -15,6 +17,8 @@
 </div>
 
 <form class="kt-form kt-form--label-right" id="form-create-device">
+    
+
     @csrf
 
     <input type="hidden" name="device_id" id="device_id" />
@@ -60,82 +64,82 @@
 
         <!-- ----- -->
 
-
-        <input type="hidden" name="id" id="id" value="" />
+        <input type="hidden" name="user_id" id="id" value="{{Auth::id()}}" />
         <div class="row">
             <div class="col-sm-8">
                 <div class="kt-portlet__body">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputName">Origem</label>
-                            <input type="text" name="name" class="form-control" value="{{ $customer->name ?? '' }}">
+                            <input type="text" name="source" class="form-control" value="{{ $boarding->source ?? '' }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputState">Ordem de Transporte</label>
-                            <input type="text" class="form-control" name="state" value="{{ $customer->state ?? '' }}">
+                            <input type="text" class="form-control" name="transport_order" value="{{ $boarding->transport_order ?? '' }}">
                         </div>
                     </div>
 
                     <div class="form-row ">
                         <div class="form-group col-md-6">
-                            <label for="inputCpfCnpj">Destino</label><input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control" value="{{ $customer->cpf_cnpj ?? '' }}">
+                            <label for="inputState">Destino</label>
+                            <input type="text" class="form-control" name="destiny" value="{{ $boarding->destiny ?? '' }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputNeighborhood">Valor Transportado</label>
-                            <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
+                            <input type="text" class="form-control" name="amount_carried" value="{{ $boarding->amount_carried ?? '' }}">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputAddress">Transportador</label>
-                            <input type="text" class="form-control" name="address" value="{{ $customer->address ?? '' }}">
+                            <input type="text" class="form-control" name="transporter" value="{{ $boarding->transporter ?? '' }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inpuCity">CPF/CNPJ</label>
-                            <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                            <input type="text" class="form-control input_cpf_cnpj" name="cpf_cnpj" value="{{ $boarding->cpf_cnpj ?? '' }}">
                         </div>
 
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputAddress">Telefone</label>
-                            <input type="text" id="input_cep_customers" class="form-control mask_input_contact" name="cep" value="{{ $customer->cep ?? '' }}">
+                            <input type="text" id="input_cep_customers" class="form-control mask_input_contact" name="telephone" value="{{ $boarding->telephone ?? '' }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputState">Tel. Cel:</label>
-                            <input type="text" class="form-control mask_input_contact" name="state" value="{{ $customer->state ?? '' }}">
+                            <input type="text" class="form-control mask_input_contact" name="cell_phone" value="{{ $boarding->cell_phone ?? '' }}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputComplement">Placa</label>
-                            <input type="text" class="form-control" name="complement" value="{{ $customer->complement ?? '' }}">
+                            <input type="text" class="form-control" name="board" value="{{ $boarding->board ?? '' }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputNeighborhood">Marca</label>
-                            <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
+                            <input type="text" class="form-control" name="brand" value="{{ $boarding->brand ?? '' }}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputNumber">Chassis</label>
-                            <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
+                            <input type="text" class="form-control" name="chassis" value="{{ $boarding->chassis ?? '' }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inpuCity">Modelo</label>
-                            <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                            <input type="text" class="form-control" name="model" value="{{ $boarding->model ?? '' }}">
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputNumber">Placas carretas</label>
-                        <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
+                        <input type="text" class="form-control" name="carts_plates" value="{{ $boarding->carts_plates ?? '' }}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inpuCity">Tecnologia Redundante</label>
-                        <input type="text" class="form-control input_cpf_cnpj" name="city" value="{{ $customer->city ?? '' }}">
+                        <input type="text" class="form-control" name="redundant_technology" value="{{ $boarding->redundant_technology ?? '' }}">
                     </div>
                 </div>
 
@@ -147,11 +151,11 @@
 
                     <div class="form-group col-md-6">
                         <label class="inputType">Tipo de Carga</label>
-                        <select class="form-control" name="type">
+                        <select class="form-control" name="type_of_load_id">
                             <option value=" ">Selecione um tipo</option>
-                            <option value="embarcado">Embarcado</option>
-                            <option value="transportadora">Transportadora</option>
-                            <option value="cliente">Cliente</option>
+                            @foreach ($typeofloads as $typeofload)
+                            <option value="{{$typeofload->id}}">{{$typeofload->type}}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -269,6 +273,23 @@
             }
 
         })
+
+    });
+
+    /**
+        Gravar Embarques
+    */
+    $(function() {
+
+        $('#btn-device-save').click(function() {
+
+            var boardings_id = $('#id').val();
+
+            console.log($('form-create-device').serialize());
+
+            ajax_store(boardings_id, "boardings", $('form-create-device').serialize());
+
+        });
 
     });
 </script>

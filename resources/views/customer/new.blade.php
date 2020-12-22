@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputCpfCnpj">CPF / CNPJ</label>
-                        <input type="text" id="input_cpf_cnpj_customers" name="input_cpf_cnpj" class="form-control input_cpf_cnpj" value="{{ $customer->cpf_cnpj ?? '' }}">
+                        <input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control input_cpf_cnpj" value="{{ $customer->cpf_cnpj ?? '' }}">
                     </div>
                 </div>
                 <div class="form-row">

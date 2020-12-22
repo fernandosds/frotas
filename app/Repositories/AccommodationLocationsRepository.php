@@ -18,15 +18,5 @@ class AccommodationLocationsRepository extends AbstractRepository
         $this->model = $model;
     }
 
-    public function search()
-    {
-        $users = DB::table('accommodation_locations')
-                    ->select('*')
-                    ->orderBy('id')
-                    ->get();
-        //$users = AccommodationLocation::query()->orderBy('id')->get();
-
-        return $users;
-    }
 
 }

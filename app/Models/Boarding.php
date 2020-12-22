@@ -33,12 +33,28 @@ class Boarding extends Model
     protected $fillable = [
         'user_id',
         'customer_id',
+        'type_of_load_id',
         'contract_id',
         'log_id',
         'device_id',
-        'accommodation_location_id',
+        'accommodation_location_id',        
+        'source',
+        'destiny',
+        'transporter',
+        'telephone',
+        'board',
+        'chassis',
+        'carts_plates',
+        'transport_order',
+        'amount_carried',
+        'cpf_cnpj',
+        'cell_phone',
+        'brand',
+        'model',
+        'redundant_technology',
         'test',
-        'active',
+        'active'
+
     ];
 
     /**
@@ -52,7 +68,25 @@ class Boarding extends Model
             'contract_id'               => $this->contract_id,
             'log_id'                    => $this->log_id,
             'device_id'                 => $this->device_id,
+            'type_of_load_id'           => $this->type_of_load_id,
             'accommodation_location_id' => $this->accommodation_location_id,
+            'source'                    => $this->source,
+            'destiny'                   => $this->destiny,
+            'transporter'               => $this->transporter,
+            'telephone'                 => $this->telephone,
+            'board'                     => $this->board,
+            'chassis'                   => $this->chassis,
+            'carts_plates'              => $this->carts_plates,
+            'transport_order'           => $this->transport_order,
+            'amount_carried'            => $this->amount_carried,
+            'cpf_cnpj'                  => $this->cpf_cnpj,
+            'cell_phone'                => $this->cell_phone,
+            'brand'                     => $this->brand,
+            'model'                     => $this->model,
+            'redundant_technology'      => $this->redundant_technology,
+            'test'                      => $this->test,
+            'active'                    => $this->active,
+
         ];
     }
 

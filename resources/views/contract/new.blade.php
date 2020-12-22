@@ -89,7 +89,9 @@
 </div>
 
 <form class="kt-form kt-form--label-right" id="form-create-contract">
+
     @csrf
+    
     <input type="hidden" name="id" id="id" value="{{ $contract->id ?? '' }}" />
 
     <div class="kt-portlet__body">
@@ -157,8 +159,6 @@
 
 @section('scripts')
 <script>
-    
-
     /**
      Search customers     
      */

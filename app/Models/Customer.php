@@ -17,11 +17,6 @@ class Customer extends Model
     protected $table = 'customers';
 
     /**
-     * @var string
-     */
-    //protected $with = ["contracts", "stocks", "shipments", "contacts"];
-
-    /**
      * @var array
      */
     protected $dates = ['created_at', 'updated_at'];
@@ -81,14 +76,7 @@ class Customer extends Model
     }
 
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function shipments()
-    {
-        return $this->HasMany('App\Models\Shipment');
-    }
-
+   
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */

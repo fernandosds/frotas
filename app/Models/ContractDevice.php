@@ -19,11 +19,7 @@ class ContractDevice extends Model
      */
     protected $table = 'customers';
 
-    /**
-     * @var string
-     */
-    //protected $with = ["contracts", "stocks", "shipments", "contacts"];
-
+   
     /**
      * @var array
      */
