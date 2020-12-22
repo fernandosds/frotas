@@ -129,7 +129,7 @@
 
                         $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
                 });
-                
+
                 /** 
                  * Mask Contato
                  * 
@@ -215,6 +215,10 @@
                                 url: url,
                                 type: method,
                                 data: form_data,
+                                data: {
+                                        "_token": "{{ csrf_token() }}",
+                                        "id": id
+                                },
                                 success: function(response) {
 
                                         if (response.status == "success") {
