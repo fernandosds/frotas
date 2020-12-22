@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BoardingTestDeviceRequest;
 use App\Services\ApiDeviceService;
 use App\Services\BoardingService;
 use App\Services\DeviceService;
@@ -135,8 +136,13 @@ class BoardingController extends Controller
         return response()->view('boardings.new', $data);
     }
 
-    public function testDevice(Request $request)
+    /**
+     * @param BoardingTestDeviceRequest $request
+     * @return mixed
+     */
+    public function testDevice(BoardingTestDeviceRequest $request)
     {
+
         $device = $this->deviceService->findByModel($request->device);
 
         $return['status'] = $device['status'];
