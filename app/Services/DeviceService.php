@@ -79,7 +79,7 @@ class DeviceService
             $data = DB::table('devices')
                 ->join('contract_devices', 'contract_devices.device_id', '=', 'devices.id')
                 ->join('contracts', 'contracts.id', '=', 'contract_devices.contract_id')
-                ->select('devices.id', 'contracts.valid','devices.model', 'contract_devices.device_type')
+                ->select('devices.id', 'contracts.id AS contract_id', 'contracts.valid','devices.model', 'contract_devices.device_type')
                 ->where('devices.model', $device)
                 ->where('contracts.customer_id', Auth::user()->customer_id)
                 ->first();

@@ -18,6 +18,7 @@ class TypeOfLoadController extends Controller
         $this->data = [
             'icon' => 'flaticon-truck',
             'title' => 'Tipos de cargas',
+            'menu_open_loads' => 'kt-menu__item--open',
         ];
     }
 

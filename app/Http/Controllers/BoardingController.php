@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BoardingTestDeviceRequest;
 use App\Services\ApiDeviceService;
 use App\Services\BoardingService;
 use App\Services\DeviceService;
@@ -91,8 +90,13 @@ class BoardingController extends Controller
      */
     public function save(Request $request)
     {
+
         try {
 
+            $request->merge([
+                    'user_id' => Auth::user()->id,
+                    'customer_id' => Auth::user()->customer_id,
+                ]);
             $this->boardingService->save($request);
 
             return response()->json(['status' => 'success'], 200);
@@ -137,13 +141,13 @@ class BoardingController extends Controller
     }
 
     /**
-     * @param BoardingTestDeviceRequest $request
+     * @param String $model
      * @return mixed
      */
-    public function testDevice(BoardingTestDeviceRequest $request)
+    public function testDevice(String $model)
     {
 
-        $device = $this->deviceService->findByModel($request->device);
+        $device = $this->deviceService->findByModel($model);
 
         $return['status'] = $device['status'];
         if ($device['status'] == 'success') {
@@ -151,8 +155,9 @@ class BoardingController extends Controller
             $return['device_type'] = $device['data']->device_type;
             $return['model'] = $device['data']->model;
             $return['device_id'] = $device['data']->id;
+            $return['contract_id'] = $device['data']->contract_id;
 
-            $test_device = $this->apiDeviceServic->testDevice($request->device);
+            $test_device = $this->apiDeviceServic->testDevice($model);
 
             if ($test_device['status'] == "sucesso") {
                 $return['last_transmission'] = $test_device['body'][0]['dh_gps'];

@@ -19,7 +19,6 @@ class CreateBoardingsTable extends Migration
             $table->integer('customer_id');
             $table->integer('contract_id');
             $table->integer('type_of_load_id');
-            $table->integer('log_id');
             $table->integer('device_id');
             $table->integer('accommodation_location_id');
             $table->string('source', 255);
@@ -36,8 +35,7 @@ class CreateBoardingsTable extends Migration
             $table->string('brand', 255);
             $table->string('model', 255);
             $table->string('redundant_technology', 255);
-            $table->boolean('test');
-            $table->boolean('active');
+            $table->boolean('active')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

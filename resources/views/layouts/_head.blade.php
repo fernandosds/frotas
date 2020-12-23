@@ -85,6 +85,18 @@
         .center{
             text-align: center;
         }
+        hr .hr{
+            border-top: 1px solid #eee !important;
+        }
+        .hidden{
+            display: none !important;
+        }
+        input, select{
+            background-color: #f8fbfc !important;
+            -webkit-box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
+            -moz-box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
+            box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
+        }
     </style>
 
 </head>
