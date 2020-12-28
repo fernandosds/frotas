@@ -20,15 +20,17 @@ class DeviceRequest extends FormRequest
     public function rules()
     {
 
+        $id = $this->route('post');
+
         $return = [];
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'serial_number' => 'required|unique:devices',
+                'model' => 'required|unique:devices,model,{$id},id,deleted_at,NULL',
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
-                'serial_number' => [
+                'model' => [
                     'required',
                     Rule::unique('devices')->ignore($this->id),
                 ],

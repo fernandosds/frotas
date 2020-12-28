@@ -16,7 +16,7 @@ class DeviceController extends Controller
         $this->deviceService = $deviceService;
 
         $this->data = [
-            'icon' => 'flaticon-map-location',
+            'icon' => 'flaticon-placeholder-3',
             'title' => 'Íscas',
             'menu_open_devices' => 'kt-menu__item--open'
         ];
@@ -45,7 +45,6 @@ class DeviceController extends Controller
         return view('device.new', $data);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -56,6 +55,8 @@ class DeviceController extends Controller
     {
     
         try {
+
+            $request->merge(['uniqid' => md5(uniqid(""))]);
 
             $this->deviceService->save($request);
 

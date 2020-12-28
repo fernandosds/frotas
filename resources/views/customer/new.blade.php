@@ -185,85 +185,79 @@
 @endsection
 
 @section('scripts')
-<script>
-    /**
-     Carregar a div de contatos
-     */
+    <script>
+        /**
+         Carregar a div de contatos
+         */
 
-    /**
-    $.ajax({
-        type: 'GET',
-        
-        url: "{{url('customers/contacts')}}",
-        success: function(response) {
-            $('#list_contacts').html(response)
-        }
-
-    })
-    */
-
-    /**
-     Exibir contato
-     */
-    $(function() {
-        var id = $('#id').val();
-
+        /**
         $.ajax({
             type: 'GET',
-            url: "{{url('customers/contacts/show')}}/" + id,
+
+            url: "{{url('customers/contacts')}}",
             success: function(response) {
                 $('#list_contacts').html(response)
             }
 
         })
-    })
+        */
 
+        /**
+         Gravar cliente
+         */
+        $(function() {
 
-    /**
-     Deletar
-     */
-
-    $("#list_contacts").on("click", ".btn-delete-contact", function() {
-
-        var id = $(this).data('id');
-        var url = "{{url('customers/contacts/delete')}}/" + id;
-        ajax_delete(id, url)
-
-    });
-
-
-    /**
-    Gravar contato
-    */
-
-    $(function() {
-
-        $('#btn-customer-new-contact').click(function() {
-
-            var dados = $('#form-create-contact').serialize();
-            var customer_id = $('#id').val();
-
-            ajax_save_contact(dados, customer_id);
-
-        });
-    });
-
-
-
-
-    /**
-        Gravar cliente
-    */
-    $(function() {
-
-        $('#btn-customer-save').click(function() {
-
-            var customer_id = $('#id').val();
-
-            ajax_store(customer_id, "customers", $('#form-create-customer').serialize());
+            $('#btn-customer-save').click(function() {
+                var customer_id = $('#id').val();
+                ajax_store(customer_id, "customers", $('#form-create-customer').serialize());
+            });
 
         });
 
-    });
-</script>
+        /**
+         Exibir contato
+         */
+        $(function() {
+            var id = $('#id').val();
+
+            $.ajax({
+                type: 'GET',
+                url: "{{url('customers/contacts/show')}}/" + id,
+                success: function(response) {
+                    $('#list_contacts').html(response)
+                }
+
+            })
+        })
+
+
+        /**
+         Deletar
+         */
+
+        $("#list_contacts").on("click", ".btn-delete-contact", function() {
+
+            var id = $(this).data('id');
+            var url = "{{url('customers/contacts/delete')}}/" + id;
+            ajax_delete(id, url)
+
+        });
+
+
+        /**
+        Gravar contato
+        */
+
+        $(function() {
+
+            $('#btn-customer-new-contact').click(function() {
+
+                var dados = $('#form-create-contact').serialize();
+                var customer_id = $('#id').val();
+                ajax_save_contact(dados, customer_id);
+
+            });
+        });
+
+    </script>
 @endsection

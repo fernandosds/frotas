@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BoardingRequest;
 use App\Services\ApiDeviceService;
 use App\Services\BoardingService;
 use App\Services\DeviceService;
 use App\Services\TypeOfLoadService;
 use App\Services\AccommodationLocationsService;
-use App\Services\UserService;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,11 +18,6 @@ class BoardingController extends Controller
      * @var BoardingService
      */
     private $boardingService;
-    
-    /**
-     * @var UserService
-     */
-    private $userService;
 
     /**
      * @var
@@ -53,13 +47,12 @@ class BoardingController extends Controller
      * @param TypeOfLoadService $typeOfLoadService
      * @param AccommodationLocationsService $accommodationLocationsService
      */
-    public function __construct(BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic, TypeOfLoadService $typeOfLoadService, AccommodationLocationsService $accommodationLocationsService, UserService $userService)
+    public function __construct(BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic, TypeOfLoadService $typeOfLoadService, AccommodationLocationsService $accommodationLocationsService)
     {
         $this->boardingService = $boardingService;
         $this->deviceService = $deviceService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->typeOfLoadService = $typeOfLoadService;
-        $this->userService = $userService;
         $this->accommodationLocationsService = $accommodationLocationsService;
 
         $this->data = [
@@ -76,10 +69,26 @@ class BoardingController extends Controller
      */
     public function index()
     {
+
         $data = $this->data;
         $data['boardings'] = $this->boardingService->paginate();
 
         return response()->view('boardings.list', $data);
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function new()
+    {
+
+        $data = $this->data;
+
+        //$typeOfLoads = $this->typeOfLoadService->all();
+        $data['accommodationlocations'] = $this->accommodationLocationsService->all();
+        $data['typeofloads'] = $this->typeOfLoadService->all();
+
+        return response()->view('boardings.new', $data);
     }
 
     /**
@@ -88,8 +97,10 @@ class BoardingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function save(Request $request)
+    public function save(BoardingRequest $request)
     {
+
+        print_r($request->input());die;
 
         try {
 
@@ -110,6 +121,7 @@ class BoardingController extends Controller
      * @param UserRequest $request
      * @return array|\Illuminate\Http\JsonResponse
      */
+    /*
     public function update(Int $id, Request $request)
     {
 
@@ -122,22 +134,16 @@ class BoardingController extends Controller
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
-
+    */
 
     /**
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function new()
+    public function destroy(Int $id)
     {
-
-        $data = $this->data;
-
-        //$typeOfLoads = $this->typeOfLoadService->all();
-        $data['accommodationlocations'] = $this->accommodationLocationsService->all();
-        $data['typeofloads'] = $this->typeOfLoadService->all();
-        $data['users'] = $this->userService->all();
-
-        return response()->view('boardings.new', $data);
+        $this->boardingService->destroy($id);
+        return back()->with(['status' => 'Deleted successfully']);
     }
 
     /**

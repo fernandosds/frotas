@@ -24,10 +24,11 @@
                 <div class="kt-portlet__body">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputSerialNumber">Número de série</label>
-                            <input type="text" name="serial_number" class="form-control" value="{{ $device->serial_number ?? '' }}">
+                            <label for="inputSerialNumber">Modelo</label>
+                            <input type="text" name="model" class="form-control" value="{{ $device->model ?? '' }}">
                         </div>
 
+                        <!--
                         <div class="form-group col-md-6">
                             <label class="inputTipoIsca">Tipo de isca</label>
                             <select class="form-control" name="type_of_device_id">
@@ -37,27 +38,16 @@
                                 <option value="3" {{ ($device->type_of_device_id ?? null) == 3 ? 'selected' : ''}}>Pallet</option>
                             </select>
                         </div>
+                        -->
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputBateryLevel">Bateria</label>
-                        <input type="text" class="form-control" name="batery_level" value="{{ $device->batery_level ?? '' }}">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputAddress">Data validação</label>
-                            <input type="date" class="form-control" name="validation" value="{{ $device->validation ?? '' }}">
-                        </div>
 
-                    </div>
-                    <div class="kt-portlet__foot">
-                        <div class="kt-form__actions">
-                            <div class="row">
-                                <div class="col-lg-12 ml-lg-auto">
-                                    <button type="button" class="btn btn-brand" id="btn-device-save">Cadastrar</button>
-                                    <a href="{{url('devices')}}" class="btn btn-secondary">Voltar</a>
-                                </div>
 
-                            </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions">
+                        <div class="col-lg-12 ml-lg-auto">
+                            <button type="button" class="btn btn-brand" id="btn-device-save">Cadastrar</button>
+                            <a href="{{url('devices')}}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
                 </div>

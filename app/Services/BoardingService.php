@@ -58,4 +58,14 @@ class BoardingService
         return $this->boarding->paginate($limit);
     }
 
+    /**
+     * @param Int $id
+     * @return bool
+     */
+    public function destroy(Int $id)
+    {
+
+        return $this->boarding->delete($id);
+    }
+
 }

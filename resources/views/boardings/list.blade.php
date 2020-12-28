@@ -34,6 +34,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Ordem de Transporte</th>
                         <th scope="col">Nome da Transportadora</th>
+                        <th scope="col">Data</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -43,10 +44,12 @@
                             <th scope="row">{{$boarding->id}}</th>
                             <td>{{$boarding->transport_order}}</td>
                             <td>{{$boarding->transporter}}</td>
+                            <td>{{date_format($boarding->created_at, "d/m/Y")}}</td>
                             <td></td>
                             <td>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-sm  btn-danger btn-delete-contact" data-id="{{$boarding->id}}">
+                                    <a href="" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detalhes</a>
+                                    <button type="button" class="btn btn-sm  btn-danger btn-delete-boarding" data-id="{{$boarding->id}}">
                                         <span class="fa fa-fw fa-trash"></span> Deletar
                                     </button>
                                 </div>
@@ -64,13 +67,13 @@
 
 @section('scripts')
     <script>
-        /**
-         Deletar
-         $('.btn-delete-contact').click(function() {
-        var id = $(this).data('id');
-        var url = "{{url('customers/contacts/delete')}}/" + id;
-        ajax_delete(id, url)
-    })
-         */
+
+         // Deletar
+         $('.btn-delete-boarding').click(function() {
+            var id = $(this).data('id');
+            var url = "{{url('boardings/delete')}}/" + id;
+            ajax_delete(id, url)
+        })
+
     </script>
 @endsection

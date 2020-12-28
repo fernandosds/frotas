@@ -17,20 +17,12 @@ class Device extends Model
     protected $table = 'devices';
 
     /**
-     * @var string
-     */
-    protected $with = ["stocks"];
-
-
-    /**
      * @var array
      */
     protected $fillable = [
         'id',
         'type_of_device_id',
-        'serial_number',
-        'batery_level',        
-        'validation'
+        'model',
     ];
 
     /**
@@ -41,9 +33,7 @@ class Device extends Model
         return [
             'id'                 => $this->id,
             'type_of_device_id'  => $this->type_of_device_id,
-            'serial_number'      => $this->serial_number,
-            'batery_level'       => $this->batery_level,
-            'validation'         => $this->date,
+            'model'              => $this->model,
             
         ];
     }

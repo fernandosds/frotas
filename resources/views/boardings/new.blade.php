@@ -288,11 +288,8 @@
     $(function() {
 
         $('#btn-boarding-save').click(function() {
-
             var boarding_id = $('#id').val();
-
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
-
         });
 
     });

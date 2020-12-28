@@ -51,7 +51,6 @@ class CustomerService
     public function save(Request $request)
     {
 
-
         $customer = $this->customer->create($request->all());
 
         return $customer;
@@ -65,14 +64,15 @@ class CustomerService
     public function update(Request $request, $id)
     {
 
-
         $customer = $this->customer->update($id, $request->all());
 
         return $customer;
     }
 
-
-
+    /**
+     * @param Int $id
+     * @return CustomerRepository|\Illuminate\Database\Eloquent\Model|object|void|null
+     */
     public function show(Int $id)
     {
 
@@ -81,9 +81,9 @@ class CustomerService
         return ($customer) ? $customer : abort(404);
     }
 
-
     /**
      * @param Int $id
+     * @return bool
      */
     public function destroy(Int $id)
     {
@@ -91,15 +91,25 @@ class CustomerService
         return $this->customer->delete($id);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
         return $this->customer->find($id);
     }
+
     /**
     public function search($cpf_cnpj)
     {
         return $this->customer->search($cpf_cnpj);
     } 
+     */
+
+    /**
+     * @param Request $request
+     * @return CustomerRepository|\Illuminate\Database\Eloquent\Model|object|null
      */
     public function search(Request $request)
     {
