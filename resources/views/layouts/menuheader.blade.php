@@ -83,6 +83,18 @@
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
 
             <!--begin: Head -->
+            <div class="kt-notification">
+                <a href="{{url('users/edit')}}/{{Auth::user()->id }}" class="kt-notification__item">
+                    <div class="kt-notification__item-icon">
+                        <i class="flaticon-settings kt-font-success"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title kt-font-bold">
+                            CONFIGURAÇÕES
+                        </div>                        
+                    </div>
+                </a>
+            </div>
             <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url({{asset('/assets/media/misc/bg-1.jpg')}})">
 
                 <div class="kt-user-card__name">
