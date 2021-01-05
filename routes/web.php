@@ -149,6 +149,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'AccommodationLocationsController@destroy');
     });
 
+
+    /**
+     * Profile routes
+     */
+    Route::group(['prefix' => 'profiles'], function () {
+
+        Route::get('/edit', 'ProfileController@editprofile');
+        Route::post('/save', 'ProfileController@save');
+        Route::put('/update', 'ProfileController@update');
+        
+    });
+
+
+
+
     /**
      * Exit router
      */

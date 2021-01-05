@@ -84,7 +84,7 @@
 
             <!--begin: Head -->
             <div class="kt-notification">
-                <a href="{{url('users/edit')}}/{{Auth::user()->id }}" class="kt-notification__item">
+                <a href="{{url('profiles/edit')}}" class="kt-notification__item">
                     <div class="kt-notification__item-icon">
                         <i class="flaticon-settings kt-font-success"></i>
                     </div>
