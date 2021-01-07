@@ -1,0 +1,26 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Ordem</th>
+            <th scope="col">Modelo</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($devices as $key => $val)
+        <tr id="_tr_device_{{$key}}">
+            <td>{{$key + 1}}</td>
+            <td>{{$val}}</td>
+            <td></td>
+            <td>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-device" data-id="{{$key}}">
+                        <span class="fa fa-fw fa-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+

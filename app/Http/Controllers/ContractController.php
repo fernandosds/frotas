@@ -40,7 +40,7 @@ class ContractController extends Controller
         return response()->view('contract.list', $data);
     }
 
-    
+
 
 
     /**
@@ -75,7 +75,7 @@ class ContractController extends Controller
 
     public function search(Request $request)
     {
-        
+
         $customer = $this->customerService->search($request);
 
         //print_r($request->cpf_cnpj);
@@ -85,7 +85,7 @@ class ContractController extends Controller
         if ($customer) {
             return response()->json(['status' => 'success', 'data' => $customer]);
         } else {
-            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
+            return response()->json(['status' => 'error', 'message' => 'usuário não encontrado!']);
         }
     }
 
@@ -169,17 +169,34 @@ class ContractController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function adddevice(Request $request)
+   
+
+    public function addDevice(Request $request)
     {
-        $iscas = explode(',', $request->input('new-device'));
+        $devices = explode(',', $request->input('new-device'));
         $tableContent='';
-        foreach($iscas AS $isca){
-            $tableContent .= "<tr><td></td><td>".$isca."</td><td></td></tr>";
+        foreach($devices AS $device){
+            $tableContent .= "<tr><td></td><td>".$device."</td><td></td></tr>";
         }
         return $tableContent;
     }
+     */
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
+    public function addDevice(Request $request)
+    {
+        $data['devices'] = explode(',', $request->input('new-device'));
 
+        //print_r($data['devices']);
+        //die();
+        
+        return view('device.list_device', $data);
+    }
+
+    
 }
