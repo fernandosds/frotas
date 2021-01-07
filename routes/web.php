@@ -64,6 +64,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/{id}', 'ContractController@show');
         //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
         Route::post('/search', 'ContractController@search');
+        
+        Route::post('/adddevice', 'ContractController@adddevice');
+        
         Route::post('/save', 'ContractController@save');
         Route::put('/update/{id}', 'ContractController@update');
         Route::get('/edit/{id}', 'ContractController@edit');
@@ -148,6 +151,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'AccommodationLocationsController@edit');
         Route::get('/delete/{id}', 'AccommodationLocationsController@destroy');
     });
+
+
+    /**
+     * Profile routes
+     */
+    Route::group(['prefix' => 'profiles'], function () {
+
+        Route::get('/edit', 'ProfileController@editprofile');
+        Route::post('/save', 'ProfileController@save');
+        Route::put('/update', 'ProfileController@update');
+        
+    });
+
+
+
 
     /**
      * Exit router

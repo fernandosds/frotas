@@ -40,6 +40,7 @@ class ContractController extends Controller
         return response()->view('contract.list', $data);
     }
 
+    
 
 
     /**
@@ -163,4 +164,22 @@ class ContractController extends Controller
         $this->contractService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adddevice(Request $request)
+    {
+        $iscas = explode(',', $request->input('new-device'));
+        $tableContent='';
+        foreach($iscas AS $isca){
+            $tableContent .= "<tr><td></td><td>".$isca."</td><td></td></tr>";
+        }
+        return $tableContent;
+    }
+
+
+
 }
