@@ -297,6 +297,7 @@
                         $('#number').html(response.data.number)
                         $('#city').html(response.data.city)
                         $('#state').html(response.data.state)
+                        $('#id').html(response.data.id)
                         return response.data;
 
                     } else {
@@ -391,8 +392,4 @@
     }
 
 
-    function mask_cpf_cnpj(input_cpf_cnpj) {
-
-        //
-    }
 </script>
