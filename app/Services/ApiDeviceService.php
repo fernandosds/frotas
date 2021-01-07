@@ -15,8 +15,8 @@ class ApiDeviceService
     /**
      * @var string
      */
-    protected $host = "http://189.16.50.195:6524";
-    //protected $host = "http://10.20.3.36:6524";
+   // protected $host = "http://189.16.50.195:6524";
+    protected $host = "http://10.20.3.36:6524";
 
     /**
      * @param String $device
