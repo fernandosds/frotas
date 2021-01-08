@@ -1,10 +1,12 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">Ordem</th>
+            <th scope="col">#</th>
             <th scope="col">Modelo</th>
+            <th scope="col">Tecnologia</th>
             <th scope="col"></th>
         </tr>
+        
     </thead>
     <tbody>
         @foreach ($devices as $key => $val)

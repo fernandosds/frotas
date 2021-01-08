@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+//use App\Models\Technologie;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
+use App\Services\TechnologieService;
+
 //use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
 
@@ -13,11 +16,14 @@ class ContractController extends Controller
     private $contractService;
     private $customerService;
     private $data;
+    private $technologieService;
 
-    public function __construct(ContractService $contractService, CustomerService $customerService)
+    public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService)
     {
         $this->contractService = $contractService;
         $this->customerService = $customerService;
+        $this->technologieService = $technologieService;
+
 
         $this->data = [
             'icon' => 'flaticon2-contract',
@@ -96,6 +102,7 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
+        $data['technologies'] = $this->technologieService->paginate();
 
         return view('contract.new', $data);
     }
@@ -190,13 +197,38 @@ class ContractController extends Controller
 
     public function addDevice(Request $request)
     {
-        $data['devices'] = explode(',', $request->input('new-device'));
+        $devices = explode(',', $request->input('devices'));
 
-        //print_r($data['devices']);
-        //die();
-        
-        return view('device.list_device', $data);
+        $technologie = $this->technologieService->show($request->technologie_id);
+
+        // $merged = $devices->merge($technologies);
+
+        // print_r($devices);
+
+        $current_devices = session('devices');
+        print_r($current_devices);
+        die;
+
+        $data = [];
+        foreach ($devices as $device) {
+            $data['devices'] = [
+                'device' => $device,
+                'technologie_id' => $technologie->id,
+                'price' => $technologie->price,
+                'type' => $technologie->type,
+            ];
+        }
+
+        session(['devices' => $data['devices']]);
+       
+
+        dd($request->session()->get('devices'));
+        die();
+
+        /* ler o input
+        incrementar session
+         */
+
+        return view('device.list_device', $devices);
     }
-
-    
 }

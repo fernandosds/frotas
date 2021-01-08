@@ -139,11 +139,25 @@
                                 <label for="dadostexto">Separar os números de séries da isca por vírgula</label>
                             </div>
                         </div>
-                        <form>
+                        <form id="form-insert-device">
                             @csrf
+
                             <div class="modal-body" id="list_devices">
                                 <textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>
                             </div>
+                            <div class="modal-body">
+                                <label class="inputType">Tecnologia</label>
+                                <select class="form-control" name="type" id="technologie_id">
+                                    <option value=" ">Selecione um tipo</option>
+                                    @foreach ($technologies as $technologie)
+                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                    @endforeach
+                                    <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
+                                </select>
+
+
+                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="button" class="btn btn-primary" id="btn-contract-new-contract">Adicionar</button>
@@ -244,8 +258,15 @@
                 url: "{{url('')}}/" + route,
                 method: 'POST',
                 data: {
-                    "new-device": $('#new-device').val()
+                    "devices": $('#new-device').val(),
+                    "technologie_id": $('#technologie_id').val(),
+                    //"price_device": $('#price_device').val()
+
+
                 },
+
+                //data: $('#form-insert-device').serialize(),
+
                 success: function(response) {
                     Swal.fire({
                         type: 'success',
@@ -261,7 +282,6 @@
 
             });
 
-
         });
 
     });
@@ -272,9 +292,9 @@
     */
 
     $("#table-new-devices").on("click", ".btn-delete-device", function() {
-        
+
         var id = $(this).data('id') + 1;
-        //alert(id)
+
 
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -298,14 +318,14 @@
 
                 $.ajax({
                     method: 'GET',
-                }).done(function(data) {                    
+                }).done(function(data) {
                     Swal.fire({
                         type: 'success',
                         title: 'Registro excluído com sucesso',
                         showConfirmButton: true,
-                        timer: 3000,                        
+                        timer: 3000,
                     })
-                    $(this).closest('tr').fadeOut(300);
+
 
                 }).fail(function(data) {
                     Swal.fire({
@@ -316,6 +336,8 @@
                         timer: 2500
                     })
                 });
+
+                $(this).closest('tr').fadeOut(300);
 
             }
         })

@@ -25,8 +25,12 @@
             <div class="kt-portlet__body">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="inputSerialNumber">Número de série</label>
+                        <label for="inputSerialNumber">Tipo de isca</label>
                         <input type="text" name="type" class="form-control" value="{{ $technologie->type ?? '' }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputSerialNumber">Preço</label>
+                        <input type="text" name="price" class="form-control" value="{{$technologie->price ?? '' }}">
                     </div>
                 </div>
                 <div class="kt-portlet__foot">
