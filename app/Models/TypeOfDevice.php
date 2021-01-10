@@ -15,7 +15,7 @@ class TypeOfDevice extends Model
     /**
      * @var string
      */
-    protected $table = 'type_of_devices';
+    protected $table = 'device_types';
 
     /**
      * @var string

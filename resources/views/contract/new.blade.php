@@ -105,17 +105,6 @@
         <div class="kt-portlet__body">
 
             <div class="form-row">
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Tecnologia</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                </table>
                 <div class=" form-group col-md-12" id='table-new-devices' style="height: 250px; overflow-y: scroll;">
 
 
@@ -150,11 +139,25 @@
                                 <label for="dadostexto">Separar os números de séries da isca por vírgula</label>
                             </div>
                         </div>
-                        <form>
+                        <form id="form-insert-device">
                             @csrf
+
                             <div class="modal-body" id="list_devices">
                                 <textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>
                             </div>
+                            <div class="modal-body">
+                                <label class="inputType">Tecnologia</label>
+                                <select class="form-control" name="type" id="technologie_id">
+                                    <option value=" ">Selecione um tipo</option>
+                                    @foreach ($technologies as $technologie)
+                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                    @endforeach
+                                    <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
+                                </select>
+
+
+                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="button" class="btn btn-primary" id="btn-contract-new-contract">Adicionar</button>
@@ -194,11 +197,11 @@
 
 @section('scripts')
 <script>
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    }
-});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        }
+    });
     /**
      Modal     
      */
@@ -255,8 +258,15 @@ $.ajaxSetup({
                 url: "{{url('')}}/" + route,
                 method: 'POST',
                 data: {
-                    "new-device": $('#new-device').val()
+                    "devices": $('#new-device').val(),
+                    "technologie_id": $('#technologie_id').val(),
+                    //"price_device": $('#price_device').val()
+
+
                 },
+
+                //data: $('#form-insert-device').serialize(),
+
                 success: function(response) {
                     Swal.fire({
                         type: 'success',
@@ -264,7 +274,7 @@ $.ajaxSetup({
                         showConfirmButton: true,
                         timer: 3000
                     }).then((result) => {
-                        
+
                         //$(location).attr('href', '{{url("")}}/' + route);
                     });
                     $('#table-new-devices').html(response);
@@ -272,9 +282,114 @@ $.ajaxSetup({
 
             });
 
-
         });
 
+    });
+
+
+    /**
+     Delete Device     
+    */
+
+    $("#table-new-devices").on("click", ".btn-delete-device", function() {
+
+        var id = $(this).data('id') + 1;
+
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Tem certeza?',
+            text: "Deseja realmente deletar o registro " + id,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim!',
+            cancelButtonText: 'Não!',
+            reverseButtons: true
+        }).then((result) => {
+            console.log(result)
+            if (result.value) {
+
+                $.ajax({
+                    method: 'GET',
+                }).done(function(data) {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro excluído com sucesso',
+                        showConfirmButton: true,
+                        timer: 3000,
+                    })
+
+
+                }).fail(function(data) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar excluir!',
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                });
+
+                $(this).closest('tr').fadeOut(300);
+
+            }
+        })
+
+        //$(this).closest('tr').fadeOut(300);
+
+        //var url = "{{url('contracts/delete')}}/" + id;
+        /**
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Tem certeza?',
+                    text: "Deseja realmente deletar o registro " + id,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim!',
+                    cancelButtonText: 'Não!',
+                    reverseButtons: true
+                }).then((result) => {
+                    console.log(result)
+                    if (result.value) {
+
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                        }).done(function(data) {
+                            $('#_tr_user_' + id).hide()
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Registro excluído com sucesso',
+                                showConfirmButton: true,
+                                timer: 3000
+                            })
+                        }).fail(function(data) {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Erro ao tentar excluir!',
+                                showConfirmButton: true,
+                                timer: 2500
+                            })
+                        });
+
+                    }
+                })
+         */
     });
 </script>
 @endsection

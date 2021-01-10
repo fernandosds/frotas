@@ -26,7 +26,8 @@ class Technologie extends Model
      */
     protected $fillable = [
         'id',
-        'type'
+        'type',
+        'price'
     ];
 
     /**
@@ -37,6 +38,7 @@ class Technologie extends Model
         return [
             'id'        => $this->id,
             'type'      => $this->type,
+            'price'     => $this->price,
             
         ];
     }

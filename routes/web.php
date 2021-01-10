@@ -65,7 +65,8 @@ Route::group(['middleware' => 'auth'], function () {
         //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
         Route::post('/search', 'ContractController@search');
         
-        Route::post('/adddevice', 'ContractController@adddevice');
+        Route::post('/adddevice', 'ContractController@addDevice');
+        //Route::get('/devices', 'ContractController@indexDevice');
         
         Route::post('/save', 'ContractController@save');
         Route::put('/update/{id}', 'ContractController@update');
@@ -85,6 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/update/{id}', 'DeviceController@update');
         Route::get('/edit/{id}', 'DeviceController@edit');
         Route::get('/delete/{id}', 'DeviceController@destroy');
+
+        
 
         /**
          * Technologies routes

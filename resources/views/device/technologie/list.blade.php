@@ -2,46 +2,50 @@
 
 @section('content')
 
-    <!-- HEADER -->
-    <div class="kt-portlet__head kt-portlet__head--lg">
-        <div class="kt-portlet__head-label">
-            <span class="kt-portlet__head-icon">
-                <i class="kt-font-brand {{$icon}}"></i>
-            </span>
-            <h3 class="kt-portlet__head-title">
-                {{$title}}
-            </h3>
-        </div>
 
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
-                    <a href="{{url('devices/technologies/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
-                        <i class="la la-plus"></i> Novo
-                    </a>
+<div class="kt-portlet">
+    <div class="kt-portlet kt-portlet--mobile">
+
+        <!-- HEADER -->
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand {{$icon}}"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    {{$title}}
+                </h3>
+            </div>
+
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+                        <a href="{{url('devices/technologies/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <i class="la la-plus"></i> Novo
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- CONTENT -->
-    <div class="kt-portlet__body">
+        <!-- CONTENT -->
+        <div class="kt-portlet__body">
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col"></th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($technologies as $technologie)
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Valor unitário</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($technologies as $technologie)
                     <tr id="_tr_user_{{$technologie->id}}">
                         <th scope="row">{{$technologie->id}}</th>
-                        <td></td>
                         <td>{{$technologie->type}}</td>
+                        <td>R$: {{$technologie->price}}</td>
                         <td></td>
                         <td>
                             <div class="pull-right">
@@ -52,27 +56,26 @@
                             </div>
                         </td>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    @endforeach
+                </tbody>
+            </table>
 
-        <div class="d-flex justify-content-center">
-            {!! $technologies->links() !!}
+            <div class="d-flex justify-content-center">
+                {!! $technologies->links() !!}
+            </div>
         </div>
-
     </div>
+</div>
 
 @endsection
 
 @section('scripts')
-    <script>
-
-        /* Deletar */
-        $('.btn-delete-technologie').click(function(){
-            var id = $(this).data('id');
-            var url = "{{url('devices/technologies/delete')}}/"+id;
-            ajax_delete(id, url)
-        })
-
-    </script>
+<script>
+    /* Deletar */
+    $('.btn-delete-technologie').click(function() {
+        var id = $(this).data('id');
+        var url = "{{url('devices/technologies/delete')}}/" + id;
+        ajax_delete(id, url)
+    })
+</script>
 @endsection

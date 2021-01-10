@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+//use App\Models\Technologie;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
+use App\Services\TechnologieService;
+
 //use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
 
@@ -13,11 +16,14 @@ class ContractController extends Controller
     private $contractService;
     private $customerService;
     private $data;
+    private $technologieService;
 
-    public function __construct(ContractService $contractService, CustomerService $customerService)
+    public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService)
     {
         $this->contractService = $contractService;
         $this->customerService = $customerService;
+        $this->technologieService = $technologieService;
+
 
         $this->data = [
             'icon' => 'flaticon2-contract',
@@ -40,7 +46,7 @@ class ContractController extends Controller
         return response()->view('contract.list', $data);
     }
 
-    
+
 
 
     /**
@@ -75,7 +81,7 @@ class ContractController extends Controller
 
     public function search(Request $request)
     {
-        
+
         $customer = $this->customerService->search($request);
 
         //print_r($request->cpf_cnpj);
@@ -85,7 +91,7 @@ class ContractController extends Controller
         if ($customer) {
             return response()->json(['status' => 'success', 'data' => $customer]);
         } else {
-            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
+            return response()->json(['status' => 'error', 'message' => 'usuário não encontrado!']);
         }
     }
 
@@ -96,6 +102,7 @@ class ContractController extends Controller
     {
 
         $data = $this->data;
+        $data['technologies'] = $this->technologieService->paginate();
 
         return view('contract.new', $data);
     }
@@ -166,17 +173,59 @@ class ContractController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function adddevice(Request $request)
+   
+
+    public function addDevice(Request $request)
     {
-        $iscas = explode(',', $request->input('new-device'));
+        $devices = explode(',', $request->input('new-device'));
         $tableContent='';
-        foreach($iscas AS $isca){
-            $tableContent .= "<tr><td></td><td>".$isca."</td><td></td></tr>";
+        foreach($devices AS $device){
+            $tableContent .= "<tr><td></td><td>".$device."</td><td></td></tr>";
         }
         return $tableContent;
     }
+     */
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
+    public function addDevice(Request $request)
+    {
+        $devices = explode(',', $request->input('devices'));
 
+        $technologie = $this->technologieService->show($request->technologie_id);
+
+        // $merged = $devices->merge($technologies);
+
+        // print_r($devices);
+
+        $current_devices = session('devices');
+        print_r($current_devices);
+        die;
+
+        $data = [];
+        foreach ($devices as $device) {
+            $data['devices'] = [
+                'device' => $device,
+                'technologie_id' => $technologie->id,
+                'price' => $technologie->price,
+                'type' => $technologie->type,
+            ];
+        }
+
+        session(['devices' => $data['devices']]);
+       
+
+        dd($request->session()->get('devices'));
+        die();
+
+        /* ler o input
+        incrementar session
+         */
+
+        return view('device.list_device', $devices);
+    }
 }
