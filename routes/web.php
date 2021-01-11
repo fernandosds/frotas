@@ -65,7 +65,8 @@ Route::group(['middleware' => 'auth'], function () {
         //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
         Route::post('/search', 'ContractController@search');
         
-        Route::post('/adddevice', 'ContractController@addDevice');
+        Route::post('/add-device', 'ContractController@addDevice');
+        Route::post('/remove-device/{id}', 'ContractController@removeDevice');
         //Route::get('/devices', 'ContractController@indexDevice');
         
         Route::post('/save', 'ContractController@save');
@@ -160,15 +161,10 @@ Route::group(['middleware' => 'auth'], function () {
      * Profile routes
      */
     Route::group(['prefix' => 'profiles'], function () {
-
         Route::get('/edit', 'ProfileController@editprofile');
         Route::post('/save', 'ProfileController@save');
         Route::put('/update', 'ProfileController@update');
-        
     });
-
-
-
 
     /**
      * Exit router

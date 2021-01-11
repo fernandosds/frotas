@@ -7,6 +7,7 @@ use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\TechnologieService;
+use Illuminate\Support\Facades\Session;
 
 //use App\Services\CustomerService;
 //use App\Http\Requests\ContractRequest;
@@ -101,6 +102,8 @@ class ContractController extends Controller
     public function new()
     {
 
+        session()->forget('devices');
+
         $data = $this->data;
         $data['technologies'] = $this->technologieService->paginate();
 
@@ -194,38 +197,49 @@ class ContractController extends Controller
 
     public function addDevice(Request $request)
     {
-        $devices = explode(',', $request->input('devices'));
 
-        $technologie = $this->technologieService->show($request->technologie_id);
+        // Pega dados da tecnologia
+        $tecnology = $this->technologieService->show($request->input('technologie_id'));
 
-        // $merged = $devices->merge($technologies);
+        // Pega dispositivos do request e joga em um array
+        $new_devices = explode(',', $request->input('devices'));
 
-        // print_r($devices);
-
-        $current_devices = session('devices');
-        print_r($current_devices);
-        die;
-
-        $data = [];
-        foreach ($devices as $device) {
-            $data['devices'] = [
-                'device' => $device,
-                'technologie_id' => $technologie->id,
-                'price' => $technologie->price,
-                'type' => $technologie->type,
+        foreach($new_devices as $device){
+            $arr_devices[] = [
+                'device'        => $device,
+                'tecnology_id'  => $tecnology->id,
+                'tecnology'     => $tecnology->type,
+                'price'         => $tecnology->price
             ];
         }
 
-        session(['devices' => $data['devices']]);
-       
+        // Merge com sessao atual se existir
+        if ($request->session()->has('devices')) {
+            $arr_devices = array_merge( $request->session()->get('devices'), $arr_devices );
+        }
 
-        dd($request->session()->get('devices'));
-        die();
+        // Salva array atualizado na sessão
+        $request->session()->put('devices', $arr_devices);
 
-        /* ler o input
-        incrementar session
-         */
+        // Soma o preço total
+        $total = 0;
+        foreach($arr_devices as $item){
+            $total += $item['price'];
+        }
 
-        return view('device.list_device', $devices);
+        return view('device.list_device', ['devices' => $arr_devices, 'total' => $total]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function removeDevice(Request $request)
+    {
+
+        $current_session = $request->session()->get('devices');
+
+        unset($current_session[0]);
+
+        $request->session()->forget(['devices', 'status']);
     }
 }
