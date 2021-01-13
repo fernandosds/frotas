@@ -176,23 +176,6 @@ class ContractController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-   
-
-    public function addDevice(Request $request)
-    {
-        $devices = explode(',', $request->input('new-device'));
-        $tableContent='';
-        foreach($devices AS $device){
-            $tableContent .= "<tr><td></td><td>".$device."</td><td></td></tr>";
-        }
-        return $tableContent;
-    }
-     */
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
 
     public function addDevice(Request $request)
@@ -204,7 +187,7 @@ class ContractController extends Controller
         // Pega dispositivos do request e joga em um array
         $new_devices = explode(',', $request->input('devices'));
 
-        foreach($new_devices as $device){
+        foreach ($new_devices as $device) {
             $arr_devices[] = [
                 'device'        => $device,
                 'tecnology_id'  => $tecnology->id,
@@ -215,7 +198,7 @@ class ContractController extends Controller
 
         // Merge com sessao atual se existir
         if ($request->session()->has('devices')) {
-            $arr_devices = array_merge( $request->session()->get('devices'), $arr_devices );
+            $arr_devices = array_merge($request->session()->get('devices'), $arr_devices);
         }
 
         // Salva array atualizado na sessão
@@ -223,7 +206,7 @@ class ContractController extends Controller
 
         // Soma o preço total
         $total = 0;
-        foreach($arr_devices as $item){
+        foreach ($arr_devices as $item) {
             $total += $item['price'];
         }
 
@@ -235,11 +218,36 @@ class ContractController extends Controller
      */
     public function removeDevice(Request $request)
     {
+        //$current_session = $request->session()->get('devices');
+        //print_r($current_session);
+        $id = $request->id + 1;
 
-        $current_session = $request->session()->get('devices');
+        /**
+        $current_session = Session::get('devices');
+        unset($current_session[$request->id]);
+        Session::put('devices', $current_session);
+        Session::save();
+        print_r($current_session);
+         */
 
-        unset($current_session[0]);
+        //$current_session = Session::get('devices');
 
-        $request->session()->forget(['devices', 'status']);
+        $current_session = session()->get('devices');
+
+        $value = [];
+
+        if ($request->session()->has($id)) {
+
+            //$request->session()->forget($id);
+
+            $request->session()->pull($id, $current_session);
+            $value = $request->session()->push($id, $current_session);
+        }
+        print_r($value);
+
+        $total = 0;
+        //return redirect()->back();
+
+        return view('device.list_device', ['devices' => $current_session, 'total' => $total]);
     }
 }

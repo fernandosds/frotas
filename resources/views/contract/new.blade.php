@@ -259,7 +259,7 @@
                 data: {
                     "devices": $('#new-device').val(),
                     "technologie_id": $('#technologie_id').val(),
-                    //"price_device": $('#price_device').val()
+
                 },
                 success: function(response) {
                     $('#table-new-devices').html(response);
@@ -279,105 +279,107 @@
 
     $("#table-new-devices").on("click", ".btn-delete-device", function() {
 
-        var id = $(this).data('id');
-
-        $(this).closest('tr').fadeOut(300);
-
-
-       // const swalWithBootstrapButtons = Swal.mixin({
-       //     customClass: {
-       //         confirmButton: 'btn btn-success',
-       //         cancelButton: 'btn btn-danger'
-       //     },
-       //     buttonsStyling: false
-       // })
-//
-       // swalWithBootstrapButtons.fire({
-       //     title: 'Tem certeza?',
-       //     text: "Deseja realmente deletar o registro " + id,
-       //     type: 'warning',
-       //     showCancelButton: true,
-       //     confirmButtonText: 'Sim!',
-       //     cancelButtonText: 'Não!',
-       //     reverseButtons: true
-       // }).then((result) => {
-       //     console.log(result)
-       //     if (result.value) {
-//
-       //         $.ajax({
-       //             method: 'GET',
-       //         }).done(function(data) {
-       //             Swal.fire({
-       //                 type: 'success',
-       //                 title: 'Registro excluído com sucesso',
-       //                 showConfirmButton: true,
-       //                 timer: 3000,
-       //             })
-//
-//
-       //         }).fail(function(data) {
-       //             Swal.fire({
-       //                 type: 'error',
-       //                 title: 'Oops...',
-       //                 text: 'Erro ao tentar excluir!',
-       //                 showConfirmButton: true,
-       //                 timer: 2500
-       //             })
-       //         });
-//
-       //         $(this).closest('tr').fadeOut(300);
-//
-       //     }
-       // })
+        var id = $(this).data('id') + 1;
+        var url = "{{url('/contracts/remove-device')}}/" + id;
 
         //$(this).closest('tr').fadeOut(300);
 
-        //var url = "{{url('contracts/delete')}}/" + id;
-        /**
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false
-                })
 
-                swalWithBootstrapButtons.fire({
-                    title: 'Tem certeza?',
-                    text: "Deseja realmente deletar o registro " + id,
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim!',
-                    cancelButtonText: 'Não!',
-                    reverseButtons: true
-                }).then((result) => {
-                    console.log(result)
-                    if (result.value) {
+        // const swalWithBootstrapButtons = Swal.mixin({
+        //     customClass: {
+        //         confirmButton: 'btn btn-success',
+        //         cancelButton: 'btn btn-danger'
+        //     },
+        //     buttonsStyling: false
+        // })
+        //
+        // swalWithBootstrapButtons.fire({
+        //     title: 'Tem certeza?',
+        //     text: "Deseja realmente deletar o registro " + id,
+        //     type: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonText: 'Sim!',
+        //     cancelButtonText: 'Não!',
+        //     reverseButtons: true
+        // }).then((result) => {
+        //     console.log(result)
+        //     if (result.value) {
+        //
+        //         $.ajax({
+        //             method: 'GET',
+        //         }).done(function(data) {
+        //             Swal.fire({
+        //                 type: 'success',
+        //                 title: 'Registro excluído com sucesso',
+        //                 showConfirmButton: true,
+        //                 timer: 3000,
+        //             })
+        //
+        //
+        //         }).fail(function(data) {
+        //             Swal.fire({
+        //                 type: 'error',
+        //                 title: 'Oops...',
+        //                 text: 'Erro ao tentar excluir!',
+        //                 showConfirmButton: true,
+        //                 timer: 2500
+        //             })
+        //         });
+        //
+        //         $(this).closest('tr').fadeOut(300);
+        //
+        //     }
+        // })
 
-                        $.ajax({
-                            url: url,
-                            method: 'GET',
-                        }).done(function(data) {
-                            $('#_tr_user_' + id).hide()
-                            Swal.fire({
-                                type: 'success',
-                                title: 'Registro excluído com sucesso',
-                                showConfirmButton: true,
-                                timer: 3000
-                            })
-                        }).fail(function(data) {
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: 'Erro ao tentar excluir!',
-                                showConfirmButton: true,
-                                timer: 2500
-                            })
-                        });
+        //$(this).closest('tr').fadeOut(300);
 
-                    }
-                })
-         */
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Tem certeza?',
+            text: "Deseja realmente deletar o registro " + id,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim!',
+            cancelButtonText: 'Não!',
+            reverseButtons: true
+        }).then((result) => {
+            console.log(result)
+            if (result.value) {
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                }).done(function(data) {
+                    $('#_tr_user_' + id).hide()
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro excluído com sucesso',
+                        showConfirmButton: true,
+                        timer: 3000
+                    })
+                }).fail(function(data) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar excluir!',
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                });
+
+                $(this).closest('tr').fadeOut(300);
+
+            }
+        })
+
+
     });
 </script>
 @endsection
