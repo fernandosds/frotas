@@ -215,39 +215,27 @@ class ContractController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function removeDevice(Request $request)
     {
-        //$current_session = $request->session()->get('devices');
-        //print_r($current_session);
-        $id = $request->id + 1;
 
-        /**
-        $current_session = Session::get('devices');
-        unset($current_session[$request->id]);
-        Session::put('devices', $current_session);
-        Session::save();
-        print_r($current_session);
-         */
+        // Pega sessão e joga em um array
+        $arr_devices = $request->session()->get('devices');
 
-        //$current_session = Session::get('devices');
+        // Remove índice informado via request do array
+        unset($arr_devices[$request->input('id')]);
 
-        $current_session = session()->get('devices');
+        // Pega novo array e sobrescreve sessão atual
+        $request->session()->put('devices', $arr_devices);
 
-        $value = [];
-
-        if ($request->session()->has($id)) {
-
-            //$request->session()->forget($id);
-
-            $request->session()->pull($id, $current_session);
-            $value = $request->session()->push($id, $current_session);
-        }
-        print_r($value);
-
+        // Soma o preço total
         $total = 0;
-        //return redirect()->back();
+        foreach ($arr_devices as $item) {
+            $total += $item['price'];
+        }
 
-        return view('device.list_device', ['devices' => $current_session, 'total' => $total]);
+        // Retorna view
+        return view('device.list_device', ['devices' => $arr_devices, 'total' => $total]);
     }
 }

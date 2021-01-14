@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/search', 'ContractController@search');
         
         Route::post('/add-device', 'ContractController@addDevice');
-        Route::GET('/remove-device/{id}', 'ContractController@removeDevice');
+        Route::post('/remove-device', 'ContractController@removeDevice');
         //Route::get('/devices', 'ContractController@indexDevice');
         
         Route::post('/save', 'ContractController@save');

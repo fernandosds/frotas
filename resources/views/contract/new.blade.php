@@ -148,14 +148,11 @@
                             <div class="modal-body">
                                 <label class="inputType">Tecnologia</label>
                                 <select class="form-control" name="type" id="technologie_id">
-                                    <option value=" ">Selecione um tipo</option>
                                     @foreach ($technologies as $technologie)
-                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                        <option value="{{$technologie->id}}">{{$technologie->type}}</option>
                                     @endforeach
                                     <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
                                 </select>
-
-
                             </div>
 
                             <div class="modal-footer">
@@ -279,105 +276,21 @@
 
     $("#table-new-devices").on("click", ".btn-delete-device", function() {
 
-        var id = $(this).data('id') + 1;
-        var url = "{{url('/contracts/remove-device')}}/" + id;
+        var id = $(this).data('id');
 
-        //$(this).closest('tr').fadeOut(300);
+        $.ajax({
+            url: "{{url('/contracts/remove-device')}}",
+            method: 'POST',
+            data: {
+                "id": id
 
-
-        // const swalWithBootstrapButtons = Swal.mixin({
-        //     customClass: {
-        //         confirmButton: 'btn btn-success',
-        //         cancelButton: 'btn btn-danger'
-        //     },
-        //     buttonsStyling: false
-        // })
-        //
-        // swalWithBootstrapButtons.fire({
-        //     title: 'Tem certeza?',
-        //     text: "Deseja realmente deletar o registro " + id,
-        //     type: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonText: 'Sim!',
-        //     cancelButtonText: 'Não!',
-        //     reverseButtons: true
-        // }).then((result) => {
-        //     console.log(result)
-        //     if (result.value) {
-        //
-        //         $.ajax({
-        //             method: 'GET',
-        //         }).done(function(data) {
-        //             Swal.fire({
-        //                 type: 'success',
-        //                 title: 'Registro excluído com sucesso',
-        //                 showConfirmButton: true,
-        //                 timer: 3000,
-        //             })
-        //
-        //
-        //         }).fail(function(data) {
-        //             Swal.fire({
-        //                 type: 'error',
-        //                 title: 'Oops...',
-        //                 text: 'Erro ao tentar excluir!',
-        //                 showConfirmButton: true,
-        //                 timer: 2500
-        //             })
-        //         });
-        //
-        //         $(this).closest('tr').fadeOut(300);
-        //
-        //     }
-        // })
-
-        //$(this).closest('tr').fadeOut(300);
-
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
             },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'Tem certeza?',
-            text: "Deseja realmente deletar o registro " + id,
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sim!',
-            cancelButtonText: 'Não!',
-            reverseButtons: true
-        }).then((result) => {
-            console.log(result)
-            if (result.value) {
-
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                }).done(function(data) {
-                    $('#_tr_user_' + id).hide()
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Registro excluído com sucesso',
-                        showConfirmButton: true,
-                        timer: 3000
-                    })
-                }).fail(function(data) {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar excluir!',
-                        showConfirmButton: true,
-                        timer: 2500
-                    })
-                });
-
-                $(this).closest('tr').fadeOut(300);
-
+            success: function(response) {
+                $('#table-new-devices').html(response);
+                $('#exampleModalCenter').modal('hide')
             }
-        })
+
+        });
 
 
     });
