@@ -100,8 +100,6 @@
         </div>
 
 
-        <input type="hidden" name="id" id="id" value="{{ $contract->id ?? '' }}" />
-
         <div class="kt-portlet__body">
 
             <div class="form-row">
@@ -142,6 +140,17 @@
                         <form id="form-insert-device">
                             @csrf
 
+                            <!-- Verificar os campos device_type, log_id e shipment_id.
+                                - Analisar se há a necessidade dos mesmos na tabela de contract
+                                - Caso não seja, alterar no model.
+                                - device_type tem o mesmo objetivo de type no campo technologie
+                                - Shipment_id ainda não há id criado no momento do contrato
+                                - O mesmo acontece com log_id.
+                             -->
+                            <input type="hidden" name="customer_id" id="customer_id" value="" />
+                            <input type="hidden" name="device_type" id="device_type" value="Retornavel" />
+                            <input type="hidden" name="log_id" id="log_id" value="1" />
+                            <input type="hidden" name="shipment_id" id="shipment_id" value="1" />
                             <div class="modal-body" id="list_devices">
                                 <textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>
                             </div>
@@ -149,7 +158,7 @@
                                 <label class="inputType">Tecnologia</label>
                                 <select class="form-control" name="type" id="technologie_id">
                                     @foreach ($technologies as $technologie)
-                                        <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
                                     @endforeach
                                     <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
                                 </select>
@@ -230,12 +239,15 @@
      */
 
     $(function() {
-
+       
         $('#btn-contract-save').click(function() {
 
-            var contract_id = $('#id').val();
-
-            ajax_store(contract_id, "contracts", $('#form-create-contract').serialize());
+            
+            var id = $('#customer_id').val();
+            console.log($('#form-insert-device').serialize());
+            
+            ajax_store("", "contracts", $('#form-insert-device').serialize());
+            //ajax_store("", "contracts", $('#form-create-contract').serialize());
 
         });
 
@@ -262,9 +274,9 @@
                     $('#table-new-devices').html(response);
                     $('#exampleModalCenter').modal('hide')
                 }
-
+                
             });
-
+            
         });
 
     });

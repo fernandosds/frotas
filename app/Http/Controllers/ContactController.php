@@ -58,7 +58,7 @@ class ContactController extends Controller
     public function save(Request $request)
     {
         try {
-
+           
             $this->contactService->save($request);
 
             return response()->json(['status' => 'success'], 200);

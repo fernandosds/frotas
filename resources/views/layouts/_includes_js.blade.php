@@ -298,6 +298,7 @@
                         $('#city').html(response.data.city)
                         $('#state').html(response.data.state)
                         $('#id').html(response.data.id)
+                        $('#customer_id').val(response.data.id)
                         return response.data;
 
                     } else {

@@ -119,6 +119,21 @@ class ContractController extends Controller
      */
     public function save(Request $request)
     {
+        $arr_devices = $request->session()->get('devices');
+
+        foreach ($arr_devices as $arr) {
+            $device         = $arr['device'];
+            $tecnology_id   = $arr['tecnology_id'];
+            $tecnology      = $arr['tecnology'];
+            $price          = $arr['price'];
+
+            //print_r($arr['tecnology']);
+        }
+
+        //print_r($arr['tecnology']);
+        print_r($arr_devices);
+        die();
+
         try {
 
             $this->contractService->save($request);
@@ -139,6 +154,10 @@ class ContractController extends Controller
 
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
+        $data['technologies'] = $this->technologieService->show($id);
+
+        //print_r($data['technologies']);
+        //die();
 
         return view('contract.new', $data);
     }

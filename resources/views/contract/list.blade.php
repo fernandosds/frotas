@@ -49,7 +49,7 @@
                             <td>{{$contract->type}}</td>
                             <td>
                                 <div class="pull-right">
-                                    <a href="{{url('customers/contracts/edit')}}/{{$contract->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                    <a href="{{url('contracts/edit')}}/{{$contract->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                     <button type="button" class="btn btn-sm  btn-danger btn-delete-contract" data-id="{{$contract->id}}">
                                         <span class="fa fa-fw fa-trash"></span> Deletar
                                     </button>

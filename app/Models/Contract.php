@@ -29,7 +29,7 @@ class Contract extends Model
         'log_id',
         'shipment_id',
         'customer_id',       
-        'type',
+        'device_type',
         'validity'
     ];
 
@@ -43,7 +43,7 @@ class Contract extends Model
             'log_id'        => $this->log_id,
             'shipment_id'   => $this->shipment_id,
             'customer_id'   => $this->customer_id,
-            'type'          => $this->type,
+            'device_type'   => $this->device_type,
             'validity'      => $this->validity,
         ];
     }
