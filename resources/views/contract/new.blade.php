@@ -147,10 +147,8 @@
                                 - Shipment_id ainda não há id criado no momento do contrato
                                 - O mesmo acontece com log_id.
                              -->
-                            <input type="hidden" name="customer_id" id="customer_id" value="" />
-                            <input type="hidden" name="device_type" id="device_type" value="Retornavel" />
-                            <input type="hidden" name="log_id" id="log_id" value="1" />
-                            <input type="hidden" name="shipment_id" id="shipment_id" value="1" />
+                            <input type="hidden" name="customer_id" id="customer_id" value="" />                           
+                            
                             <div class="modal-body" id="list_devices">
                                 <textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>
                             </div>
@@ -158,9 +156,10 @@
                                 <label class="inputType">Tecnologia</label>
                                 <select class="form-control" name="type" id="technologie_id">
                                     @foreach ($technologies as $technologie)
-                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>                                    
                                     @endforeach
-                                    <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
+                                    <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" /> 
+                                    <input type="hidden" name="model" id="model" value="{{ $technologie->type ?? '' }}" />
                                 </select>
                             </div>
 

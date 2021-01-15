@@ -21,8 +21,9 @@ class Device extends Model
      */
     protected $fillable = [
         'id',
-        'type_of_device_id',
+        'type_id',
         'model',
+        'contract_id'
     ];
 
     /**
@@ -31,17 +32,18 @@ class Device extends Model
     public function format()
     {
         return [
-            'id'                 => $this->id,
-            'type_of_device_id'  => $this->type_of_device_id,
-            'model'              => $this->model,
-            
+            'id'                => $this->id,
+            'type_id'           => $this->type_id,
+            'model'             => $this->model,
+            'contract_id'       => $this->contract_id,
+
         ];
     }
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     */
     public function Logs()
     {
         return $this->HasMany('App\Models\Log');
@@ -55,4 +57,11 @@ class Device extends Model
         return $this->BelongsTo('App\Models\TypeOfDevice');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Contracts()
+    {
+        return $this->HasMany('App\Models\Contract');
+    }
 }

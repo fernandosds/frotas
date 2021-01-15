@@ -14,8 +14,7 @@ class CreateDevicesTable extends Migration
     public function up()
     {
         Schema::create('devices', function (Blueprint $table) {
-            $table->id();
-            $table->string('uniqid', 50);
+            $table->id();            
             $table->integer('type_of_device_id')->nullable();
             $table->string('model', 255);
             $table->softDeletes();

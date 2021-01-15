@@ -26,10 +26,8 @@ class Contract extends Model
      */
     protected $fillable = [
         'id',
-        'log_id',
-        'shipment_id',
         'customer_id',       
-        'device_type',
+        'user_id',
         'validity'
     ];
 
@@ -40,10 +38,8 @@ class Contract extends Model
     {
         return [
             'id'            => $this->id,
-            'log_id'        => $this->log_id,
-            'shipment_id'   => $this->shipment_id,
             'customer_id'   => $this->customer_id,
-            'device_type'   => $this->device_type,
+            'user_id'       => $this->user_id,
             'validity'      => $this->validity,
         ];
     }
@@ -62,6 +58,14 @@ class Contract extends Model
     public function log()
     {
         return $this->belongsTo('App\Models\Log');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function device()
+    {
+        return $this->belongsTo('App\Models\Device');
     }
 
     /**

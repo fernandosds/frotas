@@ -50,8 +50,34 @@ class ContractService
      */
     public function save(Request $request)
     {
+        print_r($request->all());       
+
+        die();
+
+        $array_contract[] = [
+            'customer_id'   => $request->customer_id,
+            'user_id'       => $request->user_id
+        ];
+
+        //print_r($array_contract);
+
+        $model = $request->model;
+
+        $arr_devices = $request->session()->get('devices');
+
+        foreach ($arr_devices as $arr) {
+            $device         = $arr['device'];
+            $tecnology_id   = $arr['tecnology_id'];
+            $tecnology      = $arr['tecnology'];
+            $price          = $arr['price'];
+
+
+            //print_r($arr['tecnology']);
+        }
 
         
+
+
         $contract = $this->contract->create($request->all());
 
         return $contract;
@@ -65,10 +91,9 @@ class ContractService
     public function update(Request $request, $id)
     {
 
-        
-        $contract = $this->contract->update($id, $request->all());        
+
+        $contract = $this->contract->update($id, $request->all());
         return $contract;
-    
     }
 
     public function show(Int $id)
@@ -87,7 +112,7 @@ class ContractService
         return ($contract) ? $contract : abort(404);
     }
 
-    
+
     /**
      * @param Int $id
      */

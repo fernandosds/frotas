@@ -7,6 +7,7 @@ use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\TechnologieService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 //use App\Services\CustomerService;
@@ -119,20 +120,9 @@ class ContractController extends Controller
      */
     public function save(Request $request)
     {
-        $arr_devices = $request->session()->get('devices');
+        $user_id = Auth::user()->id;
 
-        foreach ($arr_devices as $arr) {
-            $device         = $arr['device'];
-            $tecnology_id   = $arr['tecnology_id'];
-            $tecnology      = $arr['tecnology'];
-            $price          = $arr['price'];
-
-            //print_r($arr['tecnology']);
-        }
-
-        //print_r($arr['tecnology']);
-        print_r($arr_devices);
-        die();
+        $request->merge(['user_id' => $user_id]);
 
         try {
 
