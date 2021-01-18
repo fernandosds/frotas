@@ -50,16 +50,21 @@ class ContractService
      */
     public function save(Request $request)
     {
-        print_r($request->all());       
+        // print_r($request->all());    
+        // die();
 
-        die();
-
-        $array_contract[] = [
+        $array_contract = array();
+        $array_contract = [
             'customer_id'   => $request->customer_id,
             'user_id'       => $request->user_id
         ];
 
-        //print_r($array_contract);
+       
+
+        $contract = $this->contract->create($array_contract);
+
+        print_r($contract->id);
+        die();
 
         $model = $request->model;
 
@@ -75,10 +80,8 @@ class ContractService
             //print_r($arr['tecnology']);
         }
 
-        
 
-
-        $contract = $this->contract->create($request->all());
+        //$contract = $this->contract->create($request->all());
 
         return $contract;
     }
