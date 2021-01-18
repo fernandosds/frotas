@@ -1,10 +1,10 @@
-<table class="table table-hover">
+<table class="table table-hover table-dark">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col"></th>
             <th scope="col">Modelo</th>
             <th scope="col">Tecnologia</th>
-            <th scope="col">Preço</th>
+            <th scope="col">Custo Unit.</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -18,7 +18,7 @@
             <td></td>
             <td>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-device" data-id="{{$key}}">
+                    <button type="button" class="btn btn-sm  btn-danger btn-delete-device" data-id="{{$key}}">
                         <span class="fa fa-fw fa-trash"></span>
                     </button>
                 </div>

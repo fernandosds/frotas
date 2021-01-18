@@ -66,24 +66,18 @@
                 </li>
 
                 <!-- ÍSCAS -->
-                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_devices ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_stock ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                        <span class="kt-menu__link-icon"><i class="fa fa-fish"></i></span>
-                        <span class="kt-menu__link-text">ÍSCAS</span>
+                        <span class="kt-menu__link-icon"><i class="fa fa-box-open"></i></span>
+                        <span class="kt-menu__link-text">Estoque</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                         <ul class="kt-menu__subnav">
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de íscas</span></a></li>
-                        </ul>
-                    </div>
-                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                        <ul class="kt-menu__subnav">
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Cadastro de íscas</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('stock/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de íscas</span></a></li>
                         </ul>
                     </div>
                 </li>
-
 
                 @if( Auth::user()->type == 'sat' )
 
@@ -92,8 +86,26 @@
                         <i class="kt-menu__section-icon flaticon-more-v2"></i>
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_users ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- ÍSCAS -->
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_devices ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                            <span class="kt-menu__link-icon"><i class="fa fa-fish"></i></span>
+                            <span class="kt-menu__link-text">ÍSCAS</span>
+                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                            <ul class="kt-menu__subnav">
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de íscas</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                            <ul class="kt-menu__subnav">
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Upload de arquivo</span></a></li>
+                            </ul>
+                        </div>
+                    </li>
 
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_users ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- USUÁRIOS -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-user icon-menu"></i></span>
