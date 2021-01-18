@@ -130,4 +130,14 @@ class DeviceService
     {
         return $this->device->find($id);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function filter($customer_id)
+    {     
+        return $this->device->filter($customer_id);
+    }
+    
 }

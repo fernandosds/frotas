@@ -64,17 +64,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/{id}', 'ContractController@show');
         //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
         Route::post('/search', 'ContractController@search');
-        
+
         Route::post('/add-device', 'ContractController@addDevice');
         Route::post('/remove-device', 'ContractController@removeDevice');
         //Route::get('/devices', 'ContractController@indexDevice');
-        
+
         Route::post('/save', 'ContractController@save');
         Route::put('/update/{id}', 'ContractController@update');
         Route::get('/edit/{id}', 'ContractController@edit');
         Route::get('/delete/{id}', 'ContractController@destroy');
-
     });
+
+    /**
+     * Stocks routes
+     */
+    Route::group(['prefix' => 'stocks'], function () {
+        Route::get('/', 'StockController@index');
+    
+    });
+
 
     /**
      * Devices routes
@@ -88,7 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'DeviceController@edit');
         Route::get('/delete/{id}', 'DeviceController@destroy');
 
-        
+
 
         /**
          * Technologies routes
@@ -103,7 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['prefix' => 'boardings'], function() {
+    Route::group(['prefix' => 'boardings'], function () {
         Route::get('/', 'BoardingController@index');
         Route::get('/new', 'BoardingController@new');
         Route::post('/save', 'BoardingController@save');
