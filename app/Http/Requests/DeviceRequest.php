@@ -20,24 +20,12 @@ class DeviceRequest extends FormRequest
     public function rules()
     {
 
-        $id = $this->route('post');
-
-        $return = [];
-
-        if ($this->method() == "POST") {
-            $return = array_merge([
-                'model' => 'required|unique:devices,model,{$id},id,deleted_at,NULL',
-            ], $return);
-        } elseif ($this->method() == "PUT") {
-            $return = array_merge([
-                'model' => [
-                    'required',
-                    Rule::unique('devices')->ignore($this->id),
-                ],
-            ], $return);
-        }
+        $return = [
+            'file' => 'required|max:10000|mimes:xlsx,xls',
+        ];
 
         return $return;
+
     }
 
 }

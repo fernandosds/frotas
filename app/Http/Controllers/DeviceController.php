@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DeviceImport;
 use Illuminate\Http\Request;
 use App\Http\Requests\DeviceRequest;
 use App\Services\DeviceService;
+use Maatwebsite\Excel\Facades\Excel;
+use mysql_xdevapi\Exception;
 
 class DeviceController extends Controller
 {
@@ -53,7 +56,42 @@ class DeviceController extends Controller
      */
     public function save(DeviceRequest $request)
     {
-    
+
+        $path = $request->file('file')->getRealPath();
+
+        //$path = [
+        //    ['a','b'],
+        //    ['c','d'],
+        //    ['e','f'],
+        //];
+
+
+
+        try{
+
+            $data = Excel::import(new DeviceImport, $path);
+
+
+            return response()->json(['status' => 'success'], 200);
+
+        }catch ( \Maatwebsite\Excel\Validators\ValidationException $e ){
+
+            $failures = $e->failures();
+            return response()->json(['status' => 'internal_error', 'errors' => $failures->message], 400);
+
+        }
+
+
+
+
+
+
+
+
+        //return redirect('/')->with('success', 'All good!');
+
+
+        /*
         try {
 
             $request->merge(['uniqid' => md5(uniqid(""))]);
@@ -65,6 +103,7 @@ class DeviceController extends Controller
 
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
+        */
     }
 
     /**

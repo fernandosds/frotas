@@ -23,7 +23,10 @@ class Device extends Model
         'id',
         'type_id',
         'model',
-        'contract_id'
+        'contract_id',
+        'uniqid',
+        'contract_id',
+        'tecnology_id'
     ];
 
     /**
@@ -36,6 +39,9 @@ class Device extends Model
             'type_id'           => $this->type_id,
             'model'             => $this->model,
             'contract_id'       => $this->contract_id,
+            'uniqid'            => $this->uniqid,
+            'contract_id'       => $this->contract_id,
+            'tecnology_id'      => $this->tecnology_id,
 
         ];
     }

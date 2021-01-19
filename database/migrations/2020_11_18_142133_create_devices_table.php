@@ -17,6 +17,9 @@ class CreateDevicesTable extends Migration
             $table->id();            
             $table->integer('type_of_device_id')->nullable();
             $table->string('model', 255);
+            $table->string('uniqid', 50);
+            $table->integer('contract_id')->nullable();
+            $table->integer('customer_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
