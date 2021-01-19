@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Device;
+use Illuminate\Support\Facades\DB;
 
 class DeviceRepository extends AbstractRepository
 {
@@ -17,4 +18,14 @@ class DeviceRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    public function filter(int $customer_id)
+    {
+        $customer = DB::table('devices')
+            ->select(DB::raw('*'))
+            ->where('customer_id', '=', $customer_id)
+            ->get();
+
+
+        return $customer;
+    }
 }
