@@ -96,8 +96,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'DeviceController@edit');
         Route::get('/delete/{id}', 'DeviceController@destroy');
 
-
-
         /**
          * Technologies routes
          */

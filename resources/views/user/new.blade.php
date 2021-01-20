@@ -17,6 +17,10 @@
             </div>
         </div>
 
+        <col class="sm"
+
+
+
         <form class="kt-form kt-form--label-right" id="form-create-user">
             @csrf
             <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
@@ -52,14 +56,9 @@
                     <label class="col-form-label col-lg-3 col-sm-12">Tipo</label>
                     <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
                         <select class="form-control" name="type">
-                            <option value="">Selecione um nível de usuário</option>
-                            <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>SAT</option>
-                            <option value="transportadora" {{ ($user->type ?? null) == 'transportadora' ? 'selected' : ''}}>TRANSPORTADORA</option>
-                            <option value="dono_carga" {{ ($user->type ?? null) == 'dono_carga' ? 'selected' : ''}}>DONO DE CARGA</option>
-                            <option value="gerenciador_risco" {{ ($user->type ?? null) == 'gerenciador_risco' ? 'selected' : ''}}>GERENCIADOR DE RISCO</option>
-                            <option value="embaixador" {{ ($user->type ?? null) == 'embaixador' ? 'selected' : ''}}>EMBAIXADOR</option>
+                            <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>Usuário Interno SatCompany</option>
+                            <option value="customer" {{ ($user->type ?? null) == 'customer' ? 'selected' : ''}}>Cliente Externo</option>
                         </select>
-                        <span class="form-text text-muted">Selecione o nível de acesso do usuário.</span>
                     </div>
                 </div>
                 <div class="form-group row">
