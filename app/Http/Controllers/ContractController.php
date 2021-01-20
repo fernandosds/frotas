@@ -192,10 +192,10 @@ class ContractController extends Controller
     {
 
         // Pega dados da tecnologia
-        $technologie = $this->technologieService->show($request->input('technologie_id'));
+        //$technologie = $this->technologieService->show($request->input('technologie_id'));
 
         // Pega dispositivos do request e joga em um array
-        $new_devices = $request->input();
+        //$new_devices = $request->input();
 
         $arr_devices[] = [
             'quantity'          => $request->quantity,
