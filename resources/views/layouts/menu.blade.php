@@ -81,149 +81,166 @@
 
                 @if( Auth::user()->type == 'sat' )
 
-                    <li class="kt-menu__section ">
-                        <h4 class="kt-menu__section-text">SAT Company</h4>
-                        <i class="kt-menu__section-icon flaticon-more-v2"></i>
-                    </li>
+                <li class="kt-menu__section ">
+                    <h4 class="kt-menu__section-text">SAT Company</h4>
+                    <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                </li>
 
-                    <!-- ÍSCAS -->
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_devices ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-fish"></i></span>
-                            <span class="kt-menu__link-text">ÍSCAS</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de íscas</span></a></li>
-                            </ul>
-                        </div>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Upload de arquivo</span></a></li>
-                            </ul>
-                        </div>
-                    </li>
+                <!-- ÍSCAS -->
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_devices ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-fish"></i></span>
+                        <span class="kt-menu__link-text">ÍSCAS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de íscas</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Upload de arquivo</span></a></li>
+                        </ul>
+                    </div>
+                </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_users ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!-- USUÁRIOS -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-user icon-menu"></i></span>
-                            <span class="kt-menu__link-text">USUÁRIOS</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_users ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- USUÁRIOS -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-user icon-menu"></i></span>
+                        <span class="kt-menu__link-text">USUÁRIOS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
 
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('users/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista usuários</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('users/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Usuário</span></a></li>
-                            </ul>
-                        </div>
-                    </li>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('users/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista usuários</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('users/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Usuário</span></a></li>
+                        </ul>
+                    </div>
+                </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_customers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!-- CLIENTES -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-users"></i></span>
-                            <span class="kt-menu__link-text">CLIENTES</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista cliente</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo cliente</span></a></li>
-                            </ul>
-                        </div>
-
-                    </li>
-
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_contracts ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!-- CONTRATOS -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-file-contract"></i></span>
-                            <span class="kt-menu__link-text">CONTRATOS</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista contratos</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo contrato</span></a></li>
-                            </ul>
-                        </div>
-
-                    </li>
-
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_technologies ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!-- TECNOLOGIA -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>
-                            <span class="kt-menu__link-text">TECNOLOGIA</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/technologies/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista tecnologia</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/technologies/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Nova tecnologia</span></a></li>
-                            </ul>
-                        </div>
-
-                    </li>
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logistics ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- LOGISTICA -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-boxes"></i></span>
+                        <span class="kt-menu__link-text">LOGISTICAS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Contr. Pendentes</span></a></li>
+                            <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo cliente</span></a></li> -->
+                        </ul>
+                    </div>
+                </li>
 
 
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_customers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- CLIENTES -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-users"></i></span>
+                        <span class="kt-menu__link-text">CLIENTES</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista cliente</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo cliente</span></a></li>
+                        </ul>
+                    </div>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_loads ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!--TIPO DE CARGAS -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-truck-moving"></i></span>
-                            <span class="kt-menu__link-text">TIPO DE CARGAS</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('typeofloads/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista cargas</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('typeofloads/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo tipo de carga</span></a></li>
-                            </ul>
-                        </div>
+                </li>
 
-                    </li>
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_contracts ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- CONTRATOS -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-file-contract"></i></span>
+                        <span class="kt-menu__link-text">CONTRATOS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista contratos</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo contrato</span></a></li>
+                        </ul>
+                    </div>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_locations ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!-- LOCAIS DE ACOMODAÇÃO -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-truck-loading"></i></span>
-                            <span class="kt-menu__link-text">LOCAIS DE ACOMODAÇÃO</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('accommodationlocations/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista loc. acomodação</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('accommodationlocations/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Cadastro acomodação</span></a></li>
-                            </ul>
-                        </div>
+                </li>
 
-                    </li>
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_technologies ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- TECNOLOGIA -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>
+                        <span class="kt-menu__link-text">TECNOLOGIA</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/technologies/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista tecnologia</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('devices/technologies/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Nova tecnologia</span></a></li>
+                        </ul>
+                    </div>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logs ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <!-- LOGS -->
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                            <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>
-                            <span class="kt-menu__link-text">LOGS</span>
-                            <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                        </a>
-                        <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logs/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Logs</span></a></li>
-                            </ul>
-                        </div>
+                </li>
 
-                    </li>
+
+
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_loads ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!--TIPO DE CARGAS -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-truck-moving"></i></span>
+                        <span class="kt-menu__link-text">TIPO DE CARGAS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('typeofloads/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista cargas</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('typeofloads/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo tipo de carga</span></a></li>
+                        </ul>
+                    </div>
+
+                </li>
+
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_locations ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- LOCAIS DE ACOMODAÇÃO -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-truck-loading"></i></span>
+                        <span class="kt-menu__link-text">LOCAIS DE ACOMODAÇÃO</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('accommodationlocations/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista loc. acomodação</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('accommodationlocations/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Cadastro acomodação</span></a></li>
+                        </ul>
+                    </div>
+
+                </li>
+
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logs ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- LOGS -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>
+                        <span class="kt-menu__link-text">LOGS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logs/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Logs</span></a></li>
+                        </ul>
+                    </div>
+
+                </li>
 
                 @endif
 

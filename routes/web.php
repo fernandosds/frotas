@@ -83,6 +83,14 @@ Route::group(['middleware' => 'auth'], function () {
     
     });
 
+    /**
+     * Logistics  routes
+     */
+    Route::group(['prefix' => 'logistics'], function () {
+        Route::get('/', 'LogisticController@index');
+    
+    });
+
 
     /**
      * Devices routes
