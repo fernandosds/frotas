@@ -35,6 +35,9 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Modelo</th>
+                            <th scope="col">Tecnologia</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Nº Contrato</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +45,8 @@
                             <tr id="_tr_user_{{$device->id}}">
                                 <th scope="row">{{$device->id}}</th>
                                 <td>{{$device->model}}</td>
+                                <td>{{$device->technologie->type}}</td>
+                                <td>{{$device->customer->name ?? ''}}</td>
                                 <td>
                                     <div class="pull-right">
                                         <a href="{{url('devices/edit')}}/{{$device->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>

@@ -42,7 +42,7 @@ class BoardingRequest extends FormRequest
            'cpf_cnpj'                   => 'string|max:255|required',
            'brand'                      => 'string|max:255|required',
            'model'                      => 'string|max:255|required',
-           'redundant_technology'       => 'string|max:255|required',
+           'redundant_technologie'      => 'string|max:255|required',
 
            'type_of_load_id'            => 'integer|required',
            'accommodation_location_id'  => 'integer|required',

@@ -156,7 +156,7 @@
 
                     </li>
 
-                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_tecnologies ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_technologies ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <!-- TECNOLOGIA -->
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>

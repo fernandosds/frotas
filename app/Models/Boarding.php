@@ -51,7 +51,7 @@ class Boarding extends Model
         'cell_phone',
         'brand',
         'model',
-        'redundant_technology',
+        'redundant_technologie',
         'test',
         'active'
 
@@ -83,7 +83,7 @@ class Boarding extends Model
             'cell_phone'                => $this->cell_phone,
             'brand'                     => $this->brand,
             'model'                     => $this->model,
-            'redundant_technology'      => $this->redundant_technology,
+            'redundant_technologie'     => $this->redundant_technologie,
             'test'                      => $this->test,
             'active'                    => $this->active,
 

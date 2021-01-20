@@ -34,7 +34,7 @@ class CreateBoardingsTable extends Migration
             $table->string('cell_phone', 255);
             $table->string('brand', 255);
             $table->string('model', 255);
-            $table->string('redundant_technology', 255);
+            $table->string('redundant_technologie', 255);
             $table->boolean('active')->default(0);
             $table->softDeletes();
             $table->timestamps();

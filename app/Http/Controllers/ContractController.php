@@ -191,7 +191,7 @@ class ContractController extends Controller
     {
 
         // Pega dados da tecnologia
-        $tecnology = $this->technologieService->show($request->input('technologie_id'));
+        $technologie = $this->technologieService->show($request->input('technologie_id'));
 
         // Pega dispositivos do request e joga em um array
         $new_devices = explode(',', $request->input('devices'));
@@ -199,9 +199,9 @@ class ContractController extends Controller
         foreach ($new_devices as $device) {
             $arr_devices[] = [
                 'device'        => $device,
-                'tecnology_id'  => $tecnology->id,
-                'tecnology'     => $tecnology->type,
-                'price'         => $tecnology->price
+                'technologie_id' => $technologie->id,
+                'technologie'    => $technologie->type,
+                'price'         => $technologie->price
             ];
         }
 

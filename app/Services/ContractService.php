@@ -72,12 +72,12 @@ class ContractService
 
         foreach ($arr_devices as $arr) {
             $device         = $arr['device'];
-            $tecnology_id   = $arr['tecnology_id'];
-            $tecnology      = $arr['tecnology'];
+            $technologie_id   = $arr['technologie_id'];
+            $technologie      = $arr['technologie'];
             $price          = $arr['price'];
 
 
-            //print_r($arr['tecnology']);
+            //print_r($arr['technologie']);
         }
 
 

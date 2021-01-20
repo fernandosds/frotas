@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="inpuCity">Tecnologia Redundante</label>
-                                    <input type="text" class="form-control" name="redundant_technology" value="{{ $boarding->redundant_technology ?? '' }}">
+                                    <input type="text" class="form-control" name="redundant_technologie" value="{{ $boarding->redundant_technologie ?? '' }}">
                                 </div>
 
                                 <div class="form-group col-md-3">

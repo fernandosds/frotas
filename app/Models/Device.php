@@ -26,7 +26,7 @@ class Device extends Model
         'contract_id',
         'uniqid',
         'contract_id',
-        'tecnology_id'
+        'technologie_id'
     ];
 
     /**
@@ -41,11 +41,10 @@ class Device extends Model
             'contract_id'       => $this->contract_id,
             'uniqid'            => $this->uniqid,
             'contract_id'       => $this->contract_id,
-            'tecnology_id'      => $this->tecnology_id,
+            'technologie_id'    => $this->technologie_id,
 
         ];
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -56,18 +55,35 @@ class Device extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function typeofdevice()
-    {
-        return $this->BelongsTo('App\Models\TypeOfDevice');
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function Contracts()
     {
         return $this->HasMany('App\Models\Contract');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function technologie()
+    {
+        return $this->belongsTo('App\Models\Technologie');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    // public function typeofdevice()
+    // {
+    //     return $this->BelongsTo('App\Models\TypeOfDevice');
+    // }
+
 }

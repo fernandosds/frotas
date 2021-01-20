@@ -46,14 +46,31 @@ class DeviceService
     }
 
     /**
-     * @param Request $request
+     * @param array $array
      * @return mixed
      */
-    public function save(Request $request)
+    public function save(Array $array)
     {
-        $device = $this->device->create($request->all());
 
-        return $device;
+        $arr_insert = [];
+        foreach( $array[0] as $item ){
+
+            if( $this->device->exists(trim($item[0])) == 0 ){
+
+                if( $item[0] != "" && (int)$item[1] > 0 ){
+                    $arr_insert[] = [
+                        'model' => trim($item[0]),
+                        'technologie_id' => (int)$item[1],
+                        'uniqid' => md5(uniqid(""))
+                    ];
+                }
+            }
+        }
+
+        $device = DB::table('devices')->insert($arr_insert);
+
+        return ($device) ? $arr_insert : abort(404);
+
     }
 
     /**
@@ -70,7 +87,7 @@ class DeviceService
 
     /**
      * @param String $device
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|string|null
+     * @return array
      */
     public function findByModel(String $device)
     {
@@ -139,5 +156,6 @@ class DeviceService
     {     
         return $this->device->filter($customer_id);
     }
+
     
 }

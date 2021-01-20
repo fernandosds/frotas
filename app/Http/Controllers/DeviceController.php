@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\DeviceImport;
+use App\Services\TechnologieService;
 use Illuminate\Http\Request;
 use App\Http\Requests\DeviceRequest;
 use App\Services\DeviceService;
@@ -12,11 +13,18 @@ use mysql_xdevapi\Exception;
 class DeviceController extends Controller
 {
     private $deviceService;
+    private $technologieService;
     private $data;
 
-    public function __construct(DeviceService $deviceService)
+    /**
+     * DeviceController constructor.
+     * @param DeviceService $deviceService
+     * @param TechnologieService $technologieService
+     */
+    public function __construct(DeviceService $deviceService, TechnologieService $technologieService)
     {
         $this->deviceService = $deviceService;
+        $this->technologieService = $technologieService;
 
         $this->data = [
             'icon' => 'flaticon-placeholder-3',
@@ -45,65 +53,27 @@ class DeviceController extends Controller
     {
 
         $data = $this->data;
+        $data['technologies'] = $this->technologieService->all();
+
         return view('device.new', $data);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param DeviceRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function save(DeviceRequest $request)
     {
 
-        $path = $request->file('file')->getRealPath();
+        $array = Excel::toArray(new DeviceImport, $request->file('file'));
 
-        //$path = [
-        //    ['a','b'],
-        //    ['c','d'],
-        //    ['e','f'],
-        //];
+        $inserts = $this->deviceService->save($array);
 
+        return response()->json([
+            'status' => 'success',
+            'message' => count($inserts)
+        ], 200);
 
-
-        try{
-
-            $data = Excel::import(new DeviceImport, $path);
-
-
-            return response()->json(['status' => 'success'], 200);
-
-        }catch ( \Maatwebsite\Excel\Validators\ValidationException $e ){
-
-            $failures = $e->failures();
-            return response()->json(['status' => 'internal_error', 'errors' => $failures->message], 400);
-
-        }
-
-
-
-
-
-
-
-
-        //return redirect('/')->with('success', 'All good!');
-
-
-        /*
-        try {
-
-            $request->merge(['uniqid' => md5(uniqid(""))]);
-
-            $this->deviceService->save($request);
-
-            return response()->json(['status' => 'success'], 200);
-        } catch (\Exception $e) {
-
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-        */
     }
 
     /**
@@ -120,8 +90,9 @@ class DeviceController extends Controller
     }
 
     /**
-     * @param UserRequest $request
-     * @return array|\Illuminate\Http\JsonResponse
+     * @param Int $id
+     * @param DeviceRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Int $id, DeviceRequest $request)
     {
@@ -143,13 +114,11 @@ class DeviceController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    
+
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Lure  $user
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Int $id)
     {

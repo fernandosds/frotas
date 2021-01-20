@@ -18,7 +18,7 @@ class TechnologieController extends Controller
         $this->data = [
             'icon' => 'flaticon-map-location',
             'title' => 'Tecnologias',
-            'menu_open_tecnologies' => 'kt-menu__item--open'
+            'menu_open_technologies' => 'kt-menu__item--open'
         ];
     }
 

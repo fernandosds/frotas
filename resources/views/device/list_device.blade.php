@@ -13,7 +13,7 @@
         <tr id="_tr_device_{{$key}}">
             <td>{{$key + 1}}</td>
             <td>{{$val['device']}}</td>
-            <td>{{$val['tecnology']}}</td>
+            <td>{{$val['technologie']}}</td>
             <td>{{$val['price']}}</td>
             <td></td>
             <td>

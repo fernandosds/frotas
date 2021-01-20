@@ -21,6 +21,9 @@ class Customer extends Model
      */
     protected $dates = ['created_at', 'updated_at'];
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'id',
         'name',
@@ -57,7 +60,6 @@ class Customer extends Model
         ];
     }
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
@@ -65,7 +67,6 @@ class Customer extends Model
     {
         return $this->HasMany('App\Models\Contract', Contract::class);
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -75,8 +76,6 @@ class Customer extends Model
         return $this->HasMany('App\Models\Log');
     }
 
-    
-   
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('styles')
+    <style>
+        .div-exemplo{
+            margin-top: 30px;
+            display: none
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <div class="kt-portlet">
@@ -25,15 +34,7 @@
 
                         <input name="file" type="file" class="form-control" />
 
-                        <!--
-                        <div class="form-group col-md-6">
-                            <label for="inputSerialNumber">Modelo</label>
-                            <input type="text" name="model" class="form-control" value="{{ $device->model ?? '' }}">
-                        </div>
-                        -->
-
                     </div>
-
 
                 </div>
                 <div class="kt-portlet__foot">
@@ -41,8 +42,40 @@
                         <div class="col-lg-12 ml-lg-auto">
                             <button type="button" class="btn btn-brand" id="btn-device-save">Importar</button>
                             <a href="{{url('devices')}}" class="btn btn-secondary">Voltar</a>
+
+                            <div class="pull-right">
+                                <a href="#" id="btn-show-exemple"><i class="kt-menu__ver-arrow la la-angle-down"></i> Ver exemplo de planilha</a>
+                            </div>
                         </div>
                     </div>
+
+
+                    <div class="row div-exemplo">
+                        <hr />
+                        <div class="row justify-content-md-center ">
+                            <div class="col col-lg-2">
+                                <img src="{{url('exemplo.png')}}" width="200px"/>
+                            </div>
+                            <div class="col col-lg-4">
+                                <div class="center"><h4 class="alert-heading">Exemplo!</h4></div>
+
+                                <ul>
+                                    <li>A planilha deve conter duas colunas, a primeira contendo o modelo e a segunda contendo o ID da tecnologia.</li>
+                                    <li>Não deve conter cabeçalho.</li>
+                                    <li>Os IDS das tecnologias são os seguintes:
+                                        <ul>
+                                            @foreach($technologies as $technologie)
+                                                <li><b>{{$technologie->id}}</b> => {{$technologie->type}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </form>
 
@@ -55,6 +88,10 @@
 <script>
     $(function() {
 
+        $("#btn-show-exemple").click(function(){
+            $('.div-exemplo').show('100');
+        })
+
         //$('#form-create-device').click(function() {
         $('#btn-device-save').click(function() {
 
@@ -66,15 +103,24 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
+
                     if (response.status == "success") {
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Registro salvo com sucesso',
-                            showConfirmButton: true,
-                            timer: 3000
-                        }).then((result) => {
-                            $(location).attr('href', '<?php echo e(url("")); ?>/' + route);
-                        })
+
+                        if(response.message > 0){
+                            Swal.fire({
+                                type: 'success',
+                                title: response.message + " dispositivos importados!",
+                                showConfirmButton: true,
+                                timer: 10000
+                            })
+                        }else{
+                            Swal.fire({
+                                type: 'warning',
+                                title: 'Nenhum arquivo importado, os dispositivos já devem existir no sistema ou a planilha esta fora do padrão!',
+                                showConfirmButton: true,
+                                timer: 10000
+                            })
+                        }
 
                     } else {
                         Swal.fire({
@@ -82,7 +128,7 @@
                             title: 'Oops...',
                             text: 'Erro ao tentar salvar!' + response.message,
                             showConfirmButton: true,
-                            timer: 2500
+                            timer: 10000
                         })
                     }
                 },

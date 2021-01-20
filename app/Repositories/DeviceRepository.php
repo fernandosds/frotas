@@ -18,6 +18,10 @@ class DeviceRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    /**
+     * @param int $customer_id
+     * @return \Illuminate\Support\Collection
+     */
     public function filter(int $customer_id)
     {
         $customer = DB::table('devices')
@@ -27,5 +31,14 @@ class DeviceRepository extends AbstractRepository
 
 
         return $customer;
+    }
+
+    /**
+     * @param String $model
+     * @return mixed
+     */
+    public function exists(String $model)
+    {
+        return $this->model->where('model', $model)->count();
     }
 }

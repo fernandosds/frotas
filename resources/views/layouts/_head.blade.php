@@ -99,6 +99,8 @@
         }
     </style>
 
+    @yield('styles')
+
 </head>
 
 <!-- end::Head -->
