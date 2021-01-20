@@ -61,9 +61,8 @@ class ContractService
             $arr_insert = [];
             foreach( $request->session()->get('devices') as $device ){
 
-                //  [quantity] => 10 [technologie_id] => 1 [value] => 2 [total] => 20 ) )
                 $arr_insert[] = [
-                    'technologie_id' => $device['technologie_id'],
+                    'technologie_id' =>  $device['technologie_id'],
                     'contract_id' => $contract->id,
                     'quantity' => $device['quantity'],
                     'total' => $device['total']
@@ -73,28 +72,6 @@ class ContractService
             DB::table('contract_devices')->insert($arr_insert);
 
         }
-
-
-/**
-       
-        $model = $request->model;
-
-        $arr_devices = $request->session()->get('devices');
-
-        foreach ($arr_devices as $arr) {
-            $device         = $arr['device'];
-            $technologie_id   = $arr['technologie_id'];
-            $technologie      = $arr['technologie'];
-            $price          = $arr['price'];
-
-
-            //print_r($arr['technologie']);
-        }
-
-
-        //$contract = $this->contract->create($request->all());
-
-         */
 
         return $contract;
     }
