@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Services\CustomerService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\User;
@@ -11,11 +12,13 @@ class UserController extends Controller
 {
 
     private $userService;
+    private $customerService;
     private $data;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, CustomerService $customerService)
     {
         $this->userService = $userService;
+        $this->customerService = $customerService;
 
         $this->data = [
             'icon' => 'flaticon-user',
@@ -43,6 +46,22 @@ class UserController extends Controller
     public function new()
     {
         $data = $this->data;
+        $data['customers'] = $this->customerService->all();
+
+        return view('user.new', $data);
+    }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Int $id)
+    {
+
+        $data = $this->data;
+        $data['user'] = $this->userService->show($id);
+        $data['customers'] = $this->customerService->all();
+
         return view('user.new', $data);
     }
 
@@ -55,9 +74,7 @@ class UserController extends Controller
 
         try {
 
-          
             $this->userService->save($request);
-     
 
             return response()->json(['status' => 'success'], 200);
 
@@ -65,19 +82,6 @@ class UserController extends Controller
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
 
-    }
-
-    /**
-     * @param Int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Int $id)
-    {
-
-        $data = $this->data;
-        $data['user'] = $this->userService->show($id);
-
-        return view('user.new', $data);
     }
 
     /**
@@ -89,9 +93,7 @@ class UserController extends Controller
 
         try {
 
-        
             $this->userService->update($request, $request->id);
-  
 
             return response()->json(['status' => 'success'], 200);
 

@@ -36,6 +36,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Tipo</th>
+                            <th scope="col">Cliente</th>
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
@@ -44,8 +45,17 @@
                             <tr id="_tr_user_{{$user->id}}">
                                 <th scope="row">{{$user->id}}</th>
                                 <td>{{$user->name}}</td>
-                                <td>{{$user->type}}</td>
-                                <td>{{$user->status}}</td>
+                                <td>{{ ( $user->type == ""}}</td>
+                                <td>{{$user->customer->name ?? 'Interno SatComany'}}</td>
+                                <td>
+
+                                    @if( $user->status == 1 )
+                                        <i class="text-success fa fa-circle"></i> Ativo
+                                    @else
+                                        <i class="text-danger fa fa-circle"></i>  Bloqueado
+                                    @endif
+
+                                </td>
                                 <td>
                                     <div class="pull-right">
                                         <a href="{{url('users/edit')}}/{{$user->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
