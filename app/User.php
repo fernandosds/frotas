@@ -41,6 +41,16 @@ class User extends Authenticatable
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
+    }
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     
     public function permission()
     {
