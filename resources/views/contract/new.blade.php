@@ -139,26 +139,27 @@
                         </div>
                         <form id="form-insert-device">
                             @csrf
+                            <input type="hidden" name="customer_id" id="customer_id" value="" />
 
-                            <!-- Verificar os campos device_type, log_id e shipment_id.
-                                - Analisar se há a necessidade dos mesmos na tabela de contract
-                                - Caso não seja, alterar no model.
-                                - device_type tem o mesmo objetivo de type no campo technologie
-                                - Shipment_id ainda não há id criado no momento do contrato
-                                - O mesmo acontece com log_id.
-                             -->
-                            <input type="hidden" name="customer_id" id="customer_id" value="" />                           
-                            
                             <div class="modal-body" id="list_devices">
-                                <textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>
+                                <!--<textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>-->
+                                <div class="kt-portlet__head-wrapper">
+                                    <div class="kt-portlet__head-actions">
+                                        <label class="inputQuantity">Quantidade</label>
+                                        <input type="text" id="quantity" name="quantity" placeholder="Quantidade" value="" class="form-control">
+                                        <label class="inputValue"></label>
+                                        <label class="inputValue">Valor</label>
+                                        <input type="text" id="value" name="value" placeholder="Valor" value="" class="form-control">
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-body">
                                 <label class="inputType">Tecnologia</label>
                                 <select class="form-control" name="type" id="technologie_id">
                                     @foreach ($technologies as $technologie)
-                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>                                    
+                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
                                     @endforeach
-                                    <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" /> 
+                                    <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
                                     <input type="hidden" name="model" id="model" value="{{ $technologie->type ?? '' }}" />
                                 </select>
                             </div>
@@ -238,13 +239,13 @@
      */
 
     $(function() {
-       
+
         $('#btn-contract-save').click(function() {
 
-            
+
             var id = $('#customer_id').val();
             console.log($('#form-insert-device').serialize());
-            
+
             ajax_store("", "contracts", $('#form-insert-device').serialize());
             //ajax_store("", "contracts", $('#form-create-contract').serialize());
 
@@ -265,17 +266,19 @@
                 url: "{{url('')}}/" + route,
                 method: 'POST',
                 data: {
-                    "devices": $('#new-device').val(),
+                    // "devices": $('#new-device').val(),
                     "technologie_id": $('#technologie_id').val(),
+                    "quantity": $('#quantity').val(),
+                    "value": $('#value').val(),
 
                 },
                 success: function(response) {
                     $('#table-new-devices').html(response);
                     $('#exampleModalCenter').modal('hide')
                 }
-                
+
             });
-            
+
         });
 
     });

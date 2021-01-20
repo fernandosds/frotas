@@ -62,10 +62,10 @@ class ContractService
        
 
         $contract = $this->contract->create($array_contract);
+        
 
-        print_r($contract->id);
-        die();
-
+/**
+       
         $model = $request->model;
 
         $arr_devices = $request->session()->get('devices');
@@ -82,6 +82,8 @@ class ContractService
 
 
         //$contract = $this->contract->create($request->all());
+
+         */
 
         return $contract;
     }
