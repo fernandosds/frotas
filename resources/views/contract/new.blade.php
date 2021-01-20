@@ -146,10 +146,10 @@
                                 <div class="kt-portlet__head-wrapper">
                                     <div class="kt-portlet__head-actions">
                                         <label class="inputQuantity">Quantidade</label>
-                                        <input type="text" id="quantity" name="quantity" placeholder="Quantidade" value="" class="form-control">
+                                        <input type="number" id="quantity" name="quantity" placeholder="Quantidade" value="" class="form-control">
                                         <label class="inputValue"></label>
                                         <label class="inputValue">Valor</label>
-                                        <input type="text" id="value" name="value" placeholder="Valor" value="" class="form-control">
+                                        <input type="number" step="any" id="value" name="value" placeholder="Valor" value="" class="form-control">
                                     </div>
                                 </div>
                             </div>

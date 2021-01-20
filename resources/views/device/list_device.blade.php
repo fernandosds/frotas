@@ -2,9 +2,10 @@
     <thead>
         <tr>
             <th scope="col"></th>
-            <th scope="col">Modelo</th>
             <th scope="col">Tecnologia</th>
+            <th scope="col">Quantidade</th>
             <th scope="col">Custo Unit.</th>
+            <th scope="col">Custo Total.</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -12,13 +13,14 @@
         @foreach ($devices as $key => $val)
         <tr id="_tr_device_{{$key}}">
             <td>{{$key + 1}}</td>
-            <td>{{$val['device']}}</td>
-            <td>{{$val['technologie']}}</td>
-            <td>{{$val['price']}}</td>
+            <td>{{$val['technologie_id']}}</td>
+            <td>{{$val['quantity']}}</td>
+            <td>R$ {{number_format($val['value'],2,",",".")}}</td>
+            <td>R$ {{number_format($val['total'],2,",",".")}}</td>
             <td></td>
             <td>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-sm  btn-danger btn-delete-device" data-id="{{$key}}">
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-device" data-id="{{$key}}">
                         <span class="fa fa-fw fa-trash"></span>
                     </button>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Repositories\ContractRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ContractService
@@ -50,19 +51,29 @@ class ContractService
      */
     public function save(Request $request)
     {
-        // print_r($request->all());    
-        // die();
 
-        $array_contract = array();
-        $array_contract = [
-            'customer_id'   => $request->customer_id,
-            'user_id'       => $request->user_id
-        ];
-
-       
-
-        $contract = $this->contract->create($array_contract);
+        $contract = $this->contract->create($request->input());
         
+        if($contract){
+
+            $arr_devices = $request->session()->get('devices');
+
+            $arr_insert = [];
+            foreach( $request->session()->get('devices') as $device ){
+
+                //  [quantity] => 10 [technologie_id] => 1 [value] => 2 [total] => 20 ) )
+                $arr_insert[] = [
+                    'technologie_id' => $device['technologie_id'],
+                    'contract_id' => $contract->id,
+                    'quantity' => $device['quantity'],
+                    'total' => $device['total']
+                ];
+            }
+
+            DB::table('contract_devices')->insert($arr_insert);
+
+        }
+
 
 /**
        

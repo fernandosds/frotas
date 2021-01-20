@@ -120,6 +120,7 @@ class ContractController extends Controller
      */
     public function save(Request $request)
     {
+
         $user_id = Auth::user()->id;
 
         $request->merge(['user_id' => $user_id]);
@@ -194,40 +195,19 @@ class ContractController extends Controller
         $technologie = $this->technologieService->show($request->input('technologie_id'));
 
         // Pega dispositivos do request e joga em um array
-        //$new_devices = explode(',', $request->input('devices'));
+        $new_devices = $request->input();
 
-        $new_devices = $request->all();
-
-        
-        print_r($new_devices);
-        die();
-
-
-        /**
-        foreach ($new_devices as $device) {
-            $arr_devices[] = [
-                //'device'        => $device,
-                'technologie_id' => $technologie->id,
-                'technologie'    => $technologie->type,
-                'price'         => $technologie->price
-            ];
-        }
-         */
-        foreach ($new_devices as $device) {
-            $arr_devices[] = [
-                'technologie_id'    => $technologie->id,
-                'device'        => $device,
-                
-            ];
-        }
-
-       
+        $arr_devices[] = [
+            'quantity'          => $request->quantity,
+            'technologie_id'    => $request->technologie_id,
+            'value'             => $request->value,
+            'total'             => $request->value * $request->quantity
+        ];
 
         // Merge com sessao atual se existir
         if ($request->session()->has('devices')) {
             $arr_devices = array_merge($request->session()->get('devices'), $arr_devices);
         }
-
 
         // Salva array atualizado na sessão
         $request->session()->put('devices', $arr_devices);
@@ -236,7 +216,7 @@ class ContractController extends Controller
         // Soma o preço total
         $total = 0;
         foreach ($arr_devices as $item) {
-            $total += $item['price'];
+            $total += $item['total'];
         }
 
         return view('device.list_device', ['devices' => $arr_devices, 'total' => $total]);
@@ -261,7 +241,7 @@ class ContractController extends Controller
         // Soma o preço total
         $total = 0;
         foreach ($arr_devices as $item) {
-            $total += $item['price'];
+            $total += $item['total'];
         }
 
         // Retorna view
