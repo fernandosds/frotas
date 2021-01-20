@@ -194,24 +194,44 @@ class ContractController extends Controller
         $technologie = $this->technologieService->show($request->input('technologie_id'));
 
         // Pega dispositivos do request e joga em um array
-        $new_devices = explode(',', $request->input('devices'));
+        //$new_devices = explode(',', $request->input('devices'));
 
+        $new_devices = $request->all();
+
+        
+        print_r($new_devices);
+        die();
+
+
+        /**
         foreach ($new_devices as $device) {
             $arr_devices[] = [
-                'device'        => $device,
+                //'device'        => $device,
                 'technologie_id' => $technologie->id,
                 'technologie'    => $technologie->type,
                 'price'         => $technologie->price
             ];
         }
+         */
+        foreach ($new_devices as $device) {
+            $arr_devices[] = [
+                'technologie_id'    => $technologie->id,
+                'device'        => $device,
+                
+            ];
+        }
+
+       
 
         // Merge com sessao atual se existir
         if ($request->session()->has('devices')) {
             $arr_devices = array_merge($request->session()->get('devices'), $arr_devices);
         }
 
+
         // Salva array atualizado na sessão
         $request->session()->put('devices', $arr_devices);
+
 
         // Soma o preço total
         $total = 0;

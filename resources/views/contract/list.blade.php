@@ -77,7 +77,7 @@
     /* Deletar */
     $('.btn-delete-contract').click(function() {
         var id = $(this).data('id');
-        var url = "{{url('customers/contracts/delete')}}/" + id;
+        var url = "{{url('contracts/delete')}}/" + id;
         ajax_delete(id, url)
     })
 </script>
