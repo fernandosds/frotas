@@ -48,9 +48,7 @@ class ContractController extends Controller
         return response()->view('contract.list', $data);
     }
 
-
-
-
+    
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -66,20 +64,7 @@ class ContractController extends Controller
 
         return response()->view('contract.list', $data);
     }
-    /**
-    public function search($cpf_cnpj)
-    {
-
-        $customer = $this->customerService->search($cpf_cnpj);
-
-        if ($customer) {
-            return response()->json(['status' => 'success', 'data' => $customer]);
-        } else {
-            return response()->json(['status' => 'error', 'message'=> 'usuário não encontrado!']);
-        }
-    }
-
-     */
+   
 
     public function search(Request $request)
     {
