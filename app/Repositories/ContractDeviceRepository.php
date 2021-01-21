@@ -24,7 +24,8 @@ class ContractDeviceRepository extends AbstractRepository
         
         $contractDevice = DB::table('contracts')
         ->join('contract_devices', 'contracts.id', '=', 'contract_devices.contract_id')
-        ->select('contracts.*', 'contract_devices.*')
+        ->join('technologies', 'contract_devices.technologie_id', '=', 'technologies.id')
+        ->select('contracts.*', 'contract_devices.*', 'technologies.*')
         ->where('contracts.id', '=', $id)
         ->get();
 

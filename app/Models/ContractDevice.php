@@ -15,7 +15,6 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -59,9 +58,32 @@ class ContractDevice extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function technologies()
+    public function technologie()
     {
-        return $this->hasMany('App\Models\Technologie', Technologie::class);
+        return $this->belongsTo('App\Models\Technologie');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contract()
+    {
+        return $this->belongsTo('App\Models\Contract');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function device()
+    {
+        return $this->belongsTo('App\Models\Device');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Type');
+    }
 }

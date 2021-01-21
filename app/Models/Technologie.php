@@ -52,11 +52,11 @@ class Technologie extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function contractdevice()
     {
-        return $this->belongsTo('App\Models\ContractDevice');
+        return $this->HasMany('App\Models\ContractDevice', ContractDevice::class, 'technologie_id', 'id');
     }
 
 }

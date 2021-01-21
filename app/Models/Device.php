@@ -78,12 +78,11 @@ class Device extends Model
         return $this->belongsTo('App\Models\Technologie');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    // public function typeofdevice()
-    // {
-    //     return $this->BelongsTo('App\Models\TypeOfDevice');
-    // }
-
+    public function contractdevice()
+    {
+        return $this->HasMany('App\Models\ContractDevice', ContractDevice::class);
+    }
 }

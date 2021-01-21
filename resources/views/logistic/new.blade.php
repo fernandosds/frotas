@@ -114,7 +114,7 @@
                             @foreach ($contracts as $contract)
                             <tr id="_tr_user_{{$contract->id}}">
                                 <td>{{$contract->id}}</td>
-                                <td>{{$contract->technologie_id}}</td>
+                                <td>{{$contract->type}}</td>
                                 <td>{{$contract->quantity}}</td>
                                 <td>{{$contract->total}}</td>
 
