@@ -179,6 +179,7 @@ class ContractController extends Controller
     public function destroy(Int $id)
     {
         $this->contractService->destroy($id);
+
         return back()->with(['status' => 'Deleted successfully']);
     }
 
@@ -190,12 +191,6 @@ class ContractController extends Controller
 
     public function addDevice(Request $request)
     {
-
-        // Pega dados da tecnologia
-        $technologie = $this->technologieService->show($request->input('technologie_id'));
-
-        // Pega dispositivos do request e joga em um array
-        $new_devices = $request->input();
 
         $arr_devices[] = [
             'quantity'          => $request->quantity,
@@ -211,7 +206,6 @@ class ContractController extends Controller
 
         // Salva array atualizado na sessão
         $request->session()->put('devices', $arr_devices);
-
 
         // Soma o preço total
         $total = 0;

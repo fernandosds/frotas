@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Repositories\ContractDeviceRepository;
 use App\Repositories\ContractRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,9 +11,16 @@ use Illuminate\Support\Facades\Hash;
 
 class ContractService
 {
-    public function __construct(ContractRepository $contract)
+
+    /**
+     * ContractService constructor.
+     * @param ContractRepository $contract
+     * @param ContractDeviceRepository $contract_devices
+     */
+    public function __construct(ContractRepository $contract, ContractDeviceRepository $contract_devices)
     {
         $this->contract = $contract;
+        $this->contract_devices = $contract_devices;
     }
 
     /**
@@ -84,11 +92,13 @@ class ContractService
     public function update(Request $request, $id)
     {
 
-
         $contract = $this->contract->update($id, $request->all());
         return $contract;
     }
 
+    /**
+     * @param Int $id
+     */
     public function show(Int $id)
     {
 
@@ -97,6 +107,10 @@ class ContractService
         return ($contract) ? $contract : abort(404);
     }
 
+    /**
+     * @param Int $id
+     * @return \Illuminate\Support\Collection|void
+     */
     public function showid(Int $id)
     {
 
@@ -105,14 +119,19 @@ class ContractService
         return ($contract) ? $contract : abort(404);
     }
 
-
     /**
      * @param Int $id
+     * @return bool
      */
     public function destroy(Int $id)
     {
 
-        return $this->contract->delete($id);
+        $delete = $this->contract->delete($id);
+        if( $delete ){
+            $this->contract_devices->deleteByContractId($id);
+        }
+
+        return $delete;
     }
 
     public function edit($id)
