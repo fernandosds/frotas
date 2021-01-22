@@ -14,7 +14,7 @@
                     <i class="kt-font-brand {{$icon}}"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    {{$title}} <small>{{$logistics->id}}</small>
+                    {{$title}} <small>{{$contract->id}}</small>
                 </h3>
 
             </div>
@@ -42,44 +42,44 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="inputName">Nome: </label>
-                    <span id="name">{{$logistics->customer->name}}</span>
+                    <span id="name">{{$contract->customer->name}}</span>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputCpfCnpj">CNPJ: </label>
-                    <span id="cpf_cnpj">{{$logistics->customer->cpf_cnpj}}</span>
+                    <span id="cpf_cnpj">{{$contract->customer->cpf_cnpj}}</span>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputName">Tipo: </label>
-                    <span id="type">{{$logistics->customer->type}}</span>
+                    <span id="type">{{$contract->customer->type}}</span>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label for="inputCEP">CEP: </label>
-                    <span id="cep">{{$logistics->customer->cep}}</span>
+                    <span id="cep">{{$contract->customer->cep}}</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputAddress">Endereço: </label>
-                    <span id="address">{{$logistics->customer->address}}</span>
+                    <span id="address">{{$contract->customer->address}}</span>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputComplement">Complemento: </label>
-                    <span id="complement">{{$logistics->customer->complement}}</span>
+                    <span id="complement">{{$contract->customer->complement}}</span>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputCpfCnpj">Número: </label>
-                    <span id="number">{{$logistics->customer->number}}</span>
+                    <span id="number">{{$contract->customer->number}}</span>
                 </div>
 
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label for="inputCity">Cidade: </label>
-                    <span id="city">{{$logistics->customer->city}}</span>
+                    <span id="city">{{$contract->customer->city}}</span>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputUF">UF: </label>
-                    <span id="state">{{$logistics->customer->state}}</span>
+                    <span id="state">{{$contract->customer->state}}</span>
                 </div>
             </div>
 
@@ -111,16 +111,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($contracts as $contract)
-                            <tr id="_tr_user_{{$contract->id}}">
-                                <td>{{$contract->id}}</td>
-                                <td>{{$contract->type}}</td>
-                                <td>{{$contract->quantity}}</td>
-                                <td>{{$contract->total}}</td>
-
+                            @foreach ($contract->contractDevice as $cont)
+                            <tr id="_tr_user_{{$cont->id}}">
+                                <td>{{$cont->id}}</td>
+                                <td>{{$cont->technologie->type}}</td>
+                                <td>{{$cont->quantity}}</td>
+                                <td>{{$cont->total}}</td>
+                                
                                 <td>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-sm  btn btn-outline-primary" data-id="{{$contract->id}}">
+                                        <button type="button" class="btn btn-sm  btn btn-outline-primary" data-id="{{$cont->id}}">
                                             <span class="fa fa-fw fa-folder-plus"></span>
                                         </button>
                                     </div>

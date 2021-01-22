@@ -10,7 +10,7 @@ class Contract extends Model
 {
 
     use Notifiable, SoftDeletes;
-    
+
     /**
      * @var string
      */
@@ -26,7 +26,7 @@ class Contract extends Model
      */
     protected $fillable = [
         'id',
-        'customer_id',       
+        'customer_id',
         'user_id',
         'validity'
     ];
@@ -62,7 +62,7 @@ class Contract extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     */
     public function device()
     {
         return $this->belongsTo('App\Models\Device');
@@ -79,8 +79,13 @@ class Contract extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function contractdevice()
+    //    public function contractDevice()
+    //    {
+    //        return $this->HasMany('App\Models\ContractDevice', ContractDevice::class);
+    //    }
+
+    public function contractDevice()
     {
-        return $this->HasMany('App\Models\ContractDevice', ContractDevice::class);
+        return $this->HasMany('App\Models\ContractDevice');
     }
 }

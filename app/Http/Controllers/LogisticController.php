@@ -51,9 +51,11 @@ class LogisticController extends Controller
     {
 
         $data = $this->data;
-        $data['logistics'] = $this->contractService->show($id);
-        $data['contracts'] = $this->contractDeviceService->findContractDevice($id);
+        $data['contract'] = $this->contractService->show($id);
+        //$data['contracts'] = $this->contractDeviceService->findContractDevice($id);
         //$data['technologies'] = $this->technologieService->show($id);
+
+        
 
         return view('logistic.new', $data);
     }

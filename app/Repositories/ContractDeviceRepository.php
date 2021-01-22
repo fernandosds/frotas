@@ -18,7 +18,7 @@ class ContractDeviceRepository extends AbstractRepository
     {
         $this->model = $model;
     }
-
+    /**
     public function findContractDevice(int $id)
     {
         
@@ -34,4 +34,5 @@ class ContractDeviceRepository extends AbstractRepository
         
         return $contractDevice;
     }
+     */
 }
