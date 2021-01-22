@@ -40,48 +40,48 @@
 
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="inputName">Nome: </label>
+                    <label for="inputName"><b>Nome:</b> </label>
                     <span id="name"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputCpfCnpj">CNPJ: </label>
+                    <label for="inputCpfCnpj"><b>CNPJ:</b> </label>
                     <span id="cpf_cnpj"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputName">Tipo: </label>
+                    <label for="inputName"><b>Tipo:</b> </label>
                     <span id="type"></span>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="inputCEP">CEP: </label>
+                    <label for="inputCEP"><b>CEP:</b> </label>
                     <span id="cep"></span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputAddress">Endereço: </label>
+                    <label for="inputAddress"><b>Endereço:</b> </label>
                     <span id="address"></span>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputComplement">Complemento: </label>
+                    <label for="inputComplement"><b>Complemento:</b> </label>
                     <span id="complement"></span>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputCpfCnpj">Número: </label>
+                    <label for="inputCpfCnpj"><b>Número:</b> </label>
                     <span id="number"></span>
                 </div>
 
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="inputCity">Cidade: </label>
+                    <label for="inputCity"><b>Cidade:</b> </label>
                     <span id="city"></span>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputUF">UF: </label>
+                    <label for="inputUF"><b>UF:</b> </label>
                     <span id="state"></span>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputUF">ID: </label>
+                    <label for="inputUF"><b>ID:</b> </label>
                     <span id="id"></span>
                 </div>
 
@@ -275,6 +275,9 @@
                 success: function(response) {
                     $('#table-new-devices').html(response);
                     $('#exampleModalCenter').modal('hide')
+
+                    $('#quantity').val('')
+                    $('#value').val('')
                 }
 
             });

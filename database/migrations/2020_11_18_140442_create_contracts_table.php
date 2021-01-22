@@ -14,11 +14,9 @@ class CreateContractsTable extends Migration
     public function up()
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->id();
-            $table->integer('log_id');
-            $table->integer('shipment_id');
-            $table->integer('customer_id');
-            $table->enum('device_type', ['Retornavel', 'Descartavel']);
+            $table->id();            
+            $table->integer('customer_id'); 
+            $table->integer('user_id');           
             $table->boolean('valid')->default(1);
             $table->softDeletes();
             $table->timestamps();
