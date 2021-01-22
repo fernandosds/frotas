@@ -21,11 +21,10 @@ class Device extends Model
      */
     protected $fillable = [
         'id',
-        'type_id',
         'model',
         'contract_id',
         'uniqid',
-        'contract_id',
+        'customer_id',
         'technologie_id'
     ];
 
@@ -36,9 +35,8 @@ class Device extends Model
     {
         return [
             'id'                => $this->id,
-            'type_id'           => $this->type_id,
             'model'             => $this->model,
-            'contract_id'       => $this->contract_id,
+            'customer_id'       => $this->customer_id,
             'uniqid'            => $this->uniqid,
             'contract_id'       => $this->contract_id,
             'technologie_id'    => $this->technologie_id,

@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\ContractDeviceService;
+use App\Services\DeviceService;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Print_;
 
 class LogisticController extends Controller
 {
     private $contractService;
+    private $deviceService;
     private $contractDeviceService;
     private $data;
 
-    public function __construct(ContractService $contractService, ContractDeviceService $contractDeviceService)
+    public function __construct(ContractService $contractService, ContractDeviceService $contractDeviceService, DeviceService $deviceService)
     {
         $this->contractService = $contractService;
         $this->contractDeviceService = $contractDeviceService;
+        $this->deviceService = $deviceService;
 
         $this->data = [
             'icon' => 'flaticon2-box',
@@ -52,10 +56,6 @@ class LogisticController extends Controller
 
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
-        //$data['contracts'] = $this->contractDeviceService->findContractDevice($id);
-        //$data['technologies'] = $this->technologieService->show($id);
-
-        
 
         return view('logistic.new', $data);
     }
@@ -74,6 +74,24 @@ class LogisticController extends Controller
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function attachDevicetoContract(Request $request)
+    {
+        
+        try {
+
+            $this->deviceService->saveDeviceContract($request);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }

@@ -93,7 +93,9 @@ Route::group(['middleware' => 'auth'], function () {
          * Contracts Logistics  routes
          */
         Route::group(['prefix' => 'contracts'], function () {
-            Route::get('/edit/{id}', 'LogisticController@edit');
+            Route::get('/edit/{id}', 'LogisticController@edit');            
+            Route::get('/update/{id}', 'LogisticController@update');
+            Route::post('/save/device', 'LogisticController@attachDevicetoContract');
         });
     });
 

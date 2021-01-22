@@ -157,5 +157,16 @@ class DeviceService
         return $this->device->filter($customer_id);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function saveDeviceContract(Request $request)
+    {     
+        return $this->device->saveDeviceContract($request);
+    }
+
+    
+
     
 }
