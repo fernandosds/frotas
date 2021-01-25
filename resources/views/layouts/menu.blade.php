@@ -33,6 +33,7 @@
         <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
             <ul class="kt-menu__nav ">
 
+                <!-- CLIENTE EXTERNO ______________________________________________________________________________________________________________________ -->
                 <li class="kt-menu__section ">
                     <h4 class="kt-menu__section-text">Menu</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
@@ -69,7 +70,7 @@
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_stock ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-box-open"></i></span>
-                        <span class="kt-menu__link-text">Estoque</span>
+                        <span class="kt-menu__link-text">ESTOQUE</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -81,8 +82,9 @@
 
                 @if( Auth::user()->type == 'sat' )
 
+                <!-- PRODUÇÃO ______________________________________________________________________________________________________________________ -->
                 <li class="kt-menu__section ">
-                    <h4 class="kt-menu__section-text">SAT Company</h4>
+                    <h4 class="kt-menu__section-text">PRODUÇÃO</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
 
@@ -105,6 +107,57 @@
                     </div>
                 </li>
 
+                <!-- COMERCIAL ______________________________________________________________________________________________________________________ -->
+                <li class="kt-menu__section ">
+                    <h4 class="kt-menu__section-text">COMERCIAL</h4>
+                    <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                </li>
+
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_contracts ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- CONTRATOS -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-file-contract"></i></span>
+                        <span class="kt-menu__link-text">CONTRATOS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista contratos</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo contrato</span></a></li>
+                        </ul>
+                    </div>
+
+                </li>
+
+                <!-- LOGÍSTICA ______________________________________________________________________________________________________________________ -->
+                <li class="kt-menu__section ">
+                    <h4 class="kt-menu__section-text">LOGÍSTICA</h4>
+                    <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                </li>
+
+                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logistics ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <!-- LOGISTICA -->
+                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><i class="fa fa-boxes"></i></span>
+                        <span class="kt-menu__link-text">LOGISTICAS</span>
+                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Contr. Pendentes</span></a></li>
+                        <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo cliente</span></a></li> -->
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- ADMIN. SISTEMA ______________________________________________________________________________________________________________________ -->
+                <li class="kt-menu__section ">
+                    <h4 class="kt-menu__section-text">SAT Company</h4>
+                    <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                </li>
+
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_users ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- USUÁRIOS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -122,23 +175,6 @@
                     </div>
                 </li>
 
-                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logistics ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                    <!-- LOGISTICA -->
-                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                        <span class="kt-menu__link-icon"><i class="fa fa-boxes"></i></span>
-                        <span class="kt-menu__link-text">LOGISTICAS</span>
-                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                        <ul class="kt-menu__subnav">
-                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Contr. Pendentes</span></a></li>
-                            <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo cliente</span></a></li> -->
-                        </ul>
-                    </div>
-                </li>
-
-
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_customers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- CLIENTES -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -151,23 +187,6 @@
                             <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista cliente</span></a></li>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('customers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo cliente</span></a></li>
-                        </ul>
-                    </div>
-
-                </li>
-
-                <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_contracts ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                    <!-- CONTRATOS -->
-                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                        <span class="kt-menu__link-icon"><i class="fa fa-file-contract"></i></span>
-                        <span class="kt-menu__link-text">CONTRATOS</span>
-                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                        <ul class="kt-menu__subnav">
-                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista contratos</span></a></li>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('contracts/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo contrato</span></a></li>
                         </ul>
                     </div>
 
@@ -190,11 +209,10 @@
 
                 </li>
 
-
-
+                <!--  TIPO DE CARGA
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_loads ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                    <!--TIPO DE CARGAS -->
-                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+
+                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-truck-moving"></i></span>
                         <span class="kt-menu__link-text">TIPO DE CARGAS</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
@@ -208,6 +226,7 @@
                     </div>
 
                 </li>
+                -->
 
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_locations ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- LOCAIS DE ACOMODAÇÃO -->

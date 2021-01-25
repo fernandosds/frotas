@@ -48,8 +48,8 @@
                                 <td></td>
                                 <td>
                                     <div class="pull-right">
-                                        <a href="{{url('accommodationlocations/edit')}}/{{$accommodationLocation->id}}" class="btn btn-sm btn-outline-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                        <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-accommodationlocation" data-id="{{$accommodationLocation->id}}">
+                                        <a href="{{url('accommodationlocations/edit')}}/{{$accommodationLocation->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                        <button type="button" class="btn btn-sm  btn-danger btn-delete-accommodationlocation" data-id="{{$accommodationLocation->id}}">
                                             <span class="fa fa-fw fa-trash"></span> Deletar
                                         </button>
                                     </div>

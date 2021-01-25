@@ -17,7 +17,7 @@ class CreateContractsTable extends Migration
             $table->id();            
             $table->integer('customer_id'); 
             $table->integer('user_id');           
-            $table->boolean('valid')->default(1);
+            $table->boolean('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

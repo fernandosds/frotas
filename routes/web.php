@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'UserController@destroy');
     });
 
-
     /**
      * Clients routes
      */
@@ -80,7 +79,6 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'stocks'], function () {
         Route::get('/', 'StockController@index');
-    
     });
 
     /**
@@ -88,7 +86,14 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'logistics'], function () {
         Route::get('/', 'LogisticController@index');
-    
+
+
+        /**
+         * Contracts Logistics  routes
+         */
+        Route::group(['prefix' => 'contracts'], function () {
+            Route::get('/edit/{id}', 'LogisticController@edit');
+        });
     });
 
 

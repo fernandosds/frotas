@@ -20,7 +20,7 @@ class BoardingController extends Controller
     private $boardingService;
 
     /**
-     * @var
+     * @var DeviceService
      */
     private $deviceService;
 
@@ -92,15 +92,11 @@ class BoardingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param BoardingRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function save(BoardingRequest $request)
     {
-
-        print_r($request->input());die;
 
         try {
 
@@ -108,6 +104,7 @@ class BoardingController extends Controller
                     'user_id' => Auth::user()->id,
                     'customer_id' => Auth::user()->customer_id,
                 ]);
+
             $this->boardingService->save($request);
 
             return response()->json(['status' => 'success'], 200);
@@ -158,7 +155,7 @@ class BoardingController extends Controller
         $return['status'] = $device['status'];
         if ($device['status'] == 'success') {
 
-            $return['device_type'] = $device['data']->device_type;
+            $return['device_type'] = $device['data']->technologie;
             $return['model'] = $device['data']->model;
             $return['device_id'] = $device['data']->id;
             $return['contract_id'] = $device['data']->contract_id;

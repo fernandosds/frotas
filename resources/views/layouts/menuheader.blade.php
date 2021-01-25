@@ -16,6 +16,8 @@
 
     <!--begin: Search -->
     <div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
+
+        <!--
         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
             <span class="kt-header__topbar-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -26,6 +28,8 @@
                     </g>
                 </svg> </span>
         </div>
+        -->
+
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-lg">
             <div class="kt-quick-search kt-quick-search--inline" id="kt_quick_search_inline">
                 <form method="get" class="kt-quick-search__form">

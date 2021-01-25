@@ -30,7 +30,7 @@ class BoardingService
      */
     public function save(Request $request)
     {
-       
+
         $boarding = $this->boarding->create($request->all());
         return $boarding;
     }

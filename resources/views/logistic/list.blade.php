@@ -37,16 +37,16 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nº Contrato</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col"></th>
+                        <th scope="col">Data de criação</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($logistics as $logistic)
                     <tr id="_tr_user_{{$logistic->id}}">
                         <th scope="row">{{$logistic->id}}</th>
-                        <td>{{$logistic->type}}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{$logistic->id}}</td>
+                        <td>{{$logistic->customer->name}}</td>
+                        <td>{{$logistic->created_at}}</td>
                         <td>
                             <div class="pull-right">
                                 <!--
@@ -55,7 +55,7 @@
                                             <span class="fa fa-fw fa-trash"></span> Deletar
                                         </button>
                                         -->
-                                <a href="#" class="btn btn-sm btn-info"><span class="fa fa-fw fa-file-upload"></span>Dispositivo</a>
+                                <a href="{{url('logistics/contracts/edit')}}/{{$logistic->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-file-upload"></span>Dispositivo</a>
                             </div>
                         </td>
                     </tr>

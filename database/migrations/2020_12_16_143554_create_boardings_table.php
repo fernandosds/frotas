@@ -31,7 +31,7 @@ class CreateBoardingsTable extends Migration
             $table->string('transport_order', 255);
             $table->string('amount_carried', 255);
             $table->string('cpf_cnpj', 255);
-            $table->string('cell_phone', 255);
+            $table->string('cell_phone', 255)->nullable();
             $table->string('brand', 255);
             $table->string('model', 255);
             $table->string('redundant_technologie', 255);

@@ -1,12 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Paulo Sérgio
- * Date: 20/01/2021
- * Time: 17:33
- */
+
+
 
 namespace App\Repositories;
+
+use Illuminate\Support\Facades\DB;
 
 use App\Models\ContractDevice;
 
@@ -23,11 +21,20 @@ class ContractDeviceRepository extends AbstractRepository
     }
 
     /**
-     * @param Int $contract_id
-     * @return mixed
-     */
-    public function deleteByContractId(Int $contract_id)
+    public function findContractDevice(int $id)
     {
-        return $this->model->where('contract_id', $contract_id)->delete();
+        
+        $contractDevice = DB::table('contracts')
+        ->join('contract_devices', 'contracts.id', '=', 'contract_devices.contract_id')
+        ->join('technologies', 'contract_devices.technologie_id', '=', 'technologies.id')
+        ->select('contracts.*', 'contract_devices.*', 'technologies.*')
+        ->where('contracts.id', '=', $id)
+        ->get();
+
+           // print_r($contractDevice);
+           // die();
+        
+        return $contractDevice;
     }
+     */
 }

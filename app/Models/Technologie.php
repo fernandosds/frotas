@@ -51,4 +51,12 @@ class Technologie extends Model
         return $this->HasMany('App\Models\TypeOfDevice');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contractdevice()
+    {
+        return $this->HasMany('App\Models\ContractDevice', ContractDevice::class, 'technologie_id', 'id');
+    }
+
 }

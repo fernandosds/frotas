@@ -15,8 +15,8 @@ class DeviceController extends Controller
     {
 
         $return[] = [
-            'isca' => 'aaa',
-            'dispositivo' => 'bbbb'
+            'ISCA' => '99A00105',
+            'R12' => '99112275'
         ];
 
         return json_encode($return);

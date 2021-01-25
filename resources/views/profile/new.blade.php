@@ -49,30 +49,6 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-3 col-sm-12">Tipo</label>
-                    <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
-                        <select class="form-control" name="type">
-                            <option value="">Selecione um nível de usuário</option>
-                            <option value="sat" {{ ($profile->type ?? null) == 'sat' ? 'selected' : ''}}>SAT</option>
-                            <option value="transportadora" {{ ($profile->type ?? null) == 'transportadora' ? 'selected' : ''}}>TRANSPORTADORA</option>
-                            <option value="dono_carga" {{ ($profile->type ?? null) == 'dono_carga' ? 'selected' : ''}}>DONO DE CARGA</option>
-                            <option value="gerenciador_risco" {{ ($profile->type ?? null) == 'gerenciador_risco' ? 'selected' : ''}}>GERENCIADOR DE RISCO</option>
-                            <option value="embaixador" {{ ($profile->type ?? null) == 'embaixador' ? 'selected' : ''}}>EMBAIXADOR</option>
-                        </select>
-                        <span class="form-text text-muted">Selecione o nível de acesso do usuário.</span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-3 col-sm-12">Status</label>
-                    <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
-                        <select class="form-control" name="status" @if(isset($profile)) @if($profile->id == Auth::user()->id) disabled="" @endif @endif>
-                            <option value="1" {{ ($profile->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
-                            <option value="2" {{ ($profile->status ?? null) == '2' ? 'selected' : ''}}>INATIVO</option>
-                        </select>
-
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label class="col-form-label col-lg-3 col-sm-12">Senha</label>
                     <div class="col-lg-2 col-md-2 col-sm-12">
                         <input type="password" class="form-control" name="password" placeholder="Digite sua senha" value="">
@@ -90,7 +66,7 @@
                     <div class="row">
                         <div class="col-lg-9 ml-lg-auto">
                             <button type="button" class="btn btn-brand" id="btn-user-save">Confirmar</button>
-                            <a href="{{url('profiles')}}" class="btn btn-secondary">Voltar</a>
+                            <a href="{{url('/')}}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
                 </div>

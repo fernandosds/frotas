@@ -94,16 +94,17 @@ class DeviceService
 
         try{
             $data = DB::table('devices')
-                ->join('contract_devices', 'contract_devices.device_id', '=', 'devices.id')
-                ->join('contracts', 'contracts.id', '=', 'contract_devices.contract_id')
-                ->select('devices.id', 'contracts.id AS contract_id', 'contracts.valid','devices.model', 'contract_devices.device_type')
+                ->join('contracts', 'contracts.id', '=', 'devices.contract_id')
+                ->join('technologies', 'technologies.id', '=', 'devices.technologie_id')
+                ->select('devices.id', 'devices.contract_id AS contract_id', 'contracts.status','devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
+                ->where('contracts.status', 1)
                 ->where('devices.model', $device)
-                ->where('contracts.customer_id', Auth::user()->customer_id)
+                ->where('devices.customer_id', Auth::user()->customer_id)
                 ->first();
 
             if($data){
 
-                return ($data->valid == 1 ) ? ['status' => 'success', 'message' => '', 'data' => $data] : ['status' => 'error', 'message' => 'O contrato vinculado a esta ísca está vencido!'];
+                return ['status' => 'success', 'message' => '', 'data' => $data];
 
             }else{
                 return ['status' => 'error', 'message' => 'Ísca não encontrada'];
