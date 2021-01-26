@@ -44,7 +44,23 @@ class LogisticController extends Controller
         $data['logistics'] = $this->contractService->paginate();
 
         return response()->view('logistic.list', $data);
+    
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function contractCompleted()
+    {
+
+        $data = $this->data;
+        $data['logistics'] = $this->contractService->paginate();
+
+        return response()->view('logistic.list_completed', $data);
+    }
+
 
 
     /**
@@ -79,7 +95,6 @@ class LogisticController extends Controller
             }
             $this->contractService->update($request, $request->id);
             return response()->json(['status' => 'success'], 200);
-
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
