@@ -89,26 +89,24 @@ Route::group(['middleware' => 'auth'], function () {
      * Logistics  routes
      */
     Route::group(['prefix' => 'logistics'], function () {
-        Route::get('/contracts', 'LogisticController@index');
-        Route::get('/contracts/completed', 'LogisticController@contractCompleted');
 
         /**
          * Contracts Logistics  routes
          */
         Route::group(['prefix' => 'contracts'], function () {
-            Route::get('/edit/{id}', 'LogisticController@edit');            
-            Route::put('/update/{id}', 'LogisticController@update');
+            Route::get('/edit/{id}', 'Logistic\ContractController@edit');
+            Route::put('/update/{id}', 'Logistic\ContractController@update');
+
+            Route::get('/', 'Logistic\LogisticController@index');
 
             /**
              * Devices
              */
             Route::group(['prefix' => 'devices'], function () {
-                Route::GET('/attach/{id}', 'LogisticController@attachDevices');
+                Route::GET('/attach/{id}', 'Logistic\DeviceController@attachDevices');
             });
 
         });
-
-
 
     });
 
