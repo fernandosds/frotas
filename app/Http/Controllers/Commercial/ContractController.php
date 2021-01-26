@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Commercial;
 
-//use App\Models\Technologie;
+use App\Http\Controllers\Controller;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\TechnologieService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-
-//use App\Services\CustomerService;
-//use App\Http\Requests\ContractRequest;
 
 class ContractController extends Controller
 {
@@ -20,12 +16,17 @@ class ContractController extends Controller
     private $data;
     private $technologieService;
 
+    /**
+     * ContractController constructor.
+     * @param ContractService $contractService
+     * @param CustomerService $customerService
+     * @param TechnologieService $technologieService
+     */
     public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService)
     {
         $this->contractService = $contractService;
         $this->customerService = $customerService;
         $this->technologieService = $technologieService;
-
 
         $this->data = [
             'icon' => 'flaticon2-contract',
@@ -45,7 +46,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['contracts'] = $this->contractService->paginate();
 
-        return response()->view('contract.list', $data);
+        return response()->view('commercial.contract.list', $data);
     }
 
     
@@ -59,27 +60,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['contracts'] = $this->contractService->showid($id);
 
-        //print_r($data);
-        //die();
-
-        return response()->view('contract.list', $data);
-    }
-   
-
-    public function search(Request $request)
-    {
-
-        $customer = $this->customerService->search($request);
-
-        //print_r($request->cpf_cnpj);
-        //print_r($request['cpf_cnpj']);
-        //die();
-
-        if ($customer) {
-            return response()->json(['status' => 'success', 'data' => $customer]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'usuário não encontrado!']);
-        }
+        return response()->view('commercial.contract.list', $data);
     }
 
     /**
@@ -93,7 +74,7 @@ class ContractController extends Controller
         $data = $this->data;
         $data['technologies'] = $this->technologieService->paginate();
 
-        return view('contract.new', $data);
+        return view('commercial.contract.new', $data);
     }
 
 
@@ -106,9 +87,10 @@ class ContractController extends Controller
     public function save(Request $request)
     {
 
-        $user_id = Auth::user()->id;
-
-        $request->merge(['user_id' => $user_id]);
+        $request->merge([
+            'user_id' => Auth::user()->id,
+            'customer_id' =>Auth::user()->customer_id
+        ]);
 
         try {
 
@@ -130,17 +112,15 @@ class ContractController extends Controller
 
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
-        $data['technologies'] = $this->technologieService->show($id);
+        $data['technologies'] = $this->technologieService->all();
 
-        //print_r($data['technologies']);
-        //die();
-
-        return view('contract.new', $data);
+        return view('commercial.contract.new', $data);
     }
 
     /**
-     * @param UserRequest $request
-     * @return array|\Illuminate\Http\JsonResponse
+     * @param Int $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Int $id, Request $request)
     {
@@ -156,10 +136,8 @@ class ContractController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Contact  $user
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Int $id)
     {
@@ -174,56 +152,5 @@ class ContractController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function addDevice(Request $request)
-    {
 
-        $arr_devices[] = [
-            'quantity'          => $request->quantity,
-            'technologie_id'    => $request->technologie_id,
-            'value'             => $request->value,
-            'total'             => $request->value * $request->quantity
-        ];
-
-        // Merge com sessao atual se existir
-        if ($request->session()->has('devices')) {
-            $arr_devices = array_merge($request->session()->get('devices'), $arr_devices);
-        }
-
-        // Salva array atualizado na sessão
-        $request->session()->put('devices', $arr_devices);
-
-        // Soma o preço total
-        $total = 0;
-        foreach ($arr_devices as $item) {
-            $total += $item['total'];
-        }
-
-        return view('device.list_device', ['devices' => $arr_devices, 'total' => $total]);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function removeDevice(Request $request)
-    {
-
-        // Pega sessão e joga em um array
-        $arr_devices = $request->session()->get('devices');
-
-        // Remove índice informado via request do array
-        unset($arr_devices[$request->input('id')]);
-
-        // Pega novo array e sobrescreve sessão atual
-        $request->session()->put('devices', $arr_devices);
-
-        // Soma o preço total
-        $total = 0;
-        foreach ($arr_devices as $item) {
-            $total += $item['total'];
-        }
-
-        // Retorna view
-        return view('device.list_device', ['devices' => $arr_devices, 'total' => $total]);
-    }
 }

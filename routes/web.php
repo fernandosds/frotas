@@ -57,24 +57,26 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Contract routes
      */
-    Route::group(['prefix' => 'contracts'], function () {
-        Route::get('/', 'ContractController@index');
-        Route::get('/new', 'ContractController@new');
-        Route::get('/show/{id}', 'ContractController@show');
-        //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
-        Route::post('/search', 'ContractController@search');
+    Route::group(['prefix' => 'commercial'], function () {
 
-        Route::post('/save', 'ContractController@save');
-        Route::put('/update/{id}', 'ContractController@update');
-        Route::get('/edit/{id}', 'ContractController@edit');
-        Route::get('/delete/{id}', 'ContractController@destroy');
+        Route::group(['prefix' => 'contracts'], function () {
+            Route::get('/', 'Commercial\ContractController@index');
+            Route::get('/new', 'Commercial\ContractController@new');
+            Route::get('/show/{id}', 'Commercial\ContractController@show');
+            Route::post('/save', 'Commercial\ContractController@save');
+            Route::put('/update/{id}', 'Commercial\ContractController@update');
+            Route::get('/edit/{id}', 'Commercial\ContractController@edit');
+            Route::get('/delete/{id}', 'Commercial\ContractController@destroy');
 
-        // TODO Criar grupo devices
+            Route::group(['prefix' => 'devices'], function () {
+                Route::post('/add', 'Commercial\DeviceController@add');
+                Route::post('/remove', 'Commercial\DeviceController@remove');
+            });
+        });
 
-
-        Route::post('/add-device', 'ContractController@addDevice');
-        Route::post('/remove-device', 'ContractController@removeDevice');
-        //Route::get('/devices', 'ContractController@indexDevice');
+        Route::group(['prefix' => 'customer'], function () {
+            Route::post('/search', 'Commercial\CustomerController@search');
+        });
 
     });
 

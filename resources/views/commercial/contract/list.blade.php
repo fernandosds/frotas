@@ -20,7 +20,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{url('contracts/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <a href="{{url('commercial/contracts/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                                 <i class="la la-plus"></i> Novo
                             </a>
                         </div>
@@ -47,7 +47,7 @@
                             <td>{{ date_format($contract->created_at, "d/m/Y") }}</td>
                             <td>
                                 <div class="pull-right">
-                                    <a href="{{url('contracts/edit')}}/{{$contract->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                    <a href="{{url('commercial/contracts/edit')}}/{{$contract->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                     <button type="button" class="btn btn-sm  btn-danger btn-delete-contract" data-id="{{$contract->id}}">
                                         <span class="fa fa-fw fa-trash"></span> Deletar
                                     </button>
@@ -59,7 +59,7 @@
                 </table>
 
                 <div class="d-flex justify-content-center">
-                    @if (\Request::is('customers/contracts/'))
+                    @if (\Request::is('commercial/customers/contracts/'))
                         {!! $contracts->links() !!}
                     @endif
                 </div>

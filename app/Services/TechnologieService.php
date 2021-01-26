@@ -65,8 +65,10 @@ class TechnologieService
         return $technologie;
     }
 
-
-
+    /**
+     * @param Int $id
+     * @return mixed|void
+     */
     public function show(Int $id)
     {
 
@@ -75,9 +77,9 @@ class TechnologieService
         return ($technologie) ? $technologie : abort(404);
     }
 
-
     /**
      * @param Int $id
+     * @return bool
      */
     public function destroy(Int $id)
     {
@@ -85,6 +87,10 @@ class TechnologieService
         return $this->technologie->delete($id);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
         return $this->technologie->find($id);

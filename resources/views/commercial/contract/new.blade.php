@@ -179,7 +179,7 @@
                     <div class="row">
                         <div class="col-lg-12 ml-lg-auto">
                             <button type="button" class="btn btn-brand" id="btn-contract-save">Cadastrar</button>
-                            <a href="{{url('contracts')}}" class="btn btn-secondary">Voltar</a>
+                            <a href="{{url('commercial/contracts')}}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
 
             var input_search = $('#input-search').val();
             var form_search = $('#form-search-customer').serialize();
-            var route = 'contracts';
+            var route = 'commercial/customer';
 
             ajax_find_data(input_search, form_search, route);
 
@@ -246,7 +246,7 @@
             var id = $('#customer_id').val();
             console.log($('#form-insert-device').serialize());
 
-            ajax_store("", "contracts", $('#form-insert-device').serialize());
+            ajax_store("", "commercial/contracts", $('#form-insert-device').serialize());
             //ajax_store("", "contracts", $('#form-create-contract').serialize());
 
         });
@@ -260,7 +260,7 @@
     $(function() {
 
         $('#btn-contract-new-device').click(function() {
-            var route = 'contracts/add-device';
+            var route = 'commercial/contracts/devices/add';
 
             $.ajax({
                 url: "{{url('')}}/" + route,
@@ -296,7 +296,7 @@
         var id = $(this).data('id');
 
         $.ajax({
-            url: "{{url('/contracts/remove-device')}}",
+            url: "{{url('commercial/contracts/devices/remove')}}",
             method: 'POST',
             data: {
                 "id": id
