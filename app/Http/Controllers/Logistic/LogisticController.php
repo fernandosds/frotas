@@ -48,19 +48,4 @@ class LogisticController extends Controller
     
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function contractCompleted()
-    {
-
-        $data = $this->data;
-        $data['logistics'] = $this->contractService->paginate();
-
-        return response()->view('logistic.list_completed', $data);
-    }
-
-
 }

@@ -142,4 +142,15 @@ class ContractService
     {
         return $this->contract->find($id);
     }
+
+    /**
+     * 
+     * @return mixed
+     */
+    public function contractCompleted()
+    {
+
+        return $this->contract->contractCompleted();
+    }
+
 }
