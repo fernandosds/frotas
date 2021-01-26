@@ -45,8 +45,8 @@
                             <tr id="_tr_user_{{$user->id}}">
                                 <th scope="row">{{$user->id}}</th>
                                 <td>{{$user->name}}</td>
-                                <td>{{ ( $user->type == ""}}</td>
-                                <td>{{$user->customer->name ?? 'Interno SatComany'}}</td>
+                                <td>{{ ($user->type == "sat" ) ? "Sat" : "Externo" }}</td>
+                                <td>{{$user->customer->name ?? ''}}</td>
                                 <td>
 
                                     @if( $user->status == 1 )
