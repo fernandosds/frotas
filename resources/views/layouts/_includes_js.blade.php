@@ -231,7 +231,7 @@
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
-                        text: 'Erro ao tentar salvar!',
+                        text: 'Erro ao tentar salvar! ' + response.message,
                         showConfirmButton: true,
                         timer: 2500
                     })

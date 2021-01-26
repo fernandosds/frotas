@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'logistics'], function () {
         Route::get('/contracts', 'LogisticController@index');
+        Route::get('/contracts/completed', 'LogisticController@contractCompleted');
 
         /**
          * Contracts Logistics  routes

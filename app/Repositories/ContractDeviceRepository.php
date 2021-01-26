@@ -20,21 +20,22 @@ class ContractDeviceRepository extends AbstractRepository
         $this->model = $model;
     }
 
-    /**
-    public function findContractDevice(int $id)
-    {
-        
-        $contractDevice = DB::table('contracts')
-        ->join('contract_devices', 'contracts.id', '=', 'contract_devices.contract_id')
-        ->join('technologies', 'contract_devices.technologie_id', '=', 'technologies.id')
-        ->select('contracts.*', 'contract_devices.*', 'technologies.*')
-        ->where('contracts.id', '=', $id)
-        ->get();
 
-           // print_r($contractDevice);
-           // die();
-        
-        return $contractDevice;
+    public function checkStatusContractDevice(int $id)
+    {
+
+        $checkStatus = $this->model
+            ->select('status')
+            ->where([
+                ['status', '=', 0],
+                ['contract_id', '=', $id],
+            ])
+            ->count();
+
+        //var_dump($checkStatus);
+        //die();
+
+
+        return $checkStatus;
     }
-     */
 }
