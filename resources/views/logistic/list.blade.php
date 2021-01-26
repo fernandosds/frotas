@@ -34,7 +34,6 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Nº Contrato</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Data de criação</th>
@@ -44,9 +43,8 @@
                     @foreach ($logistics as $logistic)
                     <tr id="_tr_user_{{$logistic->id}}">
                         <th scope="row">{{$logistic->id}}</th>
-                        <td>{{$logistic->id}}</td>
                         <td>{{$logistic->customer->name}}</td>
-                        <td>{{$logistic->created_at}}</td>
+                        <td>{{ date_format($logistic->created_at, "d/m/Y") }}</td>
                         <td>
                             <div class="pull-right">
                                 <!--
@@ -55,7 +53,7 @@
                                             <span class="fa fa-fw fa-trash"></span> Deletar
                                         </button>
                                         -->
-                                <a href="{{url('logistics/contracts/edit')}}/{{$logistic->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-file-upload"></span>Dispositivo</a>
+                                <a href="{{url('logistics/contracts/edit')}}/{{$logistic->id}}" class="btn btn-sm btn-info"><span class="fa fa-eye"></span> Detalhes</a>
                             </div>
                         </td>
                     </tr>

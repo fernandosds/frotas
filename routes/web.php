@@ -64,14 +64,18 @@ Route::group(['middleware' => 'auth'], function () {
         //Route::get('/search/{cpj_cnpj}', 'ContractController@search');
         Route::post('/search', 'ContractController@search');
 
-        Route::post('/add-device', 'ContractController@addDevice');
-        Route::post('/remove-device', 'ContractController@removeDevice');
-        //Route::get('/devices', 'ContractController@indexDevice');
-
         Route::post('/save', 'ContractController@save');
         Route::put('/update/{id}', 'ContractController@update');
         Route::get('/edit/{id}', 'ContractController@edit');
         Route::get('/delete/{id}', 'ContractController@destroy');
+
+        // TODO Criar grupo devices
+
+
+        Route::post('/add-device', 'ContractController@addDevice');
+        Route::post('/remove-device', 'ContractController@removeDevice');
+        //Route::get('/devices', 'ContractController@indexDevice');
+
     });
 
     /**
@@ -85,15 +89,26 @@ Route::group(['middleware' => 'auth'], function () {
      * Logistics  routes
      */
     Route::group(['prefix' => 'logistics'], function () {
-        Route::get('/', 'LogisticController@index');
-
+        Route::get('/contracts', 'LogisticController@index');
 
         /**
          * Contracts Logistics  routes
          */
         Route::group(['prefix' => 'contracts'], function () {
-            Route::get('/edit/{id}', 'LogisticController@edit');
+            Route::get('/edit/{id}', 'LogisticController@edit');            
+            Route::put('/update/{id}', 'LogisticController@update');
+
+            /**
+             * Devices
+             */
+            Route::group(['prefix' => 'devices'], function () {
+                Route::GET('/attach/{id}', 'LogisticController@attachDevices');
+            });
+
         });
+
+
+
     });
 
 

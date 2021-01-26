@@ -17,10 +17,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 class ContractDevice extends Model
 {
 
@@ -41,7 +37,8 @@ class ContractDevice extends Model
         'contract_id',
         'device_id',
         'technologie_id',
-        'type_id'
+        'type_id',
+        'status'
     ];
 
     /**
@@ -54,7 +51,8 @@ class ContractDevice extends Model
             'device_id'                  => $this->device_id,
             'technologie_id'             => $this->technologie_id,
             'type_id'                    => $this->type_id,
-            
+            'status'                     => $this->status,
+
         ];
     }
 

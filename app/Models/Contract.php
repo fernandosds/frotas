@@ -28,7 +28,9 @@ class Contract extends Model
         'id',
         'customer_id',
         'user_id',
-        'validity'
+        'validity',
+        'uniqid',
+        'status'
     ];
 
     /**
@@ -41,6 +43,8 @@ class Contract extends Model
             'customer_id'   => $this->customer_id,
             'user_id'       => $this->user_id,
             'validity'      => $this->validity,
+            'uniqid'        => $this->uniqid,
+            'status'        => $this->status,
         ];
     }
 

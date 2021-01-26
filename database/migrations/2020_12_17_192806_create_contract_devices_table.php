@@ -19,6 +19,7 @@ class CreateContractDevicesTable extends Migration
             $table->integer('technologie_id');
             $table->float('total');
             $table->integer('quantity');
+            $table->boolean('status', 0);
             $table->softDeletes();
             $table->timestamps();
         });

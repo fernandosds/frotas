@@ -37,6 +37,7 @@ class ContractService
      */
     public function paginate(Int $limit = 15)
     {
+
         return $this->contract->paginate($limit);
     }
 
@@ -59,6 +60,8 @@ class ContractService
      */
     public function save(Request $request)
     {
+
+        $request->merge(['uniqid' => md5(uniqid("_sat_"))]);
 
         $contract = $this->contract->create($request->input());
         
@@ -92,7 +95,7 @@ class ContractService
     public function update(Request $request, $id)
     {
 
-        $contract = $this->contract->update($id, $request->all());
+        $contract = $this->contract->update($id, ['status' => 1]);
         return $contract;
     }
 

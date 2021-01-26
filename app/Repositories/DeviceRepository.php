@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Device;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DeviceRepository extends AbstractRepository
@@ -40,5 +41,44 @@ class DeviceRepository extends AbstractRepository
     public function exists(String $model)
     {
         return $this->model->where('model', $model)->count();
+    }
+
+
+    /**
+     * @param String $model
+     * @return mixed
+     */
+    public function attachDevices($object)
+    {
+
+
+
+
+        $devices = $this->model
+            ->whereNull('contract_id')
+            ->whereNull('customer_id')
+            ->where('technologie_id', $object->technologie_id)
+            ->limit($object->quantity);
+
+            /*
+            ->update([
+                'contract_id' => $object->contract_id,
+                'customer_id' => $object->contract->customer_id
+            ]);
+            */
+
+        if($devices->count() < $object->quantity){
+            return ['status' => 'error', 'message' => 'Quantidade de dispositivos insuficiente no estoque'];
+        }else{
+
+            $devices->update([
+                'contract_id' => $object->contract_id,
+                'customer_id' => $object->contract->customer_id
+            ]);
+
+            return ($devices) ? ['status' => 'success'] : ['status' => 'error'];
+        }
+
+
     }
 }

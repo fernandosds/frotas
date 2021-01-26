@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class ContractDeviceService
 {
+
+    /**
+     * ContractDeviceService constructor.
+     * @param ContractDeviceRepository $contractdevice
+     */
     public function __construct(ContractDeviceRepository $contractdevice)
     {
         $this->contractdevice = $contractdevice;
@@ -18,8 +23,17 @@ class ContractDeviceService
     /**
      * @return mixed
      */
-    public function findContractDevice($id)
+    public function show($id)
     {
-        return $this->contractdevice->findContractDevice($id);
+        return $this->contractdevice->show($id);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function setAttachStatus(Int $id)
+    {
+        return $this->contractdevice->update($id, ['status' => 1]);
     }
 }

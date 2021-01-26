@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\ContractDeviceService;
+use App\Services\DeviceService;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Print_;
 
 class LogisticController extends Controller
 {
     private $contractService;
+    private $deviceService;
     private $contractDeviceService;
     private $data;
 
-    public function __construct(ContractService $contractService, ContractDeviceService $contractDeviceService)
+    public function __construct(ContractService $contractService, ContractDeviceService $contractDeviceService, DeviceService $deviceService)
     {
         $this->contractService = $contractService;
         $this->contractDeviceService = $contractDeviceService;
+        $this->deviceService = $deviceService;
 
         $this->data = [
-            'icon' => 'flaticon2-box',
-            'title' => 'Contrato nº: ',
+            'icon' => 'file-text',
+            'title' => 'Contratos',
             'menu_open_logistics' => 'kt-menu__item--open'
         ];
     }
@@ -52,20 +56,16 @@ class LogisticController extends Controller
 
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
-        //$data['contracts'] = $this->contractDeviceService->findContractDevice($id);
-        //$data['technologies'] = $this->technologieService->show($id);
-
-        
 
         return view('logistic.new', $data);
     }
 
-
     /**
-     * @param UserRequest $request
-     * @return array|\Illuminate\Http\JsonResponse
+     * @param Int $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Int $id, Request $request)
+    public function update(Request $request)
     {
 
         try {
@@ -74,6 +74,32 @@ class LogisticController extends Controller
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function attachDevices(Int $id)
+    {
+
+        try {
+
+            $contract_devices = $this->contractDeviceService->show($id);
+
+            $attach_devices = $this->deviceService->attachDevices($id, $contract_devices);
+
+            if( $attach_devices['status'] == 'success' ){
+                $this->contractDeviceService->setAttachStatus($id);
+            }else{
+                return response()->json($attach_devices, 200);
+            }
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }

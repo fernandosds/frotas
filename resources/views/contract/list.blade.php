@@ -34,19 +34,17 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Estoque</th>
+                            <th scope="col">N</th>
                             <th scope="col">Cliente</th>
-                            <th scope="col">Embarque</th>
-                            <th scope="col">Tipo</th>
+                            <th scope="col">Data</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($contracts as $contract)
                         <tr id="_tr_user_{{$contract->id}}">
-                            <th scope="row">{{$contract->stock_id}}</th>
+                            <th scope="row">{{$contract->id}}</th>
                             <td>{{ !empty($contract->customer) ? $contract->customer->name:'' }}</td>
-                            <td>{{$contract->shipment_id}}</td>
-                            <td>{{$contract->type}}</td>
+                            <td>{{ date_format($contract->created_at, "d/m/Y") }}</td>
                             <td>
                                 <div class="pull-right">
                                     <a href="{{url('contracts/edit')}}/{{$contract->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
