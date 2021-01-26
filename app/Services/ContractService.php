@@ -96,6 +96,7 @@ class ContractService
     {
 
         $contract = $this->contract->update($id, ['status' => 1]);
+
         return $contract;
     }
 

@@ -36,4 +36,13 @@ class ContractDeviceService
     {
         return $this->contractdevice->update($id, ['status' => 1]);
     }
+
+     /**
+     * @param $id
+     * @return bool
+     */
+    public function checkStatusContractDevice(Int $id)
+    {
+        return $this->contractdevice->checkStatusContractDevice($id);
+    }
 }
