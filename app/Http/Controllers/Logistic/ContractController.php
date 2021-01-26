@@ -61,5 +61,31 @@ class ContractController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function contractCompleted()
+    {
 
+        $data = $this->data;
+        $data['logistics'] = $this->contractService->contractCompleted();
+
+        return response()->view('logistic.contracts.list', $data);
+    }
+
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Int $id)
+    {
+
+        $data = $this->data;
+        $data['contract'] = $this->contractService->show($id);
+
+        return view('logistic.contracts.new', $data);
+    }
 }

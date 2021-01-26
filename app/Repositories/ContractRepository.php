@@ -30,8 +30,25 @@ class ContractRepository extends AbstractRepository
             ->where('deleted_at', null)
             ->get();
 
-       
 
-            return $contract;
+
+        return $contract;
     }
+
+
+    public function contractCompleted()
+    {
+        //print_r($id);
+        //die();
+
+        $contractCompleted = $this->model
+            ->select('*')
+            ->where('status', '=', 1) 
+            ->get();
+
+
+
+        return $contractCompleted;
+    }
+
 }
