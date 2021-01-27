@@ -19,6 +19,30 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
+     * boardings device routes
+     */
+    Route::group(['prefix' => 'boardings'], function () {
+        Route::get('/', 'BoardingController@index');
+        Route::get('/new', 'BoardingController@new');
+        Route::post('/save', 'BoardingController@save');
+        Route::get('/delete/{id}', 'BoardingController@destroy');
+        //Route::put('/update/{id}', 'BoardingController@update');
+
+        Route::get('/test-device/{model}', 'BoardingController@testDevice');
+
+        //Route::put('/update/{id}', 'BoardingController@update');
+        //Route::get('/edit/{id}', 'BoardingController@edit');
+        //Route::get('/delete/{id}', 'BoardingController@destroy');
+    });
+
+    /**
+     * boardings device routes
+     */
+    Route::group(['prefix' => 'monitoring'], function () {
+        Route::get('/', 'MonitoringController@index');
+    });
+
+    /**
      * COMMERCIAL routes
      */
     Route::group(['middleware' => ['user.access_level:commercial'], 'prefix' => 'commercial'], function () {
@@ -65,8 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'customer'], function () {
             Route::post('/search', 'Commercial\CustomerController@search');
         });
-
-
 
     });
 
@@ -126,20 +148,6 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/delete/{id}', 'Production\TechnologieController@destroy');
             });
         });
-    });
-
-    Route::group(['prefix' => 'boardings'], function () {
-        Route::get('/', 'BoardingController@index');
-        Route::get('/new', 'BoardingController@new');
-        Route::post('/save', 'BoardingController@save');
-        Route::get('/delete/{id}', 'BoardingController@destroy');
-        //Route::put('/update/{id}', 'BoardingController@update');
-
-        Route::get('/test-device/{model}', 'BoardingController@testDevice');
-
-        //Route::put('/update/{id}', 'BoardingController@update');
-        //Route::get('/edit/{id}', 'BoardingController@edit');
-        //Route::get('/delete/{id}', 'BoardingController@destroy');
     });
 
     /**
