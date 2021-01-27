@@ -104,7 +104,6 @@
 
                     <div class="kt-portlet__body">
 
-
                         <div class="form-group row">
                             <label class="col-form-label ">Nível de acesso (Usuário SAT Company)</label>
                             <select class="form-control" name="type">
@@ -114,7 +113,6 @@
                                 <option value="int" {{ ($user->level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
                             </select>
                         </div><br />
-
 
                         <div class="form-group row">
                             <label class="col-form-label ">Cliente (Usuario externo)</label>

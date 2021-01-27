@@ -100,17 +100,17 @@
                             <tbody>
                                 @foreach ($contract->contractDevice as $device)
                                 <tr id="_tr_user_{{$device->id}}">
-                                    <td>{{$device->id}}</td>
+                                    <td data-id="{{$device->id}}">{{$device->id}}</td>
                                     <td data-technologie_id="{{$device->technologie->id}}">{{$device->technologie->type}}</td>
                                     <td data-quantity_id="{{$device->quantity}}">{{$device->quantity}}</td>
                                     <td>R$ {{ number_format($device->total,2,",",".")}}</td>
                                     <td>
                                         <div class="pull-right">
-                                           
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                            <span class="fa fa-fw fa-search-plus"></span> Iscas cadastradas
+
+                                            <button type="button" class="btn btn-primary btn-device-indexed" data-toggle="modal" data-id="{{$device->id}}" data-target="#exampleModal">
+                                                <span class="fa fa-fw fa-search-plus"></span> Iscas cadastradas
                                             </button>
-                                            
+
                                         </div>
                                     </td>
                                 </tr>
@@ -125,17 +125,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Iscas Cadastradas</h5>
+                                <h5 class="modal-title" id="btn-attach-indexed">Iscas Cadastradas</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <div class="form-row col md-12" id="list_devices">
+                                    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                             </div>
                         </div>
                     </div>
@@ -182,18 +183,39 @@
 @section('scripts')
 <script>
     /**
+         Exibir Iscas cadastradas
+         
+    $(function() {
+        var id = $(this).data('id');
+        $.ajax({
+            type: 'GET',
+            url: "{{url('customers/contacts/show')}}/" + id,
+            success: function(response) {
+                $('#list_contacts').html(response)
+            }
+
+        })
+    })
+    */
+
+    /**
      Display Contracts     
      */
 
     $(function() {
 
-        $('#btn-contract-save').click(function() {
-
-            ajax_store({
-                {
-                    $contract - > id
+        var id = $(this).data('id');
+        $('.btn-device-indexed').click(function() {
+            var id = $(this).data('id');
+            //alert( $(this).data('id') )
+            $.ajax({
+                type: 'GET',
+                url: "{{url('logistics/contracts/devices/filter')}}/" + id,
+                success: function(response) {
+                    $('#list_devices').html(response)
                 }
-            }, "logistics/contracts", $('#form_finalize_contract').serialize());
+
+            })
 
         });
 
@@ -203,6 +225,7 @@
      Add Device     
     */
 
+    /**
     $(function() {
 
         $('#btn-contract-new-device').click(function() {
@@ -228,7 +251,7 @@
         });
 
     });
-
+ */
     $(function() {
 
         /* Salvar devices */

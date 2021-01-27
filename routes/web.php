@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
              */
             Route::group(['prefix' => 'devices'], function () {
                 Route::GET('/attach/{id}', 'Logistic\DeviceController@attachDevices');
+                Route::GET('/filter/{id}', 'Logistic\DeviceController@filterByContractDevice');
             });
         });
     });
