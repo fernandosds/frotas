@@ -50,9 +50,9 @@ class DeviceRepository extends AbstractRepository
     public function available(Int $id)
     {
         return $this->model->where('id', $id)
-                            ->whereNull('contract_id')
-                            ->whereNull('customer_id')
-                            ->count();
+            ->whereNull('contract_id')
+            ->whereNull('customer_id')
+            ->count();
     }
 
     /**
@@ -88,20 +88,15 @@ class DeviceRepository extends AbstractRepository
      */
     public function filterByContractDevice($contract_devices)
     {
-        //var_dump($contract_devices);
-        //die();
 
-        $users = $this->model
-            ->where([
-                ['id', '=', $contract_devices->id],
-                ['technologie_id', '=',  $contract_devices->technologie_id],
 
-            ])
-            ->select('*')
+        $devices = $this->model
+           
+            //->where('customer_id', $contract_devices->customer_id)
+            ->where('technologie_id', $contract_devices->technologie_id)
+            ->where('contract_id', $contract_devices->contract_id)
             ->get();
 
-        print_r($users);
-        die();
-
+        return $devices;
     }
 }

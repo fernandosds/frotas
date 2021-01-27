@@ -59,11 +59,17 @@ class DeviceController extends Controller
      */
     public function filterByContractDevice(Int $id)
     {
+        
+        
         $contract_devices = $this->contractDeviceService->show($id);
         
+        //var_dump($contract_devices->contract_id);
+        //die();
+
         $data = $this->data;
         $data['devices'] = $this->deviceService->filterByContractDevice($contract_devices);
        
+      
         return response()->view('logistic.contracts.device.device_registered_list', $data);
     }
 }
