@@ -19,7 +19,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{url('users/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <a href="{{url('management/users/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                                 <i class="la la-plus"></i> Novo
                             </a>
                         </div>
@@ -58,7 +58,7 @@
                                 </td>
                                 <td>
                                     <div class="pull-right">
-                                        <a href="{{url('users/edit')}}/{{$user->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                        <a href="{{url('management/users/edit')}}/{{$user->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                         <button type="button" class="btn btn-sm  btn-danger btn-delete-user" data-id="{{$user->id}}" @if( Auth::user()->id == $user->id ) disabled @endif>
                                             <span class="fa fa-fw fa-trash"></span> Deletar
                                         </button>
@@ -85,7 +85,7 @@
         /* Deletar */
         $('.btn-delete-user').click(function(){
             var id = $(this).data('id');
-            var url = "{{url('users/delete')}}/"+id;
+            var url = "{{url('management/users/delete')}}/"+id;
             ajax_delete(id, url)
         })
 

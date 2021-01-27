@@ -58,8 +58,8 @@
                             <label class="col-form-label col-lg-3 col-sm-12">Tipo</label>
                             <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
                                 <select class="form-control" name="type">
-                                    <option value="int" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>Usuário Interno SatCompany</option>
-                                    <option value="ext" {{ ($user->type ?? null) == 'customer' ? 'selected' : ''}}>Cliente Externo</option>
+                                    <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>Usuário Interno</option>
+                                    <option value="ext" {{ ($user->type ?? null) == 'ext' ? 'selected' : ''}}>Usuário Externo</option>
                                 </select>
                             </div>
                         </div>
@@ -71,7 +71,6 @@
                                     <option value="1" {{ ($user->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
                                     <option value="2" {{ ($user->status ?? null) == '2' ? 'selected' : ''}}>INATIVO</option>
                                 </select>
-
                             </div>
                         </div>
                         <div class="form-group row">
@@ -92,7 +91,7 @@
                             <div class="row">
                                 <div class="col-lg-9 ml-lg-auto">
                                     <button type="button" class="btn btn-brand" id="btn-user-save">Confirmar</button>
-                                    <a href="{{url('users')}}" class="btn btn-secondary">Voltar</a>
+                                    <a href="{{url('management/users')}}" class="btn btn-secondary">Voltar</a>
                                 </div>
                             </div>
                         </div>
@@ -102,28 +101,37 @@
 
                 <div class="col-xl-3">
 
-                    <div class="kt-portlet__body">
+                    @if(isset($user))
+                        <div class="kt-portlet__body">
 
-                        <div class="form-group row">
-                            <label class="col-form-label ">Nível de acesso (Usuário SAT Company)</label>
-                            <select class="form-control" name="type">
-                                <option value="int" {{ ($user->level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
-                                <option value="int" {{ ($user->level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
-                                <option value="int" {{ ($user->level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
-                                <option value="int" {{ ($user->level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
-                            </select>
-                        </div><br />
+                            @if($user->type == "sat")
+                                <div class="form-group row">
+                                    <label class="col-form-label ">Nível de acesso (Usuário SAT Company)</label>
+                                    <select class="form-control" name="access_level">
+                                        <option value="">... Nível de acesso</option>
+                                        <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
+                                        <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
+                                        <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                        <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
+                                    </select>
+                                </div><br />
 
-                        <div class="form-group row">
-                            <label class="col-form-label ">Cliente (Usuario externo)</label>
-                            <select class="form-control" name="customer_id">
-                                <option value="">...Vincular ao cliente</option>
-                                @foreach( $customers as $customer )
-                                    <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                @endforeach
-                            </select>
+                            @else
+
+                                <div class="form-group row">
+                                    <label class="col-form-label ">Cliente (Usuario externo)</label>
+                                    <select class="form-control" name="customer_id">
+                                        <option value="">...Vincular ao cliente</option>
+                                        @foreach( $customers as $customer )
+                                            <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            @endif
+
                         </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -142,7 +150,7 @@
 
             var user_id = $('#id').val();
 
-            ajax_store(user_id, "users", $('#form-create-user').serialize());
+            ajax_store(user_id, "management/users", $('#form-create-user').serialize(), true);
 
         });
 

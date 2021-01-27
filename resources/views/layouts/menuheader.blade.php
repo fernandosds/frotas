@@ -71,17 +71,12 @@
 
     </div>
 
-    <!--end: Quick panel toggler -->
-
-
-
     <!--begin: User Bar -->
     <div class="kt-header__topbar-item kt-header__topbar-item--user">
         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
             <div class="kt-header__topbar-user">
                 <span class="kt-header__topbar-welcome kt-hidden-mobile">Olá,</span>
                 <span class="kt-header__topbar-username kt-hidden-mobile">{{ Auth::user()->name }}</span>
-
             </div>
         </div>
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
@@ -102,7 +97,11 @@
             <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url({{asset('/assets/media/misc/bg-1.jpg')}})">
 
                 <div class="kt-user-card__name">
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->name }}<br/>
+                    <small>
+                        Tipo: {{ Auth::user()->type }} <br/>
+                        Acesso: {{ Auth::user()->access_level }}
+                    </small>
                 </div>
                 <div class="kt-user-card__badge">
                     <a href="{{ route('logout') }}" class="btn btn-danger btn-elevate btn-pill btn-sm">Sair</a>

@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
 
     private $data;
+    private $userService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
+
+        $this->userService = $userService;
+
         $this->data = [
             'icon' => 'flaticon-home-2',
             'title' => 'Home',
@@ -41,6 +46,9 @@ class HomeController extends Controller
      */
     public function accessDenied()
     {
-        return view('access_denied');
+
+        $data['managements'] = $this->userService->getAllAdmins();
+
+        return view('access_denied', $data);
     }
 }

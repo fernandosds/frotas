@@ -18,7 +18,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'type', 'status', 'customer_id'
+        'name',
+        'email',
+        'password',
+        'type',
+        'status',
+        'customer_id',
+        'access_level'
     ];
 
     /**
@@ -47,14 +53,4 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Customer');
     }
 
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    
-    public function permission()
-    {
-        return $this->BelongsTo('App\Models\Permission');
-    }
-     */
 }

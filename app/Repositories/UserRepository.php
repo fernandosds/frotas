@@ -17,4 +17,15 @@ class UserRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAllAdmins()
+    {
+        return $this->model->where("type", '=', 'sat')
+                        ->where('status', 1)
+                        ->where('access_level', '=', 'management')
+                        ->get();
+    }
+
 }

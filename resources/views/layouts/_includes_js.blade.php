@@ -213,7 +213,7 @@
     /*
     INSERT FUNCTION
      */
-    function ajax_store(id, route, form_data) {
+    function ajax_store(id, route, form_data, reload = false) {
 
         if (id != "") {
             var url = "{{url('')}}/" + route + "/update/" + id;
@@ -236,7 +236,12 @@
                         showConfirmButton: true,
                         timer: 3000
                     }).then((result) => {
-                        $(location).attr('href', '{{url("")}}/' + route);
+                        if(reload){
+                            location.reload();
+                        }else{
+                            $(location).attr('href', '{{url("")}}/' + route);
+                        }
+
                     })
 
                 } else {

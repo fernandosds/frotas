@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Management;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\CustomerService;
 use App\Services\UserService;
-use Illuminate\Http\Request;
-use App\User;
 
 class UserController extends Controller
 {
@@ -15,6 +14,11 @@ class UserController extends Controller
     private $customerService;
     private $data;
 
+    /**
+     * UserController constructor.
+     * @param UserService $userService
+     * @param CustomerService $customerService
+     */
     public function __construct(UserService $userService, CustomerService $customerService)
     {
         $this->userService = $userService;
@@ -37,7 +41,7 @@ class UserController extends Controller
         $data = $this->data;
         $data['users'] = $this->userService->paginate();
 
-        return response()->view('user.list', $data);
+        return response()->view('management.user.list', $data);
     }
 
     /**
@@ -62,7 +66,7 @@ class UserController extends Controller
         $data['user'] = $this->userService->show($id);
         $data['customers'] = $this->customerService->all();
 
-        return view('user.new', $data);
+        return view('management.user.new', $data);
     }
 
     /**
@@ -105,21 +109,7 @@ class UserController extends Controller
 
     /**
      * @param Int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    //public function show(Int $id)
-    //{
-    //    return response()->json($this->userService->show($id));
-    //}
-
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Int $id)
     {

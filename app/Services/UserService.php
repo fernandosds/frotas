@@ -28,6 +28,14 @@ class UserService
     }
 
     /**
+     * @return mixed
+     */
+    public function getAllAdmins()
+    {
+        return $this->user->getAllAdmins();
+    }
+
+    /**
      * @param Int $limit
      * @return mixed
      */

@@ -19,21 +19,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * User routes
+     * COMMERCIAL routes
      */
-    Route::group(['middleware' => ['user.sat'], 'prefix' => 'users'], function () {
-        Route::get('/', 'UserController@index');
-        Route::get('/new', 'UserController@new');
-        Route::post('/save', 'UserController@save');
-        Route::put('/update/{id}', 'UserController@update');
-        Route::get('/edit/{id}', 'UserController@edit');
-        Route::get('/delete/{id}', 'UserController@destroy');
-    });
-
-    /**
-     * Contract routes
-     */
-    Route::group(['prefix' => 'commercial'], function () {
+    Route::group(['middleware' => ['user.access_level:commercial'], 'prefix' => 'commercial'], function () {
 
         /**
          * Clients routes
@@ -83,16 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * Stocks routes
+     * LOGISTIC  routes
      */
-    Route::group(['prefix' => 'stocks'], function () {
-        Route::get('/', 'StockController@index');
-    });
-
-    /**
-     * Logistics  routes
-     */
-    Route::group(['prefix' => 'logistics'], function () {
+    Route::group(['middleware' => ['user.access_level:logistic'], 'prefix' => 'logistics'], function () {
 
         /**
          * Contracts Logistics  routes
@@ -117,9 +98,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * Production routes
+     * PRODUCTION routes
      */
-    Route::group(['prefix' => 'production'], function () {
+    Route::group(['middleware' => ['user.access_level:production'], 'prefix' => 'production'], function () {
 
         /**
          * Devices routes
@@ -162,17 +143,32 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * Logs routes
+     * MANAGEMENT routes
      */
-    Route::group(['prefix' => 'logs'], function () {
-        Route::get('/', 'LogController@index');
-        Route::get('/new', 'LogController@new');
-        Route::post('/save', 'LogController@save');
-        Route::put('/update/{id}', 'LogController@update');
-        Route::get('/edit/{id}', 'LogController@edit');
-        Route::get('/delete/{id}', 'LogController@destroy');
-    });
+    Route::group(['middleware' => ['user.access_level:management'], 'prefix' => 'management'], function () {
 
+        /**
+         * User routes
+         */
+        Route::group(['middleware' => ['user.sat'], 'prefix' => 'users'], function () {
+            Route::get('/', 'Management\UserController@index');
+            Route::get('/new', 'Management\UserController@new');
+            Route::post('/save', 'Management\UserController@save');
+            Route::put('/update/{id}', 'Management\UserController@update');
+            Route::get('/edit/{id}', 'Management\UserController@edit');
+            Route::get('/delete/{id}', 'Management\UserController@destroy');
+        });
+
+        Route::group(['prefix' => 'logs'], function () {
+            Route::get('/', 'Management\LogController@index');
+            Route::get('/new', 'Management\LogController@new');
+            Route::post('/save', 'Management\LogController@save');
+            Route::put('/update/{id}', 'Management\LogController@update');
+            Route::get('/edit/{id}', 'Management\LogController@edit');
+            Route::get('/delete/{id}', 'Management\LogController@destroy');
+        });
+
+    });
 
     /**
      * Type of Loads routes
