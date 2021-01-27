@@ -100,14 +100,14 @@
                             <tbody>
                                 @foreach ($contract->contractDevice as $device)
                                 <tr id="_tr_user_{{$device->id}}">
-                                    <td>{{$device->id}}</td>
+                                    <td data-id="{{$device->id}}">{{$device->id}}</td>
                                     <td data-technologie_id="{{$device->technologie->id}}">{{$device->technologie->type}}</td>
                                     <td data-quantity_id="{{$device->quantity}}">{{$device->quantity}}</td>
                                     <td>R$ {{ number_format($device->total,2,",",".")}}</td>
                                     <td>
                                         <div class="pull-right">
 
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" id="btn-device-indexed" data-target="#exampleModal">
+                                            <button type="button" class="btn btn-primary btn-device-indexed" data-toggle="modal" data-id="{{$device->id}}" data-target="#exampleModal">
                                                 <span class="fa fa-fw fa-search-plus"></span> Iscas cadastradas
                                             </button>
 
@@ -131,15 +131,9 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Nº Isca</th>
-                                            <th scope="col">Tecnologia</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="form-row col md-12" id="list_devices">
+                                    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -189,15 +183,39 @@
 @section('scripts')
 <script>
     /**
+         Exibir Iscas cadastradas
+         
+    $(function() {
+        var id = $(this).data('id');
+        $.ajax({
+            type: 'GET',
+            url: "{{url('customers/contacts/show')}}/" + id,
+            success: function(response) {
+                $('#list_contacts').html(response)
+            }
+
+        })
+    })
+    */
+
+    /**
      Display Contracts     
      */
 
     $(function() {
 
-        $('#btn-device-indexed').click(function() {
+        var id = $(this).data('id');
+        $('.btn-device-indexed').click(function() {
+            var id = $(this).data('id');
+            //alert( $(this).data('id') )
+            $.ajax({
+                type: 'GET',
+                url: "{{url('logistics/contracts/devices/filter')}}/" + id,
+                success: function(response) {
+                    $('#list_devices').html(response)
+                }
 
-            var tec = $('#technologie_id').val();
-            alert(tec);
+            })
 
         });
 
@@ -207,6 +225,7 @@
      Add Device     
     */
 
+    /**
     $(function() {
 
         $('#btn-contract-new-device').click(function() {
@@ -232,7 +251,7 @@
         });
 
     });
-
+ */
     $(function() {
 
         /* Salvar devices */

@@ -60,16 +60,16 @@ class DeviceRepository extends AbstractRepository
             ->where('technologie_id', $object->technologie_id)
             ->limit($object->quantity);
 
-            /*
+        /*
             ->update([
                 'contract_id' => $object->contract_id,
                 'customer_id' => $object->contract->customer_id
             ]);
             */
 
-        if($devices->count() < $object->quantity){
+        if ($devices->count() < $object->quantity) {
             return ['status' => 'error', 'message' => 'Quantidade de dispositivos insuficiente no estoque'];
-        }else{
+        } else {
 
             $devices->update([
                 'contract_id' => $object->contract_id,
@@ -78,7 +78,28 @@ class DeviceRepository extends AbstractRepository
 
             return ($devices) ? ['status' => 'success'] : ['status' => 'error'];
         }
+    }
 
 
+    /**
+     * @param int $customer_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function filterByContractDevice($contract_devices)
+    {
+        //var_dump($contract_devices);
+        //die();
+
+        $users = $this->model
+            ->where([
+                ['id', '=', $contract_devices->id],
+                ['technologie_id', '=',  $contract_devices->technologie_id],
+
+            ])
+            ->select('*')
+            ->get();
+
+        print_r($users);
+        die();
     }
 }

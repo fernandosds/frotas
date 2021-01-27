@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Logistic;
 
 use App\Http\Controllers\Controller;
+use App\Services\ContractDeviceService;
+use App\Services\DeviceService;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -49,5 +51,19 @@ class DeviceController extends Controller
 
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
+    }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function filterByContractDevice(Int $id)
+    {
+        $contract_devices = $this->contractDeviceService->show($id);
+        
+        $data = $this->data;
+        $data['devices'] = $this->deviceService->filterByContractDevice($contract_devices);
+       
+        return response()->view('logistic.contracts.device.device_registered_list', $data);
     }
 }

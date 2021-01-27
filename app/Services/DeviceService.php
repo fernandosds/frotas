@@ -167,7 +167,14 @@ class DeviceService
         return $this->device->attachDevices($object);
     }
 
-    
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function filterByContractDevice($contract_devices)
+    {     
+        return $this->device->filterByContractDevice($contract_devices);
+    }
 
     
 }
