@@ -131,7 +131,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form-row col md-12" id="list_devices">
+                                <div class="form-row col md-12" id="list_devices"  >
                                     <i class="fa fa-spinner fa-pulse fa-5x"></i>
                                 </div>
                             </div>

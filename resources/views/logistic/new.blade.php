@@ -172,7 +172,7 @@
 
         $('#btn-contract-save').click(function() {
 
-            ajax_store({{ $contract->id}}, "logistics/contracts", $('#form_finalize_contract').serialize());
+            ajax_store({{$contract->id}}, "logistics/contracts", $('#form_finalize_contract').serialize());
 
         });
 
