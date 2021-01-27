@@ -43,7 +43,7 @@
                     @foreach ($logistics as $logistic)
                     <tr id="_tr_user_{{$logistic->id}}">
                         <th scope="row">{{$logistic->id}}</th>
-                        <td>{{$logistic->customer->name}}</td>
+                        <td>{{$logistic->customer->name ?? ''}}</td>
                         <td>{{ date_format($logistic->created_at, "d/m/Y") }}</td>
                         <td>
                             <div class="pull-right">

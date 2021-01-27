@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Production;
 
+use App\Http\Controllers\Controller;
 use App\Imports\DeviceImport;
 use App\Services\TechnologieService;
-use Illuminate\Http\Request;
 use App\Http\Requests\DeviceRequest;
 use App\Services\DeviceService;
 use Maatwebsite\Excel\Facades\Excel;
-use mysql_xdevapi\Exception;
 
 class DeviceController extends Controller
 {
@@ -43,7 +42,7 @@ class DeviceController extends Controller
         $data = $this->data;
         $data['devices'] = $this->deviceService->paginate();
 
-        return response()->view('device.list', $data);
+        return response()->view('production.device.list', $data);
     }
 
     /**
@@ -55,7 +54,7 @@ class DeviceController extends Controller
         $data = $this->data;
         $data['technologies'] = $this->technologieService->all();
 
-        return view('device.new', $data);
+        return view('production.device.new', $data);
     }
 
     /**
@@ -85,8 +84,9 @@ class DeviceController extends Controller
 
         $data = $this->data;
         $data['device'] = $this->deviceService->show($id);
+        $data['technologies'] = $this->technologieService->all();
 
-        return view('device.new', $data);
+        return view('production.device.new', $data);
     }
 
     /**
@@ -122,7 +122,14 @@ class DeviceController extends Controller
      */
     public function destroy(Int $id)
     {
-        $this->deviceService->destroy($id);
-        return back()->with(['status' => 'Deleted successfully']);
+
+        $destroy = $this->deviceService->destroy($id);
+
+        if($destroy){
+            return response()->json(['status' => 'success', 'message' => $destroy.' Deleted successfully']);
+        }else{
+            return response()->json(['status' => 'error', 'message' => $destroy.' O dispositivo esta em uso por um cliente!']);
+        }
+
     }
 }

@@ -41,7 +41,7 @@
                     <div class="kt-form__actions">
                         <div class="col-lg-12 ml-lg-auto">
                             <button type="button" class="btn btn-brand" id="btn-device-save">Importar</button>
-                            <a href="{{url('devices')}}" class="btn btn-secondary">Voltar</a>
+                            <a href="{{url('production/devices')}}" class="btn btn-secondary">Voltar</a>
 
                             <div class="pull-right">
                                 <a href="#" id="btn-show-exemple"><i class="kt-menu__ver-arrow la la-angle-down"></i> Ver exemplo de planilha</a>
@@ -92,14 +92,13 @@
             $('.div-exemplo').show('100');
         })
 
-        //$('#form-create-device').click(function() {
         $('#btn-device-save').click(function() {
 
             //var formData = new FormData(this);
             var formData = new FormData(document.querySelector("#form-create-device"));
 
             $.ajax({
-                url: '{{url("/devices/save")}}',
+                url: '{{url("/production/devices/save")}}',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
@@ -113,10 +112,12 @@
                                 showConfirmButton: true,
                                 timer: 10000
                             })
+                            window.location.href = '{{url("/production/devices")}}'
                         }else{
                             Swal.fire({
                                 type: 'warning',
-                                title: 'Nenhum arquivo importado, os dispositivos já devem existir no sistema ou a planilha esta fora do padrão!',
+                                title: 'Nenhum arquivo importado!',
+                                text: 'Os dispositivos já devem existir no sistema ou a planilha esta fora do padrão!',
                                 showConfirmButton: true,
                                 timer: 10000
                             })
@@ -147,9 +148,8 @@
                 processData: false,
                 xhr: function() { // Custom XMLHttpRequest
                     var myXhr = $.ajaxSettings.xhr();
-                    if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
+                    if (myXhr.upload) {
                         myXhr.upload.addEventListener('progress', function() {
-                            /* faz alguma coisa durante o progresso do upload */
                         }, false);
                     }
                     return myXhr;

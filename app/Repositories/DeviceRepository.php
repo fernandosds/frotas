@@ -43,6 +43,17 @@ class DeviceRepository extends AbstractRepository
         return $this->model->where('model', $model)->count();
     }
 
+    /**
+     * @param Int $id
+     * @return mixed
+     */
+    public function available(Int $id)
+    {
+        return $this->model->where('id', $id)
+                            ->whereNull('contract_id')
+                            ->whereNull('customer_id')
+                            ->count();
+    }
 
     /**
      * @param String $model
@@ -50,9 +61,6 @@ class DeviceRepository extends AbstractRepository
      */
     public function attachDevices($object)
     {
-
-
-
 
         $devices = $this->model
             ->whereNull('contract_id')
@@ -78,7 +86,6 @@ class DeviceRepository extends AbstractRepository
 
             return ($devices) ? ['status' => 'success'] : ['status' => 'error'];
         }
-
 
     }
 }

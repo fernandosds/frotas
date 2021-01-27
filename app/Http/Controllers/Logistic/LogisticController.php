@@ -25,7 +25,7 @@ class LogisticController extends Controller
 
         $this->data = [
             'icon' => 'file-text',
-            'title' => 'Contratos',
+            'title' => 'Logística > Contratos',
             'menu_open_logistics' => 'kt-menu__item--open'
         ];
     }

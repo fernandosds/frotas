@@ -52,6 +52,9 @@ class DeviceService
     public function save(Array $array)
     {
 
+        $date = date('Y-m-d H:i:s');
+        $user_id = Auth::user()->id;
+
         $arr_insert = [];
         foreach( $array[0] as $item ){
 
@@ -137,7 +140,12 @@ class DeviceService
     public function destroy(Int $id)
     {
 
-        return $this->device->delete($id);
+        if( $this->device->available($id) > 0 ){
+            return $this->device->delete($id);
+        }else{
+            return false;
+        }
+
     }
 
     /**

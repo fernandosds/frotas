@@ -31,33 +31,33 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * Clients routes
-     */
-    Route::group(['prefix' => 'customers'], function () {
-
-        Route::get('/', 'CustomerController@index');
-        Route::get('/show/{id}', 'CustomerController@show');
-        Route::get('/new', 'CustomerController@new');
-        Route::post('/save', 'CustomerController@save');
-        Route::put('/update/{id}', 'CustomerController@update');
-        Route::get('/edit/{id}', 'CustomerController@edit');
-        Route::get('/delete/{id}', 'CustomerController@destroy');
-
-        /**
-         * Contact routes
-         */
-        Route::group(['prefix' => 'contacts'], function () {
-            Route::get('/', 'ContactController@index');
-            Route::get('/show/{id}', 'ContactController@show');
-            Route::post('/new', 'ContactController@save');
-            Route::get('/delete/{id}', 'ContactController@destroy');
-        });
-    });
-
-    /**
      * Contract routes
      */
     Route::group(['prefix' => 'commercial'], function () {
+
+        /**
+         * Clients routes
+         */
+        Route::group(['prefix' => 'customers'], function () {
+
+            Route::get('/', 'Commercial\CustomerController@index');
+            Route::get('/show/{id}', 'Commercial\CustomerController@show');
+            Route::get('/new', 'Commercial\CustomerController@new');
+            Route::post('/save', 'Commercial\CustomerController@save');
+            Route::put('/update/{id}', 'Commercial\CustomerController@update');
+            Route::get('/edit/{id}', 'Commercial\CustomerController@edit');
+            Route::get('/delete/{id}', 'Commercial\CustomerController@destroy');
+
+            /**
+             * Contact routes
+             */
+            Route::group(['prefix' => 'contacts'], function () {
+                Route::get('/', 'Commercial\ContactController@index');
+                Route::get('/show/{id}', 'Commercial\ContactController@show');
+                Route::post('/new', 'Commercial\ContactController@save');
+                Route::get('/delete/{id}', 'Commercial\ContactController@destroy');
+            });
+        });
 
         Route::group(['prefix' => 'contracts'], function () {
             Route::get('/', 'Commercial\ContractController@index');
@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'customer'], function () {
             Route::post('/search', 'Commercial\CustomerController@search');
         });
+
+
 
     });
 
@@ -113,29 +115,34 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-
     /**
-     * Devices routes
+     * Production routes
      */
-    Route::group(['prefix' => 'devices'], function () {
-
-        Route::get('/', 'DeviceController@index');
-        Route::get('/new', 'DeviceController@new');
-        Route::post('/save', 'DeviceController@save');
-        Route::put('/update/{id}', 'DeviceController@update');
-        Route::get('/edit/{id}', 'DeviceController@edit');
-        Route::get('/delete/{id}', 'DeviceController@destroy');
+    Route::group(['prefix' => 'production'], function () {
 
         /**
-         * Technologies routes
+         * Devices routes
          */
-        Route::group(['prefix' => 'technologies'], function () {
-            Route::get('/', 'TechnologieController@index');
-            Route::get('/new', 'TechnologieController@new');
-            Route::post('/save', 'TechnologieController@save');
-            Route::put('/update/{id}', 'TechnologieController@update');
-            Route::get('/edit/{id}', 'TechnologieController@edit');
-            Route::get('/delete/{id}', 'TechnologieController@destroy');
+        Route::group(['prefix' => 'devices'], function () {
+
+            Route::get('/', 'Production\DeviceController@index');
+            Route::get('/new', 'Production\DeviceController@new');
+            Route::post('/save', 'Production\DeviceController@save');
+            Route::put('/update/{id}', 'Production\DeviceController@update');
+            Route::get('/edit/{id}', 'Production\DeviceController@edit');
+            Route::get('/delete/{id}', 'Production\DeviceController@destroy');
+
+            /**
+             * Technologies routes
+             */
+            Route::group(['prefix' => 'technologies'], function () {
+                Route::get('/', 'Production\TechnologieController@index');
+                Route::get('/new', 'Production\TechnologieController@new');
+                Route::post('/save', 'Production\TechnologieController@save');
+                Route::put('/update/{id}', 'Production\TechnologieController@update');
+                Route::get('/edit/{id}', 'Production\TechnologieController@edit');
+                Route::get('/delete/{id}', 'Production\TechnologieController@destroy');
+            });
         });
     });
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Commercial;
 
+use App\Http\Controllers\Controller;
 use App\Services\ContactService;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,10 @@ class ContactController extends Controller
     private $contactService;
     private $data;
 
+    /**
+     * ContactController constructor.
+     * @param ContactService $contactService
+     */
     public function __construct(ContactService $contactService)
     {
         $this->contactService = $contactService;
@@ -21,7 +26,6 @@ class ContactController extends Controller
         ];
     }
 
-
     /**
      * @return \Illuminate\Http\Response
      */
@@ -30,14 +34,12 @@ class ContactController extends Controller
         $data = $this->data;
         $data['contacts'] = $this->contactService->paginate();
 
-        return response()->view('contacts.list', $data);
+        return response()->view('commercial.customer.contacts.list', $data);
     }
 
-    
-    
     /**
      * @param Int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function show(Int $id)
     {
@@ -45,15 +47,12 @@ class ContactController extends Controller
         $data = $this->data;
         $data['contacts'] = $this->contactService->show($id);
     
-        return response()->view('contacts.list', $data);
+        return response()->view('commercial.customer.contacts.list', $data);
     }
 
-
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function save(Request $request)
     {
@@ -68,13 +67,9 @@ class ContactController extends Controller
         }
     }
 
-
-
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Contact  $user
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Int $id)
     {

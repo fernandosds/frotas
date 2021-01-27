@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Production;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnologieRequest;
 use App\Services\TechnologieService;
 
@@ -11,6 +11,10 @@ class TechnologieController extends Controller
     private $technologieService;
     private $data;
 
+    /**
+     * TechnologieController constructor.
+     * @param TechnologieService $technologieService
+     */
     public function __construct(TechnologieService $technologieService)
     {
         $this->technologieService = $technologieService;
@@ -32,7 +36,7 @@ class TechnologieController extends Controller
         $data = $this->data;
         $data['technologies'] = $this->technologieService->paginate();
 
-        return response()->view('device.technologie.list', $data);
+        return response()->view('production.device.technologie.list', $data);
     }
 
     /**
@@ -42,15 +46,13 @@ class TechnologieController extends Controller
     {
 
         $data = $this->data;
-        return view('device.technologie.new', $data);
+        return view('production.device.technologie.new', $data);
     }
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param TechnologieRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function save(TechnologieRequest $request)
     {
@@ -76,12 +78,13 @@ class TechnologieController extends Controller
         $data = $this->data;
         $data['technologie'] = $this->technologieService->show($id);
 
-        return view('device.technologie.new', $data);
+        return view('production.device.technologie.new', $data);
     }
 
     /**
-     * @param UserRequest $request
-     * @return array|\Illuminate\Http\JsonResponse
+     * @param Int $id
+     * @param TechnologieRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Int $id, TechnologieRequest $request)
     {
@@ -97,19 +100,8 @@ class TechnologieController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Technologie  $user
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Int $id)
     {

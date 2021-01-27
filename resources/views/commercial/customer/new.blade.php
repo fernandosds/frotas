@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    @if (\Request::is('customers/edit/*'))
+                                    @if (\Request::is('commercial/customers/edit/*'))
 
                                     @endif
                                 </div>
@@ -94,7 +94,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 ml-lg-auto">
                                             <button type="button" class="btn btn-brand" id="btn-customer-save">Cadastrar</button>
-                                            <a href="{{url('customers')}}" class="btn btn-secondary">Voltar</a>
+                                            <a href="{{url('commercial/customers')}}" class="btn btn-secondary">Voltar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,18 +108,18 @@
 
                 <div class="col-sm-4">
 
-                    @if (\Request::is('customers/edit/*'))
+                    @if (\Request::is('commercial/customers/edit/*'))
                     <div class="col-sm-12">
                         <br />
-                        <button type="button" class="btn btn-outline-brand btn-sm pull-right" data-toggle="modal" data-target="#kt_modal_4">
+                        <button type="button" class="btn btn-brand btn-sm pull-right" data-toggle="modal" data-target="#kt_modal_4">
                             <i class="fa fa-phone" aria-hidden="true"></i> Adicionar
                         </button>
                         <h4>Contatos </h4>
                         <hr />
                     </div>
 
-                    <div class="form-row col md-12" id="list_contacts">
-                        <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                    <div class="center" id="list_contacts">
+                        <i class="fa fa-spinner fa-pulse fa-4x"></i>
                     </div>
                     @else
 
@@ -139,46 +139,40 @@
         </div>
     </div>
 
+    <!--begin::Modal-->
+    <div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionando contato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-create-contact">
 
+                        <input type="hidden" name="customer_id" value="{{$customer->id ?? ''}}" />
 
+                        @csrf
+                        <input type="hidden" name="customer_id" id="id" value="{{ $customer->id ?? '' }}" />
 
-
-
-
-        <!--begin::Modal-->
-        <div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Adicionando contato</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-create-contact">
-
-                            <input type="hidden" name="customer_id" value="{{$customer->id ?? ''}}" />
-
-                            @csrf
-                            <input type="hidden" name="customer_id" id="id" value="{{ $customer->id ?? '' }}" />
-
-                            <div class="form-group">
-                                <label for="recipient-name" class="form-control-label">Telefone</label>
-                                <input type="text" id="input_contact_customers" name="phone" class="form-control mask_input_contact" id="phone">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="form-control-label">Email</label>
-                                <input type="text" name="email" class="form-control" id="email">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" id="btn-customer-new-contact">Salvar</button>
-                    </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">Telefone</label>
+                            <input type="text" id="input_contact_customers" name="phone" class="form-control mask_input_contact" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="form-control-label">Email</label>
+                            <input type="text" name="email" class="form-control" id="email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-customer-new-contact">Salvar</button>
                 </div>
             </div>
         </div>
+    </div>
 
 <!--end::Modal-->
 
@@ -186,21 +180,6 @@
 
 @section('scripts')
     <script>
-        /**
-         Carregar a div de contatos
-         */
-
-        /**
-        $.ajax({
-            type: 'GET',
-
-            url: "{{url('customers/contacts')}}",
-            success: function(response) {
-                $('#list_contacts').html(response)
-            }
-
-        })
-        */
 
         /**
          Gravar cliente
@@ -209,7 +188,7 @@
 
             $('#btn-customer-save').click(function() {
                 var customer_id = $('#id').val();
-                ajax_store(customer_id, "customers", $('#form-create-customer').serialize());
+                ajax_store(customer_id, "commercial/customers", $('#form-create-customer').serialize());
             });
 
         });
@@ -222,7 +201,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: "{{url('customers/contacts/show')}}/" + id,
+                url: "{{url('commercial/customers/contacts/show')}}/" + id,
                 success: function(response) {
                     $('#list_contacts').html(response)
                 }
@@ -230,32 +209,81 @@
             })
         })
 
-
         /**
          Deletar
          */
-
         $("#list_contacts").on("click", ".btn-delete-contact", function() {
 
             var id = $(this).data('id');
-            var url = "{{url('customers/contacts/delete')}}/" + id;
+            var url = "{{url('commercial/customers/contacts/delete')}}/" + id;
             ajax_delete(id, url)
 
         });
 
-
         /**
         Gravar contato
         */
-
         $(function() {
 
             $('#btn-customer-new-contact').click(function() {
 
-                var dados = $('#form-create-contact').serialize();
                 var customer_id = $('#id').val();
-                ajax_save_contact(dados, customer_id);
 
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: "{{url('/commercial/customers/contacts/new')}}",
+                    async: true,
+                    data: $('#form-create-contact').serialize(),
+                    success: function(response) {
+
+                        if (response.status == "success") {
+
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Registro salvo com sucesso',
+                                showConfirmButton: true,
+                                timer: 3000
+                            }).then((result) => {
+                                $(location).attr('href', '{{url("/commercial/customers/edit")}}/' + customer_id);
+                            })
+
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Erro ao tentar salvar!',
+                                showConfirmButton: true,
+                                timer: 2500
+                            })
+                        }
+
+                    },
+                    error: function(error) {
+
+                        if (error.responseJSON.status == "internal_error") {
+                            console.log(error.responseJSON.errors)
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                                showConfirmButton: true,
+                                timer: 2500
+                            })
+                        } else {
+                            var items = error.responseJSON.errors;
+                            var errors = $.map(items, function(i) {
+                                return i.join('<br />');
+                            });
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Erro!',
+                                html: 'Os seguintes erros foram encontrados: ' + errors,
+                                footer: ' '
+                            })
+                        }
+                    }
+                });
             });
         });
 

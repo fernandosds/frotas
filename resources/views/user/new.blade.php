@@ -17,10 +17,13 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xl-2"></div>
-            <div class="col-xl-6">
-                <form class="kt-form kt-form--label-right" id="form-create-user">
+        <form class="kt-form kt-form--label-right" id="form-create-user">
+
+            <div class="row">
+
+                <div class="col-xl-1"></div>
+                <div class="col-xl-6">
+
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
 
@@ -62,18 +65,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-lg-3 col-sm-12">Cliente</label>
-                            <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
-                                <select class="form-control" name="customer_id">
-                                    <option value="">...Vincular ao cliente</option>
-                                    @foreach( $customers as $customer )
-                                        <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label class="col-form-label col-lg-3 col-sm-12">Status</label>
                             <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
                                 <select class="form-control" name="status" @if(isset($user)) @if($user->id == Auth::user()->id) disabled="" @endif @endif>
@@ -107,10 +98,38 @@
                         </div>
                     </div>
 
-                </form>
+                </div>
 
+                <div class="col-xl-3">
+
+                    <div class="kt-portlet__body">
+
+
+                        <div class="form-group row">
+                            <label class="col-form-label ">Nível de acesso (Usuário SAT Company)</label>
+                            <select class="form-control" name="type">
+                                <option value="int" {{ ($user->level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
+                                <option value="int" {{ ($user->level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
+                                <option value="int" {{ ($user->level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                <option value="int" {{ ($user->level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
+                            </select>
+                        </div><br />
+
+
+                        <div class="form-group row">
+                            <label class="col-form-label ">Cliente (Usuario externo)</label>
+                            <select class="form-control" name="customer_id">
+                                <option value="">...Vincular ao cliente</option>
+                                @foreach( $customers as $customer )
+                                    <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </form>
 
     </div>
 </div>

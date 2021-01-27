@@ -47,12 +47,19 @@
                                 <td>{{$device->model}}</td>
                                 <td>{{$device->technologie->type}}</td>
                                 <td>{{$device->customer->name ?? ''}}</td>
+                                <td>{{$device->contract_id ?? ''}}</td>
                                 <td>
                                     <div class="pull-right">
-                                        <a href="{{url('devices/edit')}}/{{$device->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                        <button type="button" class="btn btn-sm  btn-danger btn-delete-device" data-id="{{$device->id}}">
-                                            <span class="fa fa-fw fa-trash"></span> Deletar
-                                        </button>
+
+                                        @if( $device->customer == null || $device->contract_id == null )
+                                            <button type="button" class="btn btn-sm  btn-danger btn-delete-device" data-id="{{$device->id}}">
+                                                <span class="fa fa-fw fa-trash"></span> Deletar
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-sm  btn-danger" disabled>
+                                                <span class="fa fa-fw fa-trash"></span> Deletar
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -77,7 +84,7 @@
         /* Deletar */
         $('.btn-delete-device').click(function(){
             var id = $(this).data('id');
-            var url = "{{url('devices/delete')}}/"+id;
+            var url = "{{url('production/devices/delete')}}/"+id;
             ajax_delete(id, url)
         })
 

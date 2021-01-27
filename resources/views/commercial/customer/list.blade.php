@@ -19,7 +19,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{url('customers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <a href="{{url('commercial/customers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                                 <i class="la la-plus"></i> Novo
                             </a>
                         </div>
@@ -48,7 +48,7 @@
                                 <td>{{$customer->type}}</td>
                                 <td>
                                     <div class="pull-right">
-                                        <a href="{{url('customers/edit')}}/{{$customer->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                        <a href="{{url('commercial/customers/edit')}}/{{$customer->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                         <button type="button" class="btn btn-sm  btn-danger btn-delete-customer" data-id="{{$customer->id}}">
                                             <span class="fa fa-fw fa-trash"></span> Deletar
                                         </button>
@@ -75,7 +75,7 @@
         /* Deletar */
         $('.btn-delete-customer').click(function(){
             var id = $(this).data('id');
-            var url = "{{url('customers/delete')}}/"+id;
+            var url = "{{url('commercial/customers/delete')}}/"+id;
             ajax_delete(id, url)
         })
 

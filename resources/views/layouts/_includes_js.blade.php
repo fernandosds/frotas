@@ -170,20 +170,32 @@
             cancelButtonText: 'Não!',
             reverseButtons: true
         }).then((result) => {
-            console.log(result)
+
             if (result.value) {
 
                 $.ajax({
                     url: url,
                     method: 'GET',
                 }).done(function(data) {
-                    $('#_tr_user_' + id).hide()
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Registro excluído com sucesso',
-                        showConfirmButton: true,
-                        timer: 3000
-                    })
+
+                    if(data.status == 'error'){
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Não foi possível excluir o registro',
+                            text: data.message,
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+                    }else{
+                        $('#_tr_user_' + id).hide()
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Registro excluído com sucesso',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+                    }
+
                 }).fail(function(data) {
                     Swal.fire({
                         type: 'error',
@@ -325,72 +337,5 @@
             })
         }
     }
-
-
-    function ajax_save_contact(dados, customer_id) {
-
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: "{{url('')}}/customers/contacts/new",
-            async: true,
-            data: dados,
-            success: function(response) {
-
-                if (response.status == "success") {
-
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Registro salvo com sucesso',
-                        showConfirmButton: true,
-                        timer: 3000
-                    }).then((result) => {
-                        $(location).attr('href', '{{url("/customers/edit")}}/' + customer_id);
-                    })
-
-
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar salvar!',
-                        showConfirmButton: true,
-                        timer: 2500
-                    })
-                }
-
-            },
-            error: function(error) {
-
-                if (error.responseJSON.status == "internal_error") {
-                    console.log(error.responseJSON.errors)
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 2500
-                    })
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-
-
-
-            }
-        });
-
-        return false;
-    }
-
 
 </script>

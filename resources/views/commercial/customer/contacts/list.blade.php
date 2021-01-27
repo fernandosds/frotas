@@ -14,7 +14,7 @@
             <td></td>
             <td>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-sm  btn-outline-danger btn-delete-contact" data-id="{{$contact->id}}">
+                    <button type="button" class="btn btn-sm  btn-danger btn-delete-contact" data-id="{{$contact->id}}">
                         <span class="fa fa-fw fa-trash"></span>
                     </button>
                 </div>

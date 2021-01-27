@@ -53,7 +53,7 @@ class AbstractRepository
      */
     public function paginate(Int $limit = 10)
     {
-        return $this->model->paginate($limit);
+        return $this->model->orderBy('id','desc')->paginate($limit);
     }
 
     /**
