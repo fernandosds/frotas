@@ -37,7 +37,6 @@ class MonitoringController extends Controller
      */
     public function index()
     {
-
         $data = $this->data;
 
         return view('monitoring.index', $data);

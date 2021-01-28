@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Commercial;
 
 use App\Http\Controllers\Controller;
 use App\Services\CustomerService;
+use App\Services\ContractDeviceService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\TechnologieService;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ContractController extends Controller
 {
     private $contractService;
+    private $contractDeviceService;
     private $customerService;
     private $data;
     private $technologieService;
@@ -19,12 +21,14 @@ class ContractController extends Controller
     /**
      * ContractController constructor.
      * @param ContractService $contractService
+     *  @param ContractDeviceService $contractService
      * @param CustomerService $customerService
      * @param TechnologieService $technologieService
      */
-    public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService)
+    public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService, ContractDeviceService $contractDeviceService)
     {
         $this->contractService = $contractService;
+        $this->contractDeviceService = $contractDeviceService;
         $this->customerService = $customerService;
         $this->technologieService = $technologieService;
 
@@ -49,7 +53,7 @@ class ContractController extends Controller
         return response()->view('commercial.contract.list', $data);
     }
 
-    
+
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -89,7 +93,7 @@ class ContractController extends Controller
 
         $request->merge([
             'user_id' => Auth::user()->id,
-            'customer_id' =>Auth::user()->customer_id
+            'customer_id' => Auth::user()->customer_id
         ]);
 
         try {
@@ -146,11 +150,29 @@ class ContractController extends Controller
         return back()->with(['status' => 'Deleted successfully']);
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function historyContract()
+    {
+
+        try {
 
 
+            $customer = $this->customerService->show(Auth::user()->customer_id);
+
+            $data = $this->data;
+
+            $data['contract'] = $this->contractService->historyContract($customer);
+
+            return response()->view('commercial.contract.list_contract_history', $data, 200);
+        } catch (\Exception $e) {
+
+            //return response()->json([ 'history_not_found'], 404);
+            return response()->view('history_not_found', array(), 404);
+            //return redirect('list_contract_history', 404);
+        }
+    }
 }

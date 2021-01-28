@@ -64,13 +64,13 @@ class ContractService
         $request->merge(['uniqid' => md5(uniqid("_sat_"))]);
 
         $contract = $this->contract->create($request->input());
-        
-        if($contract){
+
+        if ($contract) {
 
             $arr_devices = $request->session()->get('devices');
 
             $arr_insert = [];
-            foreach( $request->session()->get('devices') as $device ){
+            foreach ($request->session()->get('devices') as $device) {
 
                 $arr_insert[] = [
                     'technologie_id' =>  $device['technologie_id'],
@@ -81,7 +81,6 @@ class ContractService
             }
 
             DB::table('contract_devices')->insert($arr_insert);
-
         }
 
         return $contract;
@@ -131,7 +130,7 @@ class ContractService
     {
 
         $delete = $this->contract->delete($id);
-        if( $delete ){
+        if ($delete) {
             $this->contract_devices->deleteByContractId($id);
         }
 
@@ -153,4 +152,15 @@ class ContractService
         return $this->contract->contractCompleted();
     }
 
+
+    /**
+     * 
+     * @return mixed
+     */
+    
+    public function historyContract($customer)
+    {
+        return $this->contract->historyContract($customer);
+    }
+    
 }

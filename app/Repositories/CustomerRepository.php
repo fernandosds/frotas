@@ -22,11 +22,16 @@ class CustomerRepository extends AbstractRepository
 
     public function showid(int $id)
     {
+
+
         $customer = DB::table('customers')
             ->select(DB::raw('*'))
             ->where('id', '=', $id)
             ->where('deleted_at', null)
             ->first();
+
+        //print_r($customer);
+        //die();
 
         return $customer;
     }
