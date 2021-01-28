@@ -18,7 +18,7 @@
 
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
-                    
+
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
 
             <table class="table table-hover">
                 <thead>
-                    <tr>                        
+                    <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Usuário Cadastro</th>
                         <th scope="col">Cliente</th>
@@ -44,10 +44,8 @@
                         <td>{{$contract->user->name}}</td>
                         <td>{{$contract->customer->name}}</td>
                         <td>{{date_format($contract->created_at, "d/m/Y")}}</td>
-                        <td>{{$contract->type}}</td>  
-                        <td>{{$contract->total}}</td>     
-                                        
-                        
+                        <td>{{$contract->type}}</td>
+                        <td>{{$contract->total}}</td>
                         <td>
                             <div class="pull-right">
 
