@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'monitoring'], function () {
         Route::get('/', 'MonitoringController@index');
+        Route::get('/map/{device}', 'MonitoringController@map');
     });
 
     /**

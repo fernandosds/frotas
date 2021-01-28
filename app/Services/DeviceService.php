@@ -184,5 +184,13 @@ class DeviceService
         return $this->device->filterByContractDevice($contract_devices);
     }
 
+    /**
+     * @param String $device
+     * @return \Illuminate\Support\Collection
+     */
+    public function validDevice(String $device)
+    {
+        return $this->device->validDevice($device);
+    }
     
 }

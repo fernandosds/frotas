@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Device;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DeviceRepository extends AbstractRepository
@@ -89,7 +90,6 @@ class DeviceRepository extends AbstractRepository
     public function filterByContractDevice($contract_devices)
     {
 
-
         $devices = $this->model
            
             //->where('customer_id', $contract_devices->customer_id)
@@ -98,5 +98,17 @@ class DeviceRepository extends AbstractRepository
             ->get();
 
         return $devices;
+    }
+
+    /**
+     * @param String $device
+     * @return mixed
+     */
+    public function validDevice(String $device)
+    {
+        return $this->model->where('model', $device)
+                            ->where('customer_id', Auth::user()->customer_id)
+                            ->whereNotNull('contract_id')
+                            ->count();
     }
 }

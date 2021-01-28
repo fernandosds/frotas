@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\DeviceService;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -23,4 +24,7 @@ class DeviceController extends Controller
 
 
     }
+
+
+
 }
