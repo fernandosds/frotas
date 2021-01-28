@@ -43,7 +43,7 @@ class ContractRepository extends AbstractRepository
 
         $contractCompleted = $this->model
             ->select('*')
-            ->where('status', '=', 1) 
+            ->where('status', '=', 1)
             ->get();
 
 
@@ -51,4 +51,24 @@ class ContractRepository extends AbstractRepository
         return $contractCompleted;
     }
 
+    public function historyContract($customer)
+    {
+        /**
+
+        $historyContract = $this->model
+            ->join('contract_devices', 'contracts.customer_id', '=', $customer->id)
+            ->get();
+
+        print_r($historyContract);
+        die();
+         */
+        $historyContract = $this->model
+            ->where('customer_id', '=', $customer->id)
+            ->where('status', '=', 1)
+            ->get();
+
+     
+
+        return $historyContract;
+    }
 }

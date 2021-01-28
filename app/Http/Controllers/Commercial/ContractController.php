@@ -49,7 +49,7 @@ class ContractController extends Controller
         return response()->view('commercial.contract.list', $data);
     }
 
-    
+
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -89,7 +89,7 @@ class ContractController extends Controller
 
         $request->merge([
             'user_id' => Auth::user()->id,
-            'customer_id' =>Auth::user()->customer_id
+            'customer_id' => Auth::user()->customer_id
         ]);
 
         try {
@@ -146,11 +146,25 @@ class ContractController extends Controller
         return back()->with(['status' => 'Deleted successfully']);
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function historyContract()
+    {
+        $customer_id = Auth::user()->customer_id;
+          
+        print_r($customer_id);
+       
+       
+        $customer = $this->customerService->show($customer_id); 
+      
+        
+        $data = $this->data;
+        
+        $data['contracts'] = $this->contractService->historyContract($customer);
 
-
+        return response()->view('commercial.contract.list_contract_history', $data);
+    }
 }

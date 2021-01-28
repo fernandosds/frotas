@@ -57,6 +57,15 @@ class Contract extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function log()
@@ -72,14 +81,7 @@ class Contract extends Model
         return $this->belongsTo('App\Models\Device');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function shipment()
-    {
-        return $this->belongsTo('App\Models\Shipment');
-    }
-
+   
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -92,4 +94,6 @@ class Contract extends Model
     {
         return $this->HasMany('App\Models\ContractDevice');
     }
+
+    
 }
