@@ -12,7 +12,7 @@
                     <i class="kt-font-brand {{$icon}}"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    {{$title}}
+                    Histórico de {{$title}}
                 </h3>
             </div>
 
@@ -33,17 +33,20 @@
                         <th scope="col">Usuário Cadastro</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Data de Cadastro</th>
+                        <th scope="col">Tipo de Isca</th>
                         <th scope="col">Valor Contrato</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($contract as $contract)
                     <tr id="_tr_contract_history_{{$contract->id}}">
-                        <td>{{$contract->id}}</td>
+                        <td>{{$contract->cdev_id}}</td>
                         <td>{{$contract->user->name}}</td>
                         <td>{{$contract->customer->name}}</td>
                         <td>{{date_format($contract->created_at, "d/m/Y")}}</td>
-                        <td>{{$contract->total}}</td>                         
+                        <td>{{$contract->type}}</td>  
+                        <td>{{$contract->total}}</td>     
+                                        
                         
                         <td>
                             <div class="pull-right">

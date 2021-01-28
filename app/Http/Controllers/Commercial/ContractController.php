@@ -157,16 +157,16 @@ class ContractController extends Controller
      */
     public function historyContract()
     {
-        $customer_id = Auth::user()->customer_id;
-          
+      
         $customer = $this->customerService->show(Auth::user()->customer_id);  
        
         $data = $this->data;
         
         $data['contract'] = $this->contractService->historyContract($customer);
-        
-       
 
+        //print_r($data['contract']);
+        //die();
+        
         return response()->view('commercial.contract.list_contract_history', $data);
     }
 }
