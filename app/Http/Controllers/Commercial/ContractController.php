@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Commercial;
 
 use App\Http\Controllers\Controller;
 use App\Services\CustomerService;
+use App\Services\ContractDeviceService;
 use Illuminate\Http\Request;
 use App\Services\ContractService;
 use App\Services\TechnologieService;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ContractController extends Controller
 {
     private $contractService;
+    private $contractDeviceService;
     private $customerService;
     private $data;
     private $technologieService;
@@ -19,12 +21,14 @@ class ContractController extends Controller
     /**
      * ContractController constructor.
      * @param ContractService $contractService
+     *  @param ContractDeviceService $contractService
      * @param CustomerService $customerService
      * @param TechnologieService $technologieService
      */
-    public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService)
+    public function __construct(ContractService $contractService, CustomerService $customerService, TechnologieService $technologieService, ContractDeviceService $contractDeviceService)
     {
         $this->contractService = $contractService;
+        $this->contractDeviceService = $contractDeviceService;
         $this->customerService = $customerService;
         $this->technologieService = $technologieService;
 
@@ -155,15 +159,13 @@ class ContractController extends Controller
     {
         $customer_id = Auth::user()->customer_id;
           
-        print_r($customer_id);
+        $customer = $this->customerService->show(Auth::user()->customer_id);  
        
-       
-        $customer = $this->customerService->show($customer_id); 
-      
-        
         $data = $this->data;
         
-        $data['contracts'] = $this->contractService->historyContract($customer);
+        $data['contract'] = $this->contractService->historyContract($customer);
+        
+       
 
         return response()->view('commercial.contract.list_contract_history', $data);
     }

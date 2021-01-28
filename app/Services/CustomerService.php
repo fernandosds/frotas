@@ -75,8 +75,9 @@ class CustomerService
      */
     public function show(Int $id)
     {
-
+        
         $customer =  $this->customer->showid($id);
+       
 
         return ($customer) ? $customer : abort(404);
     }

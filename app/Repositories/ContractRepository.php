@@ -51,23 +51,23 @@ class ContractRepository extends AbstractRepository
         return $contractCompleted;
     }
 
+
     public function historyContract($customer)
     {
+
+
         /**
-
-        $historyContract = $this->model
-            ->join('contract_devices', 'contracts.customer_id', '=', $customer->id)
-            ->get();
-
-        print_r($historyContract);
-        die();
-         */
         $historyContract = $this->model
             ->where('customer_id', '=', $customer->id)
             ->where('status', '=', 1)
             ->get();
-
-     
+         */
+        $historyContract = $this->model //contracts
+            ->join('contract_devices', 'contracts.id', '=', 'contract_devices.contract_id')
+            ->where('contracts.customer_id', '=', $customer->id)
+            ->select('contract_devices.*', 'contracts.*')
+            ->get();
+        
 
         return $historyContract;
     }

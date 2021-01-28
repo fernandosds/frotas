@@ -157,10 +157,10 @@ class ContractService
      * 
      * @return mixed
      */
+    
     public function historyContract($customer)
     {
-        
-        
         return $this->contract->historyContract($customer);
     }
+    
 }

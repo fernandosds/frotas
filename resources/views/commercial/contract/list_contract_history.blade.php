@@ -37,13 +37,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contracts as $contract)
+                    @foreach ($contract as $contract)
                     <tr id="_tr_contract_history_{{$contract->id}}">
                         <td>{{$contract->id}}</td>
                         <td>{{$contract->user->name}}</td>
                         <td>{{$contract->customer->name}}</td>
-                        <td>{{$contract->created_at}}</td>
-                        <td>{{$contract->contractDevice}}</td>                         
+                        <td>{{date_format($contract->created_at, "d/m/Y")}}</td>
+                        <td>{{$contract->total}}</td>                         
                         
                         <td>
                             <div class="pull-right">

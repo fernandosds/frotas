@@ -45,4 +45,6 @@ class ContractDeviceService
     {
         return $this->contractdevice->checkStatusContractDevice($id);
     }
+
+   
 }

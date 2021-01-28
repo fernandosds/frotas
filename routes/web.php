@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/edit/{id}', 'Commercial\ContractController@edit');
             Route::get('/delete/{id}', 'Commercial\ContractController@destroy');
 
-            
+
 
 
             Route::group(['prefix' => 'devices'], function () {
@@ -94,12 +94,14 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-     /**
+    /**
      * Contracts History routes
      */
-    Route::group(['prefix' => 'contracts'], function () {        
+    Route::group(['prefix' => 'contracts'], function () {
         Route::get('/history', 'Commercial\ContractController@historyContract');
     });
+
+
 
     /**
      * Stocks routes
@@ -109,7 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/history', 'StockController@historyContract');
     });
 
-   
+
 
     /**
      * LOGISTIC  routes

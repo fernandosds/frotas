@@ -32,10 +32,7 @@ class ContractDeviceRepository extends AbstractRepository
             ])
             ->count();
 
-        //var_dump($checkStatus);
-        //die();
-
-
         return $checkStatus;
     }
+
 }
