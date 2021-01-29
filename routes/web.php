@@ -44,6 +44,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
+     * Contracts History routes
+     */
+    Route::group(['prefix' => 'contracts'], function () {
+        Route::get('/history', 'Commercial\ContractController@historyContract');
+    });
+
+    /**
      * COMMERCIAL routes
      */
     Route::group(['middleware' => ['user.access_level:commercial'], 'prefix' => 'commercial'], function () {
@@ -96,23 +103,12 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
-     * Contracts History routes
-     */
-    Route::group(['prefix' => 'contracts'], function () {
-        Route::get('/history', 'Commercial\ContractController@historyContract');
-    });
-
-
-
-    /**
      * Stocks routes
      */
     Route::group(['prefix' => 'stocks'], function () {
         Route::get('/', 'StockController@index');
         Route::get('/history', 'StockController@historyContract');
     });
-
-
 
     /**
      * LOGISTIC  routes

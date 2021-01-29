@@ -97,6 +97,9 @@
             -moz-box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
             box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
         }
+        .hide{
+            display: none
+        }
     </style>
 
     @yield('styles')

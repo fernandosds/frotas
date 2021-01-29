@@ -6,21 +6,27 @@ namespace App\Services;
 use App\Repositories\ContractDeviceRepository;
 use App\Repositories\ContractRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ContractService
 {
 
+    protected $contract;
+    protected$contract_devices;
+    protected$userService;
+
     /**
      * ContractService constructor.
      * @param ContractRepository $contract
      * @param ContractDeviceRepository $contract_devices
      */
-    public function __construct(ContractRepository $contract, ContractDeviceRepository $contract_devices)
+    public function __construct(ContractRepository $contract, ContractDeviceRepository $contract_devices, UserService $userService)
     {
         $this->contract = $contract;
         $this->contract_devices = $contract_devices;
+        $this->userService = $userService;
     }
 
     /**
@@ -61,7 +67,10 @@ class ContractService
     public function save(Request $request)
     {
 
-        $request->merge(['uniqid' => md5(uniqid("_sat_"))]);
+        $request->merge([
+            'user_id' => Auth::user()->id,
+            'uniqid' => md5(uniqid("_sat_"))
+        ]);
 
         $contract = $this->contract->create($request->input());
 
