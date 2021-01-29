@@ -91,11 +91,6 @@ class ContractController extends Controller
     public function save(Request $request)
     {
 
-        $request->merge([
-            'user_id' => Auth::user()->id,
-            'customer_id' => Auth::user()->customer_id
-        ]);
-
         try {
 
             $this->contractService->save($request);

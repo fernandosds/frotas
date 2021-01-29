@@ -22,6 +22,7 @@
             <div class="kt-portlet__head-toolbar">
                 <form id="form-search-customer">
                     @csrf
+                    <input type="hidden" name="customer_id" id="customer_id" value="" />
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions mx-2">
                             <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control input_cpf_cnpj" value="">
@@ -139,7 +140,6 @@
                         </div>
                         <form id="form-insert-device">
                             @csrf
-                            <input type="hidden" name="customer_id" id="customer_id" value="" />
 
                             <div class="modal-body" id="list_devices">
                                 <!--<textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>-->
@@ -157,7 +157,7 @@
                                 <label class="inputType">Tecnologia</label>
                                 <select class="form-control" name="type" id="technologie_id">
                                     @foreach ($technologies as $technologie)
-                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                        <option value="{{$technologie->id}}">{{$technologie->type}}</option>
                                     @endforeach
                                     <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
                                     <input type="hidden" name="model" id="model" value="{{ $technologie->type ?? '' }}" />
@@ -203,23 +203,19 @@
 
 @section('scripts')
 <script>
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
         }
     });
-    /**
-     Modal     
-     */
 
+    // Modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').trigger('focus')
     })
 
-    /**
-     Search customers     
-     */
-
+    // Search customer
     $(function() {
 
         $('#btn-search').click(function() {
@@ -234,29 +230,19 @@
         });
     });
 
-    /**
-     Display Contracts     
-     */
-
+    // Save contract
     $(function() {
 
         $('#btn-contract-save').click(function() {
 
-
             var id = $('#customer_id').val();
-            console.log($('#form-insert-device').serialize());
-
-            ajax_store("", "commercial/contracts", $('#form-insert-device').serialize());
-            //ajax_store("", "contracts", $('#form-create-contract').serialize());
+            ajax_store("", "commercial/contracts", $('#form-search-customer').serialize());
 
         });
 
     });
 
-    /**
-     Add Device     
-    */
-
+    // Add Device
     $(function() {
 
         $('#btn-contract-new-device').click(function() {
@@ -286,11 +272,7 @@
 
     });
 
-
-    /**
-     Delete Device     
-    */
-
+    // Remove device
     $("#table-new-devices").on("click", ".btn-delete-device", function() {
 
         var id = $(this).data('id');
@@ -308,8 +290,7 @@
             }
 
         });
-
-
     });
 </script>
+
 @endsection

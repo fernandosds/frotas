@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Contract;
@@ -19,10 +20,12 @@ class ContractRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Support\Collection
+     */
     public function showid(int $id)
     {
-        //print_r($id);
-        //die();
 
         $contract = DB::table('contracts')
             ->select(DB::raw('*'))
@@ -30,46 +33,33 @@ class ContractRepository extends AbstractRepository
             ->where('deleted_at', null)
             ->get();
 
-
-
         return $contract;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function contractCompleted()
     {
-        //print_r($id);
-        //die();
 
         $contractCompleted = $this->model
             ->select('*')
             ->where('status', '=', 1)
             ->get();
 
-
-
         return $contractCompleted;
     }
 
-
-    public function historyContract($customer)
+    /**
+     * @param $customer
+     * @return mixed
+     */
+    public function historyContract()
     {
-       
-       
-        /**
+
         $historyContract = $this->model
-            ->where('customer_id', '=', $customer->id)
-            ->where('status', '=', 1)
+            ->where('customer_id', '=', Auth::user()->customer_id)
             ->get();
-         */
-        $historyContract = $this->model //contracts
-            ->join('contract_devices', 'contracts.id', '=', 'contract_devices.contract_id')
-            ->join('technologies', 'contract_devices.technologie_id', '=', 'technologies.id')
-            ->where('contract_devices.contract_id', '=', $customer->id)
-            ->select('technologies.*', 'contract_devices.id as cdev_id', 'contract_devices.total', 'contract_devices.technologie_id', 'contracts.*')
-            ->get();
-            
-            
 
         return $historyContract;
     }

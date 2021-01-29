@@ -85,11 +85,6 @@ class Contract extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    //    public function contractDevice()
-    //    {
-    //        return $this->HasMany('App\Models\ContractDevice', ContractDevice::class);
-    //    }
-
     public function contractDevice()
     {
         return $this->HasMany('App\Models\ContractDevice');

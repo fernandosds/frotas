@@ -24,7 +24,6 @@ class ContractController extends Controller
      * @param ContractService $contractService         
      * @param CustomerService $customerService         
      */
-
     public function __construct(ContractService $contractService, CustomerService $customerService)
     {
         $this->contractService = $contractService;
@@ -37,22 +36,31 @@ class ContractController extends Controller
         ];
     }
 
+    /**
+     * @return \Illuminate\Http\Response
+     */
     public function historyContract()
     {
 
-        try {
+        $data = $this->data;
 
+        $data['contract'] = $this->contractService->historyContract();
 
-            $customer = $this->customerService->show(Auth::user()->customer_id);
+        return view('contracts.list', $data);
 
-            $data = $this->data;
+    }
 
-            $data['contract'] = $this->contractService->historyContract($customer);
+    /**
+     * @param Int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Int $id)
+    {
 
-            return response()->view('commercial.contract.list_contract_history', $data, 200);
-        } catch (\Exception $e) {
+        $data = $this->data;
 
-            return response()->view('commercial.contract.history_empty', array(), 404);
-        }
+        $data['contract'] = $this->contractService->show($id);
+
+        return view('contracts.show', $data);
     }
 }

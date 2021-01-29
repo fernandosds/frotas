@@ -100,7 +100,13 @@
                     {{ Auth::user()->name }}<br/>
                     <small>
                         Tipo: {{ Auth::user()->type }} <br/>
-                        Acesso: {{ Auth::user()->access_level }}
+
+                        @if( Auth::user()->type == "ext" )
+                            Empresa: {{ Auth::user()->customer->name ?? '' }}
+                        @else
+                            Acesso: {{ Auth::user()->access_level ?? '' }}
+                        @endif
+
                     </small>
                 </div>
                 <div class="kt-user-card__badge">
