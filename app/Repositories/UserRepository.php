@@ -23,9 +23,18 @@ class UserRepository extends AbstractRepository
     public function getAllAdmins()
     {
         return $this->model->where("type", '=', 'sat')
-                        ->where('status', 1)
-                        ->where('access_level', '=', 'management')
-                        ->get();
+            ->where('status', 1)
+            ->where('access_level', '=', 'management')
+            ->get();
     }
 
+
+    public function getUserByEmail($email)
+    {
+        $checkEmail = $this->model
+            ->where('email', '=', $email)
+            ->first();
+
+        return $checkEmail;
+    }
 }

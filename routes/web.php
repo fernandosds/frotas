@@ -6,6 +6,17 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
+/**
+ * API device routes
+ */
+
+Route::group(['prefix' => 'forget'], function () {
+    Route::post('/password', 'UserController@update');
+});
+
+
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', 'HomeController@index');

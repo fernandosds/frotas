@@ -114,4 +114,30 @@ class UserService
     {
         return $this->user->find($id);
     }
+
+    public function resetPassword($email)
+    {
+
+        try {
+
+            // Busca usuário filrando pelo email
+            $email = $this->user->getUserByEmail($email);
+
+            // Cria uma senha aleatória com 6 dígitos
+
+            // Usa o Hash::make pra criptografar a senha e fazer o update no banco
+
+            // Envia a senha sem criptografia pro usuario por email
+
+            
+
+            //$this->userService->update($request, $request->id);
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+
+        return 
+    }
 }
