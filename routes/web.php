@@ -103,6 +103,14 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
+     * Contracts History routes
+     */
+    Route::group(['prefix' => 'contracts'], function () {
+        Route::get('/history', 'ContractController@historyContract');
+    });
+
+
+    /**
      * Stocks routes
      */
     Route::group(['prefix' => 'stocks'], function () {

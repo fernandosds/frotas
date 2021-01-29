@@ -146,28 +146,4 @@ class ContractController extends Controller
     }
 
 
-    /**
-     * @param Int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function historyContract()
-    {
-
-        try {
-
-
-            $customer = $this->customerService->show(Auth::user()->customer_id);
-
-            $data = $this->data;
-
-            $data['contract'] = $this->contractService->historyContract($customer);
-
-            return response()->view('commercial.contract.list_contract_history', $data, 200);
-        } catch (\Exception $e) {
-
-            //return response()->json([ 'history_not_found'], 404);
-            return response()->view('history_not_found', array(), 404);
-            //return redirect('list_contract_history', 404);
-        }
-    }
 }
