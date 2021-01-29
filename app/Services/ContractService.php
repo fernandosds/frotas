@@ -161,15 +161,12 @@ class ContractService
         return $this->contract->contractCompleted();
     }
 
-
     /**
-     * 
      * @return mixed
      */
-    
-    public function historyContract($customer)
+    public function historyContract()
     {
-        return $this->contract->historyContract($customer);
+        return $this->contract->historyContract();
     }
     
 }
