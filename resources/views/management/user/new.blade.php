@@ -69,7 +69,7 @@
                             <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
                                 <select class="form-control" name="status" @if(isset($user)) @if($user->id == Auth::user()->id) disabled="" @endif @endif>
                                     <option value="1" {{ ($user->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
-                                    <option value="2" {{ ($user->status ?? null) == '2' ? 'selected' : ''}}>INATIVO</option>
+                                    <option value="0" {{ ($user->status ?? null) == '0' ? 'selected' : ''}}>INATIVO</option>
                                 </select>
                             </div>
                         </div>
