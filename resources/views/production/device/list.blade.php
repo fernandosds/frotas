@@ -45,7 +45,7 @@
                             <tr id="_tr_user_{{$device->id}}">
                                 <th scope="row">{{$device->id}}</th>
                                 <td>{{$device->model}}</td>
-                                <td>{{$device->technologie->type}}</td>
+                                <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
                                 <td>{{$device->customer->name ?? ''}}</td>
                                 <td>{{$device->contract_id ?? ''}}</td>
                                 <td>
