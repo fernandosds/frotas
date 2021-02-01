@@ -138,6 +138,6 @@ class UserService
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
 
-        return 
+        //return
     }
 }
