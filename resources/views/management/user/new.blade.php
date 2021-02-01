@@ -150,7 +150,7 @@
 
             var user_id = $('#id').val();
 
-            ajax_store(user_id, "management/users", $('#form-create-user').serialize(), true);
+            ajax_store(user_id, "management/users", $('#form-create-user').serialize());
 
         });
 
