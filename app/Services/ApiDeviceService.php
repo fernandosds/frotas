@@ -26,6 +26,7 @@ class ApiDeviceService
     public function testDevice(String $device)
     {
         $url = $this->host . "/hospedeiros&{$device}[type=LAST,time=100D,rssi=60-100]";
+        //echo $url;die;
         return ClientHttp($url);
     }
 
