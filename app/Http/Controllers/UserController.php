@@ -36,19 +36,9 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $this->userService->resetPassword($request);
+
+        $this->userService->resetPassword($request->email);
     }
 }
 
 
-/**
- * 
- *  if ($email == 1) {
-            print_r('tem ');
-            die();
-        }
-
-        print_r('tem não');
-
-        die();
- */

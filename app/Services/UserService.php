@@ -63,12 +63,11 @@ class UserService
     public function save(Request $request)
     {
 
-        if(isset($request->password)) {
+        if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
         }
 
         return $this->user->create($request->all());
-
     }
 
     /**
@@ -82,7 +81,7 @@ class UserService
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
             $user = $this->user->update($id, $request->all());
-        }else{
+        } else {
             $user = $this->user->update($id, $request->except('password'));
         }
 
@@ -117,19 +116,41 @@ class UserService
 
     public function resetPassword($email)
     {
-
         try {
 
             // Busca usuário filrando pelo email
-            $email = $this->user->getUserByEmail($email);
+            $user = $this->user->getUserByEmail($email);
+            
+            print_r('Antigo password');
+            print_r($user->password);
+            
+            echo '<br>';
 
             // Cria uma senha aleatória com 6 dígitos
+            $newPassword = $this->generatePassword();
+            
+            print_r('Novo password');
+            print_r($newPassword);
+            
+            echo '<br>';
 
+            //$this->user->update(['password' => $newPassword]);
             // Usa o Hash::make pra criptografar a senha e fazer o update no banco
 
-            // Envia a senha sem criptografia pro usuario por email
+            $passwordHashed = Hash::make($newPassword);
 
+            $user->password = $passwordHashed;
+
+            $user->save();
+
+            print_r('Novo password');
+            print_r($user->password);
             
+            echo '<br>';
+            die();
+
+            // Envia a senha sem criptografia pro usuario por email (Criar função)
+
 
             //$this->userService->update($request, $request->id);
 
@@ -139,5 +160,30 @@ class UserService
         }
 
         //return
+    }
+
+    function generatePassword($qtyCaraceters = 8)
+    {
+        //Letras minúsculas embaralhadas
+        $smallLetters = str_shuffle('abcdefghijklmnopqrstuvwxyz');
+
+        //Letras maiúsculas embaralhadas
+        $capitalLetters = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        //Números aleatórios
+        $numbers = (((date('Ymd') / 12) * 24) + mt_rand(800, 9999));
+        $numbers .= 1234567890;
+
+        //Caracteres Especiais
+        $specialCharacters = str_shuffle('!@#$%*-');
+
+        //Junta tudo
+        $characters = $capitalLetters . $smallLetters . $numbers . $specialCharacters;
+
+        //Embaralha e pega apenas a quantidade de caracteres informada no parâmetro
+        $password = substr(str_shuffle($characters), 0, $qtyCaraceters);
+
+        //Retorna a senha
+        return $password;
     }
 }
