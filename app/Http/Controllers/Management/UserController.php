@@ -52,7 +52,7 @@ class UserController extends Controller
         $data = $this->data;
         $data['customers'] = $this->customerService->all();
 
-        return view('user.new', $data);
+        return view('management.user.new', $data);
     }
 
     /**
