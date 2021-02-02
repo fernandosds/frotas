@@ -90,7 +90,7 @@
     $('#btn-forgot_password').click(function() {
 
         var email = $('#email').val();
-        var route = 'forget/password'
+        var route = 'users/password/reset'
         //alert();
 
         if ($('#email').val()) {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -11,8 +12,8 @@ Auth::routes();
  * API device routes
  */
 
-Route::group(['prefix' => 'forget'], function () {
-    Route::post('/password', 'UserController@update');
+Route::group(['prefix' => 'users'], function () {
+    Route::post('/password/reset', 'UserController@resetPassword');
 });
 
 
