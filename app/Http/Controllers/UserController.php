@@ -10,16 +10,18 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    private $userService;
+    private $userService;   
     private $data;
+
 
     /**
      * UserController constructor.
-     * @param UserService $userService     
+     * @param UserService $userService
+     * @param ResetMail $resetMail        
      */
     public function __construct(UserService $userService)
     {
-        $this->userService = $userService;
+        $this->userService = $userService;        
 
 
         $this->data = [
@@ -34,11 +36,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function resetPassword(Request $request)
     {
 
         $this->userService->resetPassword($request->email);
     }
 }
-
-

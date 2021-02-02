@@ -5,18 +5,24 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use App\Mail\ResetEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+    private $sendEmailResetPassword;
 
     /**
      * UserService constructor.
      * @param UserRepository $user
+     * @param ResetMail $sendEmailResetPassword
+     * 
      */
-    public function __construct(UserRepository $user)
+    public function __construct(UserRepository $user, ResetEmail $sendEmailResetPassword)
     {
         $this->user = $user;
+        $this->sendEmailResetPassword = $sendEmailResetPassword;
     }
 
     /**
@@ -120,39 +126,25 @@ class UserService
 
             // Busca usuário filrando pelo email
             $user = $this->user->getUserByEmail($email);
-            
-            print_r('Antigo password');
-            print_r($user->password);
-            
-            echo '<br>';
 
             // Cria uma senha aleatória com 6 dígitos
             $newPassword = $this->generatePassword();
-            
-            print_r('Novo password');
-            print_r($newPassword);
-            
-            echo '<br>';
 
-            //$this->user->update(['password' => $newPassword]);
             // Usa o Hash::make pra criptografar a senha e fazer o update no banco
-
             $passwordHashed = Hash::make($newPassword);
 
             $user->password = $passwordHashed;
 
             $user->save();
 
-            print_r('Novo password');
-            print_r($user->password);
-            
-            echo '<br>';
-            die();
+
+            $newPassword = array(
+                'newPassword' => $newPassword
+            );
 
             // Envia a senha sem criptografia pro usuario por email (Criar função)
-
-
-            //$this->userService->update($request, $request->id);
+            $this->sendEmailResetPassword->build($newPassword);
+            Mail::to($user->email)->send(new ResetEmail($user));
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -164,26 +156,20 @@ class UserService
 
     function generatePassword($qtyCaraceters = 8)
     {
-        //Letras minúsculas embaralhadas
+
         $smallLetters = str_shuffle('abcdefghijklmnopqrstuvwxyz');
 
-        //Letras maiúsculas embaralhadas
         $capitalLetters = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
-        //Números aleatórios
         $numbers = (((date('Ymd') / 12) * 24) + mt_rand(800, 9999));
         $numbers .= 1234567890;
 
-        //Caracteres Especiais
         $specialCharacters = str_shuffle('!@#$%*-');
 
-        //Junta tudo
         $characters = $capitalLetters . $smallLetters . $numbers . $specialCharacters;
 
-        //Embaralha e pega apenas a quantidade de caracteres informada no parâmetro
         $password = substr(str_shuffle($characters), 0, $qtyCaraceters);
 
-        //Retorna a senha
         return $password;
     }
 }
