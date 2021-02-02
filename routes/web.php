@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'api-device'], function () {
         Route::get('/test/{device}', 'ApiDeviceController@testDevice');
+        Route::get('/get-device/{placa}', 'ApiDeviceController@getDevice');
     });
 
     /**

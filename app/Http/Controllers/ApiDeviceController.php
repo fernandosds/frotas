@@ -46,4 +46,14 @@ class ApiDeviceController
         return $this->apiDeviceService->getLastPosition($device);
     }
 
+    /**
+     * @param String $placa
+     * @return mixed
+     */
+    public function getDevice(String $placa)
+    {
+
+        return $this->apiDeviceService->getDevice($placa);
+    }
+
 }

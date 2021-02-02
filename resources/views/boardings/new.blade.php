@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('styles')
+    <style>
+        #div-paring{
+            display: none;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <div class="kt-portlet">
@@ -19,7 +27,7 @@
         <div class="kt-portlet__body">
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="">Isca 99a00004 / 99a00111</label>
+                    <label for="">Isca <small>99A00105</small></label>
                     <input type="text" name="device_number" id="device_number" class="form-control" maxlength="20" placeholder="Nº da Ísca">
                 </div>
                 <div class="form-group col-md-2">
@@ -131,8 +139,36 @@
                             <div class="form-row">
                                 <div class="form-group col-md-2">
                                     <label for="inputComplement">Placa</label>
-                                    <input type="text" class="form-control" name="board" maxlength="7" value="{{ $boarding->board ?? '' }}">
+                                    <input type="text" class="form-control" name="board" maxlength="7" value="{{ $boarding->board ?? '' }}" id="input-placa">
+                                    <span id="search-placa"></span>
                                 </div>
+
+                                <div class="col-md-10" id="div-paring">
+                                    <div class="form-group col-md-3">
+                                        <label for="inputComplement">Parear?</label>
+                                        <select class="form-control" name="paring">
+                                            <option value="sim">Sim</option>
+                                            <option value="nao">Não</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-9">
+                                        <label for="inputComplement">&nbsp;</label>
+                                        <div class="kt-section">
+                                            <div class="kt-section__content">
+                                                <div class="alert alert-warning" role="alert">
+                                                    <strong>ATENÇÃO!</strong>
+                                                    Este veículo possui rastreador, você deseja vincular esta ísca a ao rastreador
+                                                    existente neste veículo?
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputNeighborhood">Marca</label>
                                     <input type="text" class="form-control" name="brand" value="{{ $boarding->brand ?? '' }}">
@@ -200,6 +236,37 @@
 @section('scripts')
 <script>
     $(function() {
+
+        $('#input-placa').focusout(function(){
+
+            $('#search-placa').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando rastreador...')
+
+            var placa = $('#input-placa').val();
+
+            if(placa.length > 5 ){
+
+
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{{url("api-device/get-device")}}/' + placa,
+                    success: function (response) {
+
+                        if(response.status == "success"){
+                            $('#search-placa').remove();
+                            $('#div-paring').show()
+                        }else{
+                            $('#search-placa').html('<br /><br /><i class="fa fa-warning"></i> Este veículo não possui rastreador.')
+                        }
+
+
+                        console.log(response)
+                    }
+                });
+
+            }
+
+        })
 
         $('#btn-find-device').click(function() {
 

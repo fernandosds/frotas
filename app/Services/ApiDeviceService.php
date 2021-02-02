@@ -19,6 +19,23 @@ class ApiDeviceService
     protected $host = "http://10.20.3.36:6524";
     protected $host_posititions = "https://api.satcompany.com.br";
 
+    // Siscon
+    protected $host_siscon = "";
+
+    /**
+     * ApiDeviceService constructor.
+     */
+    public function __construct()
+    {
+
+        if( $_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "localhost" ){
+            $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
+        }else{
+            $this->host_siscon = "http://201.91.1.155:83/siscon/new-siscon/public/";
+        }
+
+    }
+
     /**
      * @param String $device
      * @return mixed
@@ -38,6 +55,18 @@ class ApiDeviceService
     {
         $url = $this->host_posititions . "/devices/grid/1/{$device}";
         return ClientHttp($url);
+    }
+
+    /**
+     * @param String $placa
+     * @return array
+     */
+    public function getDevice(String $placa)
+    {
+        //OTP7935
+        $url = $this->host_siscon . "/api-iscas/get-placa/{$placa}";
+        return ClientHttp($url);
+
     }
 
 }
