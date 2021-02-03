@@ -89,7 +89,6 @@ class AbstractRepository
      */
     public function delete(int $id)
     {
-        //return $this->model->findOrFail($id)->delete();
         return $this->model->find($id)->delete();
     }
 }

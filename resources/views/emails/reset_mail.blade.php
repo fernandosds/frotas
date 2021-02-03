@@ -3,5 +3,5 @@
 </div>
 
 <div>
-    Senha: {{ $newPassword }}
+    Senha: {{ $password }}
 </div>

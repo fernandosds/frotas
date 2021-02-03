@@ -15,13 +15,12 @@ class UserService
 
     /**
      * UserService constructor.
-     * @param UserRepository $user
-     * @param ResetMail $sendEmailResetPassword
-     * 
+     * @param UserRepository $userRepository
+     * @param ResetEmail $sendEmailResetPassword
      */
-    public function __construct(UserRepository $user, ResetEmail $sendEmailResetPassword)
+    public function __construct(UserRepository $userRepository, ResetEmail $sendEmailResetPassword)
     {
-        $this->user = $user;
+        $this->userRepository = $userRepository;
         $this->sendEmailResetPassword = $sendEmailResetPassword;
     }
 
@@ -30,7 +29,7 @@ class UserService
      */
     public function all()
     {
-        return $this->user->all();
+        return $this->userRepository->all();
     }
 
     /**
@@ -38,7 +37,7 @@ class UserService
      */
     public function getAllAdmins()
     {
-        return $this->user->getAllAdmins();
+        return $this->userRepository->getAllAdmins();
     }
 
     /**
@@ -47,7 +46,7 @@ class UserService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->user->paginate($limit);
+        return $this->userRepository->paginate($limit);
     }
 
     /**
@@ -59,7 +58,7 @@ class UserService
 
         $dados = $request->all();
 
-        return $this->user->create($dados)->orderBy('id')->get();
+        return $this->userRepository->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -73,7 +72,7 @@ class UserService
             $request->merge(['password' => Hash::make($request->password)]);
         }
 
-        return $this->user->create($request->all());
+        return $this->userRepository->create($request->all());
     }
 
     /**
@@ -86,21 +85,23 @@ class UserService
 
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
-            $user = $this->user->update($id, $request->all());
+            $user = $this->userRepository->update($id, $request->all());
         } else {
-            $user = $this->user->update($id, $request->except('password'));
+            $user = $this->userRepository->update($id, $request->except('password'));
         }
 
 
         return $user;
     }
 
-
-
+    /**
+     * @param Int $id
+     * @return mixed|void
+     */
     public function show(Int $id)
     {
 
-        $user =  $this->user->find($id);
+        $user =  $this->userRepository->find($id);
 
         return ($user) ? $user : abort(404);
     }
@@ -108,68 +109,36 @@ class UserService
 
     /**
      * @param Int $id
+     * @return bool
      */
     public function destroy(Int $id)
     {
 
-        return $this->user->delete($id);
+        return $this->userRepository->delete($id);
     }
 
+    /**]
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
-        return $this->user->find($id);
+        return $this->userRepository->find($id);
     }
 
+    /**
+     * @param $email
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function resetPassword($email)
     {
-        try {
 
-            // Busca usuário filrando pelo email
-            $user = $this->user->getUserByEmail($email);
+        $user = $this->userRepository->getUserByEmail($email);
 
-            // Cria uma senha aleatória com 6 dígitos
-            $newPassword = $this->generatePassword();
+        Mail::to($user->email)->send(new ResetEmail($user));
 
-            // Usa o Hash::make pra criptografar a senha e fazer o update no banco
-            $passwordHashed = Hash::make($newPassword);
+        return response()->json(['status' => 'success'], 200);
 
-            $user->password = $passwordHashed;
-
-            $user->save();
-
-
-            $newPassword = array(
-                'newPassword' => $newPassword
-            );
-
-            // Envia a senha sem criptografia pro usuario por email (Criar função)
-            $this->sendEmailResetPassword->build($newPassword);
-            Mail::to($user->email)->send(new ResetEmail($user));
-
-            return response()->json(['status' => 'success'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-
-        //return
     }
 
-    function generatePassword($qtyCaraceters = 8)
-    {
-
-        $smallLetters = str_shuffle('abcdefghijklmnopqrstuvwxyz');
-
-        $capitalLetters = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-        $numbers = (((date('Ymd') / 12) * 24) + mt_rand(800, 9999));
-        $numbers .= 1234567890;
-
-        $specialCharacters = str_shuffle('!@#$%*-');
-
-        $characters = $capitalLetters . $smallLetters . $numbers . $specialCharacters;
-
-        $password = substr(str_shuffle($characters), 0, $qtyCaraceters);
-
-        return $password;
-    }
 }

@@ -5,9 +5,9 @@ namespace App\Mail;
 use App\User;
 use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Hash;
 use Mail;
 
 class ResetEmail extends Mailable
@@ -32,17 +32,18 @@ class ResetEmail extends Mailable
      *
      * @return $this
      */
-    public function build($newPassword)
+    public function build()
     {
 
-        //$data = array(['newPassword' => $newPassword, 'user' => $user]);
+        $password = rand(100000, 999999);
 
-        $user = $this->user;       
+        $this->user->update(['password' => Hash::make($password)]);
 
         try {
-            return $this->from('raphael.falcao@satcompany.com.br', 'Raphael Falcão')
-                ->to($user->email)
-                ->text('emails.resetmail', compact(['user', 'newPassword']));
+            return $this->from('revendas@satcompany.com.br', 'Sat Company')
+                ->to($this->user->email, $this->user->name)
+                ->subject('SatCompany :: Nova Senha')
+                ->view('emails.reset_mail', ['user' => $this->user, 'password' => $password]);
         } catch (Exception $e) {
             return $e;
         }
