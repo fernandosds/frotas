@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Mail\ResetEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use mysql_xdevapi\Exception;
 
 class UserService
 {
@@ -135,7 +136,11 @@ class UserService
 
         $user = $this->userRepository->getUserByEmail($email);
 
-        Mail::to($user->email)->send(new ResetEmail($user));
+        try{
+            Mail::to($user->email)->send(new ResetEmail($user));
+        }catch (\Exception $e){
+            return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
+        }
 
         return response()->json(['status' => 'success'], 200);
 
