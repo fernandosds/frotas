@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    private $userService;   
+    private $userService;
     private $data;
 
 
@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function __construct(UserService $userService)
     {
-        $this->userService = $userService;        
+        $this->userService = $userService;
 
 
         $this->data = [
@@ -37,8 +37,6 @@ class UserController extends Controller
     public function resetPassword(Request $request)
     {
 
-        $this->userService->resetPassword($request->email);
+        return $this->userService->resetPassword($request->email);
     }
-
-
 }

@@ -136,14 +136,11 @@ class UserService
 
         $user = $this->userRepository->getUserByEmail($email);
 
-        try{
+        try {
             Mail::to($user->email)->send(new ResetEmail($user));
-        }catch (\Exception $e){
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
         }
-
-        return response()->json(['status' => 'success'], 200);
-
     }
-
 }

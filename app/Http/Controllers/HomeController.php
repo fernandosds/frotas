@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+//use App\User;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+
+        //$data['password'] = "sfsdfsd";
+        //$data['user'] = User::first();
+
+        //return view('emails.reset_mail', $data);
+
 
         $data = $this->data;
 

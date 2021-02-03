@@ -39,13 +39,9 @@ class ResetEmail extends Mailable
 
         $this->user->update(['password' => Hash::make($password)]);
 
-        try {
-            return $this->from('revendas@satcompany.com.br', 'Sat Company')
-                ->to($this->user->email, $this->user->name)
-                ->subject('SatCompany :: Nova Senha')
-                ->view('emails.reset_mail', ['user' => $this->user, 'password' => $password]);
-        } catch (Exception $e) {
-            return $e;
-        }
+        return $this->from('revendas@satcompany.com.br', 'Sat Company')
+            ->to($this->user->email, $this->user->name)
+            ->subject('SatCompany :: Nova Senha')
+            ->view('emails.reset_mail', ['user' => $this->user, 'password' => $password]);
     }
 }
