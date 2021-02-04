@@ -28,11 +28,11 @@ class Log extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'datetime',
         'customer_id',
         'device_id',
-        'contract_id',
-        'date',
-        'amount'
+        'description',
+        'contract_id'
     ];
 
     /**
@@ -46,8 +46,7 @@ class Log extends Model
             'customer_id'      => $this->customer_id,
             'device_id'        => $this->device_id,
             'contract_id'      => $this->contract_id,
-            'date'             => $this->date,
-            'amount'           => $this->amount,
+            'datetime'         => $this->datetime,
             
         ];
     }
@@ -61,12 +60,12 @@ class Log extends Model
     }
 
      /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
     */
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
+   // public function user()
+   // {
+   //     return $this->belongsTo('App\Models\User');
+   // }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

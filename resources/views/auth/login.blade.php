@@ -102,7 +102,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "email": email
-                },                
+                },
                 success: function(response) {
 
                     if (response.status == "success") {
@@ -122,8 +122,6 @@
                             timer: 2500
                         })
                     }
-
-
                 },
                 error: function(error) {
 

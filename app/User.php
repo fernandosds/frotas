@@ -2,6 +2,8 @@
 
 namespace App;
 
+//use App\Models\Log;
+use App\Models\Access;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,4 +55,39 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Customer');
     }
 
+    public function accesses()
+    {
+        // Não esqueça de usar a classe Access: use App\Models\Access;
+        return $this->hasMany(Access::class);
+    }
+
+    public function registerAccess()
+    {
+        // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
+        return $this->accesses()->create([
+            'user_id'   => $this->id,
+            'description' => 'Efetuou o login no sistema',
+        ]);
+    }
+
+    public function registerClose()
+    {
+        // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
+        return $this->accesses()->create([
+            'user_id'   => $this->id,
+            'description' => 'Saiu do sistema',
+        ]);
+    }
+    /**
+    public function registerCustomer()
+    {
+        $customerId = $this->customer()->id;
+        
+        return $this->accesses()->create([
+            'user_id'       => $this->id,
+            'customer_id'   => $this->customer_id,
+            'description'   => 'Cadastrou um novo usuario',
+        ]);
+    }
+     */
 }
