@@ -55,7 +55,7 @@ class CustomerService
 
         $customer = $this->customer->create($request->all());
 
-        //$this->log->saveCustomerLog($customer);
+        $this->log->saveCustomerLog($customer);
 
         return $customer;
     }
