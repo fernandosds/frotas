@@ -17,4 +17,10 @@ class LogRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    public function saveCustomerLog($customer)
+    {
+        print_r($customer);
+        die();
+    }
+
 }

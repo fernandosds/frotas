@@ -22,6 +22,12 @@ class UserEventSubscriber
         auth()->user()->registerClose();
     }
 
+    public function onUserCreateCustomer($event)
+    {        
+        //dd($event);
+        auth()->user()->registerCustomer();
+    }
+
 
     /**
      * Register the listeners for the subscriber.
@@ -39,5 +45,6 @@ class UserEventSubscriber
             'Illuminate\Auth\Events\Logout',
             'App\Listeners\UserEventSubscriber@onUserLogout'
         );
+
     }
 }

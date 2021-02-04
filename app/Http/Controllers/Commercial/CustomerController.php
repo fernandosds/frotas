@@ -73,6 +73,7 @@ class CustomerController extends Controller
         try {
 
             $this->customerService->save($request);
+            
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {

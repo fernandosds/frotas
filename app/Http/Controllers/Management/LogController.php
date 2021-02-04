@@ -36,7 +36,7 @@ class LogController extends Controller
         $data = $this->data;
         $data['logs'] = $this->logService->paginate();
 
-        return response()->view('log.list', $data);
+        return response()->view('management.log.list', $data);
     }
 
     /**

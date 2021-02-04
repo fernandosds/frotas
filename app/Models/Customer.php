@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\Auth;
 
 class Customer extends Model
 {
@@ -68,19 +69,28 @@ class Customer extends Model
         return $this->HasMany('App\Models\Contract', Contract::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function logs()
-    {
-        return $this->HasMany('App\Models\Log');
-    }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
     public function contacts()
     {
         return $this->HasMany('App\Models\Contact');
+    }
+
+    public function logs()
+    {
+        // Não esqueça de usar a classe Access: use App\Models\Access;
+        return $this->hasMany(Log::class);
+    }
+
+    public function registerCustomer()
+    {
+        // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
+        return $this->logs()->create([
+            'user_id'   => Auth::user()->id,
+            'customer_id' => $this->id,
+            'description' => 'Cadastrou cliente no sistema',
+        ]);
     }
 }

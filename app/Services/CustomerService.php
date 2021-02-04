@@ -4,14 +4,16 @@
 namespace App\Services;
 
 use App\Repositories\CustomerRepository;
+use App\Repositories\LogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerService
 {
-    public function __construct(CustomerRepository $customer)
+    public function __construct(CustomerRepository $customer, LogRepository $log)
     {
         $this->customer = $customer;
+        $this->log = $log;
     }
 
     /**
@@ -53,6 +55,8 @@ class CustomerService
 
         $customer = $this->customer->create($request->all());
 
+        //$this->log->saveCustomerLog($customer);
+
         return $customer;
     }
 
@@ -75,9 +79,9 @@ class CustomerService
      */
     public function show(Int $id)
     {
-        
+
         $customer =  $this->customer->showid($id);
-       
+
 
         return ($customer) ? $customer : abort(404);
     }
@@ -101,14 +105,14 @@ class CustomerService
         return $this->customer->find($id);
     }
 
-   
+
     /**
      * @param Request $request
      * @return CustomerRepository|\Illuminate\Database\Eloquent\Model|object|null
      */
     public function search(Request $request)
     {
-       
+
         return $this->customer->search($request);
     }
 }
