@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Log;
+use Illuminate\Support\Facades\Auth;
 
 class LogRepository extends AbstractRepository
 {
@@ -19,8 +20,17 @@ class LogRepository extends AbstractRepository
 
     public function saveCustomerLog($customer)
     {
-        print_r($customer);
-        die();
-    }
 
+        $logCustomer = $this->model
+            ->create([
+
+                'user_id' => Auth::user()->id,
+                'customer_id' => $customer->id,
+                'description' => "Cadastrou o cliente {$customer->name}", 
+            ]);
+
+        $logCustomer->save();
+
+        return $logCustomer;
+    }
 }

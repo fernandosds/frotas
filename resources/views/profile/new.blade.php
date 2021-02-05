@@ -17,10 +17,8 @@
             </div>
         </div>
 
-        <form class="kt-form kt-form--label-right" id="form-create-user">
+        <form class="kt-form kt-form--label-right" id="form-update-profile">
             @csrf
-            <input type="hidden" name="id" id="id" value="{{ $profile->id ?? '' }}" />
-
             <div class="kt-portlet__body">
                 <div class="form-group form-group-last kt-hide">
                     <div class="alert alert-danger" role="alert" id="kt_form_1_msg">
@@ -65,7 +63,7 @@
                 <div class="kt-form__actions">
                     <div class="row">
                         <div class="col-lg-9 ml-lg-auto">
-                            <button type="button" class="btn btn-brand" id="btn-user-save">Confirmar</button>
+                            <button type="button" class="btn btn-brand" id="btn-profile-save">Confirmar</button>
                             <a href="{{url('/')}}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
@@ -83,12 +81,62 @@
 <script>
     $(function() {
 
-        $('#btn-user-save').click(function() {
+        /* Atualizar profile */
 
-            var user_id = $('#id').val();
+        $('#btn-profile-save').click(function() {
 
-            ajax_store(user_id, "users", $('#form-create-user').serialize());
 
+            $.ajax({
+                url: "{{url('profiles/update')}}",
+                method: 'PUT',
+                data: $('#form-update-profile').serialize(),
+                success: function(response) {
+
+                    if (response.status == "success") {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Usuário atualizado com sucesso!',
+                            showConfirmButton: true
+                        });
+
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro ao tentar salvar!',
+                            text: response.message,
+                            showConfirmButton: true
+                        })
+                    }
+
+                },
+                error: function(error) {
+
+                    if (error.responseJSON.status == "internal_error") {
+                        console.log(error.responseJSON.errors)
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                            showConfirmButton: true,
+                            timer: 2500
+                        })
+                    } else {
+                        var items = error.responseJSON.errors;
+                        var errors = $.map(items, function(i) {
+                            return i.join('<br />');
+                        });
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + errors,
+                            footer: ' '
+                        })
+                    }
+
+
+                }
+
+            });
         });
 
     });
