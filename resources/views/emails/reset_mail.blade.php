@@ -12,7 +12,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <tr>
-                                            <td align="center" valign="top"><img src="http://10.20.3.84:83/siscon/new-siscon/public/img/logo_alta_sat_azul.png" style="border:none;clear:both;display:block;max-width:150px;max-height:500px;outline:0;text-decoration:none;width:auto;height: auto;"></td>
+                                            <td align="center" valign="top"><img src="https://www.satcompany.com.br/wp-content/uploads/Logo-home.png" style="border:none;clear:both;display:block;max-width:150px;max-height:500px;outline:0;text-decoration:none;width:auto;height: auto;"></td>
                                         </tr>
                                     </div>
                                     <div class="col-md-6">

@@ -26,26 +26,23 @@ class BoardingRequest extends FormRequest
 
        return [
            'contract_id'                => 'string|required',
-
            'device_id'                  => 'string|required',
-
-           'source'                     => 'string|max:255|required',
-           'destiny'                    => 'string|max:255|required',
-           'transporter'                => 'string|max:255|required',
-           'telephone'                  => 'max:14',
-           'cell_phone'                 => 'max:14',
-           'board'                      => 'string|max:255|required',
-           'chassis'                    => 'max:255',
-           'carts_plates'               => 'string|max:255|required',
-           'transport_order'            => 'string|max:255|required',
-           'amount_carried'             => 'string|max:255|required',
-           'cpf_cnpj'                   => 'string|max:255|required',
-           'brand'                      => 'string|max:255|required',
-           'model'                      => 'string|max:255|required',
-           'redundant_technologie'      => 'string|max:255|required',
-
-           'type_of_load_id'            => 'integer|required',
-           'accommodation_location_id'  => 'integer|required',
+           'source'                     => 'nullable|string|max:255',
+           'destiny'                    => 'nullable|string|max:255',
+           'transporter'                => 'nullable|string|max:255',
+           'telephone'                  => 'nullable|max:14',
+           'cell_phone'                 => 'nullable|max:14',
+           'board'                      => 'nullable|string|max:255',
+           'chassis'                    => 'nullable|max:255',
+           'carts_plates'               => 'nullable|string|max:255',
+           'transport_order'            => 'nullable|string|max:255',
+           'amount_carried'             => 'nullable|string|max:255',
+           'cpf_cnpj'                   => 'nullable|string|max:255',
+           'brand'                      => 'nullable|string|max:255',
+           'model'                      => 'nullable|string|max:255',
+           'redundant_technologie'      => 'nullable|string|max:255',
+           'type_of_load_id'            => 'nullable|integer',
+           'accommodation_location_id'  => 'nullable|integer',
 
        ];
     }

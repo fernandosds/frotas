@@ -110,18 +110,22 @@
                             <h4><i class="fa fa-info-circle"></i> Dados do Transporte</h4><hr />
 
                             <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label for="inputName">Origem</label>
                                     <input type="text" name="source" class="form-control" value="{{ $boarding->source ?? '' }}">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label for="inputState">Destino</label>
                                     <input type="text" class="form-control" name="destiny" value="{{ $boarding->destiny ?? '' }}">
                                 </div>
 
+                                <div class="form-group col-md-2">
+                                    <label for="inputState">Duração aproximada (Horas)</label>
+                                    <input type="number" max="1" min="50" class="form-control" name="duration" value="{{ $boarding->duration ?? '3' }}">
+                                </div>
 
                                 <div class="form-group col-md-2">
-                                    <label for="inputState">Ordem de Transporte</label>
+                                    <label for="inputState">Nº Ordem de Transporte</label>
                                     <input type="text" class="form-control" name="transport_order" value="{{ $boarding->transport_order ?? '' }}">
                                 </div>
                                 <div class="form-group col-md-2">
@@ -137,29 +141,39 @@
                             <h4><i class="fa fa-box"></i> Carga</h4><hr />
 
                             <div class="form-row">
+
                                 <div class="form-group col-md-2">
                                     <label for="inputComplement">Placa</label>
-                                    <input type="text" class="form-control" name="board" maxlength="7" value="{{ $boarding->board ?? '' }}" id="input-placa">
+                                    <input type="text" class="form-control" name="board" maxlength="7" value="MAP2020{{ $boarding->board ?? '' }}" id="input-placa" >
                                     <span id="search-placa"></span>
                                 </div>
 
-                                <div class="col-md-10" id="div-paring">
-                                    <div class="form-group col-md-3">
-                                        <label for="inputComplement">Parear?</label>
-                                        <select class="form-control" name="paring">
-                                            <option value="sim">Sim</option>
-                                            <option value="nao">Não</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group col-md-2">
+                                    <!--<input type="text" name="device_paring" id="hidden_device_paring" />-->
+                                    <label for="inputComplement">Dispositivo</label>
+                                    <input type="text" class="form-control" name="pair_device" value="" id="input_pair_device" readonly="readonly" >
+                                    <span id="search-placa"></span>
+                                </div>
 
-                                    <div class="form-group col-md-9">
-                                        <label for="inputComplement">&nbsp;</label>
-                                        <div class="kt-section">
-                                            <div class="kt-section__content">
-                                                <div class="alert alert-warning" role="alert">
-                                                    <strong>ATENÇÃO!</strong>
-                                                    Este veículo possui rastreador, você deseja vincular esta ísca a ao rastreador
-                                                    existente neste veículo?
+                                <div class="col-md-8" id="div-paring">
+                                    <div class="row">
+                                        <div class="form-group col-md-2">
+                                            <label for="inputComplement">Parear?</label>
+                                            <select class="form-control" name="paring">
+                                                <option value="sim">Sim</option>
+                                                <option value="nao">Não</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-10">
+                                            <label for="inputComplement">&nbsp;</label>
+                                            <div class="kt-section">
+                                                <div class="kt-section__content">
+                                                    <div class="alert alert-warning" role="alert">
+                                                        <strong>ATENÇÃO!</strong> <i class="fa fa-hand-o-left"></i>
+                                                        Este veículo possui rastreador, você deseja vincular esta ísca a ao rastreador
+                                                        existente neste veículo?
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,27 +183,18 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label for="inputNeighborhood">Marca</label>
-                                    <input type="text" class="form-control" name="brand" value="{{ $boarding->brand ?? '' }}">
+                                    <input type="text" class="form-control" name="brand" id="brand" value="{{ $boarding->brand ?? '' }}">
                                 </div>
 
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label for="inputNumber">Chassis</label>
-                                    <input type="text" class="form-control" name="chassis" value="{{ $boarding->chassis ?? '' }}">
+                                    <input type="text" class="form-control" name="chassis" id= "chassi" value="{{ $boarding->chassis ?? '' }}">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label for="inpuCity">Modelo</label>
-                                    <input type="text" class="form-control" name="model" value="{{ $boarding->model ?? '' }}">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="inputNumber">Placas carretas</label>
-                                    <input type="text" class="form-control" name="carts_plates" value="{{ $boarding->carts_plates ?? '' }}">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="inpuCity">Tecnologia Redundante</label>
-                                    <input type="text" class="form-control" name="redundant_technologie" value="{{ $boarding->redundant_technologie ?? '' }}">
+                                    <input type="text" class="form-control" name="model" id= "model" value="{{ $boarding->model ?? '' }}">
                                 </div>
 
                                 <div class="form-group col-md-3">
@@ -216,8 +221,9 @@
                         </div>
 
                         <div class="col-sm-12 center">
+                            <hr />
                             <div class="col-lg-12 ml-lg-auto">
-                                <button type="button" class="btn btn-brand" id="btn-boarding-save">Cadastrar</button>
+                                <button type="button" class="btn btn-brand" id="btn-boarding-save"><i class="fa fa-fire"></i> Ativar</button>
                                 <a href="{{url('devices')}}" class="btn btn-secondary">Voltar</a>
                             </div>
                         </div>
@@ -245,8 +251,6 @@
 
             if(placa.length > 5 ){
 
-
-
                 $.ajax({
                     type: 'GET',
                     url: '{{url("api-device/get-device")}}/' + placa,
@@ -255,10 +259,22 @@
                         if(response.status == "success"){
                             $('#search-placa').remove();
                             $('#div-paring').show()
-                        }else{
-                            $('#search-placa').html('<br /><br /><i class="fa fa-warning"></i> Este veículo não possui rastreador.')
-                        }
 
+                            $('#input_pair_device').val(response.data.device)
+                            $('#brand').val(response.data.marca)
+                            $('#chassi').val(response.data.chassi)
+                            $('#model').val(response.data.modelo)
+
+                        }else{
+                            $('#div-paring').hide()
+
+                            $('#input_pair_device').val('')
+                            $('#brand').val('')
+                            $('#chassi').val('')
+                            $('#model').val('')
+
+                            $('#search-placa').html('<i class="fa fa-warning"></i> Este veículo não possui rastreador.')
+                        }
 
                         console.log(response)
                     }

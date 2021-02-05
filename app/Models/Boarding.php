@@ -53,7 +53,8 @@ class Boarding extends Model
         'model',
         'redundant_technologie',
         'test',
-        'active'
+        'active',
+        'finished_at'
 
     ];
 
@@ -86,6 +87,7 @@ class Boarding extends Model
             'redundant_technologie'     => $this->redundant_technologie,
             'test'                      => $this->test,
             'active'                    => $this->active,
+            'finished_at'               => $this->finished_at,
 
         ];
     }

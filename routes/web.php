@@ -39,13 +39,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/new', 'BoardingController@new');
         Route::post('/save', 'BoardingController@save');
         Route::get('/delete/{id}', 'BoardingController@destroy');
-        //Route::put('/update/{id}', 'BoardingController@update');
+        Route::get('/finish/{id}', 'BoardingController@finish');
 
         Route::get('/test-device/{model}', 'BoardingController@testDevice');
 
-        //Route::put('/update/{id}', 'BoardingController@update');
-        //Route::get('/edit/{id}', 'BoardingController@edit');
-        //Route::get('/delete/{id}', 'BoardingController@destroy');
     });
 
     /**

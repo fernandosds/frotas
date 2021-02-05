@@ -62,10 +62,9 @@ class BoardingService
      * @param Int $id
      * @return bool
      */
-    public function destroy(Int $id)
+    public function finish(Int $id)
     {
-
-        return $this->boarding->delete($id);
+        return $this->boarding->finish($id);
     }
 
 }

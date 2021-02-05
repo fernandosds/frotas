@@ -10,6 +10,7 @@ use App\Services\TypeOfLoadService;
 use App\Services\AccommodationLocationsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
 
 class BoardingController extends Controller
 {
@@ -81,7 +82,6 @@ class BoardingController extends Controller
      */
     public function new()
     {
-
         $data = $this->data;
 
         //$typeOfLoads = $this->typeOfLoadService->all();
@@ -103,7 +103,14 @@ class BoardingController extends Controller
             $request->merge([
                     'user_id' => Auth::user()->id,
                     'customer_id' => Auth::user()->customer_id,
+                    'active' => 1
                 ]);
+
+            if(isset($request->duration)) {
+                $request->merge([
+                    'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
+                ]);
+            }
 
             $this->boardingService->save($request);
 
@@ -115,32 +122,18 @@ class BoardingController extends Controller
     }
 
     /**
-     * @param UserRequest $request
-     * @return array|\Illuminate\Http\JsonResponse
-     */
-    /*
-    public function update(Int $id, Request $request)
-    {
-
-        try {
-
-            $this->boardingService->update($request, $request->id);
-
-            return response()->json(['status' => 'success'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-    }
-    */
-
-    /**
      * @param Int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Int $id)
+    public function finish(Int $id)
     {
-        $this->boardingService->destroy($id);
-        return back()->with(['status' => 'Deleted successfully']);
+
+        try{
+            $this->boardingService->finish($id);
+            return response()->json(['status' => 'success'], 200);
+        }catch (Exception $e){
+            return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**
