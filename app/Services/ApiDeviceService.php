@@ -20,7 +20,7 @@ class ApiDeviceService
     protected $host_posititions = "https://api.satcompany.com.br";
 
     // Siscon
-    protected $host_siscon = "";
+    protected $host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
 
     /**
      * ApiDeviceService constructor.
