@@ -62,6 +62,19 @@ class MonitoringController extends Controller
             // Heat map
             $heat_positions = $this->apiDeviceService->getHeatPositions($device);
 
+            // Paring
+            $pairing = false;
+            $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+            if($boarding){
+                $api_pairing = $this->apiDeviceService->getPairing($device, $boarding->pair_device);
+                if($api_pairing['status'] == "sucesso"){
+                    if($api_pairing['body'][0]['msgs'] > 0){
+                        $pairing = true;
+                    }
+                }
+            }
+
+            // Heat
             $arr_heat_positions = [];
             foreach($heat_positions['body'] as $position){
 
@@ -73,6 +86,7 @@ class MonitoringController extends Controller
 
             };
 
+            // Marker
             if(empty($last_positicon)){
                 return response()->json([]);
             }else{
@@ -82,7 +96,8 @@ class MonitoringController extends Controller
                             'qtd_satelite' => $last_positicon[0]['QT_SATELITE'],
                             'atualizado' => $last_positicon[0]['ATUALIZADO'],
                             'lat' => $last_positicon[0]['LATITUDE'],
-                            'lng' => $last_positicon[0]['LONGITUDE']
+                            'lng' => $last_positicon[0]['LONGITUDE'],
+                            'pairing' => $pairing
                         ],
                         'heat_positions' => $arr_heat_positions,
                         'status' => 'success'
@@ -107,7 +122,7 @@ class MonitoringController extends Controller
 
         $device = $this->deviceService->findByModel($model);
 
-        $boarding = $this->boardingService->getCurrentBoardingByDevice($device['data']->id);
+        $boarding = $this->boardingService->getCurrentBoardingByDeviceId($device['data']->id);
 
         $return['status'] = $device['status'];
         if ($device['status'] == 'success') {

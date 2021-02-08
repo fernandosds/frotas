@@ -70,9 +70,18 @@ class BoardingService
      * @param Int $id
      * @return mixed
      */
-    public function getCurrentBoardingByDevice(Int $id)
+    public function getCurrentBoardingByDeviceId(Int $id)
     {
-        return $this->boarding->getCurrentBoardingByDevice($id);
+        return $this->boarding->getCurrentBoardingByDeviceId($id);
+    }
+
+    /**
+     * @param Int $id
+     * @return mixed
+     */
+    public function getCurrentBoardingByDevice(String $device)
+    {
+        return $this->boarding->getCurrentBoardingByDevice($device);
     }
 
 }

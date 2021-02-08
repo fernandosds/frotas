@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use App\Models\Boarding;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BoardingRepository extends AbstractRepository
 {
@@ -41,13 +42,30 @@ class BoardingRepository extends AbstractRepository
      * @param Int $id
      * @return mixed
      */
-    public function getCurrentBoardingByDevice(Int $id)
+    public function getCurrentBoardingByDeviceId(Int $id)
     {
 
         return $this->model->where('device_id', $id)
             ->where('customer_id', Auth::user()->customer_id)
             ->where('active', 1)
             ->first();
+    }
+
+    /**
+     * @param String $device
+     * @return mixed
+     */
+    public function getCurrentBoardingByDevice(String $device)
+    {
+
+        return DB::table('boardings')
+            ->join('devices', 'devices.id', '=', 'boardings.device_id')
+            ->select('boardings.*')
+            ->where('devices.model', $device)
+            ->where('boardings.customer_id', Auth::user()->customer_id)
+            ->where('boardings.active', 1)
+            ->first();
+
     }
 
 }

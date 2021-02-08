@@ -24,6 +24,8 @@
 
 @section('content')
 
+    <div id="pairing-alert"></div>
+
     <div class="kt-portlet">
 
         <div class="kt-portlet kt-portlet--mobile">
@@ -53,6 +55,7 @@
                                     <b for="" id="test-device-code">---</b>
                                 </div>
                                 <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa fa-5x fa-thumbs-o-up"></i>
                                     <i class="fa fa-link"></i> <label for="">Pareamento</label><br />
                                     <b for="" id="pair_device">---</b>
                                 </div>
@@ -135,7 +138,7 @@
                 }
                 $('#progress_bar').attr("style", "width:"+progressBar+"%")
 
-            },1000);
+            },500); //},1000);
 
         })
 
@@ -154,12 +157,19 @@
                 type: 'GET',
                 success: function(data) {
 
-                    mymap.removeLayer(heat)
+                    if(mymap.hasLayer(marker)){
+                        mymap.removeLayer(marker);
+                    }
+                    if(mymap.hasLayer(circle)){
+                        mymap.removeLayer(circle);
+                    }
+                    if(mymap.hasLayer(heat)){
+                        mymap.removeLayer(heat);
+                    }
 
                     if(data.status == "success"){
 
                         position = data[0];
-                        mymap.removeLayer(marker)
 
                         mymap.panTo(new L.LatLng(position.lat, position.lng));
 
@@ -170,7 +180,7 @@
                                 color: 'gray',
                                 fillColor: '#f03',
                                 fillOpacity: 0.1,
-                                radius: 1000,
+                                radius: 800,
                                 border: 0
                             }).addTo(mymap);
 
@@ -187,7 +197,17 @@
                             minOpacity: 0.7
                         }).addTo(mymap);
 
+
+                        if(!position.pairing){
+                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' +
+                                '<strong>ATENÇÃO!</strong> A ísca '+chassi_device+' não esta pareada com o rastreador informado.</div>');
+                        }else{
+                            $('#pairing-alert').html('<div class="alert alert-sucess center blink" role="alert">' +
+                                '<strong>ATENÇÃO!</strong> A ísca '+chassi_device+' esta pareada com o rastreador informado.</div>');
+                        }
+
                     }else{
+                        clearIcons()
                         Swal.fire({
                             type: 'error',
                             title: 'Oops...',
@@ -252,11 +272,7 @@
 
                     } else {
 
-                        $("#test-device-code").html('---');
-                        $("#pair_device").html('---');
-                        $("#device-tipo").html('---');
-                        $('#last-transmission').html('---')
-                        $('#nivel-bateria').html('---')
+                        clearIcons()
 
                         if(alert){
                             Swal.fire({
@@ -274,6 +290,16 @@
                 }
             })
 
+        }
+
+        function clearIcons()
+        {
+            $("#test-device-code").html('---');
+            $("#pair_device").html('---');
+            $("#device-tipo").html('---');
+            $('#last-transmission').html('---')
+            $('#nivel-bateria').html('---')
+            $('#pairing-alert').html('');
         }
 
     </script>

@@ -80,9 +80,15 @@ class ApiDeviceService
 
     }
 
-    public function alertParing(String $device, String $pair_device)
+    /**
+     * @param String $device
+     * @param String $pair_device
+     * @return array
+     */
+    public function getPairing(String $device, String $pair_device)
     {
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
+        return ClientHttp($url);
     }
 
 }
