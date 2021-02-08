@@ -42,7 +42,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/finish/{id}', 'BoardingController@finish');
 
         Route::get('/test-device/{model}', 'BoardingController@testDevice');
-
     });
 
     /**
@@ -250,6 +249,50 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit', 'ProfileController@editprofile');
         Route::post('/save', 'ProfileController@save');
         Route::put('/update', 'ProfileController@update');
+    });
+
+
+
+    /**
+     * Rent routes
+     */
+
+
+    Route::group(['prefix' => 'rents'], function () {
+
+        /**
+         * Drivers routes
+         */
+
+        Route::group(['prefix' => 'drivers'], function () {
+        });
+
+        
+        /**
+         * Fleets routes (frotas)
+         */
+
+        Route::group(['prefix' => 'cars'], function () {
+            Route::get('/', 'Rent\CarController@index');
+        });
+
+
+        /**
+         * Cards routes 
+         */
+
+        Route::group(['prefix' => 'cards'], function () {
+        });
+
+
+        /**
+         * Cost routes (Custos)
+         */
+
+        Route::group(['prefix' => 'cost'], function () {
+        });
+
+        
     });
 
     /**
