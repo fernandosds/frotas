@@ -41,26 +41,21 @@
                     <h4 for="" id="test-device-code">---</h4>
                 </div>
                 <div class="form-group col-xs-6 col-md-2">
-
                     <i class="fa fa-2x fa-signal"></i><br />
-
                     <label for="">Última Transmissão</label><br />
                     <h4 for="" id="last-transmission">---</h4>
                 </div>
                 <div class="form-group col-xs-6 col-md-2">
-
-
                     <i class="fa fa-2x fa-battery-empty" id="icon-nivel-bateria"></i><br />
-
                     <label for="">Nível de Bateria</label><br />
                     <h4 for="" id="nivel-bateria">---</h4>
                 </div>
                 <div class="form-group col-xs-6 col-md-2">
-
                     <i class="fa fa-2x fa-cube"></i><br />
                     <label for="">Tipo de ísca</label><br />
                     <h4 for="" id="device-tipo">---</h4>
                 </div>
+
             </div>
         </div>
     </div>
@@ -288,14 +283,13 @@
 
             if ($('#device_number').val() != "") {
 
+                device_number = $('#device_number').val();
+
                 var loading = '<i class="fa fa-spinner fa-pulse"></i>';
                 $("#test-device-code").html(loading);
                 $("#device-tipo").html(loading);
                 $('#last-transmission').html(loading)
                 $('#nivel-bateria').html(loading)
-
-                var device_number = $('#device_number').val();
-                var device_tipo = $('#device-tipo').val();;
 
                 $.ajax({
                     type: 'GET',
@@ -335,21 +329,28 @@
                             }
 
                         } else {
+
                             $("#test-device-code").html('---');
                             $("#device-tipo").html('---');
                             $('#last-transmission').html('---')
                             $('#nivel-bateria').html('---')
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: response.message,
-                                showConfirmButton: true,
-                                timer: 2500
-                            })
+
+                            if(alert){
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                    showConfirmButton: true,
+                                    timer: 2500
+                                })
+                            }
+
+
                         }
 
                     }
                 })
+
 
             } else {
                 Swal.fire({

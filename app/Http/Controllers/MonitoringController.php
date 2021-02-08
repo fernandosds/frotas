@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ApiDeviceService;
+use App\Services\BoardingService;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,19 +11,22 @@ use Illuminate\Support\Facades\Auth;
 class MonitoringController extends Controller
 {
 
-    protected $apiDeviceController;
+    protected $apiDeviceService;
     protected $deviceService;
+    protected $boardingService;
 
     /**
      * MonitoringController constructor.
-     * @param ApiDeviceController $apiDeviceController
+     * @param ApiDeviceService $apiDeviceService
      * @param DeviceService $deviceService
+     * @param BoardingService $boardingService
      */
-    public function __construct(ApiDeviceController $apiDeviceController, DeviceService $deviceService)
+    public function __construct(ApiDeviceService $apiDeviceService, DeviceService $deviceService, BoardingService $boardingService)
     {
 
-        $this->apiDeviceController = $apiDeviceController;
+        $this->apiDeviceService = $apiDeviceService;
         $this->deviceService = $deviceService;
+        $this->boardingService = $boardingService;
 
         $this->data = [
             'icon' => 'fa fa-map-marker',
@@ -51,7 +56,22 @@ class MonitoringController extends Controller
 
         if($this->deviceService->validDevice($device)){
 
-            $last_positicon = $this->apiDeviceController->getLastPosition($device);
+            // Marker
+            $last_positicon = $this->apiDeviceService->getLastPosition($device);
+
+            // Heat map
+            $heat_positions = $this->apiDeviceService->getHeatPositions($device);
+
+            $arr_heat_positions = [];
+            foreach($heat_positions['body'] as $position){
+
+                $arr_heat_positions[] = [
+                    $position['latitude_hospedeiro'],
+                    $position['longitude_hospedeiro'],
+                    0.1
+                ];
+
+            };
 
             if(empty($last_positicon)){
                 return response()->json([]);
@@ -59,9 +79,12 @@ class MonitoringController extends Controller
                 return response()->json(
                     [
                         [
+                            'qtd_satelite' => $last_positicon[0]['QT_SATELITE'],
+                            'atualizado' => $last_positicon[0]['ATUALIZADO'],
                             'lat' => $last_positicon[0]['LATITUDE'],
                             'lng' => $last_positicon[0]['LONGITUDE']
                         ],
+                        'heat_positions' => $arr_heat_positions,
                         'status' => 'success'
                     ], 200);
             }
@@ -73,6 +96,43 @@ class MonitoringController extends Controller
         }
 
 
+    }
+
+    /**
+     * @param String $model
+     * @return mixed
+     */
+    public function testDevice(String $model)
+    {
+
+        $device = $this->deviceService->findByModel($model);
+
+        $boarding = $this->boardingService->getCurrentBoardingByDevice($device['data']->id);
+
+        $return['status'] = $device['status'];
+        if ($device['status'] == 'success') {
+
+            $return['device_type']  = $device['data']->technologie;
+            $return['pair_device']  = ($boarding->pair_device) ? $boarding->pair_device : 'Não Pareado';
+            $return['model']        = $device['data']->model;
+            $return['device_id']    = $device['data']->id;
+
+            $test_device = $this->apiDeviceService->testDevice($model);
+
+            if ($test_device['status'] == "sucesso") {
+                $return['last_transmission'] = $test_device['body'][0]['dh_gps'];
+                $return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
+            } else {
+                $return['last_transmission'] = '';
+                $return['battery_level'] = '';
+            }
+        } else {
+
+            $return['message'] = $device['message'];
+        }
+
+
+        return $return;
     }
 
 }

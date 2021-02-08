@@ -43,7 +43,6 @@ class BoardingService
     public function update(Request $request, $id)
     {
 
-        
         $boarding = $this->boarding->update($id, $request->all());        
         return $boarding;
     
@@ -65,6 +64,15 @@ class BoardingService
     public function finish(Int $id)
     {
         return $this->boarding->finish($id);
+    }
+
+    /**
+     * @param Int $id
+     * @return mixed
+     */
+    public function getCurrentBoardingByDevice(Int $id)
+    {
+        return $this->boarding->getCurrentBoardingByDevice($id);
     }
 
 }

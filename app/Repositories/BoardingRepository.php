@@ -37,4 +37,17 @@ class BoardingRepository extends AbstractRepository
 
     }
 
+    /**
+     * @param Int $id
+     * @return mixed
+     */
+    public function getCurrentBoardingByDevice(Int $id)
+    {
+
+        return $this->model->where('device_id', $id)
+            ->where('customer_id', Auth::user()->customer_id)
+            ->where('active', 1)
+            ->first();
+    }
+
 }

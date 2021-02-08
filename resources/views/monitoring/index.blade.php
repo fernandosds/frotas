@@ -6,11 +6,26 @@
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""
     />
+    <style>
+        .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar .kt-portlet__head-wrapper,
+        .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar, .div-device-status{
+            width: 100%;
+        }
+        .div-device-status{
+            margin-left: 100px;
+            margin-top: 20px;
+        }
+        .div-device-status .row .form-group{
+            border-left: 1px solid #eee;
+        }
+        .kt-section{margin: 0px !important;}
+    </style>
 @endsection
 
 @section('content')
 
     <div class="kt-portlet">
+
         <div class="kt-portlet kt-portlet--mobile">
 
             <div class="kt-section hide" id="div-progress-bar">
@@ -21,22 +36,45 @@
 
             <!-- HEADER -->
             <div class="kt-portlet__head kt-portlet__head--lg">
+
                 <div class="kt-portlet__head-label">
                     <span class="kt-portlet__head-icon">
                         <i class="kt-font-brand {{$icon}}"></i>
                     </span>
-                    <h3 class="kt-portlet__head-title">
-                        {{$title}}
-                    </h3>
                 </div>
 
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
 
+                        <div class="div-device-status">
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa fa-microchip"></i> <label for="">Isca</label><br />
+                                    <b for="" id="test-device-code">---</b>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa fa-link"></i> <label for="">Pareamento</label><br />
+                                    <b for="" id="pair_device">---</b>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa fa-signal"></i> <label for="">Última Transmissão</label><br />
+                                    <b for="" id="last-transmission">---</b>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa fa-battery-empty" id="icon-nivel-bateria"></i> <label for=""> Nível de Bateria</label><br />
+                                    <b for="" id="nivel-bateria">---</b>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa  fa-cube"></i> <label for="">Tipo de ísca</label><br />
+                                    <b for="" id="device-tipo">---</b>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="kt-portlet__head-actions">
                             <div class="col-auto">
                                 <label class="sr-only" for="inlineFormInput">Nome</label>
-                                <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="99112581">
+                                <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="99A00105">
                             </div>
                         </div>
                         <div class="col-auto">
@@ -58,15 +96,20 @@
 
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js" integrity="sha512-K0Vddb4QdnVOAuPJBHkgrua+/A9Moyv8AQEWi0xndQ+fqbRfAFd47z4A9u1AW/spLO0gEaiE1z98PK1gl5mC5Q==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
 
     <script>
 
-        var progressBar = 100;
-        var mymap = L.map('mapid').setView([-23.569745954891225, -46.61343478451177], 15);
-        var marker = L.marker([-23.569745954891225, -46.61343478451177]).addTo(mymap);
+        var heat = {};
+        var marker = {};
+        var circle = {};
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
+        //var marker = L.marker([-23.569745954891225, -46.61343478451177]).addTo(mymap);
+        var baseLayers = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg', {
+            attribution: '&copy; <a href="https://www.satcompany.com.br">SAT Company</a>',
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
@@ -84,8 +127,6 @@
             progressBar = 100;
             setInterval(function(){
 
-                console.log(progressBar)
-
                 if(progressBar == 0){
                     progressBar = 100;
                     setLocalization(chassi_device)
@@ -94,19 +135,18 @@
                 }
                 $('#progress_bar').attr("style", "width:"+progressBar+"%")
 
-                //$('#progress_bar').attr("style", "width:"+progressBar+"%")
-                //if(progressBar < 1){
-                //    progressBar = 110;
-                //}
-                //console.log(progressBar)
-                //progressBar = progressBar - 10;
-
             },1000);
 
         })
 
+        /**
+         *
+         * @param chassi_device
+         */
         function setLocalization(chassi_device)
         {
+
+            loadIconsDeviceStatus($('#chassi_device').val());
 
             // Map
             $.ajax({
@@ -114,12 +154,39 @@
                 type: 'GET',
                 success: function(data) {
 
+                    mymap.removeLayer(heat)
+
                     if(data.status == "success"){
 
                         position = data[0];
                         mymap.removeLayer(marker)
-                        marker = L.marker([position.lat, position.lng]).addTo(mymap);
+
                         mymap.panTo(new L.LatLng(position.lat, position.lng));
+
+                        // Posição aproximada
+                        if( position.atualizado == 0 && position.qtd_satelite < 4 ){
+
+                            circle = L.circle([position.lat, position.lng], {
+                                color: 'gray',
+                                fillColor: '#f03',
+                                fillOpacity: 0.1,
+                                radius: 1000,
+                                border: 0
+                            }).addTo(mymap);
+
+                        // Posição exata
+                        }else{
+                            marker = L.marker([position.lat, position.lng]).addTo(mymap);
+                        }
+
+                        // Mapa de calor
+                        heat = L.heatLayer(data['heat_positions'], {
+                            radius: 20,
+                            max: 1.0,
+                            blur: 15,
+                            minOpacity: 0.7
+                        }).addTo(mymap);
+
                     }else{
                         Swal.fire({
                             type: 'error',
@@ -132,6 +199,81 @@
 
                 }
             });
+        }
+
+        /**
+         *
+         * @param device_number
+         */
+        function loadIconsDeviceStatus(device_number)
+        {
+
+            var loading = '<i class="fa fa-spinner fa-pulse"></i>';
+            $("#test-device-code").html(loading);
+            $("#pair_device").html(loading);
+            $("#device-tipo").html(loading);
+            $('#last-transmission').html(loading);
+            $('#nivel-bateria').html(loading);
+
+            $.ajax({
+                type: 'GET',
+                url: '{{url("monitoring/test-device")}}/'+device_number,
+                success: function(response) {
+
+                    if (response.status == "success") {
+
+                        $("#div-new-boarding").removeClass('hidden')
+
+                        $('#device_id').val(response.device_id);
+                        $('#pair_device').html(response.pair_device);
+                        $("#test-device-code").html(response.model);
+                        $('#last-transmission').html(response.last_transmission)
+                        $('#device-tipo').html(response.device_type)
+
+                        // Battery
+                        var battery_level = response.battery_level;
+                        $('#nivel-bateria').html(battery_level)
+                        $('#icon-nivel-bateria').removeClass('fa fa-battery-empty');
+                        $('#icon-nivel-bateria').removeClass('fa fa-battery-quarter');
+                        $('#icon-nivel-bateria').removeClass('fa fa-battery-half');
+                        $('#icon-nivel-bateria').removeClass('fa fa-battery-three-quarters');
+                        $('#icon-nivel-bateria').removeClass('fa fa-battery-full');
+                        if (parseInt(battery_level) < 20) {
+                            $('#icon-nivel-bateria').addClass('fa fa-battery-empty');
+                        } else if (parseInt(battery_level) < 40) {
+                            $('#icon-nivel-bateria').addClass('fa fa-battery-quarter');
+                        } else if (parseInt(battery_level) < 60) {
+                            $('#icon-nivel-bateria').addClass('fa fa-battery-half');
+                        } else if (parseInt(battery_level) < 80) {
+                            $('#icon-nivel-bateria').addClass('fa fa-battery-three-quarters');
+                        } else {
+                            $('#icon-nivel-bateria').addClass('fa fa-battery-full');
+                        }
+
+                    } else {
+
+                        $("#test-device-code").html('---');
+                        $("#pair_device").html('---');
+                        $("#device-tipo").html('---');
+                        $('#last-transmission').html('---')
+                        $('#nivel-bateria').html('---')
+
+                        if(alert){
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: response.message,
+                                showConfirmButton: true,
+                                timer: 2500
+                            })
+                        }
+
+
+                    }
+
+                }
+            })
+
         }
 
     </script>
