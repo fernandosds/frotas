@@ -15,13 +15,15 @@ use App\Repositories\BoardingRepository;
 class BoardingService
 {
 
+    protected $boardingRepository;
+
     /**
      * UserService constructor.
      * @param BoardingRepository $boarding
      */
-    public function __construct(BoardingRepository $boarding)
+    public function __construct(BoardingRepository $boardingRepository)
     {
-        $this->boarding = $boarding;
+        $this->boardingRepository = $boardingRepository;
     }
 
     /**
@@ -31,7 +33,7 @@ class BoardingService
     public function save(Request $request)
     {
 
-        $boarding = $this->boarding->create($request->all());
+        $boarding = $this->boardingRepository->create($request->all());
         return $boarding;
     }
 
@@ -43,7 +45,7 @@ class BoardingService
     public function update(Request $request, $id)
     {
 
-        $boarding = $this->boarding->update($id, $request->all());        
+        $boarding = $this->boardingRepository->update($id, $request->all());
         return $boarding;
     
     }
@@ -54,7 +56,7 @@ class BoardingService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->boarding->paginate($limit);
+        return $this->boardingRepository->paginate($limit);
     }
 
     /**
@@ -63,16 +65,34 @@ class BoardingService
      */
     public function finish(Int $id)
     {
-        return $this->boarding->finish($id);
+        return $this->boardingRepository->finish($id);
+    }
+
+    /**
+     * @param Int $id
+     * @return bool
+     */
+    public function show(Int $id)
+    {
+        return $this->boardingRepository->find($id);
     }
 
     /**
      * @param Int $id
      * @return mixed
      */
-    public function getCurrentBoardingByDevice(Int $id)
+    public function getCurrentBoardingByDeviceId(Int $id)
     {
-        return $this->boarding->getCurrentBoardingByDevice($id);
+        return $this->boardingRepository->getCurrentBoardingByDeviceId($id);
+    }
+
+    /**
+     * @param String $device
+     * @return mixed
+     */
+    public function getCurrentBoardingByDevice(String $device)
+    {
+        return $this->boardingRepository->getCurrentBoardingByDevice($device);
     }
 
 }

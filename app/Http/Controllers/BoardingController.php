@@ -84,7 +84,6 @@ class BoardingController extends Controller
     {
         $data = $this->data;
 
-        //$typeOfLoads = $this->typeOfLoadService->all();
         $data['accommodationlocations'] = $this->accommodationLocationsService->all();
         $data['typeofloads'] = $this->typeOfLoadService->all();
 
@@ -145,6 +144,12 @@ class BoardingController extends Controller
 
         $device = $this->deviceService->findByModel($model);
 
+       $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
+
+        if($in_use){
+            return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº '.$in_use->id.', informe outro dispositivo ou encerre o embarque anterior.'];
+        }
+
         $return['status'] = $device['status'];
         if ($device['status'] == 'success') {
 
@@ -168,5 +173,18 @@ class BoardingController extends Controller
         }
 
         return $return;
+    }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function view(Int $id)
+    {
+
+        $data = $this->data;
+        $data['boarding'] = $this->boardingService->show($id);
+
+        return response()->view('boardings.view', $data);
     }
 }

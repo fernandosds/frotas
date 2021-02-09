@@ -12,17 +12,28 @@
             width: 100%;
         }
         .div-device-status{
-            margin-left: 100px;
-            margin-top: 20px;
+            margin-left: 20px;
+            margin-top: 17px;
+
         }
-        .div-device-status .row .form-group{
+        .div-btn-start{
+            margin-top: 17px;
+        }
+        .div-device-status div{
             border-left: 1px solid #eee;
         }
         .kt-section{margin: 0px !important;}
+        .map-loading{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
     </style>
 @endsection
 
 @section('content')
+
+    <div id="pairing-alert"></div>
 
     <div class="kt-portlet">
 
@@ -35,15 +46,60 @@
             </div>
 
             <!-- HEADER -->
-            <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="row div-device-status">
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-microchip"></i> <label for="">Isca</label><br />
+                            <b for="" id="test-device-code">---</b>
+                        </div>
 
-                <div class="kt-portlet__head-label">
-                    <span class="kt-portlet__head-icon">
-                        <i class="kt-font-brand {{$icon}}"></i>
-                    </span>
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-link"></i> <label for="">Pareamento</label><br />
+                            <b for="" id="pair_device">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-signal"></i> <label for="">Última Transmissão</label><br />
+                            <b for="" id="last-transmission">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-battery-empty" id="icon-nivel-bateria"></i> <label for=""> Nível de Bateria</label><br />
+                            <b for="" id="nivel-bateria">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa  fa-cube"></i> <label for="">Tipo de ísca</label><br />
+                            <b for="" id="device-tipo">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa  fa-clock"></i> <label for="">Tempo restante</label><br />
+                            <b for="" id="time-left">---</b>
+                        </div>
+
+                    </div>
                 </div>
 
+                <div class="col-sm-2 col-12 div-btn-start">
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-6 col-6 my-1">
+                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="{{$device ?? ''}}">
+                        </div>
+                        <div class="col-auto col-6 my-1">
+                            <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+<!--
+            <div class="kt-portlet__head kt-portlet__head--lg">
+
                 <div class="kt-portlet__head-toolbar">
+
                     <div class="kt-portlet__head-wrapper">
 
                         <div class="div-device-status">
@@ -53,6 +109,7 @@
                                     <b for="" id="test-device-code">---</b>
                                 </div>
                                 <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa fa-5x fa-thumbs-o-up"></i>
                                     <i class="fa fa-link"></i> <label for="">Pareamento</label><br />
                                     <b for="" id="pair_device">---</b>
                                 </div>
@@ -68,24 +125,28 @@
                                     <i class="fa  fa-cube"></i> <label for="">Tipo de ísca</label><br />
                                     <b for="" id="device-tipo">---</b>
                                 </div>
+                                <div class="form-group col-xs-6 col-md-2">
+                                    <i class="fa  fa-clock"></i> <label for="">Tempo restante</label><br />
+                                    <b for="" id="time-left">---</b>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="kt-portlet__head-actions">
+                        <div class="kt-portlet__head-actions col-xs-12">
                             <div class="col-auto">
                                 <label class="sr-only" for="inlineFormInput">Nome</label>
-                                <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="99A00105">
+                                <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="{{$device ?? ''}}">
                             </div>
                         </div>
                         <div class="col-auto">
-                            <button type="button" class="btn btn-primary mb-2" id="btn-teste">Monitorar</button>
+                            <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
                         </div>
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
-            <div id="mapid" class="mapid" style="width: 100%; height: 700px;float:left;"></div>
+            <div id="mapid" class="mapid" style="width: 100%; height: 700px;float:left;"> </div>
 
         </div>
     </div>
@@ -107,7 +168,7 @@
         var circle = {};
 
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
-        //var marker = L.marker([-23.569745954891225, -46.61343478451177]).addTo(mymap);
+
         var baseLayers = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg', {
             attribution: '&copy; <a href="https://www.satcompany.com.br">SAT Company</a>',
             maxZoom: 18,
@@ -117,7 +178,22 @@
             accessToken: 'your.mapbox.access.token'
         }).addTo(mymap);
 
-        $('#btn-teste').click(function(){
+        // Autoload
+        if( '{{$device}}'.length > 0 ){
+            //$("#btn-start").click();
+            //$("#btn-start").click();
+            jQuery('#btn-start').trigger('click');
+            document.getElementById('btn-start').click();
+        }
+
+        $('#btn-start').click(function(){
+
+            Swal.fire({
+                title: '<i class="fa fa-3x fa-spinner fa-pulse"></i>',
+                html: '<h4>Aguarde, rastreadndo dispositivo...</h4>',
+                showCancelButton: false,
+                showConfirmButton: false
+            })
 
             chassi_device = $("#chassi_device").val();
             setLocalization(chassi_device)
@@ -135,7 +211,7 @@
                 }
                 $('#progress_bar').attr("style", "width:"+progressBar+"%")
 
-            },1000);
+            },500); //},1000);
 
         })
 
@@ -146,7 +222,7 @@
         function setLocalization(chassi_device)
         {
 
-            loadIconsDeviceStatus($('#chassi_device').val());
+            loadIconsDeviceStatus(chassi_device);
 
             // Map
             $.ajax({
@@ -154,12 +230,22 @@
                 type: 'GET',
                 success: function(data) {
 
-                    mymap.removeLayer(heat)
+                    Swal.close()
+
+                    if(mymap.hasLayer(marker)){
+                        mymap.removeLayer(marker);
+                    }
+                    if(mymap.hasLayer(circle)){
+                        mymap.removeLayer(circle);
+                    }
+                    if(mymap.hasLayer(heat)){
+                        mymap.removeLayer(heat);
+                    }
 
                     if(data.status == "success"){
 
+                        $('#time-left').html(data.time_left);
                         position = data[0];
-                        mymap.removeLayer(marker)
 
                         mymap.panTo(new L.LatLng(position.lat, position.lng));
 
@@ -170,7 +256,7 @@
                                 color: 'gray',
                                 fillColor: '#f03',
                                 fillOpacity: 0.1,
-                                radius: 1000,
+                                radius: 800,
                                 border: 0
                             }).addTo(mymap);
 
@@ -187,13 +273,23 @@
                             minOpacity: 0.7
                         }).addTo(mymap);
 
+
+                        if(!position.pairing.status){
+                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' +
+                                '<strong>ATENÇÃO!</strong> &nbsp; '+position.pairing.message+'</div>');
+                        }else{
+                            $('#pairing-alert').html('<div class="alert alert-sucess center blink" role="alert">' +
+                                '<strong>ATENÇÃO!</strong> &nbsp; '+position.pairing.message+'</div>');
+                        }
+
                     }else{
+                        clearIcons()
                         Swal.fire({
                             type: 'error',
                             title: 'Oops...',
                             text: 'Dispositivo não encontrado',
                             showConfirmButton: true,
-                            timer: 2500
+                            timer: 10000
                         })
                     }
 
@@ -230,6 +326,7 @@
                         $('#last-transmission').html(response.last_transmission)
                         $('#device-tipo').html(response.device_type)
 
+
                         // Battery
                         var battery_level = response.battery_level;
                         $('#nivel-bateria').html(battery_level)
@@ -252,11 +349,7 @@
 
                     } else {
 
-                        $("#test-device-code").html('---');
-                        $("#pair_device").html('---');
-                        $("#device-tipo").html('---');
-                        $('#last-transmission').html('---')
-                        $('#nivel-bateria').html('---')
+                        clearIcons()
 
                         if(alert){
                             Swal.fire({
@@ -264,7 +357,7 @@
                                 title: 'Oops...',
                                 text: response.message,
                                 showConfirmButton: true,
-                                timer: 2500
+                                timer: 10000
                             })
                         }
 
@@ -274,6 +367,17 @@
                 }
             })
 
+        }
+
+        function clearIcons()
+        {
+            $("#test-device-code").html('---');
+            $("#pair_device").html('---');
+            $("#device-tipo").html('---');
+            $('#last-transmission').html('---');
+            $('#nivel-bateria').html('---');
+            $('#pairing-alert').html('---');
+            $('#time-left').html('---');
         }
 
     </script>

@@ -243,7 +243,7 @@
                                 type: 'success',
                                 title: 'Registro salvo com sucesso',
                                 showConfirmButton: true,
-                                timer: 3000
+                                timer: 10000
                             }).then((result) => {
                                 $(location).attr('href', '{{url("/commercial/customers/edit")}}/' + customer_id);
                             })
@@ -254,7 +254,7 @@
                                 title: 'Oops...',
                                 text: 'Erro ao tentar salvar!',
                                 showConfirmButton: true,
-                                timer: 2500
+                                timer: 10000
                             })
                         }
 
@@ -268,7 +268,7 @@
                                 title: 'Oops...',
                                 text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
                                 showConfirmButton: true,
-                                timer: 2500
+                                timer: 10000
                             })
                         } else {
                             var items = error.responseJSON.errors;

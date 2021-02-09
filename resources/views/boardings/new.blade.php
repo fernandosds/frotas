@@ -341,7 +341,7 @@
                                     title: 'Oops...',
                                     text: response.message,
                                     showConfirmButton: true,
-                                    timer: 2500
+                                    timer: 10000
                                 })
                             }
 
@@ -358,7 +358,7 @@
                     title: 'Oops...',
                     text: 'Informe o número da Ísca',
                     showConfirmButton: true,
-                    timer: 2500
+                    timer: 10000
                 })
             }
 

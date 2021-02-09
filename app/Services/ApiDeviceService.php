@@ -26,8 +26,7 @@ class ApiDeviceService
      */
     public function __construct()
     {
-
-        if( $_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "localhost" ){
+        if( $_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "localhost" || $_SERVER['REMOTE_ADDR'] == "10.20.3.133" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
@@ -80,9 +79,16 @@ class ApiDeviceService
 
     }
 
-    public function alertParing(String $device, String $pair_device)
+    /**
+     * @param String $device
+     * @param String $pair_device
+     * @return array
+     */
+    public function getPairing(String $device, String $pair_device)
     {
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
+        return ClientHttp($url);
+
     }
 
 }
