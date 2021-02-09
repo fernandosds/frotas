@@ -89,6 +89,7 @@ class ApiDeviceService
     {
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
         return ClientHttp($url);
+
     }
 
 }

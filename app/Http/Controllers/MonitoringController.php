@@ -36,13 +36,13 @@ class MonitoringController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param null $device
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($device = null)
     {
         $data = $this->data;
+        $data['device'] = $device;
 
         return view('monitoring.index', $data);
     }
@@ -62,16 +62,33 @@ class MonitoringController extends Controller
             // Heat map
             $heat_positions = $this->apiDeviceService->getHeatPositions($device);
 
-            // Paring
-            $pairing = false;
             $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+            $time_left = timeLeft($boarding->finished_at);
+
+            // Paring
+            $pairing = [
+                'status' => false,
+                'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}."
+            ];
             if($boarding){
-                $api_pairing = $this->apiDeviceService->getPairing($device, $boarding->pair_device);
-                if($api_pairing['status'] == "sucesso"){
-                    if($api_pairing['body'][0]['msgs'] > 0){
-                        $pairing = true;
+
+                if(isset($boarding->pair_device)){
+                    $api_pairing = $this->apiDeviceService->getPairing($device, $boarding->pair_device);
+                    if($api_pairing['status'] == "sucesso"){
+                        if($api_pairing['body'][0]['msgs'] > 0){
+                            $pairing = [
+                                'status' => true,
+                                'message' => "A ísca {$device} esta pareada com o rastreador {$boarding->pair_device}."
+                            ];
+                        }
                     }
+                }else{
+                    $pairing = [
+                        'status' => false,
+                        'message' => "Pareamento não informado no momento do embarque"
+                    ];
                 }
+
             }
 
             // Heat
@@ -100,6 +117,7 @@ class MonitoringController extends Controller
                             'pairing' => $pairing
                         ],
                         'heat_positions' => $arr_heat_positions,
+                        'time_left' => $time_left,
                         'status' => 'success'
                     ], 200);
             }

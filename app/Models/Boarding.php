@@ -92,4 +92,20 @@ class Boarding extends Model
         ];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function device()
+    {
+        return $this->BelongsTo('App\Models\Device');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->BelongsTo('App\User');
+    }
+
 }

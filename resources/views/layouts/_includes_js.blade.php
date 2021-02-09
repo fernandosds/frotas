@@ -202,7 +202,7 @@
                         title: 'Oops...',
                         text: 'Erro ao tentar excluir!',
                         showConfirmButton: true,
-                        timer: 2500
+                        timer: 10000
                     })
                 });
 
@@ -234,7 +234,7 @@
                         type: 'success',
                         title: 'Registro salvo com sucesso',
                         showConfirmButton: true,
-                        timer: 3000
+                        timer: 10000
                     }).then((result) => {
                         if(reload){
                             location.reload();
@@ -250,7 +250,7 @@
                         title: 'Oops...',
                         text: 'Erro ao tentar salvar! ' + response.message,
                         showConfirmButton: true,
-                        timer: 2500
+                        timer: 10000
                     })
                 }
 
@@ -265,7 +265,7 @@
                         title: 'Oops...',
                         text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
                         showConfirmButton: true,
-                        timer: 2500
+                        timer: 10000
                     })
                 } else {
                     var items = error.responseJSON.errors;
@@ -324,7 +324,7 @@
                             title: 'Oops...',
                             text: response.message,
                             showConfirmButton: true,
-                            timer: 2500
+                            timer: 10000
                         })
                         $("#input-search").val('')
                         $("#btn-search").html('<i class="fa fa-search"></i>')
@@ -338,7 +338,7 @@
                 title: 'Oops...',
                 text: 'Informe um CPF ou CNPJ',
                 showConfirmButton: true,
-                timer: 2500
+                timer: 10000
             })
         }
     }

@@ -45,9 +45,9 @@
                     @foreach ($boardings as $boarding)
                         <tr id="_tr_user_{{$boarding->id}}">
                             <th scope="row">{{$boarding->id}}</th>
-                            <td>{{$boarding->device}}</td>
+                            <td>{{$boarding->device->model}}</td>
                             <td>{{$boarding->transporter}}</td>
-                            <td>{{$boarding->placa}}</td>
+                            <td>{{$boarding->board}}</td>
                             <td>{{date_format($boarding->created_at, "d/m/Y")}}</td>
                             <td id>
                                 @if ($boarding->active)
@@ -56,16 +56,7 @@
                                     <i class="fa fa-times text-warning"></i> Encerrado
                                 @endif
                             </td>
-                            <td>
-                                <?php
-                                    if( isset($boarding->created_at) && isset( $boarding->finished_at ) ){
-                                        $date1 = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $boarding->created_at);
-                                        $date2 = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $boarding->finished_at);
-                                        $value = $date2->diffInHours($date1);
-                                        echo $value.' Hora(s)';
-                                    }
-                                ?>
-                            </td>
+                            <td>{{ timeLeft($boarding->finished_at) }}</td>
                             <td>
                                 <div class="pull-right">
 
@@ -73,9 +64,12 @@
                                         <button type="button" class="btn btn-sm  btn-warning btn-finish-boarding" data-id="{{$boarding->id}}">
                                             <span class="fa fa-times"></span> Encerrar
                                         </button>
+                                        <a href="{{url('monitoring')}}/{{$boarding->device->model}}" class="btn btn-sm btn-success">
+                                            <i class="fa fa-map-marker"></i> Monitorar
+                                        </a>
                                     @endif
 
-                                    <a href="" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detalhes</a>
+                                    <a href="{{url('boardings/view')}}/{{$boarding->id}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detalhes</a>
 
                                 </div>
                             </td>
@@ -128,7 +122,7 @@
                                      title: 'Ok',
                                      text: 'Embarque encerrado com sucesso',
                                      showConfirmButton: true,
-                                     timer: 2500
+                                     timer: 10000
                                  })
                              }else{
                                  Swal.fire({
@@ -136,7 +130,7 @@
                                      title: 'Oops...',
                                      text: 'Erro ao tentar encerrar embarque! ' + response.message,
                                      showConfirmButton: true,
-                                     timer: 2500
+                                     timer: 10000
                                  })
                              }
 

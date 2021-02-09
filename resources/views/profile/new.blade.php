@@ -118,7 +118,7 @@
                             title: 'Oops...',
                             text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
                             showConfirmButton: true,
-                            timer: 2500
+                            timer: 10000
                         })
                     } else {
                         var items = error.responseJSON.errors;

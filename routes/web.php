@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'boardings'], function () {
         Route::get('/', 'BoardingController@index');
+        Route::get('/view/{id}', 'BoardingController@view');
         Route::get('/new', 'BoardingController@new');
         Route::post('/save', 'BoardingController@save');
         Route::get('/delete/{id}', 'BoardingController@destroy');
@@ -48,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
      * boardings device routes
      */
     Route::group(['prefix' => 'monitoring'], function () {
-        Route::get('/', 'MonitoringController@index');
+        Route::get('/{device?}', 'MonitoringController@index');
         Route::get('/map/{device}', 'MonitoringController@map');
 
         Route::get('/test-device/{model}', 'MonitoringController@testDevice');
