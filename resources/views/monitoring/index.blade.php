@@ -12,10 +12,14 @@
             width: 100%;
         }
         .div-device-status{
-            margin-left: 100px;
-            margin-top: 20px;
+            margin-left: 20px;
+            margin-top: 17px;
+
         }
-        .div-device-status .row .form-group{
+        .div-btn-start{
+            margin-top: 17px;
+        }
+        .div-device-status div{
             border-left: 1px solid #eee;
         }
         .kt-section{margin: 0px !important;}
@@ -42,16 +46,60 @@
             </div>
 
             <!-- HEADER -->
-            <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="row div-device-status">
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-microchip"></i> <label for="">Isca</label><br />
+                            <b for="" id="test-device-code">---</b>
+                        </div>
 
-                <div class="kt-portlet__head-label">
-                    <span class="kt-portlet__head-icon">
-                        <i class="kt-font-brand {{$icon}}"></i>
-                    </span>
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-link"></i> <label for="">Pareamento</label><br />
+                            <b for="" id="pair_device">---</b>
+                        </div>
 
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-signal"></i> <label for="">Última Transmissão</label><br />
+                            <b for="" id="last-transmission">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa fa-battery-empty" id="icon-nivel-bateria"></i> <label for=""> Nível de Bateria</label><br />
+                            <b for="" id="nivel-bateria">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa  fa-cube"></i> <label for="">Tipo de ísca</label><br />
+                            <b for="" id="device-tipo">---</b>
+                        </div>
+
+                        <div class="col-sm-2 col-6">
+                            <i class="fa  fa-clock"></i> <label for="">Tempo restante</label><br />
+                            <b for="" id="time-left">---</b>
+                        </div>
+
+                    </div>
                 </div>
 
+                <div class="col-sm-2 col-12 div-btn-start">
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-6 col-6 my-1">
+                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="{{$device ?? ''}}">
+                        </div>
+                        <div class="col-auto col-6 my-1">
+                            <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+<!--
+            <div class="kt-portlet__head kt-portlet__head--lg">
+
                 <div class="kt-portlet__head-toolbar">
+
                     <div class="kt-portlet__head-wrapper">
 
                         <div class="div-device-status">
@@ -84,7 +132,7 @@
                             </div>
                         </div>
 
-                        <div class="kt-portlet__head-actions">
+                        <div class="kt-portlet__head-actions col-xs-12">
                             <div class="col-auto">
                                 <label class="sr-only" for="inlineFormInput">Nome</label>
                                 <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="{{$device ?? ''}}">
@@ -96,7 +144,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
             <div id="mapid" class="mapid" style="width: 100%; height: 700px;float:left;"> </div>
 
