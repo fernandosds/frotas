@@ -25,6 +25,7 @@ class Card extends Model
      */
     protected $fillable = [
         'id',
+        'customer_id',
         'serial_number'
     ];
 
@@ -35,6 +36,7 @@ class Card extends Model
     {
         return [
             'id'                    => $this->id,
+            'customer_id'           => $this->customer_id,
             'serial_number'         => $this->serial_number,
 
         ];

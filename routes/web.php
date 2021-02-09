@@ -265,15 +265,26 @@ Route::group(['middleware' => 'auth'], function () {
          */
 
         Route::group(['prefix' => 'drivers'], function () {
+            Route::get('/', 'Rent\DriverController@index');
+            Route::get('/new', 'Rent\DriverController@new');
+            Route::post('/save', 'Rent\DriverController@save');
+            Route::put('/update/{id}', 'Rent\DriverController@update');
+            Route::get('/edit/{id}', 'Rent\DriverController@edit');
+            Route::get('/delete/{id}', 'Rent\DriverController@destroy');
         });
 
-        
+
         /**
          * Fleets routes (frotas)
          */
 
         Route::group(['prefix' => 'cars'], function () {
             Route::get('/', 'Rent\CarController@index');
+            Route::get('/new', 'Rent\CarController@new');
+            Route::post('/save', 'Rent\CarController@save');
+            Route::put('/update/{id}', 'Rent\CarController@update');
+            Route::get('/edit/{id}', 'Rent\CarController@edit');
+            Route::get('/delete/{id}', 'Rent\CarController@destroy');
         });
 
 
@@ -282,6 +293,12 @@ Route::group(['middleware' => 'auth'], function () {
          */
 
         Route::group(['prefix' => 'cards'], function () {
+            Route::get('/', 'Rent\CardController@index');
+            Route::get('/new', 'Rent\CardController@new');
+            Route::post('/save', 'Rent\CardController@save');
+            Route::put('/update/{id}', 'Rent\CardController@update');
+            Route::get('/edit/{id}', 'Rent\CardController@edit');
+            Route::get('/delete/{id}', 'Rent\CardController@destroy');
         });
 
 
@@ -291,8 +308,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'cost'], function () {
         });
-
-        
     });
 
     /**

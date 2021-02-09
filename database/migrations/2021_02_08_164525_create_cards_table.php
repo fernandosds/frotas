@@ -15,6 +15,7 @@ class CreateCardsTable extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
+            $table->integer('customer_id');
             $table->string('serial_number');
             $table->softDeletes();
             $table->timestamps();
