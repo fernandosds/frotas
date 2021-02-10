@@ -1,39 +1,33 @@
 <?php
 
-namespace App\Models\Rent;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Car extends Model
+class Cost extends Model
 {
     use Notifiable, SoftDeletes;
 
     /**
      * @var string
      */
-    protected $table = 'cars';
+    protected $table = 'costs';
 
     /**
      * @var array
      */
     protected $dates = ['created_at', 'updated_at'];
 
-
     /**
      * @var array
      */
     protected $fillable = [
         'id',
-        'placa',
-        'chassi',
-        'model',
-        'automaker',
-        'year',
-        'color',
+        'car_id',
         'customer_id',
-        'type'
+        'value'
     ];
 
     /**
@@ -43,15 +37,27 @@ class Car extends Model
     {
         return [
             'id'            => $this->id,
-            'placa'         => $this->placa,
-            'chassi'        => $this->chassi,
-            'model'         => $this->model,
+            'car_id'        => $this->car_id,
             'customer_id'   => $this->customer_id,
-            'automaker'     => $this->automaker,
-            'year'          => $this->year,
-            'color'         => $this->color,
-            'type'          => $this->type,
+            'value'         => $this->value,
             
         ];
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function car()
+    {
+        return $this->belongsTo('App\Models\Car');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
     }
 }

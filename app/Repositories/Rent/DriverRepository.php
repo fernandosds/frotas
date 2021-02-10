@@ -4,7 +4,7 @@
 namespace App\Repositories\Rent;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Rent\Driver;
+use App\Models\Driver;
 use App\Repositories\AbstractRepository;
 
 class DriverRepository extends AbstractRepository

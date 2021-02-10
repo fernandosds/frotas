@@ -307,7 +307,13 @@ Route::group(['middleware' => 'auth'], function () {
          * Cost routes (Custos)
          */
 
-        Route::group(['prefix' => 'cost'], function () {
+        Route::group(['prefix' => 'costs'], function () {
+            Route::get('/', 'Rent\CostController@index');
+            Route::get('/new', 'Rent\CostController@new');
+            Route::post('/save', 'Rent\CostController@save');
+            Route::put('/update/{id}', 'Rent\CostController@update');
+            Route::get('/edit/{id}', 'Rent\CostController@edit');
+            Route::get('/delete/{id}', 'Rent\CostController@destroy');
         });
     });
 
