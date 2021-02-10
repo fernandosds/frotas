@@ -190,7 +190,7 @@
 
             Swal.fire({
                 title: '<i class="fa fa-3x fa-spinner fa-pulse"></i>',
-                html: '<h4>Aguarde, rastreadndo dispositivo...</h4>',
+                html: '<h4>Aguarde, localizando dispositivo...</h4>',
                 showCancelButton: false,
                 showConfirmButton: false
             })
