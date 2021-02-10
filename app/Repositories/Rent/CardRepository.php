@@ -4,7 +4,7 @@
 namespace App\Repositories\Rent;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Rent\Card;
+use App\Models\Card;
 use App\Repositories\AbstractRepository;
 
 class CardRepository extends AbstractRepository

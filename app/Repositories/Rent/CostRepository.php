@@ -4,7 +4,7 @@
 namespace App\Repositories\Rent;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Rent\Cost;
+use App\Models\Cost;
 use App\Repositories\AbstractRepository;
 
 class CostRepository extends AbstractRepository

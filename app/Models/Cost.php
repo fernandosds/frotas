@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Rent;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -49,7 +49,7 @@ class Cost extends Model
      */
     public function car()
     {
-        return $this->belongsTo('App\Models\Rent\Car');
+        return $this->belongsTo('App\Models\Car');
     }
 
 

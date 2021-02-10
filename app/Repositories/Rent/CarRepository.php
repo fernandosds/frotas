@@ -4,7 +4,7 @@
 namespace App\Repositories\Rent;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Rent\Car;
+use App\Models\Car;
 use App\Repositories\AbstractRepository;
 
 class CarRepository extends AbstractRepository
