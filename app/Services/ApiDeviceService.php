@@ -27,9 +27,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        echo $_SERVER['REMOTE_ADDR'];die;
-
-        if( $_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "localhost" || $_SERVER['REMOTE_ADDR'] == "10.20.3.133" ){
+        if( true ){//$_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "localhost" || $_SERVER['REMOTE_ADDR'] == "10.20.3.133" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
