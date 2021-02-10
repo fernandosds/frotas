@@ -26,6 +26,7 @@ class Cost extends Model
     protected $fillable = [
         'id',
         'car_id',
+        'customer_id',
         'value'
     ];
 
@@ -37,6 +38,7 @@ class Cost extends Model
         return [
             'id'            => $this->id,
             'car_id'        => $this->car_id,
+            'customer_id'   => $this->customer_id,
             'value'         => $this->value,
             
         ];

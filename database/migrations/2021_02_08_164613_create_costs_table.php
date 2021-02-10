@@ -16,6 +16,7 @@ class CreateCostsTable extends Migration
         Schema::create('costs', function (Blueprint $table) {
             $table->id();            
             $table->integer('car_id');
+            $table->integer('customer_id');
             $table->float('value', 8, 2);
             $table->softDeletes(); 
             $table->timestamps();

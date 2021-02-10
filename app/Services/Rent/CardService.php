@@ -3,14 +3,14 @@
 
 namespace App\Services\Rent;
 use Illuminate\Http\Request;
-use App\Repositories\Rent\CarRepository;
+use App\Repositories\Rent\CardRepository;
 
 
-class CarService
+class CardService
 {
-    public function __construct(CarRepository $car)
+    public function __construct(CardRepository $card)
     {
-        $this->car = $car;
+        $this->card = $card;
     }
 
     /**
@@ -18,7 +18,7 @@ class CarService
      */
     public function all()
     {
-        return $this->car->all();
+        return $this->card->all();
     }
 
     /**
@@ -27,7 +27,7 @@ class CarService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->car->paginate($limit);
+        return $this->card->paginate($limit);
     }
 
     /**
@@ -38,9 +38,9 @@ class CarService
     {
 
         // $dados = $request->all();
-        $car = $request->all();
+        $card = $request->all();
 
-        return $this->car->create($car)->orderBy('id')->get();
+        return $this->card->create($card)->orderBy('id')->get();
     }
 
     /**
@@ -49,9 +49,9 @@ class CarService
      */
     public function save(Request $request)
     {
-        $car = $this->car->create($request->all());
+        $card = $this->card->create($request->all());
 
-        return $car;
+        return $card;
     }
 
     /**
@@ -61,8 +61,8 @@ class CarService
      */
     public function update(Request $request, $id)
     {
-        $car = $this->car->update($id, $request->all());
-        return $car;
+        $card = $this->card->update($id, $request->all());
+        return $card;
     }
 
     /**
@@ -72,9 +72,9 @@ class CarService
     public function show(Int $id)
     {
 
-        $car =  $this->car->show($id);
+        $card =  $this->card->show($id);
 
-        return ($car) ? $car : abort(404);
+        return ($card) ? $card : abort(404);
     }
 
 
@@ -85,7 +85,7 @@ class CarService
     public function destroy(Int $id)
     {
 
-        return $this->car->delete($id);
+        return $this->card->delete($id);
     }
 
     /**
@@ -94,6 +94,6 @@ class CarService
      */
     public function edit($id)
     {
-        return $this->car->find($id);
+        return $this->card->find($id);
     }
 }

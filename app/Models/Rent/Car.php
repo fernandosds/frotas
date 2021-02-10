@@ -32,6 +32,7 @@ class Car extends Model
         'automaker',
         'year',
         'color',
+        'customer_id',
         'type'
     ];
 
@@ -45,6 +46,7 @@ class Car extends Model
             'placa'         => $this->placa,
             'chassi'        => $this->chassi,
             'model'         => $this->model,
+            'customer_id'   => $this->customer_id,
             'automaker'     => $this->automaker,
             'year'          => $this->year,
             'color'         => $this->color,

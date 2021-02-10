@@ -19,7 +19,7 @@
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{url('rents/drivers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <a href="{{url('rents/cards/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                             <i class="la la-plus"></i> Novo
                         </a>
                     </div>
@@ -34,26 +34,18 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">CPF</th>
-                        <th scope="col">CNH</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Nº de série</th>                        
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($drivers as $driver)
-                    <tr id="_tr_user_{{$driver->id}}">
-                        <th scope="row">{{$driver->id}}</th>                        
-                        <td>{{$driver->name}}</td>
-                        <td>{{$driver->cpf}}</td>
-                        <td>{{$driver->cnh}}</td>
-                        <td>{{$driver->email}}</td>
-                        <td>{{$driver->status}}</td>
+                    @foreach ($cards as $card)
+                    <tr id="_tr_user_{{$card->id}}">
+                        <th scope="row">{{$card->id}}</th>                        
+                        <td>{{$card->serial_number}}</td>                        
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('rents/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                <button type="button" class="btn btn-sm  btn-danger btn-delete-driver" data-id="{{$driver->id}}">
+                                <a href="{{url('rents/cards/edit')}}/{{$card->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <button type="button" class="btn btn-sm  btn-danger btn-delete-card" data-id="{{$card->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
                             </div>
@@ -64,7 +56,7 @@
             </table>
 
             <div class="d-flex justify-content-center">
-                {!! $drivers->links() !!}
+                {!! $cards->links() !!}
             </div>
 
         </div>
@@ -76,9 +68,9 @@
 @section('scripts')
 <script>
     /* Deletar */
-    $('.btn-delete-driver').click(function() {
+    $('.btn-delete-card').click(function() {
         var id = $(this).data('id');
-        var url = "{{url('rents/drivers/delete')}}/" + id;
+        var url = "{{url('rents/cards/delete')}}/" + id;
         ajax_delete(id, url)
     })
 </script>

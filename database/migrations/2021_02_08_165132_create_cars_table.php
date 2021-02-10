@@ -15,6 +15,7 @@ class CreateCarsTable extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->integer('customer_id');
             $table->string('placa', 9);
             $table->string('chassi', 17);
             $table->string('model', 30);
