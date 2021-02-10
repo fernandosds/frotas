@@ -41,6 +41,7 @@ class MonitoringController extends Controller
      */
     public function index($device = null)
     {
+
         $data = $this->data;
         $data['device'] = $device;
 
@@ -51,7 +52,7 @@ class MonitoringController extends Controller
      * @param String $device
      * @return \Illuminate\Http\JsonResponse
      */
-    public function map(String $device)
+    public function map(String $device, Int $minutes = 10)
     {
 
         if($this->deviceService->validDevice($device)){
@@ -60,7 +61,7 @@ class MonitoringController extends Controller
             $last_positicon = $this->apiDeviceService->getLastPosition($device);
 
             // Heat map
-            $heat_positions = $this->apiDeviceService->getHeatPositions($device);
+            $heat_positions = $this->apiDeviceService->getHeatPositions($device, $minutes);
 
             $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
             $time_left = timeLeft($boarding->finished_at);
@@ -93,15 +94,17 @@ class MonitoringController extends Controller
 
             // Heat
             $arr_heat_positions = [];
-            foreach($heat_positions['body'] as $position){
+            if(isset($heat_positions['body'])) {
+                foreach ($heat_positions['body'] as $position) {
 
-                $arr_heat_positions[] = [
-                    $position['latitude_hospedeiro'],
-                    $position['longitude_hospedeiro'],
-                    0.1
-                ];
+                    $arr_heat_positions[] = [
+                        $position['latitude_hospedeiro'],
+                        $position['longitude_hospedeiro'],
+                        0.1
+                    ];
 
-            };
+                }
+            }
 
             // Marker
             if(empty($last_positicon)){

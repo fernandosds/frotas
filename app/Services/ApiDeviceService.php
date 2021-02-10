@@ -27,7 +27,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( true ){//$_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "localhost" || $_SERVER['REMOTE_ADDR'] == "10.20.3.133" ){
+        if( env('APP_ENV') == "local" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
@@ -54,7 +54,9 @@ class ApiDeviceService
      */
     public function getLastPosition(String $device)
     {
+
         $url = $this->host_posititions . "/devices/grid/1/{$device}";
+        //$url = $this->host_posititions . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
         return ClientHttp($url);
     }
 
@@ -62,9 +64,9 @@ class ApiDeviceService
      * @param String $device
      * @return array
      */
-    public function getHeatPositions(String $device)
+    public function getHeatPositions(String $device, Int $minutes)
     {
-        $url = $this->host . "/hospedeiros&{$device}[type=LIST,time=100D,rssi=60-1000]";
+        $url = $this->host . "/hospedeiros&{$device}[type=LIST,time={$minutes}M,rssi=60-1000]";
         return ClientHttp($url);
     }
 

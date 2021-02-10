@@ -47,7 +47,7 @@
 
             <!-- HEADER -->
             <div class="row">
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <div class="row div-device-status">
                         <div class="col-sm-2 col-6">
                             <i class="fa fa-microchip"></i> <label for="">Isca</label><br />
@@ -82,12 +82,15 @@
                     </div>
                 </div>
 
-                <div class="col-sm-2 col-12 div-btn-start">
+                <div class="col-sm-3 col-12 div-btn-start">
                     <div class="form-row align-items-center">
-                        <div class="col-sm-6 col-6 my-1">
-                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="{{$device ?? ''}}">
+                        <div class="col-sm-3 col-4 my-1">
+                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="10">
                         </div>
-                        <div class="col-auto col-6 my-1">
+                        <div class="col-sm-5 col-8 my-1">
+                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? ''}}">
+                        </div>
+                        <div class="col-auto col-4 my-1">
                             <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
                         </div>
                     </div>
@@ -166,6 +169,7 @@
         var heat = {};
         var marker = {};
         var circle = {};
+        var minutes = 10;
 
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
 
@@ -211,7 +215,7 @@
                 }
                 $('#progress_bar').attr("style", "width:"+progressBar+"%")
 
-            },500); //},1000);
+            },1000);
 
         })
 
@@ -224,9 +228,15 @@
 
             loadIconsDeviceStatus(chassi_device);
 
+            if($('#minutes').val() == ""){
+                minutes = 10;
+            }else{
+                minutes = $('#minutes').val();
+            }
+
             // Map
             $.ajax({
-                url: "{{url('monitoring/map')}}/"+chassi_device,
+                url: "{{url('monitoring/map')}}/"+chassi_device+'/'+minutes,
                 type: 'GET',
                 success: function(data) {
 
