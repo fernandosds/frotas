@@ -197,8 +197,6 @@
         })
 
 
-
-
         /**
          * Rastrea isca
          */
@@ -318,12 +316,11 @@
                             '<b>Último endereço válido:</b> '+data.address+
 
                             '<b> - Satélites:</b> '+position.Satelites+
-                            '<b> - Sinal:</b> '+position.Sinal+
                             '<b> - Modo:</b> '+position.Modo
                         );
 
                         if(!data.pairing.status){
-                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' +
+                            $('#pairing-alert').html('<div class="alert alert-danger center blink" role="alert">' +
                                 '<strong>ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }else{
                             $('#pairing-alert').html('<div class="alert alert-sucess center blink" role="alert">' +

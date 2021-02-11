@@ -25,7 +25,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( true ){//env('APP_ENV') == "local" ){
+        if( false ){//env('APP_ENV') == "local" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
