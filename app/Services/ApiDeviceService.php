@@ -57,6 +57,7 @@ class ApiDeviceService
 
         //$url = $this->host_posititions . "/devices/grid/1/{$device}";
         $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
+        echo $url;die;
         return ClientHttp($url);
     }
 
@@ -90,7 +91,6 @@ class ApiDeviceService
     public function getPairing(String $device, String $pair_device)
     {
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
-        echo $url;die;
         return ClientHttp($url);
 
     }
