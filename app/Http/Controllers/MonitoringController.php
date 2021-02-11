@@ -45,7 +45,121 @@ class MonitoringController extends Controller
         $data = $this->data;
         $data['device'] = $device;
 
-        return view('monitoring.index', $data);
+        return view('monitoring.index2', $data);
+    }
+
+    /**
+     * @param String $device
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function lastPosition(String $device)
+    {
+
+        if($this->deviceService->validDevice($device)){
+
+            $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+            $time_left = timeLeft($boarding->finished_at);
+
+            // Paring
+            $pairing = [
+                'status' => false,
+                'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}."
+            ];
+            if($boarding){
+
+                if(isset($boarding->pair_device)){
+                    $api_pairing = $this->apiDeviceService->getPairing($device, $boarding->pair_device);
+                    if($api_pairing['status'] == "sucesso"){
+                        if($api_pairing['body'][0]['msgs'] > 0){
+                            $pairing = [
+                                'status' => true,
+                                'message' => "A ísca {$device} esta pareada com o rastreador {$boarding->pair_device}."
+                            ];
+                        }
+                    }
+                }else{
+                    $pairing = [
+                        'status' => false,
+                        'message' => "Pareamento não informado no momento do embarque"
+                    ];
+                }
+
+            }
+
+            $last_positions = $this->apiDeviceService->getLastPosition($device);
+
+            return ['last_positions' => $last_positions, 'pairing' => $pairing, 'time_left' => $time_left];
+
+        }else{
+
+            return response()->json(['status' => 'error', 'errors' => 'Ísca não encontrada'], 200);
+
+        }
+
+    }
+
+    /**
+     * @param String $device
+     * @param Int $minutes
+     * @return array
+     */
+    public function heat(String $device, Int $minutes = 10)
+    {
+        $heat_positions = $this->apiDeviceService->getHeatPositions($device, $minutes);
+
+        // Heat
+        $arr_heat_positions = [];
+        if(isset($heat_positions['body'])) {
+            foreach ($heat_positions['body'] as $position) {
+
+                $arr_heat_positions[] = [
+                    $position['latitude_hospedeiro'],
+                    $position['longitude_hospedeiro'],
+                    0.1
+                ];
+
+            }
+        }
+
+        return $arr_heat_positions;
+    }
+
+
+    /**
+     * @param String $model
+     * @return mixed
+     */
+    public function testDevice(String $model)
+    {
+
+        $device = $this->deviceService->findByModel($model);
+
+        $return['status'] = $device['status'];
+        if ($device['status'] == 'success') {
+
+            $boarding = $this->boardingService->getCurrentBoardingByDeviceId($device['data']->id);
+
+            $return['device_type']  = $device['data']->technologie;
+            $return['pair_device']  = ($boarding->pair_device) ? $boarding->pair_device : 'Não Pareado';
+            $return['model']        = $device['data']->model;
+            $return['device_id']    = $device['data']->id;
+
+            $test_device = $this->apiDeviceService->testDevice($model);
+
+            if ($test_device['status'] == "sucesso") {
+                $return['last_transmission'] = $test_device['body'][0]['dh_gps'];
+                $return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
+            } else {
+                $return['last_transmission'] = '';
+                $return['battery_level'] = '';
+            }
+        } else {
+
+            $return['message'] = $device['message'];
+        }
+
+
+        return $return;
     }
 
     /**
@@ -54,7 +168,7 @@ class MonitoringController extends Controller
      */
     public function map(String $device, Int $minutes = 10)
     {
-
+/*
         if($this->deviceService->validDevice($device)){
 
             // Marker
@@ -131,44 +245,8 @@ class MonitoringController extends Controller
 
         }
 
-
+*/
     }
 
-    /**
-     * @param String $model
-     * @return mixed
-     */
-    public function testDevice(String $model)
-    {
-
-        $device = $this->deviceService->findByModel($model);
-
-        $boarding = $this->boardingService->getCurrentBoardingByDeviceId($device['data']->id);
-
-        $return['status'] = $device['status'];
-        if ($device['status'] == 'success') {
-
-            $return['device_type']  = $device['data']->technologie;
-            $return['pair_device']  = ($boarding->pair_device) ? $boarding->pair_device : 'Não Pareado';
-            $return['model']        = $device['data']->model;
-            $return['device_id']    = $device['data']->id;
-
-            $test_device = $this->apiDeviceService->testDevice($model);
-
-            if ($test_device['status'] == "sucesso") {
-                $return['last_transmission'] = $test_device['body'][0]['dh_gps'];
-                $return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
-            } else {
-                $return['last_transmission'] = '';
-                $return['battery_level'] = '';
-            }
-        } else {
-
-            $return['message'] = $device['message'];
-        }
-
-
-        return $return;
-    }
 
 }

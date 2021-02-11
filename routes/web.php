@@ -50,9 +50,17 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'monitoring'], function () {
         Route::get('/{device?}', 'MonitoringController@index');
-        Route::get('/map/{device}/{minutes?}', 'MonitoringController@map');
+
+        Route::get('/map/last-position/{device}', 'MonitoringController@lastPosition');
+        Route::get('/map/heat/{device}/{minutes?}', 'MonitoringController@heat');
+
+
+        //Route::get('/map/{device}/{minutes?}', 'MonitoringController@map');
 
         Route::get('/test-device/{model}', 'MonitoringController@testDevice');
+
+
+
     });
 
     /**
