@@ -86,9 +86,16 @@ class MonitoringController extends Controller
 
             }
 
+            // Get Last position
             $last_positions = $this->apiDeviceService->getLastPosition($device);
 
-            return ['last_positions' => $last_positions, 'pairing' => $pairing, 'time_left' => $time_left];
+            // Get Address
+            $address = "";
+            if(isset($last_positions['body'][0])){
+                $address = $this->apiDeviceService->getAddress( $last_positions['body'][0]['Latitude'], $last_positions['body'][0]['Longitude'] );
+            }
+
+            return ['last_positions' => $last_positions, 'pairing' => $pairing, 'time_left' => $time_left, 'address' => $address];
 
         }else{
 
@@ -144,12 +151,9 @@ class MonitoringController extends Controller
             $return['model']        = $device['data']->model;
             $return['device_id']    = $device['data']->id;
 
-            //$test_device = $this->apiDeviceService->testDevice($model);
             $test_device = $this->apiDeviceService->getLastPosition($model);
 
             if ($test_device['status'] == "sucesso") {
-                //$return['last_transmission'] = $test_device['body'][0]['dh_gps'];
-                //$return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
 
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
                 $return['battery_level'] = $test_device['body'][0]['Tensão'];
@@ -164,6 +168,35 @@ class MonitoringController extends Controller
 
 
         return $return;
+    }
+
+    /**
+     * @param String $device
+     * @param Int $minutes
+     * @return array
+     */
+    public function getGrid(String $device, Int $minutes)
+    {
+        $grid = $this->apiDeviceService->getGrid($device, $minutes);
+
+        if($grid['status'] == "sucesso"){
+
+            $data['return'] = [
+                'status' => 'success',
+                'positions' => $grid['body']
+            ];
+
+        }else{
+
+            $data['return'] = [
+                'status' => 'error',
+                'message' => "Nenhuma posição encontrada para a ísca <b>{$device}</b>, no período de <b>{$minutes}</b> minutos."
+            ];
+
+        }
+
+        return view('monitoring.grid', $data);
+
     }
 
     /**

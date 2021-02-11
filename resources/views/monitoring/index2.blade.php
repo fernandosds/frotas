@@ -23,6 +23,10 @@
             margin-left: 17px;
             margin-bottom: 15px;
         }
+        .modal-grid{
+            float: right;
+            margin-top: -5px;
+        }
         .div-device-status div{
             border-left: 1px solid #eee;
         }
@@ -32,6 +36,7 @@
             height: 100%;
             background-color: #fff;
         }
+        .text-orange{color:#ff8000}
     </style>
 @endsection
 
@@ -99,13 +104,25 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12"><hr /><div id="last-address"></div></div>
+                <div class="col-sm-12"><hr />
+
+                    <button type="button" class="btn btn-link btn-sm pull-right modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
+                    <div id="last-address"></div>
+                </div>
 
             </div>
 
 
             <div id="mapid" class="mapid" style="width: 100%; height: 700px;float:left;"> </div>
 
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" id="modal-content">
+                <div class="center"><i class="fa fa-pulse fa-spinner fa-5x"></i><br />Aguarde... </div>
+            </div>
         </div>
     </div>
 
@@ -137,6 +154,27 @@
             zoomOffset: -1,
             accessToken: 'your.mapbox.access.token'
         }).addTo(mymap);
+
+
+
+
+        $('.modal-grid').click(function(){
+
+            $.ajax({
+                url: "{{url('monitoring/get-grid')}}/" + chassi_device+"/"+minutes,
+                type: 'GET',
+                success: function (data) {
+
+                    $('#modal-content').html(data)
+
+                }
+            })
+
+
+        })
+
+
+
 
         /**
          * Click
@@ -253,8 +291,15 @@
                             marker = L.marker([position.Latitude, position.Longitude]).addTo(mymap);
                         }
 
+                        address = data.address[0];
                         $('#last-address').html(
-                            '<b>Último endereço válido:</b> '+position.ENDERECO+
+                            '<b>Último endereço válido:</b> '+
+                            address.LOGRADOURO+', '+
+                            address.BAIRRO+', '+
+                            address.CIDADE+' - '+
+                            address.UF+', CEP: '+
+                            address.CEP+' - '+
+
                             '<b> - Satélites:</b> '+position.Satelites+
                             '<b> - Sinal:</b> '+position.Sinal+
                             '<b> - Modo:</b> '+position.Modo

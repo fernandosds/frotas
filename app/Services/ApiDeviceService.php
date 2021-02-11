@@ -17,6 +17,7 @@ class ApiDeviceService
      */
     protected $host = "";
     protected $host_siscon = "";
+    protected $host_apis = "https://api.satcompany.com.br";
 
     /**
      * ApiDeviceService constructor.
@@ -24,7 +25,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( true ){//env('APP_ENV') == "local" ){
+        if( false ){//env('APP_ENV') == "local" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
@@ -89,6 +90,28 @@ class ApiDeviceService
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
         return ClientHttp($url);
 
+    }
+
+    /**
+     * @param String $lat
+     * @param String $lon
+     * @return array
+     */
+    public function getAddress(String $lat, String $lon)
+    {
+        $url = $this->host_apis . "/geo-to-address/v1/latlon/{$lat},{$lon}";
+        return ClientHttp($url);
+    }
+
+    /**
+     * @param String $device
+     * @param Int $minutes
+     * @return array
+     */
+    public function getGrid(String $device, Int $minutes)
+    {
+        $url = $this->host . "/hospedeiros&{$device}[type=LIST,time={$minutes}M,rssi=60-1000]";
+        return ClientHttp($url);
     }
 
 }
