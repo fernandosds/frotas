@@ -16,9 +16,6 @@ class ApiDeviceService
      * @var string
      */
     protected $host = "";
-    protected $host_posititions = "https://api.satcompany.com.br";
-
-    // Siscon
     protected $host_siscon = "";
 
     /**
@@ -27,7 +24,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( false ){//env('APP_ENV') == "local" ){
+        if( true ){//env('APP_ENV') == "local" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
@@ -56,7 +53,7 @@ class ApiDeviceService
 
         //$url = $this->host_posititions . "/devices/grid/1/{$device}";
         $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
-        echo $url;die;
+        //echo $url;die;
         return ClientHttp($url);
     }
 
