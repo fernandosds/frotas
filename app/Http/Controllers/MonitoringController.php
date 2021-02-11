@@ -144,11 +144,15 @@ class MonitoringController extends Controller
             $return['model']        = $device['data']->model;
             $return['device_id']    = $device['data']->id;
 
-            $test_device = $this->apiDeviceService->testDevice($model);
+            //$test_device = $this->apiDeviceService->testDevice($model);
+            $test_device = $this->apiDeviceService->getLastPosition($model);
 
             if ($test_device['status'] == "sucesso") {
-                $return['last_transmission'] = $test_device['body'][0]['dh_gps'];
-                $return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
+                //$return['last_transmission'] = $test_device['body'][0]['dh_gps'];
+                //$return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
+
+                $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
+                $return['battery_level'] = $test_device['body'][0]['Tensão'];
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
