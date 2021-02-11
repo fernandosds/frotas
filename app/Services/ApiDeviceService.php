@@ -27,7 +27,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( env('APP_ENV') == "local" ){
+        if( false ){//env('APP_ENV') == "local" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
         }else{
@@ -90,6 +90,7 @@ class ApiDeviceService
     public function getPairing(String $device, String $pair_device)
     {
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
+        echo $url;die;
         return ClientHttp($url);
 
     }
