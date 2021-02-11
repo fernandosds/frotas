@@ -93,7 +93,7 @@
                 <div class="col-sm-3 col-12 div-btn-start">
                     <div class="form-row align-items-center">
                         <div class="col-sm-3 col-4 my-1">
-                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="10">
+                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="500">
                         </div>
                         <div class="col-sm-5 col-8 my-1">
                             <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? '99A00105'}}">
@@ -156,8 +156,31 @@
         }).addTo(mymap);
 
 
+        /**
+         * Carrega endereço do grid
+         */
+        $("#modal-content").on("click", ".btn-see-address", function() {
 
+            var grid_lat = $(this).data('lat');
+            var grid_lng = $(this).data('lng');
+            var cont = $(this).data('cont');
 
+            $('#span-address-'+cont).html('<i class="fa fa-spinner fa-pulse"></i> Carregando endereço...')
+
+            $.ajax({
+                type: 'GET',
+                url: '{{url("monitoring/get-address")}}/' + grid_lat + '/' + grid_lng,
+                success: function (response) {
+
+                    $('#span-address-'+cont).html(response)
+                }
+            });
+
+        })
+
+        /**
+         * Carrega grid
+         */
         $('.modal-grid').click(function(){
 
             $.ajax({
@@ -177,7 +200,7 @@
 
 
         /**
-         * Click
+         * Rastrea isca
          */
         $('#btn-start').click(function(){
 
@@ -291,14 +314,8 @@
                             marker = L.marker([position.Latitude, position.Longitude]).addTo(mymap);
                         }
 
-                        address = data.address[0];
                         $('#last-address').html(
-                            '<b>Último endereço válido:</b> '+
-                            address.LOGRADOURO+', '+
-                            address.BAIRRO+', '+
-                            address.CIDADE+' - '+
-                            address.UF+', CEP: '+
-                            address.CEP+' - '+
+                            '<b>Último endereço válido:</b> '+data.address+
 
                             '<b> - Satélites:</b> '+position.Satelites+
                             '<b> - Sinal:</b> '+position.Sinal+

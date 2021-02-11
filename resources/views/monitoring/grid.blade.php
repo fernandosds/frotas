@@ -16,6 +16,7 @@
             </tr>
         </thead>
         <tbody>
+        <?php $cont = 1; ?>
             @foreach($return['positions'] as $position)
                 <tr>
                     <td>{{ $position["DATA_GPS_HOSPEDE"] }}</td>
@@ -44,8 +45,11 @@
 
                     </td>
                     <td>{{ $position["rssi_hospedeiro"] }}</td>
-                    <td></td>
+                    <td id="span-address-{{$cont}}">
+                        <button type="button" class="btn btn-default btn-sm pull-rigth btn-see-address" data-cont={{$cont}} data-lat="{{$position["latitude_hospede"]}}" data-lng="{{$position["longitude_hospede"]}}">Ver Endereço</button>
+                    </td>
                 </tr>
+                <?php $cont ++; ?>
             @endforeach
         </tbody>
     </table>

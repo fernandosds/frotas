@@ -106,6 +106,16 @@ class MonitoringController extends Controller
     }
 
     /**
+     * @param String $lat
+     * @param String $lng
+     * @return array
+     */
+    public function getAddress(String $lat, String $lng)
+    {
+        return $this->apiDeviceService->getAddress( $lat, $lng );
+    }
+
+    /**
      * @param String $device
      * @param Int $minutes
      * @return array

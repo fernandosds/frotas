@@ -100,7 +100,10 @@ class ApiDeviceService
     public function getAddress(String $lat, String $lon)
     {
         $url = $this->host_apis . "/geo-to-address/v1/latlon/{$lat},{$lon}";
-        return ClientHttp($url);
+        $address = ClientHttp($url);
+
+        return  $address[0]['LOGRADOURO'].", ".$address[0]['BAIRRO'].", ".$address[0]['CIDADE']." - ".$address[0]['UF'].", CEP: ".$address[0]['CEP'];
+
     }
 
     /**

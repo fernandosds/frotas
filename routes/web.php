@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/map/heat/{device}/{minutes?}', 'MonitoringController@heat');
 
         Route::get('/get-grid/{model}/{minutes}', 'MonitoringController@getGrid');
+        Route::get('/get-address/{lat}/{lng}', 'MonitoringController@getAddress');
         //Route::get('/map/{device}/{minutes?}', 'MonitoringController@map');
 
         Route::get('/test-device/{model}', 'MonitoringController@testDevice');
