@@ -15,12 +15,29 @@ class DeviceController extends Controller
     public function getEmbedded()
     {
 
-        $return[] = [
-            'ISCA' => '99A00105',
-            'R12' => '99112275'
+        $return = [
+            [
+                'ISCA' => '99A00105',
+                'R12' => '99112276'
+            ],[
+                'ISCA' => '99A00106',
+                'R12' => '99112277'
+            ],[
+                'ISCA' => '99A00107',
+                'R12' => '99112278'
+            ],[
+                'ISCA' => '99A00108',
+                'R12' => '99112279'
+            ],[
+                'ISCA' => '99A00109',
+                'R12' => '99112271'
+            ],[
+                'ISCA' => '99A00110',
+                'R12' => '99112272'
+            ]
         ];
-
-        return json_encode($return);
+        
+        return response()->json($return);
 
 
     }

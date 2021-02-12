@@ -45,7 +45,7 @@ class MonitoringController extends Controller
         $data = $this->data;
         $data['device'] = $device;
 
-        return view('monitoring.index2', $data);
+        return view('monitoring.index', $data);
     }
 
     /**
@@ -55,19 +55,23 @@ class MonitoringController extends Controller
     public function lastPosition(String $device)
     {
 
+        $pairing = [];
+
         if($this->deviceService->validDevice($device)){
 
             $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
-            $time_left = timeLeft($boarding->finished_at);
+            $time_left = (isset($boarding->finished_at)) ? timeLeft($boarding->finished_at) : '';
 
-            // Paring
-            $pairing = [
-                'status' => false,
-                'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}."
-            ];
             if($boarding){
 
                 if(isset($boarding->pair_device)){
+
+                    // Paring
+                    $pairing = [
+                        'status' => false,
+                        'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}."
+                    ];
+
                     $api_pairing = $this->apiDeviceService->getPairing($device, $boarding->pair_device);
                     if($api_pairing['status'] == "sucesso"){
                         if($api_pairing['body'][0]['msgs'] > 0){
@@ -84,6 +88,9 @@ class MonitoringController extends Controller
                     ];
                 }
 
+            }else{
+
+                return response()->json(['status' => 'error', 'errors' => 'Ísca não embarcada'], 200);
             }
 
             // Get Last position
@@ -157,7 +164,7 @@ class MonitoringController extends Controller
             $boarding = $this->boardingService->getCurrentBoardingByDeviceId($device['data']->id);
 
             $return['device_type']  = $device['data']->technologie;
-            $return['pair_device']  = ($boarding->pair_device) ? $boarding->pair_device : 'Não Pareado';
+            $return['pair_device']  = (isset($boarding->pair_device)) ? $boarding->pair_device : 'Não Pareado';
             $return['model']        = $device['data']->model;
             $return['device_id']    = $device['data']->id;
 
@@ -187,12 +194,16 @@ class MonitoringController extends Controller
      */
     public function getGrid(String $device, Int $minutes)
     {
+
+        $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+
         $grid = $this->apiDeviceService->getGrid($device, $minutes);
 
         if($grid['status'] == "sucesso"){
 
             $data['return'] = [
                 'status' => 'success',
+                'pair_device' => $boarding->pair_device,
                 'positions' => $grid['body']
             ];
 

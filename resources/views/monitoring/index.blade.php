@@ -19,6 +19,14 @@
         .div-btn-start{
             margin-top: 17px;
         }
+        #last-address{
+            margin-left: 17px;
+            margin-bottom: 15px;
+        }
+        .modal-grid{
+            float: right;
+            margin-top: -5px;
+        }
         .div-device-status div{
             border-left: 1px solid #eee;
         }
@@ -28,6 +36,7 @@
             height: 100%;
             background-color: #fff;
         }
+        .text-orange{color:#ff8000}
     </style>
 @endsection
 
@@ -75,20 +84,19 @@
                         </div>
 
                         <div class="col-sm-2 col-6">
-                            <i class="fa  fa-clock"></i> <label for="">Tempo restante</label><br />
+                            <i class="fa  fa-clock"></i> <label for="">Término previsto</label><br />
                             <b for="" id="time-left">---</b>
                         </div>
-
                     </div>
                 </div>
 
                 <div class="col-sm-3 col-12 div-btn-start">
                     <div class="form-row align-items-center">
                         <div class="col-sm-3 col-4 my-1">
-                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="10">
+                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="500">
                         </div>
                         <div class="col-sm-5 col-8 my-1">
-                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? ''}}">
+                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? '99A00105'}}">
                         </div>
                         <div class="col-auto col-4 my-1">
                             <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
@@ -96,61 +104,25 @@
                     </div>
                 </div>
 
-            </div>
+                <div class="col-sm-12"><hr />
 
-<!--
-            <div class="kt-portlet__head kt-portlet__head--lg">
-
-                <div class="kt-portlet__head-toolbar">
-
-                    <div class="kt-portlet__head-wrapper">
-
-                        <div class="div-device-status">
-                            <div class="row">
-                                <div class="form-group col-xs-6 col-md-2">
-                                    <i class="fa fa-microchip"></i> <label for="">Isca</label><br />
-                                    <b for="" id="test-device-code">---</b>
-                                </div>
-                                <div class="form-group col-xs-6 col-md-2">
-                                    <i class="fa fa-5x fa-thumbs-o-up"></i>
-                                    <i class="fa fa-link"></i> <label for="">Pareamento</label><br />
-                                    <b for="" id="pair_device">---</b>
-                                </div>
-                                <div class="form-group col-xs-6 col-md-2">
-                                    <i class="fa fa-signal"></i> <label for="">Última Transmissão</label><br />
-                                    <b for="" id="last-transmission">---</b>
-                                </div>
-                                <div class="form-group col-xs-6 col-md-2">
-                                    <i class="fa fa-battery-empty" id="icon-nivel-bateria"></i> <label for=""> Nível de Bateria</label><br />
-                                    <b for="" id="nivel-bateria">---</b>
-                                </div>
-                                <div class="form-group col-xs-6 col-md-2">
-                                    <i class="fa  fa-cube"></i> <label for="">Tipo de ísca</label><br />
-                                    <b for="" id="device-tipo">---</b>
-                                </div>
-                                <div class="form-group col-xs-6 col-md-2">
-                                    <i class="fa  fa-clock"></i> <label for="">Tempo restante</label><br />
-                                    <b for="" id="time-left">---</b>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="kt-portlet__head-actions col-xs-12">
-                            <div class="col-auto">
-                                <label class="sr-only" for="inlineFormInput">Nome</label>
-                                <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Chassi ou Ísca" value="{{$device ?? ''}}">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-link btn-sm pull-right modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
+                    <div id="last-address"></div>
                 </div>
 
-            </div>-->
+            </div>
 
-            <div id="mapid" class="mapid" style="width: 100%; height: 700px;float:left;"> </div>
 
+            <div id="mapid" class="mapid" style="width: 100%; height: 800px;float:left;"> </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" id="modal-content">
+                <div class="center"><i class="fa fa-pulse fa-spinner fa-5x"></i><br />Aguarde... </div>
+            </div>
         </div>
     </div>
 
@@ -170,6 +142,7 @@
         var marker = {};
         var circle = {};
         var minutes = 10;
+        var chassi_device = '';
 
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
 
@@ -183,7 +156,9 @@
         }).addTo(mymap);
 
 
-
+        /**
+         * Rastrea isca
+         */
         $('#btn-start').click(function(){
 
             Swal.fire({
@@ -194,33 +169,38 @@
             })
 
             chassi_device = $("#chassi_device").val();
-            setLocalization(chassi_device)
 
-            // Progress bar
-            $('#div-progress-bar').show();
-            progressBar = 100;
-            setInterval(function(){
+            if(lastPosition(chassi_device)){
 
-                if(progressBar == 0){
-                    progressBar = 100;
-                    setLocalization(chassi_device)
-                }else{
-                    progressBar = progressBar - 1;
-                }
-                $('#progress_bar').attr("style", "width:"+progressBar+"%")
+                loadIconsDeviceStatus(chassi_device);
+                heatMap(chassi_device);
 
-            },1000);
+                // Progress bar
+                $('#div-progress-bar').show();
+                progressBar = 100;
+                setInterval(function(){
+
+                    if(progressBar == 0){
+                        progressBar = 100;
+
+                        lastPosition(chassi_device);
+                        loadIconsDeviceStatus(chassi_device);
+
+                    }else{
+                        progressBar = progressBar - 1;
+                    }
+                    $('#progress_bar').attr("style", "width:"+progressBar+"%")
+
+                },1000);
+            }
 
         })
 
         /**
-         *
-         * @param chassi_device
+         * Mapa de calor
          */
-        function setLocalization(chassi_device)
+        function heatMap(chassi_device)
         {
-
-            loadIconsDeviceStatus(chassi_device);
 
             if($('#minutes').val() == ""){
                 minutes = 10;
@@ -230,33 +210,67 @@
 
             // Map
             $.ajax({
-                url: "{{url('monitoring/map')}}/"+chassi_device+'/'+minutes,
+                url: "{{url('monitoring/map/heat')}}/"+chassi_device+'/'+minutes,
                 type: 'GET',
                 success: function(data) {
 
-                    Swal.close()
-
-                    if(mymap.hasLayer(marker)){
-                        mymap.removeLayer(marker);
-                    }
-                    if(mymap.hasLayer(circle)){
-                        mymap.removeLayer(circle);
-                    }
                     if(mymap.hasLayer(heat)){
                         mymap.removeLayer(heat);
                     }
 
-                    if(data.status == "success"){
+                    // Mapa de calor
+                    heat = L.heatLayer(data, {
+                        radius: 20,
+                        max: 1.0,
+                        blur: 15,
+                        minOpacity: 0.7
+                    }).addTo(mymap);
 
-                        $('#time-left').html(data.time_left);
-                        position = data[0];
+                }
+            });
+        }
 
-                        mymap.panTo(new L.LatLng(position.lat, position.lng));
+        /**
+         * Marker - Última posição válida
+         */
+        function lastPosition(chassi_device)
+        {
+
+            $.ajax({
+                url: "{{url('/monitoring/map/last-position')}}/" + chassi_device,
+                type: 'GET',
+                success: function (data) {
+
+                    if(data.status == "error"){
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Ísca não embarcada',
+                            showConfirmButton: true,
+                            timer: 10000
+                        });
+                        return false;
+                    }
+
+                    Swal.close()
+
+                    if(data.last_positions.status == "sucesso"){
+
+                        if(mymap.hasLayer(marker)){
+                            mymap.removeLayer(marker);
+                        }
+                        if(mymap.hasLayer(circle)){
+                            mymap.removeLayer(circle);
+                        }
+
+                        position = data.last_positions['body'][0];
+
+                        mymap.panTo(new L.LatLng(position.Latitude, position.Longitude));
 
                         // Posição aproximada
-                        if( position.atualizado == 0 && position.qtd_satelite < 4 ){
+                        if( position.Atualizado == 0 && position.Satelites < 4 ){
 
-                            circle = L.circle([position.lat, position.lng], {
+                            circle = L.circle([position.Latitude, position.Longitude], {
                                 color: 'gray',
                                 fillColor: '#f03',
                                 fillOpacity: 0.1,
@@ -264,29 +278,30 @@
                                 border: 0
                             }).addTo(mymap);
 
-                        // Posição exata
+                            // Posição exata
                         }else{
-                            marker = L.marker([position.lat, position.lng]).addTo(mymap);
+                            marker = L.marker([position.Latitude, position.Longitude]).addTo(mymap);
                         }
 
-                        // Mapa de calor
-                        heat = L.heatLayer(data['heat_positions'], {
-                            radius: 20,
-                            max: 1.0,
-                            blur: 15,
-                            minOpacity: 0.7
-                        }).addTo(mymap);
+                        $('#last-address').html(
+                            '<b>Último endereço válido:</b> '+data.address+
 
+                            '<b> - Satélites:</b> '+position.Satelites+
+                            '<b> - Modo:</b> '+position.Modo
+                        );
 
-                        if(!position.pairing.status){
-                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' +
-                                '<strong>ATENÇÃO!</strong> &nbsp; '+position.pairing.message+'</div>');
+                        if(!data.pairing.status){
+                            $('#pairing-alert').html('<div class="alert alert-danger center blink" role="alert">' +
+                                '<strong>ATENÇÃO!</strong> &nbsp; <i class="fa fa-check"></i> &nbsp; '+data.pairing.message+'</div>');
                         }else{
-                            $('#pairing-alert').html('<div class="alert alert-sucess center blink" role="alert">' +
-                                '<strong>ATENÇÃO!</strong> &nbsp; '+position.pairing.message+'</div>');
+                            $('#pairing-alert').html('<div class="alert alert-success center blink" role="alert">' +
+                                '<strong>ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }
+
+                        $('#time-left').html(data.time_left);
 
                     }else{
+
                         clearIcons()
                         Swal.fire({
                             type: 'error',
@@ -299,13 +314,55 @@
 
                 }
             });
+
+            return true;
         }
 
+
         /**
-         *
-         * @param device_number
+         * Carrega endereço do grid
          */
-        function loadIconsDeviceStatus(device_number)
+        $("#modal-content").on("click", ".btn-see-address", function() {
+
+            var grid_lat = $(this).data('lat');
+            var grid_lng = $(this).data('lng');
+            var cont = $(this).data('cont');
+
+            $('#span-address-'+cont).html('<i class="fa fa-spinner fa-pulse"></i> Carregando endereço...')
+
+            $.ajax({
+                type: 'GET',
+                url: '{{url("monitoring/get-address")}}/' + grid_lat + '/' + grid_lng,
+                success: function (response) {
+
+                    $('#span-address-'+cont).html(response)
+                }
+            });
+
+        })
+
+        /**
+         * Carrega grid
+         */
+        $('.modal-grid').click(function(){
+
+            $.ajax({
+                url: "{{url('monitoring/get-grid')}}/" + chassi_device+"/"+minutes,
+                type: 'GET',
+                success: function (data) {
+
+                    $('#modal-content').html(data)
+
+                }
+            })
+
+
+        })
+
+        /**
+         * Ícones - Status
+         */
+        function loadIconsDeviceStatus(chassi_device)
         {
 
             var loading = '<i class="fa fa-spinner fa-pulse"></i>';
@@ -314,10 +371,11 @@
             $("#device-tipo").html(loading);
             $('#last-transmission').html(loading);
             $('#nivel-bateria').html(loading);
+            $('#nivel-bateria').html(loading);
 
             $.ajax({
                 type: 'GET',
-                url: '{{url("monitoring/test-device")}}/'+device_number,
+                url: '{{url("monitoring/test-device")}}/'+chassi_device,
                 success: function(response) {
 
                     if (response.status == "success") {
@@ -373,6 +431,9 @@
 
         }
 
+        /**
+         * Limpa ícones
+         */
         function clearIcons()
         {
             $("#test-device-code").html('---');
