@@ -140,6 +140,8 @@
 
         var heat = {};
         var marker = {};
+        var marker_r12 = {};
+        var marker_event = {};
         var circle = {};
         var minutes = 10;
         var chassi_device = '';
@@ -262,6 +264,12 @@
                         if(mymap.hasLayer(circle)){
                             mymap.removeLayer(circle);
                         }
+                        if(mymap.hasLayer(marker_r12)){
+                            mymap.removeLayer(marker_r12);
+                        }
+                        if(mymap.hasLayer(marker_event)){
+                            mymap.removeLayer(marker_event);
+                        }
 
                         position = data.last_positions['body'][0];
 
@@ -283,6 +291,34 @@
                             marker = L.marker([position.Latitude, position.Longitude]).addTo(mymap);
                         }
 
+
+                        // Mostra evento de despareamento
+                        if(!data.pairing.status){
+
+                            var redIcon = new L.Icon({
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            });
+
+                            var greenIcon = new L.Icon({
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            });
+
+                            marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: greenIcon}).addTo(mymap);
+                            marker_r12 = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: redIcon}).addTo(mymap);
+                        }
+
+
+
                         $('#last-address').html(
                             '<b>Último endereço válido:</b> '+data.address+
 
@@ -292,10 +328,10 @@
 
                         if(!data.pairing.status){
                             $('#pairing-alert').html('<div class="alert alert-danger center blink" role="alert">' +
-                                '<strong>ATENÇÃO!</strong> &nbsp; <i class="fa fa-check"></i> &nbsp; '+data.pairing.message+'</div>');
+                                '<strong><i class="fa fa-unlink"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }else{
                             $('#pairing-alert').html('<div class="alert alert-success center blink" role="alert">' +
-                                '<strong>ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
+                                '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }
 
                         $('#time-left').html(data.time_left);

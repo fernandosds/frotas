@@ -108,6 +108,18 @@ class ApiDeviceService
 
     /**
      * @param String $device
+     * @param String $pair_device
+     * @return array
+     */
+    public function checkPairing(String $device, String $pair_device)
+    {
+
+        $url = $this->host_apis . "/checkpareamento/isca/{$device}/r12/{$pair_device}";
+        return ClientHttp($url);
+    }
+
+    /**
+     * @param String $device
      * @param Int $minutes
      * @return array
      */

@@ -66,6 +66,41 @@ class MonitoringController extends Controller
 
                 if(isset($boarding->pair_device)){
 
+
+                    $check_pairing = $this->apiDeviceService->checkPairing($device, $boarding->pair_device);
+
+                    if( $check_pairing['status'] == "success" ){
+
+                        if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
+
+                            $pairing = [
+                                'status' => true,
+                                'message' => "A ísca {$device} esta pareada com o rastreador {$boarding->pair_device}.",
+                                'event' => $check_pairing['CheckStatusIsca']['event'],
+                                'r12' => $check_pairing['CheckStatusIsca']['r12'],
+                            ];
+
+                        }else{
+
+                            $pairing = [
+                                'status' => false,
+                                'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
+                                'event' => $check_pairing['CheckStatusIsca']['event'],
+                                'r12' => $check_pairing['CheckStatusIsca']['r12'],
+                            ];
+
+                        }
+
+                    }else{
+                        $pairing = [
+                            'status' => false,
+                            'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
+                            'event' => [],
+                            'r12' => []
+                        ];
+                    }
+
+                    /*
                     // Paring
                     $pairing = [
                         'status' => false,
@@ -80,7 +115,7 @@ class MonitoringController extends Controller
                                 'message' => "A ísca {$device} esta pareada com o rastreador {$boarding->pair_device}."
                             ];
                         }
-                    }
+                    }*/
                 }else{
                     $pairing = [
                         'status' => false,
@@ -223,6 +258,16 @@ class MonitoringController extends Controller
         return view('monitoring.grid', $data);
 
     }
+
+    /**
+     * @param String $device
+     * @param String $pair_device
+     * @return array
+     */
+ // public function checkPairing(String $device, String $pair_device)
+ // {
+ //     return $this->apiDeviceService->checkPairing($device, $pair_device);
+ // }
 
     /**
      * @param String $device

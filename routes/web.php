@@ -56,11 +56,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/get-grid/{model}/{minutes}', 'MonitoringController@getGrid');
         Route::get('/get-address/{lat}/{lng}', 'MonitoringController@getAddress');
-        //Route::get('/map/{device}/{minutes?}', 'MonitoringController@map');
+
+        Route::get('/check-pairing/{device}/{pair_device}', 'MonitoringController@checkPairing');
 
         Route::get('/test-device/{model}', 'MonitoringController@testDevice');
-
-
 
     });
 
