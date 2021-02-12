@@ -35,12 +35,12 @@ Route::group(['middleware' => 'auth'], function () {
      * boardings device routes
      */
     Route::group(['prefix' => 'boardings'], function () {
-        Route::get('/', 'BoardingController@index');
-        Route::get('/view/{id}', 'BoardingController@view');
-        Route::get('/new', 'BoardingController@new');
-        Route::post('/save', 'BoardingController@save');
-        Route::get('/delete/{id}', 'BoardingController@destroy');
-        Route::get('/finish/{id}', 'BoardingController@finish');
+        Route::get('/', 'Iscas\BoardingController@index');
+        Route::get('/view/{id}', 'Iscas\BoardingController@view');
+        Route::get('/new', 'Iscas\BoardingController@new');
+        Route::post('/save', 'Iscas\BoardingController@save');
+        Route::get('/delete/{id}', 'Iscas\BoardingController@destroy');
+        Route::get('/finish/{id}', 'Iscas\BoardingController@finish');
 
         Route::get('/test-device/{model}', 'BoardingController@testDevice');
     });
@@ -59,8 +59,8 @@ Route::group(['middleware' => 'auth'], function () {
      * Contracts History routes
      */
     Route::group(['prefix' => 'contracts'], function () {
-        Route::get('/history', 'ContractController@historyContract');
-        Route::get('/show/{id}', 'ContractController@show');
+        Route::get('/history', 'Iscas\ContractController@historyContract');
+        Route::get('/show/{id}', 'Iscas\ContractController@show');
     });
 
     /**
@@ -73,45 +73,45 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::group(['prefix' => 'customers'], function () {
 
-            Route::get('/', 'Commercial\CustomerController@index');
-            Route::get('/show/{id}', 'Commercial\CustomerController@show');
-            Route::get('/new', 'Commercial\CustomerController@new');
-            Route::post('/save', 'Commercial\CustomerController@save');
-            Route::put('/update/{id}', 'Commercial\CustomerController@update');
-            Route::get('/edit/{id}', 'Commercial\CustomerController@edit');
-            Route::get('/delete/{id}', 'Commercial\CustomerController@destroy');
+            Route::get('/', 'Iscas\Commercial\CustomerController@index');
+            Route::get('/show/{id}', 'Iscas\Commercial\CustomerController@show');
+            Route::get('/new', 'Iscas\Commercial\CustomerController@new');
+            Route::post('/save', 'Iscas\Commercial\CustomerController@save');
+            Route::put('/update/{id}', 'Iscas\Commercial\CustomerController@update');
+            Route::get('/edit/{id}', 'Iscas\Commercial\CustomerController@edit');
+            Route::get('/delete/{id}', 'Iscas\Commercial\CustomerController@destroy');
 
             /**
              * Contact routes
              */
             Route::group(['prefix' => 'contacts'], function () {
-                Route::get('/', 'Commercial\ContactController@index');
-                Route::get('/show/{id}', 'Commercial\ContactController@show');
-                Route::post('/new', 'Commercial\ContactController@save');
-                Route::get('/delete/{id}', 'Commercial\ContactController@destroy');
+                Route::get('/', 'Iscas\Commercial\ContactController@index');
+                Route::get('/show/{id}', 'Iscas\Commercial\ContactController@show');
+                Route::post('/new', 'Iscas\Commercial\ContactController@save');
+                Route::get('/delete/{id}', 'Iscas\Commercial\ContactController@destroy');
             });
         });
 
         Route::group(['prefix' => 'contracts'], function () {
-            Route::get('/', 'Commercial\ContractController@index');
-            Route::get('/new', 'Commercial\ContractController@new');
-            Route::get('/show/{id}', 'Commercial\ContractController@show');
-            Route::post('/save', 'Commercial\ContractController@save');
-            Route::put('/update/{id}', 'Commercial\ContractController@update');
-            Route::get('/edit/{id}', 'Commercial\ContractController@edit');
-            Route::get('/delete/{id}', 'Commercial\ContractController@destroy');
+            Route::get('/', 'Iscas\Commercial\ContractController@index');
+            Route::get('/new', 'Iscas\Commercial\ContractController@new');
+            Route::get('/show/{id}', 'Iscas\Commercial\ContractController@show');
+            Route::post('/save', 'Iscas\Commercial\ContractController@save');
+            Route::put('/update/{id}', 'Iscas\Commercial\ContractController@update');
+            Route::get('/edit/{id}', 'Iscas\Commercial\ContractController@edit');
+            Route::get('/delete/{id}', 'Iscas\Commercial\ContractController@destroy');
 
 
 
 
             Route::group(['prefix' => 'devices'], function () {
-                Route::post('/add', 'Commercial\DeviceController@add');
-                Route::post('/remove', 'Commercial\DeviceController@remove');
+                Route::post('/add', 'Iscas\Commercial\DeviceController@add');
+                Route::post('/remove', 'Iscas\Commercial\DeviceController@remove');
             });
         });
 
         Route::group(['prefix' => 'customer'], function () {
-            Route::post('/search', 'Commercial\CustomerController@search');
+            Route::post('/search', 'Iscas\Commercial\CustomerController@search');
         });
     });
 
@@ -119,7 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Contracts History routes
      */
     Route::group(['prefix' => 'contracts'], function () {
-        Route::get('/history', 'ContractController@historyContract');
+        Route::get('/history', 'Iscas\ContractController@historyContract');
     });
 
 
@@ -127,8 +127,8 @@ Route::group(['middleware' => 'auth'], function () {
      * Stocks routes
      */
     Route::group(['prefix' => 'stocks'], function () {
-        Route::get('/', 'StockController@index');
-        Route::get('/history', 'StockController@historyContract');
+        Route::get('/', 'Iscas\StockController@index');
+        Route::get('/history', 'Iscas\StockController@historyContract');
     });
 
     /**
@@ -140,20 +140,20 @@ Route::group(['middleware' => 'auth'], function () {
          * Contracts Logistics  routes
          */
         Route::group(['prefix' => 'contracts'], function () {
-            Route::get('/edit/{id}', 'Logistic\ContractController@edit');
-            Route::put('/update/{id}', 'Logistic\ContractController@update');
-            Route::get('/', 'Logistic\LogisticController@index');
+            Route::get('/edit/{id}', 'Iscas\Logistic\ContractController@edit');
+            Route::put('/update/{id}', 'Iscas\Logistic\ContractController@update');
+            Route::get('/', 'Iscas\Logistic\LogisticController@index');
 
-            Route::get('/completed', 'Logistic\ContractController@contractCompleted');
-            Route::get('/show/{id}', 'Logistic\ContractController@show');
+            Route::get('/completed', 'Iscas\Logistic\ContractController@contractCompleted');
+            Route::get('/show/{id}', 'Iscas\Logistic\ContractController@show');
 
 
             /**
              * Devices
              */
             Route::group(['prefix' => 'devices'], function () {
-                Route::GET('/attach/{id}', 'Logistic\DeviceController@attachDevices');
-                Route::GET('/filter/{id}', 'Logistic\DeviceController@filterByContractDevice');
+                Route::GET('/attach/{id}', 'Iscas\Logistic\DeviceController@attachDevices');
+                Route::GET('/filter/{id}', 'Iscas\Logistic\DeviceController@filterByContractDevice');
             });
         });
     });
@@ -168,23 +168,23 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::group(['prefix' => 'devices'], function () {
 
-            Route::get('/', 'Production\DeviceController@index');
-            Route::get('/new', 'Production\DeviceController@new');
-            Route::post('/save', 'Production\DeviceController@save');
-            Route::put('/update/{id}', 'Production\DeviceController@update');
-            Route::get('/edit/{id}', 'Production\DeviceController@edit');
-            Route::get('/delete/{id}', 'Production\DeviceController@destroy');
+            Route::get('/', 'Iscas\Production\DeviceController@index');
+            Route::get('/new', 'Iscas\Production\DeviceController@new');
+            Route::post('/save', 'Iscas\Production\DeviceController@save');
+            Route::put('/update/{id}', 'Iscas\Production\DeviceController@update');
+            Route::get('/edit/{id}', 'Iscas\Production\DeviceController@edit');
+            Route::get('/delete/{id}', 'Iscas\Production\DeviceController@destroy');
 
             /**
              * Technologies routes
              */
             Route::group(['prefix' => 'technologies'], function () {
-                Route::get('/', 'Production\TechnologieController@index');
-                Route::get('/new', 'Production\TechnologieController@new');
-                Route::post('/save', 'Production\TechnologieController@save');
-                Route::put('/update/{id}', 'Production\TechnologieController@update');
-                Route::get('/edit/{id}', 'Production\TechnologieController@edit');
-                Route::get('/delete/{id}', 'Production\TechnologieController@destroy');
+                Route::get('/', 'Iscas\Production\TechnologieController@index');
+                Route::get('/new', 'Iscas\Production\TechnologieController@new');
+                Route::post('/save', 'Iscas\Production\TechnologieController@save');
+                Route::put('/update/{id}', 'Iscas\Production\TechnologieController@update');
+                Route::get('/edit/{id}', 'Iscas\Production\TechnologieController@edit');
+                Route::get('/delete/{id}', 'Iscas\Production\TechnologieController@destroy');
             });
         });
     });
@@ -221,12 +221,12 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'typeofloads'], function () {
 
-        Route::get('/', 'TypeOfLoadController@index');
-        Route::get('/new', 'TypeOfLoadController@new');
-        Route::post('/save', 'TypeOfLoadController@save');
-        Route::put('/update/{id}', 'TypeOfLoadController@update');
-        Route::get('/edit/{id}', 'TypeOfLoadController@edit');
-        Route::get('/delete/{id}', 'TypeOfLoadController@destroy');
+        Route::get('/', 'Iscas\TypeOfLoadController@index');
+        Route::get('/new', 'Iscas\TypeOfLoadController@new');
+        Route::post('/save', 'Iscas\TypeOfLoadController@save');
+        Route::put('/update/{id}', 'Iscas\TypeOfLoadController@update');
+        Route::get('/edit/{id}', 'Iscas\TypeOfLoadController@edit');
+        Route::get('/delete/{id}', 'Iscas\TypeOfLoadController@destroy');
     });
 
     /**
@@ -234,12 +234,12 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'accommodationlocations'], function () {
 
-        Route::get('/', 'AccommodationLocationsController@index');
-        Route::get('/new', 'AccommodationLocationsController@new');
-        Route::post('/save', 'AccommodationLocationsController@save');
-        Route::put('/update/{id}', 'AccommodationLocationsController@update');
-        Route::get('/edit/{id}', 'AccommodationLocationsController@edit');
-        Route::get('/delete/{id}', 'AccommodationLocationsController@destroy');
+        Route::get('/', 'Iscas\AccommodationLocationsController@index');
+        Route::get('/new', 'Iscas\AccommodationLocationsController@new');
+        Route::post('/save', 'Iscas\AccommodationLocationsController@save');
+        Route::put('/update/{id}', 'Iscas\AccommodationLocationsController@update');
+        Route::get('/edit/{id}', 'Iscas\AccommodationLocationsController@edit');
+        Route::get('/delete/{id}', 'Iscas\AccommodationLocationsController@destroy');
     });
 
 

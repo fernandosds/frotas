@@ -24,10 +24,19 @@
             @csrf
             <div class="kt-portlet__body">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group  col-md-4">
                         <label for="inputName">Placa</label>
-                        <input type="text" name="placa" class="form-control" value="{{ $car->placa ?? '' }}">
+                        <div class="input-group">
+
+                            <input type="text" name="placa" id="inputplaca" class="form-control" value="MAP2020{{ $car->placa ?? '' }}">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" id="btn-search-placa" type="button">Verificar</button>
+                            </span>
+                        </div>
                     </div>
+                </div>
+                <div class="form-row">
+
                     <div class="form-group col-md-6">
                         <label for="inputCpfCnpj">Chassi</label>
                         <input type="text" id="input_chassi" name="chassi" class="form-control" maxlength="17" value="{{ $car->chassi ?? '' }}">
@@ -40,7 +49,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputAddress">Montadora</label>
-                        <input type="text" id="input_automaker" class="form-control automaker" name="automaker" value="{{ $car->automaker ?? '' }}">
+                        <input type="text" id="input_automaker" class="form-control" name="automaker" value="{{ $car->automaker ?? '' }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComplement">Ano Fabricação</label>
@@ -86,6 +95,50 @@
 
         $('#btn-car-save').click(function() {
             ajax_store(car_id, "rents/cars", $('#form-create-car').serialize());
+        });
+
+    });
+
+
+    /**
+     Pesquisar placa de carro
+     */
+    $(function() {
+
+
+        $('#btn-search-placa').click(function() {
+            var placa = $('#inputplaca').val();
+            var url = "{{url('')}}/api-device/get-device/" + placa;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function(response) {
+                    if (response.status == "success") {
+                        $('#input_chassi').val(response.data.chassi);
+                        $('input[name=automaker]').val(response.data.marca);
+                        $('input[name=model]').val(response.data.modelo);
+                        $('input[name=year]').val(response.data.ano);
+                        $('input[name=color]').val(response.data.cor);
+                        $('input[name=type]').val(response.data.categoria);
+
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Vaículo não encontrado na base de dados.',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+                        $("#input-search").val('')
+                        $("#btn-search").html('<i class="fa fa-search"></i>')
+                    }
+                    //alert(response);
+
+                }
+            });
+            //return false;
         });
 
     });

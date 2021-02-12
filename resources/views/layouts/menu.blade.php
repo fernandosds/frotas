@@ -36,7 +36,7 @@
                 @if( Auth::user()->type == 'ext' )
                 <!-- CLIENTE EXTERNO ______________________________________________________________________________________________________________________ -->
                 <li class="kt-menu__section ">
-                    <h4 class="kt-menu__section-text">Menu</h4>
+                    <h4 class="kt-menu__section-text">MENU</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
 
@@ -44,7 +44,7 @@
 
                     <a href="{{url('/')}}" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-home"></i></span>
-                        <span class="kt-menu__link-text">HOME</span>
+                        <span class="kt-menu__link-text">Home</span>
                     </a>
                 </li>
 
@@ -52,7 +52,7 @@
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_boarding ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-shipping-fast"></i></span>
-                        <span class="kt-menu__link-text">EMBARQUES</span>
+                        <span class="kt-menu__link-text">Embarques</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -104,7 +104,7 @@
                     <!-- CLIENTES -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-users"></i></span>
-                        <span class="kt-menu__link-text">CLIENTES</span>
+                        <span class="kt-menu__link-text">Clientes</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -121,7 +121,7 @@
                     <!-- CONTRATOS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-file-contract"></i></span>
-                        <span class="kt-menu__link-text">CONTRATOS</span>
+                        <span class="kt-menu__link-text">Contratos</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -148,7 +148,7 @@
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_devices ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-fish"></i></span>
-                        <span class="kt-menu__link-text">ÍSCAS</span>
+                        <span class="kt-menu__link-text">Íscas</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -179,7 +179,7 @@
                     <!-- LOGISTICA -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-boxes"></i></span>
-                        <span class="kt-menu__link-text">LOGISTICAS</span>
+                        <span class="kt-menu__link-text">Logísticas</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -207,7 +207,7 @@
                     <!-- MOTORISTAS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-user-tie"></i></span>
-                        <span class="kt-menu__link-text">MOTORISTAS</span>
+                        <span class="kt-menu__link-text">Motoristas</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -223,7 +223,7 @@
                     <!-- CARROS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-car-side"></i></span>
-                        <span class="kt-menu__link-text">FROTA DE CARROS</span>
+                        <span class="kt-menu__link-text">Frota de carros</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -239,7 +239,7 @@
                     <!-- CARTÕES -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-address-card"></i></span>
-                        <span class="kt-menu__link-text">CARTÕES</span>
+                        <span class="kt-menu__link-text">Cartões</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -255,7 +255,7 @@
                     <!-- CUSTOS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-money-bill-wave"></i></span>
-                        <span class="kt-menu__link-text">CUSTOS</span>
+                        <span class="kt-menu__link-text">Custos</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -282,7 +282,7 @@
                     <!-- USUÁRIOS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-user icon-menu"></i></span>
-                        <span class="kt-menu__link-text">USUÁRIOS</span>
+                        <span class="kt-menu__link-text">Usuários</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
 
@@ -299,7 +299,7 @@
                     <!-- LOGS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><i class="fa fa-signal"></i></span>
-                        <span class="kt-menu__link-text">LOGS</span>
+                        <span class="kt-menu__link-text">Logs</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
