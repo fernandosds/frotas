@@ -10,6 +10,7 @@
                 <th>Atualizado</th>
                 <th>Ísca</th>
                 <th>Hospedeiro</th>
+                <th>Pareado</th>
                 <th>Nível da bateria</th>
                 <th>RSSI Hospedeiro</th>
                 <th>Endereço</th>
@@ -31,6 +32,13 @@
                     </td>
                     <td>{{ $position["id"] }}</td>
                     <td>{{ $position["id_hospedeiro"] }}</td>
+                    <td>
+                        @if( $position["id"] == $return['pair_device'] )
+                            <i class="fa fa-chain text-success"></i> Pareado
+                        @else
+                            <i class="fa fa-chain-broken text-success"></i> Pareado
+                        @endif
+                    </td>
                     <td>
 
                         @if( $position["nivel_bateria"] == "100.00%" )

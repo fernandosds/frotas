@@ -52,6 +52,16 @@ class BoardingRepository extends AbstractRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function getAllPairActive()
+    {
+        return $this->model->where('active', 1)
+                            ->whereNotNull('pair_device')
+                            ->get();
+    }
+
+    /**
      * @param String $device
      * @return mixed
      */

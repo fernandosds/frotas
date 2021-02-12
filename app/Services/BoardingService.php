@@ -78,6 +78,14 @@ class BoardingService
     }
 
     /**
+     * @return mixed
+     */
+    public function getAllPairActive()
+    {
+        return $this->boardingRepository->getAllPairActive();
+    }
+
+    /**
      * @param Int $id
      * @return mixed
      */

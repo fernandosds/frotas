@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\BoardingService;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
 
@@ -10,38 +11,38 @@ class DeviceController extends Controller
 {
 
     /**
+     * @var
+     */
+    protected $boardingService;
+
+    /**
+     * DeviceController constructor.
+     * @param BoardingService $boardingService
+     */
+    public function __construct(BoardingService $boardingService)
+    {
+        $boardingService = $this->boardingService = $boardingService;
+    }
+
+    /**
      * @return false|string
      */
     public function getEmbedded()
     {
 
-        $return = [
-            [
-                'ISCA' => '99A00105',
-                'R12' => '99112276'
-            ],[
-                'ISCA' => '99A00106',
-                'R12' => '99112277'
-            ],[
-                'ISCA' => '99A00107',
-                'R12' => '99112278'
-            ],[
-                'ISCA' => '99A00108',
-                'R12' => '99112279'
-            ],[
-                'ISCA' => '99A00109',
-                'R12' => '99112271'
-            ],[
-                'ISCA' => '99A00110',
-                'R12' => '99112272'
-            ]
-        ];
-        
+        $boardings = $this->boardingService->getAllPairActive();
+
+        $return = [];
+        foreach( $boardings as $boarding ){
+            $return[] = [
+                'ISCA' => $boarding->device->model,
+                'R12' => $boarding->pair_device
+            ];
+
+        };
+
         return response()->json($return);
 
-
     }
-
-
 
 }

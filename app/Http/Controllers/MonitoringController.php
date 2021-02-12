@@ -197,13 +197,17 @@ class MonitoringController extends Controller
 
         $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
 
+        if($boarding){
+            $pair_device = (isset($boarding->pair_device)) ? $boarding->pair_device : '';
+        }
+
         $grid = $this->apiDeviceService->getGrid($device, $minutes);
 
         if($grid['status'] == "sucesso"){
 
             $data['return'] = [
                 'status' => 'success',
-                'pair_device' => $boarding->pair_device,
+                'pair_device' => $pair_device,
                 'positions' => $grid['body']
             ];
 
