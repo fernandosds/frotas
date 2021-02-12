@@ -67,7 +67,7 @@ class MonitoringController extends Controller
                 if(isset($boarding->pair_device)){
 
                     $check_pairing = $this->apiDeviceService->checkPairing($device, $boarding->pair_device);
-dd($check_pairing);
+
                     if( $check_pairing['status'] == "success" ){
 
                         if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
@@ -94,8 +94,8 @@ dd($check_pairing);
                         $pairing = [
                             'status' => false,
                             'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
-                            'event' => [],
-                            'r12' => []
+                            'event' => $check_pairing['CheckStatusIsca']['event'],
+                            'r12' => $check_pairing['CheckStatusIsca']['r12'],
                         ];
                     }
 
