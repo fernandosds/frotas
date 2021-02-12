@@ -291,7 +291,7 @@
                             marker = L.marker([position.Latitude, position.Longitude]).addTo(mymap);
                         }
 
-
+                        console.log(data.pairing)
                         // Mostra evento de despareamento
                         if(!data.pairing.status){
 
@@ -312,6 +312,7 @@
                                 popupAnchor: [1, -34],
                                 shadowSize: [41, 41]
                             });
+
 
                             marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: greenIcon}).addTo(mymap);
                             marker_r12 = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: redIcon}).addTo(mymap);
