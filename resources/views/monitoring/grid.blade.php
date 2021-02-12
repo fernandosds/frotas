@@ -8,8 +8,7 @@
             <tr>
                 <th>Data</th>
                 <th>Atualizado</th>
-                <th>Ísca</th>
-                <th>Hospedeiro</th>
+                <th>Ísca / Hospedeiro</th>
                 <th>Pareado</th>
                 <th>Nível da bateria</th>
                 <th>RSSI Hospedeiro</th>
@@ -30,13 +29,12 @@
                             <i class="fa fa-ofmeh-o"></i> Impreciso
                         @endif
                     </td>
-                    <td>{{ $position["id"] }}</td>
-                    <td>{{ $position["id_hospedeiro"] }}</td>
+                    <td>{{ $position["id"] }} <i class="fa fa-exchange-alt" aria-hidden="true"></i> {{ $position["id_hospedeiro"] }}</td>
                     <td>
-                        @if( $position["id"] == $return['pair_device'] )
-                            <i class="fa fa-chain text-success"></i> Pareado
+                        @if( $position["id_hospedeiro"] == $return['pair_device'] )
+                            <i class="fa fa-link text-success"></i> <span class="text-success">Pareado</span>
                         @else
-                            <i class="fa fa-chain-broken text-success"></i> Pareado
+                            <i class="fa fa-unlink text-danger"></i> <span class="text-danger">Despareado</span>
                         @endif
                     </td>
                     <td>
