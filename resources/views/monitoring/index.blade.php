@@ -140,16 +140,16 @@
 
         var heat = {};
         var marker = {};
-        var marker_r12 = {};
+        var marker_truck = {};
         var marker_event = {};
         var circle = {};
         var minutes = 10;
         var chassi_device = '';
 
         /* Icons */
-        var boxIcon = new L.Icon({ iconUrl: '{{url("icons/box.png")}}', iconSize: [32, 32], iconAnchor: [32, 32], popupAnchor: [1, -34], });
-        var alertIcon = new L.Icon({ iconUrl: '{{url("icons/alert.gif")}}', iconSize: [32, 32], iconAnchor: [32, 32], popupAnchor: [1, -34], });
-        var truckIcon = new L.Icon({ iconUrl: '{{url("icons/car-delivery.png")}}', iconSize: [48, 32], iconAnchor: [48, 32], popupAnchor: [1, -34], });
+        var boxIcon = new L.Icon({ iconUrl: '{{url("icons/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var eventIcon = new L.Icon({ iconUrl: '{{url("icons/marker-event-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var truckIcon = new L.Icon({ iconUrl: '{{url("icons/marker-truck-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
 
 
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
@@ -162,7 +162,6 @@
             zoomOffset: -1,
             accessToken: 'your.mapbox.access.token'
         }).addTo(mymap);
-
 
         /**
          * Rastrea isca
@@ -270,8 +269,8 @@
                         if(mymap.hasLayer(circle)){
                             mymap.removeLayer(circle);
                         }
-                        if(mymap.hasLayer(marker_r12)){
-                            mymap.removeLayer(marker_r12);
+                        if(mymap.hasLayer(marker_truck)){
+                            mymap.removeLayer(marker_truck);
                         }
                         if(mymap.hasLayer(marker_event)){
                             mymap.removeLayer(marker_event);
@@ -307,12 +306,12 @@
 
                         // Mostra evento de despareamento
                         if(!data.pairing.status){
-
-                            // Alert marker
-                            marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: alertIcon}).addTo(mymap);
+alert(data.pairing.event.position.lat)
+                            // Event marker
+                            marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: eventIcon}).addTo(mymap);
 
                             // Truck marker
-                            marker_r12 = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: truckIcon}).addTo(mymap);
+                            marker_truck = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: truckIcon}).addTo(mymap);
 
                         }
 

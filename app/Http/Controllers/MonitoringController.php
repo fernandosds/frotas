@@ -72,7 +72,7 @@ class MonitoringController extends Controller
 
                     if( $check_pairing['status'] == "success" ){
 
-                        if( false ){//$check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
+                        if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
 
                             $pairing = [
                                 'status' => true,
