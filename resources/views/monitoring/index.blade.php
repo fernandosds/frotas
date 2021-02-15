@@ -147,9 +147,9 @@
         var chassi_device = '';
 
         /* Icons */
-        var boxIcon = new L.Icon({ iconUrl: '{{url("icons/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
-        var eventIcon = new L.Icon({ iconUrl: '{{url("icons/marker-event-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
-        var truckIcon = new L.Icon({ iconUrl: '{{url("icons/marker-truck-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var boxIcon = new L.Icon({ iconUrl: '{{url("markers/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var eventIcon = new L.Icon({ iconUrl: '{{url("markers/marker-event-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var truckIcon = new L.Icon({ iconUrl: '{{url("markers/marker-truck-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
 
 
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
