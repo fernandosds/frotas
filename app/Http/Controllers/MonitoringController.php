@@ -55,22 +55,24 @@ class MonitoringController extends Controller
     public function lastPosition(String $device)
     {
 
-        $pairing = [];
-
+        // Verifica se a isca é válida
         if($this->deviceService->validDevice($device)){
 
+            // Verifica se o embarque é válido
             $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
             $time_left = (isset($boarding->finished_at)) ? timeLeft($boarding->finished_at) : '';
 
             if($boarding){
 
+                // Verifica se possui dispositivo vinculado no embarque
                 if(isset($boarding->pair_device)){
 
+                    // Pega status do dispositivo e pareamento
                     $check_pairing = $this->apiDeviceService->checkPairing($device, $boarding->pair_device);
 
                     if( $check_pairing['status'] == "success" ){
 
-                        if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
+                        if( false ){//$check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
 
                             $pairing = [
                                 'status' => true,

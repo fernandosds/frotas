@@ -146,6 +146,12 @@
         var minutes = 10;
         var chassi_device = '';
 
+        /* Icons */
+        var boxIcon = new L.Icon({ iconUrl: '{{url("icons/box.png")}}', iconSize: [32, 32], iconAnchor: [32, 32], popupAnchor: [1, -34], });
+        var alertIcon = new L.Icon({ iconUrl: '{{url("icons/alert.gif")}}', iconSize: [32, 32], iconAnchor: [32, 32], popupAnchor: [1, -34], });
+        var truckIcon = new L.Icon({ iconUrl: '{{url("icons/car-delivery.png")}}', iconSize: [48, 32], iconAnchor: [48, 32], popupAnchor: [1, -34], });
+
+
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
 
         var baseLayers = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg', {
@@ -288,37 +294,27 @@
 
                             // Posição exata
                         }else{
-                            marker = L.marker([position.Latitude, position.Longitude]).addTo(mymap);
+
+                            // Box marker
+                            if(!data.pairing.status) {
+                                marker = L.marker([position.Latitude, position.Longitude], {icon: boxIcon}).addTo(mymap);
+                            }else{
+                                marker = L.marker([position.Latitude, position.Longitude], {icon: truckIcon}).addTo(mymap);
+                            }
                         }
 
                         console.log(data.pairing)
+
                         // Mostra evento de despareamento
                         if(!data.pairing.status){
 
-                            var redIcon = new L.Icon({
-                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                                iconSize: [25, 41],
-                                iconAnchor: [12, 41],
-                                popupAnchor: [1, -34],
-                                shadowSize: [41, 41]
-                            });
+                            // Alert marker
+                            marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: alertIcon}).addTo(mymap);
 
-                            var greenIcon = new L.Icon({
-                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                                iconSize: [25, 41],
-                                iconAnchor: [12, 41],
-                                popupAnchor: [1, -34],
-                                shadowSize: [41, 41]
-                            });
+                            // Truck marker
+                            marker_r12 = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: truckIcon}).addTo(mymap);
 
-
-                            marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: greenIcon}).addTo(mymap);
-                            marker_r12 = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: redIcon}).addTo(mymap);
                         }
-
-
 
                         $('#last-address').html(
                             '<b>Último endereço válido:</b> '+data.address+

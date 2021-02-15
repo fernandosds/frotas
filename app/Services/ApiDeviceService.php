@@ -14,6 +14,7 @@ class ApiDeviceService
 
     /**
      * @var string
+     *
      */
     protected $host = "";
     protected $host_siscon = "";
@@ -54,7 +55,6 @@ class ApiDeviceService
 
         //$url = $this->host_posititions . "/devices/grid/1/{$device}";
         $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
-        //echo $url;die;
         return ClientHttp($url);
     }
 
