@@ -70,7 +70,6 @@ class MonitoringController extends Controller
                     // Pega status do dispositivo e pareamento
                     $check_pairing = $this->apiDeviceService->checkPairing($device, $boarding->pair_device);
 
-dd($check_pairing);
                     if( $check_pairing['status'] == "success" ){
 
                         if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
