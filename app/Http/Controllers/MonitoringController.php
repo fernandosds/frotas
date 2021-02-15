@@ -66,12 +66,13 @@ class MonitoringController extends Controller
 
                 // Verifica se possui dispositivo vinculado no embarque
                 if(isset($boarding->pair_device)){
-
+echo 'a';
                     // Pega status do dispositivo e pareamento
                     $check_pairing = $this->apiDeviceService->checkPairing($device, $boarding->pair_device);
+                    echo 'b';
 dd($check_pairing);
                     if( $check_pairing['status'] == "success" ){
-
+echo 'c';
                         if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
 
                             $pairing = [
@@ -82,7 +83,7 @@ dd($check_pairing);
                             ];
 
                         }else{
-
+                            echo 'e';
                             $pairing = [
                                 'status' => false,
                                 'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
@@ -93,6 +94,7 @@ dd($check_pairing);
                         }
 
                     }else{
+                        echo 'e';
                         $pairing = [
                             'status' => false,
                             'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
@@ -100,7 +102,7 @@ dd($check_pairing);
                             'r12' => $check_pairing['CheckStatusIsca']['r12'],
                         ];
                     }
-
+                    echo 'f';
                     /*
                     // Paring
                     $pairing = [
