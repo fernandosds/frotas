@@ -306,7 +306,7 @@
 
                         // Mostra evento de despareamento
                         if(!data.pairing.status){
-alert(data.pairing.event.position.lat)
+
                             // Event marker
                             marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: eventIcon}).addTo(mymap);
 
