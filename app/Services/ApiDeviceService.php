@@ -116,7 +116,7 @@ class ApiDeviceService
     public function checkPairing(String $device, String $pair_device)
     {
 
-        $url = "https://api.satcompany.com.br/checkpareamento/isca/99a00055/r12/99195204";//$this->host_apis . "/checkpareamento/isca/{$device}/r12/{$pair_device}";
+        $url = $this->host_apis . "/checkpareamento/isca/{$device}/r12/{$pair_device}";
         return ClientHttp($url);
     }
 
