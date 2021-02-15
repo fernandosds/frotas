@@ -115,6 +115,7 @@ class ApiDeviceService
     {
 
         $url = $this->host_apis . "/checkpareamento/isca/{$device}/r12/{$pair_device}";
+        echo $url;
         return ClientHttp($url);
     }
 
