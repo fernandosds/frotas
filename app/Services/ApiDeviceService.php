@@ -18,7 +18,7 @@ class ApiDeviceService
      */
     protected $host = "";
     protected $host_siscon = "";
-    protected $host_apis = "https://api.satcompany.com.br";
+    protected $host_apis = "";
 
     /**
      * ApiDeviceService constructor.
@@ -29,9 +29,11 @@ class ApiDeviceService
         if( true ){//env('APP_ENV') == "local" ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
+            $this->host_apis = "http://api.satcompany.com.br";
         }else{
             $this->host_siscon = "http://201.91.1.155:83/siscon/new-siscon/public/";
             $this->host = "http://189.16.50.195:6524";
+            $this->host_apis = "https://api.satcompany.com.br";
         }
 
     }
@@ -114,8 +116,7 @@ class ApiDeviceService
     public function checkPairing(String $device, String $pair_device)
     {
 
-        $url = $this->host_apis . "/checkpareamento/isca/{$device}/r12/{$pair_device}";
-        echo $url;
+        $url = "https://api.satcompany.com.br/checkpareamento/isca/99a00055/r12/99195204";//$this->host_apis . "/checkpareamento/isca/{$device}/r12/{$pair_device}";
         return ClientHttp($url);
     }
 
