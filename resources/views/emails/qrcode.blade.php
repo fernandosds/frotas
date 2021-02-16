@@ -1,6 +1,6 @@
 
 <div style="width: 100%; text-align: center; padding: 30px; font-family:Tahoma; font-size: 18px; color: #696969">
-    <img src="https://www.satcompany.com.br/wp-content/uploads/Logo-home.png" style="width: 200px;"><hr />
+    <img src="https://www.satcompany.com.br/wp-content/uploads/Logo-home.png" style="width: 200px;" width="200px"><hr />
 
     <h3>QRCode de validação de embarque</h3>
 
