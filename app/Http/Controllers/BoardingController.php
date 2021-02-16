@@ -114,7 +114,7 @@ class BoardingController extends Controller
             $validation = $this->apiUserService->tokenValidation(Auth::user()->validation_token, $request->token_validation);
 
             if($validation['return'] == "FAILED"){
-                return response()->json(['status' => 'error', 'errors' => ["O código informado de validação do QRCode é inválido"]], 401);
+                return response()->json(['status' => 'validation_error', 'errors' => ["O código informado de validação do QRCode é inválido"]], 401);
                 die;
             }
 
