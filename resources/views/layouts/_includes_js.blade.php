@@ -228,7 +228,7 @@
             type: method,
             data: form_data,
             success: function(response) {
-
+                console.log(response)
                 if (response.status == "success") {
                     Swal.fire({
                         type: 'success',
@@ -254,12 +254,10 @@
                     })
                 }
 
-
             },
             error: function(error) {
 
                 if (error.responseJSON.status == "internal_error") {
-                    console.log(error.responseJSON.errors)
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
@@ -269,18 +267,14 @@
                     })
                 } else {
                     var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
+
                     Swal.fire({
                         type: 'error',
                         title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        html: 'Os seguintes erros foram encontrados: ' + items,
                         footer: ' '
                     })
                 }
-
-
 
             }
         });

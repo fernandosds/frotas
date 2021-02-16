@@ -23,3 +23,16 @@ function ClientHttp(String $url, array $post = [])
 
     return $response->json();
 }
+
+function ClientHttpImg(String $url)
+{
+
+    $baseRequest = Http::timeout(120);
+
+    if (!empty($post)) {
+        $response = $baseRequest->post($url, $post);
+    } else {
+        $response = $baseRequest->get($url);
+    }
+    return $response;
+}

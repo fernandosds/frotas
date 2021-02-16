@@ -22,7 +22,7 @@
             <div class="row">
 
                 <div class="col-xl-1"></div>
-                <div class="col-xl-6">
+                <div class="col-xl-8">
 
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
@@ -56,32 +56,73 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-lg-3 col-sm-12">Tipo</label>
-                            <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
+                            <div class="col-lg-3 col-md-3 col-sm-12 form-group-sub">
                                 <select class="form-control" name="type">
                                     <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>Usuário Interno</option>
                                     <option value="ext" {{ ($user->type ?? null) == 'ext' ? 'selected' : ''}}>Usuário Externo</option>
                                 </select>
                             </div>
+
+                            @if(isset($user))
+
+                                @if($user->type == "sat")
+                                    <label class="col-form-label col-lg-1 col-sm-12">Nível de acesso </label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
+                                        <select class="form-control" name="access_level">
+                                            <option value="">... Nível de acesso</option>
+                                            <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
+                                            <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
+                                            <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                            <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
+                                        </select>
+                                    </div>
+
+                                @else
+
+                                    <label class="col-form-label col-lg-1 col-sm-12">Cliente </label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
+                                        <select class="form-control" name="customer_id">
+                                            <option value="">...Vincular ao cliente</option>
+                                            @foreach( $customers as $customer )
+                                                <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                @endif
+
+                            @endif
+
+
                         </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-lg-3 col-sm-12">Status</label>
-                            <div class="col-lg-9 col-md-9 col-sm-12 form-group-sub">
+                            <div class="col-lg-3 col-md-3 col-sm-3 form-group-sub">
                                 <select class="form-control" name="status" @if(isset($user)) @if($user->id == Auth::user()->id) disabled="" @endif @endif>
                                     <option value="1" {{ ($user->status ?? null) == '1' ? 'selected' : ''}}>ATIVO</option>
                                     <option value="0" {{ ($user->status ?? null) == '0' ? 'selected' : ''}}>INATIVO</option>
                                 </select>
                             </div>
+                            <label class="col-form-label col-lg-3 col-sm-12">Requer Validação de embarque</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form-group-sub">
+                                <select class="form-control" name="required_validation" @if(isset($user)) @if($user->id == Auth::user()->id) disabled="" @endif @endif>
+                                    <option value="1" {{ ($user->required_validation ?? null) == '1' ? 'selected' : ''}}>SIM</option>
+                                    <option value="0" {{ ($user->required_validation ?? null) == '0' ? 'selected' : ''}}>NÃO</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group row">
+
                             <label class="col-form-label col-lg-3 col-sm-12">Senha</label>
                             <div class="col-lg-3 col-md-3 col-sm-12">
-                                <input type="password" class="form-control" name="password" placeholder="Digite sua senha" value="">
+                                <input type="password" class="form-control" name="password" placeholder="Digite sua senha" value="" maxlength="8">
                                 <span class="form-text text-muted">Min 6, Máx 8 dígitos</span>
                             </div>
-                            <label class="col-form-label col-lg-3 col-sm-12">Confirma Senha</label>
+                            <label class="col-form-label col-lg-2 col-sm-12">Confirma Senha</label>
                             <div class="col-lg-3 col-md-3 col-sm-12">
-                                <input type="password" class="form-control" name="confirm_password" placeholder="Confirme sua senha" value="">
+                                <input type="password" class="form-control" name="confirm_password" placeholder="Confirme sua senha" value="" maxlength="8">
                             </div>
                         </div>
 
@@ -101,37 +142,7 @@
 
                 <div class="col-xl-3">
 
-                    @if(isset($user))
-                        <div class="kt-portlet__body">
 
-                            @if($user->type == "sat")
-                                <div class="form-group row">
-                                    <label class="col-form-label ">Nível de acesso (Usuário SAT Company)</label>
-                                    <select class="form-control" name="access_level">
-                                        <option value="">... Nível de acesso</option>
-                                        <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
-                                        <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
-                                        <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
-                                        <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
-                                    </select>
-                                </div><br />
-
-                            @else
-
-                                <div class="form-group row">
-                                    <label class="col-form-label ">Cliente (Usuario externo)</label>
-                                    <select class="form-control" name="customer_id">
-                                        <option value="">...Vincular ao cliente</option>
-                                        @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            @endif
-
-                        </div>
-                    @endif
 
                 </div>
             </div>

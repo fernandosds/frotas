@@ -17,8 +17,8 @@
                                 <b>ID:</b> {{$boarding->id}} &nbsp; | &nbsp;
                                 <b>Usuário:</b> {{$boarding->user->name}} &nbsp; | &nbsp;
                                 <b>Data:</b> {{date_format($boarding->created_at, "d/m/Y")}} &nbsp; | &nbsp;
-                                <b>Status:</b> @if($boarding->active == 0) Finalizado @else Ativo @endif
-                                <a href="{{url('monitoring')}}/{{$boarding->device->model}}"><i class="fa fa-marker"></i> Monitorar no Mapa</a>
+                                <b>Status:</b> @if($boarding->active == 0) Finalizado @else Ativo @endif |
+                                <a href="{{url('monitoring')}}/{{$boarding->device->model}}"><i class="fa fa-map-marker"></i> Monitorar no Mapa</a>
                             </h5>
                             <hr />
 

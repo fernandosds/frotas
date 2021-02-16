@@ -43,6 +43,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/finish/{id}', 'BoardingController@finish');
 
         Route::get('/test-device/{model}', 'BoardingController@testDevice');
+        Route::get('/qrcode-generate', 'BoardingController@qrcodeGenerate');
+        Route::get('/token-validation/{token}', 'BoardingController@tokenValidation');
+
+
     });
 
     /**

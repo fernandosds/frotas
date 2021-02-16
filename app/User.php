@@ -25,7 +25,9 @@ class User extends Authenticatable
         'type',
         'status',
         'customer_id',
-        'access_level'
+        'access_level',
+        'required_validation',
+        'validation_token'
     ];
 
     /**

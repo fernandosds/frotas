@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BoardingRequest;
 use App\Services\ApiDeviceService;
+use App\Services\ApiUserService;
 use App\Services\BoardingService;
 use App\Services\DeviceService;
 use App\Services\TypeOfLoadService;
@@ -41,6 +42,11 @@ class BoardingController extends Controller
     private $accommodationLocationsService;
 
     /**
+     * @var $apiUserService
+     */
+    private $apiUserService;
+
+    /**
      * BoardingController constructor.
      * @param BoardingService $boardingService
      * @param DeviceService $deviceService
@@ -48,13 +54,18 @@ class BoardingController extends Controller
      * @param TypeOfLoadService $typeOfLoadService
      * @param AccommodationLocationsService $accommodationLocationsService
      */
-    public function __construct(BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic, TypeOfLoadService $typeOfLoadService, AccommodationLocationsService $accommodationLocationsService)
+    public function __construct(
+        BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic,
+        TypeOfLoadService $typeOfLoadService, AccommodationLocationsService $accommodationLocationsService,
+        ApiUserService $apiUserService
+    )
     {
         $this->boardingService = $boardingService;
         $this->deviceService = $deviceService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->typeOfLoadService = $typeOfLoadService;
         $this->accommodationLocationsService = $accommodationLocationsService;
+        $this->apiUserService = $apiUserService;
 
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
@@ -97,13 +108,25 @@ class BoardingController extends Controller
     public function save(BoardingRequest $request)
     {
 
+
+        // Token validation
+        if( Auth::user()->required_validation ){
+            $validation = $this->apiUserService->tokenValidation(Auth::user()->validation_token, $request->token_validation);
+
+            if($validation['return'] == "FAILED"){
+                return response()->json(['status' => 'error', 'errors' => ["O código informado de validação do QRCode é inválido"]], 401);
+                die;
+            }
+
+        }
+
         try {
 
             $request->merge([
-                    'user_id' => Auth::user()->id,
-                    'customer_id' => Auth::user()->customer_id,
-                    'active' => 1
-                ]);
+                'user_id' => Auth::user()->id,
+                'customer_id' => Auth::user()->customer_id,
+                'active' => 1
+            ]);
 
             if(isset($request->duration)) {
                 $request->merge([
@@ -186,5 +209,27 @@ class BoardingController extends Controller
         $data['boarding'] = $this->boardingService->show($id);
 
         return response()->view('boardings.view', $data);
+    }
+
+    /**
+     * @return array
+     */
+    public function qrcodeGenerate()
+    {
+
+       if( Auth::user()->required_validation ){
+           return $this->apiUserService->generateQRCode(Auth::user()->validation_token);
+       }
+
+    }
+
+    /**
+     * @return array
+     */
+    public function tokenValidation(String $token)
+    {
+
+        return $this->apiUserService->tokenValidation(Auth::user()->validation_token, $token);
+
     }
 }

@@ -13,16 +13,19 @@ use mysql_xdevapi\Exception;
 class UserService
 {
     private $sendEmailResetPassword;
+    private $userRepository;
+    private $apiUserService;
 
     /**
      * UserService constructor.
      * @param UserRepository $userRepository
      * @param ResetEmail $sendEmailResetPassword
      */
-    public function __construct(UserRepository $userRepository, ResetEmail $sendEmailResetPassword)
+    public function __construct(UserRepository $userRepository, ResetEmail $sendEmailResetPassword, ApiUserService $apiUserService)
     {
         $this->userRepository = $userRepository;
         $this->sendEmailResetPassword = $sendEmailResetPassword;
+        $this->apiUserService = $apiUserService;
     }
 
     /**
@@ -69,8 +72,13 @@ class UserService
     public function save(Request $request)
     {
 
-        if (isset($request->password)) {
+        if(isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
+        }
+
+        if($request->required_validation){
+            $secret = $this->apiUserService->newSecret();
+            $request->merge(['validation_token' => $secret['secret']]);
         }
 
         return $this->userRepository->create($request->all());

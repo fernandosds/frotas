@@ -5,6 +5,9 @@
         #div-paring{
             display: none;
         }
+        .focus-input{
+            background-color: #fff0d5 !important;
+        }
     </style>
 @endsection
 
@@ -116,7 +119,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="inputState">Duração aproximada (Horas)</label>
-                                    <input type="number" max="1" min="50" class="form-control" name="duration" value="{{ $boarding->duration ?? '' }}" required="required">
+                                    <input type="number" max="1" min="50" class="form-control" id="duration" name="duration" value="{{ $boarding->duration ?? '' }}" required="required">
                                 </div>
 
                                 <div class="form-group col-md-2">
@@ -212,6 +215,29 @@
                                     </select>
                                 </div>
                             </div>
+                            <hr />
+
+                            @if(Auth::user()->required_validation)
+
+                                <div class="row">
+                                    <div class="alert alert-warning">
+                                        <div class="col-md-8">
+                                                Atenção {{Auth::user()->name}},<br /><br />
+                                                Seu usuário requere validação a cada embarque efetuado. <br />
+                                                Por favor, valide o token ao lado através do Google Authenticator. <br /><br />
+
+                                                <label for="inpuCity">Insira abaixo o código gerado no Google Authenticator.</label>
+                                                <input type="text" class="form-control" name="token_validation" id= "token_validation" value="" maxlength="6">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="qrcode"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            @endif
+
 
                         </div>
 
@@ -328,6 +354,15 @@
                                 $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
                             }
 
+                            // Generate token
+                            $.ajax({
+                                type: 'GET',
+                                url: '{{url("boardings/qrcode-generate")}}',
+                                success: function (response) {
+                                    $('#qrcode').html(response)
+                                }
+                            });
+
                         } else {
 
                             $("#test-device-code").html('---');
@@ -344,7 +379,6 @@
                                     timer: 10000
                                 })
                             }
-
 
                         }
 
@@ -372,6 +406,12 @@
     $(function() {
 
         $('#btn-boarding-save').click(function() {
+
+            if($('#duration').val() == ""){
+                $('#duration').focus();
+                $('#duration').addClass('focus-input')
+            }
+
             var boarding_id = $('#id').val();
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
         });
