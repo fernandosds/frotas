@@ -221,18 +221,15 @@
 
                                 <div class="row">
                                     <div class="alert alert-warning">
-                                        <div class="col-md-8">
-                                                Atenção {{Auth::user()->name}},<br /><br />
-                                                Seu usuário requere validação a cada embarque efetuado. <br />
-                                                Por favor, valide o token ao lado através do Google Authenticator. <br /><br />
-
-                                                <label for="inpuCity">Insira abaixo o código gerado no Google Authenticator.</label>
-                                                <input type="text" class="form-control" name="token_validation" id= "token_validation" value="" maxlength="6">
+                                        <div class="col-md-8 col-lg-8">
+                                            Atenção {{Auth::user()->name}},<br /><br />
+                                            Seu usuário requere validação a cada embarque efetuado.
+                                            Por favor, valide o token ao lado através do Google Authenticator. <br /><br />
                                         </div>
-                                        <div class="col-md-4">
-                                            <div id="qrcode"></div>
+                                        <div class="col-md-4 col-lg-4">
+                                            <label for="inpuCity">Insira abaixo o código gerado no Google Authenticator.</label>
+                                            <input type="text" class="form-control" name="token_validation" id= "token_validation" value="" maxlength="6">
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -353,15 +350,6 @@
                             } else {
                                 $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
                             }
-
-                            // Generate token
-                            $.ajax({
-                                type: 'GET',
-                                url: '{{url("boardings/qrcode-generate")}}',
-                                success: function (response) {
-                                    $('#qrcode').html(response)
-                                }
-                            });
 
                         } else {
 

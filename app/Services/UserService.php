@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Mail\QRCodeMail;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Mail\ResetEmail;
@@ -77,11 +78,18 @@ class UserService
         }
 
         if($request->required_validation){
+
+            // Secret
             $secret = $this->apiUserService->newSecret();
             $request->merge(['validation_token' => $secret['secret']]);
         }
 
-        return $this->userRepository->create($request->all());
+        $user = $this->userRepository->create($request->all());
+
+        // QRCode
+        Mail::to($request->email)->send(new QRCodeMail($user, $this->apiUserService));
+
+        return $user;
     }
 
     /**

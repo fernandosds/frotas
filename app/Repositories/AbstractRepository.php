@@ -51,7 +51,7 @@ class AbstractRepository
      * @param Int $limit
      * @return mixed
      */
-    public function paginate(Int $limit = 10)
+    public function paginate(Int $limit)
     {
         return $this->model->orderBy('id','desc')->paginate($limit);
     }

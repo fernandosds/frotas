@@ -54,6 +54,7 @@ class BoardingController extends Controller
      * @param ApiDeviceService $apiDeviceServic
      * @param TypeOfLoadService $typeOfLoadService
      * @param AccommodationLocationsService $accommodationLocationsService
+     * @param ApiUserService $apiUserService
      */
     public function __construct(
         BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic,
@@ -108,7 +109,6 @@ class BoardingController extends Controller
      */
     public function save(BoardingRequest $request)
     {
-
 
         // Token validation
         if( Auth::user()->required_validation ){
@@ -168,7 +168,7 @@ class BoardingController extends Controller
 
         $device = $this->deviceService->findByModel($model);
 
-       $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
+        $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
 
         if($in_use){
             return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº '.$in_use->id.', informe outro dispositivo ou encerre o embarque anterior.'];
@@ -210,18 +210,6 @@ class BoardingController extends Controller
         $data['boarding'] = $this->boardingService->show($id);
 
         return response()->view('boardings.view', $data);
-    }
-
-    /**
-     * @return array
-     */
-    public function qrcodeGenerate()
-    {
-
-       if( Auth::user()->required_validation ){
-           return $this->apiUserService->generateQRCode(Auth::user()->validation_token);
-       }
-
     }
 
     /**

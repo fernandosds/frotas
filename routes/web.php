@@ -36,9 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'Iscas\BoardingController@destroy');
         Route::get('/finish/{id}', 'Iscas\BoardingController@finish');
 
-        Route::get('/test-device/{model}', 'BoardingController@testDevice');
-        Route::get('/qrcode-generate', 'BoardingController@qrcodeGenerate');
-        Route::get('/token-validation/{token}', 'BoardingController@tokenValidation');
+        Route::get('/test-device/{model}', 'Iscas\BoardingController@testDevice');
+        Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation');
 
 
     });
