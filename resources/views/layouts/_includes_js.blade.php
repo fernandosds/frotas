@@ -265,12 +265,25 @@
                         showConfirmButton: true,
                         timer: 10000
                     })
-                } else {
-                    var items = error.responseJSON.errors;
 
+                }else if( error.responseJSON.status == "validation_error" ) {
+                    var items = error.responseJSON.errors;
                     Swal.fire({
                         type: 'error',
                         title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                }else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function (i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
                         html: 'Os seguintes erros foram encontrados: ' + items,
                         footer: ' '
                     })
