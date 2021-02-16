@@ -25,11 +25,17 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
 
-        $return = [];
+        $return = [
+            'address' => 'required|unique:customers',
+            'cep' => 'required|string',
+            'number' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+        ];
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'cpf_cnpj' => 'required|unique:customers',
+                'cpf_cnpj' => 'required|unique:customers'
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
@@ -37,6 +43,7 @@ class CustomerRequest extends FormRequest
                     'required',
                     Rule::unique('customers')->ignore($this->id),
                 ],
+
             ], $return);
         }
 

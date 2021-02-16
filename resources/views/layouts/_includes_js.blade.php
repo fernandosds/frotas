@@ -256,7 +256,7 @@
 
             },
             error: function(error) {
-
+                console.log(error.responseJSON)
                 if (error.responseJSON.status == "internal_error") {
                     Swal.fire({
                         type: 'error',
@@ -284,7 +284,6 @@
                         type: 'error',
                         title: 'Erro!',
                         html: 'Os seguintes erros foram encontrados: ' + errors,
-                        html: 'Os seguintes erros foram encontrados: ' + items,
                         footer: ' '
                     })
                 }

@@ -48,8 +48,8 @@
                         <td>{{$driver->name}}</td>
                         <td>{{$driver->cpf}}</td>
                         <td>{{$driver->cnh}}</td>
-                        <td>{{$driver->email}}</td>
-                        <td>{{$driver->status}}</td>
+                        <td>{{$driver->email}}</td>                        
+                        <td>{{ $driver->status == 1 ? 'Ativo' : 'Bloqueado' }}</td>
                         <td>
                             <div class="pull-right">
                                 <a href="{{url('rents/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>

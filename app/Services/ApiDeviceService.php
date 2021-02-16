@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -31,11 +32,11 @@ class ApiDeviceService
             $this->host = "http://10.20.3.36:6524";
             $this->host_apis = "https://api.satcompany.com.br";
         }else{
+
             $this->host_siscon = "http://201.91.1.155:83/siscon/new-siscon/public/";
             $this->host = "http://189.16.50.195:6524";
             $this->host_apis = "https://api.satcompany.com.br";
         }
-
     }
 
     /**
@@ -79,7 +80,6 @@ class ApiDeviceService
         //OTP7935
         $url = $this->host_siscon . "/api-iscas/get-placa/{$placa}";
         return ClientHttp($url);
-
     }
 
     /**
@@ -91,7 +91,6 @@ class ApiDeviceService
     {
         $url = $this->host . "/hospedeiros&{$device}[type=PAR,time=10M,rssi=60-100,HOSP={$pair_device}]";
         return ClientHttp($url);
-
     }
 
     /**
