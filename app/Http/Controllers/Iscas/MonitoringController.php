@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Iscas;
 
+use App\Http\Controllers\Controller;
 use App\Services\ApiDeviceService;
 use App\Services\Iscas\BoardingService;
 use App\Services\DeviceService;

@@ -51,12 +51,20 @@ class BoardingService
     }
 
     /**
+     * @return mixed
+     */
+    public function getAllActive()
+    {
+        return $this->boardingRepository->getAllActive();
+    }
+
+    /**
      * @param Int $limit
      * @return mixed
      */
-    public function paginate(Int $limit = 15)
+    public function paginateFinished(Int $limit = 15)
     {
-        return $this->boardingRepository->paginate($limit);
+        return $this->boardingRepository->paginateFinished($limit);
     }
 
     /**

@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'boardings'], function () {
         Route::get('/', 'Iscas\BoardingController@index');
+        Route::get('/finished', 'Iscas\BoardingController@finished');
         Route::get('/view/{id}', 'Iscas\BoardingController@view');
         Route::get('/new', 'Iscas\BoardingController@new');
         Route::post('/save', 'Iscas\BoardingController@save');
@@ -46,17 +47,17 @@ Route::group(['middleware' => 'auth'], function () {
      * boardings device routes
      */
     Route::group(['prefix' => 'monitoring'], function () {
-        Route::get('/{device?}', 'MonitoringController@index');
+        Route::get('/{device?}', 'Iscas\MonitoringController@index');
 
-        Route::get('/map/last-position/{device}', 'MonitoringController@lastPosition');
-        Route::get('/map/heat/{device}/{minutes?}', 'MonitoringController@heat');
+        Route::get('/map/last-position/{device}', 'Iscas\MonitoringController@lastPosition');
+        Route::get('/map/heat/{device}/{minutes?}', 'Iscas\MonitoringController@heat');
 
-        Route::get('/get-grid/{model}/{minutes}', 'MonitoringController@getGrid');
-        Route::get('/get-address/{lat}/{lng}', 'MonitoringController@getAddress');
+        Route::get('/get-grid/{model}/{minutes}', 'Iscas\MonitoringController@getGrid');
+        Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
 
-        Route::get('/check-pairing/{device}/{pair_device}', 'MonitoringController@checkPairing');
+        Route::get('/check-pairing/{device}/{pair_device}', 'Iscas\MonitoringController@checkPairing');
 
-        Route::get('/test-device/{model}', 'MonitoringController@testDevice');
+        Route::get('/test-device/{model}', 'Iscas\MonitoringController@testDevice');
 
     });
 

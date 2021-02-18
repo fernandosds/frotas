@@ -85,11 +85,20 @@ class BoardingController extends Controller
     {
 
         $data = $this->data;
-        $data['boardings'] = $this->boardingService->paginate();
+        $data['boardings'] = $this->boardingService->getAllActive();
 
         return response()->view('boardings.list', $data);
     }
 
+
+    public function finished()
+    {
+
+        $data = $this->data;
+        $data['boardings'] = $this->boardingService->paginateFinished();
+
+        return response()->view('boardings.finished', $data);
+    }
     /**
      * @return \Illuminate\Http\Response
      */

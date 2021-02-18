@@ -53,6 +53,28 @@ class BoardingRepository extends AbstractRepository
     }
 
     /**
+     * @param Int $id
+     * @return mixed
+     */
+    public function getAllActive()
+    {
+
+        return $this->model->where('customer_id', Auth::user()->customer_id)
+            ->where('active', 1)
+            ->paginate(10);
+    }
+
+
+    /**
+     * @param Int $limit
+     * @return mixed
+     */
+    public function paginateFinished(Int $limit)
+    {
+        return $this->model->where('active','0')->orderBy('id','desc')->paginate($limit);
+    }
+    
+    /**
      * @return mixed
      */
     public function getAllPairActive()
