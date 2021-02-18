@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_map')
 
 @section("styles")
     <link rel="stylesheet"
@@ -92,14 +92,17 @@
 
                 <div class="col-sm-3 col-12 div-btn-start">
                     <div class="form-row align-items-center">
-                        <div class="col-sm-3 col-4 my-1">
+                        <div class="col-sm-3 col-3 my-1">
                             <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="500">
                         </div>
-                        <div class="col-sm-5 col-8 my-1">
+                        <div class="col-sm-4 col-3 my-1">
                             <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? '99A00105'}}">
                         </div>
-                        <div class="col-auto col-4 my-1">
+                        <div class="col-sm-3 col-3 my-1">
                             <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
+                        </div>
+                        <div class="col-sm-2 col-3 my-1">
+                            <a href="{{url('/boardings')}}" class="btn btn-warning mb-2" id="btn-start">Voltar</a>
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'api-device'], function () {
         Route::get('/test/{device}', 'ApiDeviceController@testDevice');
         Route::get('/get-device/{placa}', 'ApiDeviceController@getDevice');
+        Route::get('/last-position/{model}', 'ApiDeviceController@getLastPosition');
     });
 
     /**
@@ -39,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/test-device/{model}', 'Iscas\BoardingController@testDevice');
         Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation');
+
+
 
 
     });

@@ -11,6 +11,9 @@
             margin-top: 20px;
             padding-top: 20px;
         }
+        .progress-bar-row{
+            margin-top: 30px;
+        }
     </style>
 @endsection
 
@@ -45,7 +48,18 @@
 
                         </div>
 
+                        <div class="progress-bar-row" >
+                            <i class="far fa-flag"></i>
+                            <i class="fa fa-flag-checkered pull-right"></i>
+                            <div class="progress progress-sm" id="progress-{{$boarding->id}}"></div>
+                        </div>
+
+
+
                         <div class="row chart-row">
+
+
+
                             @if ($boarding->active)
                             <div class="col-md-4">
                                 <button type="button" class="btn btn-block btn-sm  btn-warning btn-finish-boarding" data-id="{{$boarding->id}}">
@@ -115,16 +129,6 @@
 
 
 
-
-
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8000/monitoring/map/last-position/99A00105',
-            success: function (response) {
-                console.log(response)
-            }
-        });
-
         var gaugeOptions = {
             chart: {
                 type: 'solidgauge',
@@ -158,9 +162,9 @@
             // the value axis
             yAxis: {
                 stops: [
-                    [0.1, '#55BF3B'], // green
+                    [0.1, '#DF5353'], // green
                     [0.5, '#DDDF0D'], // yellow
-                    [0.9, '#DF5353'] // red
+                    [0.9, '#55BF3B'] // red
                 ],
                 lineWidth: 0,
                 tickWidth: 0,
@@ -187,36 +191,62 @@
 
         @foreach ($boardings as $boarding)
 
-            // The speed gauge
-            Highcharts.chart('container-speed-{{$boarding->id}}', Highcharts.merge(gaugeOptions, {
-                chart: {
-                    borderWidth: 0,
-                    spacing: 0,
-                    spacingTop: -50
-                },
-                yAxis: {
-                    min: 0,
-                    max: 100
-                },
+        $.ajax({
+            type: 'GET',
+            url: '{{url("api-device/last-position")}}/{{$boarding->device->model}}',
+            success: function (response) {
 
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Tempo restante',
-                    data: [ {{ minLeftChart($boarding->finished_at, $boarding->created_at) }} ],
-                    dataLabels: {
-                        format:
-                            '<div style="text-align:center">' +
-                            '<span style="font-size:25px">{y} %</span><br/>' +
-                            '</div>'
-                    }
-                }]
-
-            }));
+                $("#progress-{{$boarding->id}}").html('<div class="progress-bar kt-bg-primary" role="progressbar" style="width: {{ minLeftChart($boarding->finished_at, $boarding->created_at) }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>')
 
 
-            $('#span-last-transmission-{{$boarding->id}}').html('21/10/1981 22:58:55 <br /> Rua Igaraçu, 164')
+                if( response.status == "sucesso" ){
+
+                    // The speed gauge
+                    Highcharts.chart('container-speed-{{$boarding->id}}', Highcharts.merge(gaugeOptions, {
+                        chart: {
+                            borderWidth: 0,
+                            spacing: 0,
+                            spacingTop: -50
+                        },
+                        yAxis: {
+                            min: 0,
+                            max: 100,
+                            title: {
+                                text: 'Nível de Bateria'
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: 'Tempo restante',
+                            data: [ parseInt(response['Tensão']) ],
+                            dataLabels: {
+                                format:
+                                    '<div style="text-align:center">' +
+                                    '<span style="font-size:25px">{y} %</span><br/>' +
+                                    '</div>'
+                            }
+                        }]
+
+                    }));
+                    $('#span-last-transmission-{{$boarding->id}}').html(response['Data_GPS']+'<br />'+response['last_address'])
+
+                }else{
+                    $('#span-last-transmission-{{$boarding->id}}').html('Não foi possível carregar as informações!')
+                }
+
+            }
+        });
+        // $.ajax({
+        //     type: 'GET',
+        //     url: 'http://localhost:8000/monitoring/map/last-position/99A00105',
+        //     success: function (response) {
+        //         console.log(response)
+        //     }
+        // });
+
+
 
 
         @endforeach
