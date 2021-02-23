@@ -98,8 +98,8 @@ class MonitoringController extends Controller
                         $pairing = [
                             'status' => false,
                             'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
-                            'event' => (isset($check_pairing['CheckStatusIsca']['event']) ? $check_pairing['CheckStatusIsca']['event'] : '',
-                            'r12' => (isset($check_pairing['CheckStatusIsca']['r12']) ? $check_pairing['CheckStatusIsca']['r12'] : '',
+                            'event' => (isset($check_pairing['CheckStatusIsca']['event'])) ? $check_pairing['CheckStatusIsca']['event'] : '',
+                            'r12' => (isset($check_pairing['CheckStatusIsca']['r12'])) ? $check_pairing['CheckStatusIsca']['r12'] : '',
                         ];
                     }
 
