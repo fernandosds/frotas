@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\BoardingService;
-use App\Services\DeviceService;
-use Illuminate\Http\Request;
+use App\Services\Iscas\BoardingService;
+
 
 class DeviceController extends Controller
 {
