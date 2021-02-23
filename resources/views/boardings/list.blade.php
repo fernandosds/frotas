@@ -62,11 +62,7 @@
                             <div class="progress progress-sm" id="progress-{{$boarding->id}}"></div>
                         </div>
 
-
-
                         <div class="row chart-row">
-
-
 
                             @if ($boarding->active)
                             <div class="col-md-4">
