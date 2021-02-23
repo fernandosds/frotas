@@ -19,12 +19,20 @@
 
 @section('content')
 
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="{{url('boardings/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                <i class="la la-plus"></i> Novo Embarque
+            </a><br /><br />
+        </div>
+    </div>
+
 
     <div class="row">
 
         @foreach ($boardings as $boarding)
 
-            <div class="col-xl-4">
+            <div class="col-xl-4" id="div-{{$boarding->id}}">
 
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-widget14">
@@ -86,36 +94,6 @@
 
     </div>
 
-
-
-
-    <div class="kt-portlet">
-        <div class="kt-portlet kt-portlet--mobile">
-
-            <!-- HEADER -->
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
-                    <span class="kt-portlet__head-icon">
-                        <i class="kt-font-brand {{$icon}}"></i>
-                    </span>
-                    <h3 class="kt-portlet__head-title">
-                        {{$title}}
-                    </h3>
-                </div>
-
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            <a href="{{url('boardings/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
-                                <i class="la la-plus"></i> Novo
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 @endsection
 
 @section('scripts')
@@ -254,6 +232,8 @@
         // Deletar
         $('.btn-finish-boarding').click(function() {
 
+            var div_id = $(this).data('id');
+
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-warning',
@@ -287,6 +267,9 @@
                                     showConfirmButton: true,
                                     timer: 10000
                                 })
+
+                                $('#div-'+div_id).hide();
+
                             }else{
                                 Swal.fire({
                                     type: 'error',
