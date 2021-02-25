@@ -37,6 +37,7 @@ class CreateBoardingsTable extends Migration
             $table->string('pair_device', 50)->nullable();
             $table->boolean('active')->default(0);
             $table->dateTime('finished_at')->nullable();
+            $table->string('baterry_level', 7)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

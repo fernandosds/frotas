@@ -8,14 +8,17 @@
                 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile">
 
                     <!--begin::Aside-->
-                    <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(../assets/media//bg/bg-4.jpg);">
+                    <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(../assets/media//bg/bg-5.jpg);">
                         <div class="">
-                            <img src="{{url('logos/logo.png')}}">
+                            <img src="{{url('logos/logo-bg.png')}}">
                         </div>
                         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
                             <div class="kt-grid__item kt-grid__item--middle">
                                 <h3 class="kt-login__title">SatCompany</h3>
-                                <h4 class="kt-login__subtitle">Rastreamento de cargas</h4>
+                                <h4 class="kt-login__subtitle">
+                                    <small><i class="fa fa-box"></i></small> Rastreamento de Cargas <br />
+                                    <small><i class="fa fa-truck"></i></small> Gestão de Frotas
+                                </h4>
                             </div>
                         </div>
                         <div class="kt-grid__item">
@@ -29,7 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
+                    <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper" style="background-image: url(../assets/media//bg/bg-3.jpg);">
 
                         <div class="kt-login__body">
                             @yield('content')

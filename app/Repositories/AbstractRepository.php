@@ -4,6 +4,8 @@
 namespace App\Repositories;
 
 
+use Illuminate\Support\Facades\Auth;
+
 class AbstractRepository
 {
     /**
@@ -29,12 +31,14 @@ class AbstractRepository
      */
     public function first()
     {
+
         return $this->model->first();
     }
 
     public function show(int $id)
     {
         return $this->model->where('id', $id)->first();
+
     }
 
     /**
@@ -44,16 +48,24 @@ class AbstractRepository
      */
     public function all()
     {
+
         return $this->model->all();
     }
 
     /**
      * @param Int $limit
+     * @param null $customer_id
      * @return mixed
      */
-    public function paginate(Int $limit)
+    public function paginate(Int $limit, $customer_id = null)
     {
+
+        if($customer_id){
+            return $this->model->where('customer_id',$customer_id)->orderBy('id','desc')->paginate($limit);
+        }
+
         return $this->model->orderBy('id','desc')->paginate($limit);
+
     }
 
     /**
@@ -64,7 +76,6 @@ class AbstractRepository
      */
     public function create(array $data)
     {
-
         return $this->model->create($data);
     }
 
@@ -77,7 +88,9 @@ class AbstractRepository
      */
     public function update(int $id, array $data): bool
     {
+
         return $this->find($id)->update($data);
+
     }
 
 
@@ -89,6 +102,8 @@ class AbstractRepository
      */
     public function delete(int $id)
     {
+
         return $this->model->find($id)->delete();
+
     }
 }

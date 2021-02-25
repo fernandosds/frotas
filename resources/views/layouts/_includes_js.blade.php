@@ -1,4 +1,5 @@
 <script>
+
     var KTAppOptions = {
         "colors": {
             "state": {
@@ -107,6 +108,7 @@
 <script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
 
 <script>
+
     /**
      * Mask CEP
      *
@@ -120,13 +122,9 @@
      */
 
     $(document).on('keydown', '.input_cpf_cnpj', function(e) {
-
         var digit = e.key.replace(/\D/g, '');
-
         var value = $(this).val().replace(/\D/g, '');
-
         var size = value.concat(digit).length;
-
         $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
     });
 
@@ -136,20 +134,15 @@
      */
 
     $(document).on('keydown', '.mask_input_contact', function(e) {
-
         var digit = e.key.replace(/\D/g, '');
-
         var value = $(this).val().replace(/\D/g, '');
-
         var size = value.concat(digit).length;
-
         $(this).mask((size <= 10) ? '(00)0000-0000' : '(00)00000-0000');
     });
 
 
-
     /*
-            DELETE FUCTION
+     * DELETE FUCTION
      */
     function ajax_delete(id, url) {
 

@@ -30,7 +30,7 @@
         <div class="kt-portlet__body">
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="">Isca <small>99A00105</small></label>
+                    <label for="">Isca</label>
                     <input type="text" name="device_number" id="device_number" class="form-control" maxlength="20" placeholder="Nº da Ísca">
                 </div>
                 <div class="form-group col-md-2">
@@ -70,8 +70,9 @@
 
                 @csrf
                 <input type="hidden" name="id" id="id" value="{{ $boarding->id ?? '' }}" />
-                <input type="hidden" name="device_id" id="device_id" />
+                <input type="hidden" name="device_uniqid" id="device_uniqid" />
                 <input type="hidden" name="contract_id" id="contract_id" />
+                <input type="hidden" name="battery_level" id="battery_level" />
 
                 <div class="kt-portlet__body">
                 <!-- ----- -->
@@ -321,9 +322,9 @@
 
                         if (response.status == "success") {
 
-                            $("#div-new-boarding").removeClass('hidden')
+                            $("#div-new-boarding").removeClass('hidden');
 
-                            $('#device_id').val(response.device_id);
+                            $('#device_uniqid').val(response.uniqid);
                             $('#contract_id').val(response.contract_id);
 
                             var battery_level = response.battery_level;
@@ -332,6 +333,8 @@
                             $('#last-transmission').html(response.last_transmission)
                             $('#nivel-bateria').html(battery_level)
                             $('#device-tipo').html(response.device_type)
+
+                            $('#battery_level').val(battery_level)
 
                             $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-empty');
                             $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-quarter');

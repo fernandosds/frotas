@@ -54,8 +54,8 @@ class Boarding extends Model
         'redundant_technologie',
         'test',
         'active',
-        'finished_at'
-
+        'finished_at',
+        'baterry_level'
     ];
 
     /**
@@ -88,6 +88,7 @@ class Boarding extends Model
             'test'                      => $this->test,
             'active'                    => $this->active,
             'finished_at'               => $this->finished_at,
+            'baterry_level'             => $this->baterry_level,
 
         ];
     }

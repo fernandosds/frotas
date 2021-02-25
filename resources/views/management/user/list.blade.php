@@ -35,7 +35,11 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Tipo</th>
+                            <th scope="col">Login</th>
+                            @if(Auth::user()->type == "sat")
+                                <th scope="col">Tipo</th>
+                            @endif
+                            <th scope="col">Nível de Acesso</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Status</th>
                         </tr>
@@ -45,14 +49,33 @@
                             <tr id="_tr_user_{{$user->id}}">
                                 <th scope="row">{{$user->id}}</th>
                                 <td>{{$user->name}}</td>
-                                <td>{{ ($user->type == "sat" ) ? "Sat" : "Externo" }}</td>
+                                <td>{{$user->email}}</td>
+
+                                @if(Auth::user()->type == "sat")
+                                    <td>{{ ($user->type == "sat" ) ? "Sat" : "Externo" }}</td>
+                                @endif
+
+                                <td>
+                                    @if( $user->access_level == "shipper" )
+                                        Embarcador
+                                    @elseif( $user->access_level == "commercial" )
+                                        Comercial
+                                    @elseif( $user->access_level == "logistic" )
+                                        Logística
+                                    @elseif( $user->access_level == "production" )
+                                        Produção
+                                    @elseif( $user->access_level == "management" )
+                                        Administrador
+                                    @endif
+                                </td>
+
                                 <td>{{$user->customer->name ?? ''}}</td>
                                 <td>
 
                                     @if( $user->status == 1 )
                                         <i class="text-success fa fa-circle"></i> Ativo
                                     @else
-                                        <i class="text-danger fa fa-circle"></i>  Bloqueado
+                                        <i class="text-danger fa fa-circle"></i>  Inativo
                                     @endif
 
                                 </td>

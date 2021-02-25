@@ -76,7 +76,7 @@ class MonitoringController extends Controller
                         if( $check_pairing['CheckStatusIsca']['status'] == "Pareado" ){
 
                             $pairing = [
-                                'status' => true,
+                                'status' => 'success',
                                 'message' => "A ísca {$device} esta pareada com o rastreador {$boarding->pair_device}.",
                                 'event' => $check_pairing['CheckStatusIsca']['event'],
                                 'r12' => $check_pairing['CheckStatusIsca']['r12'],
@@ -85,7 +85,7 @@ class MonitoringController extends Controller
                         }else{
 
                             $pairing = [
-                                'status' => false,
+                                'status' => 'error',
                                 'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
                                 'event' => $check_pairing['CheckStatusIsca']['event'],
                                 'r12' => $check_pairing['CheckStatusIsca']['r12'],
@@ -96,7 +96,7 @@ class MonitoringController extends Controller
                     }else{
 
                         $pairing = [
-                            'status' => false,
+                            'status' => 'error',
                             'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}.",
                             'event' => (isset($check_pairing['CheckStatusIsca']['event'])) ? $check_pairing['CheckStatusIsca']['event'] : '',
                             'r12' => (isset($check_pairing['CheckStatusIsca']['r12'])) ? $check_pairing['CheckStatusIsca']['r12'] : '',
@@ -121,7 +121,7 @@ class MonitoringController extends Controller
                     }*/
                 }else{
                     $pairing = [
-                        'status' => false,
+                        'status' => 'false',
                         'message' => "Pareamento não informado no momento do embarque"
                     ];
                 }
@@ -253,7 +253,7 @@ class MonitoringController extends Controller
 
             $data['return'] = [
                 'status' => 'error',
-                'message' => "Nenhuma posição encontrada para a ísca <b>{$device}</b>, no período de <b>{$minutes}</b> minutos."
+                'message' => "Nenhuma posição encontrada para a ísca {$device}, no período de {$minutes} minutos."
             ];
 
         }

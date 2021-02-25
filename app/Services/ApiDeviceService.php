@@ -27,7 +27,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( true ){//env('APP_ENV') == "local" ){
+        if( false ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
             $this->host_apis = "https://api.satcompany.com.br";
@@ -55,8 +55,6 @@ class ApiDeviceService
      */
     public function getLastPosition(String $device)
     {
-
-        //$url = $this->host_posititions . "/devices/grid/1/{$device}";
         $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
         return ClientHttp($url);
     }

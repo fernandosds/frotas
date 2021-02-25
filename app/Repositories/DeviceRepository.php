@@ -45,6 +45,18 @@ class DeviceRepository extends AbstractRepository
     }
 
     /**
+     * @param String $uniqid
+     * @param Int $id
+     * @return mixed
+     */
+    public function findByUniqid(String $uniqid)
+    {
+        return $this->model->where('uniqid', $uniqid)
+                            ->where('customer_id', Auth::user()->customer_id)
+                            ->first();
+    }
+
+    /**
      * @param Int $id
      * @return mixed
      */
@@ -82,6 +94,38 @@ class DeviceRepository extends AbstractRepository
         }
     }
 
+    /**
+     * @param String $device
+     * @return array
+     */
+    public function findByModel(String $device)
+    {
+
+        try{
+            $data = DB::table('devices')
+                ->join('contracts', 'contracts.id', '=', 'devices.contract_id')
+                ->join('technologies', 'technologies.id', '=', 'devices.technologie_id')
+                ->select('devices.uniqid', 'devices.id', 'devices.contract_id AS contract_id', 'contracts.status','devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
+                ->where('contracts.status', 1)
+                ->where('devices.model', $device)
+                ->where('devices.customer_id', Auth::user()->customer_id)
+                ->first();
+
+            if($data){
+
+                return ['status' => 'success', 'message' => '', 'data' => $data];
+
+            }else{
+                return ['status' => 'error', 'message' => 'Ísca não encontrada'];
+
+            }
+
+        }catch (Exception $e){
+
+            return ['status' => 'error', 'message' => $e->getMessage(), 'data' => ''];
+        }
+
+    }
 
     /**
      * @param int $customer_id

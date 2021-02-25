@@ -3,7 +3,7 @@
 
     @if( $return['status'] == "success" )
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="table-grid">
         <thead>
             <tr>
                 <th>Data</th>
@@ -30,7 +30,6 @@
                         @endif
                     </td>
                     <td>{{ $position["id"] }}</td>
-                    <td>{{ $position["id_hospedeiro"] }}</td>
                     <td>
                         @if( $position["id_hospedeiro"] == $return['pair_device'] )
                             <span class="text-success">{{ $position["id_hospedeiro"] }}</span> <i class="fa fa-check-circle text-success"></i>
@@ -51,7 +50,27 @@
                         @endif
 
                     </td>
-                    <td>{{ $position["rssi_hospedeiro"] }}</td>
+                    <td>{{ $position["rssi_hospedeiro"] }}
+                        <div class="progress progress-sm">
+
+
+                            <?php
+                                if( $position["rssi_hospedeiro"] < 50 ){
+                                    $class = "danger";
+                                }elseif( $position["rssi_hospedeiro"] < 75 ){
+                                    $class = "warning";
+                                }else{
+                                    $class = "success";
+                                }
+
+                            ?>
+
+
+                            <div class="progress-bar kt-bg-{{$class}}" role="progressbar" style="width: {{ $position["rssi_hospedeiro"] / 1.27 }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
+                        </div>
+                    </td>
+
+
                     <td id="span-address-{{$cont}}">
                         <button type="button" class="btn btn-default btn-sm pull-rigth btn-see-address" data-cont={{$cont}} data-lat="{{$position["latitude_hospede"]}}" data-lng="{{$position["longitude_hospede"]}}">Ver Endereço</button>
                     </td>
@@ -70,16 +89,6 @@
 
 </div>
 
-<!--
-"DATA_GPS_HOSPEDE" => "11/02/2021 10:58:21"
-      "atualizado" => "2"
-      "id" => "99a00105"
-      "id_hospedeiro" => "99203480"
-      "latitude_hospede" => "-23.06487"
-      "latitude_hospedeiro" => "-23.06487"
-      "longitude_hospede" => "-46.64619"
-      "longitude_hospedeiro" => "-46.64619"
-      "nivel_bateria" => "50.00%"
-      "rssi_hospedeiro" => "118"
-
--->
+<script>
+    $('#table-grid').DataTable();
+</script>

@@ -119,6 +119,8 @@ class BoardingController extends Controller
     public function save(BoardingRequest $request)
     {
 
+        $device = $this->deviceService->findByUniqid($request->device_uniqid);
+
         // Token validation
         if( Auth::user()->required_validation ){
 
@@ -139,6 +141,7 @@ class BoardingController extends Controller
         try {
 
             $request->merge([
+                'device_id' => $device->id,
                 'user_id' => Auth::user()->id,
                 'customer_id' => Auth::user()->customer_id,
                 'active' => 1
@@ -196,12 +199,14 @@ class BoardingController extends Controller
             $return['model'] = $device['data']->model;
             $return['device_id'] = $device['data']->id;
             $return['contract_id'] = $device['data']->contract_id;
+            $return['uniqid'] = $device['data']->uniqid;
 
-            $test_device = $this->apiDeviceServic->testDevice($model);
+            $test_device = $this->apiDeviceServic->getLastPosition($model);
+            //$test_device = $this->apiDeviceServic->testDevice($model);
 
             if ($test_device['status'] == "sucesso") {
-                $return['last_transmission'] = $test_device['body'][0]['dh_gps'];
-                $return['battery_level'] = $test_device['body'][0]['nivel_bateria'];
+                $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
+                $return['battery_level'] = $test_device['body'][0]['Tensão'];
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';

@@ -36,6 +36,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Modelo</th>
+                            <th scope="col">Tipo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +44,7 @@
                             <tr id="_tr_user_{{$device->id}}">
                                 <th scope="row">{{$device->id}}</th>
                                 <td>{{$device->model}}</td>
+                                <td>{{$device->technologie->type ?? ''}}</td>
                                 <td>
                                     <div class="pull-right">
                                     <!--

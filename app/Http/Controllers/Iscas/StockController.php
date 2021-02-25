@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Iscas;
 
 //use Illuminate\Http\Request;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 //use App\Http\Requests\DeviceRequest;
 use App\Services\DeviceService;
@@ -36,9 +37,6 @@ class StockController extends Controller
         
         $data = $this->data;       
         $data['devices'] = $this->deviceService->filter($customer_id);
-
-       // print_r($data['devices']);
-       // die();
 
         return response()->view('stock.list', $data);
     }

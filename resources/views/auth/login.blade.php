@@ -67,7 +67,7 @@
                 <i class="fa fa-lock"></i> Logar
             </button>
 
-            <button type="submit" class="btn btn-primary btn-elevate kt-login__btn-primary" id="btn-forgot_password">
+            <button type="submit" class="btn btn-link btn-elevate kt-login__btn-primary" id="btn-forgot_password">
                 <i class="fa fa-key"></i> Esqueceu a senha?
             </button>
 

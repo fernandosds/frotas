@@ -26,6 +26,7 @@ class ApiUserService
     {
 
         $this->host = "https://api.satcompany.com.br";
+        $this->host = "https://api.satcompany.com.br";
 
     }
 

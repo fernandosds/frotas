@@ -6,6 +6,9 @@
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""
     />
+
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
     <style>
         .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar .kt-portlet__head-wrapper,
         .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar, .div-device-status{
@@ -37,14 +40,15 @@
             background-color: #fff;
         }
         .text-orange{color:#ff8000}
+        .alert, .kt-portlet{
+            margin-bottom: 0px !important;
+        }
     </style>
 @endsection
 
 @section('content')
 
     <div id="pairing-alert"></div>
-
-    <div class="kt-portlet">
 
         <div class="kt-portlet kt-portlet--mobile">
 
@@ -55,7 +59,7 @@
             </div>
 
             <!-- HEADER -->
-            <div class="row">
+            <div class="row" style="width: 99%">
                 <div class="col-sm-9">
                     <div class="row div-device-status">
                         <div class="col-sm-2 col-6">
@@ -84,7 +88,7 @@
                         </div>
 
                         <div class="col-sm-2 col-6">
-                            <i class="fa  fa-clock"></i> <label for="">Término previsto</label><br />
+                            <i class="fa  fa-clock"></i> <label for="">Término previsto</label><button>Ok</button><br />
                             <b for="" id="time-left">---</b>
                         </div>
                     </div>
@@ -96,7 +100,7 @@
                             <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="500">
                         </div>
                         <div class="col-sm-4 col-3 my-1">
-                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? '99A00105'}}">
+                            <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? ''}}">
                         </div>
                         <div class="col-sm-3 col-3 my-1">
                             <button type="button" class="btn btn-primary mb-2" id="btn-start">Monitorar</button>
@@ -115,11 +119,10 @@
 
             </div>
 
-
-            <div id="mapid" class="mapid" style="width: 100%; height: 800px;float:left;"> </div>
-
         </div>
-    </div>
+
+    <div id="mapid" class="mapid" style="width: 100%; height: 800px;float:left;"></div>
+
 
     <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -139,7 +142,11 @@
     <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
 
+    <script src="http://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" integrity="" crossorigin=""></script>
+
     <script>
+
+
 
         var heat = {};
         var marker = {};
@@ -166,10 +173,29 @@
         }).addTo(mymap);
 
         /**
-         * Rastrea isca
+         * Rastrea isca após clique
          */
         $('#btn-start').click(function(){
+            start()
+        });
 
+        /**
+         * Rastrea isca automaticamente
+         */
+        $(document).ready(function(){
+
+
+
+            if( $("#chassi_device").val() != "" ){
+                start()
+            }
+        })
+
+        /**
+         * Rastrea isca
+         */
+        function start()
+        {
             Swal.fire({
                 title: '<i class="fa fa-3x fa-spinner fa-pulse"></i>',
                 html: '<h4>Aguarde, localizando dispositivo...</h4>',
@@ -202,8 +228,7 @@
 
                 },1000);
             }
-
-        })
+        }
 
         /**
          * Mapa de calor
@@ -249,7 +274,7 @@
                 url: "{{url('/monitoring/map/last-position')}}/" + chassi_device,
                 type: 'GET',
                 success: function (data) {
-
+                    console.log(data.pairing)
                     if(data.status == "error"){
                         Swal.fire({
                             type: 'error',
@@ -260,8 +285,6 @@
                         });
                         return false;
                     }
-
-                    Swal.close()
 
                     if(data.last_positions.status == "sucesso"){
 
@@ -293,12 +316,14 @@
                                 border: 0
                             }).addTo(mymap);
 
-                            // Posição exata
+                        // Posição exata
                         }else{
 
-                            // Box marker
-                            if(!data.pairing.status) {
+                            // Despareado - Box marker
+                            if(data.pairing.status == "error") {
                                 marker = L.marker([position.Latitude, position.Longitude], {icon: boxIcon}).addTo(mymap);
+
+                            // Pareado - Truck marker
                             }else{
                                 marker = L.marker([position.Latitude, position.Longitude], {icon: truckIcon}).addTo(mymap);
                             }
@@ -307,7 +332,7 @@
                         console.log(data.pairing)
 
                         // Mostra evento de despareamento
-                        if(!data.pairing.status){
+                        if(data.pairing.status == "error") {
 
                             // Event marker
                             marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: eventIcon}).addTo(mymap);
@@ -324,11 +349,14 @@
                             '<b> - Modo:</b> '+position.Modo
                         );
 
-                        if(!data.pairing.status){
+                        if(data.pairing.status == "error"){
                             $('#pairing-alert').html('<div class="alert alert-danger center blink" role="alert">' +
                                 '<strong><i class="fa fa-unlink"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
-                        }else{
+                        }else if( data.pairing.status == "success" ){
                             $('#pairing-alert').html('<div class="alert alert-success center blink" role="alert">' +
+                                '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
+                        }else{
+                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' +
                                 '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }
 
@@ -345,6 +373,8 @@
                             timer: 10000
                         })
                     }
+
+                    Swal.close()
 
                 }
             });

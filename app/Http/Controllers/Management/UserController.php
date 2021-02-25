@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\CustomerService;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,9 +50,11 @@ class UserController extends Controller
      */
     public function new()
     {
-        $data = $this->data;
-        $data['customers'] = $this->customerService->all();
 
+        $data = $this->data;
+        if(Auth::user()->type == "sat") {
+            $data['customers'] = $this->customerService->all();
+        }
         return view('management.user.new', $data);
     }
 

@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerService
 {
-    public function __construct(CustomerRepository $customer, LogRepository $log)
+    public function __construct(CustomerRepository $customerRepository, LogRepository $log)
     {
-        $this->customer = $customer;
+        $this->customerRepository = $customerRepository;
         $this->log = $log;
     }
 
@@ -21,7 +21,8 @@ class CustomerService
      */
     public function all()
     {
-        return $this->customer->all();
+
+        return $this->customerRepository->all();
     }
 
     /**
@@ -30,7 +31,7 @@ class CustomerService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->customer->paginate($limit);
+        return $this->customerRepository->paginate($limit);
     }
 
     /**
@@ -43,7 +44,7 @@ class CustomerService
         // $dados = $request->all();
         $dados = $request->all();
 
-        return $this->customer->create($dados)->orderBy('id')->get();
+        return $this->customerRepository->create($dados)->orderBy('id')->get();
     }
 
     /**
@@ -53,7 +54,7 @@ class CustomerService
     public function save(Request $request)
     {
 
-        $customer = $this->customer->create($request->all());
+        $customer = $this->customerRepository->create($request->all());
 
         $this->log->saveCustomerLog($customer);
 
@@ -68,7 +69,7 @@ class CustomerService
     public function update(Request $request, $id)
     {
 
-        $customer = $this->customer->update($id, $request->all());
+        $customer = $this->customerRepository->update($id, $request->all());
 
         return $customer;
     }
@@ -80,7 +81,7 @@ class CustomerService
     public function show(Int $id)
     {
 
-        $customer =  $this->customer->showid($id);
+        $customer =  $this->customerRepository->showid($id);
 
 
         return ($customer) ? $customer : abort(404);
@@ -93,7 +94,7 @@ class CustomerService
     public function destroy(Int $id)
     {
 
-        return $this->customer->delete($id);
+        return $this->customerRepository->delete($id);
     }
 
     /**

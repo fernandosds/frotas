@@ -52,9 +52,6 @@ class DeviceService
     public function save(Array $array)
     {
 
-        $date = date('Y-m-d H:i:s');
-        $user_id = Auth::user()->id;
-
         $arr_insert = [];
         foreach( $array[0] as $item ){
 
@@ -95,30 +92,17 @@ class DeviceService
     public function findByModel(String $device)
     {
 
-        try{
-            $data = DB::table('devices')
-                ->join('contracts', 'contracts.id', '=', 'devices.contract_id')
-                ->join('technologies', 'technologies.id', '=', 'devices.technologie_id')
-                ->select('devices.id', 'devices.contract_id AS contract_id', 'contracts.status','devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
-                ->where('contracts.status', 1)
-                ->where('devices.model', $device)
-                ->where('devices.customer_id', Auth::user()->customer_id)
-                ->first();
+        return $this->device->findByModel($device);
 
-            if($data){
+    }
 
-                return ['status' => 'success', 'message' => '', 'data' => $data];
-
-            }else{
-                return ['status' => 'error', 'message' => 'Ísca não encontrada'];
-
-            }
-
-        }catch (Exception $e){
-
-            return ['status' => 'error', 'message' => $e->getMessage(), 'data' => ''];
-        }
-
+    /**
+     * @param String $uniqid
+     * @return mixed
+     */
+    public function findByUniqid(String $uniqid)
+    {
+        return $this->device->findByUniqid($uniqid);
     }
 
     /**

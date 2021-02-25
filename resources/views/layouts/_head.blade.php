@@ -76,7 +76,7 @@
     <link href="{{asset('/assets/demo/default/skins/aside/dark.css')}}" rel="stylesheet" type="text/css" />
 
     <!--end::Layout Skins -->
-    <link rel="shortcut icon" href="{{asset('/assets/media/logos/favicon.ico')}}" />
+    <link rel="shortcut icon" href="{{asset('/logos/favicon.ico')}}" />
 
     <style>
         .icon-menu{

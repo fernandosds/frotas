@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false,
+]);
 
 /**
  * API device routes
@@ -15,7 +19,7 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', 'HomeController@index');
-    Route::get('/access_denied', 'HomeController@accessDenied');
+    Route::get('/access_denied', 'HomeController@accessDenied')->name('access_denied');
 
     /**
      * API device routes
@@ -37,29 +41,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/save', 'Iscas\BoardingController@save');
         Route::get('/delete/{id}', 'Iscas\BoardingController@destroy');
         Route::get('/finish/{id}', 'Iscas\BoardingController@finish');
-
         Route::get('/test-device/{model}', 'Iscas\BoardingController@testDevice');
         Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation');
-
-
-
 
     });
 
     /**
      * boardings device routes
      */
-    Route::group(['prefix' => 'monitoring'], function () {
+    Route::group(['middleware' => ['user.access_level:management'], 'prefix' => 'monitoring'], function () {
         Route::get('/{device?}', 'Iscas\MonitoringController@index');
-
         Route::get('/map/last-position/{device}', 'Iscas\MonitoringController@lastPosition');
         Route::get('/map/heat/{device}/{minutes?}', 'Iscas\MonitoringController@heat');
-
         Route::get('/get-grid/{model}/{minutes}', 'Iscas\MonitoringController@getGrid');
         Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
-
         Route::get('/check-pairing/{device}/{pair_device}', 'Iscas\MonitoringController@checkPairing');
-
         Route::get('/test-device/{model}', 'Iscas\MonitoringController@testDevice');
 
     });
@@ -109,9 +105,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/update/{id}', 'Iscas\Commercial\ContractController@update');
             Route::get('/edit/{id}', 'Iscas\Commercial\ContractController@edit');
             Route::get('/delete/{id}', 'Iscas\Commercial\ContractController@destroy');
-
-
-
 
             Route::group(['prefix' => 'devices'], function () {
                 Route::post('/add', 'Iscas\Commercial\DeviceController@add');
@@ -206,7 +199,7 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * User routes
          */
-        Route::group(['middleware' => ['user.sat'], 'prefix' => 'users'], function () {
+        Route::group(['prefix' => 'users'], function () {
             Route::get('/', 'Management\UserController@index');
             Route::get('/new', 'Management\UserController@new');
             Route::post('/save', 'Management\UserController@save');

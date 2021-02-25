@@ -3,10 +3,12 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\HomeController;
 use App\Mail\QRCodeMail;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Mail\ResetEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use mysql_xdevapi\Exception;
@@ -51,7 +53,12 @@ class UserService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->userRepository->paginate($limit);
+
+        if(Auth::user()->type == "ext"){
+            return $this->userRepository->paginate($limit, Auth::user()->customer_id);
+        }
+
+        return $this->userRepository->paginate($limit, Auth::user()->customer_id);
     }
 
     /**
@@ -73,13 +80,19 @@ class UserService
     public function save(Request $request)
     {
 
+        if(Auth::user()->type == "ext"){
+            $request->merge([
+                'type' => "ext",
+                'customer_id' => Auth::user()->customer_id
+            ]);
+        }
+
         if(isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
         }
 
+        // New Secret
         if($request->required_validation){
-
-            // Secret
             $secret = $this->apiUserService->newSecret();
             $request->merge(['validation_token' => $secret['secret']]);
         }
@@ -123,13 +136,14 @@ class UserService
         return ($user) ? $user : abort(404);
     }
 
-
     /**
      * @param Int $id
      * @return bool
      */
     public function destroy(Int $id)
     {
+
+
 
         return $this->userRepository->delete($id);
     }
@@ -158,5 +172,21 @@ class UserService
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
         }
+    }
+
+    /**
+     * @param Int $id
+     * @return bool
+     */
+    private function accessDenied(Int $id)
+    {
+
+        if(Auth::user()->type == "ext" ){
+            $user = $this->userRepository->find($id);
+            if(Auth::user()->customer_id != $user->customer_id){
+                return false;
+            }
+        }
+        return true;
     }
 }
