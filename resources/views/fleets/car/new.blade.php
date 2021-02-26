@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-lg-12 ml-lg-auto">
                                 <button type="button" class="btn btn-brand" id="btn-car-save">Cadastrar</button>
-                                <a href="{{url('rents/cars')}}" class="btn btn-secondary">Voltar</a>
+                                <a href="{{url('fleets/cars')}}" class="btn btn-secondary">Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
         var car_id = $('#id').val();
 
         $('#btn-car-save').click(function() {
-            ajax_store(car_id, "rents/cars", $('#form-create-car').serialize());
+            ajax_store(car_id, "fleets/cars", $('#form-create-car').serialize());
         });
 
     });

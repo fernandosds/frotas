@@ -257,65 +257,63 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /**
-     * Rent routes
+     * Fleets routes
      */
 
 
-    Route::group(['prefix' => 'rents'], function () {
+    Route::group(['prefix' => 'fleets'], function () {
+
+        Route::get('/dashboard', 'Fleets\FleetController@dashboard');
 
         /**
          * Drivers routes
          */
-
         Route::group(['prefix' => 'drivers'], function () {
-            Route::get('/', 'Rent\DriverController@index');
-            Route::get('/new', 'Rent\DriverController@new');
-            Route::post('/save', 'Rent\DriverController@save');
-            Route::put('/update/{id}', 'Rent\DriverController@update');
-            Route::get('/edit/{id}', 'Rent\DriverController@edit');
-            Route::get('/delete/{id}', 'Rent\DriverController@destroy');
+            Route::get('/', 'Fleets\DriverController@index');
+            Route::get('/new', 'Fleets\DriverController@new');
+            Route::post('/save', 'Fleets\DriverController@save');
+            Route::put('/update/{id}', 'Fleets\DriverController@update');
+            Route::get('/edit/{id}', 'Fleets\DriverController@edit');
+            Route::get('/delete/{id}', 'Fleets\DriverController@destroy');
         });
 
 
         /**
          * Fleets routes (frotas)
          */
-
         Route::group(['prefix' => 'cars'], function () {
-            Route::get('/', 'Rent\CarController@index');
-            Route::get('/new', 'Rent\CarController@new');
-            Route::post('/save', 'Rent\CarController@save');
-            Route::put('/update/{id}', 'Rent\CarController@update');
-            Route::get('/edit/{id}', 'Rent\CarController@edit');
-            Route::get('/delete/{id}', 'Rent\CarController@destroy');
+            Route::get('/', 'Fleets\CarController@index');
+            Route::get('/new', 'Fleets\CarController@new');
+            Route::post('/save', 'Fleets\CarController@save');
+            Route::put('/update/{id}', 'Fleets\CarController@update');
+            Route::get('/edit/{id}', 'Fleets\CarController@edit');
+            Route::get('/delete/{id}', 'Fleets\CarController@destroy');
         });
 
 
         /**
          * Cards routes 
          */
-
         Route::group(['prefix' => 'cards'], function () {
-            Route::get('/', 'Rent\CardController@index');
-            Route::get('/new', 'Rent\CardController@new');
-            Route::post('/save', 'Rent\CardController@save');
-            Route::put('/update/{id}', 'Rent\CardController@update');
-            Route::get('/edit/{id}', 'Rent\CardController@edit');
-            Route::get('/delete/{id}', 'Rent\CardController@destroy');
+            Route::get('/', 'Fleets\CardController@index');
+            Route::get('/new', 'Fleets\CardController@new');
+            Route::post('/save', 'Fleets\CardController@save');
+            Route::put('/update/{id}', 'Fleets\CardController@update');
+            Route::get('/edit/{id}', 'Fleets\CardController@edit');
+            Route::get('/delete/{id}', 'Fleets\CardController@destroy');
         });
 
 
         /**
          * Cost routes (Custos)
          */
-
         Route::group(['prefix' => 'costs'], function () {
-            Route::get('/', 'Rent\CostController@index');
-            Route::get('/new', 'Rent\CostController@new');
-            Route::post('/save', 'Rent\CostController@save');
-            Route::put('/update/{id}', 'Rent\CostController@update');
-            Route::get('/edit/{id}', 'Rent\CostController@edit');
-            Route::get('/delete/{id}', 'Rent\CostController@destroy');
+            Route::get('/', 'Fleets\CostController@index');
+            Route::get('/new', 'Fleets\CostController@new');
+            Route::post('/save', 'Fleets\CostController@save');
+            Route::put('/update/{id}', 'Fleets\CostController@update');
+            Route::get('/edit/{id}', 'Fleets\CostController@edit');
+            Route::get('/delete/{id}', 'Fleets\CostController@destroy');
         });
     });
 

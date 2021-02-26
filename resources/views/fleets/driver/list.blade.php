@@ -19,7 +19,7 @@
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{url('rents/drivers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <a href="{{url('fleets/drivers/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                             <i class="la la-plus"></i> Novo
                         </a>
                     </div>
@@ -52,7 +52,7 @@
                         <td>{{ $driver->status == 1 ? 'Ativo' : 'Bloqueado' }}</td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('rents/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <a href="{{url('fleets/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                 <button type="button" class="btn btn-sm  btn-danger btn-delete-driver" data-id="{{$driver->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>
@@ -78,7 +78,7 @@
     /* Deletar */
     $('.btn-delete-driver').click(function() {
         var id = $(this).data('id');
-        var url = "{{url('rents/drivers/delete')}}/" + id;
+        var url = "{{url('fleets/drivers/delete')}}/" + id;
         ajax_delete(id, url)
     })
 </script>

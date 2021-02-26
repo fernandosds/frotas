@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Rent;
+namespace App\Http\Controllers\Fleets;
 
 use Illuminate\Support\Facades\Auth;
 use App\Services\Rent\CarService;

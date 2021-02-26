@@ -301,8 +301,15 @@
 
                     <!-- LOCADORA ______________________________________________________________________________________________________________________ -->
                     <li class="kt-menu__section ">
-                        <h4 class="kt-menu__section-text">LOCADORA</h4>
+                        <h4 class="kt-menu__section-text">GESTÃO DE FROTAS</h4>
                         <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                    </li>
+
+                    <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
+                        <a href="{{url('fleets/dashboard')}}" class="kt-menu__link ">
+                            <span class="kt-menu__link-icon"><i class="fas fa-chart-line"></i></span>
+                            <span class="kt-menu__link-text">Dashboard</span>
+                        </a>
                     </li>
 
                     <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_drivers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
@@ -315,8 +322,8 @@
                         <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                             <ul class="kt-menu__subnav">
                                 <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/drivers')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Motorista</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/drivers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Motorista</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/drivers')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Motorista</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/drivers/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Motorista</span></a></li>
                             </ul>
                         </div>
                     </li>
@@ -331,8 +338,8 @@
                         <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                             <ul class="kt-menu__subnav">
                                 <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/cars')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de Frota</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/cars/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo veículo</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/cars')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista de Frota</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/cars/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo veículo</span></a></li>
                             </ul>
                         </div>
                     </li>
@@ -347,8 +354,8 @@
                         <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                             <ul class="kt-menu__subnav">
                                 <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/cards')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Cartões</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/cards/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Cartão</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/cards')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Cartões</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/cards/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Cartão</span></a></li>
                             </ul>
                         </div>
                     </li>
@@ -363,8 +370,8 @@
                         <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                             <ul class="kt-menu__subnav">
                                 <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/costs')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Custos</span></a></li>
-                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('rents/costs/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Custo</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/costs')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Custos</span></a></li>
+                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleets/costs/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Custo</span></a></li>
                             </ul>
                         </div>
                     </li>

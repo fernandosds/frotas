@@ -70,7 +70,7 @@
                         <div class="row">
                             <div class="col-lg-12 ml-lg-auto">
                                 <button type="button" class="btn btn-brand" id="btn-driver-save">Cadastrar</button>
-                                <a href="{{url('rents/drivers')}}" class="btn btn-secondary">Voltar</a>
+                                <a href="{{url('fleets/drivers')}}" class="btn btn-secondary">Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
         var driver_id = $('#id').val();
 
         $('#btn-driver-save').click(function() {
-            ajax_store(driver_id, "rents/drivers", $('#form-create-driver').serialize());
+            ajax_store(driver_id, "fleets/drivers", $('#form-create-driver').serialize());
         });
 
     });

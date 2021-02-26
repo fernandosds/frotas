@@ -20,10 +20,9 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                           <!-- <a href="{{url('rents/cost/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <a href="{{url('fleets/cars/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                                 <i class="la la-plus"></i> Novo
                             </a>
-                            -->
                         </div>
                     </div>
                 </div>
@@ -36,25 +35,29 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Carro</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Valor</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Montadora</th>
+                            <th scope="col">Ano</th>
+                            <th scope="col">Placa</th>
+                            <th scope="col">Chassi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($costs as $cost)
-                        <tr id="_tr_user_{{$cost->id}}">
-                            <th scope="row">{{$cost->id}}</th>
-                            <td>{{$cost->car->model}}</td>
-                            <td>{{$cost->customer->name ?? ''}}</td>
-                            <td>{{$cost->value}}</td>
+                        @foreach ($cars as $car)
+                        <tr id="_tr_user_{{$car->id}}">
+                            <th scope="row">{{$car->id}}</th>
+                            <td>{{$car->model}}</td>
+                            <td>{{$car->automaker}}</td>
+                            <td>{{$car->year}}</td>
+                            <td>{{$car->placa}}</td>
+                            <td>{{$car->chassi}}</td>
+                            
                             <td>
                                 <div class="pull-right">
-                                   <!-- <a href="{{url('rents/costs/edit')}}/{{$cost->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                    <button type="button" class="btn btn-sm  btn-danger btn-delete-contract" data-id="{{$cost->id}}">
+                                    <a href="{{url('fleets/cars/edit')}}/{{$car->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                    <button type="button" class="btn btn-sm  btn-danger btn-delete-contract" data-id="{{$car->id}}">
                                         <span class="fa fa-fw fa-trash"></span> Deletar
-                                    </button
-                                    -->
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -77,7 +80,7 @@
     /* Deletar */
     $('.btn-delete-contract').click(function() {
         var id = $(this).data('id');
-        var url = "{{url('rents/costs/delete')}}/" + id;
+        var url = "{{url('fleets/cars/delete')}}/" + id;
         ajax_delete(id, url)
     })
 </script>

@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Rent;
+namespace App\Http\Controllers\Fleets;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Services\Rent\CardService;
-use App\Http\Requests\Rent\CardRequest;
+use Illuminate\Support\Facades\Auth;
+
+use App\Services\Rent\CostService;
 use Illuminate\Http\Request;
 
-class CardController extends Controller
+class CostController extends Controller
 {
-    private $cardService;
+    private $costService;
     private $data;
 
     /**
      * UserController constructor.
-     * @param CardService $cardService
+     * @param CostService $cardService
      * 
      */
-    public function __construct(CardService $cardService)
+    public function __construct(CostService $costService)
     {
-        $this->cardService = $cardService;
+        $this->costService = $costService;
 
         $this->data = [
-            'icon' => 'flaticon-truck',
-            'title' => 'Lista de cartões',
-            'menu_open_cards' => 'kt-menu__item--open'
+            'icon' => 'flaticon2-bar-chart',
+            'title' => 'Lista de custos',
+            'menu_open_costs' => 'kt-menu__item--open'
         ];
     }
 
@@ -38,9 +38,9 @@ class CardController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['cards'] = $this->cardService->paginate();
+        $data['costs'] = $this->costService->paginate();
 
-        return response()->view('rent.card.list', $data);
+        return response()->view('rent.cost.list', $data);
     }
 
     /**
@@ -51,9 +51,9 @@ class CardController extends Controller
     {
 
         $data = $this->data;
-        $data['card'] = $this->cardService->show($id);
+        $data['cost'] = $this->costService->show($id);
 
-        return response()->view('rent.card.list', $data);
+        return response()->view('rent.cost.list', $data);
     }
 
     /**
@@ -63,14 +63,14 @@ class CardController extends Controller
     {
 
         $data = $this->data;
-        return view('rent.card.new', $data);
+        return view('rent.cost.new', $data);
     }
 
     /**
      * @param CustomerRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function save(CardRequest $request)
+    public function save(Request $request)
     {
 
 
@@ -79,9 +79,9 @@ class CardController extends Controller
             $request->merge([
                 'customer_id' => Auth::user()->customer_id
             ]);
-            
 
-            $this->cardService->save($request);
+
+            $this->costService->save($request);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -92,28 +92,28 @@ class CardController extends Controller
 
     /**
      * @param Int $id
-     * @return \Illuminate\Cards\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Costs\View\Factory|\Illuminate\View\View
      */
     public function edit(Int $id)
     {
 
         $data = $this->data;
-        $data['card'] = $this->cardService->show($id);
+        $data['cost'] = $this->costService->show($id);
 
-        return view('rent.card.new', $data);
+        return view('rent.cost.new', $data);
     }
 
     /**
      * @param Int $id
-     * @param CardRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CardRequest $request)
+    public function update(Request $request)
     {
 
         try {
 
-            $this->cardService->update($request, $request->id);
+            $this->costService->update($request, $request->id);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -127,7 +127,7 @@ class CardController extends Controller
      */
     public function destroy(Int $id)
     {
-        $this->cardService->destroy($id);
+        $this->costService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
 }
