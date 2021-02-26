@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/test-device/{model}', 'Iscas\BoardingController@testDevice');
         Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation');
 
+        Route::post('/addtime', 'Iscas\BoardingController@addTime')->middleware('user.access_level:management');
     });
 
     /**

@@ -30,6 +30,16 @@
 
     <div class="row">
 
+        @if(!$boardings->count())
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-widget14">
+                    <div class="kt-widget14__content">
+                        <i class="fa fa-exclamation-triangle"></i> &nbsp; Nenhum embarque em andamento no momento!
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @foreach ($boardings as $boarding)
 
             <div class="col-xl-4" id="div-{{$boarding->id}}">

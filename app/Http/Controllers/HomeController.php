@@ -36,14 +36,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-
-        //$data['password'] = "sfsdfsd";
-        //$data['user'] = User::first();
-
-        //return view('emails.reset_mail', $data);
-
-
         $data = $this->data;
 
         return view('index', $data);

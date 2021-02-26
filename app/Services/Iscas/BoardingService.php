@@ -44,7 +44,6 @@ class BoardingService
      */
     public function update(Request $request, $id)
     {
-
         $boarding = $this->boardingRepository->update($id, $request->all());
         return $boarding;
     

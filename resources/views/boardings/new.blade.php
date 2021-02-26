@@ -143,7 +143,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="inputComplement">Placa</label>
-                                    <input type="text" class="form-control" name="board" maxlength="7" value="MAP2020{{ $boarding->board ?? '' }}" id="input-placa" >
+                                    <input type="text" class="form-control" name="board" maxlength="7" value="{{ $boarding->board ?? '' }}" id="input-placa" >
                                     <span id="search-placa"></span>
                                 </div>
 

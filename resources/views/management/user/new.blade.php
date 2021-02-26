@@ -56,16 +56,6 @@
                         </div>
                         <div class="form-group row">
 
-                            <!--
-                            <label class="col-form-label col-lg-3 col-sm-12">Tipo</label>
-                            <div class="col-lg-3 col-md-3 col-sm-12 form-group-sub">
-                                <select class="form-control" name="type">
-                                    <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>Usuário Interno</option>
-                                    <option value="ext" {{ ($user->type ?? null) == 'ext' ? 'selected' : ''}}>Usuário Externo</option>
-                                </select>
-                            </div>
-                            -->
-
                             <label class="col-form-label col-lg-3 col-sm-12">Nível de acess </label>
                             <div class="col-lg-3 col-md-3 col-sm-12 form-group-sub">
                                 <select class="form-control" name="access_level">
@@ -93,9 +83,6 @@
                                 </div>
 
                             @endif
-
-
-
 
                         </div>
 

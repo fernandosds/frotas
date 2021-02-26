@@ -32,8 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper" style="background-image: url(../assets/media//bg/bg-3.jpg);">
-
+                    <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper" style="background-image: url(../assets/media/bg/bg-3.jpg);">
                         <div class="kt-login__body">
                             @yield('content')
                         </div>

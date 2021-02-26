@@ -88,7 +88,13 @@
                         </div>
 
                         <div class="col-sm-2 col-6">
-                            <i class="fa  fa-clock"></i> <label for="">Término previsto</label><button>Ok</button><br />
+                            <i class="fa  fa-clock"></i> <label for="">Término previsto</label>
+
+                            <button type="button" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle" data-toggle="modal" data-target="#modal_add_time">
+                                <i class="fa fa-plus"></i>
+                            </button><br />
+
+
                             <b for="" id="time-left">---</b>
                         </div>
                     </div>
@@ -123,6 +129,29 @@
 
     <div id="mapid" class="mapid" style="width: 100%; height: 800px;float:left;"></div>
 
+    <div class="modal fade" id="modal_add_time" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar horario de chegada</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <label class="col-form-label col-lg-4 col-sm-4">Adicionar Horas</label>
+                        <div class="col-lg-4 col-sm-4">
+                            <input class="form-control" type="number" min="1" max="72" id="input-more-time" value="1">
+                        </div>
+                        <div class="col-lg-4 col-sm-4">
+                            <button type="button" class="btn btn-block btn-primary" id="btn-add-more-time"><i class="fa fa-check"></i> Confirmar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -146,7 +175,24 @@
 
     <script>
 
+        $('#btn-add-more-time').click(function(){
+            var hours = $('#input-more-time').val();
 
+            $.ajax({
+                url: "{{url('boardings/addtime')}}",
+                type: 'POST',
+                data: {
+                    hours: hours,
+                    device: '{{$device}}',
+                    _token: '{{csrf_token()}}'
+                },
+                success: function(data) {
+                    $('#modal_add_time').modal('hide')
+                    start()
+                }
+            });
+
+        })
 
         var heat = {};
         var marker = {};

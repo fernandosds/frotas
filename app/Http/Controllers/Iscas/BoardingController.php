@@ -10,6 +10,8 @@ use App\Services\Iscas\BoardingService;
 use App\Services\DeviceService;
 use App\Services\Iscas\TypeOfLoadService;
 use App\Services\Iscas\AccommodationLocationsService;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Exception;
@@ -239,6 +241,27 @@ class BoardingController extends Controller
     {
 
         return $this->apiUserService->tokenValidation(Auth::user()->validation_token, $token);
+
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function addTime(Request $request)
+    {
+
+        $boarding = $this->boardingService->getCurrentBoardingByDevice($request->device);
+        if($boarding){
+            $carbon = Carbon::parse($boarding->finished_at);
+            return $this->boardingService->update(
+                new Request(['finished_at' => $carbon->addHour($request->hours)->format('Y-m-d H:i:s')]),
+                $boarding->id
+            );
+
+        }else{
+            return false;
+        }
 
     }
 

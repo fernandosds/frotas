@@ -99,13 +99,8 @@
                 <div class="kt-user-card__name">
                     {{ Auth::user()->name }}<br/>
                     <small>
-                        Tipo: {{ Auth::user()->type }} <br/>
-
-                        @if( Auth::user()->type == "ext" )
-                            Empresa: {{ Auth::user()->customer->name ?? '' }}
-                        @else
-                            Acesso: {{ Auth::user()->access_level ?? '' }}
-                        @endif
+                        Empresa: {{ Auth::user()->customer->name ?? 'Sat Company' }} <br/>
+                        Nível de Acesso: {{ Auth::user()->access_level ?? '' }}
 
                     </small>
                 </div>
