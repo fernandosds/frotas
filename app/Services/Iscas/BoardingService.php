@@ -18,8 +18,8 @@ class BoardingService
     protected $boardingRepository;
 
     /**
-     * UserService constructor.
-     * @param BoardingRepository $boarding
+     * BoardingService constructor.
+     * @param BoardingRepository $boardingRepository
      */
     public function __construct(BoardingRepository $boardingRepository)
     {
@@ -82,6 +82,7 @@ class BoardingService
      */
     public function show(Int $id)
     {
+
         return $this->boardingRepository->find($id);
     }
 
@@ -110,5 +111,14 @@ class BoardingService
     {
         return $this->boardingRepository->getCurrentBoardingByDevice($device);
     }
+
+    /**
+     *
+     */
+    public function autoFinatlizeBoardings()
+    {
+        return $this->boardingRepository->autoFinatlizeBoardings();
+    }
+
 
 }

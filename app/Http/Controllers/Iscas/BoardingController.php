@@ -241,4 +241,5 @@ class BoardingController extends Controller
         return $this->apiUserService->tokenValidation(Auth::user()->validation_token, $token);
 
     }
+
 }

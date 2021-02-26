@@ -101,4 +101,15 @@ class BoardingRepository extends AbstractRepository
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function autoFinatlizeBoardings()
+    {
+
+        return $this->model->where('finished_at', '<', date('Y-m-d H:i:s'))
+            ->update(['active' => 0]);
+
+    }
+
 }

@@ -27,7 +27,7 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( false ){
+        if( true ){
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
             $this->host_apis = "https://api.satcompany.com.br";

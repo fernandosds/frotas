@@ -12,6 +12,10 @@ Auth::routes([
  * API device routes
  */
 
+Route::group(['prefix' => 'tasks'], function () {
+    Route::get('/boardings/finalizes', 'TasksController@autoFinatlizeBoardings');
+});
+
 Route::group(['prefix' => 'users'], function () {
     Route::post('/password/reset', 'UserController@resetPassword');
 });
@@ -254,13 +258,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/update', 'ProfileController@update');
     });
 
-
-
     /**
      * Fleets routes
      */
-
-
     Route::group(['prefix' => 'fleets'], function () {
 
         Route::get('/dashboard', 'Fleets\FleetController@dashboard');
