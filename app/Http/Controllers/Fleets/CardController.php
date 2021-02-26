@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Fleets;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Services\Rent\CardService;
-use App\Http\Requests\Rent\CardRequest;
+use App\Services\Fleets\CardService;
+use App\Http\Requests\Fleets\CardRequest;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -40,7 +40,7 @@ class CardController extends Controller
         $data = $this->data;
         $data['cards'] = $this->cardService->paginate();
 
-        return response()->view('rent.card.list', $data);
+        return response()->view('fleets.card.list', $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class CardController extends Controller
         $data = $this->data;
         $data['card'] = $this->cardService->show($id);
 
-        return response()->view('rent.card.list', $data);
+        return response()->view('fleets.card.list', $data);
     }
 
     /**
@@ -63,7 +63,7 @@ class CardController extends Controller
     {
 
         $data = $this->data;
-        return view('rent.card.new', $data);
+        return view('fleets.card.new', $data);
     }
 
     /**
@@ -100,7 +100,7 @@ class CardController extends Controller
         $data = $this->data;
         $data['card'] = $this->cardService->show($id);
 
-        return view('rent.card.new', $data);
+        return view('fleets.card.new', $data);
     }
 
     /**

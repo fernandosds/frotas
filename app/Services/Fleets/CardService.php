@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Services\Rent;
+namespace App\Services\Fleets;
 use Illuminate\Http\Request;
-use App\Repositories\Rent\CostRepository;
+use App\Repositories\Fleets\CardRepository;
 
 
-class CostService
+class CardService
 {
-    public function __construct(CostRepository $cost)
+    public function __construct(CardRepository $card)
     {
-        $this->cost = $cost;
+        $this->card = $card;
     }
 
     /**
@@ -18,7 +18,7 @@ class CostService
      */
     public function all()
     {
-        return $this->cost->all();
+        return $this->card->all();
     }
 
     /**
@@ -27,7 +27,7 @@ class CostService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->cost->paginate($limit);
+        return $this->card->paginate($limit);
     }
 
     /**
@@ -38,9 +38,9 @@ class CostService
     {
 
         // $dados = $request->all();
-        $cost = $request->all();
+        $card = $request->all();
 
-        return $this->cost->create($cost)->orderBy('id')->get();
+        return $this->card->create($card)->orderBy('id')->get();
     }
 
     /**
@@ -49,9 +49,9 @@ class CostService
      */
     public function save(Request $request)
     {
-        $cost = $this->cost->create($request->all());
+        $card = $this->card->create($request->all());
 
-        return $cost;
+        return $card;
     }
 
     /**
@@ -61,8 +61,8 @@ class CostService
      */
     public function update(Request $request, $id)
     {
-        $cost = $this->cost->update($id, $request->all());
-        return $cost;
+        $card = $this->card->update($id, $request->all());
+        return $card;
     }
 
     /**
@@ -72,9 +72,9 @@ class CostService
     public function show(Int $id)
     {
 
-        $cost =  $this->cost->show($id);
+        $card =  $this->card->show($id);
 
-        return ($cost) ? $cost : abort(404);
+        return ($card) ? $card : abort(404);
     }
 
 
@@ -85,7 +85,7 @@ class CostService
     public function destroy(Int $id)
     {
 
-        return $this->cost->delete($id);
+        return $this->card->delete($id);
     }
 
     /**
@@ -94,6 +94,6 @@ class CostService
      */
     public function edit($id)
     {
-        return $this->cost->find($id);
+        return $this->card->find($id);
     }
 }

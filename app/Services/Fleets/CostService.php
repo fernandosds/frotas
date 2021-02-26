@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Services\Rent;
+namespace App\Services\Fleets;
 use Illuminate\Http\Request;
-use App\Repositories\Rent\DriverRepository;
+use App\Repositories\Fleets\CostRepository;
 
 
-class DriverService
+class CostService
 {
-    public function __construct(DriverRepository $driver)
+    public function __construct(CostRepository $cost)
     {
-        $this->driver = $driver;
+        $this->cost = $cost;
     }
 
     /**
@@ -18,7 +18,7 @@ class DriverService
      */
     public function all()
     {
-        return $this->car->all();
+        return $this->cost->all();
     }
 
     /**
@@ -27,7 +27,7 @@ class DriverService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->driver->paginate($limit);
+        return $this->cost->paginate($limit);
     }
 
     /**
@@ -38,9 +38,9 @@ class DriverService
     {
 
         // $dados = $request->all();
-        $driver = $request->all();
+        $cost = $request->all();
 
-        return $this->car->create($driver)->orderBy('id')->get();
+        return $this->cost->create($cost)->orderBy('id')->get();
     }
 
     /**
@@ -49,9 +49,9 @@ class DriverService
      */
     public function save(Request $request)
     {
-        $driver = $this->driver->create($request->all());
+        $cost = $this->cost->create($request->all());
 
-        return $driver;
+        return $cost;
     }
 
     /**
@@ -61,8 +61,8 @@ class DriverService
      */
     public function update(Request $request, $id)
     {
-        $driver = $this->driver->update($id, $request->all());
-        return $driver;
+        $cost = $this->cost->update($id, $request->all());
+        return $cost;
     }
 
     /**
@@ -72,9 +72,9 @@ class DriverService
     public function show(Int $id)
     {
 
-        $driver =  $this->driver->show($id);
+        $cost =  $this->cost->show($id);
 
-        return ($driver) ? $driver : abort(404);
+        return ($cost) ? $cost : abort(404);
     }
 
 
@@ -85,7 +85,7 @@ class DriverService
     public function destroy(Int $id)
     {
 
-        return $this->driver->delete($id);
+        return $this->cost->delete($id);
     }
 
     /**
@@ -94,6 +94,6 @@ class DriverService
      */
     public function edit($id)
     {
-        return $this->driver->find($id);
+        return $this->cost->find($id);
     }
 }

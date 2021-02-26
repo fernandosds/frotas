@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Repositories\Rent;
+namespace App\Repositories\Fleets;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Card;

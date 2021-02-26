@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Fleets;
 
 use Illuminate\Support\Facades\Auth;
-use App\Services\Rent\CarService;
-use App\Http\Requests\Rent\CarRequest;
+use App\Services\Fleets\CarService;
+use App\Http\Requests\Fleets\CarRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -41,7 +41,7 @@ class CarController extends Controller
         $data = $this->data;
         $data['cars'] = $this->carService->paginate();
 
-        return response()->view('rent.car.list', $data);
+        return response()->view('fleets.car.list', $data);
     }
 
     /**
@@ -54,7 +54,7 @@ class CarController extends Controller
         $data = $this->data;
         $data['car'] = $this->carService->show($id);
 
-        return response()->view('rent.car.list', $data);
+        return response()->view('fleets.car.list', $data);
     }
 
     /**
@@ -64,7 +64,7 @@ class CarController extends Controller
     {
 
         $data = $this->data;
-        return view('rent.car.new', $data);
+        return view('fleets.car.new', $data);
     }
 
     /**
@@ -100,7 +100,7 @@ class CarController extends Controller
         $data = $this->data;
         $data['car'] = $this->carService->show($id);
 
-        return view('rent.car.new', $data);
+        return view('fleets.car.new', $data);
     }
 
     /**

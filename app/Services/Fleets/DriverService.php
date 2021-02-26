@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Services\Rent;
+namespace App\Services\Fleets;
 use Illuminate\Http\Request;
-use App\Repositories\Rent\CarRepository;
+use App\Repositories\Fleets\DriverRepository;
 
 
-class CarService
+class DriverService
 {
-    public function __construct(CarRepository $car)
+    public function __construct(DriverRepository $driver)
     {
-        $this->car = $car;
+        $this->driver = $driver;
     }
 
     /**
@@ -27,7 +27,7 @@ class CarService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->car->paginate($limit);
+        return $this->driver->paginate($limit);
     }
 
     /**
@@ -38,9 +38,9 @@ class CarService
     {
 
         // $dados = $request->all();
-        $car = $request->all();
+        $driver = $request->all();
 
-        return $this->car->create($car)->orderBy('id')->get();
+        return $this->car->create($driver)->orderBy('id')->get();
     }
 
     /**
@@ -49,9 +49,9 @@ class CarService
      */
     public function save(Request $request)
     {
-        $car = $this->car->create($request->all());
+        $driver = $this->driver->create($request->all());
 
-        return $car;
+        return $driver;
     }
 
     /**
@@ -61,8 +61,8 @@ class CarService
      */
     public function update(Request $request, $id)
     {
-        $car = $this->car->update($id, $request->all());
-        return $car;
+        $driver = $this->driver->update($id, $request->all());
+        return $driver;
     }
 
     /**
@@ -72,9 +72,9 @@ class CarService
     public function show(Int $id)
     {
 
-        $car =  $this->car->show($id);
+        $driver =  $this->driver->show($id);
 
-        return ($car) ? $car : abort(404);
+        return ($driver) ? $driver : abort(404);
     }
 
 
@@ -85,7 +85,7 @@ class CarService
     public function destroy(Int $id)
     {
 
-        return $this->car->delete($id);
+        return $this->driver->delete($id);
     }
 
     /**
@@ -94,6 +94,6 @@ class CarService
      */
     public function edit($id)
     {
-        return $this->car->find($id);
+        return $this->driver->find($id);
     }
 }

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Fleets;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Services\Rent\DriverService;
-use App\Http\Requests\Rent\DriverRequest;
+use App\Services\Fleets\DriverService;
+use App\Http\Requests\Fleets\DriverRequest;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -41,7 +41,7 @@ class DriverController extends Controller
         $data = $this->data;
         $data['drivers'] = $this->driverService->paginate();
 
-        return response()->view('rent.driver.list', $data);
+        return response()->view('fleets.driver.list', $data);
     }
 
     /**
@@ -54,7 +54,7 @@ class DriverController extends Controller
         $data = $this->data;
         $data['driver'] = $this->driverService->show($id);
 
-        return response()->view('rent.driver.list', $data);
+        return response()->view('fleets.driver.list', $data);
     }
 
     /**
@@ -64,7 +64,7 @@ class DriverController extends Controller
     {
 
         $data = $this->data;
-        return view('rent.driver.new', $data);
+        return view('fleets.driver.new', $data);
     }
 
     /**
@@ -100,7 +100,7 @@ class DriverController extends Controller
         $data = $this->data;
         $data['driver'] = $this->driverService->show($id);
 
-        return view('rent.driver.new', $data);
+        return view('fleets.driver.new', $data);
     }
 
     /**

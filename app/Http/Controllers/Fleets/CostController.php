@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Fleets;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-use App\Services\Rent\CostService;
+use App\Services\Fleets\CostService;
 use Illuminate\Http\Request;
 
 class CostController extends Controller
@@ -40,7 +40,7 @@ class CostController extends Controller
         $data = $this->data;
         $data['costs'] = $this->costService->paginate();
 
-        return response()->view('rent.cost.list', $data);
+        return response()->view('fleets.cost.list', $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class CostController extends Controller
         $data = $this->data;
         $data['cost'] = $this->costService->show($id);
 
-        return response()->view('rent.cost.list', $data);
+        return response()->view('fleets.cost.list', $data);
     }
 
     /**
@@ -63,7 +63,7 @@ class CostController extends Controller
     {
 
         $data = $this->data;
-        return view('rent.cost.new', $data);
+        return view('fleets.cost.new', $data);
     }
 
     /**
@@ -100,7 +100,7 @@ class CostController extends Controller
         $data = $this->data;
         $data['cost'] = $this->costService->show($id);
 
-        return view('rent.cost.new', $data);
+        return view('fleets.cost.new', $data);
     }
 
     /**

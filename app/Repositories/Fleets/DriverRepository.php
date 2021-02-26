@@ -1,20 +1,20 @@
 <?php
 
 
-namespace App\Repositories\Rent;
+namespace App\Repositories\Fleets;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Cost;
+use App\Models\Driver;
 use App\Repositories\AbstractRepository;
 
-class CostRepository extends AbstractRepository
+class DriverRepository extends AbstractRepository
 {
 
     /**
      * UserRepository constructor.
-     * @param Cost $model
+     * @param Driver $model
      */
-    public function __construct(Cost $model)
+    public function __construct(Driver $model)
     {
         $this->model = $model;
     }
