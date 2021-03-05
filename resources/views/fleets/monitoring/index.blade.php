@@ -51,7 +51,9 @@
             },
             onEachFeature(f, l) {
                 l.bindPopup(function() {
-                    return '<span>' + f.properties.placa + '</span>';
+                    return '<span> <b>Placa:</b>' + f.properties.placa + '</span><br>' +
+                        '<span> <b>Vel.:</b>' + f.properties.velocidade + '</span><br>' +
+                        '<span> <b>Data:</b>' + f.properties.Data_GPS + '</span><br>';
                 });
 
             },

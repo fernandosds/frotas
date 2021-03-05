@@ -86,6 +86,10 @@ class MonitoringController extends Controller
                             'id' => $test_device['body'][0]['ID'],
                             'chassi'=> $placa,
                             'placa'=> $placa,
+                            'velocidade' => $test_device['body'][0]['Vel.'],
+                            'Data_GPS' => $test_device['body'][0]['Data_GPS'],
+                            'Data_Rec' => $test_device['body'][0]['Data_Rec'],
+                            'Ign' => $test_device['body'][0]['Ign'],
                             'number' => $aux,
                             'color' => $colors[$auxColor]
                         ),
