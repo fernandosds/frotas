@@ -7,6 +7,8 @@
 
         <form id="form_finalize_contract">
 
+            <input type="hidden" name="id" value="{{$contract->id}}" ?/>
+
             <!-- HEADER -->
             @csrf
 

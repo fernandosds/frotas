@@ -75,7 +75,7 @@
                                 <label class="col-form-label col-lg-1 col-sm-12">Empresa </label>
                                 <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
                                     <select class="form-control" name="customer_id">
-                                        <option value="">SAT Company</option>
+                                        <option value="1">SAT Company</option>
                                         @foreach( $customers as $customer )
                                             <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
                                         @endforeach

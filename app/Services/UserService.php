@@ -80,6 +80,16 @@ class UserService
     public function save(Request $request)
     {
 
+        if($request->customer_id == 1){
+            $request->merge([
+                'type' => "sat",
+            ]);
+        }else{
+            $request->merge([
+                'type' => "ext",
+            ]);
+        }
+
         if(Auth::user()->type == "ext"){
             $request->merge([
                 'type' => "ext",

@@ -54,6 +54,7 @@ class ContractController extends Controller
             if ($checkStatus > 0) {
                 return response()->json(['status' => 'error', 'message' => 'É necessário vincular os dispositivos antes de confirmar.'], 200);
             }
+
             $this->contractService->update($request, $request->id);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
