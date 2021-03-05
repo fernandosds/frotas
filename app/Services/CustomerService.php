@@ -103,7 +103,7 @@ class CustomerService
      */
     public function edit($id)
     {
-        return $this->customer->find($id);
+        return $this->customerRepository->find($id);
     }
 
 
@@ -114,6 +114,6 @@ class CustomerService
     public function search(Request $request)
     {
 
-        return $this->customer->search($request);
+        return $this->customerRepository->search($request);
     }
 }
