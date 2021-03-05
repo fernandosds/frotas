@@ -264,6 +264,9 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'fleets'], function () {
 
+        Route::get('/monitoring', 'Fleets\MonitoringController@index');
+        Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions');
+
         Route::get('/dashboard', 'Fleets\FleetController@dashboard');
 
         /**
@@ -293,7 +296,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
         /**
-         * Cards routes 
+         * Cards routes
          */
         Route::group(['prefix' => 'cards'], function () {
             Route::get('/', 'Fleets\CardController@index');
