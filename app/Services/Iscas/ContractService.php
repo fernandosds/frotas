@@ -42,10 +42,10 @@ class ContractService
      * @param Int $limit
      * @return mixed
      */
-    public function paginate(Int $limit = 15)
+    public function paginatePendentes(Int $limit = 15)
     {
 
-        return $this->contract->paginate($limit);
+        return $this->contract->paginatePendentes($limit);
     }
 
     /**

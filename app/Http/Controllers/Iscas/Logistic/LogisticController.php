@@ -17,6 +17,12 @@ class LogisticController extends Controller
     private $contractDeviceService;
     private $data;
 
+    /**
+     * LogisticController constructor.
+     * @param ContractService $contractService
+     * @param ContractDeviceService $contractDeviceService
+     * @param DeviceService $deviceService
+     */
     public function __construct(ContractService $contractService, ContractDeviceService $contractDeviceService, DeviceService $deviceService)
     {
         $this->contractService = $contractService;
@@ -31,18 +37,13 @@ class LogisticController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
 
-
-        $customer_id = Auth::user()->customer_id;
-
         $data = $this->data;
-        $data['logistics'] = $this->contractService->paginate();
+        $data['logistics'] = $this->contractService->paginatePendentes();
 
         return response()->view('logistic.list', $data);
     

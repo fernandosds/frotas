@@ -22,6 +22,23 @@ class ContractRepository extends AbstractRepository
     }
 
     /**
+     * @param Int $limit
+     * @param null $customer_id
+     * @return mixed
+     */
+    public function paginatePendentes(Int $limit, $customer_id = null)
+    {
+
+        return $this->model->where('customer_id',$customer_id)
+                        ->where('status',0)
+                        ->orderBy('id','desc')
+                        ->paginate($limit);
+
+        return $this->model->orderBy('id','desc')->paginate($limit);
+
+    }
+
+    /**
      * @param int $id
      * @return \Illuminate\Support\Collection
      */
