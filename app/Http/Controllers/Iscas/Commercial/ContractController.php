@@ -70,12 +70,16 @@ class ContractController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function new()
+    public function new(Int $id = null)
     {
 
+        $data = $this->data;
         session()->forget('devices');
 
-        $data = $this->data;
+        if(isset($id)){
+            $data['customer'] = $this->customerService->show($id);
+        }
+
         $data['technologies'] = $this->technologieService->paginate();
 
         return view('commercial.contract.new', $data);

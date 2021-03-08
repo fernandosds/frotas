@@ -135,7 +135,7 @@ class CustomerController extends Controller
         if ($customer) {
             return response()->json(['status' => 'success', 'data' => $customer]);
         } else {
-            return response()->json(['status' => 'error', 'message' => 'usuário não encontrado!']);
+            return response()->json(['status' => 'error', 'message' => 'Cliente não encontrado!']);
         }
     }
 

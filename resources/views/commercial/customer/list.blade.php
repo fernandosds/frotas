@@ -48,6 +48,7 @@
                                 <td>{{$customer->type}}</td>
                                 <td>
                                     <div class="pull-right">
+                                        <a href="{{url('commercial/contracts/new')}}/{{$customer->id}}" class="btn btn-sm btn-warning"><span class="fa fa-fw fa-file"></span> Novo Contrato</a>
                                         <a href="{{url('commercial/customers/edit')}}/{{$customer->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                         <button type="button" class="btn btn-sm  btn-danger btn-delete-customer" data-id="{{$customer->id}}">
                                             <span class="fa fa-fw fa-trash"></span> Deletar

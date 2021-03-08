@@ -25,7 +25,7 @@
                     <input type="hidden" name="customer_id" id="customer_id" value="" />
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions mx-2">
-                            <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control input_cpf_cnpj" value="">
+                            <input type="text" id="input-search" name="cpf_cnpj" placeholder="Digite CPF/CNPJ" class="form-control input_cpf_cnpj" value="{{$customer->cpf_cnpj ?? ''}}">
                         </div>
 
                         <button type="button" id="btn-search" class="btn btn-outline-hover-success btn-sm btn-icon"><i class="fa fa-search"></i></button>
@@ -35,7 +35,6 @@
             </div>
 
         </div>
-
 
         <div class="kt-portlet__body">
 
@@ -192,8 +191,6 @@
 
         </div>
 
-
-
     </div>
 </div>
 
@@ -216,61 +213,53 @@
     })
 
     // Search customer
-    $(function() {
+    if( $('#input-search').val() != "" ){
+        searchCustomer()
+    }
 
-        $('#btn-search').click(function() {
-
-            var input_search = $('#input-search').val();
-            var form_search = $('#form-search-customer').serialize();
-            var route = 'commercial/customer';
-
-            ajax_find_data(input_search, form_search, route);
-
-
-        });
+    $('#btn-search').click(function() {
+        searchCustomer()
     });
 
+    function searchCustomer(){
+        var input_search = $('#input-search').val();
+        var form_search = $('#form-search-customer').serialize();
+        var route = 'commercial/customer';
+        ajax_find_data(input_search, form_search, route);
+    }
+
     // Save contract
-    $(function() {
-
-        $('#btn-contract-save').click(function() {
-
-            var id = $('#customer_id').val();
-            ajax_store("", "commercial/contracts", $('#form-search-customer').serialize());
-
-        });
-
+    $('#btn-contract-save').click(function() {
+        var id = $('#customer_id').val();
+        ajax_store("", "commercial/contracts", $('#form-search-customer').serialize());
     });
 
     // Add Device
-    $(function() {
+    $('#btn-contract-new-device').click(function() {
+        var route = 'commercial/contracts/devices/add';
 
-        $('#btn-contract-new-device').click(function() {
-            var route = 'commercial/contracts/devices/add';
+        $.ajax({
+            url: "{{url('')}}/" + route,
+            method: 'POST',
+            data: {
+                // "devices": $('#new-device').val(),
+                "technologie_id": $('#technologie_id').val(),
+                "quantity": $('#quantity').val(),
+                "value": $('#value').val(),
 
-            $.ajax({
-                url: "{{url('')}}/" + route,
-                method: 'POST',
-                data: {
-                    // "devices": $('#new-device').val(),
-                    "technologie_id": $('#technologie_id').val(),
-                    "quantity": $('#quantity').val(),
-                    "value": $('#value').val(),
+            },
+            success: function(response) {
+                $('#table-new-devices').html(response);
+                $('#exampleModalCenter').modal('hide')
 
-                },
-                success: function(response) {
-                    $('#table-new-devices').html(response);
-                    $('#exampleModalCenter').modal('hide')
-
-                    $('#quantity').val('')
-                    $('#value').val('')
-                }
-
-            });
+                $('#quantity').val('')
+                $('#value').val('')
+            }
 
         });
 
     });
+
 
     // Remove device
     $("#table-new-devices").on("click", ".btn-delete-device", function() {

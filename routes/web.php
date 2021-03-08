@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'contracts'], function () {
             Route::get('/', 'Iscas\Commercial\ContractController@index');
-            Route::get('/new', 'Iscas\Commercial\ContractController@new');
+            Route::get('/new/{id?}', 'Iscas\Commercial\ContractController@new');
             Route::get('/show/{id}', 'Iscas\Commercial\ContractController@show');
             Route::post('/save', 'Iscas\Commercial\ContractController@save');
             Route::put('/update/{id}', 'Iscas\Commercial\ContractController@update');
