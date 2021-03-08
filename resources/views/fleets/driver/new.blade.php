@@ -17,9 +17,7 @@
             </div>
         </div>
 
-
         <form class="kt-form kt-form--label-right" id="form-create-driver">
-
 
             <input type="hidden" name="id" id="id" value="{{ $driver->id ?? '' }}" />
             @csrf

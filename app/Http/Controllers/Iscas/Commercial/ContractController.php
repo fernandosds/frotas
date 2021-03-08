@@ -48,7 +48,7 @@ class ContractController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['contracts'] = $this->contractService->paginate();
+        $data['contracts'] = $this->contractService->paginatePendentes();
 
         return response()->view('commercial.contract.list', $data);
     }

@@ -42,7 +42,7 @@
 
         @foreach ($boardings as $boarding)
 
-            <div class="col-xl-4" id="div-{{$boarding->id}}">
+            <div class="col-sm-6 col-xl-4" id="div-{{$boarding->id}}">
 
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-widget14">

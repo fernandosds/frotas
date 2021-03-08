@@ -29,10 +29,16 @@ class ContractRepository extends AbstractRepository
     public function paginatePendentes(Int $limit, $customer_id = null)
     {
 
-        return $this->model->where('customer_id',$customer_id)
-                        ->where('status',0)
-                        ->orderBy('id','desc')
-                        ->paginate($limit);
+        if(Auth::user()->type == "ext"){
+            return $this->model->where('customer_id',$customer_id)
+                ->where('status',0)
+                ->orderBy('id','desc')
+                ->paginate($limit);
+        }else{
+            return $this->model->where('status',0)
+                ->orderBy('id','desc')
+                ->paginate($limit);
+        }
 
         return $this->model->orderBy('id','desc')->paginate($limit);
 
