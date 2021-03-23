@@ -128,4 +128,18 @@ class ApiDeviceService
         return ClientHttp($url);
     }
 
+    /**
+     * @param String $device
+     * @param Int $minutes
+     * @return array
+     */
+    public function printGrid(String $device, String $from, String $to)
+    {
+        $url = $this->host . "/hospedeiros&{$device}[type=ADDR,PER='{$from}/{$to}']";
+        return ClientHttp($url);
+    }
+
+
+
+
 }

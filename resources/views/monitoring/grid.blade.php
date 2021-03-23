@@ -90,5 +90,10 @@
 </div>
 
 <script>
-    $('#table-grid').DataTable();
+    $('#table-grid').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'print'
+        ]
+    });
 </script>

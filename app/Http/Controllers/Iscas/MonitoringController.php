@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ApiDeviceService;
 use App\Services\Iscas\BoardingService;
 use App\Services\DeviceService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -259,6 +260,52 @@ class MonitoringController extends Controller
         }
 
         return view('monitoring.grid', $data);
+
+    }
+
+    /**
+     * @param String $device
+     * @param String $from
+     * @param String $to
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function printGrid(String $device, String $from, String $to)
+    {
+
+        $carbon_from = Carbon::parse($from);
+
+        if( $carbon_from->diffInDays(Carbon::parse($to)) <= 5 ){
+
+            $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+
+            if($boarding){
+                $pair_device = (isset($boarding->pair_device)) ? $boarding->pair_device : '';
+            }
+
+            $grid = $this->apiDeviceService->printGrid($device, $from, $to);
+
+            if($grid['status'] == "sucesso"){
+
+                $data['return'] = [
+                    'status' => 'success',
+                    'pair_device' => $pair_device,
+                    'positions' => $grid['body']
+                ];
+
+            }else{
+
+                $data['return'] = [
+                    'status' => 'error',
+                    'message' => "Nenhuma posição encontrada para a ísca {$device}, no período de {$from} até {$to}."
+                ];
+
+            }
+
+            return view('monitoring.print_grid', $data);
+        }else{
+            return 'O intervalo entre as datas deve ser inferior a 5 dias';
+        }
+
 
     }
 

@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/map/last-position/{device}', 'Iscas\MonitoringController@lastPosition');
         Route::get('/map/heat/{device}/{minutes?}', 'Iscas\MonitoringController@heat');
         Route::get('/get-grid/{model}/{minutes}', 'Iscas\MonitoringController@getGrid');
+        Route::get('/get-grid/print/{model}/{from}/{to}', 'Iscas\MonitoringController@printGrid');
         Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
         Route::get('/check-pairing/{device}/{pair_device}', 'Iscas\MonitoringController@checkPairing');
         Route::get('/test-device/{model}', 'Iscas\MonitoringController@testDevice');

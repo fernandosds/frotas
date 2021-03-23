@@ -118,8 +118,8 @@
                 </div>
 
                 <div class="col-sm-12"><hr />
-
-                    <button type="button" class="btn btn-link btn-sm pull-right modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
+                    <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
+                    <button type="button" class="btn btn-link btn-sm pull-right modal-print-grid" data-toggle="modal" data-target=".bd-print-grid"><i class="fa fa-print"></i> Imprimir Grid</button>
                     <div id="last-address"></div>
                 </div>
 
@@ -153,6 +153,37 @@
         </div>
     </div>
 
+    <div class="modal fade bd-print-grid" id="modal-grid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Imprimir Grid</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            De: <br />
+                            <input class="form-control" type="date" min="1" max="72" id="input-date-from" value="1">
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                            Até: <br />
+                            <input class="form-control" type="date" min="1" max="72" id="input-date-to" value="1">
+                        </div>
+                        <div class="col-lg-12 col-sm-12">
+                            <br /><b>Atenção</b> Intervalo máximo de 5 dias<br />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block btn-primary" id="btn-print-grid"><i class="fa fa-print"></i> Imprimir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content" id="modal-content">
@@ -172,8 +203,29 @@
     <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
 
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" integrity="" crossorigin=""></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js" integrity="" crossorigin=""></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js" integrity="" crossorigin=""></script>
+
 
     <script>
+
+        $("#btn-print-grid").click(function(){
+            var date_from = $("#input-date-from").val();
+            var date_to = $("#input-date-to").val();
+
+
+            window.open("{{url('/monitoring/get-grid/print')}}/{{$device}}/"+date_from+"/"+date_to, '_blank');
+            //$.ajax({
+            //    url: "{{url('/monitoring/get-grid/print')}}/{{$device}}/"+date_from+"/"+date_to,
+            //    type: 'GET',
+            //    success: function(data) {
+            //        window.print(data);
+            //    }
+            //});
+
+        })
+
+
 
         $('#btn-add-more-time').click(function(){
             var hours = $('#input-more-time').val();
@@ -229,9 +281,6 @@
          * Rastrea isca automaticamente
          */
         $(document).ready(function(){
-
-
-
             if( $("#chassi_device").val() != "" ){
                 start()
             }
