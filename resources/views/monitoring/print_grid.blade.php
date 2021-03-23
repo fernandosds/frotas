@@ -3,6 +3,7 @@
         border:1px solid #C0C0C0;
         border-collapse:collapse;
         padding:5px;
+        width: 100%
     }
     .demo th {
         border:1px solid #C0C0C0;
@@ -13,9 +14,18 @@
         border:1px solid #C0C0C0;
         padding:5px;
     }
+    .head{
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+    }
 </style>
 
 @if( $return['status'] == "success" )
+
+    <div class="head">
+        Impresso por: {{Auth::user()->name}} em {{date('Y/m/d')}}  - www.satcompany.com.br <hr />
+    </div>
 
     <table class="demo">
         <thead>
@@ -71,6 +81,8 @@
         @endforeach
         </tbody>
     </table>
+
+
 
 @else
     <div class="center">

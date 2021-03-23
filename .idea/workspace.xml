@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f00d41b-9b3e-439e-8997-290ca21d089a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ApiDeviceService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ApiDeviceService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/monitoring/grid.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/monitoring/grid.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="830">
-              <caret line="85" selection-start-line="85" selection-end-line="85" />
+            <state relative-caret-position="442">
+              <caret line="26" column="90" selection-start-line="26" selection-start-column="90" selection-end-line="26" selection-end-column="90" />
             </state>
           </provider>
         </entry>
@@ -83,7 +78,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
@@ -211,9 +206,9 @@
         <option value="$PROJECT_DIR$/app/Services/UserService.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Services/ApiDeviceService.php" />
-        <option value="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php" />
+        <option value="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" />
       </list>
     </option>
   </component>
@@ -331,7 +326,7 @@
       <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1917" />
     <option name="y" value="65" />
     <option name="width" value="1457" />
@@ -500,12 +495,12 @@
       <workItem from="1612267129266" duration="11888000" />
       <workItem from="1612305291811" duration="5104000" />
       <workItem from="1612354205291" duration="1226000" />
-      <workItem from="1616521778560" duration="3662000" />
+      <workItem from="1616521778560" duration="4418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191245000" />
+    <option name="totallyTimeSpent" value="192001000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
@@ -810,13 +805,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="830">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -828,6 +816,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="90" selection-start-line="26" selection-start-column="90" selection-end-line="26" selection-end-column="90" />
         </state>
       </provider>
     </entry>
