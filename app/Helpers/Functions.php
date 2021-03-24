@@ -61,10 +61,17 @@ function minLeftChart($to, $from)
  */
 function saveLog($arr)
 {
-    /*
+
+
+
     //user = id do usuario, name = nome do usuario, ip, value = valor pesquisado no sistema, type tipo de filtro usado na busca
-    $arr['user', 'name', 'ip', 'value', 'type'];
+    $arr = ['user', 'name', 'ip', 'value', 'type'];
     $arr['ip'] = $_SERVER['REMOTE_ADDR'];
+
+
+    print_r($arr);die;
+
+
     $post = array(
         'component'=>'siscon',
         'level' => 5,
@@ -79,5 +86,5 @@ function saveLog($arr)
     curl_close($ch);
 
     return true;
-    */
+
 }

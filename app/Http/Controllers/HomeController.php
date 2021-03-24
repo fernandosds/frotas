@@ -38,6 +38,8 @@ class HomeController extends Controller
     {
         $data = $this->data;
 
+        saveLog(['user', 'name', 'ip', 'value', 'type']);
+
         return view('index', $data);
     }
 
