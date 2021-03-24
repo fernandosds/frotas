@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f00d41b-9b3e-439e-8997-290ca21d089a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/Functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,35 +48,18 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
+        <entry file="file://$PROJECT_DIR$/app/Helpers/Functions.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="174" column="58" selection-start-line="174" selection-start-column="58" selection-end-line="174" selection-end-column="58" />
-              <folding>
-                <element signature="e#0#6#0" expanded="true" />
-                <element signature="e#113#119#0" expanded="true" />
-                <element signature="e#112#118#0" expanded="true" />
-                <element signature="e#112#118#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="90" selection-start-line="26" selection-start-column="90" selection-end-line="26" selection-end-column="90" />
+            <state relative-caret-position="790">
+              <caret line="81" column="6" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/web.php">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Iscas/BoardingController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="98" />
-            </state>
+            <state relative-caret-position="-3579" />
           </provider>
         </entry>
       </file>
@@ -82,16 +67,7 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterface.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="1311" column="20" selection-start-line="1311" selection-start-column="20" selection-end-line="1311" selection-end-column="20" />
+              <caret line="284" column="49" lean-forward="true" selection-start-line="284" selection-start-column="49" selection-end-line="284" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -99,8 +75,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="677">
-              <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+            <state relative-caret-position="399">
+              <caret line="36" column="52" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="81" column="51" selection-start-line="81" selection-start-column="51" selection-end-line="81" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -109,7 +94,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>valid</find>
       <find>form-widgets</find>
       <find>alert</find>
       <find>timepicker</find>
@@ -139,6 +123,7 @@
       <find>Exception</find>
       <find>carbon</find>
       <find>grid</find>
+      <find>$os_result</find>
     </findStrings>
     <dirStrings>
       <dir>D:\_DEVELOPER\Projeto_iscas\iscas\resources\views\layouts</dir>
@@ -158,8 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Requests/BoardingTestDeviceRequest.php" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/list.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/new.blade.php" />
@@ -208,6 +191,8 @@
         <option value="$PROJECT_DIR$/app/Services/ApiDeviceService.php" />
         <option value="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php" />
+        <option value="Z:/retorno_liberty.php" />
+        <option value="$PROJECT_DIR$/app/Helpers/Functions.php" />
         <option value="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" />
       </list>
     </option>
@@ -326,18 +311,17 @@
       <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="1917" />
-    <option name="y" value="65" />
-    <option name="width" value="1457" />
-    <option name="height" value="1019" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -349,6 +333,12 @@
               <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
               <item name="iscas" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iscas" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Helpers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
@@ -421,13 +411,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="Z:/retorno_liberty.php" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -495,18 +486,19 @@
       <workItem from="1612267129266" duration="11888000" />
       <workItem from="1612305291811" duration="5104000" />
       <workItem from="1612354205291" duration="1226000" />
-      <workItem from="1616521778560" duration="4418000" />
+      <workItem from="1616521778560" duration="8460000" />
+      <workItem from="1616584481382" duration="535000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192001000" />
+    <option name="totallyTimeSpent" value="196578000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18656716" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18869936" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -557,21 +549,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/log/list.blade.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/menu.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="163" lean-forward="true" selection-start-line="163" selection-end-line="163" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/framework/views/da8f7e458753c8a3d1c908ebd792274948848b84.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="203" column="13" selection-start-line="203" selection-start-column="13" selection-end-line="203" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="113">
@@ -778,13 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="387">
@@ -812,17 +782,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://Z:/retorno_liberty.php" />
+    <entry file="file://$PROJECT_DIR$/app/Helpers/Functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="790">
+          <caret line="81" column="6" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Iscas/BoardingController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3579" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
+          <caret line="284" column="49" lean-forward="true" selection-start-line="284" selection-start-column="49" selection-end-line="284" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="36" column="52" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="90" selection-start-line="26" selection-start-column="90" selection-end-line="26" selection-end-column="90" />
+        <state relative-caret-position="714">
+          <caret line="81" column="51" selection-start-line="81" selection-start-column="51" selection-end-line="81" selection-end-column="51" />
         </state>
       </provider>
     </entry>

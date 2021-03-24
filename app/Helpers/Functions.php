@@ -38,7 +38,7 @@ function timeLeft($final)
 /**
  * @param $to
  * @param $from
- * @return array
+ * @return float|int
  */
 function minLeftChart($to, $from)
 {
@@ -53,4 +53,31 @@ function minLeftChart($to, $from)
     return ( $total_minutes > $past_minutes ) ? ceil(($past_minutes / $total_minutes) * 100) : 0;
 
 
+}
+
+/**
+ * @param $arr
+ * @return bool
+ */
+function saveLog($arr)
+{
+    /*
+    //user = id do usuario, name = nome do usuario, ip, value = valor pesquisado no sistema, type tipo de filtro usado na busca
+    $arr['user', 'name', 'ip', 'value', 'type'];
+    $arr['ip'] = $_SERVER['REMOTE_ADDR'];
+    $post = array(
+        'component'=>'siscon',
+        'level' => 5,
+        'customer' => Auth::user()->id,
+        'message' => json_encode($arr)
+    );
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.satcompany.com.br/log/send');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return true;
+    */
 }

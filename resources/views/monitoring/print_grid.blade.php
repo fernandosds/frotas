@@ -37,6 +37,8 @@
             <th>Nível da bateria</th>
             <th>RSSI Hospedeiro</th>
             <th>Endereço</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
         </tr>
         </thead>
         <tbody>
@@ -76,6 +78,8 @@
                 </td>
                 <td>{{ $position["rssi_hospedeiro"] }}</td>
                 <td>{{ $position["endereco"] }}</td>
+                <td>{{ $position["latitude_hospede"] }}</td>
+                <td>{{ $position["longitude_hospede"] }}</td>
             </tr>
             <?php $cont ++; ?>
         @endforeach
