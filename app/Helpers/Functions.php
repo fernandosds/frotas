@@ -59,32 +59,31 @@ function minLeftChart($to, $from)
  * @param $arr
  * @return bool
  */
-function saveLog($arr)
+function saveLog($data)
 {
 
+    try{
+        $post = array('component'=>'Íscas', 'level' => 5,
+            'customer' => Auth::user()->customer->id, 'message' => json_encode([
+                'user' => Auth::user()->id,
+                'name' => Auth::user()->name,
+                'ip' => $_SERVER['REMOTE_ADDR'],
+                'value' => $data['value'],
+                'type' => $data['type'],
+                'local' => $data['local'],
+                'funcao' => $data['funcao']
+            ]));
 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.satcompany.com.br/log/send');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return true;
+    }catch (\mysql_xdevapi\Exception $e){
+        return $e->getMessage();
+    }
 
-    //user = id do usuario, name = nome do usuario, ip, value = valor pesquisado no sistema, type tipo de filtro usado na busca
-    $arr = ['user', 'name', 'ip', 'value', 'type'];
-    $arr['ip'] = $_SERVER['REMOTE_ADDR'];
-
-
-    print_r($arr);die;
-
-
-    $post = array(
-        'component'=>'siscon',
-        'level' => 5,
-        'customer' => Auth::user()->id,
-        'message' => json_encode($arr)
-    );
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://api.satcompany.com.br/log/send');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    return true;
 
 }

@@ -13,9 +13,8 @@ class HomeController extends Controller
     private $userService;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * HomeController constructor.
+     * @param UserService $userService
      */
     public function __construct(UserService $userService)
     {
@@ -38,7 +37,7 @@ class HomeController extends Controller
     {
         $data = $this->data;
 
-        saveLog(['user', 'name', 'ip', 'value', 'type']);
+        saveLog(['value' => 'Teste', 'type' => 'Acessou a página inicial', 'local' => 'HomeController', 'funcao' => 'index']);
 
         return view('index', $data);
     }

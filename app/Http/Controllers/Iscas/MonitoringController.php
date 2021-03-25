@@ -272,8 +272,6 @@ class MonitoringController extends Controller
     public function printGrid(String $device, String $from, String $to)
     {
 
-        return false;
-
         $carbon_from = Carbon::parse($from);
 
         if( $carbon_from->diffInDays(Carbon::parse($to)) <= 5 ){
