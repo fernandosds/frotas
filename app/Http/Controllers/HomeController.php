@@ -35,6 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $data = $this->data;
 
         saveLog(['value' => 'Teste', 'type' => 'Acessou a página inicial', 'local' => 'HomeController', 'funcao' => 'index']);
