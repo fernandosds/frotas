@@ -47,6 +47,7 @@ class MonitoringController extends Controller
         $data = $this->data;
         $data['device'] = $device;
 
+        saveLog(['value' => $device, 'type' => 'Monitorou isca', 'local' => 'MonitoringController', 'funcao' => 'index']);
         return view('monitoring.index', $data);
     }
 

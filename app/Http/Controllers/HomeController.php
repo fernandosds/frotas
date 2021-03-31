@@ -38,7 +38,7 @@ class HomeController extends Controller
 
         $data = $this->data;
 
-        saveLog(['value' => 'Teste', 'type' => 'Acessou a página inicial', 'local' => 'HomeController', 'funcao' => 'index']);
+        //saveLog(['value' => 'Teste', 'type' => 'Acessou a página inicial', 'local' => 'HomeController', 'funcao' => 'index']);
 
         return view('index', $data);
     }
