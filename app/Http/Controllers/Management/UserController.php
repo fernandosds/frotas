@@ -83,6 +83,7 @@ class UserController extends Controller
 
             $this->userService->save($request);
 
+            saveLog(['value' => $request->email, 'type' => 'Salvou usuário', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
 
         } catch (\Exception $e) {
@@ -102,6 +103,7 @@ class UserController extends Controller
 
             $this->userService->update($request, $request->id);
 
+            saveLog(['value' => $request->id, 'type' => 'Editou usuário', 'local' => 'UserController', 'funcao' => 'update']);
             return response()->json(['status' => 'success'], 200);
 
         } catch (\Exception $e) {

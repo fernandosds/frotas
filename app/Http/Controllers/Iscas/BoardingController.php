@@ -156,6 +156,7 @@ class BoardingController extends Controller
             }
 
             $this->boardingService->save($request);
+            saveLog(['value' => $device->model, 'type' => 'Novo embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
 
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -173,6 +174,8 @@ class BoardingController extends Controller
 
         try{
             $this->boardingService->finish($id);
+
+            saveLog(['value' => $id, 'type' => 'Encerrou embarque', 'local' => 'BoardingController', 'funcao' => 'finish']);
             return response()->json(['status' => 'success'], 200);
         }catch (Exception $e){
             return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
