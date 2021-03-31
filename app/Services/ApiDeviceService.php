@@ -57,7 +57,41 @@ class ApiDeviceService
     {
         $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
         return ClientHttp($url);
+
+        /*
+        $arr = ClientHttp($url);
+        dd($arr);
+        $url = $this->host_apis . "/devices/grid/last/$device";
+        $arr = ClientHttp($url);
+
+        $arr = [
+            'body' => [[
+                "ID" => $device,
+                "Prd" => $arr[0]['MARC_CODIGO'],
+                "Batt/St" => "",
+                "Tensão" => $arr[0]['TENSAO'],
+                "Ign" => "",
+                "Data_Rec" => $arr[0]['DATA_REC'],
+                "Data_GPS" => $arr[0]['DH_GPS'],
+                "Latitude" => $arr[0]['LATITUDE'],
+                "Longitude" => $arr[0]['LONGITUDE'],
+                "ST" => "",
+                "Satelites" => $arr[0]['QT_SATELITE'],
+                "Sinal" => "",
+                "JM" => "",
+                "Temp" => "",
+                "Vel." => "",
+                "Evt" => $arr[0]['PT_ID'],
+                "Modo" => $arr[0]['MODO'],
+            ]],
+            "code" => 200,
+            "status" => "success"
+        ];
+        dd($arr);
+        return $arr;
+        */
     }
+
 
     /**
      * @param String $device

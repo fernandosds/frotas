@@ -47,6 +47,7 @@ class MonitoringController extends Controller
         $data = $this->data;
         $data['device'] = $device;
 
+        saveLog(['value' => 'Ísca '.$device, 'type' => 'Acessou Tela de embarque', 'local' => 'MonitoringController', 'funcao' => 'index']);
         return view('monitoring.index', $data);
     }
 
@@ -131,7 +132,7 @@ class MonitoringController extends Controller
 
                 return response()->json(['status' => 'error', 'errors' => 'Ísca não embarcada'], 200);
             }
-
+            saveLog(['value' => 'Teste', 'type' => 'Acessou a página inicial', 'local' => 'HomeController', 'funcao' => 'index']);
             // Get Last position
             $last_positions = $this->apiDeviceService->getLastPosition($device);
 

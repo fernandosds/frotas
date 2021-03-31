@@ -97,8 +97,9 @@ class ContractController extends Controller
 
         try {
 
-            $this->contractService->save($request);
+            $contract = $this->contractService->save($request);
 
+            saveLog(['value' => $contract->id, 'type' => 'Novo contrato', 'local' => 'BoardingController', 'funcao' => 'finish']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
 

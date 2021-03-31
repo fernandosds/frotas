@@ -64,7 +64,7 @@ function saveLog($data)
 
     try{
         $post = array('component'=>'Íscas', 'level' => 5,
-            'customer' => Auth::user()->customer->id, 'message' => json_encode([
+            'customer' => null, 'message' => json_encode([
                 'user' => Auth::user()->id,
                 'name' => Auth::user()->name,
                 'ip' => $_SERVER['REMOTE_ADDR'],
