@@ -21,9 +21,7 @@
 
             <div class="row">
 
-                <div class="col-xl-1"></div>
-                <div class="col-xl-8">
-
+                <div class="col-sm-8">
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
 
@@ -63,24 +61,24 @@
                                     <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
                                     <option value="shipper" {{ ($user->access_level ?? null) == 'shipper' ? 'selected' : ''}}>Embarcador</option>
                                     @if(Auth::user()->type == "sat")
-                                        <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
-                                        <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
-                                        <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                    <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
+                                    <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
+                                    <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
                                     @endif
                                 </select>
                             </div>
 
                             @if(Auth::user()->type == "sat")
 
-                                <label class="col-form-label col-lg-1 col-sm-12">Empresa </label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
-                                    <select class="form-control" name="customer_id">
-                                        <option value="1">SAT Company</option>
-                                        @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <label class="col-form-label col-lg-2 col-sm-12">Empresa </label>
+                            <div class="col-lg-4 col-md-4 col-sm-5 form-group-sub">
+                                <select class="form-control" name="customer_id">
+                                    <option value="1">SAT Company</option>
+                                    @foreach( $customers as $customer )
+                                    <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             @endif
 
@@ -129,16 +127,132 @@
                     </div>
 
                 </div>
+                @if(Route::is('user.edit'))
+                <div class="col-sm-4">
+                    <div class="col-sm-12">
+                        <br />
+                        <h4>Pemissões </h4>
+                        <div class="form-group">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Departamento</th>
+                                        <th scope="col">Sem Acesso</th>
+                                        <th scope="col">Com Acesso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div class="kt-radio-inline">
+                                        <tr>
+                                            <td>Monitoramento</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dashboard</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Motoristas</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Frota de Carros</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cartões</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Custos</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="radio2">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <button type="button" class="btn btn-outline-success btn-sm pull-right">
+                            <i class="fa fa-cogs" ></i> Aplicar Permissões
+                        </button>
+                    </div>
+
+                </div>
+                @endif
 
                 <div class="col-xl-3">
-
-
 
                 </div>
             </div>
         </form>
-
     </div>
+
 </div>
 
 @endsection

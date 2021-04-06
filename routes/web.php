@@ -63,7 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
         Route::get('/check-pairing/{device}/{pair_device}', 'Iscas\MonitoringController@checkPairing');
         Route::get('/test-device/{model}', 'Iscas\MonitoringController@testDevice');
-
     });
 
     /**
@@ -210,7 +209,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new', 'Management\UserController@new');
             Route::post('/save', 'Management\UserController@save');
             Route::put('/update/{id}', 'Management\UserController@update');
-            Route::get('/edit/{id}', 'Management\UserController@edit');
+            Route::get('/edit/{id}', 'Management\UserController@edit')->name('user.edit');
             Route::get('/delete/{id}', 'Management\UserController@destroy');
         });
 
