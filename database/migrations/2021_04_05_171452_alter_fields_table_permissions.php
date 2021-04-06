@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldsTablePermissions extends Migration
+class AlterFieldsTablePermissions extends Migration
 {
     /**
      * Run the migrations.
@@ -15,19 +15,16 @@ class AddFieldsTablePermissions extends Migration
     {
         Schema::table('permissions', function (Blueprint $table) {
             $table->dropColumn('type');            
-            $table->unsignedInteger('user_id')->nullable();
-            $table->unsignedInteger('car_id')->nullable();
-            $table->unsignedInteger('card_id')->nullable();
-            $table->unsignedInteger('driver_id')->nullable();
+            $table->integer('user_id')->after('id');
+            $table->unsignedInteger('monitoring')->after('user_id')->default(1);
+            $table->unsignedInteger('dashboard')->after('monitoring')->default(1);
+            $table->unsignedInteger('driver')->after('dashboard')->default(1);
+            $table->unsignedInteger('fleet_car')->after('driver')->default(1);
+            $table->unsignedInteger('card')->after('fleet_car')->default(1);
+            $table->unsignedInteger('cost')->after('card')->default(1);            
 
         });
 
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-        });
     }
 
     /**
@@ -40,9 +37,12 @@ class AddFieldsTablePermissions extends Migration
         Schema::table('permissions', function (Blueprint $table) {
             $table->enum('type', ['administrador', 'usuario']);
             $table->dropColumn('user_id');
-            $table->dropColumn('car_id');
-            $table->dropColumn('card_id');
-            $table->dropColumn('driver_id');
+            $table->dropColumn('monitoring');
+            $table->dropColumn('dashboard');
+            $table->dropColumn('driver');
+            $table->dropColumn('fleet_car');
+            $table->dropColumn('card');
+            $table->dropColumn('cost');
         });
     }
 }

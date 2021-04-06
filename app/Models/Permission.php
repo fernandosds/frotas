@@ -20,8 +20,13 @@ class Permission extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
-        'type'
+        'user_id',
+        'monitoring',
+        'dashboard',
+        'driver',
+        'fleet_car',
+        'card',
+        'cost'
     ];
 
     /**
@@ -31,17 +36,22 @@ class Permission extends Model
     {
         return [
             'id'               => $this->id,
-            'type'             => $this->type,
+            'user_id'          => $this->user_id,
+            'monitoring'       => $this->monitoring,
+            'dashboard'        => $this->dashboard,
+            'driver'           => $this->driver,
+            'fleet_car'        => $this->fleet_car,
+            'card'             => $this->card,
+            'cost'             => $this->cost,
 
         ];
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function users()
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
-        return $this->HasMany('App\Models\User');
+        return $this->belongsTo('App\User');
     }
-    
 }

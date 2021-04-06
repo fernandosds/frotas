@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Log;
+use App\Models\Permission;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -79,5 +80,16 @@ class User extends Authenticatable
             'description' => 'Saiu do sistema',
         ]);
     }
-   
+
+    public function accessMonitoring($value)
+    {
+        $d = $this->permissions()->where('monitoring', $value)->first();
+        print_r($d);
+        die();
+    }
+
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
 }

@@ -17,11 +17,9 @@
             </div>
         </div>
 
-        <form class="kt-form kt-form--label-right" id="form-create-user">
-
-            <div class="row">
-
-                <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-8">
+                <form class="kt-form kt-form--label-right" id="form-create-user">
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
 
@@ -125,10 +123,14 @@
                             </div>
                         </div>
                     </div>
+                </form>
+            </div>
 
-                </div>
+            <div class="col-sm-4">
                 @if(Route::is('user.edit'))
-                <div class="col-sm-4">
+                <form id="form-create-permission">
+                    @csrf
+
                     <div class="col-sm-12">
                         <br />
                         <h4>Pemissões </h4>
@@ -137,8 +139,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Departamento</th>
-                                        <th scope="col">Sem Acesso</th>
                                         <th scope="col">Com Acesso</th>
+                                        <th scope="col">Sem Acesso</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,13 +149,13 @@
                                             <td>Monitoramento</td>
                                             <td>
                                                 <label class="kt-radio kt-radio--success">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="monitoring" value="1" {{$permission->monitoring == '1' ? 'checked' : '' }} >
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label class="kt-radio kt-radio--danger">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="monitoring" {{$permission->monitoring == '0' ? 'checked' : '' }} value="0">
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -162,13 +164,13 @@
                                             <td>Dashboard</td>
                                             <td>
                                                 <label class="kt-radio kt-radio--success">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="dashboard" value="1" {{$permission->dashboard == '1' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label class="kt-radio kt-radio--danger">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="dashboard" value="0" {{$permission->dashboard == '0' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -177,13 +179,13 @@
                                             <td>Motoristas</td>
                                             <td>
                                                 <label class="kt-radio kt-radio--success">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="driver" value="1" {{$permission->driver == '1' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label class="kt-radio kt-radio--danger">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="driver" value="0" {{$permission->driver == '0' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -192,13 +194,13 @@
                                             <td>Frota de Carros</td>
                                             <td>
                                                 <label class="kt-radio kt-radio--success">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="fleet_car" value="1" {{$permission->fleet_car == '1' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label class="kt-radio kt-radio--danger">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="fleet_car" value="0" {{$permission->fleet_car == '0' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -207,13 +209,13 @@
                                             <td>Cartões</td>
                                             <td>
                                                 <label class="kt-radio kt-radio--success">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="card" value="1"  {{$permission->card == '1' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label class="kt-radio kt-radio--danger">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="card" value="0" {{$permission->card == '0' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -222,13 +224,13 @@
                                             <td>Custos</td>
                                             <td>
                                                 <label class="kt-radio kt-radio--success">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="cost" value="1" {{$permission->cost == '1' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label class="kt-radio kt-radio--danger">
-                                                    <input type="radio" name="radio2">
+                                                    <input type="radio" name="cost" value="0" {{$permission->cost == '0' ? 'checked' : '' }}>
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -238,19 +240,15 @@
                             </table>
                         </div>
                         <hr />
-                        <button type="button" class="btn btn-outline-success btn-sm pull-right">
-                            <i class="fa fa-cogs" ></i> Aplicar Permissões
+                        <button type="button" class="btn btn-outline-success btn-sm pull-right" id="btn-permission">
+                            <i class="fa fa-cogs"></i> Aplicar Permissões
                         </button>
                     </div>
-
-                </div>
-                @endif
-
-                <div class="col-xl-3">
-
-                </div>
+                </form>
             </div>
-        </form>
+            @endif
+        </div>
+
     </div>
 
 </div>
@@ -269,6 +267,15 @@
 
         });
 
+    });
+
+    $(function() {
+        $('#btn-permission').click(function() {
+            var user_id = $('#id').val();
+
+            ajax_permission(user_id, "management/users/permission", $('#form-create-permission').serialize());
+
+        });
     });
 </script>
 @endsection

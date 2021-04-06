@@ -49,7 +49,7 @@
                             <tr id="_tr_user_{{$user->id}}">
                                 <th scope="row">{{$user->id}}</th>
                                 <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
+                                <td>{{$user->email}}</td>                              
 
                                 @if(Auth::user()->type == "sat")
                                     <td>{{ ($user->type == "sat" ) ? "Sat" : "Externo" }}</td>

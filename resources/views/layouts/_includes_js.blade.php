@@ -1,5 +1,4 @@
 <script>
-
     var KTAppOptions = {
         "colors": {
             "state": {
@@ -108,7 +107,6 @@
 <script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
 
 <script>
-
     /**
      * Mask CEP
      *
@@ -171,7 +169,7 @@
                     method: 'GET',
                 }).done(function(data) {
 
-                    if(data.status == 'error'){
+                    if (data.status == 'error') {
                         Swal.fire({
                             type: 'error',
                             title: 'Não foi possível excluir o registro',
@@ -179,7 +177,7 @@
                             showConfirmButton: true,
                             timer: 10000
                         })
-                    }else{
+                    } else {
                         $('#_tr_user_' + id).hide()
                         Swal.fire({
                             type: 'success',
@@ -229,9 +227,9 @@
                         showConfirmButton: true,
                         timer: 10000
                     }).then((result) => {
-                        if(reload){
+                        if (reload) {
                             location.reload();
-                        }else{
+                        } else {
                             $(location).attr('href', '{{url("")}}/' + route);
                         }
 
@@ -259,7 +257,7 @@
                         timer: 10000
                     })
 
-                }else if( error.responseJSON.status == "validation_error" ) {
+                } else if (error.responseJSON.status == "validation_error") {
                     var items = error.responseJSON.errors;
                     Swal.fire({
                         type: 'error',
@@ -268,9 +266,9 @@
                         footer: ' '
                     })
 
-                }else {
+                } else {
                     var items = error.responseJSON.errors;
-                    var errors = $.map(items, function (i) {
+                    var errors = $.map(items, function(i) {
                         return i.join('<br />');
                     });
                     Swal.fire({
@@ -343,4 +341,75 @@
     }
 
 
+    /*
+    INSERT PERMISSION
+    */
+    function ajax_permission(id, route, form_data, reload = false) {
+
+        var url = "{{url('')}}/" + route + "/update/" + id;
+        var method = "POST";
+        console.log(form_data);
+
+        $.ajax({
+            url: url,
+            type: method,
+            data: form_data,            
+            success: function(response) {
+                console.log(response)
+                if (response.status == "success") {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Permissões configuradas!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar salvar! ' + response.message,
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                }
+
+            },
+            error: function(error) {
+                console.log(error.responseJSON)
+                if (error.responseJSON.status == "internal_error") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else if (error.responseJSON.status == "validation_error") {
+                    var items = error.responseJSON.errors;
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                } else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+
+            }
+        });
+
+    }
 </script>
