@@ -42,6 +42,7 @@ class PermissionService
      */
     public function updatePermission(Request $request, $id)
     {
+        unset($request["_token"]);        
         $userPermission = $this->permissionRepository->updatePermission($id, $request->all());
         return $userPermission;
     }

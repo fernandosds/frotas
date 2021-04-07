@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Log;
 use App\Models\Permission;
+use App\Models\MenuAccess;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -81,15 +82,18 @@ class User extends Authenticatable
         ]);
     }
 
-    public function accessMonitoring($value)
+    public function listMenu()
     {
-        $d = $this->permissions()->where('monitoring', $value)->first();
-        print_r($d);
-        die();
+        return $this->belongsTo('App\Models\ListMenu');
     }
 
     public function permissions()
     {
         return $this->hasMany(Permission::class);
+    }
+
+    public function accessMenu($menu)
+    {
+        return $this->listMenu()->where('name', $menu)->first();
     }
 }

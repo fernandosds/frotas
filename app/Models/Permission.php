@@ -21,12 +21,12 @@ class Permission extends Model
      */
     protected $fillable = [
         'user_id',
-        'monitoring',
-        'dashboard',
-        'driver',
-        'fleet_car',
-        'card',
-        'cost'
+        'monitoring_id',
+        'dashboard_id',
+        'driver_id',
+        'fleet_car_id',
+        'card_id',
+        'cost_id'
     ];
 
     /**
@@ -35,14 +35,14 @@ class Permission extends Model
     public function format()
     {
         return [
-            'id'               => $this->id,
-            'user_id'          => $this->user_id,
-            'monitoring'       => $this->monitoring,
-            'dashboard'        => $this->dashboard,
-            'driver'           => $this->driver,
-            'fleet_car'        => $this->fleet_car,
-            'card'             => $this->card,
-            'cost'             => $this->cost,
+            'id'                  => $this->id,
+            'user_id'             => $this->user_id,
+            'monitoring_id'       => $this->monitoring_id,
+            'dashboard_id'        => $this->dashboard_id,
+            'driver_id'           => $this->driver_id,
+            'fleet_car_id'        => $this->fleet_car_id,
+            'card_id'             => $this->card_id,
+            'cost_id'             => $this->cost_id,
 
         ];
     }
@@ -53,5 +53,13 @@ class Permission extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function listMenu()
+    {
+        return $this->belongsTo('App\Models\ListMenu');
     }
 }

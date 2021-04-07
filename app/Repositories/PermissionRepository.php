@@ -3,9 +3,10 @@
 
 namespace App\Repositories;
 
-
+use Exception;
+use Illuminate\Support\Facades\DB;
+//use App\Models\UserMenu;
 use App\Models\Permission;
-use Illuminate\Support\Facades\Auth;
 
 class PermissionRepository extends AbstractRepository
 {
@@ -19,22 +20,17 @@ class PermissionRepository extends AbstractRepository
         $this->model = $model;
     }
 
-    /**
-     * @return mixed
-     */
     public function updatePermission($id, $request)
     {
-
         $newPermission = $this->model->updateOrCreate([
-
             'user_id'   => $id,
         ], [
-            'monitoring'     => $request['monitoring'],
-            'dashboard'      => $request['dashboard'],
-            'driver'         => $request['driver'],
-            'fleet_car'      => $request['fleet_car'],
-            'card'           => $request['card'],
-            'cost'           => $request['cost']
+            'monitoring_id'     => $request['monitoring_id'],
+            'dashboard_id'      => $request['dashboard_id'],
+            'driver_id'         => $request['driver_id'],
+            'fleet_car_id'      => $request['fleet_car_id'],
+            'card_id'           => $request['card_id'],
+            'cost_id'           => $request['cost_id']
         ]);
         return $newPermission;
     }

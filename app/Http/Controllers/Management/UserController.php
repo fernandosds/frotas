@@ -75,7 +75,6 @@ class UserController extends Controller
         $data = $this->data;
         $data['user'] = $this->userService->show($id);
         $data['customers'] = $this->customerService->all();
-        $data['permission'] = $this->permissionService->show($id);
 
         return view('management.user.new', $data);
     }

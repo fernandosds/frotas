@@ -14,10 +14,16 @@ class CreatePermissionsTable extends Migration
     public function up()
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->id();
-            $table->enum('type', ['administrador', 'usuario']);
-            $table->softDeletes();
+            $table->bigIncrements('id');
+            $table->integer('user_id');
+            $table->unsignedInteger('monitoring_id')->nullable();
+            $table->unsignedInteger('dashboard_id')->nullable();
+            $table->unsignedInteger('driver_id')->nullable();
+            $table->unsignedInteger('fleet_car_id')->nullable();
+            $table->unsignedInteger('card_id')->nullable();
+            $table->unsignedInteger('cost_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();            
         });
     }
 
