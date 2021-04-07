@@ -20,7 +20,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('/password/reset', 'UserController@resetPassword');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'user_access']], function () {
 
     Route::get('/', 'HomeController@index');
     Route::get('/access_denied', 'HomeController@accessDenied')->name('access_denied');

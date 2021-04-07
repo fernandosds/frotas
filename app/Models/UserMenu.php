@@ -13,8 +13,12 @@ class UserMenu extends Model
         'list_menu_id',
     ];
 
-    public function menu()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function listMenu()
     {
         return $this->belongsTo(ListMenu::class, 'list_menu_id');
+        //return $this->belongsTo('App\models\ListMenu');
     }
 }

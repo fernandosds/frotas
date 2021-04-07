@@ -17,9 +17,9 @@ class AccessLevel
     public function handle($request, Closure $next, $department = null)
     {
 
-        if( Auth::user()->access_level == 'management' || Auth::user()->access_level == $department ){
+        if (Auth::user()->access_level == 'management' || Auth::user()->access_level == $department) {
             return $next($request);
-        }else{
+        } else {
             return redirect('access_denied');
         }
     }
