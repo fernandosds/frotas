@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\CustomerService;
-use App\Services\PermissionService;
+use App\Services\UserAccessService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,13 +22,13 @@ class UserController extends Controller
      * UserController constructor.
      * @param UserService $userService
      * @param CustomerService $customerService
-     * @param PermissionService $customerService
+     * @param UserAccessService $customerService
      */
-    public function __construct(UserService $userService, CustomerService $customerService, PermissionService $permissionService)
+    public function __construct(UserService $userService, CustomerService $customerService, UserAccessService $userAccessService)
     {
         $this->userService = $userService;
         $this->customerService = $customerService;
-        $this->permissionService = $permissionService;
+        $this->userAccessService = $userAccessService;
 
         $this->data = [
             'icon' => 'flaticon-user',
@@ -132,7 +132,7 @@ class UserController extends Controller
     public function updatePermission(Int $id, Request $request)
     {
         try {
-            $this->permissionService->updatePermission($request, $request->id);
+            $this->userAccessService->updateUserAccess($request, $request->id);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

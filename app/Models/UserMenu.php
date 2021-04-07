@@ -10,11 +10,11 @@ class UserMenu extends Model
 
     protected $fillable = [
         'user_id',
-        'menu_acess_id',
+        'list_menu_id',
     ];
 
     public function menu()
     {
-        return $this->belongsTo(MenuAccess::class, 'menu_acess_id');
+        return $this->belongsTo(ListMenu::class, 'list_menu_id');
     }
 }

@@ -2,10 +2,8 @@
 
 namespace App;
 
+use App\Models\ListMenu;
 use App\Models\Log;
-use App\Models\Permission;
-use App\Models\MenuAccess;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -84,16 +82,19 @@ class User extends Authenticatable
 
     public function listMenu()
     {
-        return $this->belongsTo('App\Models\ListMenu');
-    }
-
-    public function permissions()
-    {
-        return $this->hasMany(Permission::class);
+        return $this->belongsToMany(ListMenu::class, 'user_menu');
     }
 
     public function accessMenu($menu)
     {
         return $this->listMenu()->where('name', $menu)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function usersmenu()
+    {
+        return $this->hasMany('App\Models\UserMenu');
     }
 }

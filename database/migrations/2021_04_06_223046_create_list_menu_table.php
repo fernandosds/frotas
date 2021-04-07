@@ -21,6 +21,13 @@ class CreateListMenuTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('user_menu', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('user_id')->nullable();
+            $table->integer('list_menu_id')->nullable();
+            $table->timestamps();
+        });
+
         DB::statement("INSERT INTO list_menu (id, name, description) VALUES (1, 'monitoring', 'Menu de monitoramento');");
         DB::statement("INSERT INTO list_menu (id, name, description) VALUES (2, 'dashboard', 'Menu de dashboard');");
         DB::statement("INSERT INTO list_menu (id, name, description) VALUES (3, 'driver', 'Menu de motorista');");
