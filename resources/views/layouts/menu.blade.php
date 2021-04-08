@@ -278,7 +278,6 @@
                     <h4 class="kt-menu__section-text">LOGÍSTICA</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
-
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logistics ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- LOGISTICA -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -300,25 +299,28 @@
                 @if( Auth::user()->access_level == 'management' || Auth::user()->access_level == 'logistic' )
 
                 <!-- LOCADORA ______________________________________________________________________________________________________________________ -->
+
                 <li class="kt-menu__section ">
                     <h4 class="kt-menu__section-text">GESTÃO DE FROTAS</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
-
+                @if(auth()->user()->accessMenu('monitoring'))
                 <li class="kt-menu__item {{$menu_open_fleets_monitoring ?? ''}}" aria-haspopup="true">
                     <a href="{{url('fleets/monitoring')}}" class="kt-menu__link ">
                         <span class="kt-menu__link-icon"><i class="fas fa-globe"></i></span>
                         <span class="kt-menu__link-text">Monitoramento</span>
                     </a>
                 </li>
-
+                @endif
+                @if(auth()->user()->accessMenu('dashboard'))
                 <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                     <a href="{{url('fleets/dashboard')}}" class="kt-menu__link ">
                         <span class="kt-menu__link-icon"><i class="fas fa-chart-line"></i></span>
                         <span class="kt-menu__link-text">Dashboard</span>
                     </a>
                 </li>
-
+                @endif
+                @if(auth()->user()->accessMenu('driver'))
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_drivers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- MOTORISTAS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -334,7 +336,8 @@
                         </ul>
                     </div>
                 </li>
-
+                @endif
+                @if(auth()->user()->accessMenu('fleet_car'))
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_cars ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- CARROS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -350,7 +353,8 @@
                         </ul>
                     </div>
                 </li>
-
+                @endif
+                @if(auth()->user()->accessMenu('card'))
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_cards ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- CARTÕES -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -366,7 +370,8 @@
                         </ul>
                     </div>
                 </li>
-
+                @endif
+                @if(auth()->user()->accessMenu('cost'))
                 <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_costs ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <!-- CUSTOS -->
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -382,11 +387,9 @@
                         </ul>
                     </div>
                 </li>
-
                 @endif
-
                 @endif
-
+                @endif
             </ul>
         </div>
     </div>

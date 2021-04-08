@@ -17,11 +17,10 @@ class UserSatCompany
     public function handle($request, Closure $next)
     {
 
-        if( Auth::user()->type == 'sat' ){
+        if (Auth::user()->type == 'sat') {
             return $next($request);
-        }else{
+        } else {
             return redirect('access_denied');
         }
-
     }
 }

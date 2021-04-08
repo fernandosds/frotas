@@ -15,9 +15,10 @@ use mysql_xdevapi\Exception;
 
 class UserService
 {
-    private $sendEmailResetPassword;
+
     private $userRepository;
     private $apiUserService;
+    private $sendEmailResetPassword;
 
     /**
      * UserService constructor.
@@ -26,9 +27,9 @@ class UserService
      */
     public function __construct(UserRepository $userRepository, ResetEmail $sendEmailResetPassword, ApiUserService $apiUserService)
     {
-        $this->userRepository = $userRepository;
-        $this->sendEmailResetPassword = $sendEmailResetPassword;
-        $this->apiUserService = $apiUserService;
+        $this->userRepository           = $userRepository;
+        $this->sendEmailResetPassword   = $sendEmailResetPassword;
+        $this->apiUserService           = $apiUserService;
     }
 
     /**
@@ -54,7 +55,7 @@ class UserService
     public function paginate(Int $limit = 15)
     {
 
-        if(Auth::user()->type == "ext"){
+        if (Auth::user()->type == "ext") {
             return $this->userRepository->paginate($limit, Auth::user()->customer_id);
         }
 
@@ -80,29 +81,29 @@ class UserService
     public function save(Request $request)
     {
 
-        if($request->customer_id == 1){
+        if ($request->customer_id == 1) {
             $request->merge([
                 'type' => "sat",
             ]);
-        }else{
+        } else {
             $request->merge([
                 'type' => "ext",
             ]);
         }
 
-        if(Auth::user()->type == "ext"){
+        if (Auth::user()->type == "ext") {
             $request->merge([
                 'type' => "ext",
                 'customer_id' => Auth::user()->customer_id
             ]);
         }
 
-        if(isset($request->password)) {
+        if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
         }
 
         // New Secret
-        if($request->required_validation){
+        if ($request->required_validation) {
             $secret = $this->apiUserService->newSecret();
             $request->merge(['validation_token' => $secret['secret']]);
         }
@@ -152,9 +153,6 @@ class UserService
      */
     public function destroy(Int $id)
     {
-
-
-
         return $this->userRepository->delete($id);
     }
 
@@ -173,7 +171,6 @@ class UserService
      */
     public function resetPassword($email)
     {
-
         $user = $this->userRepository->getUserByEmail($email);
 
         try {
@@ -191,12 +188,24 @@ class UserService
     private function accessDenied(Int $id)
     {
 
-        if(Auth::user()->type == "ext" ){
+        if (Auth::user()->type == "ext") {
             $user = $this->userRepository->find($id);
-            if(Auth::user()->customer_id != $user->customer_id){
+            if (Auth::user()->customer_id != $user->customer_id) {
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function updateUserAccess(Request $request, $id)
+    {
+        unset($request["_token"]);        
+        $userAccessRepository = $this->userRepository->updateUserAccess($id, $request->all());
+        return $userAccessRepository;
     }
 }

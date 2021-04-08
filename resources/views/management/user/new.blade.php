@@ -17,13 +17,9 @@
             </div>
         </div>
 
-        <form class="kt-form kt-form--label-right" id="form-create-user">
-
-            <div class="row">
-
-                <div class="col-xl-1"></div>
-                <div class="col-xl-8">
-
+        <div class="row">
+            <div class="col-sm-8">
+                <form class="kt-form kt-form--label-right" id="form-create-user">
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
 
@@ -63,24 +59,24 @@
                                     <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
                                     <option value="shipper" {{ ($user->access_level ?? null) == 'shipper' ? 'selected' : ''}}>Embarcador</option>
                                     @if(Auth::user()->type == "sat")
-                                        <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
-                                        <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
-                                        <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                    <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
+                                    <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
+                                    <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
                                     @endif
                                 </select>
                             </div>
 
                             @if(Auth::user()->type == "sat")
 
-                                <label class="col-form-label col-lg-1 col-sm-12">Empresa </label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
-                                    <select class="form-control" name="customer_id">
-                                        <option value="1">SAT Company</option>
-                                        @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <label class="col-form-label col-lg-2 col-sm-12">Empresa </label>
+                            <div class="col-lg-4 col-md-4 col-sm-5 form-group-sub">
+                                <select class="form-control" name="customer_id">
+                                    <option value="1">SAT Company</option>
+                                    @foreach( $customers as $customer )
+                                    <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             @endif
 
@@ -127,18 +123,134 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="col-xl-3">
-
-
-
-                </div>
+                </form>
             </div>
-        </form>
+
+            <div class="col-sm-4">
+                @if(Route::is('user.edit'))
+                <form id="form-create-permission">
+                    @csrf
+
+                    <div class="col-sm-12">
+                        <br />
+                        <h4>Pemissões </h4>
+                        <div class="form-group">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Departamento</th>
+                                        <th scope="col">Com Acesso</th>
+                                        <th scope="col">Sem Acesso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div class="kt-radio-inline">
+                                        <tr>
+                                            <td>Monitoramento</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="monitoring_id" value="1" checked="checked" {{@$user->usersmenu[0]->list_menu_id == '1' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="monitoring_id" value="0" {{@$user->usersmenu[0]->list_menu_id == '0' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dashboard</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="dashboard_id" value="2" checked="checked" {{@$user->usersmenu[1]->list_menu_id == '2' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="dashboard_id" value="0" {{@$user->usersmenu[1]->list_menu_id == '0' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Motoristas</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="driver_id" value="3" checked="checked" {{@$user->usersmenu[2]->list_menu_id == '3' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="driver_id" value="0" {{@$user->usersmenu[2]->list_menu_id == '0' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Frota de Carros</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="fleet_car_id" value="4" checked="checked" {{@$user->usersmenu[3]->list_menu_id == '4' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="fleet_car_id" value="0" {{@$user->usersmenu[3]->list_menu_id == '0' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cartões</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="card_id" value="5" checked="checked" {{@$user->usersmenu[4]->list_menu_id == '5' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="card_id" value="0" {{@$user->usersmenu[4]->list_menu_id == '0' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Custos</td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--success">
+                                                    <input type="radio" name="cost_id" value="6" checked="checked" {{@$user->usersmenu[5]->list_menu_id == '6' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="kt-radio kt-radio--danger">
+                                                    <input type="radio" name="cost_id" value="0" {{@$user->usersmenu[5]->list_menu_id == '0' ? 'checked' : '' }}>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <button type="button" class="btn btn-outline-success btn-sm pull-right" id="btn-permission">
+                            <i class="fa fa-cogs"></i> Aplicar Permissões
+                        </button>
+                    </div>
+                </form>
+            </div>
+            @endif
+        </div>
 
     </div>
+
 </div>
 
 @endsection
@@ -155,6 +267,15 @@
 
         });
 
+    });
+
+    $(function() {
+        $('#btn-permission').click(function() {
+            var user_id = $('#id').val();
+
+            ajax_permission(user_id, "management/users/permission", $('#form-create-permission').serialize());
+
+        });
     });
 </script>
 @endsection
