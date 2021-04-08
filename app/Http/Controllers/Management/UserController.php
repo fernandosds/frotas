@@ -131,6 +131,7 @@ class UserController extends Controller
      */
     public function updatePermission(Int $id, Request $request)
     {
+
         try {
             $this->userService->updateUserAccess($request, $request->id);
             return response()->json(['status' => 'success'], 200);

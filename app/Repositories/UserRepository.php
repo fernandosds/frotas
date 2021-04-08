@@ -63,8 +63,12 @@ class UserRepository extends AbstractRepository
 
     public function updateUserAccess($id, $request)
     {
+
         try {
-            $this->model->listMenu()->detach($request);
+
+            $user = $this->model->find($id);
+            $user->listMenu()->detach();
+
             $data = [];
             foreach ($request as $menuAccess) {
                 $data[] = [
