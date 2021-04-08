@@ -35,15 +35,5 @@ class UserAccessService
         return ($permissionByUserId) ? $permissionByUserId : abort(404);
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
-    public function updateUserAccess(Request $request, $id)
-    {
-        unset($request["_token"]);
-        $userAccessRepository = $this->userAccessRepository->updateUserAccess($id, $request->all());
-        return $userAccessRepository;
-    }
+    
 }

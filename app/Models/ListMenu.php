@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class ListMenu extends Model
@@ -23,4 +24,9 @@ class ListMenu extends Model
         'name',
         'description',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_menu');
+    }
 }

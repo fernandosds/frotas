@@ -2,8 +2,9 @@
 
 
 namespace App\Repositories;
-use App\Models\UserMenu;
 
+use App\Models\UserMenu;
+use App\User;
 
 class UserAccessRepository extends AbstractRepository
 {
@@ -15,24 +16,6 @@ class UserAccessRepository extends AbstractRepository
     public function __construct(UserMenu $model)
     {
         $this->model = $model;
-    }
-
-    public function updateUserAccess($id, $request)
-    {
-        try {
-            $data = [];
-            foreach ($request as $menuAccess) {
-                $data[] = [
-                    'user_id'          => $id,
-                    'list_menu_id'    => $menuAccess,
-                ];
-            }
-
-            $this->model->insert($data);
-            return response()->json(['status' => 'success', 'data' => $data], 201);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
     }
 
     /**

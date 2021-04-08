@@ -19,6 +19,6 @@ class UserMenu extends Model
     public function listMenu()
     {
         return $this->belongsTo(ListMenu::class, 'list_menu_id');
-        //return $this->belongsTo('App\models\ListMenu');
+        
     }
 }
