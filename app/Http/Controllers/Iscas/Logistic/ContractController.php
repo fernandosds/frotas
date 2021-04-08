@@ -40,7 +40,6 @@ class ContractController extends Controller
     }
 
     /**
-     * @param Int $id
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -56,6 +55,8 @@ class ContractController extends Controller
             }
 
             $this->contractService->update($request, $request->id);
+
+            saveLog(['value' => $request->i, 'type' => 'Finalizou o contrato', 'local' => 'ContractController', 'funcao' => 'update']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
