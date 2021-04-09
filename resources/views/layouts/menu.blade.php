@@ -295,9 +295,9 @@
                 </li>
 
                 @endif
-
+                <!-- FIM DOS ACESSOS EXCLUSIVOS SAT COMPANY -->
+                @endif
                 @if( Auth::user()->access_level == 'management' || Auth::user()->access_level == 'logistic' )
-
                 <!-- LOCADORA ______________________________________________________________________________________________________________________ -->
 
                 <li class="kt-menu__section ">
@@ -387,7 +387,6 @@
                         </ul>
                     </div>
                 </li>
-                @endif
                 @endif
                 @endif
             </ul>
