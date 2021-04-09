@@ -65,7 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'user.sat' => \App\Http\Middleware\UserSatCompany::class,
         'user.access_level' => \App\Http\Middleware\AccessLevel::class,
-        'user_access' => \App\Http\Middleware\UserAccess::class,
+        'user.fleet_management' => \App\Http\Middleware\AccessFleetManagement::class,
 
     ];
 }
