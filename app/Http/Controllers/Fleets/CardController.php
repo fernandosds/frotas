@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Fleets;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Fleets\CardService;
-use App\Http\Requests\Fleets\CardRequest;
+use App\Http\Requests\Rent\CardRequest;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -16,7 +16,7 @@ class CardController extends Controller
     /**
      * UserController constructor.
      * @param CardService $cardService
-     * 
+     *
      */
     public function __construct(CardService $cardService)
     {
@@ -79,7 +79,7 @@ class CardController extends Controller
             $request->merge([
                 'customer_id' => Auth::user()->customer_id
             ]);
-            
+
 
             $this->cardService->save($request);
 
