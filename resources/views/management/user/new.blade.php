@@ -130,7 +130,7 @@
                 @if(Route::is('user.edit'))
                 <form id="form-create-permission">
                     @csrf
-
+                    <input type="hidden" name="id" id="id" value="{{ $user->id ?? '' }}" />
                     <div class="col-sm-12">
                         <br />
                         <h4>Pemissões </h4>

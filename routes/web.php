@@ -20,7 +20,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('/password/reset', 'UserController@resetPassword');
 });
 
-Route::group(['middleware' => ['auth', 'user_access']], function () {
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', 'HomeController@index');
     Route::get('/access_denied', 'HomeController@accessDenied')->name('access_denied');
@@ -261,19 +261,19 @@ Route::group(['middleware' => ['auth', 'user_access']], function () {
     });
 
     /**
-     * Fleets routes
+     * Monitoring routes
      */
     Route::group(['prefix' => 'fleets'], function () {
 
-        Route::get('/monitoring', 'Fleets\MonitoringController@index');
-        Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions');
+        Route::get('/monitoring', 'Fleets\MonitoringController@index')->middleware(['user.fleet_management:monitoring']);
+        Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions')->middleware(['user.fleet_management:monitoring']);
 
-        Route::get('/dashboard', 'Fleets\FleetController@dashboard');
+        Route::get('/dashboard', 'Fleets\FleetController@dashboard')->middleware(['user.fleet_management:dashboard']);
 
         /**
          * Drivers routes
          */
-        Route::group(['prefix' => 'drivers'], function () {
+        Route::group(['middleware' => ['user.fleet_management:driver'], 'prefix' => 'drivers'], function () {
             Route::get('/', 'Fleets\DriverController@index');
             Route::get('/new', 'Fleets\DriverController@new');
             Route::post('/save', 'Fleets\DriverController@save');
@@ -286,7 +286,7 @@ Route::group(['middleware' => ['auth', 'user_access']], function () {
         /**
          * Fleets routes (frotas)
          */
-        Route::group(['prefix' => 'cars'], function () {
+        Route::group(['middleware' => ['user.fleet_management:fleet_car'], 'prefix' => 'cars'], function () {
             Route::get('/', 'Fleets\CarController@index');
             Route::get('/new', 'Fleets\CarController@new');
             Route::post('/save', 'Fleets\CarController@save');
@@ -299,7 +299,7 @@ Route::group(['middleware' => ['auth', 'user_access']], function () {
         /**
          * Cards routes
          */
-        Route::group(['prefix' => 'cards'], function () {
+        Route::group(['middleware' => ['user.fleet_management:card'], 'prefix' => 'cards'], function () {
             Route::get('/', 'Fleets\CardController@index');
             Route::get('/new', 'Fleets\CardController@new');
             Route::post('/save', 'Fleets\CardController@save');
@@ -312,7 +312,7 @@ Route::group(['middleware' => ['auth', 'user_access']], function () {
         /**
          * Cost routes (Custos)
          */
-        Route::group(['prefix' => 'costs'], function () {
+        Route::group(['middleware' => ['user.fleet_management:cost'], 'prefix' => 'costs'], function () {
             Route::get('/', 'Fleets\CostController@index');
             Route::get('/new', 'Fleets\CostController@new');
             Route::post('/save', 'Fleets\CostController@save');

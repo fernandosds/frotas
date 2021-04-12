@@ -204,7 +204,7 @@ class UserService
      */
     public function updateUserAccess(Request $request, $id)
     {
-        unset($request["_token"]);        
+        unset($request["_token"], $request["id"]); 
         $userAccessRepository = $this->userRepository->updateUserAccess($id, $request->all());
         return $userAccessRepository;
     }
