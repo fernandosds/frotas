@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Fleets\DriverService;
 use App\Http\Requests\Fleets\DriverRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DriverController extends Controller
 {
