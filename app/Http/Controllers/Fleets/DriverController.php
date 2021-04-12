@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Fleets;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Fleets\DriverService;
-use App\Http\Requests\Fleets\DriverRequest;
+use App\Http\Requests\Rent\DriverRequest;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -17,7 +17,7 @@ class DriverController extends Controller
     /**
      * UserController constructor.
      * @param DriverService $driverService
-     * 
+     *
      */
     public function __construct(DriverService $driverService)
     {

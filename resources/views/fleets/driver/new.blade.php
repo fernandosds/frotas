@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputComplement">Telefone</label>
-                        <input type="text" class="form-control" name="phone" value="{{ $driver->phone ?? '' }}">
+                        <input type="text" class="form-control mask_input_contact" name="phone" value="{{ $driver->phone ?? '' }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputNumber">Email</label>
@@ -101,12 +101,11 @@
 
 @section('scripts')
 <script>
-
-    $('#btn-unlink').click(function(){
+    $('#btn-unlink').click(function() {
         alert('desvincular')
     })
 
-    $('#btn-link').click(function(){
+    $('#btn-link').click(function() {
         alert('vincular')
     })
 
