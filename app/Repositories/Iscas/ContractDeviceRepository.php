@@ -24,7 +24,6 @@ class ContractDeviceRepository extends AbstractRepository
 
     public function checkStatusContractDevice(int $id)
     {
-
         $checkStatus = $this->model
             ->select('status')
             ->where([
@@ -32,7 +31,6 @@ class ContractDeviceRepository extends AbstractRepository
                 ['contract_id', '=', $id],
             ])
             ->count();
-
         return $checkStatus;
     }
 

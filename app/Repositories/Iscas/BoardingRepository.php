@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -32,11 +33,9 @@ class BoardingRepository extends AbstractRepository
      */
     public function finish(Int $id)
     {
-
         return $this->model->where('id', $id)
-                                ->where('customer_id', Auth::user()->customer_id)
-                                ->update(['active' => 0]);
-
+            ->where('customer_id', Auth::user()->customer_id)
+            ->update(['active' => 0]);
     }
 
     /**
@@ -45,7 +44,6 @@ class BoardingRepository extends AbstractRepository
      */
     public function getCurrentBoardingByDeviceId(Int $id)
     {
-
         return $this->model->where('device_id', $id)
             ->where('customer_id', Auth::user()->customer_id)
             ->where('active', 1)
@@ -58,7 +56,6 @@ class BoardingRepository extends AbstractRepository
      */
     public function getAllActive()
     {
-
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->where('active', 1)
             ->paginate(10);
@@ -71,17 +68,17 @@ class BoardingRepository extends AbstractRepository
      */
     public function paginateFinished(Int $limit)
     {
-        return $this->model->where('active','0')->orderBy('id','desc')->paginate($limit);
+        return $this->model->where('active', '0')->orderBy('id', 'desc')->paginate($limit);
     }
-    
+
     /**
      * @return mixed
      */
     public function getAllPairActive()
     {
         return $this->model->where('active', 1)
-                            ->whereNotNull('pair_device')
-                            ->get();
+            ->whereNotNull('pair_device')
+            ->get();
     }
 
     /**
@@ -90,7 +87,6 @@ class BoardingRepository extends AbstractRepository
      */
     public function getCurrentBoardingByDevice(String $device)
     {
-
         return DB::table('boardings')
             ->join('devices', 'devices.id', '=', 'boardings.device_id')
             ->select('boardings.*')
@@ -98,7 +94,6 @@ class BoardingRepository extends AbstractRepository
             ->where('boardings.customer_id', Auth::user()->customer_id)
             ->where('boardings.active', 1)
             ->first();
-
     }
 
     /**
@@ -106,10 +101,7 @@ class BoardingRepository extends AbstractRepository
      */
     public function autoFinatlizeBoardings()
     {
-
         return $this->model->where('finished_at', '<', date('Y-m-d H:i:s'))
             ->update(['active' => 0]);
-
     }
-
 }

@@ -50,7 +50,6 @@ class ContractRepository extends AbstractRepository
      */
     public function showid(int $id)
     {
-
         $contract = DB::table('contracts')
             ->select(DB::raw('*'))
             ->where('customer_id', '=', $id)
@@ -65,7 +64,6 @@ class ContractRepository extends AbstractRepository
      */
     public function contractCompleted()
     {
-
         $contractCompleted = $this->model
             ->select('*')
             ->where('status', '=', 1)
@@ -80,7 +78,6 @@ class ContractRepository extends AbstractRepository
      */
     public function historyContract()
     {
-
         $historyContract = $this->model
             ->where('customer_id', '=', Auth::user()->customer_id)
             ->get();

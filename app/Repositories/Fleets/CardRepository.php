@@ -18,4 +18,12 @@ class CardRepository extends AbstractRepository
     {
         $this->model = $model;
     }
+
+    public function addCardDriver()
+    {
+        $cardDriver = $this->model
+            ->whereraw('serial_number NOT IN (SELECT card_number FROM drivers)')
+            ->get();
+        return $cardDriver;
+    }
 }
