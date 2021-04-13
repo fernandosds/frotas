@@ -28,6 +28,7 @@ class CarRequest extends FormRequest
 
         if ($this->method() == "POST") {
             $return = array_merge([
+                'type' => 'required',
                 'chassi' => 'required|unique:cars',
             ], $return);
         } elseif ($this->method() == "PUT") {
