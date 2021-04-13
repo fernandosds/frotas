@@ -19,7 +19,7 @@ class Driver extends Model
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @var array
@@ -33,7 +33,8 @@ class Driver extends Model
         'address',
         'phone',
         'email',
-        'status'
+        'status',
+        'card_number'
 
     ];
 
@@ -52,7 +53,8 @@ class Driver extends Model
             'phone'       => $this->phone,
             'email'       => $this->email,
             'status'      => $this->status,
-            
+            'card_number' => $this->card_number,
+
         ];
     }
 }

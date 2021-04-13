@@ -30,18 +30,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="">Nº Cartão</label>
-                        <input type="text" class="form-control" name="card_number" maxlength="25" value="{{ $driver->card_number ?? '' }}">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="">&nbsp;</label><br />
-
-                        <button type="button" class="btn btn-primary" id="btn-link">
-                            <i class="fa fa-link"></i> Vincular
-                        </button>
-
-                        <button type="button" class="btn btn-danger" id="btn-unlink">
-                            <i class="fa fa-unlink"></i> Desincular
-                        </button>
+                        <input type="text" class="form-control" name="card_number" maxlength="10" value="{{ $driver->card_number ?? '' }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -76,8 +65,8 @@
                     <div class="form-group col-md-3">
                         <label for="inputAddress">Status</label>
                         <select class="form-control" name="status">
-                            <option value="0" {{ ($driver->status ?? null) == '0' ? 'selected' : ''}}>Bloqueado</option>
-                            <option value="1" {{ ($driver->status ?? null) == '1' ? 'selected' : ''}}>Desbloqueado</option>
+                            <option value="0" {{ ($driver->status ?? null) == '0' ? 'selected' : ''}}>Ativo</option>
+                            <option value="1" {{ ($driver->status ?? null) == '1' ? 'selected' : ''}}>Inativo</option>
                         </select>
                     </div>
                 </div>
@@ -101,16 +90,6 @@
 
 @section('scripts')
 <script>
-    $('#btn-unlink').click(function() {
-        alert('desvincular')
-    })
-
-    $('#btn-link').click(function() {
-        alert('vincular')
-    })
-
-
-
 
     /**
          Gravar motorista

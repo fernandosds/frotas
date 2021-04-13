@@ -22,7 +22,7 @@ class CreateDriversTable extends Migration
             $table->string('address', 255)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('email', 100)->nullable();
-            $table->string('card_number', 25)->nullable();
+            $table->string('card_number', 10)->nullable();
             $table->date('admission')->nullable();
             $table->boolean('status')->default(0);
             $table->softDeletes();
