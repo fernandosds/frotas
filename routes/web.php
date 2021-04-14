@@ -267,7 +267,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/monitoring', 'Fleets\MonitoringController@index')->middleware(['user.fleet_management:monitoring']);
         Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions')->middleware(['user.fleet_management:monitoring']);
-
         Route::get('/dashboard', 'Fleets\FleetController@dashboard')->middleware(['user.fleet_management:dashboard']);
 
         /**
@@ -306,8 +305,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/update/{id}', 'Fleets\CardController@update');
             Route::get('/edit/{id}', 'Fleets\CardController@edit');
             Route::get('/delete/{id}', 'Fleets\CardController@destroy');
-        });
 
+            Route::get('/remove-car/{car_id}/{card_id}', 'Fleets\CardCarController@removeCar');
+            Route::post('/add-cards', 'Fleets\CardCarController@addCards');
+            Route::post('/add-cars', 'Fleets\CardCarController@addCars');
+        });
 
         /**
          * Cost routes (Custos)

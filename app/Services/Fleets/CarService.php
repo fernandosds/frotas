@@ -89,6 +89,21 @@ class CarService
     }
 
     /**
+     * @param $card_id
+     * @return mixed
+     */
+    public function getAvailableCars($card_id)
+    {
+        //$used_cars = $this->cardCarRepository->usedCars($card_id);
+        //$used = [];
+        //foreach($used_cars as $us){
+        //    $used[] = $us->car_id;
+        //}
+        $used = [];
+        return $this->car->getAvailableCars($used);
+    }
+
+    /**
      * @param $id
      * @return mixed
      */

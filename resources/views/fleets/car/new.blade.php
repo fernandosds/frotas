@@ -34,7 +34,7 @@
 
                 <div class="row">
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputName">Placa</label>
@@ -88,26 +88,39 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-6 border-left">
 
-                        <h3>Cartões Vinculados</h3>
+                        <br /><h4>Cartões Vinculados</h4>
+
+                        @if($cards_linkeds->count() == 0)
+                            Nenhum cartão vinculado a este veículo.
+                        @endif
 
                         <div class="row">
-                            @for( $x = 0;$x <= 10;  $x ++  )
+                            @foreach( $cards_linkeds as $card  )
 
-                                <div class="col-sm-6">
-                                    <div class="alert alert-secondary  fade show" role="alert">
-                                        <div class="alert-icon"><i class="flaticon-safe-shield-protection"></i></div>
-                                        <div class="alert-text">0005552864</div>
-                                        <div class="alert-close">
-                                            <button type="button" class="close btn-close-card" data-dismiss="alert" aria-label="Close" data-id="{{$x}}">
-                                                <span aria-hidden="true"><i class="la la-close"></i></span>
-                                            </button>
+                                @if(isset($card->card))
+                                    <div class="col-sm-4" id="div-card-{{$card->card->id ?? ''}}">
+                                        <div class="alert alert-secondary  fade show" role="alert">
+                                            <div class="alert-icon"><i class="flaticon2-browser-1"></i></div>
+                                            <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->serial_number ?? ''}}</div>
+                                            <div class="alert-close">
+                                                <!-- data-dismiss="alert" aria-label="Close" -->
+                                                <button type="button" class="close btn-close-card" data-card_id="{{$card->card->id ?? ''}}" data-car_id="{{$car->id}}">
+                                                    <span aria-hidden="true" ><i class="la la-close"></i></span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
 
-                            @endfor
+                            @endforeach
+
+                            <div class="col-sm-12">
+                                <hr />
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado"><i class="fa fa-plus"></i> Vincular Cartões</button>
+                            </div>
+
                         </div>
 
                     </div>
@@ -120,21 +133,102 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TituloModalCentralizado">Vincular Cartões</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                @if( $cards_available->count() > 0 )
+
+                    <form id="form-cards">
+                        @csrf
+                        <div class="row">
+                            @foreach( $cards_available as $card_av )
+                                <div class="col-sm-4 border-right">
+                                    <label class="kt-checkbox kt-checkbox--bold kt-checkbox--brand">
+                                        <input type="checkbox" name="cards[]" value="{{$card_av->id}}"> {{$card_av->serial_number}}
+                                        <span></span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </form>
+
+                @else
+
+                    <i class="fa fa-warning"></i> Não existem cartões disponíveis.
+
+                @endif
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="btn-add-cards">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
 <script>
 
+    $('#btn-add-cards').click(function(){
+        var data = $('#form-cards').serialize()+'&car_id={{$car->id}}';
+        $('#btn-add-cards').html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...');
 
-    $('.btn-close-card').click(function(){
-
-        var id = $(this).data('id');
-        alert(id)
+        $.ajax({
+            url: "{{url('fleets/cards/add-cards')}}",
+            method: 'POST',
+            data: data,
+            success: function(response) {
+                location.reload();
+            },
+            error: function(error) {
+                $('#btn-add-cards').html('Salvar');
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+            }
+        });
 
     })
 
+    $('.btn-close-card').click(function(){
+        var car_id = $(this).data('car_id')
+        var card_id = $(this).data('card_id')
 
+        $('#text-close-'+card_id).html('<i class="fa fa-spinner fa-pulse"></i> Removendo...')
 
+        $.ajax({
+            url: "{{url('fleets/cards/remove-car')}}/"+car_id+"/"+card_id,
+            method: 'GET',
+            success: function(response) {
+                $('#div-card-'+card_id).hide()
+            },
+            error: function(error) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+            }
+        });
+    })
 
     /**
          Gravar carro
