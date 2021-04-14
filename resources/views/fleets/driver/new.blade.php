@@ -30,7 +30,14 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="">Nº Cartão</label>
-                        <input type="text" class="form-control" name="card_number" maxlength="10" value="{{ $driver->card_number ?? '' }}">
+                        <select class="form-control" name="card_number" id="card_number">
+                            @if (Route::currentRouteName('driver.edit'))
+                            <option value="{{$driver->card_number}}" {{old('card_number',$driver->card_number)==($driver->card_number ?? '')? 'selected':''}}>{{$driver->card_number}}</option>
+                            @endif
+                            @foreach($cards as $card)
+                            <option value="{{$card->serial_number}}" {{old('card_number',$card->serial_number)== ($driver->card_number ?? '')? 'selected':' '}}>{{$card->serial_number}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
@@ -90,7 +97,6 @@
 
 @section('scripts')
 <script>
-
     /**
          Gravar motorista
          */

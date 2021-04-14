@@ -277,7 +277,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new', 'Fleets\DriverController@new');
             Route::post('/save', 'Fleets\DriverController@save');
             Route::put('/update/{id}', 'Fleets\DriverController@update');
-            Route::get('/edit/{id}', 'Fleets\DriverController@edit');
+            Route::get('/edit/{id}', 'Fleets\DriverController@edit')->name('driver.edit');
             Route::get('/delete/{id}', 'Fleets\DriverController@destroy');
         });
 

@@ -27,6 +27,7 @@ class Driver extends Model
     protected $fillable = [
         'id',
         'name',
+        'admission',
         'cpf',
         'cnh',
         'customer_id',
@@ -46,6 +47,7 @@ class Driver extends Model
         return [
             'id'          => $this->id,
             'name'        => $this->name,
+            'admission'   => $this->admission,
             'cpf'         => $this->cpf,
             'cnh'         => $this->cnh,
             'customer_id' => $this->customer_id,

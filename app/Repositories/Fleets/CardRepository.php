@@ -20,12 +20,27 @@ class CardRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    /**
+     * @param $used
+     * @return mixed
+     */
     public function getAvailableCards($used)
     {
 
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->whereNotIn('id', $used)
             ->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function addCardDriver()
+    {
+        $cardDriver = $this->model
+            ->whereraw('serial_number NOT IN (SELECT card_number FROM drivers)')
+            ->get();
+        return $cardDriver;
 
     }
 }

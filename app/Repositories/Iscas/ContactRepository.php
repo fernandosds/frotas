@@ -27,9 +27,6 @@ class ContactRepository extends AbstractRepository
             ->where('customer_id', '=', $id)
             ->where('deleted_at', null)
             ->get();
-
-            
-
             return $contact;
     }
 }

@@ -28,7 +28,8 @@ class DriverRequest extends FormRequest
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'cpf' => 'required|unique:drivers,deleted_at,NULL',
+                'cpf' => 'required|unique:drivers',
+                'card_number' => 'required|unique:drivers',
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([

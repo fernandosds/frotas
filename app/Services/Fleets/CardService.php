@@ -28,6 +28,14 @@ class CardService
     }
 
     /**
+     * @return mixed
+     */
+    public function addCardDriver()
+    {
+        return $this->card->addCardDriver();
+    }
+
+    /**
      * @param Int $limit
      * @return mixed
      */
