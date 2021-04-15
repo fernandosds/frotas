@@ -18,6 +18,13 @@ class CarController extends Controller
     private $data;
 
     /**
+     * Ao cadastrar veiculo, mandar comando para ativar com qualquer cartao
+     * Apos fazer vinculo, mudar configuração para ativar desbloqueio com cartao especifico
+     * Apagar car~tao especifico ao desvincular
+     *
+     *
+     *
+     *
      * CarController constructor.
      * @param CarService $carService
      * @param CardService $cardService
