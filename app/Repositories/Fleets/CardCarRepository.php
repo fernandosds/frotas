@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -33,8 +34,8 @@ class CardCarRepository extends AbstractRepository
     public function getCarsByCardId(Int $id)
     {
         return $this->model->where('customer_id', Auth::user()->customer_id)
-                            ->where('card_id', $id)
-                            ->get();
+            ->where('card_id', $id)
+            ->get();
     }
 
     /**
@@ -56,9 +57,20 @@ class CardCarRepository extends AbstractRepository
     {
 
         return $this->model->where('customer_id', Auth::user()->customer_id)
-                            ->where('car_id', $car_id)
-                            ->get();
+            ->where('car_id', $car_id)
+            ->get();
+    }
 
+    /**
+     * @param Int $car_id
+     * @return mixed
+     */
+    public function usedCars(Int $card_id)
+    {
+
+        return $this->model->where('customer_id', Auth::user()->customer_id)
+            ->where('card_id', $card_id)
+            ->get();
     }
 
     /**
@@ -70,21 +82,17 @@ class CardCarRepository extends AbstractRepository
     {
 
         return $this->model->where('customer_id', Auth::user()->customer_id)
-                            ->where('car_id', $car_id)
-                            ->where('card_id', $card_id)
-                            ->delete();
-
+            ->where('car_id', $car_id)
+            ->where('card_id', $card_id)
+            ->delete();
     }
 
     /**
      * @param array $data
      */
-    public function addCards(Array $attach)
+    public function addCards(array $attach)
     {
 
         DB::table('card_car')->insert($attach);
-
     }
-
-
 }
