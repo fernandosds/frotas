@@ -305,6 +305,7 @@
                         <h4 class="kt-menu__section-text">GESTÃO DE FROTAS</h4>
                         <i class="kt-menu__section-icon flaticon-more-v2"></i>
                     </li>
+                <!--
                     @if( Auth::user()->access_level == 'management' ||  auth()->user()->accessMenu('monitoring') )
                         <li class="kt-menu__item {{$menu_open_fleets_monitoring ?? ''}}" aria-haspopup="true">
                             <a href="{{url('fleets/monitoring')}}" class="kt-menu__link ">
@@ -313,6 +314,7 @@
                             </a>
                         </li>
                     @endif
+
                     @if(Auth::user()->access_level == 'management' ||  auth()->user()->accessMenu('dashboard') )
                         <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                             <a href="{{url('fleets/dashboard')}}" class="kt-menu__link ">
@@ -321,6 +323,7 @@
                             </a>
                         </li>
                     @endif
+                        -->
                     @if(Auth::user()->access_level == 'management' ||  auth()->user()->accessMenu('driver') )
                         <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_drivers ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                             <!-- MOTORISTAS -->
@@ -372,9 +375,10 @@
                             </div>
                         </li>
                     @endif
+
+                <!--
                     @if( Auth::user()->access_level == 'management' ||  auth()->user()->accessMenu('cost') )
                         <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_costs ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                            <!-- CUSTOS -->
                             <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                                 <span class="kt-menu__link-icon"><i class="fa fa-money-bill-wave"></i></span>
                                 <span class="kt-menu__link-text">Custos</span>
@@ -389,6 +393,7 @@
                             </div>
                         </li>
                     @endif
+                    -->
 
                 @endif
             </ul>
