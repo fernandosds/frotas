@@ -290,7 +290,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new', 'Fleets\CarController@new');
             Route::post('/save', 'Fleets\CarController@save');
             Route::put('/update/{id}', 'Fleets\CarController@update');
-            Route::get('/edit/{id}', 'Fleets\CarController@edit');
+            Route::get('/edit/{id}', 'Fleets\CarController@edit')->name('car.edit');
             Route::get('/delete/{id}', 'Fleets\CarController@destroy');
         });
 
