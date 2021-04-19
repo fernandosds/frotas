@@ -31,6 +31,7 @@
                     <div class="form-group col-md-2">
                         <label for="">Nº Cartão</label>
                         <select class="form-control" name="card_number" id="card_number">
+                        <option value=" ">Não adicionar cartão</option>
                             @if (Route::currentRouteName('driver.edit'))
                             <option value="{{$driver->card_number}}" {{old('card_number',$driver->card_number)==($driver->card_number ?? '')? 'selected':''}}>{{$driver->card_number}}</option>
                             @endif
