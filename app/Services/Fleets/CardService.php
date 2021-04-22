@@ -114,7 +114,6 @@ class CardService
      */
     public function destroy(Int $id)
     {
-
         return $this->card->delete($id);
     }
 

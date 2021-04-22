@@ -22,11 +22,13 @@ class CreateDriversTable extends Migration
             $table->string('address', 255)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('email', 100)->nullable();
-            $table->string('card_number', 10)->nullable();
+            $table->unsignedBigInteger('card_id')->nullable();
             $table->date('admission')->nullable();
             $table->boolean('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
         });
     }
 

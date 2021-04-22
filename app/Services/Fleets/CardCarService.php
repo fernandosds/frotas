@@ -86,7 +86,6 @@ class CardCarService
      */
     public function addCars(Array $data)
     {
-
         $user_id = Auth::user()->id;
         $customer_id = Auth::user()->customer_id;
         $date = date('Y-m-d H:i:s');
