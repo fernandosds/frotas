@@ -19,7 +19,7 @@
 
         <form class="kt-form kt-form--label-right" id="form-create-driver">
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <input type="hidden" name="id" id="id" value="{{ $driver->id ?? '' }}" />
                     @csrf
                     <div class="kt-portlet__body">
@@ -28,7 +28,7 @@
                                 <label for="inputName">Nome</label>
                                 <input type="text" name="name" class="form-control" value="{{ $driver->name ?? '' }}">
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-4">
                                 <label for="">Nº Cartão</label>
                                 <select class="form-control" name="card_id" id="card_id">
                                     <option value=" ">Não adicionar cartão</option>
@@ -50,25 +50,25 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="inputCpfCnpj">CPF</label>
                                 <input type="text" id="input_cpf" name="cpf" class="form-control input_cpf_cnpj" maxlength="14" value="{{ $driver->cpf ?? '' }}">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="inputAddress">CNH</label>
                                 <input type="text" class="form-control" name="cnh" maxlength="11" value="{{ $driver->cnh ?? '' }}">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="inputComplement">Telefone</label>
                                 <input type="text" class="form-control mask_input_contact" name="phone" value="{{ $driver->phone ?? '' }}">
                             </div>
-                            <div class="form-group col-md-3">
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
                                 <label for="inputNumber">Email</label>
                                 <input type="text" class="form-control" name="email" value="{{ $driver->email ?? '' }}">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="inputAddress">Status</label>
                                 <select class="form-control" name="status">
                                     <option value="0" {{ ($driver->status ?? null) == '0' ? 'selected' : ''}}>Ativo</option>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-3 border-left">
+                <div class="col-sm-5 border-left">
 
                     <br />
                     <h4>Veículos Vinculados</h4>
