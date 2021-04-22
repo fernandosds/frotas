@@ -30,12 +30,10 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="">Nº Cartão</label>
-                        <select class="form-control" name="card_number" id="card_number">
-                            @if (Route::currentRouteName('driver.edit'))
-                            <option value="{{$driver->card_number}}" {{old('card_number',$driver->card_number)==($driver->card_number ?? '')? 'selected':''}}>{{$driver->card_number}}</option>
-                            @endif
+                        <select class="form-control" name="card_id" id="card_id">
+                        <option value=" ">Não adicionar cartão</option>
                             @foreach($cards as $card)
-                            <option value="{{$card->serial_number}}" {{old('card_number',$card->serial_number)== ($driver->card_number ?? '')? 'selected':' '}}>{{$card->serial_number}}</option>
+                            <option value="{{$card->id}}">{{$card->serial_number}}</option>
                             @endforeach
                         </select>
                     </div>

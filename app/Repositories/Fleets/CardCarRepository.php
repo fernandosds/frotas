@@ -55,7 +55,6 @@ class CardCarRepository extends AbstractRepository
      */
     public function usedCards(Int $car_id)
     {
-
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->where('car_id', $car_id)
             ->get();
@@ -67,7 +66,6 @@ class CardCarRepository extends AbstractRepository
      */
     public function usedCars(Int $card_id)
     {
-
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->where('card_id', $card_id)
             ->get();
@@ -80,7 +78,6 @@ class CardCarRepository extends AbstractRepository
      */
     public function removeCar(Int $car_id, Int $card_id)
     {
-
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->where('car_id', $car_id)
             ->where('card_id', $card_id)
@@ -92,7 +89,6 @@ class CardCarRepository extends AbstractRepository
      */
     public function addCards(array $attach)
     {
-
         DB::table('card_car')->insert($attach);
     }
 }

@@ -20,6 +20,7 @@ class CardController extends Controller
     /**
      * CardController constructor.
      * @param CardService $cardService
+     * @param CarService $cardService
      * @param CardCarService $driverCardCarService
      */
     public function __construct(CardService $cardService, CardCarService $driverCardCarService, CarService $carService)
@@ -103,9 +104,9 @@ class CardController extends Controller
 
         $data = $this->data;
         $data['card'] = $this->cardService->show($id);
-
         $data['cars_linkeds'] = $this->driverCardCarService->getCarsByCardId($id);
         $data['cars_available'] = $this->carService->getAvailableCars($id);
+
 
         return view('fleets.card.edit', $data);
     }

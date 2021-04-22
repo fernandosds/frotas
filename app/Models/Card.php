@@ -41,4 +41,12 @@ class Card extends Model
 
         ];
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\Driver');
+    }
 }

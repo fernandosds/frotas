@@ -7,26 +7,32 @@ use App\Http\Controllers\Controller;
 use App\Services\Fleets\DriverService;
 use App\Services\Fleets\CardService;
 use App\Http\Requests\Rent\DriverRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Services\Fleets\CardCarService;
+use App\Services\Fleets\CarService;
 
 class DriverController extends Controller
 {
     private $driverService;
     private $cardService;
     private $data;
+    private $carService;
+    private $driverCardCarService;
 
 
     /**
      * UserController constructor.
-     * @param DriverService $driverService
-     * @param CardService $driverService
+     * @param   DriverService $driverService
+     * @param   CardService $driverService
+     *  @param  carService $carService
+     *  @param  driverCardCarService $driverCardCarService
      *
      */
-    public function __construct(DriverService $driverService, CardService $cardService)
+    public function __construct(DriverService $driverService, CardService $cardService, CardCarService $driverCardCarService, CarService $carService)
     {
-        $this->driverService    = $driverService;
-        $this->cardService      = $cardService;
+        $this->driverService            = $driverService;
+        $this->cardService              = $cardService;
+        $this->carService               = $carService;
+        $this->driverCardCarService     = $driverCardCarService;
 
         $this->data = [
             'icon' => 'flaticon2-user',
@@ -92,11 +98,12 @@ class DriverController extends Controller
      */
     public function edit(Int $id)
     {
-
         $data = $this->data;
-        $data['driver'] = $this->driverService->show($id);
         $data['cards'] = $this->cardService->addCardDriver();
-        return view('fleets.driver.new', $data);
+        $data['driver'] = $this->driverService->show($id);
+        $data['cars_linkeds'] = $this->driverCardCarService->getCarsByCardId($data['driver']->card_id);
+        $data['cars_available'] = $this->carService->getAvailableCars($data['driver']->card_id);
+        return view('fleets.driver.edit', $data);
     }
 
     /**
