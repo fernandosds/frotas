@@ -71,7 +71,7 @@ class DriverController extends Controller
     public function new()
     {
         $data = $this->data;
-        $data['cards'] = $this->cardService->addCardDriver();
+        $data['cards'] = $this->cardService->getCardDriverAvailable();
         return view('fleets.driver.new', $data);
     }
 
@@ -99,7 +99,7 @@ class DriverController extends Controller
     public function edit(Int $id)
     {
         $data = $this->data;
-        $data['cards'] = $this->cardService->addCardDriver();
+        $data['cards'] = $this->cardService->getCardDriverAvailable();
         $data['driver'] = $this->driverService->show($id);
         $data['cars_linkeds'] = $this->driverCardCarService->getCarsByCardId($data['driver']->card_id);
         $data['cars_available'] = $this->carService->getAvailableCars($data['driver']->card_id);

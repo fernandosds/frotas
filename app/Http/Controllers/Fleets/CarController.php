@@ -104,10 +104,8 @@ class CarController extends Controller
 
         $data = $this->data;
         $data['car'] = $this->carService->show($id);
-
-        $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
         $data['cards_available'] = $this->cardService->getAvailableCards($id);
-
+        $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
         return view('fleets.car.edit', $data);
     }
 
@@ -120,9 +118,7 @@ class CarController extends Controller
     {
 
         try {
-
             $this->carService->update($request, $request->id);
-
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

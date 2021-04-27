@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -11,6 +12,7 @@ namespace App\Services\Fleets;
 
 use App\Repositories\Fleets\CardCarRepository;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Print_;
 
 class CardCarService
 {
@@ -60,14 +62,13 @@ class CardCarService
     /**
      * @param array $data
      */
-    public function addCards(Array $data)
+    public function addCards(array $data)
     {
-
         $user_id = Auth::user()->id;
         $customer_id = Auth::user()->customer_id;
         $date = date('Y-m-d H:i:s');
 
-        foreach( $data['cards'] as $card ){
+        foreach ($data['cards'] as $card) {
             $attach[] = array(
                 'card_id' => $card,
                 'car_id' => $data['car_id'],
@@ -84,13 +85,13 @@ class CardCarService
      * @param array $data
      * @return mixed
      */
-    public function addCars(Array $data)
+    public function addCars(array $data)
     {
         $user_id = Auth::user()->id;
         $customer_id = Auth::user()->customer_id;
         $date = date('Y-m-d H:i:s');
 
-        foreach( $data['cars'] as $car ){
+        foreach ($data['cars'] as $car) {
             $attach[] = array(
                 'card_id' => $data['card_id'],
                 'car_id' => $car,
@@ -99,8 +100,6 @@ class CardCarService
                 'created_at' => $date
             );
         }
-
         return $this->cardCarRepository->addCards($attach);
     }
-
 }

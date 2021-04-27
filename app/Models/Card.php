@@ -43,10 +43,11 @@ class Card extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function driver()
+    public function drivers()
     {
-        return $this->belongsTo('App\Models\Driver');
+        return $this->hasMany('App\Models\Driver');
     }
+
 }

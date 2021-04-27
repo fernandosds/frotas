@@ -91,7 +91,7 @@
                     <div class="col-sm-6 border-left">
                         @if(Route::is('car.edit'))
                         <br />
-                        <h4>Cartões Vinculados</h4>
+                        <h4>Motoristas Vinculados</h4>
 
                         @if($cards_linkeds->count() == 0)
                         Nenhum cartão vinculado a este veículo.
@@ -104,7 +104,7 @@
                             <div class="col-sm-4" id="div-card-{{$card->card->id ?? ''}}">
                                 <div class="alert alert-secondary  fade show" role="alert">
                                     <div class="alert-icon"><i class="flaticon2-browser-1"></i></div>
-                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->serial_number ?? ''}}</div>
+                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->drivers[0]->name?? ''}}</div>
                                     <div class="alert-close">
                                         <!-- data-dismiss="alert" aria-label="Close" -->
                                         <button type="button" class="close btn-close-card" data-card_id="{{$card->card->id ?? ''}}" data-car_id="{{$car->id}}">
@@ -119,7 +119,9 @@
 
                             <div class="col-sm-12">
                                 <hr />
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado"><i class="fa fa-plus"></i> Vincular Cartões</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado"><i class="fa fa-plus"></i>
+                                Vincular Motoristas
+</button>
                             </div>
 
                         </div>
@@ -139,7 +141,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="TituloModalCentralizado">Vincular Cartões</h5>
+                <h5 class="modal-title" id="TituloModalCentralizado">Vincular Motoristas</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -152,7 +154,7 @@
                         @foreach( $cards_available as $card_av )
                         <div class="col-sm-4 border-right">
                             <label class="kt-checkbox kt-checkbox--bold kt-checkbox--brand">
-                                <input type="checkbox" name="cards[]" value="{{$card_av->id}}"> {{$card_av->serial_number}}
+                                <input type="checkbox" name="cards[]" value="{{$card_av->id}}"> {{$card_av->drivers[0]->name}}
                                 <span></span>
                             </label>
                         </div>
@@ -160,7 +162,7 @@
                     </div>
                 </form>
                 @else
-                <i class="fa fa-warning"></i> Não existem veículos disponíveis.
+                <i class="fa fa-warning"></i> Não existem motoristas disponíveis.
                 @endif
             </div>
 
