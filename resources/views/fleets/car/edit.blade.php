@@ -104,7 +104,7 @@
                             <div class="col-sm-4" id="div-card-{{$card->card->id ?? ''}}">
                                 <div class="alert alert-secondary  fade show" role="alert">
                                     <div class="alert-icon"><i class="flaticon2-browser-1"></i></div>
-                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->serial_number ?? ''}}</div>
+                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->serial_number ?? ''}} {{$card->card->driver->name ?? ''}}</div>
                                     <div class="alert-close">
                                         <!-- data-dismiss="alert" aria-label="Close" -->
                                         <button type="button" class="close btn-close-card" data-card_id="{{$card->card->id ?? ''}}" data-car_id="{{$car->id}}">
