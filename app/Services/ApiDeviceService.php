@@ -136,6 +136,7 @@ class ApiDeviceService
     public function printGrid(String $device, String $from, String $to)
     {
 
+        //return '';
         $url = $this->host . "/hospedeiros&{$device}[type=ADDR,PER='{$from}/{$to}']";
         return ClientHttp($url);
     }
