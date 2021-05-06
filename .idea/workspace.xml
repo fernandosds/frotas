@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f00d41b-9b3e-439e-8997-290ca21d089a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/html/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/html/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/ApiDeviceService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ApiDeviceService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,11 +64,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="138" column="10" selection-start-line="138" selection-start-column="10" selection-end-line="138" selection-end-column="10" />
+            <state relative-caret-position="663">
+              <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/boardings/view.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="62" column="75" selection-start-line="62" selection-start-column="75" selection-end-line="62" selection-end-column="75" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="181" column="24" selection-start-line="181" selection-start-column="24" selection-end-line="181" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#6#0" expanded="true" />
+                <element signature="e#113#119#0" expanded="true" />
+                <element signature="e#112#118#0" expanded="true" />
+                <element signature="e#112#118#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,7 +101,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>timepicker</find>
       <find>bootstrapSwitch</find>
       <find>ninguém</find>
       <find>baixa_os_frustrada_mobile</find>
@@ -106,6 +130,7 @@
       <find>$os_result</find>
       <find>MYSQL</find>
       <find>8306</find>
+      <find>Imprim</find>
     </findStrings>
     <dirStrings>
       <dir>D:\_DEVELOPER\Projeto_iscas\iscas\resources\views\layouts</dir>
@@ -168,7 +193,6 @@
         <option value="$PROJECT_DIR$/app/Mail/ResetEmail.php" />
         <option value="$PROJECT_DIR$/app/Services/UserService.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" />
         <option value="Z:/retorno_liberty.php" />
         <option value="$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php" />
@@ -176,6 +200,7 @@
         <option value="$PROJECT_DIR$/app/Helpers/Functions.php" />
         <option value="$PROJECT_DIR$/laradock/.env" />
         <option value="$PROJECT_DIR$/app/Services/ApiDeviceService.php" />
+        <option value="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" />
       </list>
     </option>
   </component>
@@ -348,7 +373,20 @@
             <path>
               <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
               <item name="iscas" type="462c0819:PsiDirectoryNode" />
-              <item name="laradock" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iscas" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iscas" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="monitoring" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -434,7 +472,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="212018000" />
+    <option name="totallyTimeSpent" value="212787000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -491,9 +529,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app_login.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layouts/_includes_js.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1921">
@@ -680,19 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="174" column="58" selection-start-line="174" selection-start-column="58" selection-end-line="174" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#6#0" expanded="true" />
-            <element signature="e#113#119#0" expanded="true" />
-            <element signature="e#112#118#0" expanded="true" />
-            <element signature="e#112#118#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -757,8 +779,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="138" column="10" selection-start-line="138" selection-start-column="10" selection-end-line="138" selection-end-column="10" />
+        <state relative-caret-position="663">
+          <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/boardings/view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="62" column="75" selection-start-line="62" selection-start-column="75" selection-end-line="62" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="181" column="24" selection-start-line="181" selection-start-column="24" selection-end-line="181" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#6#0" expanded="true" />
+            <element signature="e#113#119#0" expanded="true" />
+            <element signature="e#112#118#0" expanded="true" />
+            <element signature="e#112#118#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
