@@ -178,9 +178,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    @if(Auth::user()->id == 1 || Auth::user()->id == 11)
-                        <button type="button" class="btn btn-block btn-primary" id="btn-print-grid"><i class="fa fa-print"></i> Imprimir</button>
-                    @endif
+                    <button type="button" class="btn btn-block btn-primary" id="btn-print-grid"><i class="fa fa-print"></i> Imprimir</button>
                 </div>
             </div>
         </div>
