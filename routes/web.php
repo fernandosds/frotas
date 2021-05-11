@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes([
     'register' => false,
@@ -63,7 +64,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
         Route::get('/check-pairing/{device}/{pair_device}', 'Iscas\MonitoringController@checkPairing');
         Route::get('/test-device/{model}', 'Iscas\MonitoringController@testDevice');
-
     });
 
     /**

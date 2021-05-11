@@ -90,16 +90,16 @@
                     <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title kt-font-bold">
                             CONFIGURAÇÕES
-                        </div>                        
+                        </div>
                     </div>
                 </a>
             </div>
             <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url({{asset('/assets/media/misc/bg-1.jpg')}})">
 
                 <div class="kt-user-card__name">
-                    {{ Auth::user()->name }}<br/>
+                    {{ Auth::user()->name }}<br />
                     <small>
-                        Empresa: {{ Auth::user()->customer->name ?? 'Sat Company' }} <br/>
+                        Empresa: {{ Auth::user()->customer->name ?? 'Sat Company' }} <br />
                         Nível de Acesso: {{ Auth::user()->access_level ?? '' }}
 
                     </small>
