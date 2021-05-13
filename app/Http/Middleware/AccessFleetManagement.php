@@ -19,6 +19,7 @@ class AccessFleetManagement
      */
     public function handle($request, Closure $next, $department = null)
     {
+
         if (Auth::user()->accessMenu($department)) {
             return $next($request);
         } else {
