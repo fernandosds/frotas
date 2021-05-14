@@ -78,12 +78,17 @@
                     <div class="row">
                         @foreach( $cars_linkeds as $car )
 
-                        <div class="col-sm-4" id="div-car-{{$car->car->id}}">
+                        <div class="col-sm-6" id="div-car-{{$car->car->id}}">
                             <div class="alert alert-secondary  fade show" role="alert">
                                 <div class="alert-icon"><i class="flaticon-truck"></i></div>
-                                <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}}</div>
+                                <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}}
+                                    @if($car->status == "new")
+                                        <br /><span class="text-danger"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
+                                    @else
+                                        <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
+                                    @endif
+                                </div>
                                 <div class="alert-close">
-                                    <!-- data-dismiss="alert" aria-label="Close" -->
                                     <button type="button" class="close btn-close-card" data-car_id="{{$car->car->id}}" data-card_id="{{$card->id}}">
                                         <span aria-hidden="true"><i class="la la-close"></i></span>
                                     </button>

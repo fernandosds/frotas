@@ -85,10 +85,37 @@ class CardCarRepository extends AbstractRepository
     }
 
     /**
-     * @param array $data
+     * @param array $attach
      */
     public function addCards(array $attach)
     {
+
         DB::table('card_car')->insert($attach);
+    }
+
+    /**
+     * @param String $token
+     * @param String $status
+     * @return mixed
+     */
+    public function updateStatus(String $token, String $status)
+    {
+
+        $command = $this->model->where('token', $token)->first();
+
+        if( $status == "Sucesso" && $command->type_command == "detach" ){
+            return $command->delete();
+        }else{
+            $command->status = $status;
+            return $command->save();
+        }
+
+    }
+
+    public function setToken(Int $car_id, Int $card_id, String $token)
+    {
+        $command = $this->model->where('car_id', $car_id)->where('card_id', $card_id)->first();
+        $command->token = $token;
+        return $command->update();
     }
 }

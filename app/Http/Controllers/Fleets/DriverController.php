@@ -20,12 +20,11 @@ class DriverController extends Controller
 
 
     /**
-     * UserController constructor.
-     * @param   DriverService $driverService
-     * @param   CardService $driverService
-     *  @param  carService $carService
-     *  @param  driverCardCarService $driverCardCarService
-     *
+     * DriverController constructor.
+     * @param DriverService $driverService
+     * @param CardService $cardService
+     * @param CardCarService $driverCardCarService
+     * @param CarService $carService
      */
     public function __construct(DriverService $driverService, CardService $cardService, CardCarService $driverCardCarService, CarService $carService)
     {
