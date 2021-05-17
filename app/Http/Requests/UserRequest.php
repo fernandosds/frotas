@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
 
         if($this->method() == "POST"){
             $return = array_merge([
-                'email' => 'email|required|max:255|unique:users',
+                'email' => 'email|required|max:255|unique:users,email,NULL,id,deleted_at,NULL',
                 'password' => 'min:6|max:8|required_with:confirm_password|same:confirm_password',
                 'password_confirmation' => 'min:6|max:8',
             ], $return);
