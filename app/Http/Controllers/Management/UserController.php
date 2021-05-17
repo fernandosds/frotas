@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\CustomerService;
+use App\Services\UserAccessService;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -13,17 +15,20 @@ class UserController extends Controller
 
     private $userService;
     private $customerService;
+    private $permissionService;
     private $data;
 
     /**
      * UserController constructor.
      * @param UserService $userService
      * @param CustomerService $customerService
+     * @param UserAccessService $customerService
      */
-    public function __construct(UserService $userService, CustomerService $customerService)
+    public function __construct(UserService $userService, CustomerService $customerService, UserAccessService $userAccessService)
     {
         $this->userService = $userService;
         $this->customerService = $customerService;
+        $this->userAccessService = $userAccessService;
 
         $this->data = [
             'icon' => 'flaticon-user',
@@ -45,6 +50,8 @@ class UserController extends Controller
         return response()->view('management.user.list', $data);
     }
 
+
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -52,7 +59,7 @@ class UserController extends Controller
     {
 
         $data = $this->data;
-        if(Auth::user()->type == "sat") {
+        if (Auth::user()->type == "sat") {
             $data['customers'] = $this->customerService->all();
         }
         return view('management.user.new', $data);
@@ -85,18 +92,16 @@ class UserController extends Controller
 
             saveLog(['value' => $request->email, 'type' => 'Salvou usuário', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
-
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
-
     }
 
     /**
      * @param UserRequest $request
      * @return array|\Illuminate\Http\JsonResponse
      */
-    public function update(Int $id, UserRequest $request )
+    public function update(Int $id, UserRequest $request)
     {
 
         try {
@@ -105,11 +110,9 @@ class UserController extends Controller
 
             saveLog(['value' => $request->id, 'type' => 'Editou usuário', 'local' => 'UserController', 'funcao' => 'update']);
             return response()->json(['status' => 'success'], 200);
-
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
-
     }
 
     /**
@@ -120,5 +123,20 @@ class UserController extends Controller
     {
         $this->userService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function updatePermission(Int $id, Request $request)
+    {
+
+        try {
+            $this->userService->updateUserAccess($request, $request->id);
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 }

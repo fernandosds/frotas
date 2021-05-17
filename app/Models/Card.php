@@ -41,4 +41,13 @@ class Card extends Model
 
         ];
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drivers()
+    {
+        return $this->hasMany('App\Models\Driver');
+    }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateDriverCardCarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('card_car', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['administrador', 'usuario']);
-            $table->softDeletes();
+            $table->integer('card_id');
+            $table->integer('car_id');
+            $table->integer('customer_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('driver_card_car');
     }
 }

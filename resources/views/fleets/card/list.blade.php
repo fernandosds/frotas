@@ -44,7 +44,7 @@
                         <td>{{$card->serial_number}}</td>                        
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('fleets/cards/edit')}}/{{$card->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
+                                <a href="{{url('fleets/cards/edit')}}/{{$card->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Detalhes</a>
                                 <button type="button" class="btn btn-sm  btn-danger btn-delete-card" data-id="{{$card->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar
                                 </button>

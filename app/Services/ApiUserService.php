@@ -35,6 +35,7 @@ class ApiUserService
      */
     public function newSecret()
     {
+
         $url = $this->host . "/otp/newsecret";
         return ClientHttp($url);
     }

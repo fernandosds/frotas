@@ -2,29 +2,36 @@
 
 namespace App\Http\Controllers\Fleets;
 
+use App\Services\Fleets\CardCarService;
+use App\Services\Fleets\CarService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Fleets\CardService;
-use App\Http\Requests\Fleets\CardRequest;
+use App\Http\Requests\Rent\CardRequest;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
     private $cardService;
+    private $driverCardCarService;
+    private $carService;
     private $data;
 
     /**
-     * UserController constructor.
+     * CardController constructor.
      * @param CardService $cardService
-     * 
+     * @param CarService $cardService
+     * @param CardCarService $driverCardCarService
      */
-    public function __construct(CardService $cardService)
+    public function __construct(CardService $cardService, CardCarService $driverCardCarService, CarService $carService)
     {
         $this->cardService = $cardService;
+        $this->driverCardCarService = $driverCardCarService;
+        $this->carService = $carService;
 
         $this->data = [
-            'icon' => 'flaticon-truck',
-            'title' => 'Lista de cartões',
+            'icon' => 'fa fa-credit-card',
+            'title' => 'Cartões',
             'menu_open_cards' => 'kt-menu__item--open'
         ];
     }
@@ -67,19 +74,17 @@ class CardController extends Controller
     }
 
     /**
-     * @param CustomerRequest $request
+     * @param CardRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function save(CardRequest $request)
     {
-
 
         try {
 
             $request->merge([
                 'customer_id' => Auth::user()->customer_id
             ]);
-            
 
             $this->cardService->save($request);
 
@@ -99,8 +104,9 @@ class CardController extends Controller
 
         $data = $this->data;
         $data['card'] = $this->cardService->show($id);
-
-        return view('fleets.card.new', $data);
+        $data['cars_linkeds'] = $this->driverCardCarService->getCarsByCardId($id);
+        $data['cars_available'] = $this->carService->getAvailableCars($id);
+        return view('fleets.card.edit', $data);
     }
 
     /**

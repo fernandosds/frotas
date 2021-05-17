@@ -2,15 +2,21 @@
 
 
 namespace App\Services\Fleets;
+
 use Illuminate\Http\Request;
 use App\Repositories\Fleets\CarRepository;
+use App\Repositories\Fleets\CardCarRepository;
 
 
 class CarService
 {
-    public function __construct(CarRepository $car)
+    protected $cardCarRepository;
+    protected $car;
+
+    public function __construct(CarRepository $car, CardCarRepository $cardCarRepository)
     {
         $this->car = $car;
+        $this->cardCarRepository = $cardCarRepository;
     }
 
     /**
@@ -86,6 +92,20 @@ class CarService
     {
 
         return $this->car->delete($id);
+    }
+
+    /**
+     * @param $card_id
+     * @return mixed
+     */
+    public function getAvailableCars($card_id = null)
+    {
+        $used_cars = $this->cardCarRepository->usedCars($card_id);
+        $used = [];
+        foreach ($used_cars as $us) {
+            $used[] = $us->car_id;
+        }
+        return $this->car->getAvailableCars($used);
     }
 
     /**

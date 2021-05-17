@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerService
 {
+
+    /**
+     * CustomerService constructor.
+     * @param CustomerRepository $customerRepository
+     * @param LogRepository $log
+     */
     public function __construct(CustomerRepository $customerRepository, LogRepository $log)
     {
         $this->customerRepository = $customerRepository;

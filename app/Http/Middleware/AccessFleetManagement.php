@@ -4,9 +4,12 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\User;
+use Illuminate\Support\Facades\Route;
 
-class AccessLevel
+class AccessFleetManagement
 {
+
     /**
      * Handle an incoming request.
      *
@@ -17,7 +20,7 @@ class AccessLevel
     public function handle($request, Closure $next, $department = null)
     {
 
-        if (Auth::user()->access_level == 'management' || Auth::user()->access_level == $department) {
+        if (Auth::user()->accessMenu($department)) {
             return $next($request);
         } else {
             return redirect('access_denied');
