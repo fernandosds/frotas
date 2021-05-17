@@ -298,7 +298,7 @@
             <!-- FIM DOS ACESSOS EXCLUSIVOS SAT COMPANY -->
         @endif
 
-        @if( Auth::user()->access_level == 'management' || Auth::user()->access_level == 'logistic' )
+        @if( Auth::user()->access_level == 'management' || Auth::user()->access_level == 'fleets' )
             <!-- LOCADORA ______________________________________________________________________________________________________________________ -->
 
                 <li class="kt-menu__section ">
