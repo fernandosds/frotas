@@ -18,13 +18,6 @@ class CarController extends Controller
     private $data;
 
     /**
-     * Ao cadastrar veiculo, mandar comando para ativar com qualquer cartao
-     * Apos fazer vinculo, mudar configuração para ativar desbloqueio com cartao especifico
-     * Apagar car~tao especifico ao desvincular
-     *
-     *
-     *
-     *
      * CarController constructor.
      * @param CarService $carService
      * @param CardService $cardService
@@ -42,7 +35,6 @@ class CarController extends Controller
             'menu_open_cars' => 'kt-menu__item--open'
         ];
     }
-
 
     /**
      * Display a listing of the resource.
@@ -111,25 +103,22 @@ class CarController extends Controller
 
         $data = $this->data;
         $data['car'] = $this->carService->show($id);
-
-        $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
         $data['cards_available'] = $this->cardService->getAvailableCards($id);
+        $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
 
+        //print_r($data['cards_linkeds']);die;
         return view('fleets.car.edit', $data);
     }
 
     /**
-     * @param Int $id
-     * @param CustomerRequest $request
+     * @param CarRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(CarRequest $request)
     {
 
         try {
-
             $this->carService->update($request, $request->id);
-
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

@@ -20,15 +20,18 @@ class CommandService
      */
     protected $host;
 
-
     /**
      * CommandService constructor.
      */
     public function __construct()
     {
-        $this->host = "http://201.91.1.155:83/api-envio-comandos/api";
-        $this->host = "http://10.20.3.84:83/api-envio-comandos/api";
-        $this->host = "http://10.20.3.36:6525";
+
+        if( true ){
+            $this->host = "http://10.20.3.36:6523";
+        }else{
+            $this->host = "http://189.16.50.195:6523";
+        }
+
     }
 
     /**
@@ -39,12 +42,9 @@ class CommandService
     public function addCardToDevice(String $card, String $device)
     {
 
-        return 'token: '.$card.' - '.$device;
-
-
-
-        $url = $this->host . "/add-card-to-device/$card/$device";
-        return ClientHttp($url);
+        $url = $this->host . "/addcard&{$device}[{$card}]";
+        $a = ClientHttp($url);
+        return $a[0]['TOKEN'];
     }
 
     /**
@@ -54,12 +54,10 @@ class CommandService
      */
     public function removeCartToDevice(String $card, String $device)
     {
-        $url = $this->host . "/remove-card-to-device/$card/$device";
 
-        return 'aaaaaaa';
-
-
-        return ClientHttp($url);
+        $url = $this->host . "/removecard&{$device}[{$card}]";
+        $a = ClientHttp($url);
+        return $a[0]['TOKEN'];
     }
 
     /**
@@ -68,8 +66,8 @@ class CommandService
      */
     public function acceptAllCards(String $device)
     {
-        $url = $this->host . "/accept-all-cards/$device";
-        return ClientHttp($url);
+        //$url = $this->host . "/accept-all-cards/$device";
+        //return ClientHttp($url);
     }
 
     /**
@@ -78,9 +76,9 @@ class CommandService
      */
     public function removeAllCards(String $device)
     {
-
-        $url = $this->host . "/remove-all-cards/$device";
-        return ClientHttp($url);
+        $url = $this->host . "/clearcard&{$device}";
+        $a = ClientHttp($url);
+        return $a[0]['TOKEN'];
     }
 
     /**
@@ -89,8 +87,7 @@ class CommandService
      */
     public function checkStatus(String $token)
     {
-
-        $url = $this->host . "/listjson&grid_comandos+token='{".$token."}'";
+        $url = $this->host . "/listjson&grid_comandos+token=$token";
         return ClientHttp($url);
     }
 

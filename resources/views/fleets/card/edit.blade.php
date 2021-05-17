@@ -69,7 +69,7 @@
                 <div class="col-sm-5 border-left">
 
                     <br />
-                    <h4>Veículos Vinculados</h4>
+                    <h4>Veículos Vinculados <a href="{{url('fleets/cards/edit')}}/{{$card->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
 
                     @if($cars_linkeds->count() == 0)
                     Nenhum veículo vinculado a este cartão.
@@ -82,11 +82,15 @@
                             <div class="alert alert-secondary  fade show" role="alert">
                                 <div class="alert-icon"><i class="flaticon-truck"></i></div>
                                 <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}}
-                                    @if($car->status == "new")
-                                        <br /><span class="text-danger"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
-                                    @else
+
+                                    @if($car->status == "Iniciado")
+                                        <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
+                                    @elseif($car->status == "sucesso")
                                         <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
+                                    @else
+                                        <br /><span class="text-danger"> <i class="fa fa-times"></i> Erro, tente novamente!</span>
                                     @endif
+
                                 </div>
                                 <div class="alert-close">
                                     <button type="button" class="close btn-close-card" data-car_id="{{$car->car->id}}" data-card_id="{{$card->id}}">
@@ -155,6 +159,25 @@
 
 @section('scripts')
 <script>
+
+    // Update Status
+    @if(isset($cars_linkeds))
+        var devices = [
+            @foreach( $cars_linkeds as $card_linked )
+                {{$card_linked->id}},
+            @endforeach
+        ];
+    @endif
+    $.ajax({
+        url: "{{url('/api/fleets/cards/update-status')}}",
+        method: 'POST',
+        data: {devices: devices}
+    });
+    $('#btn-refresh-status').click(function(){
+        $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...')
+    })
+    // Fim - update status
+
     $('#btn-add-cars').click(function() {
         var data = $('#form-cars').serialize() + '&card_id={{$card->id}}';
         $('#btn-add-cars').html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...');

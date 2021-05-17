@@ -98,7 +98,7 @@ class CarService
      * @param $card_id
      * @return mixed
      */
-    public function getAvailableCars($card_id)
+    public function getAvailableCars($card_id = null)
     {
         $used_cars = $this->cardCarRepository->usedCars($card_id);
         $used = [];

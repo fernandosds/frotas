@@ -65,6 +65,10 @@
                         <label for="inpuCity">Tipo (caminhão, passeio, etc...)</label>
                         <input type="text" class="form-control" name="type" value="{{ $car->type ?? '' }}">
                     </div>
+                    <div class="form-group col-md-2">
+                        <label for="inpuCity">Dispositivo</label>
+                        <input type="text" class="form-control" name="device" value="{{ $car->device ?? '' }}" readonly>
+                    </div>
                 </div>
                 <div class="kt-portlet__foot">
                     <div class="kt-form__actions">
@@ -118,6 +122,7 @@
                             $('input[name=year]').val(response.data.ano);
                             $('input[name=color]').val(response.data.cor);
                             $('input[name=type]').val(response.data.categoria);
+                            $('input[name=device]').val(response.data.device);
                             $('#btn-search-placa').html('<i class="fa fa-search"></i> Consultar')
                         } else {
                             Swal.fire({

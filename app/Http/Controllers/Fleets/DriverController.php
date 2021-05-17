@@ -9,6 +9,7 @@ use App\Services\Fleets\CardService;
 use App\Http\Requests\Rent\DriverRequest;
 use App\Services\Fleets\CardCarService;
 use App\Services\Fleets\CarService;
+use Illuminate\Support\Facades\Hash;
 
 class DriverController extends Controller
 {
@@ -70,7 +71,7 @@ class DriverController extends Controller
     public function new()
     {
         $data = $this->data;
-        $data['cards'] = $this->cardService->addCardDriver();
+        $data['cards'] = $this->cardService->getCardDriverAvailable();
         return view('fleets.driver.new', $data);
     }
 
@@ -97,17 +98,17 @@ class DriverController extends Controller
      */
     public function edit(Int $id)
     {
+
         $data = $this->data;
-        $data['cards'] = $this->cardService->addCardDriver();
+        $data['cards'] = $this->cardService->getCardDriverAvailable();
         $data['driver'] = $this->driverService->show($id);
-        $data['cars_linkeds'] = $this->driverCardCarService->getCarsByCardId($data['driver']->card_id);
-        $data['cars_available'] = $this->carService->getAvailableCars($data['driver']->card_id);
+        $data['cars_linkeds'] = (isset($data['driver']->card_id)) ? $this->driverCardCarService->getCarsByCardId($data['driver']->card_id) : $this->driverCardCarService->getCarsByCardId();
+        $data['cars_available'] = (isset($data['driver']->card_id)) ? $this->carService->getAvailableCars($data['driver']->card_id) : $this->carService->getAvailableCars();
         return view('fleets.driver.edit', $data);
     }
 
     /**
-     * @param Int $id
-     * @param CustomerRequest $request
+     * @param DriverRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(DriverRequest $request)

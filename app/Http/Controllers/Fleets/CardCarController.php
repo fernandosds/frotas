@@ -21,7 +21,6 @@ class CardCarController extends Controller
     {
         $this->cardCarService = $cardCarService;
 
-
     }
 
     /**
@@ -56,5 +55,14 @@ class CardCarController extends Controller
 
         return $this->cardCarService->addCars($request->input());
 
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function updateStatus(Request $request)
+    {
+        return $this->cardCarService->updateStatus($request->devices);
     }
 }

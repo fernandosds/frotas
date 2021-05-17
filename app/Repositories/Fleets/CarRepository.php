@@ -28,11 +28,8 @@ class CarRepository extends AbstractRepository
      */
     public function getAvailableCars($used)
     {
-
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->whereNotIn('id', $used)
             ->get();
-
     }
-
 }

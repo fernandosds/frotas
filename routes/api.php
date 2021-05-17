@@ -21,3 +21,5 @@ Route::group(['prefix' => 'devices'], function () {
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/fleets/cards/update-status', 'Fleets\CardCarController@updateStatus');
