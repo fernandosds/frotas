@@ -58,6 +58,7 @@
                                     <option value="">... Nível de acesso</option>
                                     <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
                                     <option value="shipper" {{ ($user->access_level ?? null) == 'shipper' ? 'selected' : ''}}>Embarcador</option>
+                                    <option value="fleets" {{ ($user->access_level ?? null) == 'fleets' ? 'selected' : ''}}>Gestão de Frotas</option>
                                     @if(Auth::user()->type == "sat")
                                     <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
                                     <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
