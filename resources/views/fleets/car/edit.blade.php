@@ -98,7 +98,7 @@
                         <h4>Motoristas Vinculados <a href="{{url('fleets/cars/edit')}}/{{$car->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
 
                         @if($cards_linkeds->count() == 0)
-                        Nenhum cartão vinculado a este veículo.
+                            Nenhum cartão vinculado a este veículo.
                         @endif
 
                         <div class="row">
@@ -108,7 +108,7 @@
                             <div class="col-sm-6" id="div-card-{{$card->card->id ?? ''}}">
                                 <div class="alert alert-secondary  fade show" role="alert">
                                     <div class="alert-icon"><i class="flaticon2-browser-1"></i></div>
-                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->drivers[0]->name?? ''}} {{$card->status}}
+                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->drivers[0]->name?? ''}}
 
                                         @if($card->status == "Iniciado")
                                             <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>

@@ -72,7 +72,7 @@
                     <h4>Veículos Vinculados <a href="{{url('fleets/cards/edit')}}/{{$card->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
 
                     @if($cars_linkeds->count() == 0)
-                    Nenhum veículo vinculado a este cartão.
+                        Nenhum veículo vinculado a este cartão.
                     @endif
 
                     <div class="row">
