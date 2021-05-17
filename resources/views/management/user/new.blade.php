@@ -56,31 +56,31 @@
                         </div>
                         <div class="form-group row">
 
-                            <label class="col-form-label col-lg-3 col-sm-12">Nível de acess </label>
+                            <label class="col-form-label col-lg-3 col-sm-12">Nível de acesso </label>
                             <div class="col-lg-3 col-md-3 col-sm-12 form-group-sub">
                                 <select class="form-control" name="access_level">
                                     <option value="">... Nível de acesso</option>
                                     <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
                                     <option value="shipper" {{ ($user->access_level ?? null) == 'shipper' ? 'selected' : ''}}>Embarcador</option>
                                     @if(Auth::user()->type == "sat")
-                                        <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
-                                        <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
-                                        <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                    <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
+                                    <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
+                                    <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
                                     @endif
                                 </select>
                             </div>
 
                             @if(Auth::user()->type == "sat")
 
-                                <label class="col-form-label col-lg-1 col-sm-12">Empresa </label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
-                                    <select class="form-control" name="customer_id">
-                                        <option value="1">SAT Company</option>
-                                        @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <label class="col-form-label col-lg-1 col-sm-12">Empresa </label>
+                            <div class="col-lg-4 col-md-4 col-sm-4 form-group-sub">
+                                <select class="form-control" name="customer_id">
+                                    <option value="1">SAT Company</option>
+                                    @foreach( $customers as $customer )
+                                    <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             @endif
 
@@ -131,8 +131,6 @@
                 </div>
 
                 <div class="col-xl-3">
-
-
 
                 </div>
             </div>

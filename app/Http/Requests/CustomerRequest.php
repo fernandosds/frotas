@@ -26,7 +26,7 @@ class CustomerRequest extends FormRequest
     {
 
         $return = [
-            'address' => 'required|unique:customers',
+            'address' => 'required',
             'cep' => 'required|string',
             'number' => 'required|string',
             'city' => 'required|string',
