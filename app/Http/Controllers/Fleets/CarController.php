@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Fleets;
 
 use Illuminate\Support\Facades\Auth;
 use App\Services\Fleets\CarService;
-use App\Http\Requests\Fleets\CarRequest;
+use App\Http\Requests\Rent\CarRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ class CarController extends Controller
     /**
      * UserController constructor.
      * @param CarService $carService
-     * 
+     *
      */
     public function __construct(CarService $carService)
     {
