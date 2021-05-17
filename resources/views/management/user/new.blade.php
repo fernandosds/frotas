@@ -127,13 +127,6 @@
                 </form>
             </div>
 
-<<<<<<< HEAD
-                </div>
-
-                <div class="col-xl-3">
-
-                </div>
-=======
             <div class="col-sm-4">
                 @if(Route::is('user.edit'))
                 <form id="form-create-permission">
@@ -253,7 +246,8 @@
                         </button>
                     </div>
                 </form>
->>>>>>> feature/motorista
+
+
             </div>
             @endif
         </div>
