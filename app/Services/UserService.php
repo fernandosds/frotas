@@ -54,7 +54,7 @@ class UserService
     public function paginate(Int $limit = 15)
     {
 
-        if(Auth::user()->type == "ext"){
+        if (Auth::user()->type == "ext") {
             return $this->userRepository->paginate($limit, Auth::user()->customer_id);
         }
 
@@ -80,29 +80,29 @@ class UserService
     public function save(Request $request)
     {
 
-        if($request->customer_id == 1){
+        if ($request->customer_id == 1) {
             $request->merge([
                 'type' => "sat",
             ]);
-        }else{
+        } else {
             $request->merge([
                 'type' => "ext",
             ]);
         }
 
-        if(Auth::user()->type == "ext"){
+        if (Auth::user()->type == "ext") {
             $request->merge([
                 'type' => "ext",
                 'customer_id' => Auth::user()->customer_id
             ]);
         }
 
-        if(isset($request->password)) {
+        if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
         }
 
         // New Secret
-        if($request->required_validation){
+        if ($request->required_validation == 1) {
             $secret = $this->apiUserService->newSecret();
             $request->merge(['validation_token' => $secret['secret']]);
         }
@@ -110,8 +110,9 @@ class UserService
         $user = $this->userRepository->create($request->all());
 
         // QRCode
-        Mail::to($request->email)->send(new QRCodeMail($user, $this->apiUserService));
-
+        if ($request->required_validation == 1) {
+            Mail::to($request->email)->send(new QRCodeMail($user, $this->apiUserService));
+        }
         return $user;
     }
 
@@ -191,9 +192,9 @@ class UserService
     private function accessDenied(Int $id)
     {
 
-        if(Auth::user()->type == "ext" ){
+        if (Auth::user()->type == "ext") {
             $user = $this->userRepository->find($id);
-            if(Auth::user()->customer_id != $user->customer_id){
+            if (Auth::user()->customer_id != $user->customer_id) {
                 return false;
             }
         }
