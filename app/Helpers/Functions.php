@@ -56,8 +56,8 @@ function minLeftChart($to, $from)
 }
 
 /**
- * @param $data
- * @return bool|string
+ * @param $arr
+ * @return bool
  */
 function saveLog($data)
 {

@@ -2,21 +2,14 @@
 
 
 namespace App\Services\Fleets;
-
-use App\Repositories\Fleets\CardCarRepository;
 use Illuminate\Http\Request;
 use App\Repositories\Fleets\CardRepository;
 
 
 class CardService
 {
-
-    protected $cardCarRepository;
-    protected $card;
-
-    public function __construct(CardRepository $card, CardCarRepository $cardCarRepository)
+    public function __construct(CardRepository $card)
     {
-        $this->cardCarRepository = $cardCarRepository;
         $this->card = $card;
     }
 
@@ -26,14 +19,6 @@ class CardService
     public function all()
     {
         return $this->card->all();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCardDriverAvailable()
-    {
-        return $this->card->getCardDriverAvailable();
     }
 
     /**
@@ -51,23 +36,11 @@ class CardService
      */
     public function create(Request $request)
     {
+
+        // $dados = $request->all();
         $card = $request->all();
+
         return $this->card->create($card)->orderBy('id')->get();
-    }
-
-    /**
-     * @param Int $car_id
-     * @return mixed
-     */
-    public function getAvailableCards(Int $car_id)
-    {
-        $used_cards = $this->cardCarRepository->usedCards($car_id);
-        $used = [];
-        foreach ($used_cards as $us) {
-            $used[] = $us->card_id;
-        }
-
-        return $this->card->getAvailableCards($used);
     }
 
     /**
@@ -77,6 +50,7 @@ class CardService
     public function save(Request $request)
     {
         $card = $this->card->create($request->all());
+
         return $card;
     }
 
@@ -97,7 +71,9 @@ class CardService
      */
     public function show(Int $id)
     {
+
         $card =  $this->card->show($id);
+
         return ($card) ? $card : abort(404);
     }
 
@@ -108,6 +84,7 @@ class CardService
      */
     public function destroy(Int $id)
     {
+
         return $this->card->delete($id);
     }
 

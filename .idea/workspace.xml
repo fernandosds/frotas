@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f00d41b-9b3e-439e-8997-290ca21d089a" name="Default Changelist" comment="">
-<<<<<<< HEAD
-=======
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
->>>>>>> feature/motorista
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/html/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,11 +49,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/laradock/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6188">
-              <caret line="364" column="12" selection-start-line="364" selection-start-column="12" selection-end-line="364" selection-end-column="12" />
+            <state relative-caret-position="289">
+              <caret line="409" column="9" selection-start-line="409" selection-start-column="4" selection-end-line="409" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -62,53 +60,31 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2261">
+            <state relative-caret-position="680">
               <caret line="138" column="51" selection-start-line="138" selection-start-column="51" selection-end-line="138" selection-end-column="51" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3043">
+            <state relative-caret-position="264">
               <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
-=======
-        <entry file="file://$PROJECT_DIR$/laradock/.env.example">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="32" lean-forward="true" selection-end-line="1002" />
->>>>>>> feature/motorista
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/composer.json">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
-=======
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="17" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/laradock/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="41" column="7" selection-start-line="41" selection-end-line="41" selection-end-column="7" />
->>>>>>> feature/motorista
+            <state relative-caret-position="153">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -117,17 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-<<<<<<< HEAD
-=======
-      <find>bootstrapSwitch</find>
-      <find>ninguém</find>
-      <find>baixa_os_frustrada_mobile</find>
-      <find>busca_foto_mobile</find>
-      <find>Logout</find>
-      <find>home</find>
-      <find>Login</find>
-      <find>ajax_store</find>
->>>>>>> feature/motorista
       <find>stock</find>
       <find>sw</find>
       <find>ajax_find_data</find>
@@ -147,7 +112,6 @@
       <find>carbon</find>
       <find>grid</find>
       <find>$os_result</find>
-<<<<<<< HEAD
       <find>MYSQL</find>
       <find>8306</find>
       <find>Imprim</find>
@@ -158,12 +122,7 @@
       <find>workspace_ssh_p</find>
       <find>PHP</find>
       <find>VERS</find>
-      <find>3306</find>
-=======
-      <find>149</find>
       <find>mysql</find>
-      <find>workspace</find>
->>>>>>> feature/motorista
     </findStrings>
     <dirStrings>
       <dir>D:\_DEVELOPER\Projeto_iscas\iscas\resources\views\layouts</dir>
@@ -178,15 +137,12 @@
     </dirStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/laradock" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-<<<<<<< HEAD
         <option value="$PROJECT_DIR$/resources/views/user/new.blade.php" />
-=======
->>>>>>> feature/motorista
         <option value="$PROJECT_DIR$/resources/views/customer/list.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/contract/list.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/contract/new.blade.php" />
@@ -220,6 +176,7 @@
         <option value="$PROJECT_DIR$/config/mail.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/emails/resetmail.blade.php" />
+        <option value="$PROJECT_DIR$/app/Repositories/UserRepository.php" />
         <option value="$PROJECT_DIR$/resources/views/emails/reset_mail.blade.php" />
         <option value="$PROJECT_DIR$/app/Mail/ResetEmail copy.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
@@ -232,17 +189,10 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/Iscas/MonitoringController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" />
         <option value="$PROJECT_DIR$/app/Helpers/Functions.php" />
-<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/Services/ApiDeviceService.php" />
+        <option value="$PROJECT_DIR$/laradock/.env" />
+        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/resources/views/monitoring/index.blade.php" />
-        <option value="$PROJECT_DIR$/laradock/.env" />
-        <option value="$PROJECT_DIR$/.env" />
-=======
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Management/UserController.php" />
-        <option value="$PROJECT_DIR$/app/Repositories/UserRepository.php" />
-        <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/laradock/.env" />
->>>>>>> feature/motorista
       </list>
     </option>
   </component>
@@ -361,17 +311,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-<<<<<<< HEAD
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
-=======
     <option name="x" value="240" />
     <option name="y" value="130" />
     <option name="width" value="1440" />
     <option name="height" value="780" />
->>>>>>> feature/motorista
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -395,7 +338,20 @@
             <path>
               <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
               <item name="iscas" type="462c0819:PsiDirectoryNode" />
-              <item name="laradock" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iscas" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iscas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iscas" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="monitoring" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -407,7 +363,7 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../siscon" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -477,35 +433,18 @@
       <workItem from="1612354205291" duration="1226000" />
       <workItem from="1616521778560" duration="8460000" />
       <workItem from="1616584481382" duration="11626000" />
-<<<<<<< HEAD
-      <workItem from="1620387963748" duration="888000" />
-      <workItem from="1620394267394" duration="594000" />
-=======
-      <workItem from="1617905333714" duration="3135000" />
-      <workItem from="1617969937915" duration="1488000" />
-      <workItem from="1620136611482" duration="2582000" />
-      <workItem from="1620218935908" duration="2326000" />
-      <workItem from="1620304713122" duration="2321000" />
->>>>>>> feature/motorista
+      <workItem from="1620387963748" duration="233000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-<<<<<<< HEAD
-    <option name="totallyTimeSpent" value="220409000" />
-=======
-    <option name="totallyTimeSpent" value="219521000" />
->>>>>>> feature/motorista
+    <option name="totallyTimeSpent" value="219160000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-<<<<<<< HEAD
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18176973" />
-=======
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13859275" />
->>>>>>> feature/motorista
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18017058" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -556,11 +495,8 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/resources/views/user/list.blade.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/customer/new.blade.php" />
-=======
->>>>>>> feature/motorista
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_12_16_143554_create_boardings_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -638,6 +574,13 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/DeviceController.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiDeviceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BoardingController.php" />
     <entry file="file://D:/Templates/HTML/metronic_v6.0.1/theme/classic/default/components_base_colors.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -660,6 +603,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repositories/UserRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Repositories/BoardingRepository.php" />
     <entry file="file://$PROJECT_DIR$/app/Mail/ResetEmail copy.php" />
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php">
@@ -676,6 +626,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/UserService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1649">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
         </state>
       </provider>
     </entry>
@@ -724,6 +681,7 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://Z:/retorno_liberty.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/monitoring/print_grid.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
@@ -745,89 +703,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="552">
+          <caret line="39" column="117" selection-start-line="39" selection-start-column="117" selection-end-line="39" selection-end-column="117" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Management/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="135" column="40" lean-forward="true" selection-start-line="135" selection-start-column="40" selection-end-line="135" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/UserService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="207" column="63" selection-start-line="207" selection-start-column="63" selection-end-line="207" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/ListMenu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="82" column="28" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repositories/UserRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="61" column="5" lean-forward="true" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://Z:/retorno_liberty.php" />
     <entry file="file://$PROJECT_DIR$/app/Helpers/Functions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="61" column="23" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiDeviceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="108" column="28" lean-forward="true" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laradock/.env.example">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="32" lean-forward="true" selection-end-line="1002" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laradock/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="41" column="7" selection-start-line="41" selection-end-line="41" selection-end-column="7" />
+        <state relative-caret-position="705">
+          <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -847,22 +731,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laradock/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6188">
-          <caret line="364" column="12" selection-start-line="364" selection-start-column="12" selection-end-line="364" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2261">
-          <caret line="138" column="51" selection-start-line="138" selection-start-column="51" selection-end-line="138" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3043">
-          <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
+        <state relative-caret-position="289">
+          <caret line="409" column="9" selection-start-line="409" selection-start-column="4" selection-end-line="409" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -871,8 +741,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+        <state relative-caret-position="153">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/ApiDeviceService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="138" column="51" selection-start-line="138" selection-start-column="51" selection-end-line="138" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/monitoring/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
         </state>
       </provider>
     </entry>

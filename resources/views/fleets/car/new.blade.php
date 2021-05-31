@@ -28,7 +28,7 @@
                         <label for="inputName">Placa</label>
                         <div class="input-group">
 
-                            <input type="text" name="placa" id="inputplaca" class="form-control" value="{{ $car->placa ?? '' }}">
+                            <input type="text" name="placa" id="inputplaca" class="form-control" value="MAP2020{{ $car->placa ?? '' }}">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" id="btn-search-placa" type="button">Verificar</button>
                             </span>
@@ -65,10 +65,6 @@
                         <label for="inpuCity">Tipo (caminhão, passeio, etc...)</label>
                         <input type="text" class="form-control" name="type" value="{{ $car->type ?? '' }}">
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="inpuCity">Dispositivo</label>
-                        <input type="text" class="form-control" name="device" value="{{ $car->device ?? '' }}" readonly>
-                    </div>
                 </div>
                 <div class="kt-portlet__foot">
                     <div class="kt-form__actions">
@@ -94,59 +90,57 @@
          Gravar carro
          */
     $(function() {
+
         var car_id = $('#id').val();
+
         $('#btn-car-save').click(function() {
             ajax_store(car_id, "fleets/cars", $('#form-create-car').serialize());
         });
+
     });
+
 
     /**
      Pesquisar placa de carro
      */
     $(function() {
 
+
         $('#btn-search-placa').click(function() {
             var placa = $('#inputplaca').val();
             var url = "{{url('')}}/api-device/get-device/" + placa;
-            if (placa != "") {
-                $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde..')
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.status == "success") {
-                            $('#input_chassi').val(response.data.chassi);
-                            $('input[name=automaker]').val(response.data.marca);
-                            $('input[name=model]').val(response.data.modelo);
-                            $('input[name=year]').val(response.data.ano);
-                            $('input[name=color]').val(response.data.cor);
-                            $('input[name=type]').val(response.data.categoria);
-                            $('input[name=device]').val(response.data.device);
-                            $('#btn-search-placa').html('<i class="fa fa-search"></i> Consultar')
-                        } else {
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: 'Vaículo não encontrado na base de dados.',
-                                showConfirmButton: true,
-                                timer: 10000
-                            })
-                            $('#btn-search-placa').html('<i class="fa fa-search"></i> Consultar')
-                        }
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function(response) {
+                    if (response.status == "success") {
+                        $('#input_chassi').val(response.data.chassi);
+                        $('input[name=automaker]').val(response.data.marca);
+                        $('input[name=model]').val(response.data.modelo);
+                        $('input[name=year]').val(response.data.ano);
+                        $('input[name=color]').val(response.data.cor);
+                        $('input[name=type]').val(response.data.categoria);
+
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Vaículo não encontrado na base de dados.',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+                        $("#input-search").val('')
+                        $("#btn-search").html('<i class="fa fa-search"></i>')
                     }
-                });
-            } else {
-                Swal.fire({
-                    type: 'warning',
-                    title: 'Oops...',
-                    text: 'Informe uma placa.',
-                    showConfirmButton: true,
-                    timer: 10000
-                })
-                $('#btn-search-placa').html('<i class="fa fa-search"></i> Consultar')
-            }
+                    //alert(response);
+
+                }
+            });
+            //return false;
         });
+
     });
 </script>
 @endsection

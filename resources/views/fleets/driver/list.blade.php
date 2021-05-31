@@ -35,22 +35,21 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nome</th>
+                        <th scope="col">CPF</th>
                         <th scope="col">CNH</th>
                         <th scope="col">Email</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Nº Cartão</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($drivers as $driver)
                     <tr id="_tr_user_{{$driver->id}}">
-                        <th scope="row">{{$driver->id}}</th>
+                        <th scope="row">{{$driver->id}}</th>                        
                         <td>{{$driver->name}}</td>
+                        <td>{{$driver->cpf}}</td>
                         <td>{{$driver->cnh}}</td>
-                        <td>{{$driver->email}}</td>
-                        <td>{{ $driver->status == 0 ? 'Ativo' : 'Bloqueado' }}</td>
-                        <td>{{$driver->card->serial_number ?? 'Nenhum cartão atribuído'}}</td>
+                        <td>{{$driver->email}}</td>                        
+                        <td>{{ $driver->status == 1 ? 'Ativo' : 'Bloqueado' }}</td>
                         <td>
                             <div class="pull-right">
                                 <a href="{{url('fleets/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>

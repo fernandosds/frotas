@@ -94,7 +94,6 @@ class DriverService
      */
     public function edit($id)
     {
-
         return $this->driver->find($id);
     }
 }

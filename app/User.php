@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Models\ListMenu;
 use App\Models\Log;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -79,22 +79,5 @@ class User extends Authenticatable
             'description' => 'Saiu do sistema',
         ]);
     }
-
-    public function listMenu()
-    {
-        return $this->belongsToMany(ListMenu::class, 'user_menu');
-    }
-
-    public function accessMenu($menu)
-    {
-        return $this->listMenu()->where('name', $menu)->first();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    public function usersmenu()
-    {
-        return $this->hasMany('App\Models\UserMenu');
-    }
+   
 }

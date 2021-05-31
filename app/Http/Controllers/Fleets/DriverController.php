@@ -5,34 +5,23 @@ namespace App\Http\Controllers\Fleets;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Fleets\DriverService;
-use App\Services\Fleets\CardService;
-use App\Http\Requests\Rent\DriverRequest;
-use App\Services\Fleets\CardCarService;
-use App\Services\Fleets\CarService;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Fleets\DriverRequest;
+use Illuminate\Http\Request;
 
 class DriverController extends Controller
 {
     private $driverService;
-    private $cardService;
     private $data;
-    private $carService;
-    private $driverCardCarService;
 
 
     /**
-     * DriverController constructor.
+     * UserController constructor.
      * @param DriverService $driverService
-     * @param CardService $cardService
-     * @param CardCarService $driverCardCarService
-     * @param CarService $carService
+     * 
      */
-    public function __construct(DriverService $driverService, CardService $cardService, CardCarService $driverCardCarService, CarService $carService)
+    public function __construct(DriverService $driverService)
     {
-        $this->driverService            = $driverService;
-        $this->cardService              = $cardService;
-        $this->carService               = $carService;
-        $this->driverCardCarService     = $driverCardCarService;
+        $this->driverService = $driverService;
 
         $this->data = [
             'icon' => 'flaticon2-user',
@@ -51,6 +40,7 @@ class DriverController extends Controller
     {
         $data = $this->data;
         $data['drivers'] = $this->driverService->paginate();
+
         return response()->view('fleets.driver.list', $data);
     }
 
@@ -60,8 +50,10 @@ class DriverController extends Controller
      */
     public function show(Int $id)
     {
+
         $data = $this->data;
         $data['driver'] = $this->driverService->show($id);
+
         return response()->view('fleets.driver.list', $data);
     }
 
@@ -70,8 +62,8 @@ class DriverController extends Controller
      */
     public function new()
     {
+
         $data = $this->data;
-        $data['cards'] = $this->cardService->getCardDriverAvailable();
         return view('fleets.driver.new', $data);
     }
 
@@ -81,13 +73,19 @@ class DriverController extends Controller
      */
     public function save(DriverRequest $request)
     {
+
+
         try {
+
             $request->merge([
                 'customer_id' => Auth::user()->customer_id
             ]);
+
             $this->driverService->save($request);
+
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
+
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
@@ -100,21 +98,23 @@ class DriverController extends Controller
     {
 
         $data = $this->data;
-        $data['cards'] = $this->cardService->getCardDriverAvailable();
         $data['driver'] = $this->driverService->show($id);
-        $data['cars_linkeds'] = (isset($data['driver']->card_id)) ? $this->driverCardCarService->getCarsByCardId($data['driver']->card_id) : $this->driverCardCarService->getCarsByCardId();
-        $data['cars_available'] = (isset($data['driver']->card_id)) ? $this->carService->getAvailableCars($data['driver']->card_id) : $this->carService->getAvailableCars();
-        return view('fleets.driver.edit', $data);
+
+        return view('fleets.driver.new', $data);
     }
 
     /**
-     * @param DriverRequest $request
+     * @param Int $id
+     * @param CustomerRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(DriverRequest $request)
     {
+
         try {
+
             $this->driverService->update($request, $request->id);
+
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

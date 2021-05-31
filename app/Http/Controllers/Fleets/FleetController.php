@@ -30,6 +30,4 @@ class FleetController extends Controller
 
         return response()->view('fleets.dashboard', $data);
     }
-
-
 }

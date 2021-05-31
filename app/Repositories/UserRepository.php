@@ -37,12 +37,12 @@ class UserRepository extends AbstractRepository
     public function find(Int $id)
     {
 
-        if (Auth::user()->type == "ext") {
+        if(Auth::user()->type == "ext"){
             return $this->model->where('customer_id', Auth::user()->customer_id)
-                ->where('id', $id)
+                ->where('id',$id)
                 ->first();
-        } else {
-            return $this->model->where('id', $id)->first();
+        }else{
+            return $this->model->where('id',$id)->first();
         }
 
         return $this->model->where('id', $id)->first();
@@ -61,22 +61,6 @@ class UserRepository extends AbstractRepository
         return $checkEmail;
     }
 
-    public function updateUserAccess($id, $request)
-    {
-        try {
-            $user = $this->model->find($id);
-            $user->listMenu()->detach();
-            $data = [];
-            foreach ($request as $menuAccess) {
-                $data[] = [
-                    'user_id'          => $id,
-                    'list_menu_id'    => $menuAccess,
-                ];
-            }
-            $this->model->listMenu()->syncWithoutDetaching($data);
-            return response()->json(['status' => 'success', 'data' => $data], 201);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-    }
+
+
 }
