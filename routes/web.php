@@ -306,6 +306,12 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/update/{id}', 'Fleets\CardController@update');
             Route::get('/edit/{id}', 'Fleets\CardController@edit');
             Route::get('/delete/{id}', 'Fleets\CardController@destroy');
+
+            Route::get('/remove-car/{car_id}/{card_id}', 'Fleets\CardCarController@removeCar');
+            Route::post('/add-cards', 'Fleets\CardCarController@addCards');
+            Route::post('/add-cars', 'Fleets\CardCarController@addCars');
+            //Route::post('/update-status', 'Fleets\CardCarController@updateStatus');
+
         });
 
 
