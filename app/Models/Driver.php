@@ -13,6 +13,7 @@ class Driver extends Model
 
     /**
      * @var string
+     *
      */
     protected $table = 'drivers';
 
@@ -36,7 +37,6 @@ class Driver extends Model
         'email',
         'status',
         'card_id'
-
     ];
 
     /**

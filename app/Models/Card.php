@@ -12,6 +12,7 @@ class Card extends Model
 
     /**
      * @var string
+     *
      */
     protected $table = 'cards';
 

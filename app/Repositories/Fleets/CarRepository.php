@@ -16,6 +16,7 @@ class CarRepository extends AbstractRepository
     /**
      * UserRepository constructor.
      * @param Car $model
+     *
      */
     public function __construct(Car $model)
     {

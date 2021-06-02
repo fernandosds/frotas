@@ -8,6 +8,11 @@ use App\Repositories\Fleets\DriverRepository;
 
 class DriverService
 {
+
+    /**
+     * DriverService constructor.
+     * @param DriverRepository $driver
+     */
     public function __construct(DriverRepository $driver)
     {
         $this->driver = $driver;

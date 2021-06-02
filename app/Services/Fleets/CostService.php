@@ -8,6 +8,10 @@ use App\Repositories\Fleets\CostRepository;
 
 class CostService
 {
+
+    /*
+     *
+     */
     public function __construct(CostRepository $cost)
     {
         $this->cost = $cost;

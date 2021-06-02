@@ -13,6 +13,12 @@ class CarService
     protected $cardCarRepository;
     protected $car;
 
+
+    /**
+     * CarService constructor.
+     * @param CarRepository $car
+     * @param CardCarRepository $cardCarRepository
+     */
     public function __construct(CarRepository $car, CardCarRepository $cardCarRepository)
     {
         $this->car = $car;

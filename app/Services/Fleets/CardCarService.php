@@ -22,6 +22,7 @@ class CardCarService
 
     /**
      * @var
+     *
      */
     protected $driverCardCarRepository;
     protected $commandService;
