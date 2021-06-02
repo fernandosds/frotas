@@ -17,6 +17,7 @@ class CommandService
 
     /**
      * @var
+     *
      */
     protected $host;
 
