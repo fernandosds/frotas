@@ -79,5 +79,17 @@ class User extends Authenticatable
             'description' => 'Saiu do sistema',
         ]);
     }
-   
+
+    public function accessMenu($menu)
+    {
+        return $this->listMenu()->where('name', $menu)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function usersmenu()
+    {
+        return $this->hasMany('App\Models\UserMenu');
+    }
 }

@@ -210,7 +210,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new', 'Management\UserController@new');
             Route::post('/save', 'Management\UserController@save');
             Route::put('/update/{id}', 'Management\UserController@update');
-            Route::get('/edit/{id}', 'Management\UserController@edit');
+            Route::post('/permission/update/{id}', 'Management\UserController@updatePermission')->name('user.permission.update');
+            Route::get('/edit/{id}', 'Management\UserController@edit')->name('user.edit');
             Route::get('/delete/{id}', 'Management\UserController@destroy');
         });
 

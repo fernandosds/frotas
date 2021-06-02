@@ -196,6 +196,18 @@ class UserService
     }
 
     /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function updateUserAccess(Request $request, $id)
+    {
+        unset($request["_token"], $request["id"]);
+        $userAccessRepository = $this->userRepository->updateUserAccess($id, $request->all());
+        return $userAccessRepository;
+    }
+
+    /**
      * @param Int $id
      * @return bool
      */

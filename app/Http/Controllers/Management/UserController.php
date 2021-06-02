@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\CustomerService;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -115,5 +116,20 @@ class UserController extends Controller
     {
         $this->userService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function updatePermission(Int $id, Request $request)
+    {
+
+        try {
+            $this->userService->updateUserAccess($request, $request->id);
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 }
