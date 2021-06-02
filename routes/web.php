@@ -310,6 +310,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/add-cards', 'Fleets\CardCarController@addCards');
             Route::post('/add-cars', 'Fleets\CardCarController@addCars');
             //Route::post('/update-status', 'Fleets\CardCarController@updateStatus');
+            
         });
 
         /**
