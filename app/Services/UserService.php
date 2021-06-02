@@ -102,10 +102,7 @@ class UserService
         }
 
         // New Secret
-        if ($request->required_validation == 1) {
-            $secret = $this->apiUserService->newSecret();
-            $request->merge(['validation_token' => $secret['secret']]);
-        }
+        $this->checkValidationToken($request);
 
         $user = $this->userRepository->create($request->all());
 
@@ -123,16 +120,13 @@ class UserService
      */
     public function update(Request $request, $id)
     {
-
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
-            $user = $this->userRepository->update($id, $request->all());
-        } else {
-            $user = $this->userRepository->update($id, $request->except('password'));
+            $this->checkValidationToken($request);
+            return  $this->userRepository->update($id, $request->all());
         }
-
-
-        return $user;
+        $this->checkValidationToken($request);
+        return $this->userRepository->update($id, $request->except('password'));
     }
 
     /**
@@ -198,6 +192,20 @@ class UserService
                 return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * @param Int $id
+     * @return bool
+     */
+    private function checkValidationToken(Request $request)
+    {
+        $secret['secret'] = null;
+        if ($request->required_validation == 1) {
+            $secret = $this->apiUserService->newSecret();
+        }
+        $request->merge(['validation_token' => $secret['secret']]);
         return true;
     }
 }

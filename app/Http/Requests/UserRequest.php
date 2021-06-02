@@ -32,14 +32,13 @@ class UserRequest extends FormRequest
             'customer_id' => 'integer',
         ];
 
-        if($this->method() == "POST"){
+        if ($this->method() == "POST") {
             $return = array_merge([
                 'email' => 'email|required|max:255|unique:users,email,NULL,id,deleted_at,NULL',
                 'password' => 'min:6|max:8|required_with:confirm_password|same:confirm_password',
                 'password_confirmation' => 'min:6|max:8',
             ], $return);
-
-        }elseif($this->method() == "PUT"){
+        } elseif ($this->method() == "PUT") {
             $return = array_merge([
                 'email' => [
                     'required',
@@ -50,7 +49,5 @@ class UserRequest extends FormRequest
         }
 
         return $return;
-
     }
-
 }
