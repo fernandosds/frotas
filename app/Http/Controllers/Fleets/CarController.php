@@ -17,11 +17,6 @@ class CarController extends Controller
     /**
      * UserController constructor.
      * @param CarService $carService
-<<<<<<< HEAD
-=======
-     * @param CardService $cardService
-     * @param CardCarService $driverCardCarService
->>>>>>> feature/motorista
      *
      */
     public function __construct(CarService $carService)
@@ -67,7 +62,6 @@ class CarController extends Controller
      */
     public function new()
     {
-
         $data = $this->data;
         return view('fleets.car.new', $data);
     }

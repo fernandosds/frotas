@@ -4,6 +4,7 @@
 namespace App\Services\Fleets;
 use Illuminate\Http\Request;
 use App\Repositories\Fleets\CarRepository;
+use App\Repositories\Fleets\CardCarRepository;
 
 
 class CarService

@@ -18,7 +18,7 @@ class CreateCarsTable extends Migration
             $table->integer('customer_id');
             $table->string('placa', 9);
             $table->string('chassi', 17);
-            $table->string('model', 30);
+            $table->string('model', 150);
             $table->string('automaker', 18);
             $table->year('year');
             $table->string('color', 20);

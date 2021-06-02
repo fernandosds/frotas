@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Log;
+use App\Models\ListMenu;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -78,6 +79,11 @@ class User extends Authenticatable
             'user_id'   => $this->id,
             'description' => 'Saiu do sistema',
         ]);
+    }
+
+    public function listMenu()
+    {
+        return $this->belongsToMany(ListMenu::class, 'user_menu');
     }
 
     public function accessMenu($menu)
