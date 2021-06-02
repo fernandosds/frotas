@@ -13,6 +13,7 @@ class DriverRepository extends AbstractRepository
     /**
      * UserRepository constructor.
      * @param Driver $model
+     *
      */
     public function __construct(Driver $model)
     {

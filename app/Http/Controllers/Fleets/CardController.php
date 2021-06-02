@@ -16,7 +16,13 @@ class CardController extends Controller
     /**
      * UserController constructor.
      * @param CardService $cardService
+<<<<<<< HEAD
      * 
+=======
+     * @param CarService $cardService
+     * @param CardCarService $driverCardCarService
+     *
+>>>>>>> feature/motorista
      */
     public function __construct(CardService $cardService)
     {

@@ -12,6 +12,7 @@ class Car extends Model
 
     /**
      * @var string
+     *
      */
     protected $table = 'cars';
 

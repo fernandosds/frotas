@@ -8,7 +8,18 @@ use App\Repositories\Fleets\CardRepository;
 
 class CardService
 {
-    public function __construct(CardRepository $card)
+
+    protected $cardCarRepository;
+    protected $card;
+
+
+    /**
+     * CardService constructor.
+     * @param CardRepository $card
+     * @param CardCarRepository $cardCarRepository
+     */
+    public function __construct(CardRepository $card, CardCarRepository $cardCarRepository)
+
     {
         $this->card = $card;
     }

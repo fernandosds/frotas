@@ -17,6 +17,7 @@ class MonitoringController extends Controller
      * FleetController constructor.
      *
      * @param ApiDeviceService $apiDeviceService
+     *
      */
 
     public function __construct(ApiDeviceService $apiDeviceService)

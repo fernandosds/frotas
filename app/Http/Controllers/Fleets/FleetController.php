@@ -10,6 +10,7 @@ class FleetController extends Controller
 
     /**
      * FleetController constructor.
+     * 
      */
     public function __construct()
     {

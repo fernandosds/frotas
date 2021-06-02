@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('styles')
 
 <link href="{{asset('/css/leaflet.css')}}" rel="stylesheet" type="text/css" />

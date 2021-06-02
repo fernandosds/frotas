@@ -16,6 +16,7 @@ class CostController extends Controller
     /**
      * UserController constructor.
      * @param CostService $cardService
+     *
      * 
      */
     public function __construct(CostService $costService)
