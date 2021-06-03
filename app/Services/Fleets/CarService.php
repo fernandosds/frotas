@@ -10,16 +10,9 @@ use App\Repositories\Fleets\CardCarRepository;
 
 class CarService
 {
-
     protected $cardCarRepository;
     protected $car;
 
-
-    /**
-     * CarService constructor.
-     * @param CarRepository $car
-     * @param CardCarRepository $cardCarRepository
-     */
     public function __construct(CarRepository $car, CardCarRepository $cardCarRepository)
     {
         $this->car = $car;
@@ -68,15 +61,6 @@ class CarService
     }
 
     /**
-     * @param $id
-     * @return mixed
-     */
-    public function edit($id)
-    {
-        return $this->car->find($id);
-    }
-
-    /**
      * @param Request $request
      * @param $id
      * @return mixed
@@ -114,7 +98,7 @@ class CarService
      * @param $card_id
      * @return mixed
      */
-    public function getAvailableCars($card_id)
+    public function getAvailableCars($card_id = null)
     {
         $used_cars = $this->cardCarRepository->usedCars($card_id);
         $used = [];
@@ -122,5 +106,14 @@ class CarService
             $used[] = $us->car_id;
         }
         return $this->car->getAvailableCars($used);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function edit($id)
+    {
+        return $this->car->find($id);
     }
 }

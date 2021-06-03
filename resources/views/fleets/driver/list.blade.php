@@ -38,6 +38,7 @@
                         <th scope="col">CNH</th>
                         <th scope="col">Email</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Nº Cartão</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -49,9 +50,9 @@
                         <td>{{$driver->cnh}}</td>
                         <td>{{$driver->email}}</td>
                         <td>{{ $driver->status == 0 ? 'Ativo' : 'Bloqueado' }}</td>
+                        <td>{{$driver->card->serial_number ?? 'Nenhum cartão atribuído'}}</td>
                         <td>
                             <div class="pull-right">
-                                <a href="{{url('fleets/cards/edit')}}/{{$driver->card_id}}" class="btn btn-sm btn-warning"><span class="fa fa-fw fa-credit-card"></span> {{$driver->card->serial_number}}</a>
                                 <a href="{{url('fleets/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                 <button type="button" class="btn btn-sm  btn-danger btn-delete-driver" data-id="{{$driver->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar

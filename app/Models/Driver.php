@@ -13,14 +13,13 @@ class Driver extends Model
 
     /**
      * @var string
-     *
      */
     protected $table = 'drivers';
 
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @var array
@@ -28,6 +27,7 @@ class Driver extends Model
     protected $fillable = [
         'id',
         'name',
+        'admission',
         'cpf',
         'cnh',
         'customer_id',
@@ -36,6 +36,7 @@ class Driver extends Model
         'email',
         'status',
         'card_id'
+
     ];
 
     /**
@@ -46,6 +47,7 @@ class Driver extends Model
         return [
             'id'          => $this->id,
             'name'        => $this->name,
+            'admission'   => $this->admission,
             'cpf'         => $this->cpf,
             'cnh'         => $this->cnh,
             'customer_id' => $this->customer_id,
@@ -53,10 +55,10 @@ class Driver extends Model
             'phone'       => $this->phone,
             'email'       => $this->email,
             'status'      => $this->status,
+            'card_id'     => $this->card_id,
 
         ];
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

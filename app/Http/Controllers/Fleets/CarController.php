@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Fleets;
 
-use Illuminate\Support\Facades\Auth;
-use App\Services\Fleets\CarService;
 use App\Services\Fleets\CardCarService;
 use App\Services\Fleets\CardService;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Fleets\CarService;
 use App\Http\Requests\Rent\CarRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,11 +18,10 @@ class CarController extends Controller
     private $data;
 
     /**
-     * UserController constructor.
+     * CarController constructor.
      * @param CarService $carService
      * @param CardService $cardService
      * @param CardCarService $driverCardCarService
-     *
      */
     public function __construct(CarService $carService, CardService $cardService, CardCarService $driverCardCarService)
     {
@@ -32,11 +31,10 @@ class CarController extends Controller
 
         $this->data = [
             'icon' => 'flaticon-truck',
-            'title' => 'Lista de carros',
+            'title' => 'Veiculos',
             'menu_open_cars' => 'kt-menu__item--open'
         ];
     }
-
 
     /**
      * Display a listing of the resource.
@@ -69,17 +67,17 @@ class CarController extends Controller
      */
     public function new()
     {
+
         $data = $this->data;
         return view('fleets.car.new', $data);
     }
 
     /**
-     * @param CustomerRequest $request
+     * @param CarRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function save(CarRequest $request)
     {
-
 
         try {
 
@@ -102,25 +100,25 @@ class CarController extends Controller
      */
     public function edit(Int $id)
     {
+
         $data = $this->data;
         $data['car'] = $this->carService->show($id);
         $data['cards_available'] = $this->cardService->getAvailableCards($id);
         $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
+
+        //print_r($data['cards_linkeds']);die;
         return view('fleets.car.edit', $data);
     }
 
     /**
-     * @param Int $id
-     * @param CustomerRequest $request
+     * @param CarRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(CarRequest $request)
     {
 
         try {
-
             $this->carService->update($request, $request->id);
-
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

@@ -54,6 +54,10 @@
                                 <label for="inpuCity">Tipo (caminhão, passeio, etc...)</label>
                                 <input type="text" class="form-control" name="type" value="{{ $car->type ?? '' }}">
                             </div>
+                            <div class="form-group col-md-2">
+                                <label for="inpuCity">Dispositivo</label>
+                                <input type="text" class="form-control" name="device" value="{{ $car->device ?? '' }}" readonly>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -91,7 +95,7 @@
                     <div class="col-sm-6 border-left">
                         @if(Route::is('car.edit'))
                         <br />
-                        <h4>Motoristas Vinculados</h4>
+                        <h4>Motoristas Vinculados <a href="{{url('fleets/cars/edit')}}/{{$car->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
 
                         @if($cards_linkeds->count() == 0)
                         Nenhum cartão vinculado a este veículo.
@@ -101,10 +105,20 @@
                             @foreach( $cards_linkeds as $card )
 
                             @if(isset($card->card))
-                            <div class="col-sm-4" id="div-card-{{$card->card->id ?? ''}}">
+                            <div class="col-sm-6" id="div-card-{{$card->card->id ?? ''}}">
                                 <div class="alert alert-secondary  fade show" role="alert">
                                     <div class="alert-icon"><i class="flaticon2-browser-1"></i></div>
-                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->drivers[0]->name?? ''}}</div>
+                                    <div class="alert-text" id="text-close-{{$card->card->id ?? ''}}">{{$card->card->drivers[0]->name?? ''}} {{$card->status}}
+
+                                        @if($card->status == "Iniciado")
+                                            <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
+                                        @elseif($card->status == "sucesso")
+                                            <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
+                                        @else
+                                            <br /><span class="text-danger"> <i class="fa fa-times"></i> Erro, tente novamente!</span>
+                                        @endif
+
+                                    </div>
                                     <div class="alert-close">
                                         <!-- data-dismiss="alert" aria-label="Close" -->
                                         <button type="button" class="close btn-close-card" data-card_id="{{$card->card->id ?? ''}}" data-car_id="{{$car->id}}">
@@ -178,6 +192,26 @@
 
 @section('scripts')
 <script>
+
+    // Update Status
+    @if(isset($cards_linkeds))
+        var devices = [
+            @foreach( $cards_linkeds as $card_linked )
+                {{$card_linked->id}},
+            @endforeach
+        ];
+
+        $.ajax({
+            url: "{{url('/api/fleets/cards/update-status')}}",
+            method: 'POST',
+            data: {devices: devices}
+        });
+        $('#btn-refresh-status').click(function(){
+            $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...')
+        })
+    @endif
+    // Fim - update status
+
     $('#btn-add-cards').click(function() {
         var data = $('#form-cards').serialize() + '&car_id={{$car->id}}';
         $('#btn-add-cards').html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...');
@@ -213,7 +247,7 @@
             url: "{{url('fleets/cards/remove-car')}}/" + car_id + "/" + card_id,
             method: 'GET',
             success: function(response) {
-                $('#div-card-' + card_id).hide()
+                ///$('#div-card-' + card_id).hide()
             },
             error: function(error) {
                 Swal.fire({
@@ -264,6 +298,7 @@
                             $('input[name=year]').val(response.data.ano);
                             $('input[name=color]').val(response.data.cor);
                             $('input[name=type]').val(response.data.categoria);
+                            $('input[name=device]').val(response.data.device);
                             $('#btn-search-placa').html('<i class="fa fa-search"></i> Consultar')
                         } else {
                             Swal.fire({

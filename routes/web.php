@@ -270,7 +270,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions')->middleware(['user.fleet_management:monitoring']);
         Route::get('/dashboard', 'Fleets\FleetController@dashboard')->middleware(['user.fleet_management:dashboard']);
 
-
         /**
          * Drivers routes
          */
@@ -282,7 +281,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/edit/{id}', 'Fleets\DriverController@edit')->name('driver.edit');
             Route::get('/delete/{id}', 'Fleets\DriverController@destroy');
         });
-
 
 
         /**
@@ -312,8 +310,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/remove-car/{car_id}/{card_id}', 'Fleets\CardCarController@removeCar');
             Route::post('/add-cards', 'Fleets\CardCarController@addCards');
             Route::post('/add-cars', 'Fleets\CardCarController@addCars');
+            //Route::post('/update-status', 'Fleets\CardCarController@updateStatus');
         });
-
 
         /**
          * Cost routes (Custos)

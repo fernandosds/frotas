@@ -10,7 +10,6 @@ class FleetController extends Controller
 
     /**
      * FleetController constructor.
-     * 
      */
     public function __construct()
     {
@@ -31,4 +30,6 @@ class FleetController extends Controller
 
         return response()->view('fleets.dashboard', $data);
     }
+
+
 }

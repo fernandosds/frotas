@@ -3,19 +3,19 @@
 
 namespace App\Repositories\Fleets;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Car;
 use App\Repositories\AbstractRepository;
+use mysql_xdevapi\Schema;
 
 class CarRepository extends AbstractRepository
 {
 
+
     /**
      * UserRepository constructor.
      * @param Car $model
-     *
-     *
      */
     public function __construct(Car $model)
     {

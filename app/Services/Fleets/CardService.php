@@ -3,9 +3,9 @@
 
 namespace App\Services\Fleets;
 
+use App\Repositories\Fleets\CardCarRepository;
 use Illuminate\Http\Request;
 use App\Repositories\Fleets\CardRepository;
-use App\Repositories\Fleets\CardCarRepository;
 
 
 class CardService
@@ -14,12 +14,6 @@ class CardService
     protected $cardCarRepository;
     protected $card;
 
-
-    /**
-     * CardService constructor.
-     * @param CardRepository $card
-     * @param CardCarRepository $cardCarRepository
-     */
     public function __construct(CardRepository $card, CardCarRepository $cardCarRepository)
     {
         $this->cardCarRepository = $cardCarRepository;
@@ -57,10 +51,7 @@ class CardService
      */
     public function create(Request $request)
     {
-
-        // $dados = $request->all();
         $card = $request->all();
-
         return $this->card->create($card)->orderBy('id')->get();
     }
 
@@ -86,7 +77,6 @@ class CardService
     public function save(Request $request)
     {
         $card = $this->card->create($request->all());
-
         return $card;
     }
 
@@ -107,9 +97,7 @@ class CardService
      */
     public function show(Int $id)
     {
-
         $card =  $this->card->show($id);
-
         return ($card) ? $card : abort(404);
     }
 
@@ -120,7 +108,6 @@ class CardService
      */
     public function destroy(Int $id)
     {
-
         return $this->card->delete($id);
     }
 

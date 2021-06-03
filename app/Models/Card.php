@@ -12,7 +12,6 @@ class Card extends Model
 
     /**
      * @var string
-     *
      */
     protected $table = 'cards';
 
@@ -50,4 +49,5 @@ class Card extends Model
     {
         return $this->hasMany('App\Models\Driver');
     }
+
 }

@@ -22,7 +22,6 @@ class CardCarService
 
     /**
      * @var
-     *
      */
     protected $driverCardCarRepository;
     protected $commandService;
@@ -35,7 +34,6 @@ class CardCarService
      * @param CommandService $commandService
      * @param CarRepository $carRepository
      * @param CardRepository $cardRepository
-     *
      */
     public function __construct(
         CardCarRepository $cardCarRepository,
@@ -110,7 +108,7 @@ class CardCarService
                     'user_id' => $user_id,
                     'created_at' => $date,
                     'token' => $token,
-                    'status' => 'new',
+                    'status' => 'Iniciado',
                     'type_command' => 'attach'
                 );
             }

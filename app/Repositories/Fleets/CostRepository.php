@@ -13,7 +13,6 @@ class CostRepository extends AbstractRepository
     /**
      * UserRepository constructor.
      * @param Cost $model
-     *
      */
     public function __construct(Cost $model)
     {

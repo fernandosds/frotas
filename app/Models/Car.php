@@ -12,7 +12,6 @@ class Car extends Model
 
     /**
      * @var string
-     *
      */
     protected $table = 'cars';
 
@@ -20,7 +19,6 @@ class Car extends Model
      * @var array
      */
     protected $dates = ['created_at', 'updated_at'];
-
 
     /**
      * @var array
@@ -34,7 +32,8 @@ class Car extends Model
         'year',
         'color',
         'customer_id',
-        'type'
+        'type',
+        'device'
     ];
 
     /**
@@ -52,7 +51,7 @@ class Car extends Model
             'year'          => $this->year,
             'color'         => $this->color,
             'type'          => $this->type,
-            
+            'device'        => $this->device,
         ];
     }
 }

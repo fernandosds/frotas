@@ -16,7 +16,6 @@ class CardCar extends Model
 
     /**
      * @var string
-     *
      */
     protected $table = 'card_car';
 
