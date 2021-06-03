@@ -62,6 +62,7 @@
                                     <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
                                     <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
                                     <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                    <option value="fleets" {{ ($user->access_level ?? null) == 'fleets' ? 'selected' : ''}}>Gestão de Frotas</option>
                                     @endif
                                 </select>
                             </div>

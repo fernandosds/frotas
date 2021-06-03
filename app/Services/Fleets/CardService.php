@@ -5,6 +5,7 @@ namespace App\Services\Fleets;
 
 use App\Repositories\Fleets\CardCarRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Fleets\CardRepository;
 
 
@@ -42,7 +43,7 @@ class CardService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->card->paginate($limit);
+        return $this->card->paginate($limit, Auth::user()->customer_id);
     }
 
     /**

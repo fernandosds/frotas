@@ -3,6 +3,7 @@
 
 namespace App\Services\Fleets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Fleets\CostRepository;
 
 
@@ -27,7 +28,7 @@ class CostService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->cost->paginate($limit);
+        return $this->cost->paginate($limit, Auth::user()->customer_id);
     }
 
     /**

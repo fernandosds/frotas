@@ -66,6 +66,8 @@
                                         Produção
                                     @elseif( $user->access_level == "management" )
                                         Administrador
+                                    @elseif( $user->access_level == "fleets" )
+                                        Gestão de Frotas
                                     @endif
                                 </td>
 

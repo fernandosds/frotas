@@ -22,6 +22,7 @@ class CreateCarsTable extends Migration
             $table->string('automaker', 18);
             $table->year('year');
             $table->string('color', 20);
+            $table->string('device', 20);
             $table->string('type', 15);
             $table->softDeletes();
             $table->timestamps();

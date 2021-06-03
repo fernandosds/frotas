@@ -2,7 +2,9 @@
 
 
 namespace App\Services\Fleets;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Fleets\DriverRepository;
 
 
@@ -27,7 +29,7 @@ class DriverService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->driver->paginate($limit);
+        return $this->driver->paginate($limit, Auth::user()->customer_id);
     }
 
     /**

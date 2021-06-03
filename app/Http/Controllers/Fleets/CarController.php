@@ -106,7 +106,6 @@ class CarController extends Controller
         $data['cards_available'] = $this->cardService->getAvailableCards($id);
         $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
 
-        //print_r($data['cards_linkeds']);die;
         return view('fleets.car.edit', $data);
     }
 

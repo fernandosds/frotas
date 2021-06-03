@@ -33,6 +33,7 @@ class CardCar extends Model
         'car_id',
         'customer_id',
         'user_id',
+        'type_command',
         'token'
     ];
 

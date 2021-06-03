@@ -29,6 +29,7 @@ class CarRequest extends FormRequest
         if ($this->method() == "POST") {
             $return = array_merge([
                 'chassi' => 'required|unique:cars',
+                'device' => 'required',
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
@@ -40,5 +41,14 @@ class CarRequest extends FormRequest
         }
 
         return $return;
+    }
+
+    public function messages()
+    {
+
+        return [
+
+            'device.required' => 'O campo dispositivo é obrigatório',
+        ];
     }
 }

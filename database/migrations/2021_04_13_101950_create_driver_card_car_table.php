@@ -19,6 +19,9 @@ class CreateDriverCardCarTable extends Migration
             $table->integer('car_id');
             $table->integer('customer_id');
             $table->integer('user_id');
+            $table->string('status', 15);
+            $table->string('token', 100);
+            $table->string('type_command', 45);
             $table->timestamps();
         });
     }

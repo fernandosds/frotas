@@ -51,6 +51,7 @@ class DriverController extends Controller
     {
         $data = $this->data;
         $data['drivers'] = $this->driverService->paginate();
+
         return response()->view('fleets.driver.list', $data);
     }
 

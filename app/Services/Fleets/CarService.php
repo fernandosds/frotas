@@ -4,6 +4,7 @@
 namespace App\Services\Fleets;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Fleets\CarRepository;
 use App\Repositories\Fleets\CardCarRepository;
 
@@ -33,7 +34,7 @@ class CarService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->car->paginate($limit);
+        return $this->car->paginate($limit, Auth::user()->customer_id);
     }
 
     /**

@@ -120,12 +120,15 @@ class UserService
      */
     public function update(Request $request, $id)
     {
+
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
-            $this->checkValidationToken($request);
+            $this->checkTokenUpdate($request);
+
             return  $this->userRepository->update($id, $request->all());
         }
-        $this->checkValidationToken($request);
+
+        $this->checkTokenUpdate($request);
         return $this->userRepository->update($id, $request->except('password'));
     }
 
@@ -216,9 +219,30 @@ class UserService
         $secret['secret'] = null;
         if ($request->required_validation == 1) {
             $secret = $this->apiUserService->newSecret();
-            Mail::to($request->email)->send(new QRCodeMail($request->id, $this->apiUserService));
+            //Mail::to($request->email)->send(new QRCodeMail($request->id, $this->apiUserService));
         }
         $request->merge(['validation_token' => $secret['secret']]);
+        return true;
+    }
+
+    /**
+     * @param Int $id
+     * @return bool
+     */
+    private function checkTokenUpdate(Request $request)
+    {
+        $user = $this->userRepository->find($request->id);
+
+        if ($request->required_validation == 0) {
+            $secret['secret'] = null;
+            $request->merge(['validation_token' => $secret['secret']]);
+        }
+
+        if ($request->required_validation == 1 &&  $user->validation_token == null) {
+            $secret = $this->apiUserService->newSecret();
+            $request->merge(['validation_token' => $secret['secret']]);
+            //Mail::to($request->email)->send(new QRCodeMail($user, $this->apiUserService));
+        }
         return true;
     }
 }
