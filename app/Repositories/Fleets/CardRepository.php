@@ -39,6 +39,7 @@ class CardRepository extends AbstractRepository
     {
         $cardDriver = $this->model
             ->whereraw('NOT EXISTS (SELECT * FROM drivers WHERE cards.id = drivers.card_id)')
+            ->where('customer_id', Auth::user()->customer_id)
             ->get();
         return $cardDriver;
     }
