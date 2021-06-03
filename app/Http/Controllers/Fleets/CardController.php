@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Fleets;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Fleets\CardService;
+use App\Services\Fleets\CardCarService;
+use App\Services\Fleets\CarService;
 use App\Http\Requests\Rent\CardRequest;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
     private $cardService;
+    private $driverCardCarService;
+    private $carService;
     private $data;
 
     /**
@@ -20,9 +24,11 @@ class CardController extends Controller
      * @param CardCarService $driverCardCarService
      *
      */
-    public function __construct(CardService $cardService)
+    public function __construct(CardService $cardService, CardCarService $driverCardCarService, CarService $carService)
     {
         $this->cardService = $cardService;
+        $this->driverCardCarService = $driverCardCarService;
+        $this->carService = $carService;
 
         $this->data = [
             'icon' => 'flaticon-truck',
@@ -54,7 +60,6 @@ class CardController extends Controller
 
         $data = $this->data;
         $data['card'] = $this->cardService->show($id);
-
         return response()->view('fleets.card.list', $data);
     }
 
@@ -73,20 +78,13 @@ class CardController extends Controller
      */
     public function save(CardRequest $request)
     {
-
-
         try {
-
             $request->merge([
                 'customer_id' => Auth::user()->customer_id
             ]);
-
-
             $this->cardService->save($request);
-
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
-
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
@@ -97,11 +95,11 @@ class CardController extends Controller
      */
     public function edit(Int $id)
     {
-
         $data = $this->data;
         $data['card'] = $this->cardService->show($id);
-
-        return view('fleets.card.new', $data);
+        $data['cars_linkeds'] = $this->driverCardCarService->getCarsByCardId($id);
+        $data['cars_available'] = $this->carService->getAvailableCars($id);
+        return view('fleets.card.edit', $data);
     }
 
     /**
@@ -111,11 +109,8 @@ class CardController extends Controller
      */
     public function update(CardRequest $request)
     {
-
         try {
-
             $this->cardService->update($request, $request->id);
-
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

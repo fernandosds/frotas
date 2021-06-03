@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 
 <div class="kt-portlet">
@@ -36,23 +35,23 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">CPF</th>
                         <th scope="col">CNH</th>
                         <th scope="col">Email</th>
                         <th scope="col">Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($drivers as $driver)
                     <tr id="_tr_user_{{$driver->id}}">
-                        <th scope="row">{{$driver->id}}</th>                        
+                        <th scope="row">{{$driver->id}}</th>
                         <td>{{$driver->name}}</td>
-                        <td>{{$driver->cpf}}</td>
                         <td>{{$driver->cnh}}</td>
-                        <td>{{$driver->email}}</td>                        
-                        <td>{{ $driver->status == 1 ? 'Ativo' : 'Bloqueado' }}</td>
+                        <td>{{$driver->email}}</td>
+                        <td>{{ $driver->status == 0 ? 'Ativo' : 'Bloqueado' }}</td>
                         <td>
                             <div class="pull-right">
+                                <a href="{{url('fleets/cards/edit')}}/{{$driver->card_id}}" class="btn btn-sm btn-warning"><span class="fa fa-fw fa-credit-card"></span> {{$driver->card->serial_number}}</a>
                                 <a href="{{url('fleets/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                 <button type="button" class="btn btn-sm  btn-danger btn-delete-driver" data-id="{{$driver->id}}">
                                     <span class="fa fa-fw fa-trash"></span> Deletar

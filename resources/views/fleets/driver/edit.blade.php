@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 
 <div class="kt-portlet">
@@ -33,9 +32,9 @@
                                 <label for="">Nº Cartão</label>
                                 <select class="form-control" name="card_id" id="card_id">
                                     <option value=" ">Não adicionar cartão</option>
-                                    <option value="{{$driver->card_id}}" {{old('card_id',$driver->card_id)==($driver->card_id ?? '')? 'selected':''}}>{{$driver->card->serial_number ?? ''}}</option>
+                                    <option value="{{$driver->card_id}}" {{old('card_id',$driver->card_id)==($driver->card_id ?? '')? 'selected':''}}>{{$driver->card->serial_number}}</option>
                                     @foreach($cards as $card)
-                                        <option value="{{$card->id}}" {{old('card_number',$card->id)== ($driver->card_id ?? '')? 'selected':' '}}>{{$card->serial_number}}</option>
+                                    <option value="{{$card->id}}" {{old('card_number',$card->id)== ($driver->card_id ?? '')? 'selected':' '}}>{{$card->serial_number}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -91,28 +90,21 @@
                 </div>
 
                 <div class="col-sm-5 border-left">
+
                     <br />
-                    <h4>Veículos Vinculados <a href="{{url('fleets/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
+                    <h4>Veículos Vinculados</h4>
                     @if($cars_linkeds->count() == 0)
-                        Nenhum veículo vinculado a este cartão.
+                    Nenhum veículo vinculado a este cartão.
                     @endif
                     <div class="row">
                         @foreach( $cars_linkeds as $car )
-                        <div class="col-sm-6" id="div-car-{{$car->car->id}}">
+                        <div class="col-sm-4" id="div-car-{{$car->car->id}}">
                             <div class="alert alert-secondary  fade show" role="alert">
                                 <div class="alert-icon"><i class="flaticon-truck"></i></div>
-                                <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}} {{$car->status}}
-                                    @if($car->status == "Iniciado")
-                                        <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
-                                    @elseif($car->status == "sucesso")
-                                        <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
-                                    @else
-                                        <br /><span class="text-danger"> <i class="fa fa-times"></i> Erro, tente novamente!</span>
-                                    @endif
-                                </div>
+                                <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}}</div>
                                 <div class="alert-close">
                                     <!-- data-dismiss="alert" aria-label="Close" -->
-                                    <button type="button" class="close btn-close-card" data-car_id="{{$car->car->id}}" data-card_id="{{$car->placa}}">
+                                    <button type="button" class="close btn-close-card" data-car_id="{{$car->car->id}}" data-card_id="{{$card->id}}">
                                         <span aria-hidden="true"><i class="la la-close"></i></span>
                                     </button>
                                 </div>
@@ -171,32 +163,12 @@
 
 @section('scripts')
 <script>
-
-    // Update Status
-    @if(isset($driver->card->serial_number))
-        var devices = [
-            @foreach( $cars_linkeds as $card_linked )
-                {{$card_linked->id}},
-            @endforeach
-        ];
-    @endif
-    $.ajax({
-        url: "{{url('/api/fleets/cards/update-status')}}",
-        method: 'POST',
-        data: {devices: devices}
-    });
-    $('#btn-refresh-status').click(function(){
-        $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...')
-    })
-    // Fim - update status
-
-
     $('#btn-add-cars-driver').click(function() {
         var data = $('#form-cars-drivers').serialize() + '&card_id={{$driver->card_id}}';
         $('#btn-add-cars-driver').html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...');
 
         $.ajax({
-            url: "{{url('/fleets/cards/add-cars')}}",
+            url: "{{url('fleets/cards/add-cars')}}",
             method: 'POST',
             data: data,
             success: function(response) {
@@ -237,12 +209,6 @@
             }
         });
     })
-
-
-
-
-
-
 
     /**
          Gravar motorista

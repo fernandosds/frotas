@@ -69,7 +69,6 @@ class UserController extends Controller
         $data = $this->data;
         $data['user'] = $this->userService->show($id);
         $data['customers'] = $this->customerService->all();
-
         return view('management.user.new', $data);
     }
 
@@ -80,9 +79,7 @@ class UserController extends Controller
     public function save(UserRequest $request)
     {
         try {
-
             $this->userService->save($request);
-
             saveLog(['value' => $request->email, 'type' => 'Salvou usuário', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -96,11 +93,8 @@ class UserController extends Controller
      */
     public function update(Int $id, UserRequest $request)
     {
-
         try {
-
             $this->userService->update($request, $request->id);
-
             saveLog(['value' => $request->id, 'type' => 'Editou usuário', 'local' => 'UserController', 'funcao' => 'update']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -124,7 +118,6 @@ class UserController extends Controller
      */
     public function updatePermission(Int $id, Request $request)
     {
-
         try {
             $this->userService->updateUserAccess($request, $request->id);
             return response()->json(['status' => 'success'], 200);

@@ -11,11 +11,10 @@ class UserController extends Controller
     private $userService;
     private $data;
 
-
     /**
      * UserController constructor.
      * @param UserService $userService
-     * @param ResetMail $resetMail        
+     * @param ResetMail $resetMail
      */
     public function __construct(UserService $userService)
     {
