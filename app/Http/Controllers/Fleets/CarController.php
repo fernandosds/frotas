@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Fleets;
 
 use Illuminate\Support\Facades\Auth;
 use App\Services\Fleets\CarService;
+use App\Services\Fleets\CardCarService;
+use App\Services\Fleets\CardService;
 use App\Http\Requests\Rent\CarRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,22 +13,22 @@ use Illuminate\Http\Request;
 class CarController extends Controller
 {
     private $carService;
+    private $driverCardCarService;
+    private $cardService;
     private $data;
-
 
     /**
      * UserController constructor.
      * @param CarService $carService
-<<<<<<< HEAD
-=======
      * @param CardService $cardService
      * @param CardCarService $driverCardCarService
->>>>>>> feature/motorista
      *
      */
-    public function __construct(CarService $carService)
+    public function __construct(CarService $carService, CardService $cardService, CardCarService $driverCardCarService)
     {
         $this->carService = $carService;
+        $this->driverCardCarService = $driverCardCarService;
+        $this->cardService = $cardService;
 
         $this->data = [
             'icon' => 'flaticon-truck',
@@ -67,7 +69,6 @@ class CarController extends Controller
      */
     public function new()
     {
-
         $data = $this->data;
         return view('fleets.car.new', $data);
     }
@@ -101,11 +102,11 @@ class CarController extends Controller
      */
     public function edit(Int $id)
     {
-
         $data = $this->data;
         $data['car'] = $this->carService->show($id);
-
-        return view('fleets.car.new', $data);
+        $data['cards_available'] = $this->cardService->getAvailableCards($id);
+        $data['cards_linkeds'] = $this->driverCardCarService->getCardByCarId($id);
+        return view('fleets.car.edit', $data);
     }
 
     /**

@@ -196,6 +196,18 @@ class UserService
     }
 
     /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function updateUserAccess(Request $request, $id)
+    {
+        unset($request["_token"], $request["id"]);
+        $userAccessRepository = $this->userRepository->updateUserAccess($id, $request->all());
+        return $userAccessRepository;
+    }
+
+    /**
      * @param Int $id
      * @return bool
      */
@@ -204,6 +216,7 @@ class UserService
         $secret['secret'] = null;
         if ($request->required_validation == 1) {
             $secret = $this->apiUserService->newSecret();
+            Mail::to($request->email)->send(new QRCodeMail($request->id, $this->apiUserService));
         }
         $request->merge(['validation_token' => $secret['secret']]);
         return true;

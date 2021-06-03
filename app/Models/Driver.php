@@ -53,7 +53,16 @@ class Driver extends Model
             'phone'       => $this->phone,
             'email'       => $this->email,
             'status'      => $this->status,
-            
+
         ];
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function card()
+    {
+        return $this->belongsTo('App\Models\Card');
     }
 }

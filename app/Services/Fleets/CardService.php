@@ -2,8 +2,10 @@
 
 
 namespace App\Services\Fleets;
+
 use Illuminate\Http\Request;
 use App\Repositories\Fleets\CardRepository;
+use App\Repositories\Fleets\CardCarRepository;
 
 
 class CardService
@@ -19,8 +21,8 @@ class CardService
      * @param CardCarRepository $cardCarRepository
      */
     public function __construct(CardRepository $card, CardCarRepository $cardCarRepository)
-
     {
+        $this->cardCarRepository = $cardCarRepository;
         $this->card = $card;
     }
 
@@ -30,6 +32,14 @@ class CardService
     public function all()
     {
         return $this->card->all();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardDriverAvailable()
+    {
+        return $this->card->getCardDriverAvailable();
     }
 
     /**
@@ -52,6 +62,21 @@ class CardService
         $card = $request->all();
 
         return $this->card->create($card)->orderBy('id')->get();
+    }
+
+    /**
+     * @param Int $car_id
+     * @return mixed
+     */
+    public function getAvailableCards(Int $car_id)
+    {
+        $used_cards = $this->cardCarRepository->usedCards($car_id);
+        $used = [];
+        foreach ($used_cards as $us) {
+            $used[] = $us->card_id;
+        }
+
+        return $this->card->getAvailableCards($used);
     }
 
     /**

@@ -21,7 +21,7 @@ class CardCarRepository extends AbstractRepository
     /**
      * DriverCardCarRepository constructor.
      * @param CardCar $model
-     * 
+     *
      *
      */
     public function __construct(CardCar $model)

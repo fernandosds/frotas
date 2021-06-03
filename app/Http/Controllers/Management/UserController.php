@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\CustomerService;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -68,7 +69,6 @@ class UserController extends Controller
         $data = $this->data;
         $data['user'] = $this->userService->show($id);
         $data['customers'] = $this->customerService->all();
-
         return view('management.user.new', $data);
     }
 
@@ -79,9 +79,7 @@ class UserController extends Controller
     public function save(UserRequest $request)
     {
         try {
-
             $this->userService->save($request);
-
             saveLog(['value' => $request->email, 'type' => 'Salvou usuário', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -95,11 +93,8 @@ class UserController extends Controller
      */
     public function update(Int $id, UserRequest $request)
     {
-
         try {
-
             $this->userService->update($request, $request->id);
-
             saveLog(['value' => $request->id, 'type' => 'Editou usuário', 'local' => 'UserController', 'funcao' => 'update']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -115,5 +110,19 @@ class UserController extends Controller
     {
         $this->userService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function updatePermission(Int $id, Request $request)
+    {
+        try {
+            $this->userService->updateUserAccess($request, $request->id);
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 }

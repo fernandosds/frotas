@@ -210,7 +210,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new', 'Management\UserController@new');
             Route::post('/save', 'Management\UserController@save');
             Route::put('/update/{id}', 'Management\UserController@update');
-            Route::get('/edit/{id}', 'Management\UserController@edit');
+            Route::post('/permission/update/{id}', 'Management\UserController@updatePermission')->name('user.permission.update');
+            Route::get('/edit/{id}', 'Management\UserController@edit')->name('user.edit');
             Route::get('/delete/{id}', 'Management\UserController@destroy');
         });
 
@@ -265,33 +266,34 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'fleets'], function () {
 
-        Route::get('/monitoring', 'Fleets\MonitoringController@index');
-        Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions');
+        Route::get('/monitoring', 'Fleets\MonitoringController@index')->middleware(['user.fleet_management:monitoring']);
+        Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions')->middleware(['user.fleet_management:monitoring']);
+        Route::get('/dashboard', 'Fleets\FleetController@dashboard')->middleware(['user.fleet_management:dashboard']);
 
-        Route::get('/dashboard', 'Fleets\FleetController@dashboard');
 
         /**
          * Drivers routes
          */
-        Route::group(['prefix' => 'drivers'], function () {
+        Route::group(['middleware' => ['user.fleet_management:driver'], 'prefix' => 'drivers'], function () {
             Route::get('/', 'Fleets\DriverController@index');
             Route::get('/new', 'Fleets\DriverController@new');
             Route::post('/save', 'Fleets\DriverController@save');
             Route::put('/update/{id}', 'Fleets\DriverController@update');
-            Route::get('/edit/{id}', 'Fleets\DriverController@edit');
+            Route::get('/edit/{id}', 'Fleets\DriverController@edit')->name('driver.edit');
             Route::get('/delete/{id}', 'Fleets\DriverController@destroy');
         });
+
 
 
         /**
          * Fleets routes (frotas)
          */
-        Route::group(['prefix' => 'cars'], function () {
+        Route::group(['middleware' => ['user.fleet_management:fleet_car'], 'prefix' => 'cars'], function () {
             Route::get('/', 'Fleets\CarController@index');
             Route::get('/new', 'Fleets\CarController@new');
             Route::post('/save', 'Fleets\CarController@save');
             Route::put('/update/{id}', 'Fleets\CarController@update');
-            Route::get('/edit/{id}', 'Fleets\CarController@edit');
+            Route::get('/edit/{id}', 'Fleets\CarController@edit')->name('car.edit');
             Route::get('/delete/{id}', 'Fleets\CarController@destroy');
         });
 
@@ -299,7 +301,7 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Cards routes
          */
-        Route::group(['prefix' => 'cards'], function () {
+        Route::group(['middleware' => ['user.fleet_management:card'], 'prefix' => 'cards'], function () {
             Route::get('/', 'Fleets\CardController@index');
             Route::get('/new', 'Fleets\CardController@new');
             Route::post('/save', 'Fleets\CardController@save');
@@ -310,15 +312,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/remove-car/{car_id}/{card_id}', 'Fleets\CardCarController@removeCar');
             Route::post('/add-cards', 'Fleets\CardCarController@addCards');
             Route::post('/add-cars', 'Fleets\CardCarController@addCars');
-            //Route::post('/update-status', 'Fleets\CardCarController@updateStatus');
-
         });
 
 
         /**
          * Cost routes (Custos)
          */
-        Route::group(['prefix' => 'costs'], function () {
+        Route::group(['middleware' => ['user.fleet_management:cost'], 'prefix' => 'costs'], function () {
             Route::get('/', 'Fleets\CostController@index');
             Route::get('/new', 'Fleets\CostController@new');
             Route::post('/save', 'Fleets\CostController@save');
