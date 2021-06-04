@@ -32,13 +32,14 @@ class DriverRequest extends FormRequest
                 'cpf' => Rule::unique('drivers')->where(function ($query) {
                     return $query->where('customer_id', Auth::user()->customer_id)->where('deleted_at', null);
                 }),
+                'card_id' => 'required',
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
-                'cpf' => [
-                    'required',
-                    Rule::unique('drivers')->ignore($this->id),
-                ],
+                'cpf' => Rule::unique('drivers')->ignore($this->id)->where(function ($query) {
+                    return $query->where('customer_id', Auth::user()->customer_id);
+                }),
+                'card_id' => 'required',
             ], $return);
         }
 

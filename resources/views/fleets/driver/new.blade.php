@@ -31,7 +31,7 @@
                     <div class="form-group col-md-2">
                         <label for="">Nº Cartão</label>
                         <select class="form-control" name="card_id" id="card_id">
-                        <option value=" ">Não adicionar cartão</option>
+                        <option value=" ">Selecione um cartão</option>
                             @foreach($cards as $card)
                             <option value="{{$card->id}}">{{$card->serial_number}}</option>
                             @endforeach

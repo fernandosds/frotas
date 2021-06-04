@@ -179,5 +179,6 @@ return [
         'year'                  => 'ano',
         'email'                 => 'e-mail',
         'remember'              => 'lembrar-me',
+        'card_id'               => 'número do cartão',
     ],
 ];

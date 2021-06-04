@@ -36,10 +36,9 @@ class CarRequest extends FormRequest
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
-                'chassi' => [
-                    'required',
-                    Rule::unique('cars')->ignore($this->id),
-                ],
+                'chassi' => Rule::unique('cars')->ignore($this->id)->where(function ($query) {
+                    return $query->where('customer_id', Auth::user()->customer_id);
+                }),
             ], $return);
         }
 
