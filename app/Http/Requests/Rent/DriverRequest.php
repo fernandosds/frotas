@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Rent;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class DriverRequest extends FormRequest
@@ -28,7 +29,9 @@ class DriverRequest extends FormRequest
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'cpf' => 'required|unique:drivers',
+                'cpf' => Rule::unique('drivers')->where(function ($query) {
+                    return $query->where('customer_id', Auth::user()->customer_id)->where('deleted_at', null);
+                }),
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([

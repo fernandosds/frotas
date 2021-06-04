@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Rent;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class CarRequest extends FormRequest
@@ -28,7 +29,9 @@ class CarRequest extends FormRequest
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'chassi' => 'required|unique:cars',
+                'chassi' => Rule::unique('cars')->where(function ($query) {
+                    return $query->where('customer_id', Auth::user()->customer_id)->where('deleted_at', null);
+                }),
                 'device' => 'required',
             ], $return);
         } elseif ($this->method() == "PUT") {

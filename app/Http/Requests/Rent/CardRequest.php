@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Rent;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class CardRequest extends FormRequest
@@ -28,7 +29,9 @@ class CardRequest extends FormRequest
 
         if ($this->method() == "POST") {
             $return = array_merge([
-                'serial_number' => 'required|unique:cards',
+                'serial_number' => Rule::unique('cards')->where(function ($query) {
+                    return $query->where('customer_id', Auth::user()->customer_id)->where('deleted_at', null);
+                })
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([
