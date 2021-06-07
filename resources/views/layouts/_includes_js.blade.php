@@ -411,4 +411,85 @@
         });
 
     }
+
+    /*
+    INSERT FUNCTION
+     */
+    function ajax_store_cards_driver(id, route, form_data, reload = false) {
+
+        if (id != "") {
+            var url = "{{url('')}}/" + route + "/update/" + id;
+            var method = "PUT";
+        } else {
+            var url = "{{url('')}}/" + route + "/save";
+            var method = "POST";
+        }
+
+        $.ajax({
+            url: url,
+            type: method,
+            data: form_data,
+            success: function(response) {
+                console.log(response)
+                if (response.status == "success") {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro salvo com sucesso',
+                        showConfirmButton: true,
+                        timer: 10000
+                    }).then((result) => {
+                        $("#reloadOption").load(location.href + " #reloadOption>*", "");
+                        setTimeout(function() {
+                            $('#exampleModal').modal('hide')
+                        }, 1000);
+                    })
+
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar salvar! ' + response.message,
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                }
+
+            },
+            error: function(error) {
+                console.log(error.responseJSON)
+                if (error.responseJSON.status == "internal_error") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else if (error.responseJSON.status == "validation_error") {
+                    var items = error.responseJSON.errors;
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                } else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+
+            }
+        });
+
+    }
 </script>

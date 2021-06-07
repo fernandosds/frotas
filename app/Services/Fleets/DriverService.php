@@ -86,7 +86,6 @@ class DriverService
      */
     public function destroy(Int $id)
     {
-
         return $this->driver->delete($id);
     }
 

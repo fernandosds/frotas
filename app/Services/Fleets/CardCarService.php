@@ -143,7 +143,7 @@ class CardCarService
                     'created_at' => $date,
                     'token' => $token,
                     'status' => 'Iniciado',
-                    'type_command' => 'detach'
+                    'type_command' => 'attach'
                 );
             }
 

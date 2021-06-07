@@ -105,8 +105,6 @@
                                         <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
                                     @elseif($car->status == "sucesso")
                                         <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
-                                    @else
-                                        <br /><span class="text-danger"> <i class="fa fa-times"></i> Erro, tente novamente!</span>
                                     @endif
                                 </div>
                                 <div class="alert-close">

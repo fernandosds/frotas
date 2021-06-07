@@ -24,18 +24,25 @@
 
             <div class="kt-portlet__body">
                 <div class="form-row">
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-6">
                         <label for="inputName">Nome</label>
                         <input type="text" name="name" class="form-control" value="{{ $driver->name ?? '' }}">
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2" id="reloadOption">
                         <label for="">Nº Cartão</label>
                         <select class="form-control" name="card_id" id="card_id">
-                        <option value=" ">Selecione um cartão</option>
+                            <option value=" ">Selecione um cartão</option>
                             @foreach($cards as $card)
-                            <option value="{{$card->id}}">{{$card->serial_number}}</option>
+                            <option value="{{$card->id}}" id="optionSelected">{{$card->serial_number}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="">&nbsp</label>
+                        <br />
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-backdrop="static">
+                            +
+                        </button>
                     </div>
                 </div>
                 <div class="form-row">
@@ -91,10 +98,45 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form class="kt-form kt-form--label-right" id="form-create-card">
+            @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Novo Cartão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-md-6">
+                        <label for="inputName">Nº de série</label>
+                        <input type="text" name="serial_number" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-card-save">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
 <script>
+    /**
+         Modal
+         */
+
+    $('#myModal').on('shown.bs.modal', function() {
+        $('#myInput').trigger('focus')
+    })
+
     /**
          Gravar motorista
          */
@@ -106,6 +148,16 @@
             ajax_store(driver_id, "fleets/drivers", $('#form-create-driver').serialize());
         });
 
+    });
+
+    /**
+        Gravar cartão
+        */
+    $(function() {
+        var card_id = $('#id').val();
+        $('#btn-card-save').click(function() {
+            ajax_store_cards_driver(card_id, "fleets/cards", $('#form-create-card').serialize());
+        });
     });
 </script>
 @endsection
