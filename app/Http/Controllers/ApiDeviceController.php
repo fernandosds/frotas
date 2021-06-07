@@ -62,7 +62,7 @@ class ApiDeviceController
             $return["Latitude"] =        isset( $last_position['body'][0]["Latitude"] ) ? $last_position['body'][0]["Latitude"] : '';
             $return["Longitude"] =       isset( $last_position['body'][0]["Longitude"] ) ? $last_position['body'][0]["Longitude"] : '';
             $return["Modo"] =            isset( $last_position['body'][0]["Modo"] ) ? $last_position['body'][0]["Modo"] : '';
-            $return["PT_ID"] =           isset( $last_position['body'][0]["PT_ID"] ) ? last_position['body'][0]["PT_ID"]: '';
+            $return["PT_ID"] =           isset( $last_position['body'][0]["PT_ID"] ) ? $last_position['body'][0]["PT_ID"]: '';
             $return["Satelites"] =       isset( $last_position['body'][0]["Satelites"] ) ? $last_position['body'][0]["Satelites"] : '';
             $return["Sinal"] =           isset( $last_position['body'][0]["Sinal"] ) ? $last_position['body'][0]["Sinal"] : '';
             $return["Temp"] =            isset( $last_position['body'][0]["Temp"] ) ? $last_position['body'][0]["Temp"] : '';
