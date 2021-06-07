@@ -28,7 +28,7 @@
                         <label for="inputName">Nome</label>
                         <input type="text" name="name" class="form-control" value="{{ $driver->name ?? '' }}">
                     </div>
-                    <div class="form-group col-md-2" id="reloadOption">
+                    <div class="form-group col-md-3" id="reloadOption">
                         <label for="">Nº Cartão</label>
                         <select class="form-control" name="card_id" id="card_id">
                             <option value=" ">Selecione um cartão</option>
