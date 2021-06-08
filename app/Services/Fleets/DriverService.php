@@ -81,21 +81,21 @@ class DriverService
 
 
     /**
-     * @param Int $id
-     * @return bool
-     */
-    public function destroy(Int $id)
-    {
-        return $this->driver->delete($id);
-    }
-
-    /**
      * @param $id
      * @return mixed
      */
     public function edit($id)
     {
-
         return $this->driver->find($id);
+    }
+
+    /**
+     * @param Int $id
+     * @return bool
+     */
+    public function destroy(Int $id)
+    {
+        $this->driver->removeCard($id);
+        return $this->driver->delete($id);
     }
 }

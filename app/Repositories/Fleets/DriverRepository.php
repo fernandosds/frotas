@@ -18,4 +18,14 @@ class DriverRepository extends AbstractRepository
     {
         $this->model = $model;
     }
+
+    /**
+     * @param $used
+     * @return mixed
+     */
+    public function removeCard($id)
+    {
+        return $this->model->where('id', $id)
+            ->update(['card_id' => null]);
+    }
 }
