@@ -45,4 +45,17 @@ class DriverRequest extends FormRequest
 
         return $return;
     }
+
+    /**
+     * Handle a passed validation attempt.
+     *
+     * @return void
+     */
+    protected function passedValidation()
+    {
+        $this->merge([
+            'customer_id' => Auth::user()->customer_id,
+            'category'    => implode("", $this->category),
+        ]);
+    }
 }

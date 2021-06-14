@@ -24,7 +24,8 @@ class UserRepository extends AbstractRepository
      */
     public function getAllAdmins()
     {
-        return $this->model->where("type", '=', 'sat')
+        return $this->model
+            ->where('customer_id', Auth::user()->customer_id)
             ->where('status', 1)
             ->where('access_level', '=', 'management')
             ->get();

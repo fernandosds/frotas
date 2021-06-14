@@ -8,7 +8,7 @@ class CreateDriversTable extends Migration
 {
     /**
      * Run the migrations.
-     * 
+     *
      * @return void
      */
     public function up()
@@ -20,10 +20,12 @@ class CreateDriversTable extends Migration
             $table->string('cpf', 18);
             $table->string('cnh', 11);
             $table->string('address', 255);
-            $table->string('phone', 20)->nullable();  
+            $table->string('phone', 20)->nullable();
             $table->string('email', 100)->nullable();
             $table->boolean('status')->default(0);
-            $table->softDeletes(); 
+            $table->integer('card_id');
+            $table->date('admission');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

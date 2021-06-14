@@ -34,7 +34,7 @@
                                     <option value=" ">Não adicionar cartão</option>
                                     <option value="{{$driver->card_id}}" {{old('card_id',$driver->card_id)==($driver->card_id ?? '')? 'selected':''}}>{{$driver->card->serial_number ?? ''}}</option>
                                     @foreach($cards as $card)
-                                        <option value="{{$card->id}}" {{old('card_number',$card->id)== ($driver->card_id ?? '')? 'selected':' '}}>{{$card->serial_number}}</option>
+                                    <option value="{{$card->id}}" {{old('card_number',$card->id)== ($driver->card_id ?? '')? 'selected':' '}}>{{$card->serial_number}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -50,31 +50,66 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="inputCpfCnpj">CPF</label>
                                 <input type="text" id="input_cpf" name="cpf" class="form-control input_cpf_cnpj" maxlength="14" value="{{ $driver->cpf ?? '' }}">
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputAddress">CNH</label>
-                                <input type="text" class="form-control" name="cnh" maxlength="11" value="{{ $driver->cnh ?? '' }}">
-                            </div>
-                            <div class="form-group col-md-4">
+
+                            <div class="form-group col-md-6">
                                 <label for="inputComplement">Telefone</label>
                                 <input type="text" class="form-control mask_input_contact" name="phone" value="{{ $driver->phone ?? '' }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-8">
                                 <label for="inputNumber">Email</label>
                                 <input type="text" class="form-control" name="email" value="{{ $driver->email ?? '' }}">
                             </div>
+
                             <div class="form-group col-md-4">
+                                <label for="inputAddress">CNH</label>
+                                <input type="text" class="form-control" name="cnh" maxlength="11" value="{{ $driver->cnh ?? '' }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputAddress">Validade da CNH</label>
+                                    <input type="date" class="form-control" name="validation" value="{{ $driver->validation ?? '' }}">
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="">Categoria A</label>
+                                    <div class="form-group">
+                                        <div class="kt-radio-inline">
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="category[]" value="A" {{ ($driver->category == 'A' || $driver->category == 'AB' || $driver->category == 'AC' || $driver->category == 'AD' || $driver->category == 'AE' ? 'checked' : '')}}>A
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputCategory">Outras Catogorias</label>
+                                    <select class="form-control" name="category[]" id="category">
+                                        <option value="">Sem categoria</option>
+                                        <option value="B" {{ ($driver->category ?? null) == 'B' || ($driver->category ?? null) == 'AB' ? 'selected' : ''}} id="option">B</option>
+                                        <option value="C" {{ ($driver->category ?? null) == 'C' || ($driver->category ?? null) == 'AC'? 'selected' : ''}} id="option">C</option>
+                                        <option value="D" {{ ($driver->category ?? null) == 'D' || ($driver->category ?? null) == 'AD'? 'selected' : ''}} id="option">D</option>
+                                        <option value="E" {{ ($driver->category ?? null) == 'E' || ($driver->category ?? null) == 'AE'? 'selected' : ''}} id="option">E</option>
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
                                 <label for="inputAddress">Status</label>
                                 <select class="form-control" name="status">
                                     <option value="0" {{ ($driver->status ?? null) == '0' ? 'selected' : ''}}>Ativo</option>
                                     <option value="1" {{ ($driver->status ?? null) == '1' ? 'selected' : ''}}>Inativo</option>
                                 </select>
                             </div>
+
                         </div>
                         <div class="kt-portlet__foot">
                             <div class="kt-form__actions">
@@ -93,7 +128,7 @@
                     <br />
                     <h4>Veículos Vinculados <a href="{{url('fleets/drivers/edit')}}/{{$driver->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
                     @if($cars_linkeds->count() == 0)
-                        Nenhum veículo vinculado a este cartão.
+                    Nenhum veículo vinculado a este cartão.
                     @endif
                     <div class="row">
                         @foreach( $cars_linkeds as $car )
@@ -102,9 +137,9 @@
                                 <div class="alert-icon"><i class="flaticon-truck"></i></div>
                                 <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}} {{$car->status}}
                                     @if($car->status == "Iniciado")
-                                        <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
+                                    <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
                                     @elseif($car->status == "sucesso")
-                                        <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
+                                    <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
                                     @endif
                                 </div>
                                 <div class="alert-close">
@@ -168,21 +203,25 @@
 
 @section('scripts')
 <script>
-
     // Update Status
-    @if(isset($driver->card->serial_number))
-        var devices = [
-            @foreach( $cars_linkeds as $card_linked )
-                {{$card_linked->id}},
-            @endforeach
-        ];
+    @if(isset($driver -> card -> serial_number))
+    var devices = [
+        @foreach($cars_linkeds as $card_linked) {
+            {
+                $card_linked -> id
+            }
+        },
+        @endforeach
+    ];
     @endif
     $.ajax({
         url: "{{url('/api/fleets/cards/update-status')}}",
         method: 'POST',
-        data: {devices: devices}
+        data: {
+            devices: devices
+        }
     });
-    $('#btn-refresh-status').click(function(){
+    $('#btn-refresh-status').click(function() {
         $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...')
     })
     // Fim - update status

@@ -52,7 +52,6 @@ class DriverService
     public function save(Request $request)
     {
         $driver = $this->driver->create($request->all());
-
         return $driver;
     }
 

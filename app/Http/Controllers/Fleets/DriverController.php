@@ -83,9 +83,6 @@ class DriverController extends Controller
     public function save(DriverRequest $request)
     {
         try {
-            $request->merge([
-                'customer_id' => Auth::user()->customer_id
-            ]);
             $this->driverService->save($request);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -99,7 +96,6 @@ class DriverController extends Controller
      */
     public function edit(Int $id)
     {
-
         $data = $this->data;
         $data['cards'] = $this->cardService->getCardDriverAvailable();
         $data['driver'] = $this->driverService->show($id);

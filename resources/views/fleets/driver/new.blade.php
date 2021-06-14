@@ -24,7 +24,7 @@
 
             <div class="kt-portlet__body">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-8">
                         <label for="inputName">Nome</label>
                         <input type="text" name="name" class="form-control" value="{{ $driver->name ?? '' }}">
                     </div>
@@ -50,31 +50,66 @@
                         <label for="">Endereço</label>
                         <input type="text" class="form-control automaker" name="address" value="{{ $driver->address ?? '' }}">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputAddress">Data de Admissão</label>
-                        <input type="date" class="form-control" name="admission" value="{{ $driver->admission ?? '' }}">
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="inputCpfCnpj">CPF</label>
                         <input type="text" id="input_cpf" name="cpf" class="form-control input_cpf_cnpj" maxlength="14" value="{{ $driver->cpf ?? '' }}">
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputAddress">CNH</label>
-                        <input type="text" class="form-control" name="cnh" maxlength="11" value="{{ $driver->cnh ?? '' }}">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputAddress">Data de Admissão</label>
+                        <input type="date" class="form-control" name="admission" value="{{ $driver->admission ?? '' }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputComplement">Telefone</label>
                         <input type="text" class="form-control mask_input_contact" name="phone" value="{{ $driver->phone ?? '' }}">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         <label for="inputNumber">Email</label>
                         <input type="text" class="form-control" name="email" value="{{ $driver->email ?? '' }}">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="form-group col-md-3">
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-4">
+                        <label for="inputAddress">CNH</label>
+                        <input type="text" class="form-control" name="cnh" maxlength="11" value="{{ $driver->cnh ?? '' }}">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="inputAddress">Validade da CNH</label>
+                        <input type="date" class="form-control" name="validation" value="{{ $driver->admission ?? '' }}">
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <label for="">Categoria A</label>
+                        <div class="form-group">
+                            <div class="kt-radio-inline">
+                                <label class="kt-checkbox">
+                                    <input type="checkbox" name="category[]" value="A">A
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="inputCategory">Outras Catogorias</label>
+                        <select class="form-control" name="category[]" id="category">
+                            <option value="">Sem categoria</option>
+                            <option value="B" id="option">B</option>
+                            <option value="C" id="option">C</option>
+                            <option value="D" id="option">D</option>
+                            <option value="E" id="option">E</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group col-md-0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
                         <label for="inputAddress">Status</label>
                         <select class="form-control" name="status">
                             <option value="0" {{ ($driver->status ?? null) == '0' ? 'selected' : ''}}>Ativo</option>
@@ -82,6 +117,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="kt-portlet__foot">
                     <div class="kt-form__actions">
                         <div class="row">
@@ -103,7 +139,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form class="kt-form kt-form--label-right" id="form-create-card">
-            @csrf
+                @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Novo Cartão</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -117,7 +153,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="btn-card-save">Cadastrar</button>
                 </div>
             </form>
