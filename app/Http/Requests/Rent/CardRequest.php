@@ -31,7 +31,8 @@ class CardRequest extends FormRequest
             $return = array_merge([
                 'serial_number' => Rule::unique('cards')->where(function ($query) {
                     return $query->where('customer_id', Auth::user()->customer_id)->where('deleted_at', null);
-                })
+                }),
+                'serial_number' => 'required',
             ], $return);
         } elseif ($this->method() == "PUT") {
             $return = array_merge([

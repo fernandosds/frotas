@@ -49,7 +49,6 @@ class CarRequest extends FormRequest
     {
 
         return [
-
             'device.required' => 'O campo dispositivo é obrigatório',
         ];
     }

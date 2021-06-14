@@ -179,7 +179,6 @@
     $(function() {
 
         var driver_id = $('#id').val();
-
         $('#btn-driver-save').click(function() {
             ajax_store(driver_id, "fleets/drivers", $('#form-create-driver').serialize());
         });
@@ -187,8 +186,8 @@
     });
 
     /**
-        Gravar cartão
-        */
+            Gravar cartão
+*/
     $(function() {
         var card_id = $('#id').val();
         $('#btn-card-save').click(function() {

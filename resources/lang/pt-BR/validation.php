@@ -180,5 +180,6 @@ return [
         'email'                 => 'e-mail',
         'remember'              => 'lembrar-me',
         'card_id'               => 'número do cartão',
+        'serial_number'         => 'número de série'
     ],
 ];

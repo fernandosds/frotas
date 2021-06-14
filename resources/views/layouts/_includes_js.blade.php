@@ -247,7 +247,6 @@
 
             },
             error: function(error) {
-                console.log(error.responseJSON)
                 if (error.responseJSON.status == "internal_error") {
                     Swal.fire({
                         type: 'error',
@@ -412,9 +411,9 @@
 
     }
 
-    /*
+    /**
     INSERT FUNCTION
-     */
+*/
     function ajax_store_cards_driver(id, route, form_data, reload = false) {
 
         if (id != "") {
