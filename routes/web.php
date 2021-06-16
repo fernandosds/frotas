@@ -50,6 +50,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation');
 
         Route::post('/addtime', 'Iscas\BoardingController@addTime')->middleware('user.access_level:management');
+
+        Route::group(['prefix' => 'history'], function () {
+            Route::get('/show/{device_number}', 'Iscas\BoardingController@showDevice');
+            Route::post('/save', 'Iscas\BoardingController@saveHistory');
+        });
     });
 
     /**

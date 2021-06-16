@@ -52,8 +52,8 @@ class DeviceRepository extends AbstractRepository
     public function findByUniqid(String $uniqid)
     {
         return $this->model->where('uniqid', $uniqid)
-                            ->where('customer_id', Auth::user()->customer_id)
-                            ->first();
+            ->where('customer_id', Auth::user()->customer_id)
+            ->first();
     }
 
     /**
@@ -101,30 +101,26 @@ class DeviceRepository extends AbstractRepository
     public function findByModel(String $device)
     {
 
-        try{
+        try {
             $data = DB::table('devices')
                 ->join('contracts', 'contracts.id', '=', 'devices.contract_id')
                 ->join('technologies', 'technologies.id', '=', 'devices.technologie_id')
-                ->select('devices.uniqid', 'devices.id', 'devices.contract_id AS contract_id', 'contracts.status','devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
+                ->select('devices.uniqid', 'devices.id', 'devices.contract_id AS contract_id', 'contracts.status', 'devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
                 ->where('contracts.status', 1)
                 ->where('devices.model', $device)
                 ->where('devices.customer_id', Auth::user()->customer_id)
                 ->first();
 
-            if($data){
+            if ($data) {
 
                 return ['status' => 'success', 'message' => '', 'data' => $data];
-
-            }else{
+            } else {
                 return ['status' => 'error', 'message' => 'Ísca não encontrada'];
-
             }
-
-        }catch (Exception $e){
+        } catch (Exception $e) {
 
             return ['status' => 'error', 'message' => $e->getMessage(), 'data' => ''];
         }
-
     }
 
     /**
@@ -135,7 +131,7 @@ class DeviceRepository extends AbstractRepository
     {
 
         $devices = $this->model
-           
+
             //->where('customer_id', $contract_devices->customer_id)
             ->where('technologie_id', $contract_devices->technologie_id)
             ->where('contract_id', $contract_devices->contract_id)
@@ -151,8 +147,18 @@ class DeviceRepository extends AbstractRepository
     public function validDevice(String $device)
     {
         return $this->model->where('model', $device)
-                            ->where('customer_id', Auth::user()->customer_id)
-                            ->whereNotNull('contract_id')
-                            ->count();
+            ->where('customer_id', Auth::user()->customer_id)
+            ->whereNotNull('contract_id')
+            ->count();
+    }
+
+    /**
+     * @param int $customer_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function findDevice($device)
+    {
+        return $this->model->where('model', $device)
+            ->first();
     }
 }

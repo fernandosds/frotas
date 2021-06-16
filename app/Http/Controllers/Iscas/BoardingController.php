@@ -8,6 +8,7 @@ use App\Services\ApiDeviceService;
 use App\Services\ApiUserService;
 use App\Services\Iscas\BoardingService;
 use App\Services\DeviceService;
+use App\Services\Iscas\ServiceHistoryService;
 use App\Services\Iscas\TypeOfLoadService;
 use App\Services\Iscas\AccommodationLocationsService;
 use Carbon\Carbon;
@@ -57,19 +58,24 @@ class BoardingController extends Controller
      * @param TypeOfLoadService $typeOfLoadService
      * @param AccommodationLocationsService $accommodationLocationsService
      * @param ApiUserService $apiUserService
+     * @param ServiceHistoryService $serviceHistoryService
      */
     public function __construct(
-        BoardingService $boardingService, DeviceService $deviceService, ApiDeviceService $apiDeviceServic,
-        TypeOfLoadService $typeOfLoadService, AccommodationLocationsService $accommodationLocationsService,
-        ApiUserService $apiUserService
-    )
-    {
+        BoardingService $boardingService,
+        DeviceService $deviceService,
+        ApiDeviceService $apiDeviceServic,
+        TypeOfLoadService $typeOfLoadService,
+        AccommodationLocationsService $accommodationLocationsService,
+        ApiUserService $apiUserService,
+        ServiceHistoryService $serviceHistoryService
+    ) {
         $this->boardingService = $boardingService;
         $this->deviceService = $deviceService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->typeOfLoadService = $typeOfLoadService;
         $this->accommodationLocationsService = $accommodationLocationsService;
         $this->apiUserService = $apiUserService;
+        $this->serviceHistoryService = $serviceHistoryService;
 
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
@@ -124,20 +130,19 @@ class BoardingController extends Controller
         $device = $this->deviceService->findByUniqid($request->device_uniqid);
 
         // Token validation
-        if( Auth::user()->required_validation ){
+        if (Auth::user()->required_validation) {
 
-            if( $request->token_validation == "" ){
+            if ($request->token_validation == "") {
                 return response()->json(['status' => 'validation_error', 'errors' => ["Informe o código autenticador"]], 401);
                 die;
             }
 
             $validation = $this->apiUserService->tokenValidation(Auth::user()->validation_token, $request->token_validation);
 
-            if($validation['return'] == "FAILED"){
+            if ($validation['return'] == "FAILED") {
                 return response()->json(['status' => 'validation_error', 'errors' => ["O código autenticador inválido"]], 401);
                 die;
             }
-
         }
 
         try {
@@ -149,7 +154,7 @@ class BoardingController extends Controller
                 'active' => 1
             ]);
 
-            if(isset($request->duration)) {
+            if (isset($request->duration)) {
                 $request->merge([
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
@@ -172,12 +177,12 @@ class BoardingController extends Controller
     public function finish(Int $id)
     {
 
-        try{
+        try {
             $this->boardingService->finish($id);
 
             saveLog(['value' => $id, 'type' => 'Encerrou embarque', 'local' => 'BoardingController', 'funcao' => 'finish']);
             return response()->json(['status' => 'success'], 200);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
         }
     }
@@ -193,8 +198,8 @@ class BoardingController extends Controller
 
         $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
 
-        if($in_use){
-            return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº '.$in_use->id.', informe outro dispositivo ou encerre o embarque anterior.'];
+        if ($in_use) {
+            return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo ou encerre o embarque anterior.'];
         }
 
         $return['status'] = $device['status'];
@@ -244,7 +249,6 @@ class BoardingController extends Controller
     {
 
         return $this->apiUserService->tokenValidation(Auth::user()->validation_token, $token);
-
     }
 
     /**
@@ -255,17 +259,39 @@ class BoardingController extends Controller
     {
 
         $boarding = $this->boardingService->getCurrentBoardingByDevice($request->device);
-        if($boarding){
+        if ($boarding) {
             $carbon = Carbon::parse($boarding->finished_at);
             return $this->boardingService->update(
                 new Request(['finished_at' => $carbon->addHour($request->hours)->format('Y-m-d H:i:s')]),
                 $boarding->id
             );
-
-        }else{
+        } else {
             return false;
         }
-
     }
 
+    /**
+     * @return array
+     */
+    public function saveHistory(Request $request)
+    {
+        try {
+            $this->serviceHistoryService->saveHistory($request);
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function showDevice(String $device_number)
+    {
+        $data = $this->data;
+        $deviceId = $this->serviceHistoryService->showDevice($device_number);
+        $data['devices'] = $this->serviceHistoryService->showByCustomerId($deviceId->id);
+
+        return view('boardings.serviceHistory.list', $data);
+    }
 }

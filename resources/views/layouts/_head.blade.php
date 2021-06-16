@@ -10,6 +10,11 @@
     <meta name="description" content="Login page example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
     <!--begin::Fonts -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script>
@@ -20,6 +25,23 @@
             active: function() {
                 sessionStorage.fonts = true;
             }
+        });
+    </script>
+
+    <script>
+        $('#summernote').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
         });
     </script>
 
@@ -79,31 +101,36 @@
     <link rel="shortcut icon" href="{{asset('/logos/favicon.ico')}}" />
 
     <style>
-        .icon-menu{
+        .icon-menu {
             margin-right: 10px;
         }
-        .center{
+
+        .center {
             text-align: center;
         }
-        hr .hr{
+
+        hr .hr {
             border-top: 1px solid #eee !important;
         }
-        .hidden{
+
+        .hidden {
             display: none !important;
         }
-        input, select{
+
+        input,
+        select {
             background-color: #f8fbfc !important;
-            -webkit-box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
-            -moz-box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
-            box-shadow: inset 0px 0px 5px -1px rgba(0,0,0,0.2);
+            -webkit-box-shadow: inset 0px 0px 5px -1px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: inset 0px 0px 5px -1px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0px 0px 5px -1px rgba(0, 0, 0, 0.2);
         }
-        .hide{
+
+        .hide {
             display: none
         }
     </style>
 
     @yield('styles')
-
 </head>
 
 <!-- end::Head -->
