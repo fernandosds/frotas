@@ -275,6 +275,8 @@ class BoardingController extends Controller
      */
     public function saveHistory(Request $request)
     {
+
+
         try {
             $this->serviceHistoryService->saveHistory($request);
             return response()->json(['status' => 'success'], 200);

@@ -1,6 +1,6 @@
 <table class="table table-hover">
     <thead>
-        <tr>
+        <tr align="center">
             <th scope="col">Dados</th>
             <th scope="col">Descrição Atendimento</th>
             <th scope="col"></th>
@@ -14,10 +14,10 @@
                 <b>Protocolo:</b> {{$device->id}} <br>
                 <b>Usuário:</b> {{$device->user->name}} <br>
                 <b>Cliente:</b> {{$device->customer->name}} <br>
-                <b>Data:</b> {{$device->created_at}}<br>
+                <b>Data:</b> {{$device->created_at->format('d/m/Y H:i:s')}}<br>
                 <b>Dispositivo:</b> {{$device->device->model}} <br>
             </td>
-            <td>
+            <td width="70%" class="p-3 mb-2 bg-secondary text-dark">
                 {{$device->message}}
             </td>
         </tr>

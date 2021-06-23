@@ -60,7 +60,7 @@
                 <h4 for="" id="device-tipo">---</h4>
             </div>
             <div class="kt-portlet hidden" id="div-button-history">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTickets">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTickets" data-backdrop="static">
                     Registrar Atendimento
                 </button>
             </div>
@@ -265,35 +265,7 @@
 
 </div>
 
-<!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="modalTickets" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Histórico de Atendimentos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form class="kt-form kt-form--label-right" id="form-create-history">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Registrar atendimento</label>
-                        <textarea class="form-control" name="message" id="formTextArea" rows="5"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" id="btn-history-save">Salvar Atendimento</button>
-                </div>
-            </form>
-            <div class="center" id="list_history">
-                <i class="fa fa-spinner fa-pulse fa-4x"></i>
-            </div>
-        </div>
-    </div>
-</div>
+@include('boardings.modalServiceHistory')
 
 @endsection
 
@@ -302,23 +274,6 @@
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').trigger('focus')
     });
-
-    $(document).ready(function() {
-        $('#formTextArea').summernote({
-            height: 120,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    });
-
-
 
     /**
              Função para atualizar a div do atendimento
@@ -366,6 +321,7 @@
                             timer: 10000
                         }).then((result) => {
                             refreshListHistory(device_number);
+                            $("#formTextArea").val("");
                         })
                     } else {
                         Swal.fire({
