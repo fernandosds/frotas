@@ -55,6 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/show/{device_number}', 'Iscas\BoardingController@showDevice');
             Route::post('/save', 'Iscas\BoardingController@saveHistory');
         });
+
+        Route::group(['prefix' => 'trackers'], function () {
+            Route::get('/verify/{tracker}', 'Iscas\TrackerController@findTrackerByModel');
+        });
     });
 
     /**

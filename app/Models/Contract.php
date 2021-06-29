@@ -81,7 +81,15 @@ class Contract extends Model
         return $this->belongsTo('App\Models\Device');
     }
 
-   
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tracker()
+    {
+        return $this->belongsTo('App\Models\Tracker');
+    }
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -89,6 +97,4 @@ class Contract extends Model
     {
         return $this->HasMany('App\Models\ContractDevice');
     }
-
-    
 }

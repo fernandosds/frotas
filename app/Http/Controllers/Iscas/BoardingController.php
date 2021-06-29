@@ -126,7 +126,6 @@ class BoardingController extends Controller
      */
     public function save(BoardingRequest $request)
     {
-
         $device = $this->deviceService->findByUniqid($request->device_uniqid);
 
         // Token validation

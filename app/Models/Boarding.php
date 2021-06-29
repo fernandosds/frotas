@@ -37,7 +37,7 @@ class Boarding extends Model
         'contract_id',
         'log_id',
         'device_id',
-        'accommodation_location_id',        
+        'accommodation_location_id',
         'source',
         'destiny',
         'transporter',
@@ -54,6 +54,7 @@ class Boarding extends Model
         'redundant_technologie',
         'test',
         'active',
+        'active_tracker',
         'finished_at',
         'baterry_level'
     ];
@@ -87,6 +88,7 @@ class Boarding extends Model
             'redundant_technologie'     => $this->redundant_technologie,
             'test'                      => $this->test,
             'active'                    => $this->active,
+            'active_tracker'            => $this->active_tracker,
             'finished_at'               => $this->finished_at,
             'baterry_level'             => $this->baterry_level,
 

@@ -27,7 +27,7 @@ class ContractDevice extends Model
      */
     protected $table = 'contract_devices';
 
-   
+
     /**
      * @var array
      */
@@ -78,6 +78,14 @@ class ContractDevice extends Model
     public function device()
     {
         return $this->belongsTo('App\Models\Device');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tracker()
+    {
+        return $this->belongsTo('App\Models\Tracker');
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -7,6 +8,7 @@
  */
 
 namespace App\Services\Iscas;
+
 use Illuminate\Http\Request;
 
 
@@ -46,7 +48,6 @@ class BoardingService
     {
         $boarding = $this->boardingRepository->update($id, $request->all());
         return $boarding;
-    
     }
 
     /**
@@ -118,6 +119,4 @@ class BoardingService
     {
         return $this->boardingRepository->autoFinatlizeBoardings();
     }
-
-
 }
