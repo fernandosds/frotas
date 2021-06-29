@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
  * Date: 05/02/2021
  * Time: 15:07
  */
+
 use Carbon\Carbon;
 
 /**
@@ -14,13 +16,12 @@ use Carbon\Carbon;
  */
 function hoursDiff($start, $end)
 {
-    if( isset($start) && isset( $end ) ){
+    if (isset($start) && isset($end)) {
         $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $start);
         $date2 = Carbon::createFromFormat('Y-m-d H:i:s', $end);
         $value = $date2->diffInHours($date1);
         return $value;
     }
-
 }
 
 /**
@@ -32,7 +33,6 @@ function timeLeft($final)
 
     $final =  Carbon::parse($final);
     return $final->diff(Carbon::now())->format('%d dia(s) %H Hrs e %i min');
-
 }
 
 /**
@@ -50,9 +50,7 @@ function minLeftChart($to, $from)
     $from =  Carbon::parse($from);
     $past_minutes = $from->diffInMinutes(Carbon::now());
 
-    return ( $total_minutes > $past_minutes ) ? ceil(($past_minutes / $total_minutes) * 100) : 0;
-
-
+    return ($total_minutes > $past_minutes) ? ceil(($past_minutes / $total_minutes) * 100) : 0;
 }
 
 /**
@@ -62,8 +60,9 @@ function minLeftChart($to, $from)
 function saveLog($data)
 {
 
-    try{
-        $post = array('component'=>'Íscas', 'level' => 5,
+    try {
+        $post = array(
+            'component' => 'Íscas', 'level' => 5,
             'customer' => Auth::user()->customer->id, 'message' => json_encode([
                 'user' => Auth::user()->id,
                 'name' => Auth::user()->name,
@@ -72,8 +71,10 @@ function saveLog($data)
                 'type' => $data['type'],
                 'local' => $data['local'],
                 'funcao' => $data['funcao']
-            ]));
-
+            ])
+        );
+        print_r($post);
+        die();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.satcompany.com.br/log/send');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -81,9 +82,7 @@ function saveLog($data)
         $result = curl_exec($ch);
         curl_close($ch);
         return true;
-    }catch (\mysql_xdevapi\Exception $e){
+    } catch (\mysql_xdevapi\Exception $e) {
         return $e->getMessage();
     }
-
-
 }

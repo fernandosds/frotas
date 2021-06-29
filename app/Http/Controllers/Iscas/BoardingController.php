@@ -135,7 +135,6 @@ class BoardingController extends Controller
                 return response()->json(['status' => 'validation_error', 'errors' => ["Informe o código autenticador"]], 401);
                 die;
             }
-
             $validation = $this->apiUserService->tokenValidation(Auth::user()->validation_token, $request->token_validation);
 
             if ($validation['return'] == "FAILED") {
@@ -143,16 +142,21 @@ class BoardingController extends Controller
                 die;
             }
         }
-
         try {
-
             $request->merge([
                 'device_id' => $device->id,
                 'user_id' => Auth::user()->id,
                 'customer_id' => Auth::user()->customer_id,
-                'active' => 1
             ]);
-
+            if ($request->paring == "sim") {
+                $request->merge([
+                    'active' => 1
+                ]);
+            } else {
+                $request->merge([
+                    'active_tracker' => 1
+                ]);
+            }
             if (isset($request->duration)) {
                 $request->merge([
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
@@ -160,11 +164,9 @@ class BoardingController extends Controller
             }
 
             $this->boardingService->save($request);
-            saveLog(['value' => $device->model, 'type' => 'Novo embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
-
+            saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
-
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }

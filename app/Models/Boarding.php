@@ -55,6 +55,8 @@ class Boarding extends Model
         'test',
         'active',
         'active_tracker',
+        'pair_device',
+        'pair_device_tracker',
         'finished_at',
         'baterry_level'
     ];
