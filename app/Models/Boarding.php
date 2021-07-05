@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -37,7 +38,7 @@ class Boarding extends Model
         'contract_id',
         'log_id',
         'device_id',
-        'accommodation_location_id',        
+        'accommodation_location_id',
         'source',
         'destiny',
         'transporter',
@@ -53,6 +54,7 @@ class Boarding extends Model
         'model',
         'redundant_technologie',
         'test',
+        'pair_device',
         'active',
         'finished_at',
         'baterry_level'
@@ -86,6 +88,7 @@ class Boarding extends Model
             'model'                     => $this->model,
             'redundant_technologie'     => $this->redundant_technologie,
             'test'                      => $this->test,
+            'pair_device'                    => $this->pair_device,
             'active'                    => $this->active,
             'finished_at'               => $this->finished_at,
             'baterry_level'             => $this->baterry_level,
@@ -108,5 +111,4 @@ class Boarding extends Model
     {
         return $this->BelongsTo('App\User');
     }
-
 }
