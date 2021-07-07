@@ -11,11 +11,13 @@ use App\Services\DeviceService;
 use App\Services\Iscas\ServiceHistoryService;
 use App\Services\Iscas\TypeOfLoadService;
 use App\Services\Iscas\AccommodationLocationsService;
+use App\Services\Iscas\TrackerService;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Exception;
+use PhpParser\Node\Expr\Print_;
 
 class BoardingController extends Controller
 {
@@ -46,6 +48,11 @@ class BoardingController extends Controller
     private $accommodationLocationsService;
 
     /**
+     * @var TrackerService
+     */
+    private $trackerService;
+
+    /**
      * @var $apiUserService
      */
     private $apiUserService;
@@ -57,6 +64,7 @@ class BoardingController extends Controller
      * @param ApiDeviceService $apiDeviceServic
      * @param TypeOfLoadService $typeOfLoadService
      * @param AccommodationLocationsService $accommodationLocationsService
+     * @param TrackerService $trackerService
      * @param ApiUserService $apiUserService
      * @param ServiceHistoryService $serviceHistoryService
      */
@@ -66,6 +74,7 @@ class BoardingController extends Controller
         ApiDeviceService $apiDeviceServic,
         TypeOfLoadService $typeOfLoadService,
         AccommodationLocationsService $accommodationLocationsService,
+        TrackerService $trackerService,
         ApiUserService $apiUserService,
         ServiceHistoryService $serviceHistoryService
     ) {
@@ -74,6 +83,7 @@ class BoardingController extends Controller
         $this->apiDeviceServic = $apiDeviceServic;
         $this->typeOfLoadService = $typeOfLoadService;
         $this->accommodationLocationsService = $accommodationLocationsService;
+        $this->trackerService = $trackerService;
         $this->apiUserService = $apiUserService;
         $this->serviceHistoryService = $serviceHistoryService;
 
@@ -126,6 +136,7 @@ class BoardingController extends Controller
      */
     public function save(BoardingRequest $request)
     {
+
         $device = $this->deviceService->findByUniqid($request->device_uniqid);
 
         // Token validation
@@ -143,26 +154,29 @@ class BoardingController extends Controller
             }
         }
         try {
+
             $request->merge([
                 'device_id' => $device->id,
                 'user_id' => Auth::user()->id,
                 'customer_id' => Auth::user()->customer_id,
+                'active' => 1
             ]);
-            if ($request->paring == "sim") {
-                $request->merge([
-                    'active' => 1
-                ]);
-            } else {
-                $request->merge([
-                    'active_tracker' => 1
-                ]);
-            }
+
             if (isset($request->duration)) {
                 $request->merge([
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
 
+            if ($request->attatch_device == 'movel' && $request->pair_device) {
+                $pair_device = $this->trackerService->findTrackerByModel($request->pair_device);
+                if (!$pair_device) {
+                    return response()->json(['status' => 'internal_error', 'errors' => ['Digite um dispositivo disponível!']], 400);
+                }
+            }
+
+            //print_r(($request->all()));
+            //die();
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);

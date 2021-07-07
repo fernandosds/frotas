@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class BoardingRequest extends FormRequest
 {
@@ -24,28 +26,27 @@ class BoardingRequest extends FormRequest
     public function rules()
     {
 
-       return [
-           'contract_id'                => 'string|required',
-           'device_uniqid'              => 'string|required',
-           'source'                     => 'nullable|string|max:255',
-           'destiny'                    => 'nullable|string|max:255',
-           'transporter'                => 'nullable|string|max:255',
-           'duration'                   => 'required|integer|min:1|max:99999',
-           'telephone'                  => 'nullable|max:14',
-           'cell_phone'                 => 'nullable|max:14',
-           'board'                      => 'nullable|string|max:255',
-           'chassis'                    => 'nullable|max:255',
-           'carts_plates'               => 'nullable|string|max:255',
-           'transport_order'            => 'nullable|string|max:255',
-           'amount_carried'             => 'nullable|string|max:255',
-           'cpf_cnpj'                   => 'nullable|string|max:255',
-           'brand'                      => 'nullable|string|max:255',
-           'model'                      => 'nullable|string|max:255',
-           'redundant_technologie'      => 'nullable|string|max:255',
-           'type_of_load_id'            => 'nullable|integer',
-           'accommodation_location_id'  => 'nullable|integer',
-
-       ];
+        return [
+            'contract_id'                => 'string|required',
+            'device_uniqid'              => 'string|required',
+            'source'                     => 'nullable|string|max:255',
+            'destiny'                    => 'nullable|string|max:255',
+            'transporter'                => 'nullable|string|max:255',
+            'duration'                   => 'required|integer|min:1|max:99999',
+            'telephone'                  => 'nullable|max:14',
+            'cell_phone'                 => 'nullable|max:14',
+            'board'                      => 'nullable|string|max:255',
+            'chassis'                    => 'nullable|max:255',
+            'carts_plates'               => 'nullable|string|max:255',
+            'transport_order'            => 'nullable|string|max:255',
+            'amount_carried'             => 'nullable|string|max:255',
+            'cpf_cnpj'                   => 'nullable|string|max:255',
+            'brand'                      => 'nullable|string|max:255',
+            'model'                      => 'nullable|string|max:255',
+            'redundant_technologie'      => 'nullable|string|max:255',
+            'type_of_load_id'            => 'nullable|integer',
+            'accommodation_location_id'  => 'nullable|integer',
+        ];
     }
 
     public function messages()
@@ -58,4 +59,16 @@ class BoardingRequest extends FormRequest
         ];
     }
 
+    /**
+     * Handle a passed validation attempt.
+     *
+     * @return void
+     */
+    protected function passedValidation()
+    {
+        $pair_device = array_filter($this->pair_device);
+        $this->merge([
+            'pair_device' => implode(",", $pair_device),
+        ]);
+    }
 }

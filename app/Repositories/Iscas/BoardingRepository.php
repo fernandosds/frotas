@@ -73,7 +73,7 @@ class BoardingRepository extends AbstractRepository
     {
         return $this->model->where('active','0')->orderBy('id','desc')->paginate($limit);
     }
-    
+
     /**
      * @return mixed
      */

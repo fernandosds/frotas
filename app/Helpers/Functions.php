@@ -73,8 +73,6 @@ function saveLog($data)
                 'funcao' => $data['funcao']
             ])
         );
-        print_r($post);
-        die();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.satcompany.com.br/log/send');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

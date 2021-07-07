@@ -54,9 +54,8 @@ class Boarding extends Model
         'redundant_technologie',
         'test',
         'active',
-        'active_tracker',
         'pair_device',
-        'pair_device_tracker',
+        'attatch_device',
         'finished_at',
         'baterry_level'
     ];
@@ -89,8 +88,9 @@ class Boarding extends Model
             'model'                     => $this->model,
             'redundant_technologie'     => $this->redundant_technologie,
             'test'                      => $this->test,
+            'pair_device'               => $this->pair_device,
             'active'                    => $this->active,
-            'active_tracker'            => $this->active_tracker,
+            'attatch_device'            => $this->attatch_device,
             'finished_at'               => $this->finished_at,
             'baterry_level'             => $this->baterry_level,
 

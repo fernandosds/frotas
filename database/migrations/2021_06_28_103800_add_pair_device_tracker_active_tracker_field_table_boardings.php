@@ -14,9 +14,7 @@ class AddPairDeviceTrackerActiveTrackerFieldTableBoardings extends Migration
     public function up()
     {
         Schema::table('boardings', function (Blueprint $table) {
-            $table->string('pair_device_tracker', 50)->nullable()->after('active');
-            $table->boolean('active_tracker')->default(0)->after('pair_device_tracker');
-
+            $table->string('attatch_device', 50)->nullable()->after('pair_device');
         });
     }
 
@@ -28,8 +26,7 @@ class AddPairDeviceTrackerActiveTrackerFieldTableBoardings extends Migration
     public function down()
     {
         Schema::table('boardings', function (Blueprint $table) {
-            $table->dropColumn('pair_device_tracker');
-            $table->dropColumn('active_tracker');
+            $table->dropColumn('attatch_device');
         });
     }
 }

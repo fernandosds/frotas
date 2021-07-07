@@ -10,6 +10,14 @@
         display: none;
     }
 
+    #div-paring-mobile {
+        display: none;
+    }
+
+    #div-paring-device {
+        display: none;
+    }
+
     .focus-input {
         background-color: #fff0d5 !important;
     }
@@ -148,6 +156,24 @@
                     </div>
 
                     <div class="col-sm-12">
+                        <h4><i class="fa fa-info-circle"></i> Selecione um pareamento</h4>
+                        <hr />
+                        <div class="form-row">
+                            <div class="form-group col-md-4"></div>
+
+                            <div class="form-group col-md-4">
+                                <select class="form-control" name="attatch_device" id="selectPairDeviceTracker">
+                                    <option value="selecione_pareamento">Selecione um pareamento</option>
+                                    <option value="movel">Movel</option>
+                                    <option value="carga">Carga</option>
+                                    <option value="nao_pareado">Não Parear</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" id="div-paring-mobile">
 
                         <h4><i class="fa fa-cog"></i> Dispositivo Movel</h4>
                         <hr />
@@ -155,28 +181,20 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inpuCity">Modelo do Dispositivo</label>
-                                <input type="text" class="form-control" name="pair_device_tracker" value="" id="input-tracker">
+                                <input type="text" class="form-control" name="pair_device[]" value="" id="input-tracker">
                                 <span id="search-tracker"></span>
                             </div>
 
 
                             <div class="col-md-8" id="div-paring-tracker">
                                 <div class="row">
-                                    <div class="form-group col-md-2">
-                                        <label for="inputComplement">Parear?</label>
-                                        <select class="form-control" name="paring_tracker" id="selectPairDeviceTracker">
-                                            <option value="sim">Sim</option>
-                                            <option value="nao">Não</option>
-                                        </select>
-                                    </div>
-
                                     <div class="form-group col-md-10">
                                         <label for="inputComplement">&nbsp;</label>
                                         <div class="kt-section">
                                             <div class="kt-section__content">
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>ATENÇÃO!</strong> <i class="fa fa-hand-o-left"></i>
-                                                    Este dispositivo está disponível. Deseja vinculá-lo a este veículo?
+                                                    Este dispositivo está disponível. Ative o embarque para pareá-lo.
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +204,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" id="div-paring-device">
 
                         <h4><i class="fa fa-box"></i> Carga</h4>
                         <hr />
@@ -202,28 +220,19 @@
                             <div class="form-group col-md-2">
                                 <!--<input type="text" name="device_paring" id="hidden_device_paring" />-->
                                 <label for="inputComplement">Dispositivo</label>
-                                <input type="text" class="form-control" name="pair_device" value="" id="input_pair_device" readonly="readonly">
+                                <input type="text" class="form-control" name="pair_device[]" value="" id="input_pair_device" readonly="readonly">
                                 <span id="search-placa"></span>
                             </div>
 
                             <div class="col-md-8" id="div-paring">
                                 <div class="row">
-                                    <div class="form-group col-md-2">
-                                        <label for="inputComplement">Parear?</label>
-                                        <select class="form-control" name="paring" id="selectPairDevice">
-                                            <option value="sim">Sim</option>
-                                            <option value="nao" selected="selected">Não</option>
-                                        </select>
-                                    </div>
-
                                     <div class="form-group col-md-10">
                                         <label for="inputComplement">&nbsp;</label>
                                         <div class="kt-section">
                                             <div class="kt-section__content">
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>ATENÇÃO!</strong> <i class="fa fa-hand-o-left"></i>
-                                                    Este veículo possui rastreador, você deseja vincular esta ísca a ao rastreador
-                                                    existente neste veículo?
+                                                    Este veículo possui rastreador, ative o embarque para pareá-lo.
                                                 </div>
                                             </div>
                                         </div>
@@ -318,28 +327,48 @@
         $('#myInput').trigger('focus')
     });
 
+    /**
+      Função para apagar os dados do input da carga
+     */
+    function clearInputDevice(device_number) {
+        $('#input-placa').val('')
+        $('#input_pair_device').val('')
+        $('#brand').val('')
+        $('#chassi').val('')
+        $('#model').val('')
+    }
+
+    /**
+      Função para apagar os dados do input do dispositivo movel
+     */
+    function clearInputDevicetracker(device_number) {
+        $('#input-tracker').val('')
+    }
 
     /**
       Função para alterar os selects
      */
 
     $('#selectPairDeviceTracker').on('change', function() {
-        if ($("#selectPairDeviceTracker").val() == 'sim') {
-            $('#selectPairDevice').val('nao');
+        if ($("#selectPairDeviceTracker").val() == 'movel') {
+            clearInputDevice()
+            $('#div-paring-device').hide();
+            $('#div-paring-mobile').show();
+        } else if ($("#selectPairDeviceTracker").val() == 'carga') {
+            clearInputDevicetracker()
+            $('#div-paring-mobile').hide();
+            $('#div-paring-device').show();
         } else {
-            $('#selectPairDevice').val('sim');
-        }
-    });
-
-    $('#selectPairDevice').on('change', function() {
-        if ($("#selectPairDevice").val() == 'sim') {
-            $('#selectPairDeviceTracker').val('nao');
+            clearInputDevicetracker()
+            clearInputDevice()
+            $('#div-paring-mobile').hide();
+            $('#div-paring-device').hide();
         }
     });
 
     /**
-             Função para atualizar a div do atendimento
-        */
+         Função para atualizar a div do atendimento
+    */
     function refreshListHistory(device_number) {
         $.ajax({
             type: 'GET',
@@ -436,16 +465,7 @@
 
     $(function() {
 
-        /**
-         Pesquisar O Rastreador Movel
-         */
-
-        $('#input-tracker').focusout(function() {
-
-            $('#search-tracker').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando dispositivo...')
-
-            var tracker = $('#input-tracker').val();
-
+        function searchTrackerMobile(tracker) {
             $.ajax({
                 type: 'GET',
                 url: '{{url("boardings/trackers/verify")}}/' + tracker,
@@ -462,6 +482,17 @@
                     }
                 }
             });
+
+        }
+
+
+        /**
+         Pesquisar O Rastreador Movel
+         */
+        $('#input-tracker').focusout(function() {
+            $('#search-tracker').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando dispositivo...')
+            var tracker = $('#input-tracker').val();
+            searchTrackerMobile(tracker)
         })
 
 
@@ -498,13 +529,9 @@
 
                             $('#search-placa').html('<i class="fa fa-warning"></i> Este veículo não possui rastreador.')
                         }
-
-                        console.log(response)
                     }
                 });
-
             }
-
         })
 
         $('#btn-find-device').click(function() {
@@ -599,6 +626,7 @@
     /**
         Gravar Embarques
     */
+
     $(function() {
 
         $('#btn-boarding-save').click(function() {
@@ -608,6 +636,47 @@
                 $('#duration').addClass('focus-input')
             }
 
+            if ($('#selectPairDeviceTracker').val() == 'selecione_pareamento') {
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Oops...',
+                    text: 'Selecione um tipo de pareamento!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+                die;
+            }
+
+            if ($('#selectPairDeviceTracker').val() == 'carga') {
+                if ($('#input_pair_device').val() == '') {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Insira a placa do veículo!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                    die;
+                }
+            }
+
+            if ($('#selectPairDeviceTracker').val() == 'movel') {
+                if ($('#input-tracker').val() == '') {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Selecione um valor para pareamento móvel!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                    die;
+                }
+                /*else {
+                                   var tracker = $('#input-tracker').val();
+                                   searchTrackerMobile(tracker)
+                                   return false;
+                               }*/
+            }
             var boarding_id = $('#id').val();
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
         });
