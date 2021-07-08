@@ -12,6 +12,7 @@ use App\Services\Iscas\ServiceHistoryService;
 use App\Services\Iscas\TypeOfLoadService;
 use App\Services\Iscas\AccommodationLocationsService;
 use App\Services\Iscas\TrackerService;
+use App\Http\Controllers\Iscas\TrackerController;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -21,6 +22,11 @@ use PhpParser\Node\Expr\Print_;
 
 class BoardingController extends Controller
 {
+
+    /**
+     * @var TrackerController
+     */
+    private $trackerController;
 
     /**
      * @var BoardingService
@@ -67,8 +73,10 @@ class BoardingController extends Controller
      * @param TrackerService $trackerService
      * @param ApiUserService $apiUserService
      * @param ServiceHistoryService $serviceHistoryService
+     * @param TrackerController $trackerController
      */
     public function __construct(
+        TrackerController $trackerController,
         BoardingService $boardingService,
         DeviceService $deviceService,
         ApiDeviceService $apiDeviceServic,
@@ -78,6 +86,7 @@ class BoardingController extends Controller
         ApiUserService $apiUserService,
         ServiceHistoryService $serviceHistoryService
     ) {
+        $this->trackerController = $trackerController;
         $this->boardingService = $boardingService;
         $this->deviceService = $deviceService;
         $this->apiDeviceServic = $apiDeviceServic;
@@ -138,6 +147,15 @@ class BoardingController extends Controller
     {
         $device = $this->deviceService->findByUniqid($request->device_uniqid);
 
+        if ($request->attatch_device == 'movel' && $request->pair_device) {
+            $tracker = $this->trackerService->findTrackerByModel($request->pair_device);
+
+            if (!$tracker) {
+                return response()->json(['status' => 'validation_error', 'errors' => "Informe o codigo autenticador"], 404);
+            }
+            return response()->json(['status' => 'success'], 200);
+        }
+
         // Token validation
         if (Auth::user()->required_validation) {
 
@@ -149,14 +167,6 @@ class BoardingController extends Controller
 
             if ($validation['return'] == "FAILED") {
                 return response()->json(['status' => 'validation_error', 'errors' => ["O código autenticador inválido"]], 401);
-                die;
-            }
-        }
-
-        if ($request->attatch_device == 'movel' && $request->pair_device) {
-            $tracker = $this->trackerService->findTrackerByModel($request->pair_device);
-            if (!$tracker) {
-                return response()->json(['status' => 'error', 'errors' => "Informe o codigo autenticador"], 200);
                 die;
             }
         }
@@ -181,7 +191,7 @@ class BoardingController extends Controller
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 500);
         }
     }
 

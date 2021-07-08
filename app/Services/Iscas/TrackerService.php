@@ -61,6 +61,6 @@ class TrackerService
     public function findTrackerByModel($tracker)
     {
         $trackerModel =  $this->trackerRepository->findTrackerByModel($tracker);
-        return $trackerModel;
+        return $trackerModel ? $trackerModel : abort(404);
     }
 }

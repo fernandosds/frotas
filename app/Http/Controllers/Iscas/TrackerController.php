@@ -40,7 +40,7 @@ class TrackerController extends Controller
         try {
             $tracker =  $this->trackerService->findTrackerByModel($tracker);
             if (!$tracker) {
-                return response()->json(['status' => 'error', 'errors' => "Informe o codigo autenticador"], 200);
+                return response()->json(['status' => 'error', 'errors' => "Informe o codigo autenticador"], 404);
             }
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {

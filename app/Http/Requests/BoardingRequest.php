@@ -66,9 +66,9 @@ class BoardingRequest extends FormRequest
      */
     protected function passedValidation()
     {
-        $pair_device = $this->pair_device[0];
+        $pair_device = $this->pair_device[1];
         if (!$pair_device) {
-            $deviceVehicle = $this->pair_device[1];
+            $deviceVehicle = $this->pair_device[0];
             $this->merge([
                 'pair_device' => $deviceVehicle,
                 'attatch_device' => 'veiculo'
