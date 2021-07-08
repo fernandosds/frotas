@@ -38,10 +38,13 @@ class TrackerController extends Controller
     public function findTrackerByModel(String $tracker)
     {
         try {
-            $this->trackerService->findTrackerByModel($tracker);
+            $tracker =  $this->trackerService->findTrackerByModel($tracker);
+            if (!$tracker) {
+                return response()->json(['status' => 'error', 'errors' => "Informe o codigo autenticador"], 200);
+            }
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage(), 'status' => 'device'], 200);
+            return response()->json(['error' => $e->getMessage(), 'status' => 'device'], 500);
         }
     }
 }

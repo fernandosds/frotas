@@ -136,7 +136,6 @@ class BoardingController extends Controller
      */
     public function save(BoardingRequest $request)
     {
-
         $device = $this->deviceService->findByUniqid($request->device_uniqid);
 
         // Token validation
@@ -153,6 +152,15 @@ class BoardingController extends Controller
                 die;
             }
         }
+
+        if ($request->attatch_device == 'movel' && $request->pair_device) {
+            $tracker = $this->trackerService->findTrackerByModel($request->pair_device);
+            if (!$tracker) {
+                return response()->json(['status' => 'error', 'errors' => "Informe o codigo autenticador"], 200);
+                die;
+            }
+        }
+
         try {
 
             $request->merge([
@@ -167,16 +175,8 @@ class BoardingController extends Controller
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
-
-            if ($request->attatch_device == 'movel' && $request->pair_device) {
-                $pair_device = $this->trackerService->findTrackerByModel($request->pair_device);
-                if (!$pair_device) {
-                    return response()->json(['status' => 'internal_error', 'errors' => ['Digite um dispositivo disponível!']], 400);
-                }
-            }
-
-            //print_r(($request->all()));
-            //die();
+            print_r(($request->all()));
+            die();
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);

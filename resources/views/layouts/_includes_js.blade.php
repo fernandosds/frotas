@@ -270,6 +270,7 @@
                     var errors = $.map(items, function(i) {
                         return i.join('<br />');
                     });
+                    console.log(errors)
                     Swal.fire({
                         type: 'error',
                         title: 'Erro!',
