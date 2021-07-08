@@ -151,9 +151,8 @@ class BoardingController extends Controller
             $tracker = $this->trackerService->findTrackerByModel($request->pair_device);
 
             if (!$tracker) {
-                return response()->json(['status' => 'validation_error', 'errors' => "Informe o codigo autenticador"], 404);
+                return response()->json(['status' => 'validation_error', 'errors' => "Código do dispositivo inválido"], 404);
             }
-            return response()->json(['status' => 'success'], 200);
         }
 
         // Token validation
@@ -185,13 +184,11 @@ class BoardingController extends Controller
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
-            print_r(($request->all()));
-            die();
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 500);
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
 

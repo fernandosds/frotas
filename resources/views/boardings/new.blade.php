@@ -409,25 +409,18 @@
                 success: function(response) {
 
                     if (response.status == "success") {
-                        $('#search-tracker').remove();
+                        $('#search-tracker').hide();
                         $('#div-paring-tracker').show();
                         $('#input-tracker').val()
-                    } else {
-                        $('#div-paring-tracker').hide();
-                        $('#div-paring').hide();
-                        $('#input-tracker').val('');
-                        $('#search-tracker').html('<i class="fa fa-warning"></i> Este dispositivo não está disponível.')
                     }
                 },
                 error: function(error) {
                     if (error.responseJSON.status == "validation_error") {
                         var items = error.responseJSON.errors;
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + items,
-                            footer: ' '
-                        })
+                        $('#div-paring-tracker').hide();
+                        $('#div-paring').hide();
+                        $('#input-tracker').val('');
+                        $('#search-tracker').show().html('<i class="fa fa-warning"></i>' + items)
                     }
 
                 }
@@ -566,9 +559,7 @@
                     timer: 10000
                 })
             }
-
         })
-
     });
 
     /**
@@ -584,42 +575,10 @@
                 $('#duration').addClass('focus-input')
             }
 
-            if ($('#selectPairDeviceTracker').val() == 'selecione_pareamento') {
-                Swal.fire({
-                    type: 'warning',
-                    title: 'Oops...',
-                    text: 'Selecione um tipo de pareamento!',
-                    showConfirmButton: true,
-                    timer: 10000
-                })
-                die;
-            }
+            $('#search-tracker').remove();
 
-            if ($('#selectPairDeviceTracker').val() == 'carga') {
-                if ($('#input_pair_device').val() == '') {
-                    Swal.fire({
-                        type: 'warning',
-                        title: 'Oops...',
-                        text: 'Insira a placa do veículo!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-                    die;
-                }
-            }
 
-            if ($('#selectPairDeviceTracker').val() == 'movel') {
-                if ($('#input-tracker').val() == '') {
-                    Swal.fire({
-                        type: 'warning',
-                        title: 'Oops...',
-                        text: 'Selecione um valor para pareamento móvel!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-                    die;
-                }
-            }
+
             var boarding_id = $('#id').val();
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
         });

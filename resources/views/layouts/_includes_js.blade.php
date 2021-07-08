@@ -23,6 +23,7 @@
 
 <!--begin:: Global Mandatory Vendors -->
 <script src="{{asset('/assets/vendors/general/jquery/dist/jquery.js')}}" type="text/javascript"></script>
+
 <script src="{{asset('/assets/vendors/general/popper.js/dist/umd/popper.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/js-cookie/src/js.cookie.js')}}" type="text/javascript"></script>
@@ -104,7 +105,7 @@
 <!--begin::Global App Bundle(used by all pages) -->
 <script src="{{asset('/assets/app/bundle/app.bundle.js')}}" type="text/javascript"></script>
 
-<script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>
+<!--<script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script> -->
 
 <script>
     /**
@@ -256,7 +257,7 @@
                         timer: 10000
                     })
 
-                } else if (error.responseJSON.status == "validation_error") {
+                } else if (error.responseJSON.status == "validation_error" || error.responseJSON.status == "error") {
                     var items = error.responseJSON.errors;
                     Swal.fire({
                         type: 'error',

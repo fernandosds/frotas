@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Iscas\TrackerService;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\VarDumper\VarDumper;
 
 class TrackerController extends Controller
 {
@@ -40,7 +41,7 @@ class TrackerController extends Controller
         try {
             $tracker =  $this->trackerService->findTrackerByModel($tracker);
             if (!$tracker) {
-                return response()->json(['status' => 'error', 'errors' => "Informe o codigo autenticador"], 404);
+                return response()->json(['status' => 'validation_error', 'errors' => "Código do dispositivo inválido"], 404);
             }
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
