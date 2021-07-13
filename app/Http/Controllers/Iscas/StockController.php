@@ -34,8 +34,8 @@ class StockController extends Controller
     public function index()
     {
         $customer_id = Auth::user()->customer_id;
-        
-        $data = $this->data;       
+
+        $data = $this->data;
         $data['devices'] = $this->deviceService->filter($customer_id);
 
         return response()->view('stock.list', $data);
