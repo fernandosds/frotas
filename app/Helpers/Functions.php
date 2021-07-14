@@ -69,17 +69,7 @@ function saveLog($data)
         $message['type'] = $data['type'];
         $message['local'] = $data['local'];
         $message['funcao'] = $data['funcao'];
-        /**
-        $message = [
-            'user' => Auth::user()->id,
-            'name' => Auth::user()->name,
-            'ip' => $_SERVER['REMOTE_ADDR'],
-            'value' => $data['value'],
-            'type' => $data['type'],
-            'local' => $data['local'],
-            'funcao' => $data['funcao']
-        ];
-         */
+
         $post = array(
             'component' => 'Iscas', 'level' => 5,
             'customer' => Auth::user()->customer->id, 'message' => json_encode($message)
@@ -90,10 +80,7 @@ function saveLog($data)
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $result = curl_exec($ch);
-        var_dump($result);
-        var_dump($post);
         curl_close($ch);
-        die();
         return true;
     } catch (\Exception $e) {
         return $e->getMessage();
