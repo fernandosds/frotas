@@ -15,8 +15,8 @@ class ContractService
 {
 
     protected $contract;
-    protected$contract_devices;
-    protected$userService;
+    protected $contract_devices;
+    protected $userService;
 
     /**
      * ContractService constructor.
@@ -80,19 +80,32 @@ class ContractService
             $arr_devices = $request->session()->get('devices');
 
             $arr_insert = [];
-            foreach ($request->session()->get('devices') as $device) {
 
-                $arr_insert[] = [
-                    'technologie_id' =>  $device['technologie_id'],
-                    'contract_id' => $contract->id,
-                    'quantity' => $device['quantity'],
-                    'total' => $device['total']
-                ];
+            foreach ($arr_devices as $device) {
+
+                if ($device['product'] == "Isca") {
+                    $arr_insert[] = [
+                        'quantity' => $device['quantity'],
+                        'type' => 'isca',
+                        'technologie_id' =>  $device['technologie_id'],
+                        'contract_id' => $contract->id,
+                        'total' => $device['total']
+                    ];
+                }
+
+                if ($device['product'] == "Disp. Movel") {
+                    $arr_insert[] = [
+                        'quantity' => $device['quantity'],
+                        'type' => 'movel',
+                        'technologie_id' =>  null,
+                        'contract_id' => $contract->id,
+                        'total' => $device['total']
+                    ];
+                }
             }
 
             DB::table('contract_devices')->insert($arr_insert);
         }
-
         return $contract;
     }
 
@@ -153,7 +166,7 @@ class ContractService
     }
 
     /**
-     * 
+     *
      * @return mixed
      */
     public function contractCompleted()
@@ -169,5 +182,4 @@ class ContractService
     {
         return $this->contract->historyContract();
     }
-    
 }

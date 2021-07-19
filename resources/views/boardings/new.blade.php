@@ -254,7 +254,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inpuCity">Número do Dispositivo</label>
-                                <input type="text" class="form-control" name="pair_device[]" value="" id="input-tracker">
+                                <input type="text" class="form-control typeahead" name="pair_device[]" value="" id="input-tracker">
                                 <span id="search-tracker"></span>
                             </div>
 
@@ -398,6 +398,7 @@
             });
         });
     });
+
 
 
     $(function() {
@@ -576,13 +577,9 @@
             }
 
             $('#search-tracker').remove();
-
-
-
             var boarding_id = $('#id').val();
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
         });
-
     });
 </script>
 @endsection

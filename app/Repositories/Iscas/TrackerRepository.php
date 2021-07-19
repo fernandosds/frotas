@@ -29,4 +29,50 @@ class TrackerRepository extends AbstractRepository
 
         return $trackerModel;
     }
+
+    /**
+     * @param String $model
+     * @return mixed
+     */
+    public function exists(String $model)
+    {
+        return $this->model->where('model', $model)->count();
+    }
+
+    /**
+     * @param String $model
+     * @return mixed
+     */
+    public function attachDevices($object)
+    {
+        $trackerDevices = $this->model
+            ->whereNull('contract_id')
+            ->whereNull('customer_id')
+            ->limit($object->quantity);
+
+        if ($trackerDevices->count() < $object->quantity) {
+            return ['status' => 'error', 'message' => 'Quantidade de dispositivos insuficiente no estoque'];
+        } else {
+            $trackerDevices->update([
+                'contract_id' => $object->contract_id,
+                'customer_id' => $object->contract->customer_id
+            ]);
+
+            return ($trackerDevices) ? ['status' => 'success'] : ['status' => 'error'];
+        }
+    }
+
+    /**
+     * @param int $customer_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function filterByContractDevice($contract_devices)
+    {
+
+        $trackers = $this->model
+            ->where('contract_id', $contract_devices->contract_id)
+            ->get();
+
+        return $trackers;
+    }
 }

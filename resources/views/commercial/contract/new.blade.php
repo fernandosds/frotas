@@ -2,6 +2,23 @@
 
 @section('content')
 
+@section('styles')
+<style>
+    .div-tecnologia {
+        margin-top: 30px;
+        display: none
+    }
+
+    .div-radio {
+        margin-top: 30px;
+    }
+
+    .div-header {
+        text-align: center;
+    }
+</style>
+@endsection
+
 <div class="kt-portlet">
     <div class="kt-portlet kt-portlet--mobile">
 
@@ -104,8 +121,6 @@
 
             <div class="form-row">
                 <div class=" form-group col-md-12" id='table-new-devices' style="height: 250px; overflow-y: scroll;">
-
-
                 </div>
 
             </div>
@@ -131,17 +146,24 @@
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header div-header">
                             <div class="form-group ">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Adicionando Iscas</h5>
-                                <label for="dadostexto">Separar os números de séries da isca por vírgula</label>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Adicionando Dispositivos</h5>
                             </div>
                         </div>
                         <form id="form-insert-device">
                             @csrf
-
+                            <div class="kt-radio-inline center div-radio">
+                                <label class="kt-radio">
+                                    <input type="radio" name="checked" value="isca"> Cad. Íscas
+                                    <span></span>
+                                </label>
+                                <label class="kt-radio">
+                                    <input type="radio" name="checked" value="dispositivo"> Cad. Dispositivos Móveis
+                                    <span></span>
+                                </label>
+                            </div>
                             <div class="modal-body" id="list_devices">
-                                <!--<textarea id="new-device" name="textarea" rows="8" cols="70"></textarea>-->
                                 <div class="kt-portlet__head-wrapper">
                                     <div class="kt-portlet__head-actions">
                                         <label class="inputQuantity">Quantidade</label>
@@ -152,11 +174,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body div-tecnologia">
                                 <label class="inputType">Tecnologia</label>
                                 <select class="form-control" name="type" id="technologie_id">
                                     @foreach ($technologies as $technologie)
-                                        <option value="{{$technologie->id}}">{{$technologie->type}}</option>
+                                    <option value="{{$technologie->id}}">{{$technologie->type}}</option>
                                     @endforeach
                                     <input type="hidden" name="price" id="price_device" value="{{ $technologie->price ?? '' }}" />
                                     <input type="hidden" name="model" id="model" value="{{ $technologie->type ?? '' }}" />
@@ -200,11 +222,21 @@
 
 @section('scripts')
 <script>
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
         }
+    });
+
+    radio = "";
+    $('input[type=radio]').change(function() {
+        radio = this.value;
+        if (radio == "isca") {
+            $('.div-tecnologia').show('100');
+        } else {
+            $('.div-tecnologia').hide();
+        }
+
     });
 
     // Modal
@@ -213,7 +245,7 @@
     })
 
     // Search customer
-    if( $('#input-search').val() != "" ){
+    if ($('#input-search').val() != "") {
         searchCustomer()
     }
 
@@ -221,7 +253,7 @@
         searchCustomer()
     });
 
-    function searchCustomer(){
+    function searchCustomer() {
         var input_search = $('#input-search').val();
         var form_search = $('#form-search-customer').serialize();
         var route = 'commercial/customer';
@@ -236,17 +268,31 @@
 
     // Add Device
     $('#btn-contract-new-device').click(function() {
+        /**
+         * Verifica se o radio está desmarcado
+         */
+        if (!$("input[type='radio']").is(':checked')) {
+            radio = this.value;
+            console.log(radio);
+            Swal.fire({
+                type: 'warning',
+                title: 'Oops...',
+                text: 'Selecione um tipo de dispositivo!',
+                showConfirmButton: true,
+                timer: 10000
+            })
+            return false;
+        }
         var route = 'commercial/contracts/devices/add';
-
         $.ajax({
             url: "{{url('')}}/" + route,
             method: 'POST',
             data: {
-                // "devices": $('#new-device').val(),
                 "technologie_id": $('#technologie_id').val(),
+                "technologie_name": $('#technologie_id option:selected').text(),
                 "quantity": $('#quantity').val(),
                 "value": $('#value').val(),
-
+                "checked": radio,
             },
             success: function(response) {
                 $('#table-new-devices').html(response);

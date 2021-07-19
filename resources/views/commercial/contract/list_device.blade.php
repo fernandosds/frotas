@@ -3,6 +3,7 @@
         <tr>
             <th scope="col"></th>
             <th scope="col">Tecnologia</th>
+            <th scope="col">Produto</th>
             <th scope="col">Quantidade</th>
             <th scope="col">Custo Unit.</th>
             <th scope="col">Custo Total.</th>
@@ -13,7 +14,8 @@
         @foreach ($devices as $key => $val)
         <tr id="_tr_device_{{$key}}">
             <td>{{$key + 1}}</td>
-            <td>{{$val['technologie_id']}}</td>
+            <td>{{$val['technologie_name']}}</td>
+            <td>{{$val['product']}}</td>
             <td>{{$val['quantity']}}</td>
             <td>R$ {{number_format($val['value'],2,",",".")}}</td>
             <td>R$ {{number_format($val['total'],2,",",".")}}</td>

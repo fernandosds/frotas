@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -6,7 +7,7 @@
  * Time: 17:36
  */
 
- /**
+/**
  * Updated by VScode.
  * User: Raphael Falcão
  * Date: 21/01/2021
@@ -14,6 +15,7 @@
  */
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -38,6 +40,7 @@ class ContractDevice extends Model
         'device_id',
         'technologie_id',
         'type_id',
+        'type',
         'status'
     ];
 
@@ -51,6 +54,7 @@ class ContractDevice extends Model
             'device_id'                  => $this->device_id,
             'technologie_id'             => $this->technologie_id,
             'type_id'                    => $this->type_id,
+            'type'                       => $this->type_id,
             'status'                     => $this->status,
 
         ];

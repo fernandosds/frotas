@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Iscas\Production;
 
 use App\Http\Controllers\Controller;
 use App\Imports\DeviceImport;
+use App\Imports\DeviceImportTracker;
 use App\Services\Iscas\TechnologieService;
 use App\Http\Requests\DeviceRequest;
 use App\Services\DeviceService;
+use App\Services\Iscas\TrackerService;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DeviceController extends Controller
 {
     private $deviceService;
+    private $trackerService;
     private $technologieService;
     private $data;
 
@@ -20,14 +23,16 @@ class DeviceController extends Controller
      * @param DeviceService $deviceService
      * @param TechnologieService $technologieService
      */
-    public function __construct(DeviceService $deviceService, TechnologieService $technologieService)
+    public function __construct(DeviceService $deviceService, TechnologieService $technologieService, TrackerService $trackerService)
     {
         $this->deviceService = $deviceService;
         $this->technologieService = $technologieService;
+        $this->trackerService = $trackerService;
+
 
         $this->data = [
             'icon' => 'flaticon-placeholder-3',
-            'title' => 'Íscas',
+            'title' => 'Produtos',
             'menu_open_devices' => 'kt-menu__item--open'
         ];
     }
@@ -63,16 +68,26 @@ class DeviceController extends Controller
      */
     public function save(DeviceRequest $request)
     {
+        if ($request->checked == 'isca') {
+            $array = Excel::toArray(new DeviceImport, $request->file('file'));
 
-        $array = Excel::toArray(new DeviceImport, $request->file('file'));
+            $inserts = $this->deviceService->save($array);
 
-        $inserts = $this->deviceService->save($array);
+            return response()->json([
+                'status' => 'success',
+                'message' => count($inserts)
+            ], 200);
+        }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => count($inserts)
-        ], 200);
+        if ($request->checked == 'dispositivo') {
+            $array = Excel::toArray(new DeviceImportTracker, $request->file('file'));
+            $inserts = $this->trackerService->saveTracker($array);
 
+            return response()->json([
+                'status' => 'success',
+                'message' => count($inserts)
+            ], 200);
+        }
     }
 
     /**
@@ -125,11 +140,10 @@ class DeviceController extends Controller
 
         $destroy = $this->deviceService->destroy($id);
 
-        if($destroy){
-            return response()->json(['status' => 'success', 'message' => $destroy.' Deleted successfully']);
-        }else{
-            return response()->json(['status' => 'error', 'message' => $destroy.' O dispositivo esta em uso por um cliente!']);
+        if ($destroy) {
+            return response()->json(['status' => 'success', 'message' => $destroy . ' Deleted successfully']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => $destroy . ' O dispositivo esta em uso por um cliente!']);
         }
-
     }
 }

@@ -15,13 +15,25 @@ class DeviceController extends Controller
      */
     public function add(Request $request)
     {
-
-        $arr_devices[] = [
-            'quantity'          => $request->quantity,
-            'technologie_id'    => $request->technologie_id,
-            'value'             => $request->value,
-            'total'             => $request->value * $request->quantity
-        ];
+        if ($request->checked == "isca") {
+            $arr_devices[] = [
+                'quantity'          => $request->quantity,
+                'technologie_id'    => $request->technologie_id,
+                'technologie_name'  => $request->technologie_name,
+                'product'           => 'Isca',
+                'value'             => $request->value,
+                'total'             => $request->value * $request->quantity
+            ];
+        } else {
+            $arr_devices[] = [
+                'quantity'          => $request->quantity,
+                'technologie_id'    => '-',
+                'technologie_name'  => '-----------------',
+                'product'           => 'Disp. Movel',
+                'value'             => $request->value,
+                'total'             => $request->value * $request->quantity
+            ];
+        }
 
         if ($request->session()->has('devices')) {
             $arr_devices = array_merge($request->session()->get('devices'), $arr_devices);

@@ -52,7 +52,7 @@
 <!-- <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-switch/init.js')}}" type="text/javascript"></script> -->
 <!-- <script src="{{asset('/assets/vendors/general/select2/dist/js/select2.full.js')}}" type="text/javascript"></script> -->
 <!-- <script src="{{asset('/assets/vendors/general/ion-rangeslider/js/ion.rangeSlider.js')}}" type="text/javascript"></script> -->
-<!-- <script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script> -->
+<script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script>
 <!-- <script src="{{asset('/assets/vendors/general/handlebars/dist/handlebars.js')}}" type="text/javascript"></script> -->
 <script src="{{asset('/assets/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script>
@@ -494,3 +494,4 @@
 
     }
 </script>
+

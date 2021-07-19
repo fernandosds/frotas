@@ -171,6 +171,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::group(['prefix' => 'devices'], function () {
                 Route::GET('/attach/{id}', 'Iscas\Logistic\DeviceController@attachDevices');
                 Route::GET('/filter/{id}', 'Iscas\Logistic\DeviceController@filterByContractDevice');
+                Route::GET('/filter/tracker/{id}', 'Iscas\Logistic\TrackerController@filterByContractDevice');
             });
         });
     });

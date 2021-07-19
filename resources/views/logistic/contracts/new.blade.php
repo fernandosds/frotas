@@ -72,26 +72,20 @@
 
             </div>
 
-            <div class="form-row">
-            </div>
-
             <div class="kt-portlet__head kt-portlet__head--lg">
                 <h3 class="kt-portlet__head-title">
                     <small>Dados do contrato</small>
                 </h3>
-
             </div>
-
 
             <div class="kt-portlet__body">
                 <!--DIV COM SCROLL -->
-
                 <div class="form-row">
                     <div class=" form-group col-md-12" id='table-new-devices' style="height: 250px; overflow-y: scroll;">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col"></th>
                                     <th scope="col">Tecnologia</th>
                                     <th scope="col">Quantidade</th>
                                     <th scope="col">Total</th>
@@ -100,17 +94,15 @@
                             <tbody>
                                 @foreach ($contract->contractDevice as $device)
                                 <tr id="_tr_user_{{$device->id}}">
-                                    <td data-id="{{$device->id}}">{{$device->id}}</td>
-                                    <td data-technologie_id="{{$device->technologie->id}}">{{$device->technologie->type}}</td>
+                                    <td data-id="{{$device->id}}">{{$loop->iteration}}</td>
+                                    <td data-technologie_id="{{$device->technologie->id  ?? ''}}">{{$device->technologie->type ?? 'Disp. Móvel'}}</td>
                                     <td data-quantity_id="{{$device->quantity}}">{{$device->quantity}}</td>
                                     <td>R$ {{ number_format($device->total,2,",",".")}}</td>
                                     <td>
                                         <div class="pull-right">
-
-                                            <button type="button" class="btn btn-primary btn-device-indexed" data-toggle="modal" data-id="{{$device->id}}" data-target="#exampleModal">
-                                                <span class="fa fa-fw fa-search-plus"></span> Iscas cadastradas
+                                            <button type="button" class="btn btn-primary btn-device-indexed" id="_btn_devices_{{$device->id}}" data-toggle="modal" data-id="{{$device->id}}" data-technologie="{{$device->technologie->id ?? ''}}" data-target="#exampleModal">
+                                                <span class="fa fa-fw fa-search-plus"></span> Dispositivos cadastrados
                                             </button>
-
                                         </div>
                                     </td>
                                 </tr>
@@ -131,7 +123,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form-row col md-12" id="list_devices"  >
+                                <div class="form-row col md-12" id="list_devices">
                                     <i class="fa fa-spinner fa-pulse fa-5x"></i>
                                 </div>
                             </div>
@@ -184,7 +176,7 @@
 <script>
     /**
          Exibir Iscas cadastradas
-         
+
     $(function() {
         var id = $(this).data('id');
         $.ajax({
@@ -199,30 +191,33 @@
     */
 
     /**
-     Display Contracts     
+     Display Contracts
      */
 
     $(function() {
 
-        var id = $(this).data('id');
+
         $('.btn-device-indexed').click(function() {
             var id = $(this).data('id');
-            //alert( $(this).data('id') )
+            var dataTechnologie = $('#_btn_devices_' + id).data('technologie');
+
+            if (dataTechnologie != "") {
+                var url = "{{url('logistics/contracts/devices/filter')}}/" + id;
+            } else {
+                var url = "{{url('logistics/contracts/devices/filter/tracker')}}/" + id
+            }
             $.ajax({
                 type: 'GET',
-                url: "{{url('logistics/contracts/devices/filter')}}/" + id,
+                url: url,
                 success: function(response) {
                     $('#list_devices').html(response)
                 }
-
             })
-
         });
-
     });
 
     /**
-     Add Device     
+     Add Device
     */
 
     /**

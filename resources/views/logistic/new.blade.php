@@ -103,13 +103,13 @@
                                 @foreach ($contract->contractDevice as $device)
                                 <tr id="_tr_user_{{$device->id}}">
                                     <td>{{$device->id}}</td>
-                                    <td data-technologie_id="{{$device->technologie->id}}">{{$device->technologie->type}}</td>
+                                    <td data-technologie_id="{{$device->technologie->id ?? ''}}">{{$device->technologie->type ?? 'Disp. Móvel'}}</td>
                                     <td data-quantity_id="{{$device->quantity}}">{{$device->quantity}}</td>
                                     <td>R$ {{ number_format($device->total,2,",",".")}}</td>
                                     <td>
                                         <div class="pull-right">
                                             @if( $device->status == 0 )
-                                                <button type="button" class="btn btn-sm  btn btn-primary btn-attach-device" id="_btn_devices_{{$device->id}}" data-id="{{$device->id}}">
+                                                <button type="button" class="btn btn-sm  btn btn-primary btn-attach-device" id="_btn_devices_{{$device->id}}" data-id="{{$device->id}}"  data-technologie="{{$device->technologie->id ?? ''}}">
                                                     <span class="fa fa-fw fa-folder-plus"></span> Vincular Dispositivos
                                                 </button>
                                                 <span id="_after_{{$device->id}}"></span>
@@ -167,28 +167,38 @@
 <script>
 
     /**
-     Display Contracts     
+     Display Contracts
      */
-
+     id = "";
     $(function() {
-
         $('#btn-contract-save').click(function() {
 
+        /**
+         * Verifica se os vínculos foram efetivados.
+        */
+
+        while ($("#_btn_devices_" + id) > 0) {
+            Swal.fire({
+                type: 'warning',
+                title: 'Oops...',
+                text: 'É necessário vincular os dispositivos!',
+                showConfirmButton: true,
+                timer: 10000
+            })
+            return false;
+        }
             ajax_store({{$contract->id}}, "logistics/contracts", $('#form_finalize_contract').serialize());
-
         });
-
     });
 
     /**
-     Add Device     
+     Add Device
     */
 
     $(function() {
 
         $('#btn-contract-new-device').click(function() {
             var route = 'contracts/add-device';
-
             $.ajax({
                 url: "{{url('')}}/" + route,
                 method: 'POST',
@@ -210,19 +220,25 @@
 
     });
 
-    $(function() {
 
+    $(function() {
         /* Salvar devices */
         $('.btn-attach-device').click(function() {
 
-            $(this).html("<i class='fa fa-pulse fa-spinner'></i> Aguarde...");
-            var id = $(this).data('id');
+            id = $(this).data('id');
+            var dataTechnologie = $('#_btn_devices_' + id).data('technologie');
 
+            if(dataTechnologie != ""){
+                var url = "{{url('logistics/contracts/devices/attach')}}/"+id
+            }else{
+                var url = "{{url('logistics/contracts/devices/attach/tracker')}}/"+id
+            }
+
+            $(this).html("<i class='fa fa-pulse fa-spinner'></i> Aguarde...");
             $.ajax({
-                url: "{{url('logistics/contracts/devices/attach')}}/"+id,
+                url: url,
                 method: 'GET',
                 success: function(response) {
-
                     if (response.status == "success") {
                         Swal.fire({
                             type: 'success',
@@ -231,7 +247,6 @@
                         });
                         $("#_btn_devices_"+id).hide();
                         $("#_after_"+id).html("<i class='fa fa-check text-success'></i> Vínculo efetuada");
-
                     } else {
                         Swal.fire({
                             type: 'error',
@@ -266,13 +281,9 @@
                             footer: ' '
                         })
                     }
-
-                    
                 }
-
             });
         });
-
     });
 </script>
 @endsection

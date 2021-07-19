@@ -76,7 +76,7 @@ class ContractController extends Controller
         $data = $this->data;
         session()->forget('devices');
 
-        if(isset($id)){
+        if (isset($id)) {
             $data['customer'] = $this->customerService->show($id);
         }
 
@@ -94,11 +94,8 @@ class ContractController extends Controller
      */
     public function save(Request $request)
     {
-
         try {
-
             $contract = $this->contractService->save($request);
-
             saveLog(['value' => $contract->id, 'type' => 'Novo Contrato', 'local' => 'ContractController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -149,6 +146,4 @@ class ContractController extends Controller
 
         return back()->with(['status' => 'Deleted successfully']);
     }
-
-
 }
