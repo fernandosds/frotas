@@ -22,6 +22,7 @@ class Tracker extends Model
         'id',
         'model',
         'uniqid',
+        'status',
         'contract_id',
         'customer_id'
     ];
@@ -35,6 +36,7 @@ class Tracker extends Model
             'id'                => $this->id,
             'model'             => $this->model,
             'uniqid'            => $this->uniqid,
+            'status'            => $this->status,
             'contract_id'       => $this->contract_id,
             'customer_id'       => $this->customer_id,
         ];

@@ -59,9 +59,9 @@ class DeviceService
 
                 if( $item[0] != "" && (int)$item[1] > 0 ){
                     $arr_insert[] = [
-                        'model' => trim($item[0]),
+                        'model'          => trim($item[0]),
                         'technologie_id' => (int)$item[1],
-                        'uniqid' => md5(uniqid(""))
+                        'uniqid'         => md5(uniqid(""))
                     ];
                 }
             }
@@ -146,7 +146,7 @@ class DeviceService
      * @return mixed
      */
     public function filter($customer_id)
-    {     
+    {
         return $this->device->filter($customer_id);
     }
 
@@ -155,7 +155,7 @@ class DeviceService
      * @return mixed
      */
     public function attachDevices(Int $id, $object)
-    {     
+    {
         return $this->device->attachDevices($object);
     }
 
@@ -164,7 +164,7 @@ class DeviceService
      * @return mixed
      */
     public function filterByContractDevice($contract_devices)
-    {     
+    {
         return $this->device->filterByContractDevice($contract_devices);
     }
 
@@ -176,5 +176,5 @@ class DeviceService
     {
         return $this->device->validDevice($device);
     }
-    
+
 }

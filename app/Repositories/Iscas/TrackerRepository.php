@@ -10,7 +10,6 @@ use App\Repositories\AbstractRepository;
 
 class TrackerRepository extends AbstractRepository
 {
-
     /**
      * UserRepository constructor.
      * @param Boarding $model
@@ -55,7 +54,8 @@ class TrackerRepository extends AbstractRepository
         } else {
             $trackerDevices->update([
                 'contract_id' => $object->contract_id,
-                'customer_id' => $object->contract->customer_id
+                'customer_id' => $object->contract->customer_id,
+                'status'      => 'disponivel'
             ]);
 
             return ($trackerDevices) ? ['status' => 'success'] : ['status' => 'error'];
@@ -68,11 +68,22 @@ class TrackerRepository extends AbstractRepository
      */
     public function filterByContractDevice($contract_devices)
     {
-
         $trackers = $this->model
             ->where('contract_id', $contract_devices->contract_id)
             ->get();
 
         return $trackers;
+    }
+
+    /**
+     * @param int $customer_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function filter(int $customer_id)
+    {
+        $tracker = $this->model->select(DB::raw('*'))
+            ->where('customer_id', '=', $customer_id)
+            ->get();
+        return $tracker;
     }
 }

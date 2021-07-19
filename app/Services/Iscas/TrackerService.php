@@ -8,7 +8,6 @@ use App\Repositories\Iscas\TrackerRepository;
 
 class TrackerService
 {
-
     protected $trackerRepository;
 
     /**
@@ -26,7 +25,6 @@ class TrackerService
      */
     public function save(Request $request)
     {
-
         $boarding = $this->trackerRepository->create($request->all());
         return $boarding;
     }
@@ -42,14 +40,12 @@ class TrackerService
         return $tracker;
     }
 
-
     /**
      * @param Int $id
      * @return bool
      */
     public function show(Int $id)
     {
-
         return $this->trackerRepository->find($id);
     }
 
@@ -75,8 +71,8 @@ class TrackerService
 
                 if ($item[0] != "") {
                     $arr_insert[] = [
-                        'model' => trim($item[0]),
-                        'uniqid' => md5(uniqid(""))
+                        'model'     => trim($item[0]),
+                        'uniqid'    => md5(uniqid(""))
                     ];
                 }
             }
@@ -101,5 +97,14 @@ class TrackerService
     public function filterByContractDevice($contract_devices)
     {
         return $this->trackerRepository->filterByContractDevice($contract_devices);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function filter($customer_id)
+    {
+        return $this->trackerRepository->filter($customer_id);
     }
 }

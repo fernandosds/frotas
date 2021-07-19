@@ -45,9 +45,7 @@ class ContractController extends Controller
      */
     public function update(Request $request)
     {
-
         try {
-
             $checkStatus =  $this->contractDeviceService->checkStatusContractDevice($request->id);
 
             if ($checkStatus > 0) {

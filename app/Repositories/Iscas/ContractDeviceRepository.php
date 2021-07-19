@@ -28,7 +28,7 @@ class ContractDeviceRepository extends AbstractRepository
         $checkStatus = $this->model
             ->select('status')
             ->where([
-                ['status', '=', 0],
+                ['status', '=', null],
                 ['contract_id', '=', $id],
             ])
             ->count();

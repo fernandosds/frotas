@@ -93,8 +93,8 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Tecnologia</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Produto</th>
                                     <th scope="col">Quantidade</th>
                                     <th scope="col">Total</th>
                                 </tr>
@@ -102,7 +102,7 @@
                             <tbody>
                                 @foreach ($contract->contractDevice as $device)
                                 <tr id="_tr_user_{{$device->id}}">
-                                    <td>{{$device->id}}</td>
+                                    <td>{{$loop->iteration}}</td>
                                     <td data-technologie_id="{{$device->technologie->id ?? ''}}">{{$device->technologie->type ?? 'Disp. Móvel'}}</td>
                                     <td data-quantity_id="{{$device->quantity}}">{{$device->quantity}}</td>
                                     <td>R$ {{ number_format($device->total,2,",",".")}}</td>
@@ -172,21 +172,6 @@
      id = "";
     $(function() {
         $('#btn-contract-save').click(function() {
-
-        /**
-         * Verifica se os vínculos foram efetivados.
-        */
-
-        while ($("#_btn_devices_" + id) > 0) {
-            Swal.fire({
-                type: 'warning',
-                title: 'Oops...',
-                text: 'É necessário vincular os dispositivos!',
-                showConfirmButton: true,
-                timer: 10000
-            })
-            return false;
-        }
             ajax_store({{$contract->id}}, "logistics/contracts", $('#form_finalize_contract').serialize());
         });
     });
@@ -207,7 +192,6 @@
                     "technologie_id": $('#technologie_id').val(),
                     "quantity": $('#quantity').val(),
                     "value": $('#value').val(),
-
                 },
                 success: function(response) {
                     $('#table-new-devices').html(response);

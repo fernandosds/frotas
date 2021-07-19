@@ -26,12 +26,9 @@ class DeviceRepository extends AbstractRepository
      */
     public function filter(int $customer_id)
     {
-        $customer = DB::table('devices')
-            ->select(DB::raw('*'))
-            ->where('customer_id', '=', $customer_id)
+        $customer = $this->model
+            ->where('customer_id', $customer_id)
             ->get();
-
-
         return $customer;
     }
 
@@ -87,7 +84,8 @@ class DeviceRepository extends AbstractRepository
 
             $devices->update([
                 'contract_id' => $object->contract_id,
-                'customer_id' => $object->contract->customer_id
+                'customer_id' => $object->contract->customer_id,
+                'status'      => 'disponivel',
             ]);
 
             return ($devices) ? ['status' => 'success'] : ['status' => 'error'];

@@ -24,6 +24,7 @@ class Device extends Model
         'model',
         'contract_id',
         'uniqid',
+        'status',
         'customer_id',
         'technologie_id'
     ];
@@ -38,6 +39,7 @@ class Device extends Model
             'model'             => $this->model,
             'customer_id'       => $this->customer_id,
             'uniqid'            => $this->uniqid,
+            'status'            => $this->status,
             'contract_id'       => $this->contract_id,
             'technologie_id'    => $this->technologie_id,
 
@@ -55,7 +57,7 @@ class Device extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Contracts()
+    public function contracts()
     {
         return $this->HasMany('App\Models\Contract');
     }
@@ -76,7 +78,7 @@ class Device extends Model
         return $this->belongsTo('App\Models\Technologie');
     }
 
-   /**
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function contractdevice()

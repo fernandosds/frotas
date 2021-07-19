@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Technologie extends Model
 {
-    
+
     use Notifiable, SoftDeletes;
 
     /**
@@ -39,13 +39,13 @@ class Technologie extends Model
             'id'        => $this->id,
             'type'      => $this->type,
             'price'     => $this->price,
-            
+
         ];
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     */
     public function typeofdevice()
     {
         return $this->HasMany('App\Models\TypeOfDevice');
@@ -59,4 +59,11 @@ class Technologie extends Model
         return $this->HasMany('App\Models\ContractDevice', ContractDevice::class, 'technologie_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function devices()
+    {
+        return $this->HasMany('App\Models\Device', Device::class);
+    }
 }
