@@ -110,7 +110,6 @@ class ContractController extends Controller
      */
     public function edit(Int $id)
     {
-
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
         $data['technologies'] = $this->technologieService->all();

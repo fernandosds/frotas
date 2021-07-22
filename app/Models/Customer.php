@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Customer extends Model
 {
     use Notifiable, SoftDeletes;
-    
+
     /**
      * @var string
      */
@@ -63,16 +63,16 @@ class Customer extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     */
     public function contracts()
     {
         return $this->HasMany('App\Models\Contract', Contract::class);
     }
 
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     */
     public function contacts()
     {
         return $this->HasMany('App\Models\Contact');
@@ -92,5 +92,13 @@ class Customer extends Model
             'customer_id' => $this->id,
             'description' => 'Cadastrou cliente no sistema',
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trackers()
+    {
+        return $this->HasMany('App\Models\Tracker');
     }
 }

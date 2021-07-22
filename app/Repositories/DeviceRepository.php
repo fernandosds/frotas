@@ -28,7 +28,7 @@ class DeviceRepository extends AbstractRepository
     {
         $customer = $this->model
             ->where('customer_id', $customer_id)
-            ->get();
+            ->paginate(15);
         return $customer;
     }
 
@@ -158,5 +158,22 @@ class DeviceRepository extends AbstractRepository
     {
         return $this->model->where('model', $device)
             ->first();
+    }
+
+    public function updateStatusDevice($deviceUniquid)
+    {
+        $device = $this->findByUniqid($deviceUniquid);
+        if ($device->status == 'disponivel') {
+            return $this->model
+                ->where('model', '=', $device->model)
+                ->where('customer_id', '=', Auth::user()->customer_id)
+                ->update(['status' => 'indisponivel']);
+        }
+        if ($device->status == 'indisponivel') {
+            return $this->model
+                ->where('model', '=', $device->model)
+                ->where('customer_id', '=', Auth::user()->customer_id)
+                ->update(['status' => 'disponivel']);
+        }
     }
 }

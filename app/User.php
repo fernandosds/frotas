@@ -4,10 +4,13 @@ namespace App;
 
 use App\Models\Log;
 use App\Models\ListMenu;
+use App\Models\Tracker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 
 class User extends Authenticatable
@@ -97,5 +100,23 @@ class User extends Authenticatable
     public function usersmenu()
     {
         return $this->hasMany('App\Models\UserMenu');
+    }
+
+    public function trackers()
+    {
+        return DB::table('trackers')->get();
+    }
+
+    public function trackerDevice($model)
+    {
+        $trackerStatus = $this->trackers()
+            ->where('status', $model)
+            ->where('customer_id', Auth::user()->customer_id);
+
+        foreach ($trackerStatus as $key => $value) {
+            if (!empty($trackerStatus)) {
+                return $trackerStatus;
+            }
+        }
     }
 }

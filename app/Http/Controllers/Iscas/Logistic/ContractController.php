@@ -68,7 +68,6 @@ class ContractController extends Controller
      */
     public function contractCompleted()
     {
-
         $data = $this->data;
         $data['logistics'] = $this->contractService->contractCompleted();
 
@@ -82,7 +81,6 @@ class ContractController extends Controller
      */
     public function show(Int $id)
     {
-
         $data = $this->data;
         $data['contract'] = $this->contractService->show($id);
 

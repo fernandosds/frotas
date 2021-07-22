@@ -49,15 +49,15 @@ class DeviceService
      * @param array $array
      * @return mixed
      */
-    public function save(Array $array)
+    public function save(array $array)
     {
 
         $arr_insert = [];
-        foreach( $array[0] as $item ){
+        foreach ($array[0] as $item) {
 
-            if( $this->device->exists(trim($item[0])) == 0 ){
+            if ($this->device->exists(trim($item[0])) == 0) {
 
-                if( $item[0] != "" && (int)$item[1] > 0 ){
+                if ($item[0] != "" && (int)$item[1] > 0) {
                     $arr_insert[] = [
                         'model'          => trim($item[0]),
                         'technologie_id' => (int)$item[1],
@@ -70,7 +70,6 @@ class DeviceService
         $device = DB::table('devices')->insert($arr_insert);
 
         return ($device) ? $arr_insert : abort(404);
-
     }
 
     /**
@@ -93,7 +92,6 @@ class DeviceService
     {
 
         return $this->device->findByModel($device);
-
     }
 
     /**
@@ -124,12 +122,11 @@ class DeviceService
     public function destroy(Int $id)
     {
 
-        if( $this->device->available($id) > 0 ){
+        if ($this->device->available($id) > 0) {
             return $this->device->delete($id);
-        }else{
+        } else {
             return false;
         }
-
     }
 
     /**
@@ -177,4 +174,13 @@ class DeviceService
         return $this->device->validDevice($device);
     }
 
+    /**
+     * @param Int $id
+     * @return mixed|void
+     */
+    public function updateStatusDevice($deviceUniquid)
+    {
+        $device =  $this->device->updateStatusDevice($deviceUniquid);
+        return $device;
+    }
 }

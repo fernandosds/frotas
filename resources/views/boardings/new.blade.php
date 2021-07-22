@@ -17,6 +17,21 @@
     .focus-input {
         background-color: #fff0d5 !important;
     }
+
+    .ui-autocomplete {
+        color: black;
+        padding: 5px;
+    }
+
+    .ui-menu-item {
+        background-color: white;
+        width: 202px;
+        padding: 8px;
+    }
+
+    .ui-menu-item .ui-state-focus {
+        color: red;
+    }
 </style>
 @endsection
 
@@ -39,7 +54,7 @@
     <div class="kt-portlet__body">
         <div class="form-row">
             <div class="form-group col-md-2">
-                <label for="">Isca</label>
+                <label for="">&nbsp;</label>
                 <input type="text" name="device_number" id="device_number" class="form-control" maxlength="20" placeholder="Nº da Ísca">
             </div>
             <div class="form-group col-md-2">
@@ -89,12 +104,8 @@
             <input type="hidden" name="battery_level" id="battery_level" />
 
             <div class="kt-portlet__body">
-                <!-- ----- -->
-
                 <div class="row ">
-
                     <div class="col-sm-12">
-
                         <h4><i class="fa fa-truck"></i> Transportadora</h4>
                         <hr />
 
@@ -187,7 +198,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="form-row">
@@ -225,7 +235,6 @@
                                 </select>
                             </div>
                         </div>
-
                         @if(Auth::user()->required_validation)
 
                         <div class="row">
@@ -244,6 +253,7 @@
 
                         @endif
                     </div>
+                    @if(Auth::user()->trackerDevice('disponivel'))
 
                     <div>&nbsp;</div>
                     <div class="col-sm-12" id="div-paring-mobile">
@@ -254,11 +264,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inpuCity">Número do Dispositivo</label>
-                                <input type="text" class="form-control typeahead" name="pair_device[]" value="" id="input-tracker">
-                                <span id="search-tracker"></span>
+                                <input type="text" class="form-control" name="pair_device[]" value="" id="input-tracker"><span id="search-tracker"></span>
                             </div>
-
-
                             <div class="col-md-8" id="div-paring-tracker">
                                 <div class="row">
                                     <div class="form-group col-md-10">
@@ -276,6 +283,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="col-sm-12 center">
                         <hr />
                         <div class="col-lg-12 ml-lg-auto">
@@ -316,6 +324,30 @@
         })
     }
 
+    /**
+             Função que executa o auto complete do input do dispositivo movel
+*/
+    $("#input-tracker").autocomplete({
+        minLength: 1,
+        delay: 500,
+        source: function(request, response) {
+            $.ajax({
+                url: '{{url("boardings/trackers/verify")}}',
+                type: 'post',
+                dataType: "json",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    search: request.term
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        $('#search-tracker').hide();
+                        response(data.response);
+                    }
+                }
+            });
+        }
+    });
 
     /**
              Exibir historicos atendimentos
@@ -340,7 +372,6 @@
                     "message": $('#formTextArea').val(),
                 },
                 success: function(response) {
-                    console.log(response)
                     if (response.status == "success") {
                         Swal.fire({
                             type: 'success',
@@ -570,12 +601,10 @@
     $(function() {
 
         $('#btn-boarding-save').click(function() {
-
             if ($('#duration').val() == "") {
                 $('#duration').focus();
                 $('#duration').addClass('focus-input')
             }
-
             $('#search-tracker').remove();
             var boarding_id = $('#id').val();
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());

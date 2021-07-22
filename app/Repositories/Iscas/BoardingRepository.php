@@ -45,7 +45,6 @@ class BoardingRepository extends AbstractRepository
      */
     public function getCurrentBoardingByDeviceId(Int $id)
     {
-
         return $this->model->where('device_id', $id)
             ->where('customer_id', Auth::user()->customer_id)
             ->where('active', 1)
@@ -93,7 +92,6 @@ class BoardingRepository extends AbstractRepository
      */
     public function getCurrentBoardingByDevice(String $device)
     {
-
         return DB::table('boardings')
             ->join('devices', 'devices.id', '=', 'boardings.device_id')
             ->select('boardings.*')

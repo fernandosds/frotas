@@ -60,6 +60,16 @@ class TrackerService
     }
 
     /**
+     * @param Int $id
+     * @return mixed|void
+     */
+    public function updateStatusTracker($tracker)
+    {
+        $trackerStatus =  $this->trackerRepository->updateStatusTracker($tracker);
+        return $trackerStatus;
+    }
+
+    /**
      * @param array $array
      * @return mixed
      */
@@ -106,5 +116,10 @@ class TrackerService
     public function filter($customer_id)
     {
         return $this->trackerRepository->filter($customer_id);
+    }
+
+    public function getTracker($request)
+    {
+        return $this->trackerRepository->getTracker($request);
     }
 }

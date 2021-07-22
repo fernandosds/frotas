@@ -153,6 +153,7 @@ class BoardingController extends Controller
             if (!$tracker) {
                 return response()->json(['status' => 'validation_error', 'errors' => "Código do dispositivo inválido"], 404);
             }
+            $this->trackerService->updateStatusTracker($tracker->model);
         }
 
         // Token validation
@@ -184,6 +185,8 @@ class BoardingController extends Controller
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
+
+            $this->deviceService->updateStatusDevice($request->device_uniqid);
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
@@ -198,10 +201,12 @@ class BoardingController extends Controller
      */
     public function finish(Int $id)
     {
-
         try {
+            $boarding = $this->boardingService->show($id);
+            if ($boarding['attatch_device'] == 'movel') {
+                $this->trackerService->updateStatusTracker($boarding['pair_device']);
+            }
             $this->boardingService->finish($id);
-
             saveLog(['value' => $id, 'type' => 'Encerrou embarque', 'local' => 'BoardingController', 'funcao' => 'finish']);
             return response()->json(['status' => 'success'], 200);
         } catch (Exception $e) {
@@ -215,7 +220,6 @@ class BoardingController extends Controller
      */
     public function testDevice(String $model)
     {
-
         $device = $this->deviceService->findByModel($model);
 
         $in_use = $this->boardingService->getCurrentBoardingByDevice($model);

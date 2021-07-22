@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Iscas;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Tracker;
 use App\Services\Iscas\TrackerService;
+use App\Models\Tracker;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\VarDumper\VarDumper;
 use DB;
@@ -53,8 +53,15 @@ class TrackerController extends Controller
 
     public function getTracker(Request $request)
     {
-        $data = Tracker::where("model", "LIKE", "%{$request->input('query')}%")->get();
-
-        return response()->json($data);
+        try {
+            $trackers = $this->trackerService->getTracker($request);
+            $response = [];
+            foreach ($trackers as $tracker) {
+                $response[] = array("id" => $tracker->id, "label" => $tracker->model);
+            }
+            return response()->json(['status' => 'success', 'errors' => 'Dispositivo indisponível', 'response' => $response], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'validation_error', 'error' => $e->getMessage()], 500);
+        }
     }
 }

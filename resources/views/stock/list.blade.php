@@ -28,42 +28,24 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Modelo</th>
                         <th scope="col">Tipo</th>
+                        <th scope="col">Modelo</th>
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($devices as $device)
                     <tr id="_tr_user_{{$device->id}}">
-                        <th scope="row">{{$loop->iteration}}</th>
-                        <td>{{$device->model ?? ''}}</td>
                         <td>{{$device->technologie->type ?? ''}}</td>
+                        <td>{{$device->model ?? ''}}</td>
                         <td>{{$device->status ?? ''}}</td>
                     </tr>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <div class="kt-portlet__body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
                     @foreach ($trackers as $tracker)
                     <tr id="_tr_user_{{$tracker->id}}">
-                        <th scope="row">{{$loop->iteration}}</th>
-                        <td>{{$tracker->model ?? ''}}</td>
                         <td>{{'Disp. Móvel'}}</td>
-                        <td>{{$device->status ?? ''}}</td>
+                        <td>{{$tracker->model ?? ''}}</td>
+                        <td>{{$tracker->status ?? ''}}</td>
                     </tr>
                     @endforeach
                 </tbody>

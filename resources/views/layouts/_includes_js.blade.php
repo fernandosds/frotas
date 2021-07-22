@@ -33,6 +33,9 @@
 <script src="{{asset('/assets/vendors/general/sticky-js/dist/sticky.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/wnumb/wNumb.js')}}" type="text/javascript"></script>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <!--end:: Global Mandatory Vendors -->
 
 <!--begin:: Global Optional Vendors -->
@@ -52,7 +55,7 @@
 <!-- <script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-switch/init.js')}}" type="text/javascript"></script> -->
 <!-- <script src="{{asset('/assets/vendors/general/select2/dist/js/select2.full.js')}}" type="text/javascript"></script> -->
 <!-- <script src="{{asset('/assets/vendors/general/ion-rangeslider/js/ion.rangeSlider.js')}}" type="text/javascript"></script> -->
-<script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script>
+<!-- <script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script>-->
 <!-- <script src="{{asset('/assets/vendors/general/handlebars/dist/handlebars.js')}}" type="text/javascript"></script> -->
 <script src="{{asset('/assets/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script>
@@ -494,4 +497,3 @@
 
     }
 </script>
-

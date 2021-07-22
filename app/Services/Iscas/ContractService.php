@@ -44,7 +44,6 @@ class ContractService
      */
     public function paginatePendentes(Int $limit = 15)
     {
-
         return $this->contract->paginatePendentes($limit);
     }
 

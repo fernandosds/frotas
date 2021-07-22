@@ -16,7 +16,7 @@ class CreateContractDevicesTable extends Migration
         Schema::create('contract_devices', function (Blueprint $table) {
             $table->id();
             $table->integer('contract_id');
-            $table->integer('technologie_id');
+            $table->integer('technologie_id')->nullable();
             $table->float('total');
             $table->integer('quantity');
             $table->boolean('status', 0)->nullable();

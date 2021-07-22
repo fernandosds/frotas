@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'trackers'], function () {
             Route::get('/verify/{tracker}', 'Iscas\TrackerController@findTrackerByModel');
+            Route::post('/verify', 'Iscas\TrackerController@getTracker');
         });
     });
 

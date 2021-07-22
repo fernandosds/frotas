@@ -24,7 +24,6 @@
         });
     </script>
     <!--end::Fonts -->
-
     <!--begin::Page Custom Styles(used by this page) -->
     <link href="{{asset('/assets/app/custom/login/login-v1.default.css')}}" rel="stylesheet" type="text/css" />
 
@@ -114,4 +113,3 @@
 <!-- end::Head -->
 
 <!-- begin::Body -->
-

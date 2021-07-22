@@ -24,9 +24,28 @@ class TrackerRepository extends AbstractRepository
         $trackerModel = $this->model
             ->where('model', '=', $trackerModel)
             ->where('customer_id', '=', Auth::user()->customer_id)
+            ->where('status', '=', 'disponivel')
             ->first();
 
         return $trackerModel;
+    }
+
+    public function updateStatusTracker($trackerModel)
+    {
+        $tracker = $this->model->where('model', '=', $trackerModel)->first();
+        if ($tracker->status == 'disponivel') {
+            return $this->model
+                ->where('model', '=', $trackerModel)
+                ->where('customer_id', '=', Auth::user()->customer_id)
+                ->update(['status' => 'indisponivel']);
+        }
+
+        if ($tracker->status == 'indisponivel') {
+            return $this->model
+                ->where('model', '=', $trackerModel)
+                ->where('customer_id', '=', Auth::user()->customer_id)
+                ->update(['status' => 'disponivel']);
+        }
     }
 
     /**
@@ -85,5 +104,15 @@ class TrackerRepository extends AbstractRepository
             ->where('customer_id', '=', $customer_id)
             ->get();
         return $tracker;
+    }
+
+    public function getTracker($request)
+    {
+        $request = $this->model
+            ->where("model", 'LIKE', "%{$request->input('search')}%")
+            ->where('customer_id', '=', Auth::user()->customer_id)
+            ->where('status', '=', 'disponivel')
+            ->get();
+        return $request;
     }
 }
