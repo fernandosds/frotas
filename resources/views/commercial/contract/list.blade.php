@@ -34,7 +34,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">N</th>
+                            <th scope="col"></th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Data</th>
                         </tr>
@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach ($contracts as $contract)
                         <tr id="_tr_user_{{$contract->id}}">
-                            <th scope="row">{{$contract->id}}</th>
+                            <th scope="row">{{$loop->iteration}}</th>
                             <td>{{ !empty($contract->customer) ? $contract->customer->name:'' }}</td>
                             <td>{{ date_format($contract->created_at, "d/m/Y") }}</td>
                             <td>
