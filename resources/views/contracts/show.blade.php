@@ -29,7 +29,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col"></th>
                                     <th scope="col">Tecnologia</th>
                                     <th scope="col">Quantidade</th>
                                     <th scope="col">Total</th>
@@ -38,8 +38,8 @@
                             <tbody>
                                 @foreach ($contract->contractDevice as $device)
                                 <tr id="_tr_user_{{$device->id}}">
-                                    <td data-id="{{$device->id}}">{{$device->id}}</td>
-                                    <td data-technologie_id="{{$device->technologie->id}}">{{$device->technologie->type}}</td>
+                                    <td data-id="{{$device->id}}">{{$loop->iteration}}</td>
+                                    <td data-technologie_id="{{$device->technologie->id ?? 'Disp. Móvel'}}">{{$device->technologie->type ?? 'Disp. Móvel'}}</td>
                                     <td data-quantity_id="{{$device->quantity}}">{{$device->quantity}}</td>
                                     <td>R$ {{ number_format($device->total,2,",",".")}}</td>
                                 </tr>
