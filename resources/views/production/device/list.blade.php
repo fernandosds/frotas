@@ -34,7 +34,6 @@
                 <thead>
                     <tr>
                         <th scope="col">Modelo</th>
-                        <th scope="col">Produto</th>
                         <th scope="col">Tecnologia</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Nº Contrato</th>
@@ -44,7 +43,6 @@
                     @foreach ($devices as $device)
                     <tr id="_tr_user_{{$device->id}}">
                         <td>{{$device->model}}</td>
-                        <td>Disp.Movel</td>
                         <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
                         <td>{{$device->customer->name ?? ''}}</td>
                         <td>{{$device->contract_id ?? ''}}</td>
