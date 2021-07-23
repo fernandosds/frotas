@@ -2,6 +2,14 @@
 
 @section('styles')
 <style>
+    .div-btn-isca {
+        display: none
+    }
+
+    .div-btn-movel {
+        display: none
+    }
+
     .div-exemplo-isca {
         margin-top: 30px;
         display: none
@@ -57,8 +65,11 @@
                         <button type="button" class="btn btn-brand" id="btn-device-save">Importar</button>
                         <a href="{{url('production/devices')}}" class="btn btn-secondary">Voltar</a>
 
-                        <div class="pull-right">
-                            <a href="#" id="btn-show-exemple"><i class="kt-menu__ver-arrow la la-angle-down"></i> Ver exemplo de planilha</a>
+                        <div class="pull-right div-btn-isca">
+                            <a href="#" id="btn-show-exemple-isca"><i class="kt-menu__ver-arrow la la-angle-down"></i> Ver exemplo de planilha</a>
+                        </div>
+                        <div class="pull-right div-btn-movel">
+                            <a href="#" id="btn-show-exemple-movel"><i class="kt-menu__ver-arrow la la-angle-down"></i> Ver exemplo de planilha</a>
                         </div>
                     </div>
                 </div>
@@ -124,17 +135,20 @@
         $('input[type=radio]').change(function() {
             var radio = this.value;
             if (radio == "isca") {
-                $("#btn-show-exemple").click(function() {
-                    $('.div-exemplo-movel').hide();
+                $('.div-btn-isca').show('100');
+                $('.div-btn-movel').hide();
+                $('.div-exemplo-movel').hide();
+                $("#btn-show-exemple-isca").click(function() {
                     $('.div-exemplo-isca').show('100');
                 })
             } else {
-                $("#btn-show-exemple").click(function() {
-                    $('.div-exemplo-isca').hide();
+                $('.div-btn-movel').show('100');
+                $('.div-btn-isca').hide();
+                $('.div-exemplo-isca').hide();
+                $("#btn-show-exemple-movel").click(function() {
                     $('.div-exemplo-movel').show('100');
                 })
             }
-
         });
 
 

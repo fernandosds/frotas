@@ -325,8 +325,8 @@
     }
 
     /**
-             Função que executa o auto complete do input do dispositivo movel
-*/
+       Função que executa o auto complete do input do dispositivo movel
+    */
     $("#input-tracker").autocomplete({
         minLength: 1,
         delay: 500,
