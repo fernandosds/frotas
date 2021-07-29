@@ -145,6 +145,7 @@ class BoardingController extends Controller
      */
     public function save(BoardingRequest $request)
     {
+
         $device = $this->deviceService->findByUniqid($request->device_uniqid);
 
         if ($request->attatch_device == 'movel' && $request->pair_device) {
@@ -154,6 +155,12 @@ class BoardingController extends Controller
                 return response()->json(['status' => 'validation_error', 'errors' => "Código do dispositivo inválido"], 404);
             }
             $this->trackerService->updateStatusTracker($tracker->model);
+        }
+
+        $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
+
+        if ($in_use) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo utilizado!"], 404);
         }
 
         // Token validation

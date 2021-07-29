@@ -59,7 +59,7 @@ class TrackerController extends Controller
             foreach ($trackers as $tracker) {
                 $response[] = array("id" => $tracker->id, "label" => $tracker->model);
             }
-            return response()->json(['status' => 'success', 'errors' => 'Dispositivo indisponível', 'response' => $response], 200);
+            return response()->json(['status' => 'success', 'response' => $response], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'validation_error', 'error' => $e->getMessage()], 500);
         }
