@@ -195,6 +195,7 @@ class BoardingController extends Controller
 
             $this->deviceService->updateStatusDevice($request->device_uniqid);
             $this->boardingService->save($request);
+           // saveLog(['value' => $device, 'type' => 'Monitorou isca', 'local' => 'MonitoringController', 'funcao' => 'index']);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
