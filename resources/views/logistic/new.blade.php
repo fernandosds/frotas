@@ -167,13 +167,13 @@
 <script>
 
     /**
-     Display Contracts     
+     Display Contracts
      */
 
     $(function() {
 
         $('#btn-contract-save').click(function() {
-
+            $('#btn-contract-save').prop('disabled', true);
             ajax_store({{$contract->id}}, "logistics/contracts", $('#form_finalize_contract').serialize());
 
         });
@@ -181,7 +181,7 @@
     });
 
     /**
-     Add Device     
+     Add Device
     */
 
     $(function() {
@@ -267,7 +267,7 @@
                         })
                     }
 
-                    
+
                 }
 
             });

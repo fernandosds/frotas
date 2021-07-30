@@ -219,7 +219,6 @@
             type: method,
             data: form_data,
             success: function(response) {
-                console.log(response)
                 if (response.status == "success") {
                     Swal.fire({
                         type: 'success',
@@ -243,6 +242,7 @@
                         showConfirmButton: true,
                         timer: 10000
                     })
+                    $('.btn').prop('disabled', false);
                 }
 
             },
@@ -277,7 +277,7 @@
                         footer: ' '
                     })
                 }
-
+                $('.btn').prop('disabled', false);
             }
         });
 

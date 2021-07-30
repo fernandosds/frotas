@@ -297,7 +297,6 @@
         var device_number = $('#device_number').val();
         refreshListHistory(device_number);
     })
-
     /**
          Gravar Historico Atendimento
          */
@@ -312,7 +311,6 @@
                     "message": $('#formTextArea').val(),
                 },
                 success: function(response) {
-                    console.log(response)
                     if (response.status == "success") {
                         Swal.fire({
                             type: 'success',
@@ -335,6 +333,7 @@
 
                 },
                 error: function(error) {
+                    $('#btn-history-save').prop('disabled', false);
                     if (error.responseJSON.status == "internal_error") {
                         Swal.fire({
                             type: 'error',
@@ -510,12 +509,11 @@
     $(function() {
 
         $('#btn-boarding-save').click(function() {
-
+            $('#btn-boarding-save').prop('disabled', true);
             if ($('#duration').val() == "") {
                 $('#duration').focus();
                 $('#duration').addClass('focus-input')
             }
-
             var boarding_id = $('#id').val();
             ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
         });

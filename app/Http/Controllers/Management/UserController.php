@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         try {
             $this->userService->save($request);
-            saveLog(['value' => $request->email, 'type' => 'Salvou usuário', 'local' => 'UserController', 'funcao' => 'save']);
+            saveLog(['value' => $request->email, 'type' => 'Salvou usuario', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

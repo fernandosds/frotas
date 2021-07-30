@@ -145,24 +145,26 @@ class BoardingController extends Controller
             }
         }
 
-        try {
+        $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
 
+        if ($in_use) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo utilizado!"], 404);
+        }
+
+        try {
             $request->merge([
                 'device_id' => $device->id,
                 'user_id' => Auth::user()->id,
                 'customer_id' => Auth::user()->customer_id,
                 'active' => 1
             ]);
-
             if (isset($request->duration)) {
                 $request->merge([
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
-
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
-
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
 
@@ -257,7 +259,6 @@ class BoardingController extends Controller
      */
     public function addTime(Request $request)
     {
-
         $boarding = $this->boardingService->getCurrentBoardingByDevice($request->device);
         if ($boarding) {
             $carbon = Carbon::parse($boarding->finished_at);
