@@ -218,7 +218,9 @@ class BoardingController extends Controller
 
             if ($test_device['status'] == "sucesso") {
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                $return['battery_level'] = $test_device['body'][0]['Tensão'];
+                //$return['battery_level'] = $test_device['body'][0]['Tensão'];
+                //$return['battery_level'] = $this->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_GPS'], $this->save['device_id']);
+                $return['battery_level'] = $this->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec']);
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
@@ -230,6 +232,36 @@ class BoardingController extends Controller
 
         return $return;
     }
+    //usar data_rec
+
+    public function getStatus($bateriaReal, $dt_posicao)
+    {
+        $user = Auth::user()->id;
+        $dt_embarque = $this->boardingService->dtBoarding();
+        $date_embarque = $this->formatDate($dt_embarque->created_at);
+
+        $dif = abs(strtotime($dt_embarque) - strtotime($dt_posicao)) / (60 * 60); //(/$dt_posicao)) / (60 * 60);
+        $x = ($dif * 0.50);
+        $y = 100 - $x;
+
+
+        dd($dif);
+
+        preg_match('/@(.*)/', Auth::user()->id, $out);
+
+        if ($out[1] == 'satcompany.com.br') {
+
+            return 'R: ' . $bateriaReal . ' | P: ' . $y . '%';
+        } else {
+            return 100 - $x . '%';
+        }
+    }
+
+    public function formatDate($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d/m/Y H:i:s');
+    }
+
 
     /**
      * @param Int $id

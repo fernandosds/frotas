@@ -125,5 +125,12 @@ class BoardingService
         return $this->boardingRepository->autoFinatlizeBoardings();
     }
 
+    /**
+     *
+     */
+    public function dtBoarding()
+    {
+        return $this->boardingRepository->dtBoarding();
+    }
 
 }
