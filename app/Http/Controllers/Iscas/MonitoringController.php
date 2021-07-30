@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Iscas;
 use App\Http\Controllers\Controller;
 use App\Services\ApiDeviceService;
 use App\Services\Iscas\BoardingService;
+use App\Http\Controllers\Iscas\BoardingController;
 use App\Services\DeviceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,12 +24,13 @@ class MonitoringController extends Controller
      * @param DeviceService $deviceService
      * @param BoardingService $boardingService
      */
-    public function __construct(ApiDeviceService $apiDeviceService, DeviceService $deviceService, BoardingService $boardingService)
+    public function __construct(ApiDeviceService $apiDeviceService, DeviceService $deviceService, BoardingService $boardingService, BoardingController $boardingController)
     {
 
         $this->apiDeviceService = $apiDeviceService;
         $this->deviceService = $deviceService;
         $this->boardingService = $boardingService;
+        $this->boardingController = $boardingController;
 
         $this->data = [
             'icon' => 'fa fa-map-marker',
@@ -213,7 +215,7 @@ class MonitoringController extends Controller
             if ($test_device['status'] == "sucesso") {
 
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                $return['battery_level'] = $test_device['body'][0]['Tensão'];
+                $return['battery_level'] = $this->boardingController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec']); //$test_device['body'][0]['Tensão'];
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
