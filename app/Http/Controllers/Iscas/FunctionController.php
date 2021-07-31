@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Iscas;
 use App\Http\Controllers\Controller;
 use App\Services\Iscas\BoardingService;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 class FunctionController extends Controller
@@ -30,8 +29,8 @@ class FunctionController extends Controller
         $dt_embarque = $this->boardingService->dtBoarding();
         $date_embarque = $this->formatDate($dt_embarque->created_at);
 
-        $dt_embarque = DateTime::createFromFormat('d/m/Y H:i:s', $date_embarque)->format('Y-m-d H:i:s');
-        $dt_posicao = DateTime::createFromFormat('d/m/Y H:i:s', $dt_posicao)->format('Y-m-d H:i:s');
+        $dt_embarque = Carbon::createFromFormat('d/m/Y H:i:s', $date_embarque)->format('Y-m-d H:i:s');
+        $dt_posicao = Carbon::createFromFormat('d/m/Y H:i:s', $dt_posicao)->format('Y-m-d H:i:s');
 
         $dif = abs(strtotime($dt_embarque) - strtotime($dt_posicao)) / (60 * 60);
         $x = ($dif * 0.50);

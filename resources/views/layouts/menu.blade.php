@@ -33,7 +33,7 @@
     <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
         <ul class="kt-menu__nav ">
 
-        @if( Auth::user()->type == 'sat' )
+            @if( Auth::user()->type == 'sat' || Auth::user()->type == 'ext')
             <!-- CLIENTE EXTERNO ______________________________________________________________________________________________________________________ -->
             <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">MENU</h4>
@@ -71,13 +71,14 @@
                     </ul>
                 </div>
             </li>
-
+            <!--
             <li class="kt-menu__item " aria-haspopup="true">
                 <a href="{{url('monitoring/')}}" class="kt-menu__link ">
                     <span class="kt-menu__link-icon"><i class="fa fa-map-marker"></i></span>
                     <span class="kt-menu__link-text">Monitoramento</span>
                 </a>
             </li>
+            -->
 
             <li class="kt-menu__item " aria-haspopup="true">
                 <a href="{{url('stocks/')}}" class="kt-menu__link ">
