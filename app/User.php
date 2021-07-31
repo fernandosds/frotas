@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -68,6 +68,7 @@ class User extends Authenticatable
         // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
         return $this->logs()->create([
             'user_id'   => $this->id,
+            'customer_id' =>  Auth::user()->customer_id,
             'description' => 'Efetuou o login no sistema',
         ]);
     }
@@ -77,6 +78,7 @@ class User extends Authenticatable
         // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
         return $this->logs()->create([
             'user_id'   => $this->id,
+            'customer_id' =>  Auth::user()->customer_id,
             'description' => 'Saiu do sistema',
         ]);
     }

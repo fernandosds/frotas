@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Repositories\LogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class LogService
 {
@@ -28,7 +29,7 @@ class LogService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->log->paginate($limit);
+        return $this->log->paginate($limit, Auth::user()->customer_id);
     }
 
     /**
@@ -88,5 +89,10 @@ class LogService
     public function edit($id)
     {
         return $this->log->find($id);
+    }
+
+    public function monitoringBoarding($device)
+    {
+        return $this->log->monitoringBoarding($device);
     }
 }

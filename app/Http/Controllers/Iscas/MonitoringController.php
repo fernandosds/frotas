@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Iscas;
 
 use App\Http\Controllers\Controller;
 use App\Services\ApiDeviceService;
+use App\Services\LogService;
 use App\Services\Iscas\BoardingService;
 use App\Http\Controllers\Iscas\FunctionController;
 use App\Services\DeviceService;
@@ -18,6 +19,7 @@ class MonitoringController extends Controller
     protected $deviceService;
     protected $boardingService;
     protected $functionController;
+    protected $logService;
 
 
     /**
@@ -25,14 +27,16 @@ class MonitoringController extends Controller
      * @param ApiDeviceService $apiDeviceService
      * @param DeviceService $deviceService
      * @param BoardingService $boardingService
+     * @param LogService $logService
      */
-    public function __construct(ApiDeviceService $apiDeviceService, DeviceService $deviceService, BoardingService $boardingService, FunctionController $functionController)
+    public function __construct(ApiDeviceService $apiDeviceService, DeviceService $deviceService, BoardingService $boardingService, FunctionController $functionController, LogService $logService)
     {
 
         $this->apiDeviceService = $apiDeviceService;
         $this->deviceService = $deviceService;
         $this->boardingService = $boardingService;
         $this->functionController = $functionController;
+        $this->logService = $logService;
 
         $this->data = [
             'icon' => 'fa fa-map-marker',
@@ -50,6 +54,7 @@ class MonitoringController extends Controller
 
         $data = $this->data;
         $data['device'] = $device;
+        $this->logService->monitoringBoarding($device);
 
         saveLog(['value' => $device, 'type' => 'Monitorou isca', 'local' => 'MonitoringController', 'funcao' => 'index']);
         return view('monitoring.index', $data);

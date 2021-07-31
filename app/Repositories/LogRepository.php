@@ -69,4 +69,30 @@ class LogRepository extends AbstractRepository
         $logCustomer->save();
         return $logCustomer;
     }
+
+    public function finishBoardingLog($boarding, $device)
+    {
+        $logCustomer = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' => $boarding->customer_id,
+                'description' => "Encerrou o embarque da isca {$device}",
+            ]);
+
+        $logCustomer->save();
+        return $logCustomer;
+    }
+
+    public function monitoringBoarding($device)
+    {
+        $logCustomer = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' =>  Auth::user()->customer_id,
+                'description' => "Monitorou a isca {$device}",
+            ]);
+
+        $logCustomer->save();
+        return $logCustomer;
+    }
 }

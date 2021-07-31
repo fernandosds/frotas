@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -7,6 +8,7 @@
  */
 
 namespace App\Services\Iscas;
+
 use Illuminate\Http\Request;
 use App\Repositories\LogRepository;
 use App\Repositories\DeviceRepository;
@@ -52,7 +54,6 @@ class BoardingService
     {
         $boarding = $this->boardingRepository->update($id, $request->all());
         return $boarding;
-
     }
 
     /**
@@ -78,6 +79,9 @@ class BoardingService
      */
     public function finish(Int $id)
     {
+        $boarding = $this->show($id);
+        $device = $this->deviceRepository->show($boarding['device_id']);
+        $this->log->finishBoardingLog($boarding, $device->model);
         return $this->boardingRepository->finish($id);
     }
 
@@ -132,5 +136,4 @@ class BoardingService
     {
         return $this->boardingRepository->dtBoarding();
     }
-
 }
