@@ -11,7 +11,9 @@ use App\Services\DeviceService;
 use App\Services\Iscas\ServiceHistoryService;
 use App\Services\Iscas\TypeOfLoadService;
 use App\Services\Iscas\AccommodationLocationsService;
+use App\Http\Controllers\Iscas\FunctionController;
 use Carbon\Carbon;
+use DateTime;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +43,11 @@ class BoardingController extends Controller
     private $typeOfLoadService;
 
     /**
+     * @var FunctionController
+     */
+    private $functionController;
+
+    /**
      * @var AccommodationLocationsService
      */
     private $accommodationLocationsService;
@@ -59,6 +66,7 @@ class BoardingController extends Controller
      * @param AccommodationLocationsService $accommodationLocationsService
      * @param ApiUserService $apiUserService
      * @param ServiceHistoryService $serviceHistoryService
+     * @param FunctionController $functionController
      */
     public function __construct(
         BoardingService $boardingService,
@@ -67,7 +75,8 @@ class BoardingController extends Controller
         TypeOfLoadService $typeOfLoadService,
         AccommodationLocationsService $accommodationLocationsService,
         ApiUserService $apiUserService,
-        ServiceHistoryService $serviceHistoryService
+        ServiceHistoryService $serviceHistoryService,
+        FunctionController $functionController
     ) {
         $this->boardingService = $boardingService;
         $this->deviceService = $deviceService;
@@ -76,6 +85,7 @@ class BoardingController extends Controller
         $this->accommodationLocationsService = $accommodationLocationsService;
         $this->apiUserService = $apiUserService;
         $this->serviceHistoryService = $serviceHistoryService;
+        $this->functionController = $functionController;
 
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
@@ -214,14 +224,10 @@ class BoardingController extends Controller
             $return['uniqid'] = $device['data']->uniqid;
 
             $test_device = $this->apiDeviceServic->getLastPosition($model);
-            //$test_device = $this->apiDeviceServic->testDevice($model);
 
             if ($test_device['status'] == "sucesso") {
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                //$return['battery_level'] = $test_device['body'][0]['Tensão'];
-                //$return['battery_level'] = $this->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_GPS'], $this->save['device_id']);
-                $return['battery_level'] = $this->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec']);
-                //dd($data);
+                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec']);
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
@@ -233,30 +239,6 @@ class BoardingController extends Controller
 
         return $return;
     }
-    //usar data_rec
-
-    public function getStatus($bateriaReal, $dt_posicao)
-    {
-        $user = Auth::user()->id;
-        $dt_embarque = $this->boardingService->dtBoarding();
-        $date_embarque = $this->formatDate($dt_embarque->created_at);
-        $dif = abs(strtotime($dt_embarque) - strtotime($dt_posicao)) / (60 * 60);
-        $x = ($dif * 0.50);
-        $y = 100 - $x;
-
-        preg_match('/@(.*)/', Auth::user()->email, $out);
-        if ($out[1] == 'satcompany.com.br') {
-            return 'R: ' . $bateriaReal . ' | P: ' . $y . '%';
-        } else {
-            return 100 - $x . '%';
-        }
-    }
-
-    public function formatDate($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d/m/Y H:i:s');
-    }
-
 
     /**
      * @param Int $id
