@@ -38,7 +38,7 @@ class FunctionController extends Controller
         if ($out[1] == 'satcompany.com.br') {
             return 'R: ' . $bateriaReal . ' | P: ' . number_format($y, 2, '.', '') . '%';
         } else {
-            return 100 - $x . '%';
+            return $bateriaReal;
         }
     }
 

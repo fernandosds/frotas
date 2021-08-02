@@ -128,12 +128,4 @@ class BoardingService
     {
         return $this->boardingRepository->autoFinatlizeBoardings();
     }
-
-    /**
-     *
-     */
-    public function dtBoarding($device)
-    {
-        return $this->boardingRepository->dtBoarding($device);
-    }
 }

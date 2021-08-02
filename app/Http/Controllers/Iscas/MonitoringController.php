@@ -245,6 +245,7 @@ class MonitoringController extends Controller
 
         if ($grid['status'] == "sucesso") {
 
+
             $data['return'] = [
                 'status' => 'success',
                 'pair_device' => $pair_device,
