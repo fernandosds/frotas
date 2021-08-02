@@ -12,23 +12,29 @@ namespace App\Http\Controllers;
 
 use App\Services\ApiDeviceService;
 use App\Http\Controllers\Iscas\BoardingController;
+use App\Services\Iscas\BoardingService;
+use App\Http\Controllers\Iscas\FunctionController;
 
 class ApiDeviceController
 {
 
     /**
-     * @var BoardingService
+     * @var ApiDeviceService
      */
     private $apiDeviceService;
+
+    protected $functionController;
 
     /**
      * BoardingController constructor.
      * @param ApiDeviceService $apiDeviceService
      */
-    public function __construct(ApiDeviceService $apiDeviceService, BoardingController $boardingController)
+    public function __construct(ApiDeviceService $apiDeviceService, BoardingController $boardingController, FunctionController $functionController, BoardingService $boardingService)
     {
         $this->apiDeviceService = $apiDeviceService;
         $this->boardingController = $boardingController;
+        $this->boardingService = $boardingService;
+        $this->functionController = $functionController;
     }
 
     /**
@@ -47,6 +53,9 @@ class ApiDeviceController
     public function getLastPosition(String $device)
     {
         $last_position = $this->apiDeviceService->getLastPosition($device);
+
+        $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+
 
         $return = [];
         if ($last_position['status'] == "sucesso") {
@@ -69,10 +78,14 @@ class ApiDeviceController
             $return["Satelites"] =       isset($last_position['body'][0]["Satelites"]) ? $last_position['body'][0]["Satelites"] : '';
             $return["Sinal"] =           isset($last_position['body'][0]["Sinal"]) ? $last_position['body'][0]["Sinal"] : '';
             $return["Temp"] =            isset($last_position['body'][0]["Temp"]) ? $last_position['body'][0]["Temp"] : '';
-            $return["Tensão"] =          isset($last_position['body'][0]["Tensão"]) ? $last_position['body'][0]["Tensão"] : '';
             $return["Velocidade"] =      isset($last_position['body'][0]["Velocidade"]) ? $last_position['body'][0]["Velocidade"] : '';
             $return["jammer"] =          isset($last_position['body'][0]["jammer"]) ? $last_position['body'][0]["jammer"] : '';
 
+            $return["tempts"] =          $this->functionController->getStatus($last_position['body'][0]["Tensão"], $last_position['body'][0]["Data_GPS"], $boarding->created_at);
+
+            $temp = explode("|", $return["tempts"]);
+
+            $return["Tensão"] =  str_replace('R:', '', $temp[0]);
             if (isset($last_position['body'][0]["Latitude"]) && isset($last_position['body'][0]["Longitude"])) {
                 $return["last_address"] = $this->apiDeviceService->getAddress($last_position['body'][0]["Latitude"], $last_position['body'][0]["Longitude"]);
             } else {
