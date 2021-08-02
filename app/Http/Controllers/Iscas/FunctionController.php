@@ -27,7 +27,6 @@ class FunctionController extends Controller
     public function getStatus($bateriaReal, $dt_posicao, $date_embarque)
     {
         //$dt_embarque = Carbon::createFromFormat('d/m/Y H:i:s', $date_embarque)->format('Y-m-d H:i:s');
-
         $dt_posicao = Carbon::createFromFormat('d/m/Y H:i:s', $dt_posicao)->format('Y-m-d H:i:s');
 
         $dif = abs(strtotime($date_embarque) - strtotime($dt_posicao)) / (60 * 60);
@@ -38,7 +37,7 @@ class FunctionController extends Controller
         if ($out[1] == 'satcompany.com.br') {
             return 'R: ' . $bateriaReal . ' | P: ' . number_format($y, 2, '.', '') . '%';
         } else {
-            return $bateriaReal;
+            return number_format($y, 2, '.', '') . '%';
         }
     }
 
