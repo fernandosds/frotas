@@ -109,17 +109,4 @@ class BoardingRepository extends AbstractRepository
         return $this->model->where('finished_at', '<', date('Y-m-d H:i:s'))
             ->update(['active' => 0]);
     }
-
-
-    /**
-     * @return mixed
-     */
-    public function dtBoarding($device)
-    {
-        return $this->model->where('user_id', Auth::user()->id)
-            ->where('device_id', $device)
-            ->where('active', 1)
-            ->orderBy('created_at', 'desc')->get()
-            ->first();
-    }
 }
