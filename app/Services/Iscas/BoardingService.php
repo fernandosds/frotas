@@ -132,8 +132,8 @@ class BoardingService
     /**
      *
      */
-    public function dtBoarding()
+    public function dtBoarding($device)
     {
-        return $this->boardingRepository->dtBoarding();
+        return $this->boardingRepository->dtBoarding($device);
     }
 }

@@ -114,9 +114,10 @@ class BoardingRepository extends AbstractRepository
     /**
      * @return mixed
      */
-    public function dtBoarding()
+    public function dtBoarding($device)
     {
         return $this->model->where('user_id', Auth::user()->id)
+            ->where('device_id', $device)
             ->where('active', 1)
             ->orderBy('created_at', 'desc')->get()
             ->first();

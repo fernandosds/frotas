@@ -24,15 +24,13 @@ class FunctionController extends Controller
         $this->boardingService = $boardingService;
     }
 
-    public function getStatus($bateriaReal, $dt_posicao)
+    public function getStatus($bateriaReal, $dt_posicao, $date_embarque)
     {
-        $dt_embarque = $this->boardingService->dtBoarding();
-        $date_embarque = $this->formatDate($dt_embarque->created_at);
+        //$dt_embarque = Carbon::createFromFormat('d/m/Y H:i:s', $date_embarque)->format('Y-m-d H:i:s');
 
-        $dt_embarque = Carbon::createFromFormat('d/m/Y H:i:s', $date_embarque)->format('Y-m-d H:i:s');
         $dt_posicao = Carbon::createFromFormat('d/m/Y H:i:s', $dt_posicao)->format('Y-m-d H:i:s');
 
-        $dif = abs(strtotime($dt_embarque) - strtotime($dt_posicao)) / (60 * 60);
+        $dif = abs(strtotime($date_embarque) - strtotime($dt_posicao)) / (60 * 60);
         $x = ($dif * 0.50);
         $y = 100 - $x;
 

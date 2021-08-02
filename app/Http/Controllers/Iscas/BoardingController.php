@@ -227,7 +227,7 @@ class BoardingController extends Controller
 
             if ($test_device['status'] == "sucesso") {
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec']);
+                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'], Carbon::now());
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';

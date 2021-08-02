@@ -214,7 +214,7 @@ class MonitoringController extends Controller
             if ($test_device['status'] == "sucesso") {
 
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec']); //$test_device['body'][0]['Tensão'];
+                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'],$boarding->created_at); //$test_device['body'][0]['Tensão'];
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
