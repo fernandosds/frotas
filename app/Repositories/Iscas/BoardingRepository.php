@@ -61,7 +61,7 @@ class BoardingRepository extends AbstractRepository
 
         return $this->model->where('customer_id', Auth::user()->customer_id)
             ->where('active', 1)
-            ->paginate(10);
+            ->paginate(100);
     }
 
 

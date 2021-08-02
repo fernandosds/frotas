@@ -214,7 +214,7 @@ class MonitoringController extends Controller
             if ($test_device['status'] == "sucesso") {
 
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'],$boarding->created_at); //$test_device['body'][0]['Tensão'];
+                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'], $boarding->created_at); //$test_device['body'][0]['Tensão'];
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
@@ -244,11 +244,16 @@ class MonitoringController extends Controller
         $grid = $this->apiDeviceService->getGrid($device, $minutes);
 
         if ($grid['status'] == "sucesso") {
-
+            $dataTable = [];
+            foreach ($grid['body'] as $row) {
+                $row['nivel_bateria'] =
+                    $this->functionController->getStatus($row['nivel_bateria'], $row['DATA_GPS_HOSPEDE'], $boarding->created_at);
+                $dataTable[] = $row;
+            }
             $data['return'] = [
                 'status' => 'success',
                 'pair_device' => $pair_device,
-                'positions' => $grid['body']
+                'positions' =>  $dataTable
             ];
         } else {
 
@@ -284,11 +289,16 @@ class MonitoringController extends Controller
 
 
             if ($grid['status'] == "sucesso") {
-
+                $dataTable = [];
+                foreach ($grid['body'] as $row) {
+                    $row['nivel_bateria'] =
+                        $this->functionController->getStatus($row['nivel_bateria'], $row['DATA_GPS_HOSPEDE'], $boarding->created_at);
+                    $dataTable[] = $row;
+                }
                 $data['return'] = [
                     'status' => 'success',
                     'pair_device' => $pair_device,
-                    'positions' => $grid['body']
+                    'positions' =>  $dataTable
                 ];
             } else {
 
