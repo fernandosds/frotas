@@ -78,14 +78,6 @@ class ApiDeviceController
             } else {
                 $return["last_address"] = '';
             }
-            /**
-            if (isset($last_position['body'][0]["Data_GPS"])) {
-                // $return["Tensão"] = $this->boardingController->getStatus($last_position['body'][0]['Tensão'], $last_position['body'][0]['Data_Rec']);
-            } else {
-                // $return["Tensão"] = '';
-            }
-
-             */
 
             return $return;
         } else {
