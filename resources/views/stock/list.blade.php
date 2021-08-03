@@ -30,7 +30,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">Produto</th>
                         <th scope="col">Modelo</th>
                         <th scope="col">Tipo</th>
                     </tr>
@@ -38,45 +38,9 @@
                 <tbody>
                     @foreach ($devices as $device)
                     <tr id="_tr_user_{{$device->id}}">
-                        <th scope="row">{{$device->id}}</th>
+                        <td>{{'Iscas'}}</td>
                         <td>{{$device->model}}</td>
                         <td>{{$device->technologie->type ?? ''}}</td>
-                        <td>
-                            <div class="pull-right">
-                                <!--
-                                        <a href="{{url('devices/edit')}}/{{$device->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
-                                        <button type="button" class="btn btn-sm  btn-danger btn-delete-device" data-id="{{$device->id}}">
-                                            <span class="fa fa-fw fa-trash"></span> Deletar
-                                        </button>
-                                        -->
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <div class="d-flex justify-content-center">
-
-            </div>
-        </div>
-
-        <!-- CONTENT -->
-        <div class="kt-portlet__body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($devices as $device)
-                    <tr id="_tr_user_{{$device->id}}">
-                        <td>{{$device->technologie->type ?? ''}}</td>
-                        <td>{{$device->model ?? ''}}</td>
-                        <td>{{$device->status ?? ''}}</td>
                     </tr>
                     @endforeach
                     @foreach ($trackers as $tracker)
@@ -88,8 +52,11 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
 
+            <div class="d-flex justify-content-center">
+
+            </div>
+        </div>
     </div>
 </div>
 
@@ -105,4 +72,3 @@
     })
 </script>
 @endsection
-
