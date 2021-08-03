@@ -33,6 +33,8 @@
                         <th scope="col">Produto</th>
                         <th scope="col">Modelo</th>
                         <th scope="col">Tipo</th>
+                        <th scope="col">Status</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -41,12 +43,14 @@
                         <td>{{'Iscas'}}</td>
                         <td>{{$device->model}}</td>
                         <td>{{$device->technologie->type ?? ''}}</td>
+                        <td>{{$device->status ?? ''}}</td>
                     </tr>
                     @endforeach
                     @foreach ($trackers as $tracker)
                     <tr id="_tr_user_{{$tracker->id}}">
                         <td>{{'Disp. Móvel'}}</td>
                         <td>{{$tracker->model ?? ''}}</td>
+                        <td> --- </td>
                         <td>{{$tracker->status ?? ''}}</td>
                     </tr>
                     @endforeach

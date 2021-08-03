@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         try {
             $this->userService->save($request);
-            saveLog(['value' => $request->email, 'type' => 'Salvou usuario', 'local' => 'UserController', 'funcao' => 'save']);
+            saveLog(['value' => $request->name, 'type' => 'Salvou usuario', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -95,7 +95,7 @@ class UserController extends Controller
     {
         try {
             $this->userService->update($request, $request->id);
-            saveLog(['value' => $request->id, 'type' => 'Editou usuário', 'local' => 'UserController', 'funcao' => 'update']);
+            saveLog(['value' => $request->name, 'type' => 'Editou usuario', 'local' => 'UserController', 'funcao' => 'update']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -108,6 +108,8 @@ class UserController extends Controller
      */
     public function destroy(Int $id)
     {
+        $user = $this->userService->show($id);
+        saveLog(['value' => $user->name, 'type' => 'Excluiu usuario', 'local' => 'UserController', 'funcao' => 'destroy']);
         $this->userService->destroy($id);
         return back()->with(['status' => 'Deleted successfully']);
     }
@@ -120,6 +122,7 @@ class UserController extends Controller
     {
         try {
             $this->userService->updateUserAccess($request, $request->id);
+            saveLog(['value' => $request->name, 'type' => 'Alterou permissoes', 'local' => 'UserController', 'funcao' => 'updatePermission']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
