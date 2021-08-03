@@ -68,6 +68,7 @@ class User extends Authenticatable
 
     public function registerAccess()
     {
+        saveLog(['value' => Auth::user()->email, 'type' => 'Efetuou o login no sistema', 'local' => 'User', 'funcao' => 'registerAccess']);
         // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
         return $this->logs()->create([
             'user_id'   => $this->id,
@@ -78,6 +79,7 @@ class User extends Authenticatable
 
     public function registerClose()
     {
+        saveLog(['value' => Auth::user()->email, 'type' => 'Saiu do sistema', 'local' => 'User', 'funcao' => 'registerClose']);
         // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
         return $this->logs()->create([
             'user_id'   => $this->id,
