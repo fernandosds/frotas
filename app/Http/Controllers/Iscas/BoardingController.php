@@ -164,6 +164,7 @@ class BoardingController extends Controller
             }
             $this->trackerService->updateStatusTracker($tracker->model);
         }
+        $this->deviceService->updateStatusDevice($device);
 
         $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
 

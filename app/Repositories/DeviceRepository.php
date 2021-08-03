@@ -160,9 +160,8 @@ class DeviceRepository extends AbstractRepository
             ->first();
     }
 
-    public function updateStatusDevice($deviceUniquid)
+    public function updateStatusDevice($device)
     {
-        $device = $this->findByUniqid($deviceUniquid);
         if ($device->status == 'disponivel') {
             return $this->model
                 ->where('model', '=', $device->model)
