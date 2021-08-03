@@ -62,18 +62,19 @@ function saveLog($data)
 {
 
     try {
+        $message['user'] = Auth::user()->id;
+        $message['name'] = Auth::user()->name;
+        $message['ip'] = $_SERVER['REMOTE_ADDR'];
+        $message['value'] = $data['value'];
+        $message['type'] = $data['type'];
+        $message['local'] = $data['local'];
+        $message['funcao'] = $data['funcao'];
+
         $post = array(
-            'component' => 'Íscas', 'level' => 5,
-            'customer' => Auth::user()->customer->id, 'message' => json_encode([
-                'user' => Auth::user()->id,
-                'name' => Auth::user()->name,
-                'ip' => $_SERVER['REMOTE_ADDR'],
-                'value' => $data['value'],
-                'type' => $data['type'],
-                'local' => $data['local'],
-                'funcao' => $data['funcao']
-            ])
+            'component' => 'Iscas', 'level' => 5,
+            'customer' => Auth::user()->customer->id, 'message' => json_encode($message)
         );
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.satcompany.com.br/log/send');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -81,7 +82,7 @@ function saveLog($data)
         $result = curl_exec($ch);
         curl_close($ch);
         return true;
-    } catch (\mysql_xdevapi\Exception $e) {
+    } catch (\Exception $e) {
         return $e->getMessage();
     }
 }

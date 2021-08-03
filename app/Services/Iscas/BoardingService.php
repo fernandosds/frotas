@@ -10,6 +10,8 @@
 namespace App\Services\Iscas;
 
 use Illuminate\Http\Request;
+use App\Repositories\LogRepository;
+use App\Repositories\DeviceRepository;
 
 
 use App\Repositories\Iscas\BoardingRepository;
@@ -23,9 +25,11 @@ class BoardingService
      * BoardingService constructor.
      * @param BoardingRepository $boardingRepository
      */
-    public function __construct(BoardingRepository $boardingRepository)
+    public function __construct(BoardingRepository $boardingRepository, LogRepository $log, DeviceRepository $deviceRepository)
     {
         $this->boardingRepository = $boardingRepository;
+        $this->log = $log;
+        $this->deviceRepository = $deviceRepository;
     }
 
     /**
@@ -36,6 +40,8 @@ class BoardingService
     {
 
         $boarding = $this->boardingRepository->create($request->all());
+        $device = $this->deviceRepository->show($boarding->device_id);
+        $this->log->saveBoardingLog($boarding, $device->model);
         return $boarding;
     }
 
@@ -73,6 +79,9 @@ class BoardingService
      */
     public function finish(Int $id)
     {
+        $boarding = $this->show($id);
+        $device = $this->deviceRepository->show($boarding['device_id']);
+        $this->log->finishBoardingLog($boarding, $device->model);
         return $this->boardingRepository->finish($id);
     }
 

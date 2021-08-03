@@ -263,7 +263,7 @@
         $('#btn-user-save').click(function() {
 
             var user_id = $('#id').val();
-
+            $('#btn-user-save').prop('disabled', true);
             ajax_store(user_id, "management/users", $('#form-create-user').serialize());
 
         });

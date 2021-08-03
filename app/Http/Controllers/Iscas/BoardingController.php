@@ -14,6 +14,7 @@ use App\Services\Iscas\AccommodationLocationsService;
 use App\Services\Iscas\TrackerService;
 use App\Http\Controllers\Iscas\TrackerController;
 use Carbon\Carbon;
+use DateTime;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,11 @@ class BoardingController extends Controller
     private $typeOfLoadService;
 
     /**
+     * @var FunctionController
+     */
+    private $functionController;
+
+    /**
      * @var AccommodationLocationsService
      */
     private $accommodationLocationsService;
@@ -73,7 +79,7 @@ class BoardingController extends Controller
      * @param TrackerService $trackerService
      * @param ApiUserService $apiUserService
      * @param ServiceHistoryService $serviceHistoryService
-     * @param TrackerController $trackerController
+     * @param FunctionController $functionController
      */
     public function __construct(
         TrackerController $trackerController,
@@ -84,7 +90,8 @@ class BoardingController extends Controller
         AccommodationLocationsService $accommodationLocationsService,
         TrackerService $trackerService,
         ApiUserService $apiUserService,
-        ServiceHistoryService $serviceHistoryService
+        ServiceHistoryService $serviceHistoryService,
+        FunctionController $functionController
     ) {
         $this->trackerController = $trackerController;
         $this->boardingService = $boardingService;
@@ -95,6 +102,7 @@ class BoardingController extends Controller
         $this->trackerService = $trackerService;
         $this->apiUserService = $apiUserService;
         $this->serviceHistoryService = $serviceHistoryService;
+        $this->functionController = $functionController;
 
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
@@ -178,24 +186,25 @@ class BoardingController extends Controller
             }
         }
 
-        try {
+        $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
 
+        if ($in_use) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo utilizado!"], 404);
+        }
+
+        try {
             $request->merge([
                 'device_id' => $device->id,
                 'user_id' => Auth::user()->id,
                 'customer_id' => Auth::user()->customer_id,
                 'active' => 1
             ]);
-
             if (isset($request->duration)) {
                 $request->merge([
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
-
-            $this->deviceService->updateStatusDevice($request->device_uniqid);
             $this->boardingService->save($request);
-           // saveLog(['value' => $device, 'type' => 'Monitorou isca', 'local' => 'MonitoringController', 'funcao' => 'index']);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -246,11 +255,10 @@ class BoardingController extends Controller
             $return['uniqid'] = $device['data']->uniqid;
 
             $test_device = $this->apiDeviceServic->getLastPosition($model);
-            //$test_device = $this->apiDeviceServic->testDevice($model);
 
             if ($test_device['status'] == "sucesso") {
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
-                $return['battery_level'] = $test_device['body'][0]['Tensão'];
+                $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'], Carbon::now());
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
@@ -291,7 +299,6 @@ class BoardingController extends Controller
      */
     public function addTime(Request $request)
     {
-
         $boarding = $this->boardingService->getCurrentBoardingByDevice($request->device);
         if ($boarding) {
             $carbon = Carbon::parse($boarding->finished_at);

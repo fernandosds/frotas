@@ -43,7 +43,8 @@ class LogController extends Controller
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Int $id)
+
+   /**   public function show(Int $id)
     {
 
         $data = $this->data;
@@ -51,7 +52,7 @@ class LogController extends Controller
 
         return response()->view('log.list', $data);
     }
-
+*/
     /**
      * Store a newly created resource in storage.
      *

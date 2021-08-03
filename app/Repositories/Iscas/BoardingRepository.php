@@ -57,13 +57,9 @@ class BoardingRepository extends AbstractRepository
      */
     public function getAllActive()
     {
-        if (Auth::user()->type == 'ext') {
-            return $this->model->where('customer_id', Auth::user()->customer_id)
-                ->where('active', 1)
-                ->paginate(10);
-        }
-        return $this->model->where('active', 1)
-            ->paginate(10);
+        return $this->model->where('customer_id', Auth::user()->customer_id)
+            ->where('active', 1)
+            ->paginate(100);
     }
 
 

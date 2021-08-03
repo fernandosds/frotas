@@ -55,9 +55,7 @@ class CustomerService
     {
 
         $customer = $this->customerRepository->create($request->all());
-
         $this->log->saveCustomerLog($customer);
-
         return $customer;
     }
 
@@ -70,7 +68,7 @@ class CustomerService
     {
 
         $customer = $this->customerRepository->update($id, $request->all());
-
+        $this->log->updateCustomerLog($request->all());
         return $customer;
     }
 
@@ -82,8 +80,6 @@ class CustomerService
     {
 
         $customer =  $this->customerRepository->showid($id);
-
-
         return ($customer) ? $customer : abort(404);
     }
 
@@ -93,7 +89,8 @@ class CustomerService
      */
     public function destroy(Int $id)
     {
-
+        $customer = $this->show($id);
+        $this->log->deleteCustomerLog($customer);
         return $this->customerRepository->delete($id);
     }
 

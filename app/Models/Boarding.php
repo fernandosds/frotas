@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Paulo Sérgio
@@ -53,6 +54,7 @@ class Boarding extends Model
         'model',
         'redundant_technologie',
         'test',
+        'pair_device',
         'active',
         'pair_device',
         'attatch_device',
@@ -112,5 +114,4 @@ class Boarding extends Model
     {
         return $this->BelongsTo('App\User');
     }
-
 }

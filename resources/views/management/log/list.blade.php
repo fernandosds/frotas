@@ -19,7 +19,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
+                            <!--<th scope="col">ID</th>-->
                             <th scope="col">Usuário</th>
                             <th scope="col">Descricão</th>
                             <th scope="col">Data</th>
@@ -40,12 +40,12 @@
                     <tbody>
                         @foreach ($logs as $log)
                             <tr id="_tr_user_{{$log->id}}">
-                                <th scope="row">{{$log->id}}</th>
+                                <!--<th scope="row">{{$loop->iteration}}</th>-->
                                 <td>{{$log->user->name}}</td>
                                 <td>{{$log->description}}</td>
-                                <td>{{$log->created_at}}</td>
+                                <td>{{date_format($log->created_at, "d/m/Y H:m:s")}}</td>
                                 <td>
-                                    
+
                                 </td>
                             </tr>
                         @endforeach

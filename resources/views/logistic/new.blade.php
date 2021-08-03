@@ -172,6 +172,7 @@
      id = "";
     $(function() {
         $('#btn-contract-save').click(function() {
+            $('#btn-contract-save').prop('disabled', true);
             ajax_store({{$contract->id}}, "logistics/contracts", $('#form_finalize_contract').serialize());
         });
     });
@@ -265,6 +266,8 @@
                             footer: ' '
                         })
                     }
+
+
                 }
             });
         });

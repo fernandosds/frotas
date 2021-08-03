@@ -94,6 +94,7 @@
         dom: 'Bfrtip',
         buttons: [
             'print'
-        ]
+        ],
+        order: [[ 0, 'desc' ]]
     });
 </script>

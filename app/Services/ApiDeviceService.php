@@ -27,11 +27,11 @@ class ApiDeviceService
     public function __construct()
     {
 
-        if( true ){
+        if (true) {
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
             $this->host = "http://10.20.3.36:6524";
             $this->host_apis = "https://api.satcompany.com.br";
-        }else{
+        } else {
 
             $this->host_siscon = "http://201.91.1.155:83/siscon/new-siscon/public/";
             $this->host = "http://189.16.50.195:6524";
@@ -101,8 +101,7 @@ class ApiDeviceService
         $url = $this->host_apis . "/geo-to-address/v1/latlon/{$lat},{$lon}";
         $address = ClientHttp($url);
 
-        return  $address[0]['LOGRADOURO'].", ".$address[0]['BAIRRO'].", ".$address[0]['CIDADE']." - ".$address[0]['UF'].", CEP: ".$address[0]['CEP'];
-
+        return  $address[0]['LOGRADOURO'] . ", " . $address[0]['BAIRRO'] . ", " . $address[0]['CIDADE'] . " - " . $address[0]['UF'] . ", CEP: " . $address[0]['CEP'];
     }
 
     /**
@@ -139,8 +138,4 @@ class ApiDeviceService
         $url = $this->host . "/hospedeiros&{$device}[type=ADDR,PER='{$from}/{$to}']";
         return ClientHttp($url);
     }
-
-
-
-
 }

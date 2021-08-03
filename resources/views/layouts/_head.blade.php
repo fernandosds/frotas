@@ -10,7 +10,10 @@
     <meta name="description" content="Login page example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     <!--begin::Fonts -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script>
@@ -75,7 +78,7 @@
     <link href="{{asset('/assets/demo/default/skins/aside/dark.css')}}" rel="stylesheet" type="text/css" />
 
     <!--end::Layout Skins -->
-    <link rel="shortcut icon" href="{{asset('/logos/favicon.ico')}}" />
+    <link rel="shortcut icon" href="{{asset('/logos/icon.png')}}" />
 
     <style>
         .icon-menu {
