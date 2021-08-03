@@ -262,6 +262,7 @@
 
     // Save contract
     $('#btn-contract-save').click(function() {
+        $('#btn-contract-save').prop('disabled', true);
         var id = $('#customer_id').val();
         ajax_store("", "commercial/contracts", $('#form-search-customer').serialize());
     });
