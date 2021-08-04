@@ -169,7 +169,7 @@ class MonitoringController extends Controller
      * @param Int $minutes
      * @return array
      */
-    public function heat(String $device, Int $minutes = 10)
+    public function heat(String $device, Int $minutes = 15000)
     {
         $heat_positions = $this->apiDeviceService->getHeatPositions($device, $minutes);
 
