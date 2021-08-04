@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Customer extends Model
 {
     use Notifiable, SoftDeletes;
-    
+
     /**
      * @var string
      */
@@ -36,8 +36,8 @@ class Customer extends Model
         'number',
         'city',
         'neighborhood',
-        'state'
-
+        'state',
+        'hash',
     ];
 
     /**
@@ -57,6 +57,7 @@ class Customer extends Model
             'city'                  => $this->city,
             'neighborhood'          => $this->neighborhood,
             'state'                 => $this->state,
+            'hash '                 => $this->hash,
 
         ];
     }
@@ -69,7 +70,7 @@ class Customer extends Model
         return $this->HasMany('App\Models\Contract', Contract::class);
     }
 
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */

@@ -299,6 +299,8 @@
             <!-- FIM DOS ACESSOS EXCLUSIVOS SAT COMPANY -->
             @endif
 
+            @if( Auth::user()->type == 'sat' || Auth::user()->type == 'fle')
+
             @if( Auth::user()->access_level == 'management' || Auth::user()->access_level == 'fleets' )
             <!-- LOCADORA ______________________________________________________________________________________________________________________ -->
 
@@ -395,7 +397,7 @@
                         </li>
                     @endif
                     -->
-
+                    @endif
             @endif
         </ul>
     </div>
