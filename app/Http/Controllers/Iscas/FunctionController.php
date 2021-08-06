@@ -26,18 +26,19 @@ class FunctionController extends Controller
 
     public function getStatus($bateriaReal, $dt_posicao, $date_embarque)
     {
-        //$dt_embarque = Carbon::createFromFormat('d/m/Y H:i:s', $date_embarque)->format('Y-m-d H:i:s');
+
         $dt_posicao = Carbon::createFromFormat('d/m/Y H:i:s', $dt_posicao)->format('Y-m-d H:i:s');
 
         $dif = abs(strtotime($date_embarque) - strtotime($dt_posicao)) / (60 * 60);
-        $x = ($dif * 0.50);
+        $x = ($dif * 0.40);
         $y = 100 - $x;
+
 
         preg_match('/@(.*)/', Auth::user()->email, $out);
         if ($out[1] == 'satcompany.com.br') {
-            return 'R: ' . $bateriaReal . ' | P: ' . number_format($y, 2, '.', '') . '%';
+            return 'R: ' . $bateriaReal . ' | P: ' . round($y, 0) . '%' ;
         } else {
-            return number_format($y, 2, '.', '') . '%';
+           return round($y, 0) . '%';
         }
     }
 

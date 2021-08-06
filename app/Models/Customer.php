@@ -36,8 +36,8 @@ class Customer extends Model
         'number',
         'city',
         'neighborhood',
-        'state'
-
+        'state',
+        'hash',
     ];
 
     /**
@@ -57,6 +57,7 @@ class Customer extends Model
             'city'                  => $this->city,
             'neighborhood'          => $this->neighborhood,
             'state'                 => $this->state,
+            'hash '                 => $this->hash,
 
         ];
     }

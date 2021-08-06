@@ -69,7 +69,11 @@ class BoardingRepository extends AbstractRepository
      */
     public function paginateFinished(Int $limit)
     {
-        return $this->model->where('active', '0')->orderBy('id', 'desc')->paginate($limit);
+        return $this->model
+            ->where('active', '0')
+            ->where('customer_id', Auth::user()->customer_id)
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
     }
 
     /**
@@ -78,6 +82,7 @@ class BoardingRepository extends AbstractRepository
     public function getAllPairActive()
     {
         return $this->model->where('active', 1)
+            ->where('customer_id', Auth::user()->customer_id)
             ->whereNotNull('pair_device')
             ->get();
     }
