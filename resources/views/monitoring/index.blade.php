@@ -103,7 +103,7 @@
                 <div class="col-sm-3 col-12 div-btn-start">
                     <div class="form-row align-items-center">
                         <div class="col-sm-3 col-3 my-1">
-                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="500">
+                            <input type="number" class="form-control mb-2" id="minutes" placeholder="Tempo" value="15000">
                         </div>
                         <div class="col-sm-4 col-3 my-1">
                             <input type="text" class="form-control mb-2" id="chassi_device" placeholder="Ísca" value="{{$device ?? ''}}">
