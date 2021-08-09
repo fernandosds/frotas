@@ -80,22 +80,20 @@ class UserService
     public function save(Request $request)
     {
 
-        if ($request->customer_id == 1) {
-            $request->merge([
-                'type' => "sat",
-            ]);
-        } else {
-            $request->merge([
-                'type' => "ext",
-            ]);
-        }
-
         if (Auth::user()->type == "ext") {
             $request->merge([
                 'type' => "ext",
                 'customer_id' => Auth::user()->customer_id
             ]);
         }
+
+        if (Auth::user()->type == "fle") {
+            $request->merge([
+                'type' => "fle",
+                'customer_id' => Auth::user()->customer_id
+            ]);
+        }
+
 
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
