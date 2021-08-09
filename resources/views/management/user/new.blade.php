@@ -57,11 +57,15 @@
                                 <select class="form-control" name="access_level">
                                     <option value="">... Nível de acesso</option>
                                     <option value="management" {{ ($user->access_level ?? null) == 'management' ? 'selected' : ''}}>Gerência (Acesso total)</option>
+                                    @if(Auth::user()->type == "ext" || Auth::user()->type == "sat")
                                     <option value="shipper" {{ ($user->access_level ?? null) == 'shipper' ? 'selected' : ''}}>Embarcador</option>
+                                    @endif
                                     @if(Auth::user()->type == "sat")
                                     <option value="commercial" {{ ($user->access_level ?? null) == 'commercial' ? 'selected' : ''}}>Comercial</option>
                                     <option value="logistic" {{ ($user->access_level ?? null) == 'logistic' ? 'selected' : ''}}>Logística</option>
                                     <option value="production" {{ ($user->access_level ?? null) == 'production' ? 'selected' : ''}}>Produção</option>
+                                    @endif
+                                    @if(Auth::user()->type == "fle" || Auth::user()->type == "sat")
                                     <option value="fleets" {{ ($user->access_level ?? null) == 'fleets' ? 'selected' : ''}}>Gestão de Frotas</option>
                                     @endif
                                 </select>
@@ -69,13 +73,22 @@
 
                             @if(Auth::user()->type == "sat")
 
-                            <label class="col-form-label col-lg-2 col-sm-12">Empresa </label>
-                            <div class="col-lg-4 col-md-4 col-sm-5 form-group-sub">
+                            <label class="col-form-label col-lg-1 col-sm-12">Empresa </label>
+                            <div class="col-lg-2 col-md-4 col-sm-5 form-group-sub">
                                 <select class="form-control" name="customer_id">
                                     <option value="1">SAT Company</option>
                                     @foreach( $customers as $customer )
                                     <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
                                     @endforeach
+                                </select>
+                            </div>
+
+                            <label class="col-form-label col-lg-1 col-sm-12">Tipo Usuário </label>
+                            <div class="col-lg-2 col-md-4 col-sm-5 form-group-sub">
+                                <select class="form-control" name="type">
+                                    <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>SAT</option>
+                                    <option value="ext" {{ ($user->type ?? null) == 'ext' ? 'selected' : ''}}>Externo</option>
+                                    <option value="fle" {{ ($user->type ?? null) == 'fle' ? 'selected' : ''}}>Ges. Frotas</option>
                                 </select>
                             </div>
 

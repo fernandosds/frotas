@@ -52,7 +52,14 @@
                                 <td>{{$user->email}}</td>
 
                                 @if(Auth::user()->type == "sat")
-                                    <td>{{ ($user->type == "sat" ) ? "Sat" : "Externo" }}</td>
+                                    <td> @if( $user->type == "sat" )
+                                    Sat
+                                    @elseif( $user->type == "ext" )
+                                        Externo
+                                    @elseif( $user->type == "fle" )
+                                        Ges.Frotas
+                                        @endif
+                                    </td>
                                 @endif
 
                                 <td>

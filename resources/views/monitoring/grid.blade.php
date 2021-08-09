@@ -90,11 +90,24 @@
 </div>
 
 <script>
+
+
+    $(document).ready(function () {
     $('#table-grid').DataTable({
+        "aoColumns": [
+            { "sType": "date" },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
         dom: 'Bfrtip',
         buttons: [
             'print'
         ],
-        order: [[ 0, 'desc' ]]
+        "aaSorting": [0, 'desc']
+    });
     });
 </script>
