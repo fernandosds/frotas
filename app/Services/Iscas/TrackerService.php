@@ -122,4 +122,15 @@ class TrackerService
     {
         return $this->trackerRepository->getTracker($request);
     }
+
+    /**
+     * @param Int $id
+     * @return mixed|void
+     */
+    public function unavailableTracker()
+    {
+        $unavailableDevice =  $this->trackerRepository->unavailableTracker();
+        return $unavailableDevice;
+    }
+
 }

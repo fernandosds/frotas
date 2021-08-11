@@ -159,9 +159,14 @@ class BoardingController extends Controller
         if ($request->attatch_device == 'movel' && $request->pair_device) {
             $tracker = $this->trackerService->findTrackerByModel($request->pair_device);
 
-            if (!$tracker) {
-                return response()->json(['status' => 'validation_error', 'errors' => "Código do dispositivo inválido"], 404);
+            if (isset($tracker->status) == 'indisponivel') {
+                return response()->json(['status' => 'validation_error', 'errors' => "Este dispositivo está em uso!"], 404);
             }
+
+            if (!$tracker) {
+                return response()->json(['status' => 'validation_error', 'errors' => "Código do dispositivo inválido."], 404);
+            }
+
             $this->trackerService->updateStatusTracker($tracker->model);
         }
         $this->deviceService->updateStatusDevice($device);
@@ -187,7 +192,7 @@ class BoardingController extends Controller
             }
         }
 
-        $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
+        // $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
 
         if ($in_use) {
             return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo utilizado!"], 404);
@@ -205,6 +210,7 @@ class BoardingController extends Controller
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
+            dd($device);
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);

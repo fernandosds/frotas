@@ -108,6 +108,7 @@ class User extends Authenticatable
 
     public function trackers()
     {
+        // retorna todos os dispositivos moveis
         return DB::table('trackers')->get();
     }
 
@@ -123,4 +124,24 @@ class User extends Authenticatable
             }
         }
     }
+ /**
+    public function allDeviceUnavailable($status)
+    {
+        $trackerStatus = $this->trackers()
+            ->where('status', $status)
+            ->where('customer_id', Auth::user()->customer_id);
+
+        foreach ($trackerStatus as $key => $value) {
+
+            if (!empty($trackerStatus)) {
+
+                if (($trackerStatus[$key]->status = 'indisponivel')) {
+                    //dd($trackerStatus);
+
+                    return $trackerStatus;
+                }
+            }
+        }
+    }
+     */
 }

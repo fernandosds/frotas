@@ -24,9 +24,7 @@ class TrackerRepository extends AbstractRepository
         $trackerModel = $this->model
             ->where('model', '=', $trackerModel)
             ->where('customer_id', '=', Auth::user()->customer_id)
-            ->where('status', '=', 'disponivel')
             ->first();
-
         return $trackerModel;
     }
 
@@ -114,5 +112,27 @@ class TrackerRepository extends AbstractRepository
             ->where('status', '=', 'disponivel')
             ->get();
         return $request;
+    }
+
+    public function unavailableTracker()
+    {
+        $validationCustomerId = $this->model->where('customer_id', '=', Auth::user()->customer_id)->exists();
+
+        if (!$validationCustomerId) {
+            return false;
+        }
+
+        $totalTrackerUnavailable = $this->model
+            ->where('customer_id', Auth::user()->customer_id)
+            ->where('status', 'indisponivel')
+            ->count();
+
+        $totalTracker = $this->model
+            ->where('customer_id', Auth::user()->customer_id)
+            ->count();
+        if ($totalTracker == $totalTrackerUnavailable) {
+            return true;
+        }
+        return false;
     }
 }

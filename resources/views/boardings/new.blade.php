@@ -10,6 +10,11 @@
         display: none;
     }
 
+    #div-unavailable-mobile {
+        display: none;
+        background-color: #DCDCDC;
+    }
+
     #div-paring-mobile {
         background-color: #DCDCDC;
     }
@@ -273,8 +278,8 @@
                                         <div class="kt-section">
                                             <div class="kt-section__content">
                                                 <div class="alert alert-warning" role="alert">
-                                                    <strong>ATENÇÃO!</strong> <i class="fa fa-hand-o-left"></i>
-                                                    Este dispositivo está disponível. Ative o embarque para pareá-lo.
+                                                    <strong>ATENÇÃO! </strong> <i class="fa fa-hand-o-left"></i>
+                                                    &nbsp; Este dispositivo está disponível. Ative o embarque para pareá-lo.
                                                 </div>
                                             </div>
                                         </div>
@@ -284,6 +289,36 @@
                         </div>
                     </div>
                     @endif
+
+
+                    <div class="col-sm-12" id="div-unavailable-mobile">
+                        <br />
+                        <h4><i class="fa fa-cog"></i> Dispositivo Movel</h4>
+                        <hr />
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="inpuCity">Número do Dispositivo</label>
+                                <input type="text" class="form-control" name="" value="" id="" readonly>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="form-group col-md-10">
+                                        <label for="inputComplement">&nbsp;</label>
+                                        <div class="kt-section">
+                                            <div class="kt-section__content">
+                                                <div class="alert alert-warning" role="alert">
+                                                    <strong>ATENÇÃO! </strong> <i class="fa fa-hand-o-left"></i>
+                                                    &nbsp; Todos os seus dispositivos móveis estão utilizados.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-sm-12 center">
                         <hr />
                         <div class="col-lg-12 ml-lg-auto">
@@ -434,6 +469,21 @@
 
 
     $(function() {
+
+        $.ajax({
+            type: 'GET',
+            url: '{{route("unavailabletracker")}}',
+            success: function(response) {
+                if (response.status == "success") {
+                    $('#div-unavailable-mobile').show();
+                }
+            },
+            error: function(error) {
+                if (error.responseJSON.status == "validation_error") {
+                    $('#div-unavailable-mobile').hide();
+                }
+            }
+        });
 
         function searchTrackerMobile(tracker) {
             $.ajax({

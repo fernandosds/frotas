@@ -64,4 +64,21 @@ class TrackerController extends Controller
             return response()->json(['status' => 'validation_error', 'error' => $e->getMessage()], 500);
         }
     }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function unavailableTracker()
+    {
+        try {
+            $unavailableTracker = $this->trackerService->unavailableTracker();
+            if ($unavailableTracker) {
+                return response()->json(['status' => 'success'], 200);
+            }
+            return response()->json(['status' => 'validation_error'], 204);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'validation_error', 'error' => $e->getMessage()], 500);
+        }
+    }
 }
