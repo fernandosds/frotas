@@ -68,6 +68,9 @@
                                     @if(Auth::user()->type == "fle" || Auth::user()->type == "sat")
                                     <option value="fleets" {{ ($user->access_level ?? null) == 'fleets' ? 'selected' : ''}}>Gestão de Frotas</option>
                                     @endif
+                                    @if(Auth::user()->type == "gfl" || Auth::user()->type == "sat")
+                                    <option value="fleetslarge" {{ ($user->access_level ?? null) == 'fleetslarge' ? 'selected' : ''}}>Gestão de Grandes Frotas</option>
+                                    @endif
                                 </select>
                             </div>
 
@@ -89,6 +92,7 @@
                                     <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>SAT</option>
                                     <option value="ext" {{ ($user->type ?? null) == 'ext' ? 'selected' : ''}}>Externo</option>
                                     <option value="fle" {{ ($user->type ?? null) == 'fle' ? 'selected' : ''}}>Ges. Frotas</option>
+                                    <option value="fle" {{ ($user->type ?? null) == 'gfl' ? 'selected' : ''}}>Ges. Grandes Frotas</option>
                                 </select>
                             </div>
 
@@ -104,6 +108,7 @@
                                     <option value="0" {{ ($user->status ?? null) == '0' ? 'selected' : ''}}>INATIVO</option>
                                 </select>
                             </div>
+                            @if(Auth::user()->type == "sat"|| Auth::user()->type == "ext")
                             <label class="col-form-label col-lg-3 col-sm-12">Requer Validação de embarque</label>
                             <div class="col-lg-2 col-md-2 col-sm-2 form-group-sub">
                                 <select class="form-control" name="required_validation" @if(isset($user)) @if($user->id == Auth::user()->id) disabled="" @endif @endif>
@@ -111,6 +116,7 @@
                                     <option value="0" {{ ($user->required_validation ?? null) == '0' ? 'selected' : ''}}>NÃO</option>
                                 </select>
                             </div>
+                            @endif
                         </div>
 
                         <div class="form-group row">

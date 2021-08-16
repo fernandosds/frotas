@@ -90,7 +90,16 @@ class UserService
         if (Auth::user()->type == "fle") {
             $request->merge([
                 'type' => "fle",
-                'customer_id' => Auth::user()->customer_id
+                'customer_id' => Auth::user()->customer_id,
+                'required_validation' => 0
+            ]);
+        }
+
+        if (Auth::user()->type == "gfl") {
+            $request->merge([
+                'type' => "gfl",
+                'customer_id' => Auth::user()->customer_id,
+                'required_validation' => 0
             ]);
         }
 
