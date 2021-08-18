@@ -404,23 +404,23 @@
 
             @if( Auth::user()->access_level == 'management' || Auth::user()->access_level == 'fleetslarge' )
 
-            <!-- LOGÍSTICA ______________________________________________________________________________________________________________________ -->
+            <!-- GRANDES FROTAS ______________________________________________________________________________________________________________________ -->
             <li class="kt-menu__section ">
-                <h4 class="kt-menu__section-text">LOGÍSTICA</h4>
+                <h4 class="kt-menu__section-text">GRANDES FROTAS</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
-            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_logistics ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <!-- LOGISTICA -->
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <span class="kt-menu__link-icon"><i class="fa fa-boxes"></i></span>
-                    <span class="kt-menu__link-text">Logísticas</span>
+                    <span class="kt-menu__link-icon"><i class="fa fa-car-side"></i></span>
+                    <span class="kt-menu__link-text">Menu</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/contracts')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Contr. Pendentes</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/contracts/completed')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Contr. Finalizados</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleetslarges')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Dashboard</span></a></li>
+                       <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/contracts/completed')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Mapa</span></a></li> -->
                     </ul>
                 </div>
             </li>

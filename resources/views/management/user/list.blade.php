@@ -58,6 +58,8 @@
                                         Externo
                                     @elseif( $user->type == "fle" )
                                         Ges.Frotas
+                                    @elseif( $user->type == "gfl" )
+                                        Ges.Grandes Frotas
                                         @endif
                                     </td>
                                 @endif
@@ -75,6 +77,8 @@
                                         Administrador
                                     @elseif( $user->access_level == "fleets" )
                                         Gestão de Frotas
+                                    @elseif( $user->access_level == "fleetslarge" )
+                                        Ges. Grandes Frotas
                                     @endif
                                 </td>
 

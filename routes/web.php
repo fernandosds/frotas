@@ -340,6 +340,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     /**
+     * Fleets Large routes
+     */
+    Route::group(['prefix' => 'fleetslarges'], function () {
+        Route::get('/', 'FleetsLarge\DashboardController@index');
+    });
+
+    /**
      * Exit router
      */
     Route::get('/logout', function () {

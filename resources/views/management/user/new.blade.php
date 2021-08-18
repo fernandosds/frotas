@@ -92,7 +92,7 @@
                                     <option value="sat" {{ ($user->type ?? null) == 'sat' ? 'selected' : ''}}>SAT</option>
                                     <option value="ext" {{ ($user->type ?? null) == 'ext' ? 'selected' : ''}}>Externo</option>
                                     <option value="fle" {{ ($user->type ?? null) == 'fle' ? 'selected' : ''}}>Ges. Frotas</option>
-                                    <option value="fle" {{ ($user->type ?? null) == 'gfl' ? 'selected' : ''}}>Ges. Grandes Frotas</option>
+                                    <option value="gfl" {{ ($user->type ?? null) == 'gfl' ? 'selected' : ''}}>Ges. Grandes Frotas</option>
                                 </select>
                             </div>
 

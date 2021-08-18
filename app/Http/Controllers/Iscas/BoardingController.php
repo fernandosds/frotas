@@ -210,7 +210,6 @@ class BoardingController extends Controller
                     'finished_at' => date('Y-m-d H:i:s', strtotime("+{$request->duration} hour", strtotime(date('Y-m-d H:i:s'))))
                 ]);
             }
-            dd($device);
             $this->boardingService->save($request);
             saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
