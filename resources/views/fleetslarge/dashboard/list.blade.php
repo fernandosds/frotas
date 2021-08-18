@@ -55,7 +55,7 @@
     }
 
     .modal-personalizado {
-        min-width: 101%;
+        min-width: 80%;
         margin-left: 100;
     }
 
@@ -66,7 +66,7 @@
 @endsection
 
 @section('content')
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+<div class="kt-subheader  kt-grid__item" id="kt_subheader">
     <div class="kt-section" id="div-progress-bar-fleetlarge">
         <div class="progress progress-sm">
             <div class="progress-bar kt-bg-primary" role="progressbar" style="width:81%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
@@ -139,34 +139,22 @@
     </div>
 </div>
 
+<br />
+<br />
 
-<div class="modal fade bd-datatable-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style=" overflow-y: auto !important; padding: 0px 15%;">
-    <div class="modal-dialog modal-personalizado">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myLargeModalLabel">Registros dos veículos cadastrados</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+<div class="row">
+    <div class="col-lg-12">
+        <!--begin::Portlet-->
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        <small>Veículos cadastrados</small>
+                    </h3>
+                </div>
             </div>
-            ---
-        </div>
-    </div>
-</div>
-<br />
-<br />
-<div class="col-lg-12">
-    <!--begin::Portlet-->
-    <div class="kt-portlet kt-portlet--mobile">
-        <div class="kt-portlet__head">
-            <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">
-                    <small>Veículos cadastrados</small>
-                </h3>
-            </div>
-        </div>
-        <div class="kt-portlet kt-portlet--mobile" id="kt_content">
-            <div class="row">
+            <br />
+            <div class="kt-portlet kt-portlet--mobile" id="kt_content">
 
                 <div class="col-md-12">
                     <table id="example" class="display nowrap" style="width:50%">
@@ -187,7 +175,11 @@
                                 <td>CGF5034</td>
                                 <td>4LPVJfV2DBL711495</td>
                                 <td>Rio de Janeiro</td>
-                                <td><span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Roubado</span></td>
+                                <td>
+                                    <button type="button" class="btn  btn-pill  btn-sm " data-toggle="modal" data-target="#modalvehicle">
+                                        <span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Roubado</span>
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Fiat</td>
@@ -195,7 +187,11 @@
                                 <td>CGF5034</td>
                                 <td>57P2UlNM09LbX4956</td>
                                 <td>São Paulo</td>
-                                <td><span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Veículo sem comunicar</span></td>
+                                <td>
+                                    <button type="button" class="btn  btn-pill  btn-sm " data-toggle="modal" data-target="#modalvehicle">
+                                        <span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Veículo sem comunicar</span>
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>JAC</td>
@@ -203,7 +199,11 @@
                                 <td>GCP0904</td>
                                 <td>342SE6A4W5GUA6339</td>
                                 <td>São Paulo</td>
-                                <td><span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">Parado na loja</span></td>
+                                <td>
+                                    <button type="button" class="btn  btn-pill  btn-sm " data-toggle="modal" data-target="#modalvehicle">
+                                        <span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">Parado na loja</span>
+                                    </button>
+                                </td>
                             </tr>
 
                             <tr>
@@ -239,7 +239,11 @@
                                 <td>PNR4842</td>
                                 <td>81ZJVN4YAFAHM1049</td>
                                 <td>Goiânia</td>
-                                <td><span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Disponível</span></td>
+                                <td>
+                                    <button type="button" class="btn  btn-pill  btn-sm " data-toggle="modal" data-target="#modalvehicle">
+                                        <span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Disponível</span>
+                                    </button>
+                                </td>
                             </tr>
 
                             <tr>
@@ -289,6 +293,20 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-datatable-modal-lg" id="modalvehicle" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style=" overflow-y: auto !important; padding: 0px 15%;">
+        <div class="modal-dialog modal-personalizado">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Dados do veículo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                ---
             </div>
         </div>
     </div>
