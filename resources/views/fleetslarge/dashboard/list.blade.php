@@ -88,7 +88,7 @@
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 40</h1>
+                <h1 class="card-title display-4"> 996</h1>
                 <p class="card-text h5">Total de veículos comunicando.</p>
             </div>
         </div>
@@ -97,7 +97,7 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 15</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos em manutenção.</p>
             </div>
         </div>
@@ -109,7 +109,7 @@
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 2.550</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos sinistrados.</p>
             </div>
         </div>
@@ -118,7 +118,7 @@
         <div class="card text-white bg-primary col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 38</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos em pátio.</p>
             </div>
         </div>
@@ -127,7 +127,7 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 68</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos sem comunicação.</p>
             </div>
         </div>
@@ -141,13 +141,7 @@
     <div class="col-lg-12">
         <!--begin::Portlet-->
         <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        <small>Veículos cadastrados</small>
-                    </h3>
-                </div>
-            </div>
+
             <br />
             <div class="kt-portlet kt-portlet--mobile" id="kt_content">
 
@@ -225,7 +219,7 @@
             resetTime()
             $('#example').DataTable({
                 buttons: [
-                    'excelHtml5'
+                    'excel'
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
