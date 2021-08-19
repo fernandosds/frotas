@@ -344,6 +344,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['prefix' => 'fleetslarges'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index');
+        Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
     });
 
     /**
