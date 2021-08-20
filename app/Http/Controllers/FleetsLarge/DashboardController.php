@@ -51,52 +51,7 @@ class DashboardController extends Controller
 
 
         $data['totalJson'] = count($data['fleetslarge']);
-        /**
-        $carSinistrado[] = '';
-        foreach ($data['fleetslarge'] as $data => $dat) {
-            if ($dat['sinistrado'] == "TRUE") {
-                $carSinistrado = ([
-                    "lp_satelite"               => $dat['lp_satelite'],
-                    "lp_ignicao"                => $dat['lp_ignicao'],
-                    "dif_date"                  => $dat['dif_date'],
-                    "status_veiculo"            => $dat['status_veiculo'],
-                    "lp_voltagem"               => $dat['lp_voltagem'],
-                    "sinistrado"                => $dat['sinistrado'],
-                    "filial"                    => $dat['filial'],
-                    "status_veiculo"            => $dat['status_veiculo'],
-                    "status_veiculo_dt"         => $dat['status_veiculo_dt'],
-                    "modelo_veiculo_aprimorado" => $dat['modelo_veiculo_aprimorado'],
-                    "placa"                     => $dat['placa'],
-                    "empresa"                   => $dat['empresa'],
-                    "r12s_proximos"             => $dat['r12s_proximos'],
-                    "dif_date"                  => $dat['dif_date'],
-                    "lp_longitude"              => $dat['lp_longitude'],
-                    "estado"                    => $dat['estado'],
-                    "lp_latitude"               => $dat['lp_latitude'],
-                    "telefone"                  => $dat['telefone'],
-                    "status"                    => $dat['status'],
-                    "iccid"                     => $dat['iccid'],
-                    "chassis"                   => $dat['chassis'],
-                    "modelo_veiculo"            => $dat['modelo_veiculo'],
-                    "qtd_dispositivos"          => $dat['qtd_dispositivos'],
-                    "categoria_veiculo"         => $dat['categoria_veiculo'],
-                    "cidade"                    => $dat['cidade'],
-                    "operadora"                 => $dat['operadora'],
-                    "cliente"                   => $dat['cliente'],
-                    "data_instalacao"           => $dat['data_instalacao'],
-                    "cod_empresa"               => $dat['cod_empresa'],
-                    "codigo_fipe"               => $dat['codigo_fipe'],
-                    "modelo"                    => $dat['modelo'],
-                    "point"                     => $dat['point'],
-                    "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'],
-                    "versao"                    => $dat['versao'],
-                ]);
-            }
-        }
-       // print_r(($carSinistrado));
-       // die();
-        // count($carSinistrado);
-         */
+
         return response()->view('fleetslarge.dashboard.list', $data);
     }
 
