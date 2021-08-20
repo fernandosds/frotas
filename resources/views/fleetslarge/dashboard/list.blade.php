@@ -73,7 +73,7 @@
         <div class="progress-bar kt-bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
-<div class="row div-grid-vehicle">
+<div class="row" id="div-grid-vehicle">
     <div class="col-xl-4">
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
@@ -87,7 +87,7 @@
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 996</h1>
+                <h1 class="card-title display-4"> 999</h1>
                 <p class="card-text h5">Total de veículos comunicando.</p>
             </div>
         </div>
@@ -96,14 +96,14 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
+                <h1 class="card-title display-4"> 11</h1>
                 <p class="card-text h5">Total de veículos em manutenção.</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row div-grid-vehicle" >
+<div class="row" id="div-grid-vehicle2" >
     <div class="col-xl-4">
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
@@ -117,7 +117,7 @@
         <div class="card text-white bg-primary col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
+                <h1 class="card-title display-4"> 20</h1>
                 <p class="card-text h5">Total de veículos em pátio.</p>
             </div>
         </div>
@@ -126,7 +126,7 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
+                <h1 class="card-title display-4"> 40</h1>
                 <p class="card-text h5">Total de veículos sem comunicação.</p>
             </div>
         </div>
@@ -157,7 +157,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbodyVehicle">
                             @foreach ($fleetslarge as $driver)
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['modelo_veiculo_aprimorado']}}</td>
@@ -209,9 +209,9 @@
             progressBar = 100;
             setInterval(function() {
                 if (progressBar == 0) {
-                    //$('.div-grid-vehicle').reload();
-                    //$('.div-grid-vehicle').hide();
-                    //$(".div-grid-vehicle").load(" .div-grid-vehicle > *");
+                    $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
+                    $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
+                    $("#tbodyVehicle").load(" #tbodyVehicle > *");
                     progressBar = 100;
                 } else {
                     progressBar = progressBar - 1;
