@@ -127,7 +127,7 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4"> 0</h1>
-                <p class="card-text h5">Total de veículos em pátio.</p>
+                <p class="card-text h5">Total de veículos parado em loja.</p>
             </div>
         </div>
     </div>
