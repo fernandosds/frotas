@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .modal-backdrop {
+        z-index: 0;
+    }
+</style>
 
 <div class="kt-portlet">
     <div class="kt-portlet kt-portlet--mobile">

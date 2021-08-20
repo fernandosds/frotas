@@ -34,6 +34,7 @@
 <script src="{{asset('/assets/vendors/general/wnumb/wNumb.js')}}" type="text/javascript"></script>
 
 
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -92,6 +93,7 @@
 <!--<script src="{{asset('/assets/vendors/general/dompurify/dist/purify.js')}}" type="text/javascript"></script>-->
 
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
@@ -111,6 +113,7 @@
 
 <script src="{{asset('/assets/app/bundle/app.bundle.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 
 <!--<script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>-->
 

@@ -71,10 +71,9 @@
     <br />
     <div class="progress progress-sm">
         <div class="progress-bar kt-bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
-        <input type="hidden" class="form-control mb-2" id="setTime" placeholder="Ísca" value="" readonly>
     </div>
 </div>
-<div class="row">
+<div class="row div-grid-vehicle">
     <div class="col-xl-4">
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
@@ -104,12 +103,12 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row div-grid-vehicle" >
     <div class="col-xl-4">
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
+                <h1 class="card-title display-4"> 16</h1>
                 <p class="card-text h5">Total de veículos sinistrados.</p>
             </div>
         </div>
@@ -146,6 +145,7 @@
             <div class="kt-portlet kt-portlet--mobile" id="kt_content">
 
                 <div class="col-md-12">
+                    <br />
                     <table id="example" class="display nowrap" style="width:50%">
                         <thead>
                             <tr>
@@ -191,35 +191,40 @@
                 location.reload();
             }, 180000);
         });
-
-        $('#div-progress-bar-fleetlarge').ready(function() {
-            progressBar = 100;
-            if (progressBar == 0) {
-                progressBar = 100;
-                progressBar = progressBar - 1;
-            }
-            $('#progress_bar').attr("style", "width:" + progressBar + "%")
-        }, 180000);
-
 */
 
-        function resetTime() {
+        /**
+         * Rastrea isca automaticamente
+         */
+        $(document).ready(function() {
+            start()
+        })
+
+        /**
+         * Rastrea isca
+         */
+        function start() {
+            // Progress bar
+            $('#div-progress-bar-fleetlarge').show();
+            progressBar = 100;
             setInterval(function() {
-                progressBar = 100;
                 if (progressBar == 0) {
+                    //$('.div-grid-vehicle').reload();
+                    //$('.div-grid-vehicle').hide();
+                    //$(".div-grid-vehicle").load(" .div-grid-vehicle > *");
                     progressBar = 100;
+                } else {
+                    progressBar = progressBar - 1;
                 }
-                progressBar = progressBar - 1;
                 $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+
             }, 1000);
         }
 
-
         $(document).ready(function() {
-            resetTime()
             $('#example').DataTable({
                 buttons: [
-                    'excel'
+                    'copy', 'excel', 'pdf'
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
