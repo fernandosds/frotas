@@ -159,9 +159,10 @@
                         <thead>
                             <tr>
                                 <th>Placa</th>
-                                <th>Chassis</th>
+                                <th>Modelo</th>
                                 <th class="hidden">Endereço</th>
                                 <th>Localidade</th>
+                                <th>Filial</th>
                                 <th class="hidden">Satelite</th>
                                 <th class="hidden">Status</th>
                                 <th class="hidden">Velocidade</th>
@@ -175,9 +176,10 @@
                             @foreach ($fleetslarge as $driver)
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
-                                <td>{{$driver['chassis']}}</td>
+                                <td>{{$driver['modelo_veiculo']}}</td>
                                 <td class="hidden">---</td>
                                 <td>{{$driver['estado']}}</td>
+                                <td>{{$driver['filial']}}</td>
                                 <td class="hidden">{{$driver['lp_satelite']}}</td>
                                 <td class="hidden">{{$driver['status']}}</td>
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>

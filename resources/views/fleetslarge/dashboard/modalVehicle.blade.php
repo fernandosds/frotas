@@ -30,10 +30,6 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="inputCpfCnpj">Modelo</label>
-                            <input type="text" id="modelo_veiculo_aprimorado" name="modelo_veiculo_aprimorado" class="form-control" maxlength="17" readonly>
-                        </div>
                         <div class="form-group col-md-5">
                             <label for="inputCpfCnpj">Modelo do Veículo</label>
                             <input type="text" id="modelo_veiculo" name="modelo_veiculo" class="form-control" maxlength="17" readonly>
