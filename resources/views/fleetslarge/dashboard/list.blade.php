@@ -62,6 +62,11 @@
     .modal-personalizado.modal-content {
         min-height: 70vh;
     }
+
+    div.dt-buttons {
+        float: right;
+        margin-left: 10px;
+    }
 </style>
 @endsection
 
@@ -103,7 +108,7 @@
     </div>
 </div>
 
-<div class="row" id="div-grid-vehicle2" >
+<div class="row" id="div-grid-vehicle2">
     <div class="col-xl-4">
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
@@ -211,7 +216,6 @@
                 if (progressBar == 0) {
                     $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
                     $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
-                    $("#tbodyVehicle").load(" #tbodyVehicle > *");
                     progressBar = 100;
                 } else {
                     progressBar = progressBar - 1;
@@ -223,9 +227,24 @@
 
         $(document).ready(function() {
             $('#example').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf'
+                dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
+                    "<'row'<'col-md-6'><'col-md-6'>>" +
+                    "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+                buttons: [{
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':visible:not(.notexport)'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':visible:not(.notexport)'
+                        }
+                    },
+                    {
+                        extend: 'copy'
+                    }
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
