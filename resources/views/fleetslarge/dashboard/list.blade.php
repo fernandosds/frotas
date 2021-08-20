@@ -167,6 +167,7 @@
                                 <th class="hidden">Velocidade</th>
                                 <th class="hidden">Voltagem</th>
                                 <th>Última Transmissão</th>
+                                <th>Sinistrado</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -182,6 +183,7 @@
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
                                 <td class="hidden">{{$driver['lp_voltagem']}}</td>
                                 <td>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
+                                <td>{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
                                 <td>
                                     <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Detalhes</span>
