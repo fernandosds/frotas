@@ -27,7 +27,7 @@ class ApiFleetLargeService
      */
     public function allCars()
     {
-        $url = $this->host . "/1a3961bd-cdf3-4b2b-8e7a-df362d33eaba.json";
+        $url = $this->host . "/9859d7fe-6cbc-4546-83be-ae0d41f30449.json";
         return ClientHttp($url);
     }
 }

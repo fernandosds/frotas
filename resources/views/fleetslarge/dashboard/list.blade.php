@@ -67,6 +67,10 @@
         float: right;
         margin-left: 10px;
     }
+
+    .hidden {
+        display: none;
+    }
 </style>
 @endsection
 
@@ -92,7 +96,7 @@
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 999</h1>
+                <h1 class="card-title display-4"> 995</h1>
                 <p class="card-text h5">Total de veículos comunicando.</p>
             </div>
         </div>
@@ -101,7 +105,7 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 11</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos em manutenção.</p>
             </div>
         </div>
@@ -113,7 +117,7 @@
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 16</h1>
+                <h1 class="card-title display-4"> 1</h1>
                 <p class="card-text h5">Total de veículos sinistrados.</p>
             </div>
         </div>
@@ -122,7 +126,7 @@
         <div class="card text-white bg-primary col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 20</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos em pátio.</p>
             </div>
         </div>
@@ -131,7 +135,7 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 40</h1>
+                <h1 class="card-title display-4"> 0</h1>
                 <p class="card-text h5">Total de veículos sem comunicação.</p>
             </div>
         </div>
@@ -154,10 +158,14 @@
                     <table id="example" class="display nowrap" style="width:50%">
                         <thead>
                             <tr>
-                                <th>Veículo</th>
                                 <th>Placa</th>
                                 <th>Chassis</th>
+                                <th class="hidden">Endereço</th>
                                 <th>Localidade</th>
+                                <th class="hidden">Satelite</th>
+                                <th class="hidden">Status</th>
+                                <th class="hidden">Velocidade</th>
+                                <th class="hidden">Voltagem</th>
                                 <th>Última Transmissão</th>
                                 <th></th>
                             </tr>
@@ -165,11 +173,15 @@
                         <tbody id="tbodyVehicle">
                             @foreach ($fleetslarge as $driver)
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
-                                <td>{{$driver['modelo_veiculo_aprimorado']}}</td>
                                 <td>{{$driver['placa']}}</td>
                                 <td>{{$driver['chassis']}}</td>
+                                <td class="hidden">---</td>
                                 <td>{{$driver['estado']}}</td>
-                                <td>{{\Carbon\Carbon::parse($driver['ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{$driver['lp_satelite']}}</td>
+                                <td class="hidden">{{$driver['status']}}</td>
+                                <td class="hidden">{{$driver['lp_velocidade']}}</td>
+                                <td class="hidden">{{$driver['lp_voltagem']}}</td>
+                                <td>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td>
                                     <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Detalhes</span>
@@ -296,9 +308,9 @@
                     $('#empresa').val(response.empresa)
                     $('#r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
-                    $('#longitude').val(response.longitude)
+                    $('#lp_longitude').val(response.lp_longitude)
                     $('#estado').val(response.estado)
-                    $('#latitude').val(response.latitude)
+                    $('#lp_latitude').val(response.lp_latitude)
                     $('#telefone').val(response.telefone)
                     $('#status').val(response.status)
                     $('#iccid').val(response.iccid)
@@ -314,7 +326,7 @@
                     $('#codigo_fipe').val(response.codigo_fipe)
                     $('#modelo').val(response.modelo)
                     $('#point').val(response.point)
-                    $('#ultima_transmissao').val(response.ultima_transmissao)
+                    $('#lp_ultima_transmissao').val(response.lp_ultima_transmissao)
                     $('#versao').val(response.versao)
                 },
                 error: function(error) {

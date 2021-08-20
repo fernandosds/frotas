@@ -72,7 +72,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputAddress">Última Transmissão</label>
-                            <input type="text" id="ultima_transmissao" name="ultima_transmissao" class="form-control" maxlength="17" readonly>
+                            <input type="text" id="lp_ultima_transmissao" name="lp_ultima_transmissao" class="form-control" maxlength="17" readonly>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputComplement">Versão</label>
@@ -90,11 +90,11 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputComplement">Latitude</label>
-                            <input type="text" id="latitude" name="latitude" class="form-control" maxlength="17" readonly>
+                            <input type="text" id="lp_latitude" name="lp_latitude" class="form-control" maxlength="17" readonly>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputComplement">Longitude</label>
-                            <input type="text" id="longitude" name="longitude" class="form-control" maxlength="17" readonly>
+                            <input type="text" id="lp_longitude" name="lp_longitude" class="form-control" maxlength="17" readonly>
                         </div>
                     </div>
                 </div>
