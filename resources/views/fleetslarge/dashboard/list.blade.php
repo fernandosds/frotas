@@ -87,7 +87,7 @@
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> {{$totalJson}}</h1>
+                <h1 class="card-title display-4">{{$totalJson}}</h1>
                 <p class="card-text h5">Total de veículos cadastrados.</p>
             </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 995</h1>
+                <h1 class="card-title display-4"> <span id="statusComunicando"></h1>
                 <p class="card-text h5">Total de veículos comunicando.</p>
             </div>
         </div>
@@ -105,8 +105,8 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
-                <p class="card-text h5">Total de veículos em manutenção.</p>
+                <h1 class="card-title display-4"><span id="statusAvaria"></h1>
+                <p class="card-text h5">Total de veículos com avaria.</p>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 1</h1>
+                <h1 class="card-title display-4"><span id="statusSinistro"></span> </h1>
                 <p class="card-text h5">Total de veículos sinistrados.</p>
             </div>
         </div>
@@ -126,8 +126,8 @@
         <div class="card text-white bg-primary col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
-                <p class="card-text h5">Total de veículos parado em loja. </p>
+                <h1 class="card-title display-4"><span id="statusParadoEmLoja"></h1>
+                <p class="card-text h5">Total de veículos parado em loja.</p>
             </div>
         </div>
     </div>
@@ -162,13 +162,13 @@
                                 <th>Modelo</th>
                                 <th class="hidden">Endereço</th>
                                 <th>Localidade</th>
-                                <th>Filial</th>
                                 <th class="hidden">Satelite</th>
-                                <th class="hidden">Status</th>
                                 <th class="hidden">Velocidade</th>
                                 <th class="hidden">Voltagem</th>
                                 <th>Última Transmissão</th>
                                 <th>Sinistrado</th>
+                                <th>Filial</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -179,13 +179,13 @@
                                 <td>{{$driver['modelo_veiculo']}}</td>
                                 <td class="hidden">---</td>
                                 <td>{{$driver['estado']}}</td>
-                                <td>{{$driver['filial']}}</td>
                                 <td class="hidden">{{$driver['lp_satelite']}}</td>
-                                <td class="hidden">{{$driver['status']}}</td>
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
                                 <td class="hidden">{{$driver['lp_voltagem']}}</td>
                                 <td>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td>{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
+                                <td>{{$driver['filial']}}</td>
+                                <td>{{$driver['status_veiculo']}}</td>
                                 <td>
                                     <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Detalhes</span>
@@ -213,13 +213,57 @@
             }, 180000);
         });
 */
-
+        start()
         /**
          * Rastrea isca automaticamente
          */
         $(document).ready(function() {
-            start()
+            reloadValue()
         })
+
+        function reloadValue() {
+
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/show/status/sinistrado",
+                type: 'GET',
+                success: function(response) {
+                    if (response.data[0] == "") {
+                        return $('#statusSinistro').html(0)
+                    }
+                    $('#statusSinistro').html(response.data.length)
+                }
+            });
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/show/status/comunicando",
+                type: 'GET',
+                success: function(response) {
+                    if (response.data[0] == "") {
+                        return $('#statusComunicando').html(0)
+                    }
+                    $('#statusComunicando').html(response.data.length)
+                }
+            });
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/show/status/emloja",
+                type: 'GET',
+                success: function(response) {
+                    if (response.data[0] == "") {
+                        return $('#statusParadoEmLoja').html(0)
+                    }
+                    $('#statusParadoEmLoja').html(response.data.length)
+                }
+            });
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/show/status/avaria",
+                type: 'GET',
+                success: function(response) {
+                    if (response.data[0] == "") {
+                        return $('#statusAvaria').html(0)
+                    }
+                    $('#statusAvaria').html(response.data.length)
+                }
+            });
+        }
 
         /**
          * Rastrea isca
@@ -232,6 +276,7 @@
                 if (progressBar == 0) {
                     $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
                     $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
+                    reloadValue()
                     progressBar = 100;
                 } else {
                     progressBar = progressBar - 1;
@@ -320,6 +365,7 @@
                     $('#iccid').val(response.iccid)
                     $('#chassis').val(response.chassis)
                     $('#modelo_veiculo').val(response.modelo_veiculo)
+                    $('#modelo_veiculo_span').html(response.modelo_veiculo)
                     $('#qtd_dispositivos').val(response.qtd_dispositivos)
                     $('#categoria_veiculo').val(response.categoria_veiculo)
                     $('#cidade').val(response.cidade)
@@ -332,6 +378,7 @@
                     $('#point').val(response.point)
                     $('#lp_ultima_transmissao').val(response.lp_ultima_transmissao)
                     $('#versao').val(response.versao)
+                    // $('#endereco').val(response.endereco)
                 },
                 error: function(error) {
                     if (error.responseJSON.status == "internal_error") {

@@ -49,7 +49,6 @@ class DashboardController extends Controller
     {
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
 
-
         $data['totalJson'] = count($data['fleetslarge']);
 
         return response()->view('fleetslarge.dashboard.list', $data);
@@ -116,15 +115,97 @@ class DashboardController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function new()
+    public function showStatusSinistrado()
     {
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+
+        try {
+
+            $carSinistrado[] = '';
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                if ($dat['sinistrado'] == "TRUE") {
+                    $arr[] = $this->resultJson($dat);
+                    $carSinistrado = $arr;
+                }
+            }
+
+            return response()->json(['status' => 'success', 'data' => $carSinistrado], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function save()
+    public function showStatusComunicando()
     {
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+
+        try {
+
+            $carComunicando[] = '';
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                if ($dat['sinistrado'] == "FALSE") {
+                    $arr[] = $this->resultJson($dat);
+                    $carComunicando = $arr;
+                }
+            }
+
+            return response()->json(['status' => 'success', 'data' => $carComunicando], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showStatusParadoEmLoja()
+    {
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+
+        try {
+
+            $paradoEmLoja[] = '';
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                if ($dat['status_veiculo'] != "LOCACAO") {
+                    $arr[] = $this->resultJson($dat);
+                    $paradoEmLoja = $arr;
+                }
+            }
+
+            return response()->json(['status' => 'success', 'data' => $paradoEmLoja], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showStatusAvaria()
+    {
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+
+        try {
+
+            $carAvaria[] = '';
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                if ($dat['status_veiculo'] == "AVARIA") {
+                    $arr[] = $this->resultJson($dat);
+                    $carAvaria = $arr;
+                }
+            }
+
+            return response()->json(['status' => 'success', 'data' => $carAvaria], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -147,7 +228,44 @@ class DashboardController extends Controller
      * @param Int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    function destroy(Int $id)
+    function resultJson($dat)
     {
+        $arr[] = ([
+            "lp_satelite"               => $dat['lp_satelite'],
+            "lp_ignicao"                => $dat['lp_ignicao'],
+            "dif_date"                  => $dat['dif_date'],
+            "status_veiculo"            => $dat['status_veiculo'],
+            "lp_voltagem"               => $dat['lp_voltagem'],
+            "sinistrado"                => $dat['sinistrado'],
+            "filial"                    => $dat['filial'],
+            "status_veiculo"            => $dat['status_veiculo'],
+            "status_veiculo_dt"         => $dat['status_veiculo_dt'],
+            "modelo_veiculo_aprimorado" => $dat['modelo_veiculo_aprimorado'],
+            "placa"                     => $dat['placa'],
+            "empresa"                   => $dat['empresa'],
+            "r12s_proximos"             => $dat['r12s_proximos'],
+            "dif_date"                  => $dat['dif_date'],
+            "lp_longitude"              => $dat['lp_longitude'],
+            "estado"                    => $dat['estado'],
+            "lp_latitude"               => $dat['lp_latitude'],
+            "telefone"                  => $dat['telefone'],
+            "status"                    => $dat['status'],
+            "iccid"                     => $dat['iccid'],
+            "chassis"                   => $dat['chassis'],
+            "modelo_veiculo"            => $dat['modelo_veiculo'],
+            "qtd_dispositivos"          => $dat['qtd_dispositivos'],
+            "categoria_veiculo"         => $dat['categoria_veiculo'],
+            "cidade"                    => $dat['cidade'],
+            "operadora"                 => $dat['operadora'],
+            "cliente"                   => $dat['cliente'],
+            "data_instalacao"           => $dat['data_instalacao'],
+            "cod_empresa"               => $dat['cod_empresa'],
+            "codigo_fipe"               => $dat['codigo_fipe'],
+            "modelo"                    => $dat['modelo'],
+            "point"                     => $dat['point'],
+            "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'],
+            "versao"                    => $dat['versao'],
+        ]);
+        return;
     }
 }
