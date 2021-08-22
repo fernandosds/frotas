@@ -294,13 +294,16 @@
                 buttons: [{
                         extend: 'pdf',
                         exportOptions: {
-                            columns: ':visible:not(.notexport)'
-                        }
+                            //columns: ':visible:not(.notexport)'
+                            columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
+                        },
+                        orientation: 'landscape',
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: ':visible:not(.notexport)'
+                            //columns: ':visible:not(.notexport)'
+                            columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
