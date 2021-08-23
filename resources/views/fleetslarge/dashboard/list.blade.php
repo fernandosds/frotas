@@ -381,6 +381,21 @@
                     $('#point').val(response.point)
                     $('#lp_ultima_transmissao').val(response.lp_ultima_transmissao)
                     $('#versao').val(response.versao)
+                    $('#lp_satelite').val(response.lp_satelite)
+                    $('#lp_ignicao').val(response.lp_ignicao)
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('#lp_voltagem').val(response.lp_voltagem)
+                    $('#veiculo_em_loja').val(response.veiculo_em_loja)
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('#lp_velocidade').val(response.lp_velocidade)
+                    $('#point').val(response.point)
+                    $('#filial').val(response.filial)
+                    $('#status_veiculo_dt').val(response.status_veiculo_dt)
+                    $('#status_veiculo').val(response.status_veiculo)
+                    $('#sinistrado').val(response.sinistrado)
+
                     // $('#endereco').val(response.endereco)
                 },
                 error: function(error) {
