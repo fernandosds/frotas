@@ -410,7 +410,29 @@
                     $('#end_logradouro').val(response.end_logradouro)
                     $('#end_bairro').val(response.end_bairro)
                     $('#end_uf').val(response.end_uf)
+                    $('#cliente_foto').attr('src', response.cliente_foto);
+                    $('#cliente_cpf').val(response.cliente_cpf)
+                    $('#cliente_nome').val(response.cliente_nome)
+                    $('#cliente_datadev').val(response.cliente_datadev)
+                    $('#cliente_celular').val(response.cliente_celular)
+                    $('#cliente_localdev').val(response.cliente_localdev)
+                    $('#cliente_local_retirada').val(response.cliente_local_retirada)
+                    $('#cliente_contrato').val(response.cliente_contrato)
+                    $('#cliente_dataretirada').val(response.cliente_dataretirada)
+                    $('#cliente_email').val(response.cliente_email)
+                    $('#cliente_endereco').val(response.cliente_endereco)
+                    $('#cliente_foto_cnh').attr('src', response.cliente_foto_cnh);
+                    $('#cliente_cnh').val(response.cliente_cnh)
 
+                    if (response.status_veiculo != "LOCACAO") {
+                        $("#btn_cliente").css({
+                            "display": "none"
+                        });
+                    } else {
+                        $("#btn_cliente").css({
+                            "display": "inline"
+                        });
+                    }
                     // $('#endereco').val(response.endereco)
                 },
                 error: function(error) {

@@ -171,11 +171,83 @@
                             <input type="text" id="end_cep" name="end_cep" class="form-control" maxlength="17" readonly>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalClient" id="btn_cliente">Dados do cliente</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-personalizado" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Dados do Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4">Foto</label>
+                        <iframe style="height:400px;width:600px;" title="Iframe Example" id="cliente_foto" name="cliente_foto"></iframe>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Nome</label>
+                        <input type="text" id="cliente_nome" name="cliente_nome" class="form-control" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4">CPF</label>
+                        <input type="text" class="form-control" id="cliente_cpf" name="cliente_cpf" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4">Celular</label>
+                        <input type="text" class="form-control" id="cliente_celular" name="cliente_celular" readonly>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputEmail4">Data Devolução</label>
+                        <input type="text" id="cliente_datadev" name="cliente_datadev" class="form-control" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputPassword4">Local Devolução</label>
+                        <input type="text" class="form-control" id="cliente_localdev" name="cliente_localdev" readonly>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputPassword4">Local de Retirada</label>
+                        <input type="text" class="form-control" id="cliente_local_retirada" name="cliente_local_retirada" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4">CNH</label>
+                        <input type="text" class="form-control" id="cliente_cnh" name="cliente_cnh" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputPassword4">Email</label>
+                        <input type="text" class="form-control" id="cliente_email" name="cliente_email" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputEmail4">Foto CNH</label>
+                        <iframe style="height:400px;width:600px;" title="Iframe Example" id="cliente_foto_cnh" name="cliente_foto_cnh"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -108,6 +108,19 @@ class DashboardController extends Controller
                         "point"                     => $dat['point'],
                         "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'],
                         "versao"                    => $dat['versao'],
+                        "cliente_foto"              => $dat['cliente_foto'],
+                        "cliente_cpf"               => $dat['cliente_cpf'],
+                        "cliente_nome"              => $dat['cliente_nome'],
+                        "cliente_datadev"           => $dat['cliente_datadev'],
+                        "cliente_celular"           => $dat['cliente_celular'],
+                        "cliente_localdev"          => $dat['cliente_localdev'],
+                        "cliente_local_retirada"    => $dat['cliente_local_retirada'],
+                        "cliente_contrato"          => $dat['cliente_contrato'],
+                        "cliente_dataretirada"      => $dat['cliente_dataretirada'],
+                        "cliente_email"             => $dat['cliente_email'],
+                        "cliente_endereco"          => $dat['cliente_endereco'],
+                        "cliente_foto_cnh"          => $dat['cliente_foto_cnh'],
+                        "cliente_cnh"               => $dat['cliente_cnh'],
                     ]);
                 }
             }
@@ -270,6 +283,19 @@ class DashboardController extends Controller
             "point"                     => $dat['point'],
             "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'],
             "versao"                    => $dat['versao'],
+            "cliente_foto"              => $dat['cliente_foto'],
+            "cliente_cpf"               => $dat['cliente_cpf'],
+            "cliente_nome"              => $dat['cliente_nome'],
+            "cliente_datadev"           => $dat['cliente_datadev'],
+            "cliente_celular"           => $dat['cliente_celular'],
+            "cliente_localdev"          => $dat['cliente_localdev'],
+            "cliente_local_retirada"    => $dat['cliente_local_retirada'],
+            "cliente_contrato"          => $dat['cliente_contrato'],
+            "cliente_dataretirada"      => $dat['cliente_dataretirada'],
+            "cliente_email"             => $dat['cliente_email'],
+            "cliente_endereco"          => $dat['cliente_endereco'],
+            "cliente_foto_cnh"          => $dat['cliente_foto_cnh'],
+            "cliente_cnh"               => $dat['cliente_cnh'],
         ]);
         return;
     }
