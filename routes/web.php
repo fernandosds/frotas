@@ -342,7 +342,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Fleets Large routes
      */
-    Route::group(['prefix' => 'fleetslarges'], function () {
+    Route::group(['middleware' => ['user.access_level:fleetslarge'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index');
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
         Route::get('/show/status/sinistrado', 'FleetsLarge\DashboardController@showStatusSinistrado')->name('fleetslarges.showStatusSinistrado');
