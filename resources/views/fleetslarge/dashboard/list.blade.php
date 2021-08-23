@@ -161,7 +161,7 @@
                                 <th>Placa</th>
                                 <th>Modelo</th>
                                 <th class="hidden">Endereço</th>
-                                <th>Localidade</th>
+                                <th class="hidden">Estado</th>
                                 <th class="hidden">Satelite</th>
                                 <th class="hidden">Velocidade</th>
                                 <th class="hidden">Voltagem</th>
@@ -177,8 +177,8 @@
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
-                                <td class="hidden">---</td>
-                                <td>{{$driver['estado']}}</td>
+                                <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['cidade']}} {{$driver['end_uf']}}</td>
+                                <td class="hidden">{{$driver['estado']}}</td>
                                 <td class="hidden">{{$driver['lp_satelite']}}</td>
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
                                 <td class="hidden">{{$driver['lp_voltagem']}}</td>
@@ -186,11 +186,21 @@
                                 <td>{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
                                 <td>{{$driver['filial']}}</td>
                                 <td>{{$driver['status_veiculo']}}</td>
+
+                                @if ($driver['sinistrado'] == 'TRUE')
+                                <td>
+                                    <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
+                                        <span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Sinistro</span>
+                                    </button>
+                                </td>
+                                @else
                                 <td>
                                     <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Detalhes</span>
                                     </button>
                                 </td>
+                                @endif
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -213,6 +223,7 @@
             }, 180000);
         });
 */
+
         start()
         /**
          * Rastrea isca automaticamente
@@ -295,7 +306,7 @@
                         extend: 'pdf',
                         exportOptions: {
                             //columns: ':visible:not(.notexport)'
-                            columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         },
                         orientation: 'landscape',
                     },
@@ -303,7 +314,7 @@
                         extend: 'excel',
                         exportOptions: {
                             //columns: ':visible:not(.notexport)'
-                            columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
@@ -395,6 +406,10 @@
                     $('#status_veiculo_dt').val(response.status_veiculo_dt)
                     $('#status_veiculo').val(response.status_veiculo)
                     $('#sinistrado').val(response.sinistrado)
+                    $('#end_cep').val(response.end_cep)
+                    $('#end_logradouro').val(response.end_logradouro)
+                    $('#end_bairro').val(response.end_bairro)
+                    $('#end_uf').val(response.end_uf)
 
                     // $('#endereco').val(response.endereco)
                 },

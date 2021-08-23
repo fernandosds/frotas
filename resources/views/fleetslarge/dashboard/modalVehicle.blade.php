@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                    <div class="form-group col-md-2">
+                        <div class="form-group col-md-2">
                             <label for="inputCpfCnpj">Veículo em loja</label>
                             <input type="text" id="veiculo_em_loja" name="veiculo_em_loja" class="form-control" maxlength="17" readonly>
                         </div>
@@ -150,6 +150,25 @@
                         <div class="form-group col-md-2">
                             <label for="inputComplement">Longitude</label>
                             <input type="text" id="lp_longitude" name="lp_longitude" class="form-control" maxlength="17" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="inputAddress">Endereço veículo</label>
+                            <input type="text" id="end_logradouro" name="end_logradouro" class="form-control" maxlength="17" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputAddress">Bairro</label>
+                            <input type="text" id="end_bairro" name="end_bairro" class="form-control" maxlength="17" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputComplement">UF</label>
+                            <input type="text" id="end_uf" name="end_uf" class="form-control" maxlength="17" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputComplement">CEP</label>
+                            <input type="text" id="end_cep" name="end_cep" class="form-control" maxlength="17" readonly>
                         </div>
                     </div>
 
