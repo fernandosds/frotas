@@ -189,18 +189,27 @@
 
                                 @if ($driver['sinistrado'] == 'TRUE')
                                 <td>
-                                    <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
-                                        <span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Sinistro</span>
+                                    <button type="button" class="btn btn-danger btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
+                                        <i class="fa fa-search-plus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
+                                        <i class="fa fa-file-contract"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
+                                        <i class="fa fa-map-marked-alt"></i>
                                     </button>
                                 </td>
                                 @else
                                 <td>
-                                    <button type="button" class="btn  btn-pill  btn-sm btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
-                                        <span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill"><i class="fa fa-search-plus"></i>Detalhes</span>
+                                    <button type="button" class="btn btn-success btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
+                                        <i class="fa fa-search-plus"></i>
                                     </button>
+                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
+                                        <i class="fa fa-file-contract"></i>
+                                    </button>
+                                    <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver['chassis']}}" class="btn btn-warning btn-elevate btn-circle btn-icon btn-vehicle-data"><span class="fa fa-map-marked-alt"></span></a>
                                 </td>
                                 @endif
-
                             </tr>
                             @endforeach
                         </tbody>
