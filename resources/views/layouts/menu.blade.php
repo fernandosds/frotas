@@ -2,7 +2,7 @@
 <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
     <div class="kt-aside__brand-logo">
         <a href="/">
-            <img alt="Logo" src="{{url('logos/logo_2.svg')}}" width="60%" />
+            <img alt="Logo" src="{{url('logos/logo_sat_branco.svg')}}" width="60%" />
         </a>
     </div>
     <div class="kt-aside__brand-tools">

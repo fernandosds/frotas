@@ -10,7 +10,7 @@
                     <!--begin::Aside-->
                     <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(../assets/media//bg/bg-4.jpg);">
                         <div class="">
-                            <img src="{{url('logos/logo.svg')}}">
+                            <img src="{{url('logos/logo_sat_branco.svg')}}">
                         </div>
                         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
                             <div class="kt-grid__item kt-grid__item--middle">

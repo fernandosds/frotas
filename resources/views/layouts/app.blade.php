@@ -9,7 +9,7 @@
 <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
     <div class="kt-header-mobile__logo">
         <a href="index.html">
-            <img alt="Logo" src="{{asset('/logos/logo_top.svg')}}" />
+            <img alt="Logo" src="{{asset('/logos/logo_sat_branco.svg')}}" />
         </a>
     </div>
     <div class="kt-header-mobile__toolbar">
