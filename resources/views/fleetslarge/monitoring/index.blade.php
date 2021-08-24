@@ -320,16 +320,7 @@
                     mymap.removeLayer(marker_event);
                 }
 
-
                 mymap.panTo(new L.LatLng(data.lp_latitude, data.lp_longitude));
-
-                circle = L.circle([data.lp_latitude, data.lp_longitude], {
-                    color: 'gray',
-                    fillColor: '#f03',
-                    fillOpacity: 0.1,
-                    radius: 800,
-                    border: 0
-                }).addTo(mymap);
 
                 marker = L.marker([data.lp_latitude, data.lp_longitude], {
                     icon: truckIcon
