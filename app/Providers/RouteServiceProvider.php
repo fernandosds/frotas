@@ -23,6 +23,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
 
+    public const HOMEMOVIDA = '/fleetslarges';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *

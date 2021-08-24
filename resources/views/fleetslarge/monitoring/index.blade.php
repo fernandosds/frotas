@@ -27,6 +27,7 @@
         margin-bottom: 15px;
     }
 
+
     .modal-grid {
         float: right;
         margin-top: -5px;
@@ -98,7 +99,7 @@
                     <b for="" id="categoria_veiculo">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6 hidden">
+                <div class="col-sm-2 col-6">
                     <i class="fa fa-rss"></i> <label for="">Última Transmissão</label><br />
                     <b for="" id="lp_ultima_transmissao">---</b>
                 </div>
@@ -126,8 +127,8 @@
             <!--
             <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
             <button type="button" class="btn btn-link btn-sm pull-right modal-print-grid" data-toggle="modal" data-target=".bd-print-grid"><i class="fa fa-print"></i> Imprimir Grid</button>
+            -->
             <div id="last-address"></div>
--->
         </div>
 
     </div>
@@ -251,12 +252,6 @@
         start()
     })
 
-
-    /**
-     * Pegar chassi do veículo
-     */
-
-
     /**
      * Rastrea isca
      */
@@ -297,13 +292,20 @@
             url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
             type: 'GET',
             success: function(data) {
-
+                if (data.lp_ignicao == "1") {
+                    $("#placa").css({
+                        "color": "green"
+                    });
+                } else {
+                    $("#placa").css({
+                        "color": "red"
+                    });
+                }
                 $("#placa").html(data.placa);
                 $("#chassis").html(data.chassis);
                 $("#modelo_veiculo").html(data.modelo_veiculo);
                 $("#categoria_veiculo").html(data.categoria_veiculo);
                 $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao);
-
 
                 if (mymap.hasLayer(marker)) {
                     mymap.removeLayer(marker);

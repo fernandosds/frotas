@@ -233,7 +233,7 @@
         });
 */
 
-        start()
+        resetGrid()
         /**
          * Rastrea isca automaticamente
          */
@@ -286,9 +286,9 @@
         }
 
         /**
-         * Rastrea isca
+         * Reset Grig
          */
-        function start() {
+        function resetGrid() {
             // Progress bar
             $('#div-progress-bar-fleetlarge').show();
             progressBar = 100;
@@ -376,49 +376,49 @@
                 type: 'GET',
                 success: function(response) {
                     $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
-                    $('#placa').val(response.placa)
-                    $('#empresa').val(response.empresa)
+                    $('.placa').val(response.placa)
+                    $('.empresa').val(response.empresa)
                     $('#r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
-                    $('#lp_longitude').val(response.lp_longitude)
-                    $('#estado').val(response.estado)
-                    $('#lp_latitude').val(response.lp_latitude)
-                    $('#telefone').val(response.telefone)
-                    $('#status').val(response.status)
-                    $('#iccid').val(response.iccid)
-                    $('#chassis').val(response.chassis)
-                    $('#modelo_veiculo').val(response.modelo_veiculo)
-                    $('#modelo_veiculo_span').html(response.modelo_veiculo)
-                    $('#qtd_dispositivos').val(response.qtd_dispositivos)
-                    $('#categoria_veiculo').val(response.categoria_veiculo)
-                    $('#cidade').val(response.cidade)
-                    $('#operadora').val(response.operadora)
-                    $('#cliente').val(response.cliente)
-                    $('#data_instalacao').val(response.data_instalacao)
-                    $('#cod_empresa').val(response.cod_empresa)
-                    $('#codigo_fipe').val(response.codigo_fipe)
-                    $('#modelo').val(response.modelo)
-                    $('#point').val(response.point)
-                    $('#lp_ultima_transmissao').val(response.lp_ultima_transmissao)
-                    $('#versao').val(response.versao)
-                    $('#lp_satelite').val(response.lp_satelite)
-                    $('#lp_ignicao').val(response.lp_ignicao)
-                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('.lp_longitude').val(response.lp_longitude)
+                    $('.estado').val(response.estado)
+                    $('.lp_latitude').val(response.lp_latitude)
+                    $('.telefone').val(response.telefone)
+                    $('.status').val(response.status)
+                    $('.iccid').val(response.iccid)
+                    $('.chassis').val(response.chassis)
+                    $('.modelo_veiculo').val(response.modelo_veiculo)
+                    //$('#modelo_veiculo_span').html(response.modelo_veiculo)
+                    $('.qtd_dispositivos').val(response.qtd_dispositivos)
+                    $('.categoria_veiculo').val(response.categoria_veiculo)
+                    $('.cidade').val(response.cidade)
+                    $('.operadora').val(response.operadora)
+                    $('.cliente').val(response.cliente)
+                    $('.data_instalacao').val(response.data_instalacao)
+                    $('.cod_empresa').val(response.cod_empresa)
+                    $('.codigo_fipe').val(response.codigo_fipe)
+                    $('.modelo').val(response.modelo)
+                    $('.point').val(response.point)
+                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao)
+                    $('.versao').val(response.versao)
+                    $('.lp_satelite').val(response.lp_satelite)
+                    $('.lp_ignicao').val(response.lp_ignicao)
+                    $('.r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
-                    $('#lp_voltagem').val(response.lp_voltagem)
+                    $('.lp_voltagem').val(response.lp_voltagem)
                     $('#veiculo_em_loja').val(response.veiculo_em_loja)
                     $('#r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
-                    $('#lp_velocidade').val(response.lp_velocidade)
+                    $('.lp_velocidade').val(response.lp_velocidade)
                     $('#point').val(response.point)
-                    $('#filial').val(response.filial)
+                    $('.filial').val(response.filial)
                     $('#status_veiculo_dt').val(response.status_veiculo_dt)
                     $('#status_veiculo').val(response.status_veiculo)
                     $('#sinistrado').val(response.sinistrado)
-                    $('#end_cep').val(response.end_cep)
-                    $('#end_logradouro').val(response.end_logradouro)
-                    $('#end_bairro').val(response.end_bairro)
-                    $('#end_uf').val(response.end_uf)
+                    $('.end_cep').val(response.end_cep)
+                    $('.end_logradouro').val(response.end_logradouro)
+                    $('.end_bairro').val(response.end_bairro)
+                    $('.end_uf').val(response.end_uf)
                     $('#cliente_foto').attr('src', response.cliente_foto);
                     $('#cliente_cpf').val(response.cliente_cpf)
                     $('#cliente_nome').val(response.cliente_nome)
@@ -432,6 +432,8 @@
                     $('#cliente_endereco').val(response.cliente_endereco)
                     $('#cliente_foto_cnh').attr('src', response.cliente_foto_cnh);
                     $('#cliente_cnh').val(response.cliente_cnh)
+                    $('.end_cidade').val(response.end_cidade)
+                    $('.veiculo_odometro').val(response.veiculo_odometro)
 
                     if (response.status_veiculo != "LOCACAO") {
                         $("#btn_cliente").css({

@@ -121,6 +121,8 @@ class DashboardController extends Controller
                         "cliente_endereco"          => $dat['cliente_endereco'],
                         "cliente_foto_cnh"          => $dat['cliente_foto_cnh'],
                         "cliente_cnh"               => $dat['cliente_cnh'],
+                        "veiculo_odometro"          => $dat['veiculo_odometro'],
+                        "lp_velocidade"             => $dat['lp_velocidade'],
                     ]);
                 }
             }
