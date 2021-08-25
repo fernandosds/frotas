@@ -3,7 +3,9 @@
         <thead>
             <tr>
                 <th>Dispositivo</th>
+                <th class="hidden">Data recebimento</th>
                 <th>Data recebimento</th>
+                <th class="hidden">Data GPS</th>
                 <th>Data GPS</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
@@ -20,8 +22,10 @@
             @foreach($positions as $position)
             <tr>
                 <td>{{ $position['id_dispositivo'] }}</td>
-                <td>{{ \Carbon\Carbon::parse($position['data_recebimento'])->format('d/m/Y H:i:s') }}</td>
-                <td>{{ \Carbon\Carbon::parse($position['data_gps'])->format('d/m/Y H:i:s') }}</td>
+                <td><span style="display:none">{{$position['data_recebimento']}}</span>{{\Carbon\Carbon::parse($position['data_recebimento'])->format('d/m/Y H:i:s')}}</td>
+                <td class="hidden">{{ \Carbon\Carbon::parse($position['data_recebimento'])->format('d/m/Y H:i:s') }}</td>
+                <td><span style="display:none">{{$position['data_gps']}}</span>{{\Carbon\Carbon::parse($position['data_gps'])->format('d/m/Y H:i:s')}}</td>
+                <td class="hidden">{{ \Carbon\Carbon::parse($position['data_gps'])->format('d/m/Y H:i:s') }}</td>
                 <td>{{ $position['latitude'] }}</td>
                 <td>{{ $position['longitude'] }}</td>
                 <td class="hidden">{{ $position['angulo'] }}</td>

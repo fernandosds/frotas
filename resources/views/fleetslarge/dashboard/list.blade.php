@@ -165,6 +165,7 @@
                                 <th class="hidden">Satelite</th>
                                 <th class="hidden">Velocidade</th>
                                 <th class="hidden">Voltagem</th>
+                                <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
                                 <th>Sinistrado</th>
                                 <th>Filial</th>
@@ -182,7 +183,8 @@
                                 <td class="hidden">{{$driver['lp_satelite']}}</td>
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
                                 <td class="hidden">{{$driver['lp_voltagem']}}</td>
-                                <td>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td>{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
                                 <td>{{$driver['filial']}}</td>
                                 <td>{{$driver['status_veiculo']}}</td>
@@ -316,7 +318,7 @@
                         extend: 'pdf',
                         exportOptions: {
                             //columns: ':visible:not(.notexport)'
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10,11]
                         },
                         orientation: 'landscape',
                     },
@@ -324,7 +326,7 @@
                         extend: 'excel',
                         exportOptions: {
                             //columns: ':visible:not(.notexport)'
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10,11]
                         }
                     },
                     {
@@ -355,16 +357,7 @@
                         "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
                     }
                 },
-                columnDefs: [{
-                    targets: [0],
-                    orderData: [0, 1]
-                }, {
-                    targets: [1],
-                    orderData: [1, 0]
-                }, {
-                    targets: [4],
-                    orderData: [4, 0]
-                }],
+
             });
 
         });
