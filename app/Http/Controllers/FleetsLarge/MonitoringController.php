@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FleetsLarge;
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\ApiDeviceService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 
@@ -38,10 +39,9 @@ class MonitoringController extends Controller
     }
 
     /**
-     * @param null $device
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($chassis = null)
+    public function index()
     {
         return view('fleetslarge.monitoring.index');
     }
@@ -117,5 +117,22 @@ class MonitoringController extends Controller
         }
         return response()->json(['status' => 'success'], 200);
     }
+    /**
+     * @param null $chassis
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function grid(Request $request)
+    {
+        $data['positions'] = $this->apiFleetLargeService->getGridModel($request->first_date, $request->last_date, $request->modelo);
 
+        if (Carbon::parse($request->last_date)->diffInDays(Carbon::parse($request->first_date)) > 31) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Período superior a 30 dias"], 404);
+        };
+
+        if ($request->first_date > $request->last_date) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Data invalida, data de inicio maior que a data final, ou diferença entre data superior a 5 dias"], 404);
+        }
+
+        return response()->view('fleetslarge.monitoring.list', $data);
+    }
 }

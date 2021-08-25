@@ -199,7 +199,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3"><iframe style="height:200px;width:300px;" title="Iframe Example" id="cliente_foto" name="cliente_foto"></iframe></div>
+                    <div class="col-3"><iframe style="height:200px;width:300px;" title="Iframe Example" class="cliente_foto" name="cliente_foto"></iframe></div>
                     <div class="col-8">
                         <h4>Dados Pessoais</h4>
                         <br />
@@ -384,6 +384,24 @@
                             <div class="col-2">
                                 <h5>Voltagem</h5>
                                 <input type="text" class="form-control lp_voltagem" id="lp_voltagem" name="lp_voltagem" readonly>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Anexos</h4>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>Foto - Selfie</h5>
+                                <a href="" class="btn btn-brand btn-icon cliente_foto" target="_blank"><span class="fa fa-camera-retro"></span></a>
+                            </div>
+                            <div class="col-3">
+                                <h5>Foto - Habilitação</h5>
+                                <a href="" class="btn btn-brand btn-icon" id="cliente_foto_cnh" target="_blank"><span class="fa fa-address-card"></span></a>
                             </div>
                         </div>
                         <br />

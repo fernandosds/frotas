@@ -124,13 +124,13 @@
 
         <div class="col-sm-12">
             <hr />
+            <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target="#modalGrid" data-backdrop="static" data-keyboard="false"><i class="fa fa-table"></i> Histórico de Posições</button>
             <!--
             <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
             <button type="button" class="btn btn-link btn-sm pull-right modal-print-grid" data-toggle="modal" data-target=".bd-print-grid"><i class="fa fa-print"></i> Imprimir Grid</button>
-            -->
+                -->
             <div id="last-address"></div>
         </div>
-
     </div>
 
 </div>
@@ -149,11 +149,11 @@
                 <div class="row">
                     <div class="col-lg-6 col-sm-6">
                         De: <br />
-                        <input class="form-control" type="date" min="1" max="72" id="input-date-from" value="1">
+                        <input class="form-control" type="date" min="1" max="72" id="input-date-from" value="">
                     </div>
                     <div class="col-lg-6 col-sm-6">
                         Até: <br />
-                        <input class="form-control" type="date" min="1" max="72" id="input-date-to" value="1">
+                        <input class="form-control" type="date" min="1" max="72" id="input-date-to" value="">
                     </div>
                     <div class="col-lg-12 col-sm-12">
                         <br /><b>Atenção</b> Intervalo máximo de 5 dias<br />
@@ -176,6 +176,8 @@
     </div>
 </div>
 
+@include('fleetslarge.monitoring.modalGrid')
+
 @endsection
 
 @section('scripts')
@@ -196,6 +198,7 @@
      * Pega o chassi atual passado por parâmetro
      */
     chassi_url = window.location.href.split('/')[5];
+    var modelo = "";
 
     var loading = '<i class="fa fa-spinner fa-pulse"></i>';
     $("#placa").html(loading);
@@ -306,6 +309,9 @@
                 $("#modelo_veiculo").html(data.modelo_veiculo);
                 $("#categoria_veiculo").html(data.categoria_veiculo);
                 $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao);
+                $(".modelo").html(data.modelo);
+
+                modelo = data.modelo;
 
                 if (mymap.hasLayer(marker)) {
                     mymap.removeLayer(marker);
@@ -356,28 +362,9 @@
             type: 'GET',
             url: '{{url("monitoring/get-address")}}/' + grid_lat + '/' + grid_lng,
             success: function(response) {
-
                 $('#span-address-' + cont).html(response)
             }
         });
-
-    })
-
-    /**
-     * Carrega grid
-     */
-    $('.modal-grid').click(function() {
-
-        $.ajax({
-            url: "{{url('monitoring/get-grid')}}/" + chassi_device + "/" + minutes,
-            type: 'GET',
-            success: function(data) {
-
-                $('#modal-content').html(data)
-
-            }
-        })
-
 
     })
 
@@ -407,5 +394,27 @@
         $('#categoria_veiculo').html('---');
 
     }
+
+
+
+    $('#btn-grid').click(function() {
+
+        var chassis = chassi_url;
+        $.ajax({
+            type: 'POST',
+            url: "{{route('fleetslarges.monitoring.grid')}}",
+            async: true,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "modelo": modelo,
+                "chassis": chassis,
+                "first_date": $('#first_date').val(),
+                "last_date": $('#last_date').val()
+            },
+            success: function(response) {
+                $('#list_grid').html(response);
+            }
+        });
+    });
 </script>
 @endsection

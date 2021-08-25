@@ -307,6 +307,7 @@
         }
 
         $(document).ready(function() {
+
             $('#example').DataTable({
                 dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                     "<'row'<'col-md-6'><'col-md-6'>>" +
@@ -419,7 +420,7 @@
                     $('.end_logradouro').val(response.end_logradouro)
                     $('.end_bairro').val(response.end_bairro)
                     $('.end_uf').val(response.end_uf)
-                    $('#cliente_foto').attr('src', response.cliente_foto);
+                    $('.cliente_foto').attr('src', response.cliente_foto);
                     $('#cliente_cpf').val(response.cliente_cpf)
                     $('#cliente_nome').val(response.cliente_nome)
                     $('#cliente_datadev').val(response.cliente_datadev)
@@ -430,10 +431,12 @@
                     $('#cliente_dataretirada').val(response.cliente_dataretirada)
                     $('#cliente_email').val(response.cliente_email)
                     $('#cliente_endereco').val(response.cliente_endereco)
-                    $('#cliente_foto_cnh').attr('src', response.cliente_foto_cnh);
-                    $('#cliente_cnh').val(response.cliente_cnh)
+                    //$('#cliente_foto_cnh').attr('src', response.cliente_foto_cnh);
                     $('.end_cidade').val(response.end_cidade)
+                    $('#cliente_cnh').val(response.cliente_cnh)
                     $('.veiculo_odometro').val(response.veiculo_odometro)
+                    $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
+                    $('.cliente_foto').attr('href', response.cliente_foto)
 
                     if (response.status_veiculo != "LOCACAO") {
                         $("#btn_cliente").css({
