@@ -199,8 +199,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3"><iframe style="height:200px;width:300px;" title="Iframe Example" class="cliente_foto" name="cliente_foto"></iframe></div>
-                    <div class="col-8">
+                    <div class="col-12">
                         <h4>Dados Pessoais</h4>
                         <br />
                         <br />

@@ -14,8 +14,6 @@
                 <th class="hidden">Sinal</th>
                 <th class="hidden">Tensão</th>
                 <th>Velocidade</th>
-                <th class="hidden"></th>
-                <th class="hidden"></th>
             </tr>
         </thead>
         <tbody>
@@ -33,8 +31,6 @@
                 <td class="hidden">{{ $position['sinal'] }}</td>
                 <td class="hidden">{{ $position['tensao'] }}</td>
                 <td>{{ $position['velocidade'] }}</td>
-                <td class="hidden"></td>
-                <td class="hidden"></td>
             </tr>
             @endforeach
         </tbody>
@@ -44,24 +40,23 @@
 <script>
     $(document).ready(function() {
         $('#gridDatatable').DataTable({
-            dom: "<'row'<'col-md-4'l><'col-md-8'Bf>>" + // 1º Mostrar registro e 2º Pesquisar
+            dom: "<'row'<'col-md-4'l><'col-md-8'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
             buttons: [{
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        //columns: ':visible:not(.notexport)'
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                     },
                     orientation: 'landscape',
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        //columns: ':visible:not(.notexport)'
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                     }
-                },
-                {
-                    extend: 'copy'
                 },
                 {
                     extend: 'print'
