@@ -316,7 +316,7 @@
                 $("#chassis").html(data.chassis);
                 $("#modelo_veiculo").html(data.modelo_veiculo);
                 $("#categoria_veiculo").html(data.categoria_veiculo);
-                $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao);
+                $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'));
                 $(".modelo").html(data.modelo);
 
                 modelo = data.modelo;
@@ -383,6 +383,8 @@
 
         var loading = '<i class="fa fa-spinner fa-pulse"></i>';
         $("#placa").html(loading);
+        $("#lp_ignicao").html(loading);
+        $("#lp_velocidade").html(loading);
         $("#chassis").html(loading);
         $("#modelo_veiculo").html(loading);
         $('#lp_ultima_transmissao').html(loading);
@@ -396,6 +398,8 @@
      */
     function clearIcons() {
         $("#placa").html('---');
+        $("#lp_ignicao").html('---');
+        $("#lp_velocidade").html('---');
         $("#chassis").html('---');
         $("#modelo_veiculo").html('---');
         $('#lp_ultima_transmissao').html('---');
