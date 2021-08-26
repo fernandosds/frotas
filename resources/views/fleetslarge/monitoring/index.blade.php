@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="col-sm-1 col-3">
-                    <i class="fa fa-car-alt"></i> <label for="">Ignição</label><br />
+                    <i class="fa fa-key"></i> <label for="">Ignição</label><br />
                     <b for="" id="lp_ignicao">---</b>
                 </div>
 
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="col-sm-2 col-6">
-                    <i class="fa  fa-car-side"></i> <label for="">Categoria</label><br />
+                    <i class="fa  fa-car-alt"></i> <label for="">Categoria</label><br />
                     <b for="" id="categoria_veiculo">---</b>
                 </div>
 
