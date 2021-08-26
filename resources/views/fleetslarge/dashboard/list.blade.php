@@ -135,7 +135,7 @@
         <div class="card text-white bg-warning  col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> 0</h1>
+                <h1 class="card-title display-4"><span id="statusSemComunicacao"></h1>
                 <p class="card-text h5">Total de veículos sem comunicação.</p>
             </div>
         </div>
@@ -155,7 +155,7 @@
 
                 <div class="col-md-12">
                     <br />
-                    <table id="example" class="display nowrap" style="width:50%">
+                    <table id="example" class="display" style="width:50%">
                         <thead>
                             <tr>
                                 <th>Placa</th>
@@ -266,6 +266,16 @@
                 }
             });
             $.ajax({
+                url: "{{url('')}}/fleetslarges/show/status/semcomunicando",
+                type: 'GET',
+                success: function(response) {
+                    if (response.data[0] == "") {
+                        return $('#statusSemComunicacao').html(0)
+                    }
+                    $('#statusSemComunicacao').html(response.data.length)
+                }
+            });
+            $.ajax({
                 url: "{{url('')}}/fleetslarges/show/status/emloja",
                 type: 'GET',
                 success: function(response) {
@@ -318,7 +328,7 @@
                         extend: 'pdf',
                         exportOptions: {
                             //columns: ':visible:not(.notexport)'
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10,11]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                         },
                         orientation: 'landscape',
                     },
@@ -326,7 +336,7 @@
                         extend: 'excel',
                         exportOptions: {
                             //columns: ':visible:not(.notexport)'
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10,11]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                         }
                     },
                     {

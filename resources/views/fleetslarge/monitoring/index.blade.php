@@ -76,18 +76,29 @@
 
     <!-- HEADER -->
     <div class="row" style="width: 99%">
-        <div class="col-sm-9">
+        <div class="col-sm-11">
             <div class="row div-device-status">
-                <div class="col-sm-2 col-6">
+                <div class="col-sm-1 col-3">
                     <i class="fa fa-car-alt"></i> <label for="">Placa</label><br />
                     <b for="" id="placa">---</b>
                 </div>
+
+                <div class="col-sm-1 col-3">
+                    <i class="fa fa-car-alt"></i> <label for="">Ignição</label><br />
+                    <b for="" id="lp_ignicao">---</b>
+                </div>
+
+
+                <div class="col-sm-1 col-6">
+                    <i class="fa fa-car-alt"></i> <label for="">Velocidade</label><br />
+                    <b for="" id="lp_velocidade">---</b>
+                </div>
+
 
                 <div class="col-sm-2 col-6">
                     <i class="fa fa-car-side"></i> <label for="">Chassis</label><br />
                     <b for="" id="chassis">---</b>
                 </div>
-
 
                 <div class="col-sm-2 col-6">
                     <i class="fa fa-car-side" id="icon-nivel-bateria"></i> <label for=""> Modelo</label><br />
@@ -103,19 +114,11 @@
                     <i class="fa fa-rss"></i> <label for="">Última Transmissão</label><br />
                     <b for="" id="lp_ultima_transmissao">---</b>
                 </div>
-
-                <div class="col-sm-2 col-6 hidden">
-                    <i class="fa  fa-clock"></i> <label for="">Cliente</label>
-                    <b for="" id="cliente">---</b>
-                </div>
             </div>
         </div>
 
-        <div class="col-sm-3 col-12 div-btn-start">
+        <div class="col-sm-1 col-12 div-btn-start">
             <div class="form-row align-items-center">
-                <div class="col-sm-3 col-3 my-1"> </div>
-                <div class="col-sm-4 col-3 my-1"></div>
-                <div class="col-sm-3 col-3 my-1"> </div>
                 <div class="col-sm-2 col-3 my-1">
                     <a href="{{route('fleetslarges.index')}}" class="btn btn-warning mb-2" id="btn-start">Voltar</a>
                 </div>
@@ -202,6 +205,8 @@
 
     var loading = '<i class="fa fa-spinner fa-pulse"></i>';
     $("#placa").html(loading);
+    $("#lp_ignicao").html(loading);
+    $("#lp_velocidade").html(loading);
     $("#chassis").html(loading);
     $("#modelo_veiculo").html(loading);
     $('#categoria_veiculo').html(loading);
@@ -296,15 +301,18 @@
             type: 'GET',
             success: function(data) {
                 if (data.lp_ignicao == "1") {
-                    $("#placa").css({
+                    $("#lp_ignicao").css({
                         "color": "green"
                     });
                 } else {
-                    $("#placa").css({
+                    $("#lp_ignicao").css({
                         "color": "red"
                     });
                 }
+
                 $("#placa").html(data.placa);
+                $("#lp_ignicao").html(data.lp_ignicao != "1" ? "OFF" : "ON");
+                $("#lp_velocidade").html(data.lp_velocidade + " km/h");
                 $("#chassis").html(data.chassis);
                 $("#modelo_veiculo").html(data.modelo_veiculo);
                 $("#categoria_veiculo").html(data.categoria_veiculo);

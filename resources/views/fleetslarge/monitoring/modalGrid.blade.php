@@ -15,7 +15,7 @@
                             <label for="inputName">Data Inicial</label>
                             <input class="form-control" type="date" value="<?php echo date('Y-m-d'); ?>" id="first_date">
                         </div>
-                        <div class="form-group col-md-5" id="reloadOption">
+                        <div class="form-group col-md-6" id="reloadOption">
                             <label for="">Data Final</label>
                             <input class="form-control" type="date" value="<?php echo date('Y-m-d'); ?>" id="last_date">
                         </div>
@@ -41,4 +41,3 @@
         </div>
     </div>
 </div>
-

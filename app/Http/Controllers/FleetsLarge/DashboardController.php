@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\ApiDeviceService;
 use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Print_;
 
@@ -168,13 +169,37 @@ class DashboardController extends Controller
             $carComunicando[] = '';
 
             foreach ($data['fleetslarge'] as $data => $dat) {
-                if ($dat['sinistrado'] == "FALSE") {
+                if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
                     $arr[] = $this->resultJson($dat);
                     $carComunicando = $arr;
                 }
             }
 
             return response()->json(['status' => 'success', 'data' => $carComunicando], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showStatusSemComunicando()
+    {
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+
+        try {
+            $carSemComunicado[] = '';
+
+            //Carbon::parse($request->last_date)->diffInDays(Carbon::parse($request->first_date)) > 31
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
+                    $arr[] = $this->resultJson($dat);
+                    $carSemComunicado = $arr;
+                }
+            }
+
+            return response()->json(['status' => 'success', 'data' => $carSemComunicado], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
@@ -299,6 +324,6 @@ class DashboardController extends Controller
             "cliente_foto_cnh"          => $dat['cliente_foto_cnh'],
             "cliente_cnh"               => $dat['cliente_cnh'],
         ]);
-        return;
+        return $arr;
     }
 }

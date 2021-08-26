@@ -347,6 +347,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
         Route::get('/show/status/sinistrado', 'FleetsLarge\DashboardController@showStatusSinistrado')->name('fleetslarges.showStatusSinistrado');
         Route::get('/show/status/comunicando', 'FleetsLarge\DashboardController@showStatusComunicando')->name('fleetslarges.showStatusComunicando');
+        Route::get('/show/status/semcomunicando', 'FleetsLarge\DashboardController@showStatusSemComunicando')->name('fleetslarges.showStatusSemComunicando');
         Route::get('/show/status/emloja', 'FleetsLarge\DashboardController@showStatusParadoEmLoja')->name('fleetslarges.showStatusParadoEmLoja');
         Route::get('/show/status/avaria', 'FleetsLarge\DashboardController@showStatusAvaria')->name('fleetslarges.showStatusAvaria');
 
