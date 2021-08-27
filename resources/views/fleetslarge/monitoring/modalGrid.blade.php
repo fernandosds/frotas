@@ -22,7 +22,7 @@
                         <div class="form-group col-md-1">
                             <label for="">&nbsp;</label>
                             <br>
-                            <button type="button" id="btn-grid" class="btn btn-outline-brand btn-elevate btn-icon" data-toggle="modal" data-target="#exampleModal" data-backdrop="static">
+                            <button type="button" id="btn-grid" class="btn btn-outline-brand btn-elevate btn-icon" data-toggle="modal"  data-backdrop="static">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>

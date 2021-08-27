@@ -159,7 +159,7 @@
                         <thead>
                             <tr>
                                 <th>Placa</th>
-                                <th>Modelo</th>
+                                <th style="width: 220px;">Modelo</th>
                                 <th class="hidden">Endereço</th>
                                 <th class="hidden">Estado</th>
                                 <th class="hidden">Satelite</th>
@@ -168,9 +168,9 @@
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
                                 <th>Sinistrado</th>
-                                <th>Filial</th>
+                                <th style="width: 220;">Filial</th>
                                 <th>Status</th>
-                                <th></th>
+                                <th style="width: 150px;"></th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
@@ -327,7 +327,6 @@
                 buttons: [{
                         extend: 'pdf',
                         exportOptions: {
-                            //columns: ':visible:not(.notexport)'
                             columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                         },
                         orientation: 'landscape',
@@ -335,7 +334,6 @@
                     {
                         extend: 'excel',
                         exportOptions: {
-                            //columns: ':visible:not(.notexport)'
                             columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                         }
                     },
@@ -398,12 +396,12 @@
                     $('.cidade').val(response.cidade)
                     $('.operadora').val(response.operadora)
                     $('.cliente').val(response.cliente)
-                    $('.data_instalacao').val(response.data_instalacao)
+                    $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
                     $('.cod_empresa').val(response.cod_empresa)
                     $('.codigo_fipe').val(response.codigo_fipe)
                     $('.modelo').val(response.modelo)
                     $('.point').val(response.point)
-                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao)
+                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
                     $('.versao').val(response.versao)
                     $('.lp_satelite').val(response.lp_satelite)
                     $('.lp_ignicao').val(response.lp_ignicao)

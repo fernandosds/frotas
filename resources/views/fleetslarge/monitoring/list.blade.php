@@ -37,29 +37,25 @@
     </table>
 </div>
 
+
 <script>
     $(document).ready(function() {
-        $('#gridDatatable').DataTable({
+        var dataTable = $('#gridDatatable').DataTable({
             dom: "<'row'<'col-md-4'l><'col-md-8'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
             buttons: [{
                     extend: 'pdf',
                     exportOptions: {
-                        //columns: ':visible:not(.notexport)'
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
+                        columns: [0, 2, 4, 5, 6, 7, 9, 10, 11]
                     },
                     orientation: 'landscape',
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        //columns: ':visible:not(.notexport)'
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
+                        columns: [0, 2, 4, 5, 6, 7, 9, 10, 11]
                     }
-                },
-                {
-                    extend: 'print'
                 }
             ],
             "language": {
