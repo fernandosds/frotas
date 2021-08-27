@@ -8,170 +8,205 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="kt-portlet__body">
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Cliente</label>
-                            <input type="text" id="cliente" name="cliente" class="form-control cliente" maxlength="17" readonly>
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Dados da Locadora</h4>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Nome</h5>
+                                <input type="text" id="cliente" name="cliente" class="form-control cliente" maxlength="17" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>Empresa</h5>
+                                <input type="text" id="empresa" name="empresa" class="form-control empresa" maxlength="17" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>Filial</h5>
+                                <input type="text" id="filial" name="filial" class="form-control filial" maxlength="17" readonly>
+                            </div>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Empresa</label>
-                            <input type="text" id="empresa" name="empresa" class="form-control empresa" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Filial</label>
-                            <input type="text" id="filial" name="filial" class="form-control filial" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Cód. Empresa</label>
-                            <input type="text" id="cod_empresa" name="cod_empresa" class="form-control cod_empresa" maxlength="17" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group  col-md-3">
-                            <label for="inputName">Placa</label>
-                            <input type="text" id="placa" name="placa" class="form-control placa" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group  col-md-4">
-                            <label for="inputName">Chassis</label>
-                            <input type="text" id="chassis" name="chassis" class="form-control chassis" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group  col-md-3">
-                            <label for="inputName">Data status do veículo</label>
-                            <input type="text" id="status_veiculo_dt" name="status_veiculo_dt" class="form-control status_veiculo_dt" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group  col-md-2">
-                            <label for="inputName">Status do veículo</label>
-                            <input type="text" id="status_veiculo" name="status_veiculo" class="form-control" maxlength="17" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2">
-                            <label for="inputCpfCnpj">Veículo em loja</label>
-                            <input type="text" id="veiculo_em_loja" name="veiculo_em_loja" class="form-control" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputCpfCnpj">Modelo do Veículo</label>
-                            <input type="text" id="modelo_veiculo" name="modelo_veiculo" class="form-control modelo_veiculo" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputCpfCnpj">Categoria do Veículo</label>
-                            <input type="text" id="categoria_veiculo" name="categoria_veiculo" class="form-control categoria_veiculo" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputCpfCnpj">Código FIPE</label>
-                            <input type="text" id="codigo_fipe" name="codigo_fipe" class="form-control codigo_fipe" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="inputCpfCnpj">Sinistrado</label>
-                            <input type="text" id="sinistrado" name="sinistrado" class="form-control" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputCpfCnpj">Qtde. Dispositivo</label>
-                            <input type="text" id="qtd_dispositivos" name="qtd_dispositivos" class="form-control qtd_dispositivos" maxlength="17" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Operadora</label>
-                            <input type="text" id="operadora" name="operadora" class="form-control operadora" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="inputAddress">Data de Instalação</label>
-                            <input type="text" id="data_instalacao" name="data_instalacao" class="form-control data_instalacao" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">ICCID</label>
-                            <input type="text" id="iccid" name="iccid" class="form-control iccid" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">Telefone</label>
-                            <input type="text" id="telefone" name="telefone" class="form-control telefone" maxlength="17" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Modelo</label>
-                            <input type="text" id="modelo" name="modelo" class="form-control modelo" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Última Transmissão</label>
-                            <input type="text" id="lp_ultima_transmissao" name="lp_ultima_transmissao" class="form-control lp_ultima_transmissao" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputComplement">Versão</label>
-                            <input type="text" id="versao" name="versao" class="form-control versao" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputComplement">Status</label>
-                            <input type="text" id="status" name="status" class="form-control status" maxlength="17" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2">
-                            <label for="inputAddress">Velocidade</label>
-                            <input type="text" id="lp_velocidade" name="lp_velocidade" class="form-control lp_velocidade" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputAddress">Point</label>
-                            <input type="text" id="point" name="point" class="form-control point" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">Voltagem</label>
-                            <input type="text" id="lp_voltagem" name="lp_voltagem" class="form-control lp_voltagem" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">R12 próximos</label>
-                            <input type="text" id="r12s_proximos" name="r12s_proximos" class="form-control r12s_proximos" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">LP ignição</label>
-                            <input type="text" id="lp_ignicao" name="lp_ignicao" class="form-control lp_ignicao" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">LP satélite</label>
-                            <input type="text" id="lp_satelite" name="lp_satelite" class="form-control lp_satelite" maxlength="17" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="inputAddress">Cidade</label>
-                            <input type="text" id="cidade" name="cidade" class="form-control cidade" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputAddress">Estado</label>
-                            <input type="text" id="estado" name="estado" class="form-control estado" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">Latitude</label>
-                            <input type="text" id="lp_latitude" name="lp_latitude" class="form-control lp_latitude" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="inputComplement">Longitude</label>
-                            <input type="text" id="lp_longitude" name="lp_longitude" class="form-control lp_longitude" maxlength="17" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Endereço veículo</label>
-                            <input type="text" id="end_logradouro" name="end_logradouro" class="form-control end_logradouro" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputAddress">Bairro</label>
-                            <input type="text" id="end_bairro" name="end_bairro" class="form-control end_bairro" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputComplement">UF</label>
-                            <input type="text" id="end_uf" name="end_uf" class="form-control end_uf" maxlength="17" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputComplement">CEP</label>
-                            <input type="text" id="end_cep" name="end_cep" class="form-control end_cep" maxlength="17" readonly>
+                        <br />
+                        <div class="row">
+                            <div class="col-2">
+                                <h5>Cód. Empresa</h5>
+                                <input type="text" id="cod_empresa" name="cod_empresa" class="form-control cod_empresa" maxlength="17" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>Cidade</h5>
+                                <input type="text" id="cidade" name="cidade" class="form-control cidade" maxlength="17" readonly>
+                            </div>
+                            <div class="col-6">
+                                <h5>Estado</h5>
+                                <input type="text" id="estado" name="estado" class="form-control estado" maxlength="17" readonly>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Dados do veículo</h4>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Placa</h5>
+                                <input type="text" id="placa" name="placa" class="form-control placa" maxlength="17" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>Chassis</h5>
+                                <input type="text" id="chassis" name="chassis" class="form-control chassis" maxlength="17" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>Modelo do Veículo</h5>
+                                <input type="text" id="modelo_veiculo" name="modelo_veiculo" class="form-control modelo_veiculo" maxlength="17" readonly>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>Categoria do Veículo</h5>
+                                <input type="text" id="categoria_veiculo" name="categoria_veiculo" class="form-control categoria_veiculo" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Status do veículo</h5>
+                                <input type="text" id="status_veiculo" name="status_veiculo" class="form-control" maxlength="17" readonly>
+                            </div>
+                            <div class="col-6">
+                                <h5>Data status do veículo</h5>
+                                <input type="text" id="status_veiculo_dt" name="status_veiculo_dt" class="form-control status_veiculo_dt" maxlength="17" readonly>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-6">
+                                <h5>Endereço veículo</h5>
+                                <input type="text" id="end_logradouro" name="end_logradouro" class="form-control end_logradouro" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Bairro</h5>
+                                <input type="text" id="end_bairro" name="end_bairro" class="form-control end_bairro" maxlength="17" readonly>
+                            </div>
+                            <div class="col-2">
+                                <h5>UF</h5>
+                                <input type="text" id="end_uf" name="end_uf" class="form-control end_uf" maxlength="17" readonly>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>CEP</h5>
+                                <input type="text" id="end_cep" name="end_cep" class="form-control end_cep" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Veículo em loja</h5>
+                                <input type="text" id="veiculo_em_loja" name="veiculo_em_loja" class="form-control" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Código FIPE</h5>
+                                <input type="text" id="codigo_fipe" name="codigo_fipe" class="form-control codigo_fipe" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Sinistrado</h5>
+                                <input type="text" id="sinistrado" name="sinistrado" class="form-control" maxlength="17" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Dados do Rastreador</h4>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>Qtde. Dispositivo</h5>
+                                <input type="text" id="qtd_dispositivos" name="qtd_dispositivos" class="form-control qtd_dispositivos" maxlength="17" readonly>
+                            </div>
+                            <div class="col-5">
+                                <h5>Modelo</h5>
+                                <input type="text" id="modelo" name="modelo" class="form-control modelo" maxlength="17" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>Operadora</h5>
+                                <input type="text" id="operadora" name="operadora" class="form-control operadora" maxlength="17" readonly>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>ICCID</h5>
+                                <input type="text" id="iccid" name="iccid" class="form-control iccid" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Telefone</h5>
+                                <input type="text" id="telefone" name="telefone" class="form-control telefone" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Data de Instalação</h5>
+                                <input type="text" id="data_instalacao" name="data_instalacao" class="form-control data_instalacao" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Status</h5>
+                                <input type="text" id="status" name="status" class="form-control status" maxlength="17" readonly>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Dados de posicionamento</h4>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Última Transmissão</h5>
+                                <input type="text" id="lp_ultima_transmissao" name="lp_ultima_transmissao" class="form-control lp_ultima_transmissao" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Latitude</h5>
+                                <input type="text" id="lp_latitude" name="lp_latitude" class="form-control lp_latitude" maxlength="17" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Longitude</h5>
+                                <input type="text" id="lp_longitude" name="lp_longitude" class="form-control lp_longitude" readonly>
+                            </div>
+                            <div class="col-2">
+                                <h5>Voltagem</h5>
+                                <input type="text" class="form-control lp_voltagem" id="lp_voltagem" name="lp_voltagem" readonly>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>Operadora</h5>
+                                <input type="text" class="form-control operadora" id="operadora" name="operadora" readonly>
+                            </div>
+                            <div class="col-4">
+                                <h5>ICCID</h5>
+                                <input type="text" class="form-control iccid" id="iccid" name="iccid" readonly>
+                            </div>
+                            <div class="col-3">
+                                <h5>Status</h5>
+                                <input type="text" class="form-control status" id="status" name="status" readonly>
+                            </div>
+                            <div class="col-2">
+                                <h5>Velocidade</h5>
+                                <input type="text" class="form-control lp_velocidade" id="lp_velocidade" name="lp_velocidade" readonly>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <br />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalClient" id="btn_cliente">Dados do cliente</button>
@@ -272,7 +307,7 @@
                             </div>
                             <div class="col-4">
                                 <h5>Cidade</h5>
-                                <input type="text" class="form-control end_cidade" id="end_cidade" name="end_cidade" readonly>
+                                <input type="text" class="form-control cidade" id="cidade" name="cidade" readonly>
                             </div>
                         </div>
                         <br />

@@ -411,7 +411,7 @@
                     $('#veiculo_em_loja').val(response.veiculo_em_loja)
                     $('#r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
-                    $('.lp_velocidade').val(response.lp_velocidade)
+                    $('.lp_velocidade').val(response.lp_velocidade + " km/h")
                     $('#point').val(response.point)
                     $('.filial').val(response.filial)
                     $('#status_veiculo_dt').val(response.status_veiculo_dt)
@@ -433,7 +433,7 @@
                     $('#cliente_email').val(response.cliente_email)
                     $('#cliente_endereco').val(response.cliente_endereco)
                     //$('#cliente_foto_cnh').attr('src', response.cliente_foto_cnh);
-                    $('.end_cidade').val(response.end_cidade)
+                    $('.cidade').val(response.end_cidade)
                     $('#cliente_cnh').val(response.cliente_cnh)
                     $('.veiculo_odometro').val(response.veiculo_odometro)
                     $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
