@@ -189,29 +189,21 @@
                                 <td>{{$driver['filial']}}</td>
                                 <td>{{$driver['status_veiculo']}}</td>
 
-                                @if ($driver['sinistrado'] == 'TRUE')
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
+                                    @if ($driver['sinistrado'] == 'TRUE')
+                                    <button type="button" class="btn btn-danger btn-elevate btn-circle btn-icon btn-vehicle-data" id="btn-modalVehicle" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <i class="fa fa-search-plus"></i>
                                     </button>
-                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
-                                        <i class="fa fa-file-contract"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-warning btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
-                                        <i class="fa fa-map-marked-alt"></i>
-                                    </button>
-                                </td>
-                                @else
-                                <td>
-                                    <button type="button" class="btn btn-success btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
+                                    @else
+                                    <button type="button" class="btn btn-success  btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <i class="fa fa-search-plus"></i>
                                     </button>
+                                    @endif
                                     <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
                                         <i class="fa fa-file-contract"></i>
                                     </button>
                                     <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver['chassis']}}" class="btn btn-warning btn-elevate btn-circle btn-icon btn-vehicle-data"><span class="fa fa-map-marked-alt"></span></a>
                                 </td>
-                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -227,14 +219,6 @@
 
     @section('scripts')
     <script>
-        /**
-        $(function() {
-            setTimeout(function() {
-                location.reload();
-            }, 180000);
-        });
-*/
-
         resetGrid()
         /**
          * Rastrea isca automaticamente
@@ -244,55 +228,34 @@
         })
 
         function reloadValue() {
-
             $.ajax({
-                url: "{{url('')}}/fleetslarges/show/status/sinistrado",
+                url: "{{route('fleetslarges.showAllStatus')}}",
                 type: 'GET',
                 success: function(response) {
-                    if (response.data[0] == "") {
-                        return $('#statusSinistro').html(0)
-                    }
-                    $('#statusSinistro').html(response.data.length)
-                }
-            });
-            $.ajax({
-                url: "{{url('')}}/fleetslarges/show/status/comunicando",
-                type: 'GET',
-                success: function(response) {
-                    if (response.data[0] == "") {
-                        return $('#statusComunicando').html(0)
-                    }
-                    $('#statusComunicando').html(response.data.length)
-                }
-            });
-            $.ajax({
-                url: "{{url('')}}/fleetslarges/show/status/semcomunicando",
-                type: 'GET',
-                success: function(response) {
-                    if (response.data[0] == "") {
-                        return $('#statusSemComunicacao').html(0)
-                    }
-                    $('#statusSemComunicacao').html(response.data.length)
-                }
-            });
-            $.ajax({
-                url: "{{url('')}}/fleetslarges/show/status/emloja",
-                type: 'GET',
-                success: function(response) {
-                    if (response.data[0] == "") {
-                        return $('#statusParadoEmLoja').html(0)
-                    }
-                    $('#statusParadoEmLoja').html(response.data.length)
-                }
-            });
-            $.ajax({
-                url: "{{url('')}}/fleetslarges/show/status/avaria",
-                type: 'GET',
-                success: function(response) {
-                    if (response.data[0] == "") {
+                    if (response.data.carAvaria == "") {
                         return $('#statusAvaria').html(0)
                     }
-                    $('#statusAvaria').html(response.data.length)
+                    $('#statusAvaria').html(response.data.carAvaria.length)
+
+                    if (response.data.carSinistrado == "") {
+                        return $('#statusSinistro').html(0)
+                    }
+                    $('#statusSinistro').html(response.data.carSinistrado.length)
+
+                    if (response.data.carSemComunicado == "") {
+                        return $('#statusSemComunicacao').html(0)
+                    }
+                    $('#statusSemComunicacao').html(response.data.carSemComunicado.length)
+
+                    if (response.data.paradoEmLoja == "") {
+                        return $('#statusParadoEmLoja').html(0)
+                    }
+                    $('#statusParadoEmLoja').html(response.data.paradoEmLoja.length)
+
+                    if (response.data.carComunicando == "") {
+                        return $('#statusComunicando').html(0)
+                    }
+                    $('#statusComunicando').html(response.data.carComunicando.length)
                 }
             });
         }
@@ -390,7 +353,6 @@
                     $('.iccid').val(response.iccid)
                     $('.chassis').val(response.chassis)
                     $('.modelo_veiculo').val(response.modelo_veiculo)
-                    //$('#modelo_veiculo_span').html(response.modelo_veiculo)
                     $('.qtd_dispositivos').val(response.qtd_dispositivos)
                     $('.categoria_veiculo').val(response.categoria_veiculo)
                     $('.cidade').val(response.cidade)
@@ -408,15 +370,15 @@
                     $('.r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
                     $('.lp_voltagem').val(response.lp_voltagem)
-                    $('#veiculo_em_loja').val(response.veiculo_em_loja)
+                    $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
                     $('#r12s_proximos').val(response.r12s_proximos)
                     $('#dif_date').val(response.dif_date)
                     $('.lp_velocidade').val(response.lp_velocidade + " km/h")
                     $('#point').val(response.point)
                     $('.filial').val(response.filial)
-                    $('#status_veiculo_dt').val(response.status_veiculo_dt)
+                    $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
                     $('#status_veiculo').val(response.status_veiculo)
-                    $('#sinistrado').val(response.sinistrado)
+                    $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
                     $('.end_cep').val(response.end_cep)
                     $('.end_logradouro').val(response.end_logradouro)
                     $('.end_bairro').val(response.end_bairro)
@@ -424,15 +386,14 @@
                     $('.cliente_foto').attr('src', response.cliente_foto);
                     $('#cliente_cpf').val(response.cliente_cpf)
                     $('#cliente_nome').val(response.cliente_nome)
-                    $('#cliente_datadev').val(response.cliente_datadev)
+                    $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
                     $('#cliente_celular').val(response.cliente_celular)
                     $('#cliente_localdev').val(response.cliente_localdev)
                     $('#cliente_local_retirada').val(response.cliente_local_retirada)
                     $('#cliente_contrato').val(response.cliente_contrato)
-                    $('#cliente_dataretirada').val(response.cliente_dataretirada)
+                    $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
                     $('#cliente_email').val(response.cliente_email)
                     $('#cliente_endereco').val(response.cliente_endereco)
-                    //$('#cliente_foto_cnh').attr('src', response.cliente_foto_cnh);
                     $('.cidade').val(response.end_cidade)
                     $('#cliente_cnh').val(response.cliente_cnh)
                     $('.veiculo_odometro').val(response.veiculo_odometro)
@@ -448,7 +409,6 @@
                             "display": "inline"
                         });
                     }
-                    // $('#endereco').val(response.endereco)
                 },
                 error: function(error) {
                     if (error.responseJSON.status == "internal_error") {
@@ -481,9 +441,15 @@
                             footer: ' '
                         })
                     }
-
                 }
             });
         })
+
+        /**
+         * Correção do scroll do modal
+         */
+        $('#modalClient').on('hidden.bs.modal', function(e) {
+            $("body").addClass("modal-open");
+        });
     </script>
     @endsection

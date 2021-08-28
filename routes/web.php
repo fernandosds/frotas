@@ -345,11 +345,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['user.access_level:fleetslarge'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
-        Route::get('/show/status/sinistrado', 'FleetsLarge\DashboardController@showStatusSinistrado')->name('fleetslarges.showStatusSinistrado');
-        Route::get('/show/status/comunicando', 'FleetsLarge\DashboardController@showStatusComunicando')->name('fleetslarges.showStatusComunicando');
-        Route::get('/show/status/semcomunicando', 'FleetsLarge\DashboardController@showStatusSemComunicando')->name('fleetslarges.showStatusSemComunicando');
-        Route::get('/show/status/emloja', 'FleetsLarge\DashboardController@showStatusParadoEmLoja')->name('fleetslarges.showStatusParadoEmLoja');
-        Route::get('/show/status/avaria', 'FleetsLarge\DashboardController@showStatusAvaria')->name('fleetslarges.showStatusAvaria');
+        Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');
 
         Route::group(['prefix' => 'monitoring'], function () {
             Route::get('/{chassis?}', 'FleetsLarge\MonitoringController@index')->name('fleetslarges.monitoring.index');

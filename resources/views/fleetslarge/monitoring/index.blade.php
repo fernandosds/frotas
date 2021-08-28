@@ -127,10 +127,6 @@
         <div class="col-sm-12">
             <hr />
             <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target="#modalGrid" data-backdrop="static" data-keyboard="false"><i class="fa fa-table"></i> Histórico de Posições</button>
-            <!--
-            <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-table"></i> Histórico de Posições</button>
-            <button type="button" class="btn btn-link btn-sm pull-right modal-print-grid" data-toggle="modal" data-target=".bd-print-grid"><i class="fa fa-print"></i> Imprimir Grid</button>
-                -->
             <div id="last-address"></div>
         </div>
     </div>
@@ -346,14 +342,12 @@
                 }).addTo(mymap);
 
                 $('#last-address').html(
-                    '<b>Último endereço válido:</b> ' + data.end_logradouro
+                    '<b>Último endereço válido:</b> ' + data.end_logradouro +
+                    ' <b>Cidade:</b> ' + data.end_cidade
                 );
-
                 Swal.close()
             }
         });
-
-
         return true;
     }
 
@@ -362,7 +356,6 @@
      * Carrega endereço do grid
      */
     $("#modal-content").on("click", ".btn-see-address", function() {
-
         var grid_lat = $(this).data('lat');
         var grid_lng = $(this).data('lng');
         var cont = $(this).data('cont');
@@ -383,7 +376,6 @@
      * Ícones - Status
      */
     function loadIconsDeviceStatus(chassi_device) {
-
         var loading = '<i class="fa fa-spinner fa-pulse"></i>';
         $("#placa").html(loading);
         $("#lp_ignicao").html(loading);
@@ -392,8 +384,6 @@
         $("#modelo_veiculo").html(loading);
         $('#lp_ultima_transmissao').html(loading);
         $('#categoria_veiculo').html(loading);
-
-
     }
 
     /**
@@ -407,13 +397,11 @@
         $("#modelo_veiculo").html('---');
         $('#lp_ultima_transmissao').html('---');
         $('#categoria_veiculo').html('---');
-
     }
 
 
 
     $('#btn-grid').click(function() {
-
         var chassis = chassi_url;
         $.ajax({
             type: 'POST',
@@ -428,6 +416,39 @@
             },
             success: function(response) {
                 $('#list_grid').html(response);
+            },
+            error: function(error) {
+                if (error.responseJSON.status == "internal_error") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else if (error.responseJSON.status == "validation_error") {
+                    var items = error.responseJSON.errors;
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                } else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+
             }
         });
     });

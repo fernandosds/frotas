@@ -136,118 +136,50 @@ class DashboardController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showStatusSinistrado()
+    public function showAllStatus()
     {
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
 
         try {
 
-            $carSinistrado[] = '';
-
             foreach ($data['fleetslarge'] as $data => $dat) {
-                if ($dat['sinistrado'] == "TRUE") {
-                    $arr[] = $this->resultJson($dat);
-                    $carSinistrado = $arr;
-                }
-            }
 
-            return response()->json(['status' => 'success', 'data' => $carSinistrado], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showStatusComunicando()
-    {
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
-
-        try {
-
-            $carComunicando[] = '';
-
-            foreach ($data['fleetslarge'] as $data => $dat) {
                 if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
                     $arr[] = $this->resultJson($dat);
                     $carComunicando = $arr;
                 }
-            }
 
-            return response()->json(['status' => 'success', 'data' => $carComunicando], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showStatusSemComunicando()
-    {
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
-
-        try {
-            $carSemComunicado[] = '';
-
-            //Carbon::parse($request->last_date)->diffInDays(Carbon::parse($request->first_date)) > 31
-            foreach ($data['fleetslarge'] as $data => $dat) {
-                if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
-                    $arr[] = $this->resultJson($dat);
-                    $carSemComunicado = $arr;
-                }
-            }
-
-            return response()->json(['status' => 'success', 'data' => $carSemComunicado], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showStatusParadoEmLoja()
-    {
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
-
-        try {
-
-            $paradoEmLoja[] = '';
-
-            foreach ($data['fleetslarge'] as $data => $dat) {
                 if ($dat['status_veiculo'] != "LOCACAO") {
-                    $arr[] = $this->resultJson($dat);
-                    $paradoEmLoja = $arr;
+                    $arr2[] = $this->resultJson($dat);
+                    $paradoEmLoja = $arr2;
                 }
-            }
 
-            return response()->json(['status' => 'success', 'data' => $paradoEmLoja], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        }
-    }
+                if ($dat['sinistrado'] == "TRUE") {
+                    $arr3[] = $this->resultJson($dat);
+                    $carSinistrado = $arr3;
+                }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showStatusAvaria()
-    {
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+                if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
+                    $arr4[] = $this->resultJson($dat);
+                    $carSemComunicado = $arr4;
+                }
 
-        try {
-
-            $carAvaria[] = '';
-
-            foreach ($data['fleetslarge'] as $data => $dat) {
                 if ($dat['status_veiculo'] == "AVARIA") {
-                    $arr[] = $this->resultJson($dat);
-                    $carAvaria = $arr;
+                    $arr5[] = $this->resultJson($dat);
+                    $carAvaria = $arr5;
                 }
             }
 
-            return response()->json(['status' => 'success', 'data' => $carAvaria], 200);
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    "carComunicando"  => $carComunicando,
+                    "paradoEmLoja" => $paradoEmLoja,
+                    "carSinistrado" => $carSinistrado,
+                    "carSemComunicado" => $carSemComunicado,
+                    "carAvaria" => $carAvaria
+                ]
+            ], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
