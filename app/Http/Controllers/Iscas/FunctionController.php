@@ -26,6 +26,7 @@ class FunctionController extends Controller
 
     public function getStatus($bateriaReal, $dt_posicao, $date_embarque)
     {
+        $bateriaReal = $this->removePercent($bateriaReal);
 
         $dt_posicao = Carbon::createFromFormat('d/m/Y H:i:s', $dt_posicao)->format('Y-m-d H:i:s');
 
@@ -36,14 +37,19 @@ class FunctionController extends Controller
 
         preg_match('/@(.*)/', Auth::user()->email, $out);
         if ($out[1] == 'satcompany.com.br') {
-            return 'R: ' . $bateriaReal . ' | P: ' . round($y, 0) . '%' ;
+            return 'R: ' . $bateriaReal . '% | P: ' . round($y, 0) . '%';
         } else {
-           return round($y, 0) . '%';
+            return round($y, 0) . '%';
         }
     }
 
     public function formatDate($date)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d/m/Y H:i:s');
+    }
+
+    function removePercent($str)
+    {
+        return preg_replace("/[^0-9]/", "", $str);
     }
 }

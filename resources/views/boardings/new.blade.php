@@ -151,8 +151,8 @@
                             </div>
 
                             <div class="form-group col-md-2">
-                                <label for="inputState">Duração aproximada (Horas)</label>
-                                <input type="number" max="1" min="50" class="form-control" id="duration" name="duration" value="{{ $boarding->duration ?? '' }}" required="required">
+                                <label for="inputState">Duração aprox. (Horas)</label>
+                                <input type="number" max="1" min="50" class="form-control" id="duration" name="duration" value="{{ $boarding->duration ?? '1' }}" required="required">
                             </div>
 
                             <div class="form-group col-md-2">
