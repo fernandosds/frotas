@@ -30,7 +30,7 @@
                 <td>{{ $position['qt_satelite'] }}</td>
                 <td class="hidden">{{ $position['sinal'] }}</td>
                 <td class="hidden">{{ $position['tensao'] }}</td>
-                <td>{{ $position['velocidade'] }}</td>
+                <td>{{ $position['velocidade'] }} km/h</td>
             </tr>
             @endforeach
         </tbody>
@@ -40,19 +40,21 @@
 
 <script>
     $(document).ready(function() {
+        var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var dataTable = $('#gridDatatable').DataTable({
             dom: "<'row'<'col-md-4'l><'col-md-8'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
             buttons: [{
                     extend: 'pdf',
+                    title: 'SAT Company :: Relatorio de Posicoes_' + date,
                     exportOptions: {
                         columns: [0, 2, 4, 5, 6, 7, 9, 10, 11]
-                    },
-                    orientation: 'landscape',
+                    }
                 },
                 {
                     extend: 'excel',
+                    title: 'SAT Company :: Relatorio de Posicoes_' + date,
                     exportOptions: {
                         columns: [0, 2, 4, 5, 6, 7, 9, 10, 11]
                     }

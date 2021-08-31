@@ -281,7 +281,9 @@
             }, 1000);
         }
 
+
         $(document).ready(function() {
+            var date = $.datepicker.formatDate('dd_mm_yy', new Date());
 
             $('#example').DataTable({
                 dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
@@ -289,6 +291,7 @@
                     "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
                 buttons: [{
                         extend: 'pdf',
+                        title: 'SAT Company :: Grid de Veiculos_' + date,
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                         },
@@ -296,12 +299,10 @@
                     },
                     {
                         extend: 'excel',
+                        title: 'SAT Company :: Grid de Veiculos_' + date,
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
                         }
-                    },
-                    {
-                        extend: 'copy'
                     }
                 ],
                 "language": {

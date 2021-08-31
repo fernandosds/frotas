@@ -17,7 +17,8 @@
                                 <h3 class="kt-login__title">SatCompany</h3>
                                 <h4 class="kt-login__subtitle">
                                     <small><i class="fa fa-box"></i></small> Rastreamento de Cargas <br />
-                                    <small><i class="fa fa-truck"></i></small> Gestão de Frotas
+                                    <small><i class="fa fa-truck"></i></small> Gestão de Frotas <br />
+                                    <small><i class="fa fa-car"></i></small> Gestão de Grandes Frotas
                                 </h4>
                             </div>
                         </div>
