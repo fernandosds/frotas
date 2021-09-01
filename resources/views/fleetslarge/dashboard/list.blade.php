@@ -269,8 +269,8 @@
             progressBar = 100;
             setInterval(function() {
                 if (progressBar == 0) {
-                    $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
-                    $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
+                    // $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
+                    // $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
                     reloadValue()
                     progressBar = 100;
                 } else {
