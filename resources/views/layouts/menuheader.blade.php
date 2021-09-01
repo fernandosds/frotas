@@ -100,8 +100,13 @@
                     {{ Auth::user()->name }}<br />
                     <small>
                         Empresa: {{ Auth::user()->customer->name ?? 'Sat Company' }} <br />
-                        Nível de Acesso: {{ Auth::user()->access_level ?? '' }}
-
+                        Nível de Acesso: @if( Auth::user()->access_level == 'management' ) Administrador
+                        @elseif ( Auth::user()->access_level == 'commercial' ) Comercial
+                        @elseif ( Auth::user()->access_level == 'logistic' ) Logística
+                        @elseif ( Auth::user()->access_level == 'production' ) Produção
+                        @elseif ( Auth::user()->access_level == 'fleets' ) Gestão de Frotas
+                        @elseif ( Auth::user()->access_level == 'fleetslarge' ) Ges. Grandes Frotas
+                        @endif
                     </small>
                 </div>
                 <div class="kt-user-card__badge">

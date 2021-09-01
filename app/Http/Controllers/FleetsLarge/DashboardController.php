@@ -5,8 +5,10 @@ namespace App\Http\Controllers\FleetsLarge;
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\ApiDeviceService;
+use App\Services\CustomerService;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Print_;
 
@@ -21,6 +23,7 @@ class DashboardController extends Controller
 
     /**
      * @var ApiDeviceService
+     * @var CustomerService
      */
     private $apiDeviceServic;
 
@@ -29,10 +32,11 @@ class DashboardController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, ApiDeviceService $apiDeviceServic)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->apiDeviceServic = $apiDeviceServic;
+        $this->customerService = $customerService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -48,8 +52,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
-
+        $customer = $this->customerService->show(Auth::user()->customer_id);
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
         $data['totalJson'] = count($data['fleetslarge']);
 
         return response()->view('fleetslarge.dashboard.list', $data);
@@ -61,11 +65,12 @@ class DashboardController extends Controller
      */
     public function findByChassi()
     {
+        $customer = $this->customerService->show(Auth::user()->customer_id);
         $chassis = Route::getCurrentRoute()->parameters()['chassis'];
 
         try {
 
-            $fleetslarge = $this->apiFleetLargeService->allCars();
+            $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
             $arr[] = '';
             foreach ($fleetslarge as $data => $dat) {
                 if ($chassis == $dat['chassis']) {
@@ -138,7 +143,8 @@ class DashboardController extends Controller
      */
     public function showAllStatus()
     {
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars();
+        $customer = $this->customerService->show(Auth::user()->customer_id);
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
 
         try {
 

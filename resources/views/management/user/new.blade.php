@@ -292,7 +292,6 @@
     $(function() {
         $('#btn-permission').click(function() {
             var user_id = $('#id').val();
-
             ajax_permission(user_id, "management/users/permission", $('#form-create-permission').serialize());
 
         });

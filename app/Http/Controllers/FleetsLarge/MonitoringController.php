@@ -5,8 +5,10 @@ namespace App\Http\Controllers\FleetsLarge;
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\ApiDeviceService;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class MonitoringController extends Controller
@@ -18,6 +20,7 @@ class MonitoringController extends Controller
 
     /**
      * @var ApiDeviceService
+     * @var CustomerService
      */
     private $apiDeviceServic;
 
@@ -26,10 +29,11 @@ class MonitoringController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, ApiDeviceService $apiDeviceServic)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->apiDeviceServic = $apiDeviceServic;
+        $this->customerService = $customerService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -52,7 +56,9 @@ class MonitoringController extends Controller
      */
     public function lastPosition(String $chassi)
     {
-        $fleetslarge = $this->apiFleetLargeService->allCars();
+        $customer = $this->customerService->show(Auth::user()->customer_id);
+
+        $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
         $veiculo[] = '';
         foreach ($fleetslarge as $data => $dat) {
             if ($chassi == $dat['chassis']) {
@@ -124,6 +130,10 @@ class MonitoringController extends Controller
     public function grid(Request $request)
     {
         $data['positions'] = $this->apiFleetLargeService->getGridModel($request->first_date, $request->last_date, $request->modelo);
+
+        if (in_array("Nenhum registro encontrado", $data['positions'])) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Nenhum registro encontrado."], 404);
+        };
 
         if (Carbon::parse($request->last_date)->diffInDays(Carbon::parse($request->first_date)) > 31) {
             return response()->json(['status' => 'validation_error', 'errors' => "Período superior a 30 dias"], 404);

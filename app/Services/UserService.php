@@ -54,8 +54,8 @@ class UserService
     public function paginate(Int $limit = 15)
     {
 
-        if (Auth::user()->type == "ext") {
-            return $this->userRepository->paginate($limit, Auth::user()->customer_id);
+        if (Auth::user()->type == "sat") {
+            return $this->userRepository->paginate($limit);
         }
 
         return $this->userRepository->paginate($limit, Auth::user()->customer_id);

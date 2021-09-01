@@ -78,7 +78,7 @@
                                 </div>
 
                                 <div class="form-group col-md-2">
-                                    <label for="">Categoria A</label>
+                                    <label for="">Categ. A</label>
                                     <div class="form-group">
                                         <div class="kt-radio-inline">
                                             <label class="kt-checkbox">

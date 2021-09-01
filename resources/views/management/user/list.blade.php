@@ -33,7 +33,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col"></th>
                             <th scope="col">Nome</th>
                             <th scope="col">Login</th>
                             @if(Auth::user()->type == "sat")
@@ -47,7 +47,7 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr id="_tr_user_{{$user->id}}">
-                                <th scope="row">{{$user->id}}</th>
+                                <th scope="row">{{$loop->iteration}}</th>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
 
@@ -92,7 +92,7 @@
                                     @endif
 
                                 </td>
-                                <td>
+                                <td style="width: 200px;">
                                     <div class="pull-right">
                                         <a href="{{url('management/users/edit')}}/{{$user->id}}" class="btn btn-sm btn-info"><span class="fa fa-fw fa-edit"></span> Editar</a>
                                         <button type="button" class="btn btn-sm  btn-danger btn-delete-user" data-id="{{$user->id}}" @if( Auth::user()->id == $user->id ) disabled @endif>
