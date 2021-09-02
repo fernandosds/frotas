@@ -82,61 +82,103 @@
         <div class="progress-bar kt-bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
+
 <div class="row" id="div-grid-vehicle">
-    <div class="col-xl-4">
+    <div class="col-xl-4 hidden" id="dashboardTotal">
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">{{$totalJson}}</h1>
-                <p class="card-text h5">Total de veículos cadastrados.</p>
+                <p class="card-text h5" id="">Quantidade de veículos.</p>
             </div>
         </div>
     </div>
-    <div class="col-xl-4">
-        <div class="card text-white bg-success col-md-12">
+    <div class="" id="divCard01">
+        <div class="card text-white col-md-12" id="divColor01">
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4"> <span id="statusComunicando"></h1>
-                <p class="card-text h5">Total de veículos comunicando.</p>
+                <p class="card-text h5"><span id="statusCard01"></p>
             </div>
         </div>
     </div>
-    <div class="col-xl-4">
-        <div class="card text-white bg-warning  col-md-12">
+    <div class="" id="divCard02">
+        <div class="card text-white col-md-12" id="divColor02">
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4"><span id="statusAvaria"></h1>
-                <p class="card-text h5">Total de veículos com avaria.</p>
+                <p class="card-text h5"><span id="statusCard02"></p>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row" id="div-grid-vehicle2">
-    <div class="col-xl-4">
+    <div class="col-xl-4 hidden" id="dashboardSinistro">
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4"><span id="statusSinistro"></span> </h1>
-                <p class="card-text h5">Total de veículos sinistrados.</p>
+                <p class="card-text h5"><span id="statusCard03"></p>
             </div>
         </div>
     </div>
-    <div class="col-xl-4">
-        <div class="card text-white bg-primary col-md-12">
+    <div class="" id="divCard04">
+        <div class="card text-white col-md-12" id="divColor04">
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4"><span id="statusParadoEmLoja"></h1>
-                <p class="card-text h5">Total de veículos parado em loja.</p>
+                <p class="card-text h5"><span id="statusCard04"></p>
             </div>
         </div>
     </div>
-    <div class="col-xl-4">
-        <div class="card text-white bg-warning  col-md-12">
+    <div class="" id='divCard05'>
+        <div class="card text-white col-md-12" id='divColor05'>
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4"><span id="statusSemComunicacao"></h1>
-                <p class="card-text h5">Total de veículos sem comunicação.</p>
+                <p class="card-text h5"><span id="statusCard05"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<div class="row hidden" id="dashboardSantander">
+    <div class="col-xl-3">
+        <div class="card text-white bg-primary col-md-12">
+            <div class="card-body">
+                <br />
+                <h1 class="card-title display-12"><span id="statusSinistro"></span> </h1>
+                <p class="card-text h5"><span id="statusCard06"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3">
+        <div class="card text-white bg-primary col-md-12">
+            <div class="card-body">
+                <br />
+                <h1 class="card-title display-12"><span id="statusParadoEmLoja"></h1>
+                <p class="card-text h5"><span id="statusCard07"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3" id='divCard05'>
+        <div class="card text-white bg-primary  col-md-12">
+            <div class="card-body">
+                <br />
+                <h1 class="card-title display-12"><span id="statusSemComunicacao"></h1>
+                <p class="card-text h5"><span id="statusCard08"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3" id='divCard05'>
+        <div class="card text-white bg-primary  col-md-12">
+            <div class="card-body">
+                <br />
+                <h1 class="card-title display-12"><span id="statusSemComunicacao"></h1>
+                <p class="card-text h5"><span id="statusCard09"></p>
             </div>
         </div>
     </div>
@@ -168,8 +210,8 @@
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
                                 <th>Sinistrado</th>
-                                <th style="width: 220;">Filial</th>
-                                <th>Status</th>
+                                <th class="santander" style="width: 220;">Filial</th>
+                                <th class="santander">Status</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
@@ -186,8 +228,8 @@
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td>{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
-                                <td>{{$driver['filial']}}</td>
-                                <td>{{$driver['status_veiculo']}}</td>
+                                <td class="santander">{{$driver['filial']}}</td>
+                                <td class="santander">{{$driver['status_veiculo']}}</td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
@@ -199,7 +241,7 @@
                                         <i class="fa fa-search-plus"></i>
                                     </button>
                                     @endif
-                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
+                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['empresa']=='Santander' ) style="display: none;" @endif @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
                                         <i class="fa fa-file-contract"></i>
                                     </button>
                                     <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver['chassis']}}" class="btn btn-warning btn-elevate btn-circle btn-icon"><span class="fa fa-map-marked-alt"></span></a>
@@ -232,30 +274,33 @@
                 url: "{{route('fleetslarges.showAllStatus')}}",
                 type: 'GET',
                 success: function(response) {
+                    var empresa = response.data.carComunicando[0][0]['empresa'];
+                    ValueDashboard(empresa)
                     if (response.data.carAvaria == "") {
-                        return $('#statusAvaria').html(0)
+                        $('#statusAvaria').html(0)
+                    } else {
+                        $('#statusAvaria').html(response.data.carAvaria.length)
                     }
-                    $('#statusAvaria').html(response.data.carAvaria.length)
-
                     if (response.data.carSinistrado == "") {
-                        return $('#statusSinistro').html(0)
+                        $('#statusSinistro').html(0)
+                    } else {
+                        $('#statusSinistro').html(response.data.carSinistrado.length)
                     }
-                    $('#statusSinistro').html(response.data.carSinistrado.length)
-
                     if (response.data.carSemComunicado == "") {
-                        return $('#statusSemComunicacao').html(0)
+                        $('#statusSemComunicacao').html(0)
+                    } else {
+                        $('#statusSemComunicacao').html(response.data.carSemComunicado.length)
                     }
-                    $('#statusSemComunicacao').html(response.data.carSemComunicado.length)
-
                     if (response.data.paradoEmLoja == "") {
-                        return $('#statusParadoEmLoja').html(0)
+                        $('#statusParadoEmLoja').html(0)
+                    } else {
+                        $('#statusParadoEmLoja').html(response.data.paradoEmLoja.length)
                     }
-                    $('#statusParadoEmLoja').html(response.data.paradoEmLoja.length)
-
                     if (response.data.carComunicando == "") {
-                        return $('#statusComunicando').html(0)
+                        $('#statusComunicando').html(0)
+                    } else {
+                        $('#statusComunicando').html(response.data.carComunicando.length)
                     }
-                    $('#statusComunicando').html(response.data.carComunicando.length)
                 }
             });
         }
@@ -452,5 +497,69 @@
         $('#modalClient').on('hidden.bs.modal', function(e) {
             $("body").addClass("modal-open");
         });
+
+
+        /**
+         * Valor Dashboard
+         */
+        function ValueDashboard(empresa) {
+            if (empresa == 'Movida') {
+                var empresa = 'Movida'
+                changeClass(empresa);
+                $('#dashboardTotal').removeClass('hidden');
+                $('#dashboardSinistro').removeClass('hidden');
+                $("#statusCard01").html('Total de veículos comunicando.');
+                $("#statusCard02").html('Total de veículos com avaria.');
+                $("#statusCard03").html('Total de veículos sinistrados.');
+                $("#statusCard04").html('Total de veículos parado em loja.');
+                $("#statusCard05").html('Total de veículos sem comunicação.');
+                return;
+            }
+
+            if (empresa == 'Santander') {
+                var empresa = 'Santander'
+                changeClass(empresa);
+                 $(".santander").hide();
+                //$('#dashboardSantander').removeClass('hidden'); ** JÁ TEM 4 GRIDS OCULTO COM A CLASSE HIDDEN, DESCOMENTAR ESTA LINHA QUANDO SURGIR A NECESSIDADE.
+                $("#statusCard01").html('TEMPO MÉDIO DE INSTALAÇÃO');
+                $("#statusCard02").html('TEMPO MÉDIO PARA ACIONAR TECNICO');
+                //$("#statusCard03").html('TEMPO MÉDIO DE ATENDIMENTO');
+                $("#statusCard04").html('TEMPO MÉDIO DE DESLOCAMENTO');
+                $("#statusCard05").html('TEMPO MÉDIO DE ATENDIMENTO');
+                return;
+            }
+
+            function changeClass() {
+                if (empresa == 'Santander') {
+                    $('#divCard01').addClass('col-xl-6');
+                    $('#divColor01').addClass('bg-primary');
+
+                    $('#divCard02').addClass('col-xl-6');
+                    $('#divColor02').addClass('bg-primary');
+
+                    $('#divCard04').addClass('col-xl-6');
+                    $('#divColor04').addClass('bg-primary');
+
+                    $('#divCard05').addClass('col-xl-6');
+                    $('#divColor05').addClass('bg-primary');
+                    return;
+                }
+
+                if (empresa == 'Movida') {
+                    $('#divCard01').addClass('col-xl-4');
+                    $('#divColor01').addClass('bg-success');
+
+                    $('#divCard02').addClass('col-xl-4');
+                    $('#divColor02').addClass('bg-warning');
+
+                    $('#divCard04').addClass('col-xl-4');
+                    $('#divColor04').addClass('bg-primary');
+
+                    $('#divCard05').addClass('col-xl-4');
+                    $('#divColor05').addClass('bg-warning');
+                }
+
+            }
+        }
     </script>
     @endsection
