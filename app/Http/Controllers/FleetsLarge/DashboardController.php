@@ -157,55 +157,53 @@ class DashboardController extends Controller
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
 
         try {
-            //if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
-            foreach ($data['fleetslarge'] as $data => $dat) {
-
-                if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
-                    $arr[] = $this->resultJson($dat);
-                    $carComunicando = $arr;
-                }
-
-                if ($dat['status_veiculo'] != "LOCACAO") {
-                    $arr2[] = $this->resultJson($dat);
-                    $paradoEmLoja = $arr2;
-                }
-
-                if ($dat['sinistrado'] == "TRUE") {
-                    $arr3[] = $this->resultJson($dat);
-                    $carSinistrado = $arr3;
-                }
-
-                if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
-                    $arr4[] = $this->resultJson($dat);
-                    $carSemComunicado = $arr4;
-                }
-
-                if ($dat['status_veiculo'] == "AVARIA") {
-                    $arr5[] = $this->resultJson($dat);
-                    $carAvaria = $arr5;
-                }
-            }
-            // }
-            /**
-            if ($data['fleetslarge'][0]['empresa'] == 'Santander') {
-                $totalJson = count($data['fleetslarge']);
-
+            if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
+                $empresa = 'Movida';
                 foreach ($data['fleetslarge'] as $data => $dat) {
-                    $t_acionamento_tecnico[] = $dat['t_acionamento_tecnico'];
-                    $t_solicitado_instalado[] = $dat['t_solicitado_instalado'];
-                    $t_inicio_servico[] = $dat['t_inicio_servico'];
-                    $t_instalacao[] = $dat['t_instalacao'];
-                }
 
-                $carComunicando = $this->media($t_acionamento_tecnico, $totalJson);
-                $paradoEmLoja = $this->media($t_solicitado_instalado, $totalJson);
-                $carSinistrado = $this->media($t_inicio_servico, $totalJson);
-                $carSemComunicado = $this->media($t_instalacao, $totalJson);
+                    if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
+                        $arr[] = $this->resultJson($dat);
+                        $carComunicando = $arr;
+                    }
+
+                    if ($dat['status_veiculo'] != "LOCACAO") {
+                        $arr2[] = $this->resultJson($dat);
+                        $paradoEmLoja = $arr2;
+                    }
+
+                    if ($dat['sinistrado'] == "TRUE") {
+                        $arr3[] = $this->resultJson($dat);
+                        $carSinistrado = $arr3;
+                    }
+
+                    if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
+                        $arr4[] = $this->resultJson($dat);
+                        $carSemComunicado = $arr4;
+                    }
+
+                    if ($dat['status_veiculo'] == "AVARIA") {
+                        $arr5[] = $this->resultJson($dat);
+                        $carAvaria = $arr5;
+                    }
+                }
             }
-             */
+
+            if ($data['fleetslarge'][0]['empresa'] == 'Santander') {
+                $empresa = 'Santander';
+
+                $mediaHora = $this->apiFleetLargeService->mediaHours();
+                foreach ($mediaHora as $data => $dat) {
+                    $carAvaria = $dat['tempo_inicio_servico'];
+                    $carSemComunicado = $dat['tempo_solicitado_instalado'];
+                    $paradoEmLoja = $dat['tempo_acionamento_tecnico'];
+                    $carComunicando =  $dat['tempo_instalacao'];
+                }
+            }
+
             return response()->json([
                 'status' => 'success',
                 'data' => [
+                    "empresa"  => $empresa ?? '',
                     "carComunicando"  => $carComunicando ?? '',
                     "paradoEmLoja" => $paradoEmLoja ?? '',
                     "carSinistrado" => $carSinistrado ?? '',
@@ -300,33 +298,5 @@ class DashboardController extends Controller
 
         ]);
         return $arr;
-    }
-
-    public function media($times, $totalJson)
-    {
-        $seconds = 0;
-        foreach ($times as $time) {
-            list($g, $i) = explode(':', $time);
-            $seconds += $g * 3600;
-            $seconds += $i * 60;
-        }
-        $hours = floor($seconds / 3600);
-        $seconds -= $hours * 3600;
-        $minutes = floor($seconds / 60);
-
-        echo "{$hours}:{$minutes}";
-        die();
-        /**
-        $sum = (strtotime($datahora1) + strtotime($datahora2) + strtotime($datahora3) + strtotime($datahora4) + strtotime($datahora5));
-
-        $d1 = date_create($datahora1);
-        $d2 = date_create($datahora2);
-
-        $df = date_diff($d1, $d2);
-
-        //echo '<pre>'.json_encode($df, JSON_PRETTY_PRINT).'</pre>';
-
-        echo date('H:i:s', ceil($sum / 5)); // 11:07:12 =>TMA / TME ( 1h e 7 min )
-         */
     }
 }

@@ -33,6 +33,15 @@ class ApiFleetLargeService
     }
 
     /**
+     * @return array
+     */
+    public function mediaHours()
+    {
+        $url = $this->host . "/4aa29189-387b-401b-94b9-24312a8477ca.json";
+        return ClientHttp($url);
+    }
+
+    /**
      * @param String $device
      * @param Int $minutes
      * @return array

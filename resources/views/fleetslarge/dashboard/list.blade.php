@@ -276,32 +276,43 @@
                 url: "{{route('fleetslarges.showAllStatus')}}",
                 type: 'GET',
                 success: function(response) {
-                    var empresa = response.data.carComunicando[0][0]['empresa'];
+                    //console.log(response.data.empresa)
+                    //var empresa = response.data.carComunicando[0][0]['empresa'];
+                    var empresa = response.data.empresa;
                     ValueDashboard(empresa)
-                    if (response.data.carAvaria == "") {
-                        $('#statusAvaria').html("00:10:36")
-                    } else {
-                        $('#statusAvaria').html("00:10:36")
+                    if (empresa == "Movida") {
+                        if (response.data.carAvaria == "") {
+                            $('#statusAvaria').html(0)
+                        } else {
+                            $('#statusAvaria').html(response.data.carAvaria.length)
+                        }
+                        if (response.data.carSinistrado == "") {
+                            $('#statusSinistro').html(0)
+                        } else {
+                            $('#statusSinistro').html(response.data.carSinistrado.length)
+                        }
+                        if (response.data.carSemComunicado == "") {
+                            $('#statusSemComunicacao').html(0)
+                        } else {
+                            $('#statusSemComunicacao').html(response.data.carSemComunicado.length)
+                        }
+                        if (response.data.paradoEmLoja == "") {
+                            $('#statusParadoEmLoja').html(0)
+                        } else {
+                            $('#statusParadoEmLoja').html(response.data.paradoEmLoja.length)
+                        }
+                        if (response.data.carComunicando == "") {
+                            $('#statusComunicando').html(0)
+                        } else {
+                            $('#statusComunicando').html(response.data.carComunicando.length)
+                        }
                     }
-                    if (response.data.carSinistrado == "") {
-                        $('#statusSinistro').html("02:16:24")
-                    } else {
-                        $('#statusSinistro').html("01:38:39")
-                    }
-                    if (response.data.carSemComunicado == "") {
-                        $('#statusSemComunicacao').html("02:50:25")
-                    } else {
-                        $('#statusSemComunicacao').html("01:38:39")
-                    }
-                    if (response.data.paradoEmLoja == "") {
-                        $('#statusParadoEmLoja').html("02:16:24")
-                    } else {
-                        $('#statusParadoEmLoja').html("01:38:39")
-                    }
-                    if (response.data.carComunicando == "") {
-                        $('#statusComunicando').html("02:16:24")
-                    } else {
-                        $('#statusComunicando').html("00:55:33")
+
+                    if (empresa == 'Santander') {
+                        $('#statusAvaria').html(response.data.carAvaria.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                        $('#statusParadoEmLoja').html(response.data.paradoEmLoja.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                        $('#statusSemComunicacao').html(response.data.carSemComunicado.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                        $('#statusComunicando').html(response.data.carComunicando.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
                     }
                 }
             });
@@ -522,7 +533,7 @@
             if (empresa == 'Santander') {
                 var empresa = 'Santander'
                 changeClass(empresa);
-                 $(".santander").hide();
+                $(".santander").hide();
                 //$('#dashboardSantander').removeClass('hidden'); ** JÁ TEM 4 GRIDS OCULTO COM A CLASSE HIDDEN, DESCOMENTAR ESTA LINHA QUANDO SURGIR A NECESSIDADE.
                 $("#statusCard01").html('TEMPO MÉDIO DE INSTALAÇÃO');
                 $("#statusCard02").html('TEMPO MÉDIO PARA ACIONAR TECNICO');
