@@ -279,9 +279,9 @@
                     var empresa = response.data.carComunicando[0][0]['empresa'];
                     ValueDashboard(empresa)
                     if (response.data.carAvaria == "") {
-                        $('#statusAvaria').html("02:16:24")
+                        $('#statusAvaria').html("00:10:36")
                     } else {
-                        $('#statusAvaria').html("01:23:25")
+                        $('#statusAvaria').html("00:10:36")
                     }
                     if (response.data.carSinistrado == "") {
                         $('#statusSinistro').html("02:16:24")
@@ -289,7 +289,7 @@
                         $('#statusSinistro').html("01:38:39")
                     }
                     if (response.data.carSemComunicado == "") {
-                        $('#statusSemComunicacao').html("01:29:26")
+                        $('#statusSemComunicacao').html("02:50:25")
                     } else {
                         $('#statusSemComunicacao').html("01:38:39")
                     }
@@ -301,7 +301,7 @@
                     if (response.data.carComunicando == "") {
                         $('#statusComunicando').html("02:16:24")
                     } else {
-                        $('#statusComunicando').html("01:19:27")
+                        $('#statusComunicando').html("00:55:33")
                     }
                 }
             });
