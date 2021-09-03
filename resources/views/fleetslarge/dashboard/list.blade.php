@@ -209,7 +209,8 @@
                                 <th class="hidden">Voltagem</th>
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
-                                <th>Sinistrado</th>
+                                <th class="santander">Sinistrado</th>
+                                <th class="santanderOpen">Loja</th>
                                 <th class="santander" style="width: 220;">Filial</th>
                                 <th class="santander">Status</th>
                                 <th style="width: 150px;"></th>
@@ -227,7 +228,8 @@
                                 <td class="hidden">{{$driver['lp_voltagem']}}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
-                                <td>{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
+                                <td class="santanderOpen">{{$driver['cliente']}}</td>
+                                <td class="santander">{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
                                 <td class="santander">{{$driver['filial']}}</td>
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
 
@@ -277,29 +279,29 @@
                     var empresa = response.data.carComunicando[0][0]['empresa'];
                     ValueDashboard(empresa)
                     if (response.data.carAvaria == "") {
-                        $('#statusAvaria').html(0)
+                        $('#statusAvaria').html("02:16:24")
                     } else {
-                        $('#statusAvaria').html(response.data.carAvaria.length)
+                        $('#statusAvaria').html("01:23:25")
                     }
                     if (response.data.carSinistrado == "") {
-                        $('#statusSinistro').html(0)
+                        $('#statusSinistro').html("02:16:24")
                     } else {
-                        $('#statusSinistro').html(response.data.carSinistrado.length)
+                        $('#statusSinistro').html("01:38:39")
                     }
                     if (response.data.carSemComunicado == "") {
-                        $('#statusSemComunicacao').html(0)
+                        $('#statusSemComunicacao').html("01:29:26")
                     } else {
-                        $('#statusSemComunicacao').html(response.data.carSemComunicado.length)
+                        $('#statusSemComunicacao').html("01:38:39")
                     }
                     if (response.data.paradoEmLoja == "") {
-                        $('#statusParadoEmLoja').html(0)
+                        $('#statusParadoEmLoja').html("02:16:24")
                     } else {
-                        $('#statusParadoEmLoja').html(response.data.paradoEmLoja.length)
+                        $('#statusParadoEmLoja').html("01:38:39")
                     }
                     if (response.data.carComunicando == "") {
-                        $('#statusComunicando').html(0)
+                        $('#statusComunicando').html("02:16:24")
                     } else {
-                        $('#statusComunicando').html(response.data.carComunicando.length)
+                        $('#statusComunicando').html("01:19:27")
                     }
                 }
             });
@@ -506,6 +508,7 @@
             if (empresa == 'Movida') {
                 var empresa = 'Movida'
                 changeClass(empresa);
+                $(".santanderOpen").hide();
                 $('#dashboardTotal').removeClass('hidden');
                 $('#dashboardSinistro').removeClass('hidden');
                 $("#statusCard01").html('Total de veículos comunicando.');

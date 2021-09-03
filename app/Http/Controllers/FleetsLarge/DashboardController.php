@@ -129,6 +129,15 @@ class DashboardController extends Controller
                         "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
                         "veiculo_odometro"          => $dat['veiculo_odometro'] ?? '',
                         "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
+
+                        "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
+                        "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
+                        "dt_entrada"                => $dat['dt_entrada'] ?? '',
+                        "t_solicitado_instalado"    => $dat['t_solicitado_instalado'] ?? '',
+                        "t_inicio_servico"          => $dat['t_inicio_servico'] ?? '',
+                        "dt_inicio_instalacao"      => $dat['dt_inicio_instalacao'] ?? '',
+                        "dt_tecnico_acionado"       => $dat['dt_tecnico_acionado'] ?? '',
+                        "t_instalacao"              => $dat['t_instalacao'] ?? '',
                     ]);
                 }
             }
@@ -148,7 +157,7 @@ class DashboardController extends Controller
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
 
         try {
-
+            //if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
             foreach ($data['fleetslarge'] as $data => $dat) {
 
                 if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
@@ -176,7 +185,24 @@ class DashboardController extends Controller
                     $carAvaria = $arr5;
                 }
             }
+            // }
+            /**
+            if ($data['fleetslarge'][0]['empresa'] == 'Santander') {
+                $totalJson = count($data['fleetslarge']);
 
+                foreach ($data['fleetslarge'] as $data => $dat) {
+                    $t_acionamento_tecnico[] = $dat['t_acionamento_tecnico'];
+                    $t_solicitado_instalado[] = $dat['t_solicitado_instalado'];
+                    $t_inicio_servico[] = $dat['t_inicio_servico'];
+                    $t_instalacao[] = $dat['t_instalacao'];
+                }
+
+                $carComunicando = $this->media($t_acionamento_tecnico, $totalJson);
+                $paradoEmLoja = $this->media($t_solicitado_instalado, $totalJson);
+                $carSinistrado = $this->media($t_inicio_servico, $totalJson);
+                $carSemComunicado = $this->media($t_instalacao, $totalJson);
+            }
+             */
             return response()->json([
                 'status' => 'success',
                 'data' => [
@@ -262,7 +288,45 @@ class DashboardController extends Controller
             "cliente_endereco"          => $dat['cliente_endereco'] ?? '',
             "cliente_foto_cnh"          => $dat['cliente_foto_cnh'] ?? '',
             "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
+
+            "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
+            "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
+            "dt_entrada"                => $dat['dt_entrada'] ?? '',
+            "t_solicitado_instalado"    => $dat['t_solicitado_instalado'] ?? '',
+            "t_inicio_servico"          => $dat['t_inicio_servico'] ?? '',
+            "dt_inicio_instalacao"      => $dat['dt_inicio_instalacao'] ?? '',
+            "dt_tecnico_acionado"       => $dat['dt_tecnico_acionado'] ?? '',
+            "t_instalacao"              => $dat['t_instalacao'] ?? '',
+
         ]);
         return $arr;
+    }
+
+    public function media($times, $totalJson)
+    {
+        $seconds = 0;
+        foreach ($times as $time) {
+            list($g, $i) = explode(':', $time);
+            $seconds += $g * 3600;
+            $seconds += $i * 60;
+        }
+        $hours = floor($seconds / 3600);
+        $seconds -= $hours * 3600;
+        $minutes = floor($seconds / 60);
+
+        echo "{$hours}:{$minutes}";
+        die();
+        /**
+        $sum = (strtotime($datahora1) + strtotime($datahora2) + strtotime($datahora3) + strtotime($datahora4) + strtotime($datahora5));
+
+        $d1 = date_create($datahora1);
+        $d2 = date_create($datahora2);
+
+        $df = date_diff($d1, $d2);
+
+        //echo '<pre>'.json_encode($df, JSON_PRETTY_PRINT).'</pre>';
+
+        echo date('H:i:s', ceil($sum / 5)); // 11:07:12 =>TMA / TME ( 1h e 7 min )
+         */
     }
 }
