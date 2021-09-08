@@ -71,6 +71,96 @@
     .hidden {
         display: none;
     }
+
+
+    .time-line-box {
+        height: 100px;
+        padding: 100px 0;
+        width: 100%;
+
+    }
+
+    .time-line-box .timeline {
+        list-style-type: none;
+        display: flex;
+        padding: 0;
+        text-align: center;
+    }
+
+    .time-line-box .timestamp {
+        margin: auto;
+        margin-bottom: 5px;
+        padding: 0px 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .time-line-box .status {
+        padding: 0px 10px;
+        display: flex;
+        justify-content: center;
+        border-top: 3px solid #6959CD;
+        position: relative;
+        transition: all 200ms ease-in;
+    }
+
+    .time-line-box .status span {
+        padding-top: 8px;
+    }
+
+    .status span:before {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background-color: #ecf0f5;
+        border-radius: 12px;
+        border: 2px solid #6959CD;
+        position: absolute;
+        left: 50%;
+        top: 0%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        transition: all 200ms ease-in;
+    }
+
+    .timelinePointActive span:before {
+        background-color: #6959CD !important;
+    }
+
+    .swiper-container {
+        width: 95%;
+        margin: auto;
+        overflow-y: auto;
+    }
+
+    .swiper-wrapper {
+        display: inline-flex;
+        flex-direction: row;
+        overflow-y: auto;
+        justify-content: center;
+    }
+
+    .swiper-container::-webkit-scrollbar-track {
+        background: #a8a8a8b6;
+    }
+
+    .swiper-container::-webkit-scrollbar {
+        height: 2px;
+    }
+
+    .swiper-container::-webkit-scrollbar-thumb {
+        background: #4F4F4F !important;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 12px;
+        width: 200px;
+        height: 100%;
+        position: relative;
+    }
 </style>
 @endsection
 
@@ -213,6 +303,7 @@
                                 <th class="santanderOpen">Loja</th>
                                 <th class="santander" style="width: 220;">Filial</th>
                                 <th class="santander">Status</th>
+                                <th class="hidden">Empresa</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
@@ -232,6 +323,7 @@
                                 <td class="santander">{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
                                 <td class="santander">{{$driver['filial']}}</td>
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
+                                <td class="hidden">{{$driver['empresa']}}</td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
@@ -256,324 +348,360 @@
             </div>
         </div>
     </div>
+</div>
 
-    @include('fleetslarge.dashboard.modalVehicle')
+@include('fleetslarge.dashboard.modalVehicle')
 
-    @endsection
+@endsection
 
-    @section('scripts')
-    <script>
-        resetGrid()
-        /**
-         * Rastrea isca automaticamente
-         */
-        $(document).ready(function() {
-            reloadValue()
-        })
+@section('scripts')
+<script>
+    resetGrid()
+    /**
+     * Rastrea isca automaticamente
+     */
+    $(document).ready(function() {
+        reloadValue()
+    })
 
-        function reloadValue() {
-            $.ajax({
-                url: "{{route('fleetslarges.showAllStatus')}}",
-                type: 'GET',
-                success: function(response) {
-                    //console.log(response.data.empresa)
-                    //var empresa = response.data.carComunicando[0][0]['empresa'];
-                    var empresa = response.data.empresa;
-                    ValueDashboard(empresa)
-                    if (empresa == "Movida") {
-                        if (response.data.carAvaria == "") {
-                            $('#statusAvaria').html(0)
-                        } else {
-                            $('#statusAvaria').html(response.data.carAvaria.length)
-                        }
-                        if (response.data.carSinistrado == "") {
-                            $('#statusSinistro').html(0)
-                        } else {
-                            $('#statusSinistro').html(response.data.carSinistrado.length)
-                        }
-                        if (response.data.carSemComunicado == "") {
-                            $('#statusSemComunicacao').html(0)
-                        } else {
-                            $('#statusSemComunicacao').html(response.data.carSemComunicado.length)
-                        }
-                        if (response.data.paradoEmLoja == "") {
-                            $('#statusParadoEmLoja').html(0)
-                        } else {
-                            $('#statusParadoEmLoja').html(response.data.paradoEmLoja.length)
-                        }
-                        if (response.data.carComunicando == "") {
-                            $('#statusComunicando').html(0)
-                        } else {
-                            $('#statusComunicando').html(response.data.carComunicando.length)
-                        }
-                    }
-
-                    if (empresa == 'Santander') {
-                        $('#statusAvaria').html(response.data.carAvaria.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                        $('#statusParadoEmLoja').html(response.data.paradoEmLoja.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                        $('#statusSemComunicacao').html(response.data.carSemComunicado.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                        $('#statusComunicando').html(response.data.carComunicando.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                    }
-                }
-            });
-        }
-
-        /**
-         * Reset Grig
-         */
-        function resetGrid() {
-            // Progress bar
-            $('#div-progress-bar-fleetlarge').show();
-            progressBar = 100;
-            setInterval(function() {
-                if (progressBar == 0) {
-                    // $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
-                    // $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
-                    reloadValue()
-                    progressBar = 100;
-                } else {
-                    progressBar = progressBar - 1;
-                }
-                $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
-
-            }, 1000);
-        }
-
-
-        $(document).ready(function() {
-            var date = $.datepicker.formatDate('dd_mm_yy', new Date());
-
-            $('#example').DataTable({
-                dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
-                    "<'row'<'col-md-6'><'col-md-6'>>" +
-                    "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-                buttons: [{
-                        extend: 'pdf',
-                        title: 'SAT Company :: Grid de Veiculos_' + date,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
-                        },
-                        orientation: 'landscape',
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'SAT Company :: Grid de Veiculos_' + date,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
-                        }
-                    }
-                ],
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sEmptyTable": "Nenhum registro disponível nesta tabela",
-                    "sInfo": "Mostrando registros de _START_ até _END_ de um total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros de 0 até 0 de um total de 0 registros",
-                    "sInfoFiltered": "(filtrado de um total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Carregando...",
-                    "oPaginate": {
-                        "sFirst": "Primeiro",
-                        "sLast": "Último",
-                        "sNext": "Seguinte",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Ativar para ordenar a coluna de maneira ascendente",
-                        "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
-                    }
-                },
-
-            });
-
-        });
-
-        /* Details vehicle */
-        $('.btn-vehicle-data').click(function() {
-            var chassi = $(this).data('chassi');
-            $.ajax({
-                url: "{{url('')}}/fleetslarges/find/" + chassi,
-                type: 'GET',
-                success: function(response) {
-                    $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
-                    $('.placa').val(response.placa)
-                    $('.empresa').val(response.empresa)
-                    $('#r12s_proximos').val(response.r12s_proximos)
-                    $('#dif_date').val(response.dif_date)
-                    $('.lp_longitude').val(response.lp_longitude)
-                    $('.estado').val(response.estado)
-                    $('.lp_latitude').val(response.lp_latitude)
-                    $('.telefone').val(response.telefone)
-                    $('.status').val(response.status)
-                    $('.iccid').val(response.iccid)
-                    $('.chassis').val(response.chassis)
-                    $('.modelo_veiculo').val(response.modelo_veiculo)
-                    $('.qtd_dispositivos').val(response.qtd_dispositivos)
-                    $('.categoria_veiculo').val(response.categoria_veiculo)
-                    $('.cidade').val(response.cidade)
-                    $('.operadora').val(response.operadora)
-                    $('.cliente').val(response.cliente)
-                    $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                    $('.cod_empresa').val(response.cod_empresa)
-                    $('.codigo_fipe').val(response.codigo_fipe)
-                    $('.modelo').val(response.modelo)
-                    $('.point').val(response.point)
-                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                    $('.versao').val(response.versao)
-                    $('.lp_satelite').val(response.lp_satelite)
-                    $('.lp_ignicao').val(response.lp_ignicao)
-                    $('.r12s_proximos').val(response.r12s_proximos)
-                    $('#dif_date').val(response.dif_date)
-                    $('.lp_voltagem').val(response.lp_voltagem)
-                    $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
-                    $('#r12s_proximos').val(response.r12s_proximos)
-                    $('#dif_date').val(response.dif_date)
-                    $('.lp_velocidade').val(response.lp_velocidade + " km/h")
-                    $('#point').val(response.point)
-                    $('.filial').val(response.filial)
-                    $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                    $('#status_veiculo').val(response.status_veiculo)
-                    $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
-                    $('.end_cep').val(response.end_cep)
-                    $('.end_logradouro').val(response.end_logradouro)
-                    $('.end_bairro').val(response.end_bairro)
-                    $('.end_uf').val(response.end_uf)
-                    $('.cliente_foto').attr('src', response.cliente_foto);
-                    $('#cliente_cpf').val(response.cliente_cpf)
-                    $('#cliente_nome').val(response.cliente_nome)
-                    $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                    $('#cliente_celular').val(response.cliente_celular)
-                    $('#cliente_localdev').val(response.cliente_localdev)
-                    $('#cliente_local_retirada').val(response.cliente_local_retirada)
-                    $('#cliente_contrato').val(response.cliente_contrato)
-                    $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                    $('#cliente_email').val(response.cliente_email)
-                    $('#cliente_endereco').val(response.cliente_endereco)
-                    $('.cidade').val(response.end_cidade)
-                    $('#cliente_cnh').val(response.cliente_cnh)
-                    $('.veiculo_odometro').val(response.veiculo_odometro)
-                    $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
-                    $('.cliente_foto').attr('href', response.cliente_foto)
-
-                    if (response.status_veiculo != "LOCACAO") {
-                        $("#btn_cliente").css({
-                            "display": "none"
-                        });
+    function reloadValue() {
+        $.ajax({
+            url: "{{route('fleetslarges.showAllStatus')}}",
+            type: 'GET',
+            success: function(response) {
+                var empresa = response.data.empresa;
+                ValueDashboard(empresa)
+                if (empresa == "Movida") {
+                    if (response.data.grid05 == "") {
+                        $('#statusAvaria').html(0)
                     } else {
-                        $("#btn_cliente").css({
-                            "display": "inline"
-                        });
+                        $('#statusAvaria').html(response.data.grid05.length)
                     }
-                },
-                error: function(error) {
-                    if (error.responseJSON.status == "internal_error") {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-
-                    } else if (error.responseJSON.status == "validation_error") {
-                        var items = error.responseJSON.errors;
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + items,
-                            footer: ' '
-                        })
-
+                    if (response.data.grid03 == "") {
+                        $('#statusSinistro').html(0)
                     } else {
-                        var items = error.responseJSON.errors;
-                        var errors = $.map(items, function(i) {
-                            return i.join('<br />');
-                        });
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + errors,
-                            footer: ' '
-                        })
+                        $('#statusSinistro').html(response.data.grid03.length)
+                    }
+                    if (response.data.grid04 == "") {
+                        $('#statusSemComunicacao').html(0)
+                    } else {
+                        $('#statusSemComunicacao').html(response.data.grid04.length)
+                    }
+                    if (response.data.grid02 == "") {
+                        $('#statusParadoEmLoja').html(0)
+                    } else {
+                        $('#statusParadoEmLoja').html(response.data.grid02.length)
+                    }
+                    if (response.data.grid01 == "") {
+                        $('#statusComunicando').html(0)
+                    } else {
+                        $('#statusComunicando').html(response.data.grid01.length)
                     }
                 }
-            });
-        })
 
-        /**
-         * Correção do scroll do modal
-         */
-        $('#modalClient').on('hidden.bs.modal', function(e) {
-            $("body").addClass("modal-open");
-        });
-
-
-        /**
-         * Valor Dashboard
-         */
-        function ValueDashboard(empresa) {
-            if (empresa == 'Movida') {
-                var empresa = 'Movida'
-                changeClass(empresa);
-                $(".santanderOpen").hide();
-                $('#dashboardTotal').removeClass('hidden');
-                $('#dashboardSinistro').removeClass('hidden');
-                $("#statusCard01").html('Total de veículos comunicando.');
-                $("#statusCard02").html('Total de veículos com avaria.');
-                $("#statusCard03").html('Total de veículos sinistrados.');
-                $("#statusCard04").html('Total de veículos parado em loja.');
-                $("#statusCard05").html('Total de veículos sem comunicação.');
-                return;
-            }
-
-            if (empresa == 'Santander') {
-                var empresa = 'Santander'
-                changeClass(empresa);
-                $(".santander").hide();
-                //$('#dashboardSantander').removeClass('hidden'); ** JÁ TEM 4 GRIDS OCULTO COM A CLASSE HIDDEN, DESCOMENTAR ESTA LINHA QUANDO SURGIR A NECESSIDADE.
-                $("#statusCard01").html('TEMPO MÉDIO DE INSTALAÇÃO');
-                $("#statusCard02").html('TEMPO MÉDIO PARA ACIONAR TECNICO');
-                //$("#statusCard03").html('TEMPO MÉDIO DE ATENDIMENTO');
-                $("#statusCard04").html('TEMPO MÉDIO DE DESLOCAMENTO');
-                $("#statusCard05").html('TEMPO MÉDIO DE ATENDIMENTO');
-                return;
-            }
-
-            function changeClass() {
                 if (empresa == 'Santander') {
-                    $('#divCard01').addClass('col-xl-6');
-                    $('#divColor01').addClass('bg-primary');
-
-                    $('#divCard02').addClass('col-xl-6');
-                    $('#divColor02').addClass('bg-primary');
-
-                    $('#divCard04').addClass('col-xl-6');
-                    $('#divColor04').addClass('bg-primary');
-
-                    $('#divCard05').addClass('col-xl-6');
-                    $('#divColor05').addClass('bg-primary');
-                    return;
+                    $('#statusAvaria').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                    $('#statusParadoEmLoja').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                    $('#statusSemComunicacao').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                    $('#statusComunicando').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
                 }
-
-                if (empresa == 'Movida') {
-                    $('#divCard01').addClass('col-xl-4');
-                    $('#divColor01').addClass('bg-success');
-
-                    $('#divCard02').addClass('col-xl-4');
-                    $('#divColor02').addClass('bg-warning');
-
-                    $('#divCard04').addClass('col-xl-4');
-                    $('#divColor04').addClass('bg-primary');
-
-                    $('#divCard05').addClass('col-xl-4');
-                    $('#divColor05').addClass('bg-warning');
-                }
-
             }
+        });
+    }
+
+    /**
+     * Reset Grig
+     */
+    function resetGrid() {
+        // Progress bar
+        $('#div-progress-bar-fleetlarge').show();
+        progressBar = 100;
+        setInterval(function() {
+            if (progressBar == 0) {
+                // $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
+                // $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
+                reloadValue()
+                progressBar = 100;
+            } else {
+                progressBar = progressBar - 1;
+            }
+            $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+
+        }, 1000);
+    }
+
+    $(document).ready(function() {
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13];
+        var date = $.datepicker.formatDate('dd_mm_yy', new Date());
+        $('#example').DataTable({
+            dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
+                "<'row'<'col-md-6'><'col-md-6'>>" +
+                "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+            buttons: [{
+                    extend: 'pdf',
+                    title: 'SAT Company :: Grid de Veiculos_' + date,
+                    exportOptions: {
+                        columns: columns
+                    },
+                    orientation: 'landscape',
+                },
+                {
+                    extend: 'excel',
+                    title: 'SAT Company :: Grid de Veiculos_' + date,
+                    exportOptions: {
+                        columns: columns //[0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11]
+                    }
+                }
+            ],
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sEmptyTable": "Nenhum registro disponível nesta tabela",
+                "sInfo": "Mostrando registros de _START_ até _END_ de um total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros de 0 até 0 de um total de 0 registros",
+                "sInfoFiltered": "(filtrado de um total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Carregando...",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sLast": "Último",
+                    "sNext": "Seguinte",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ativar para ordenar a coluna de maneira ascendente",
+                    "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
+                }
+            },
+
+        });
+
+    });
+
+    /* Details vehicle */
+    $('.btn-vehicle-data').click(function() {
+        var chassi = $(this).data('chassi');
+        $.ajax({
+            url: "{{url('')}}/fleetslarges/find/" + chassi,
+            type: 'GET',
+            success: function(response) {
+                console.log(response)
+                $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
+                $('.placa').val(response.placa)
+                $('.empresa').val(response.empresa)
+                $('#r12s_proximos').val(response.r12s_proximos)
+                $('#dif_date').val(response.dif_date)
+                $('.lp_longitude').val(response.lp_longitude)
+                $('.estado').val(response.estado)
+                $('.lp_latitude').val(response.lp_latitude)
+                $('.telefone').val(response.telefone)
+                $('.status').val(response.status)
+                $('.iccid').val(response.iccid)
+                $('.chassis').val(response.chassis)
+                $('.modelo_veiculo').val(response.modelo_veiculo)
+                $('.qtd_dispositivos').val(response.qtd_dispositivos)
+                $('.categoria_veiculo').val(response.categoria_veiculo)
+                $('.cidade').val(response.cidade)
+                $('.operadora').val(response.operadora)
+                $('.cliente').val(response.cliente)
+                $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                $('.cod_empresa').val(response.cod_empresa)
+                $('.codigo_fipe').val(response.codigo_fipe)
+                $('.modelo').val(response.modelo)
+                $('.point').val(response.point)
+                $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                $('.versao').val(response.versao)
+                $('.lp_satelite').val(response.lp_satelite)
+                $('.lp_ignicao').val(response.lp_ignicao)
+                $('.r12s_proximos').val(response.r12s_proximos)
+                $('#dif_date').val(response.dif_date)
+                $('.lp_voltagem').val(response.lp_voltagem)
+                $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
+                $('#r12s_proximos').val(response.r12s_proximos)
+                $('#dif_date').val(response.dif_date)
+                $('.lp_velocidade').val(response.lp_velocidade + " km/h")
+                $('#point').val(response.point)
+                $('.filial').val(response.filial)
+                $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                $('#status_veiculo').val(response.status_veiculo)
+                $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
+                $('.end_cep').val(response.end_cep)
+                $('.end_logradouro').val(response.end_logradouro)
+                $('.end_bairro').val(response.end_bairro)
+                $('.end_uf').val(response.end_uf)
+                $('.cliente_foto').attr('src', response.cliente_foto);
+                $('#cliente_cpf').val(response.cliente_cpf)
+                $('#cliente_nome').val(response.cliente_nome)
+                $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                $('#cliente_celular').val(response.cliente_celular)
+                $('#cliente_localdev').val(response.cliente_localdev)
+                $('#cliente_local_retirada').val(response.cliente_local_retirada)
+                $('#cliente_contrato').val(response.cliente_contrato)
+                $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                $('#cliente_email').val(response.cliente_email)
+                $('#cliente_endereco').val(response.cliente_endereco)
+                $('.cidade').val(response.end_cidade)
+                $('#cliente_cnh').val(response.cliente_cnh)
+                $('.veiculo_odometro').val(response.veiculo_odometro)
+                $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
+                $('.cliente_foto').attr('href', response.cliente_foto)
+
+                if (response.status_veiculo != "LOCACAO") {
+                    $("#btn_cliente").css({
+                        "display": "none"
+                    });
+                } else {
+                    $("#btn_cliente").css({
+                        "display": "inline"
+                    });
+                }
+
+                updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+            },
+            error: function(error) {
+                if (error.responseJSON.status == "internal_error") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else if (error.responseJSON.status == "validation_error") {
+                    var items = error.responseJSON.errors;
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                } else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+            }
+        });
+    })
+
+    /**
+     * Correção do scroll do modal
+     */
+    $('#modalClient').on('hidden.bs.modal', function(e) {
+        $("body").addClass("modal-open");
+    });
+
+
+    /**
+     * Valor Dashboard
+     */
+    function ValueDashboard(empresa) {
+        if (empresa == 'Movida') {
+            var empresa = 'Movida'
+            changeClass(empresa);
+            $(".santanderOpen").hide();
+            $('#dashboardTotal').removeClass('hidden');
+            $('#dashboardSinistro').removeClass('hidden');
+            $("#statusCard01").html('Total de veículos comunicando.');
+            $("#statusCard02").html('Total de veículos com avaria.');
+            $("#statusCard03").html('Total de veículos sinistrados.');
+            $("#statusCard04").html('Total de veículos parado em loja.');
+            $("#statusCard05").html('Total de veículos sem comunicação.');
+            return;
         }
-    </script>
-    @endsection
+
+        if (empresa == 'Santander') {
+            var empresa = 'Santander'
+            changeClass(empresa);
+            $(".santander").hide();
+            $('#timeline').removeClass('hidden');
+            //$('#dashboardSantander').removeClass('hidden'); ** JÁ TEM 4 GRIDS OCULTO COM A CLASSE HIDDEN, DESCOMENTAR ESTA LINHA QUANDO SURGIR A NECESSIDADE.
+            $("#statusCard01").html('TEMPO MÉDIO DE INSTALAÇÃO');
+            $("#statusCard02").html('TEMPO MÉDIO PARA ACIONAR TECNICO');
+            //$("#statusCard03").html('TEMPO MÉDIO DE ATENDIMENTO');
+            $("#statusCard04").html('TEMPO MÉDIO DE DESLOCAMENTO');
+            $("#statusCard05").html('TEMPO MÉDIO DE ATENDIMENTO');
+            return;
+        }
+
+        function changeClass() {
+            if (empresa == 'Santander') {
+                $('#divCard01').addClass('col-xl-6');
+                $('#divColor01').addClass('bg-primary');
+
+                $('#divCard02').addClass('col-xl-6');
+                $('#divColor02').addClass('bg-primary');
+
+                $('#divCard04').addClass('col-xl-6');
+                $('#divColor04').addClass('bg-primary');
+
+                $('#divCard05').addClass('col-xl-6');
+                $('#divColor05').addClass('bg-primary');
+                return;
+            }
+
+            if (empresa == 'Movida') {
+                $('#divCard01').addClass('col-xl-4');
+                $('#divColor01').addClass('bg-success');
+
+                $('#divCard02').addClass('col-xl-4');
+                $('#divColor02').addClass('bg-warning');
+
+                $('#divCard04').addClass('col-xl-4');
+                $('#divColor04').addClass('bg-primary');
+
+                $('#divCard05').addClass('col-xl-4');
+                $('#divColor05').addClass('bg-warning');
+            }
+
+        }
+    }
+
+    /**
+     * Update Timeline cliente Santander
+     */
+    function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, dt_termino_instalacao) {
+        if (dt_entrada != 0) {
+            $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1')) //2021-09-01T10:02:27-03:00
+            $('#status_dt_entrada').addClass('timelinePointActive');
+        } else {
+            $('#dt_entrada').html('Aguarde...')
+        }
+
+        if (dt_tecnico_acionado != 0) {
+            $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1'))
+            $('#status_dt_tecnico_acionado').addClass('timelinePointActive');
+        } else {
+            $('#dt_tecnico_acionado').html('Aguarde...')
+        }
+
+        if (dt_inicio_instalacao != 0) {
+            $('#dt_inicio_instalacao').html(dt_inicio_instalacao.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1'))
+            $('#status_dt_inicio_instalacao').addClass('timelinePointActive');
+        } else {
+            $('#dt_inicio_instalacao').html('Aguarde...')
+        }
+
+        if (dt_termino_instalacao != 0) {
+            $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1'))
+            $('#status_dt_termino_instalacao').addClass('timelinePointActive');
+        } else {
+            $('#dt_termino_instalacao').html('Aguarde...')
+        }
+
+    }
+</script>
+@endsection

@@ -163,27 +163,27 @@ class DashboardController extends Controller
 
                     if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
                         $arr[] = $this->resultJson($dat);
-                        $carComunicando = $arr;
+                        $grid01 = $arr;
                     }
 
                     if ($dat['status_veiculo'] != "LOCACAO") {
                         $arr2[] = $this->resultJson($dat);
-                        $paradoEmLoja = $arr2;
+                        $grid02 = $arr2;
                     }
 
                     if ($dat['sinistrado'] == "TRUE") {
                         $arr3[] = $this->resultJson($dat);
-                        $carSinistrado = $arr3;
+                        $grid03 = $arr3;
                     }
 
                     if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
                         $arr4[] = $this->resultJson($dat);
-                        $carSemComunicado = $arr4;
+                        $grid04 = $arr4;
                     }
 
                     if ($dat['status_veiculo'] == "AVARIA") {
                         $arr5[] = $this->resultJson($dat);
-                        $carAvaria = $arr5;
+                        $grid05 = $arr5;
                     }
                 }
             }
@@ -193,10 +193,10 @@ class DashboardController extends Controller
 
                 $mediaHora = $this->apiFleetLargeService->mediaHours();
                 foreach ($mediaHora as $data => $dat) {
-                    $carAvaria = $dat['tempo_inicio_servico'];
-                    $carSemComunicado = $dat['tempo_solicitado_instalado'];
-                    $paradoEmLoja = $dat['tempo_acionamento_tecnico'];
-                    $carComunicando =  $dat['tempo_instalacao'];
+                    $grid05 = $dat['tempo_inicio_servico'];
+                    $grid04 = $dat['tempo_solicitado_instalado'];
+                    $grid02 = $dat['tempo_acionamento_tecnico'];
+                    $grid01 =  $dat['tempo_instalacao'];
                 }
             }
 
@@ -204,11 +204,11 @@ class DashboardController extends Controller
                 'status' => 'success',
                 'data' => [
                     "empresa"  => $empresa ?? '',
-                    "carComunicando"  => $carComunicando ?? '',
-                    "paradoEmLoja" => $paradoEmLoja ?? '',
-                    "carSinistrado" => $carSinistrado ?? '',
-                    "carSemComunicado" => $carSemComunicado ?? '',
-                    "carAvaria" => $carAvaria ?? ''
+                    "grid01"   => $grid01 ?? '',
+                    "grid02"   => $grid02 ?? '',
+                    "grid03"   => $grid03 ?? '',
+                    "grid04"   => $grid04 ?? '',
+                    "grid05"   => $grid05 ?? ''
                 ]
             ], 200);
         } catch (\Exception $e) {
