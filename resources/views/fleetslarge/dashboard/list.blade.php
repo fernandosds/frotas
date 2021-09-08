@@ -674,29 +674,29 @@
      * Update Timeline cliente Santander
      */
     function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, dt_termino_instalacao) {
-        if (dt_entrada != 0) {
-            $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1')) //2021-09-01T10:02:27-03:00
+        if (dt_entrada != '') {
+            $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
             $('#status_dt_entrada').addClass('timelinePointActive');
         } else {
             $('#dt_entrada').html('Aguarde...')
         }
 
-        if (dt_tecnico_acionado != 0) {
-            $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1'))
+        if (dt_tecnico_acionado != '') {
+            $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
             $('#status_dt_tecnico_acionado').addClass('timelinePointActive');
         } else {
             $('#dt_tecnico_acionado').html('Aguarde...')
         }
 
-        if (dt_inicio_instalacao != 0) {
-            $('#dt_inicio_instalacao').html(dt_inicio_instalacao.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1'))
+        if (dt_inicio_instalacao != '') {
+            $('#dt_inicio_instalacao').html(dt_inicio_instalacao.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
             $('#status_dt_inicio_instalacao').addClass('timelinePointActive');
         } else {
             $('#dt_inicio_instalacao').html('Aguarde...')
         }
 
-        if (dt_termino_instalacao != 0) {
-            $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*).*/, '$3.$2.$1'))
+        if (dt_termino_instalacao != '') {
+            $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
             $('#status_dt_termino_instalacao').addClass('timelinePointActive');
         } else {
             $('#dt_termino_instalacao').html('Aguarde...')
