@@ -206,6 +206,8 @@
                         <br />
                         <div class="row hidden" id="timeline">
                             <div class="col-12">
+                                <br />
+                                <h4>Timeline da solicitação</h4>
                                 <section class="time-line-box">
                                     <div class="swiper-container text-center">
                                         <div class="swiper-wrapper">
