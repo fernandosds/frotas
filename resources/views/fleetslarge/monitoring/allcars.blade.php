@@ -254,236 +254,68 @@
     }).addTo(mymap);
 
 
-    /**
-     * Rastrea isca automaticamente
-     */
     $(document).ready(function() {
         start()
     })
 
+
     /**
-     * Rastrea isca
+     * Rastrea os carros
      */
     function start() {
+        // Progress bar
+        $('#div-progress-bar').show();
+        progressBar = 100;
+        setInterval(function() {
 
-        chassi_device = chassi_url;
+            if (progressBar == 0) {
+                progressBar = 100;
+                lastPosition();
+            } else {
+                progressBar = progressBar - 1;
+            }
+            $('#progress_bar').attr("style", "width:" + progressBar + "%")
 
-        if (lastPosition(chassi_device)) {
-
-            loadIconsDeviceStatus(chassi_device);
-
-            // Progress bar
-            $('#div-progress-bar').show();
-            progressBar = 100;
-            setInterval(function() {
-
-                if (progressBar == 0) {
-                    progressBar = 100;
-
-                    lastPosition(chassi_device);
-                    loadIconsDeviceStatus(chassi_device);
-
-                } else {
-                    progressBar = progressBar - 1;
-                }
-                $('#progress_bar').attr("style", "width:" + progressBar + "%")
-
-            }, 1000);
-        }
+        }, 1000);
     }
+
 
     /**
      * Marker - Última posição válida
      */
-    function lastPosition(chassi_device) {
 
-        $.ajax({
-            url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
-            type: 'GET',
-            success: function(data) {
-                if (data.lp_ignicao == "1") {
-                    $("#lp_ignicao").css({
-                        "color": "green"
-                    });
-                } else {
-                    $("#lp_ignicao").css({
-                        "color": "red"
-                    });
-                }
+    $.ajax({
+        url: "{{url('')}}/fleetslarges/monitoring/cars/position/",
+        type: 'GET',
+        success: function(data) {
+           // console.log(data)
 
-                $("#placa").html(data.placa);
-                $("#lp_ignicao").html(data.lp_ignicao != "1" ? "OFF" : "ON");
-                $("#lp_velocidade").html(data.lp_velocidade + " km/h");
-                $("#chassis").html(data.chassis);
-                $("#modelo_veiculo").html(data.modelo_veiculo);
-                $("#categoria_veiculo").html(data.categoria_veiculo);
-                $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'));
-                $(".modelo").html(data.modelo);
+            modelo = data.modelo;
 
-                modelo = data.modelo;
-
-                if (mymap.hasLayer(marker)) {
-                    mymap.removeLayer(marker);
-                }
-                if (mymap.hasLayer(circle)) {
-                    mymap.removeLayer(circle);
-                }
-                /**
-                if (mymap.hasLayer(marker_truck)) {
-                    mymap.removeLayer(marker_truck);
-                }
-                 */
-                if (mymap.hasLayer(marker_event)) {
-                    mymap.removeLayer(marker_event);
-                }
-
-                var planes = [
-                    ["7C6B07", -40.99497, 174.50808],
-                    ["7C6B38", -41.30269, 173.63696],
-                    ["7C6CA1", -41.49413, 173.5421],
-                    ["7C6CA2", -40.98585, 174.50659],
-                    ["C81D9D", -40.93163, 173.81726],
-                    ["C82009", -41.5183, 174.78081],
-                    ["C82081", -41.42079, 173.5783],
-                    ["C820AB", -42.08414, 173.96632],
-                    ["C820B6", -41.51285, 173.53274]
-                ];
-
-
-                mymap.panTo(new L.LatLng(-41.3058, 174.82082));
-
-                for (var i = 0; i < planes.length; i++) {
-                    marker = new L.marker([planes[i][1], planes[i][2]])
-                        .bindPopup(planes[i][0])
-                        .addTo(mymap);
-                }
-
-
-                $('#last-address').html(
-                    '<b>Último endereço válido:</b> ' + data.end_logradouro +
-                    ' <b>Cidade:</b> ' + data.end_cidade
-                );
-
-
-
-                /**
-                mymap.panTo(new L.LatLng(data.lp_latitude, data.lp_longitude));
-
-                marker = L.marker([data.lp_latitude, data.lp_longitude], {
-                    icon: truckIcon
-                }).addTo(mymap);
-
-                $('#last-address').html(
-                    '<b>Último endereço válido:</b> ' + data.end_logradouro +
-                    ' <b>Cidade:</b> ' + data.end_cidade
-                );
-                */
-                Swal.close()
+            if (mymap.hasLayer(marker)) {
+                mymap.removeLayer(marker);
             }
-        });
-        return true;
-    }
-
-
-    /**
-     * Carrega endereço do grid
-     */
-    $("#modal-content").on("click", ".btn-see-address", function() {
-        var grid_lat = $(this).data('lat');
-        var grid_lng = $(this).data('lng');
-        var cont = $(this).data('cont');
-
-        $('#span-address-' + cont).html('<i class="fa fa-spinner fa-pulse"></i> Carregando endereço...')
-
-        $.ajax({
-            type: 'GET',
-            url: '{{url("monitoring/get-address")}}/' + grid_lat + '/' + grid_lng,
-            success: function(response) {
-                $('#span-address-' + cont).html(response)
+            if (mymap.hasLayer(circle)) {
+                mymap.removeLayer(circle);
             }
-        });
 
-    })
-
-    /**
-     * Ícones - Status
-     */
-    function loadIconsDeviceStatus(chassi_device) {
-        var loading = '<i class="fa fa-spinner fa-pulse"></i>';
-        $("#placa").html(loading);
-        $("#lp_ignicao").html(loading);
-        $("#lp_velocidade").html(loading);
-        $("#chassis").html(loading);
-        $("#modelo_veiculo").html(loading);
-        $('#lp_ultima_transmissao').html(loading);
-        $('#categoria_veiculo').html(loading);
-    }
-
-    /**
-     * Limpa ícones
-     */
-    function clearIcons() {
-        $("#placa").html('---');
-        $("#lp_ignicao").html('---');
-        $("#lp_velocidade").html('---');
-        $("#chassis").html('---');
-        $("#modelo_veiculo").html('---');
-        $('#lp_ultima_transmissao').html('---');
-        $('#categoria_veiculo').html('---');
-    }
-
-
-
-    $('#btn-grid').click(function() {
-        var chassis = chassi_url;
-        $.ajax({
-            type: 'POST',
-            url: "{{route('fleetslarges.monitoring.grid')}}",
-            async: true,
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "modelo": modelo,
-                "chassis": chassis,
-                "first_date": $('#first_date').val(),
-                "last_date": $('#last_date').val()
-            },
-            success: function(response) {
-                $('#list_grid').html(response);
-            },
-            error: function(error) {
-                if (error.responseJSON.status == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-
-                } else if (error.responseJSON.status == "validation_error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
-
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-
+            if (mymap.hasLayer(marker_event)) {
+                mymap.removeLayer(marker_event);
             }
-        });
+
+            //console.log(data);
+            const planes = data.data;
+            mymap.panTo(new L.LatLng(-27.43641, -48.39365));
+
+            for (var i = 0; i < planes.length; i++) {
+                //console.log(planes[i]);
+                new L.marker([planes[i].lp_latitude, planes[i].lp_longitude])
+                    .bindPopup(planes[i].placa)
+                    .addTo(mymap);
+                icon: truckIcon
+            }
+            Swal.close()
+        }
     });
 </script>
 @endsection

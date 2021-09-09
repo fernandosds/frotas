@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use stdClass;
 
 class MonitoringController extends Controller
 {
@@ -144,5 +145,95 @@ class MonitoringController extends Controller
         }
 
         return response()->view('fleetslarge.monitoring.list', $data);
+    }
+
+    //Dashboard de todos os carros
+
+    public function allCars()
+    {
+        return view('fleetslarge.monitoring.allcars');
+    }
+
+    public function carsPosition()
+    {
+        $customer = $this->customerService->show(Auth::user()->customer_id);
+        $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
+
+        foreach ($data['fleetslarge'] as $data => $dat) {
+            $dados = new stdClass();
+            $dados->placa = $dat['placa'];
+            $dados->lp_latitude = $dat['lp_latitude'];
+            $dados->lp_longitude = $dat['lp_longitude'];
+            $arr[] = $dados;
+            $grid05 = $arr;
+        }
+        return response()->json(['status' => 'success', 'data' => $grid05], 200);
+    }
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    function resultJson($dat)
+    {
+        $arr[] = ([
+            "lp_satelite"               => $dat['lp_satelite'] ?? '',
+            "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
+            "dif_date"                  => $dat['dif_date'] ?? '',
+            "status_veiculo"            => $dat['status_veiculo'] ?? '',
+            "lp_voltagem"               => $dat['lp_voltagem'] ?? '',
+            "sinistrado"                => $dat['sinistrado'] ?? '',
+            "filial"                    => $dat['filial'] ?? '',
+            "status_veiculo"            => $dat['status_veiculo'] ?? '',
+            "status_veiculo_dt"         => $dat['status_veiculo_dt'] ?? '',
+            "modelo_veiculo_aprimorado" => $dat['modelo_veiculo_aprimorado'] ?? '',
+            "placa"                     => $dat['placa'] ?? '',
+            "empresa"                   => $dat['empresa'] ?? '',
+            "r12s_proximos"             => $dat['r12s_proximos'] ?? '',
+            "dif_date"                  => $dat['dif_date'] ?? '',
+            "lp_longitude"              => $dat['lp_longitude'] ?? '',
+            "estado"                    => $dat['estado'] ?? '',
+            "lp_latitude"               => $dat['lp_latitude'] ?? '',
+            "telefone"                  => $dat['telefone'] ?? '',
+            "status"                    => $dat['status'] ?? '',
+            "iccid"                     => $dat['iccid'] ?? '',
+            "chassis"                   => $dat['chassis'] ?? '',
+            "modelo_veiculo"            => $dat['modelo_veiculo'] ?? '',
+            "qtd_dispositivos"          => $dat['qtd_dispositivos'] ?? '',
+            "categoria_veiculo"         => $dat['categoria_veiculo'] ?? '',
+            "cidade"                    => $dat['cidade'] ?? '',
+            "operadora"                 => $dat['operadora'] ?? '',
+            "cliente"                   => $dat['cliente'] ?? '',
+            "data_instalacao"           => $dat['data_instalacao'] ?? '',
+            "cod_empresa"               => $dat['cod_empresa'] ?? '',
+            "codigo_fipe"               => $dat['codigo_fipe'] ?? '',
+            "modelo"                    => $dat['modelo'] ?? '',
+            "point"                     => $dat['point'] ?? '',
+            "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'] ?? '',
+            "versao"                    => $dat['versao'] ?? '',
+            "cliente_foto"              => $dat['cliente_foto'] ?? '',
+            "cliente_cpf"               => $dat['cliente_cpf'] ?? '',
+            "cliente_nome"              => $dat['cliente_nome'] ?? '',
+            "cliente_datadev"           => $dat['cliente_datadev'] ?? '',
+            "cliente_celular"           => $dat['cliente_celular'] ?? '',
+            "cliente_localdev"          => $dat['cliente_localdev'] ?? '',
+            "cliente_local_retirada"    => $dat['cliente_local_retirada'] ?? '',
+            "cliente_contrato"          => $dat['cliente_contrato'] ?? '',
+            "cliente_dataretirada"      => $dat['cliente_dataretirada'] ?? '',
+            "cliente_email"             => $dat['cliente_email'] ?? '',
+            "cliente_endereco"          => $dat['cliente_endereco'] ?? '',
+            "cliente_foto_cnh"          => $dat['cliente_foto_cnh'] ?? '',
+            "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
+            "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
+            "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
+            "dt_entrada"                => $dat['dt_entrada'] ?? '',
+            "t_solicitado_instalado"    => $dat['t_solicitado_instalado'] ?? '',
+            "t_inicio_servico"          => $dat['t_inicio_servico'] ?? '',
+            "dt_inicio_instalacao"      => $dat['dt_inicio_instalacao'] ?? '',
+            "dt_tecnico_acionado"       => $dat['dt_tecnico_acionado'] ?? '',
+            "t_instalacao"              => $dat['t_instalacao'] ?? '',
+
+        ]);
+        return $arr;
     }
 }

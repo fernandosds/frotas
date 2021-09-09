@@ -420,9 +420,15 @@
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('fleetslarges')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Dashboard</span></a></li>
-                       <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/contracts/completed')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Mapa</span></a></li> -->
+                        <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('logistics/contracts/completed')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Mapa</span></a></li> -->
                     </ul>
                 </div>
+            </li>
+            <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
+                <a href="{{route('fleetslarges.monitoring.allCars')}}" class="kt-menu__link ">
+                    <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
+                    <span class="kt-menu__link-text">Mapa Geral</span>
+                </a>
             </li>
 
             @endif
