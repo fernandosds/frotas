@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>SAT Company :: Rastreamento de cargas</title>
+    <title>SAT Company :: Plataforma de Gerenciamento</title>
     <meta name="description" content="Login page example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">

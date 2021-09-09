@@ -58,125 +58,39 @@
     .hidden {
         display: none;
     }
+
+    #returnButton {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 10px;
+        z-index: 400;
+    }
 </style>
 @endsection
 
 @section('content')
 
 <div id="pairing-alert"></div>
-
+<!--
 <div class="kt-portlet kt-portlet--mobile">
 
-    <div class="kt-section" id="div-progress-bar">
-        <div class="progress">
-            <div class="progress-bar progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
-        </div>
+
+
+    <div class="col-sm-2 col-3 my-1">
+        <a href="{{route('fleetslarges.index')}}" class="btn btn-warning mb-2" id="btn-start">Voltar</a>
     </div>
 
-    <!-- HEADER -->
-    <div class="row" style="width: 99%">
-        <div class="col-sm-11">
-            <div class="row div-device-status">
-                <div class="col-sm-1 col-3">
-                    <i class="fa fa-car-alt"></i> <label for="">Placa</label><br />
-                    <b for="" id="placa">---</b>
-                </div>
+</div>-->
 
-                <div class="col-sm-1 col-3">
-                    <i class="fa fa-key"></i> <label for="">Ignição</label><br />
-                    <b for="" id="lp_ignicao">---</b>
-                </div>
-
-
-                <div class="col-sm-1 col-6">
-                    <i class="fa fa-car-alt"></i> <label for="">Velocidade</label><br />
-                    <b for="" id="lp_velocidade">---</b>
-                </div>
-
-
-                <div class="col-sm-2 col-6">
-                    <i class="fa fa-car-side"></i> <label for="">Chassis</label><br />
-                    <b for="" id="chassis">---</b>
-                </div>
-
-                <div class="col-sm-2 col-6">
-                    <i class="fa fa-car-side" id="icon-nivel-bateria"></i> <label for=""> Modelo</label><br />
-                    <b for="" id="modelo_veiculo">---</b>
-                </div>
-
-                <div class="col-sm-2 col-6">
-                    <i class="fa  fa-car-alt"></i> <label for="">Categoria</label><br />
-                    <b for="" id="categoria_veiculo">---</b>
-                </div>
-
-                <div class="col-sm-2 col-6">
-                    <i class="fa fa-rss"></i> <label for="">Última Transmissão</label><br />
-                    <b for="" id="lp_ultima_transmissao">---</b>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-1 col-12 div-btn-start">
-            <div class="form-row align-items-center">
-                <div class="col-sm-2 col-3 my-1">
-                    <a href="{{route('fleetslarges.index')}}" class="btn btn-warning mb-2" id="btn-start">Voltar</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12">
-            <hr />
-            <!--
-            <button type="button" class="btn btn-link modal-grid" data-toggle="modal" data-target="#modalGrid" data-backdrop="static" data-keyboard="false"><i class="fa fa-table"></i> Histórico de Posições</button>
-            <div id="last-address"></div>
-            -->
-        </div>
+<div class="kt-section" id="div-progress-bar">
+    <div class="progress">
+        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
     </div>
-
 </div>
-
 <div id="mapid" class="mapid" style="width: 100%; height: 800px;float:left;"></div>
+<button id="returnButton">Voltar</button>
 
-<div class="modal fade bd-print-grid" id="modal-grid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Imprimir Grid</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6">
-                        De: <br />
-                        <input class="form-control" type="date" min="1" max="72" id="input-date-from" value="">
-                    </div>
-                    <div class="col-lg-6 col-sm-6">
-                        Até: <br />
-                        <input class="form-control" type="date" min="1" max="72" id="input-date-to" value="">
-                    </div>
-                    <div class="col-lg-12 col-sm-12">
-                        <br /><b>Atenção</b> Intervalo máximo de 5 dias<br />
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-block btn-primary" id="btn-print-grid"><i class="fa fa-print"></i> Imprimir</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content" id="modal-content">
-            <div class="center"><i class="fa fa-pulse fa-spinner fa-5x"></i><br />Aguarde... </div>
-        </div>
-    </div>
-</div>
-
-@include('fleetslarge.monitoring.modalGrid')
 
 @endsection
 
@@ -198,21 +112,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
 <script>
-    /**
-     * Pega o chassi atual passado por parâmetro
-     */
-    chassi_url = window.location.href.split('/')[5];
-    var modelo = "";
-
-    var loading = '<i class="fa fa-spinner fa-pulse"></i>';
-    $("#placa").html(loading);
-    $("#lp_ignicao").html(loading);
-    $("#lp_velocidade").html(loading);
-    $("#chassis").html(loading);
-    $("#modelo_veiculo").html(loading);
-    $('#categoria_veiculo').html(loading);
-    $('#lp_ultima_transmissao').html(loading);
-
     var heat = {};
     var marker = {};
     var marker_truck = {};
@@ -222,27 +121,21 @@
     var chassi_device = '';
 
     /* Icons */
-    var boxIcon = new L.Icon({
-        iconUrl: '{{url("markers/marker-box-64.png")}}',
-        iconSize: [64, 64],
-        iconAnchor: [35, 62],
-        popupAnchor: [1, -34],
-    });
-    var eventIcon = new L.Icon({
-        iconUrl: '{{url("markers/marker-event-64.png")}}',
-        iconSize: [64, 64],
-        iconAnchor: [35, 62],
-        popupAnchor: [1, -34],
-    });
-    var truckIcon = new L.Icon({
-        iconUrl: '{{url("markers/marker-car.png")}}',
-        iconSize: [64, 64],
-        iconAnchor: [35, 62],
-        popupAnchor: [1, -34],
-    });
-    console.log(truckIcon);
 
-    var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
+    var redcarIcon = new L.Icon({
+        iconUrl: '{{url("markers/marker-car-red-icon.png")}}',
+        iconSize: [64, 64],
+        iconAnchor: [35, 62],
+        popupAnchor: [1, -34],
+    });
+    var greencarIcon = new L.Icon({
+        iconUrl: '{{url("markers/marker-car-green-icon.png")}}',
+        iconSize: [64, 64],
+        iconAnchor: [35, 62],
+        popupAnchor: [1, -34],
+    });
+
+    var mymap = L.map('mapid').setView([-15.7801, -47.9292], 5);
 
     var baseLayers = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg', {
         attribution: '&copy; <a href="https://www.satcompany.com.br">SAT Company</a>',
@@ -256,7 +149,17 @@
 
     $(document).ready(function() {
         start()
+        lastPosition()
     })
+
+    /**
+     *
+     * Botão voltar
+     */
+    $("#returnButton").click(function() {
+        window.location.href = "{{route('fleetslarges.index')}}";
+    });
+
 
 
     /**
@@ -267,10 +170,19 @@
         $('#div-progress-bar').show();
         progressBar = 100;
         setInterval(function() {
-
+            $('#progress_bar').addClass('progress-bar progress-bar-striped');
+            if (progressBar < 11) {
+                $('#progress_bar').removeClass('progress-bar progress-bar-striped');
+                $('#progress_bar').addClass("progress-bar progress-bar-striped bg-danger");
+            }
             if (progressBar == 0) {
+                $('#progress_bar').removeClass('progress-bar progress-bar-striped bg-danger');
+                $('#progress_bar').addClass('progress-bar progress-bar-striped');
                 progressBar = 100;
-                lastPosition();
+
+                lastPosition(chassi_device);
+                loadIconsDeviceStatus(chassi_device);
+
             } else {
                 progressBar = progressBar - 1;
             }
@@ -279,43 +191,50 @@
         }, 1000);
     }
 
-
     /**
      * Marker - Última posição válida
      */
+    function lastPosition() {
+        $.ajax({
+            url: "{{url('')}}/fleetslarges/monitoring/cars/position/",
+            type: 'GET',
+            success: function(data) {
+                modelo = data.modelo;
+                console.log(data.data)
 
-    $.ajax({
-        url: "{{url('')}}/fleetslarges/monitoring/cars/position/",
-        type: 'GET',
-        success: function(data) {
-           // console.log(data)
+                if (mymap.hasLayer(marker)) {
+                    mymap.removeLayer(marker);
+                }
+                if (mymap.hasLayer(circle)) {
+                    mymap.removeLayer(circle);
+                }
 
-            modelo = data.modelo;
+                if (mymap.hasLayer(marker_event)) {
+                    mymap.removeLayer(marker_event);
+                }
 
-            if (mymap.hasLayer(marker)) {
-                mymap.removeLayer(marker);
+                const planes = data.data;
+                //mymap.panTo(new L.LatLng(-15.7801, -47.9292));
+
+                for (var i = 0; i < planes.length; i++) {
+                    if (planes[i].ignicao == 1) {
+                        new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
+                                icon: greencarIcon
+                            })
+                            .bindPopup('<p>Placa:' + planes[i].placa + '</p> <p>Chassis: ' + planes[i].chassis + '</p>')
+                            .addTo(mymap);
+                    }
+                    if (planes[i].ignicao == 0) {
+                        new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
+                                icon: redcarIcon
+                            })
+                            .bindPopup('<p>Placa:' + planes[i].placa + '</p> <p>Chassis: ' + planes[i].chassis + '</p>')
+                            .addTo(mymap);
+                    }
+                }
+                Swal.close()
             }
-            if (mymap.hasLayer(circle)) {
-                mymap.removeLayer(circle);
-            }
-
-            if (mymap.hasLayer(marker_event)) {
-                mymap.removeLayer(marker_event);
-            }
-
-            //console.log(data);
-            const planes = data.data;
-            mymap.panTo(new L.LatLng(-27.43641, -48.39365));
-
-            for (var i = 0; i < planes.length; i++) {
-                //console.log(planes[i]);
-                new L.marker([planes[i].lp_latitude, planes[i].lp_longitude])
-                    .bindPopup(planes[i].placa)
-                    .addTo(mymap);
-                icon: truckIcon
-            }
-            Swal.close()
-        }
-    });
+        });
+    }
 </script>
 @endsection

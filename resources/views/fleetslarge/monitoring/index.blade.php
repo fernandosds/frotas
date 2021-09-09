@@ -69,7 +69,7 @@
 
     <div class="kt-section" id="div-progress-bar">
         <div class="progress">
-            <div class="progress-bar progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
+            <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
         </div>
     </div>
 
@@ -274,8 +274,14 @@
             $('#div-progress-bar').show();
             progressBar = 100;
             setInterval(function() {
-
+                $('#progress_bar').addClass('progress-bar progress-bar-striped');
+                if (progressBar < 11) {
+                    $('#progress_bar').removeClass('progress-bar progress-bar-striped');
+                    $('#progress_bar').addClass("progress-bar progress-bar-striped bg-danger");
+                }
                 if (progressBar == 0) {
+                    $('#progress_bar').removeClass('progress-bar progress-bar-striped bg-danger');
+                    $('#progress_bar').addClass('progress-bar progress-bar-striped');
                     progressBar = 100;
 
                     lastPosition(chassi_device);

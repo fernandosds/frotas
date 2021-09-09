@@ -164,6 +164,8 @@ class MonitoringController extends Controller
             $dados->placa = $dat['placa'];
             $dados->lp_latitude = $dat['lp_latitude'];
             $dados->lp_longitude = $dat['lp_longitude'];
+            $dados->ignicao = $dat['lp_ignicao'];
+            $dados->chassis = $dat['chassis'];
             $arr[] = $dados;
             $grid05 = $arr;
         }

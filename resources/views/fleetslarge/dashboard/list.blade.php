@@ -169,7 +169,7 @@
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="progress-bar kt-bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
+        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
 
@@ -289,7 +289,7 @@
                     <br />
                     <table id="example" class="display" style="width:50%">
                         <thead>
-                            <tr>
+                            <tr class="headerTable">
                                 <th>Placa</th>
                                 <th style="width: 220px;">Modelo</th>
                                 <th class="hidden">Endereço</th>
@@ -409,24 +409,25 @@
         });
     }
 
-    /**
-     * Reset Grig
-     */
     function resetGrid() {
         // Progress bar
         $('#div-progress-bar-fleetlarge').show();
         progressBar = 100;
         setInterval(function() {
+            $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
+            if (progressBar < 11) {
+                $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-primary');
+                $('#progress_bar_fleetlarge').addClass("progress-bar kt-bg-danger");
+            }
             if (progressBar == 0) {
-                // $("#div-grid-vehicle").load(" #div-grid-vehicle > *");
-                // $("#div-grid-vehicle2").load(" #div-grid-vehicle2 > *");
+                $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-danger');
+                $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
                 reloadValue()
                 progressBar = 100;
             } else {
                 progressBar = progressBar - 1;
             }
             $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
-
         }, 1000);
     }
 
@@ -604,7 +605,26 @@
         $("body").addClass("modal-open");
     });
 
+    /**
+     * Correção Datatable
+     */
+    $(document).on('click', '.paginate_button', function() {
+        reloadValue()
+    });
 
+    /**
+     * Correção Datatable
+     */
+    $(document).on('click', '.headerTable', function() {
+        reloadValue()
+    });
+
+    //dataTables_filter
+    /**
+        $(".dataTables_filter").autocomplete({
+            reloadValue()
+        });
+     */
     /**
      * Valor Dashboard
      */
