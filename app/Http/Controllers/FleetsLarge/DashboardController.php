@@ -53,6 +53,10 @@ class DashboardController extends Controller
     public function index()
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
+        if (empty($customer->hash)) {
+            return redirect('access_denied');
+
+        }
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
         $data['totalJson'] = count($data['fleetslarge']);
 
