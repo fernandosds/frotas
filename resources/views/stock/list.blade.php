@@ -58,7 +58,7 @@
             </table>
 
             <div class="d-flex justify-content-center">
-
+                {!! $devices->links() !!}
             </div>
         </div>
     </div>
