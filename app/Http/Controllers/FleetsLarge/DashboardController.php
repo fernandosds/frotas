@@ -55,12 +55,18 @@ class DashboardController extends Controller
         $customer = $this->customerService->show(Auth::user()->customer_id);
         if (empty($customer->hash)) {
             return redirect('access_denied');
-
         }
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
         $data['totalJson'] = count($data['fleetslarge']);
 
-        return response()->view('fleetslarge.dashboard.list', $data);
+        // Entrar no dashboard Movida
+        if (Auth::user()->customer_id == 7) {
+            return response()->view('fleetslarge.dashboard.movida', $data);
+        }
+        // Entrar no dashboard Santander
+        if (Auth::user()->customer_id == 8) {
+            return response()->view('fleetslarge.dashboard.santander', $data);
+        }
     }
 
     /**

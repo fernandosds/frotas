@@ -3,6 +3,8 @@
 
 namespace App\Services;
 
+use stdClass;
+
 
 class ApiFleetLargeService
 {
@@ -23,13 +25,47 @@ class ApiFleetLargeService
         $this->host_apis = "https://api.satcompany.com.br/";
     }
 
-    /**
-     * @return array
-     */
     public function allCars($hash)
     {
         $url = $this->host . "/" . $hash . ".json";
         return ClientHttp($url);
+    }
+
+    /**
+     * @return array
+     */
+    public function allCarsDashboard($hash)
+    {
+
+        $url = curl_init($this->host . "/" . $hash . ".json");
+        curl_setopt($url, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($url, CURLOPT_FOLLOWLOCATION, true);
+
+        $json = curl_exec($url);
+        curl_close($url);
+
+        $geojson = new stdClass();
+        $geojson->type = "FeatureCollection";
+        $geojson->features = [];
+
+        header('Content-Type: application/json');
+        $items = json_decode($json);
+
+        foreach ($items as $item) {
+            $feature = new stdClass();
+            $feature->type = "Feature";
+            $feature->properties = new stdClass();
+            $feature->properties->id = $item->modelo;
+            $feature->properties->ignicao = $item->lp_ignicao;
+            $feature->properties->chassis = $item->chassis;
+            $feature->properties->placa = $item->placa;
+            $geometry = new stdClass();
+            $geometry->type = "Point";
+            $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];
+            $feature->geometry = $geometry;
+            $geojson->features[] = $feature;
+        }
+        return $geojson;
     }
 
     /**

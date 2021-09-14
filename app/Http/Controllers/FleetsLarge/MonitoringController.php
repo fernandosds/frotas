@@ -157,19 +157,9 @@ class MonitoringController extends Controller
     public function carsPosition()
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
+        $fleetslarge = $this->apiFleetLargeService->allCarsDashboard($customer->hash);
 
-        foreach ($data['fleetslarge'] as $data => $dat) {
-            $dados = new stdClass();
-            $dados->placa = $dat['placa'];
-            $dados->lp_latitude = $dat['lp_latitude'];
-            $dados->lp_longitude = $dat['lp_longitude'];
-            $dados->ignicao = $dat['lp_ignicao'];
-            $dados->chassis = $dat['chassis'];
-            $arr[] = $dados;
-            $grid05 = $arr;
-        }
-        return response()->json(['status' => 'success', 'data' => $grid05], 200);
+        return response()->json($fleetslarge, 200);
     }
 
     /**

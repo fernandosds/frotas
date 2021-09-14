@@ -424,13 +424,13 @@
                     </ul>
                 </div>
             </li>
-            <!--  <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
+            <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                 <a href="{{route('fleetslarges.monitoring.allCars')}}" class="kt-menu__link ">
                     <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
-                   <span class="kt-menu__link-text">Mapa Geral</span>
+                    <span class="kt-menu__link-text">Mapa Geral</span>
                 </a>
             </li>
- -->
+
             @endif
             @endif
         </ul>
