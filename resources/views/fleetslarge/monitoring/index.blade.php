@@ -233,7 +233,7 @@
         popupAnchor: [1, -34],
     });
     var truckIcon = new L.Icon({
-        iconUrl: '{{url("markers/marker-car.png")}}',
+        iconUrl: '{{url("markers/black_icon.png")}}',
         iconSize: [64, 64],
         iconAnchor: [35, 62],
         popupAnchor: [1, -34],
