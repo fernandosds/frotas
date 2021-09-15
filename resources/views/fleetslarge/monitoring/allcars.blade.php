@@ -99,13 +99,13 @@
 
 <script>
     const greenCarIcon = new L.Icon({
-        iconUrl: '{{url("markers/green_icon.png")}}',
+        iconUrl: '{{url("markers/car_green.png")}}',
         iconSize: [64, 64],
         iconAnchor: [35, 62],
         popupAnchor: [1, -34],
     });
     const redCarIcon = new L.Icon({
-        iconUrl: '{{url("markers/red_icon.png")}}',
+        iconUrl: '{{url("markers/car_red.png")}}',
         iconSize: [64, 64],
         iconAnchor: [35, 62],
         popupAnchor: [1, -34],
