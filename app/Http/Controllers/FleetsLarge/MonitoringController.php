@@ -154,10 +154,10 @@ class MonitoringController extends Controller
         return view('fleetslarge.monitoring.allcars');
     }
 
-    public function carsPosition()
+    public function carsPosition($ignition = '')
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
-        $fleetslarge = $this->apiFleetLargeService->allCarsDashboard($customer->hash);
+        $fleetslarge = $this->apiFleetLargeService->allCarsDashboard($customer->hash, $ignition);
 
         return response()->json($fleetslarge, 200);
     }

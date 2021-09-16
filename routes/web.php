@@ -350,7 +350,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'monitoring'], function () {
             Route::get('/{chassis?}', 'FleetsLarge\MonitoringController@index')->name('fleetslarges.monitoring.index');
             Route::get('/cars/all', 'FleetsLarge\MonitoringController@allCars')->name('fleetslarges.monitoring.allCars');
-            Route::get('/cars/position', 'FleetsLarge\MonitoringController@carsPosition')->name('fleetslarges.monitoring.carsPosition');
+            Route::get('/cars/position/{ignition?}', 'FleetsLarge\MonitoringController@carsPosition')->name('fleetslarges.monitoring.carsPosition');
             Route::get('/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPosition')->name('fleetslarges.monitoring.lastPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');
         });

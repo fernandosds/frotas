@@ -34,8 +34,17 @@ class ApiFleetLargeService
     /**
      * @return array
      */
-    public function allCarsDashboard($hash)
+    public function allCarsDashboard($hash, $ignition = '')
     {
+        $filter = '';
+        if ($ignition === '1') {
+            $filter = 1;
+        }
+
+        if ($ignition === '0') {
+            $filter = 0;
+        }
+
 
         $url = curl_init($this->host . "/" . $hash . ".json");
         curl_setopt($url, CURLOPT_RETURNTRANSFER, 1);
@@ -48,7 +57,6 @@ class ApiFleetLargeService
         $geojson->type = "FeatureCollection";
         $geojson->features = [];
 
-        header('Content-Type: application/json');
         $items = json_decode($json);
 
         foreach ($items as $item) {
@@ -63,7 +71,14 @@ class ApiFleetLargeService
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];
             $feature->geometry = $geometry;
-            $geojson->features[] = $feature;
+
+            if ($filter === '') {
+                $geojson->features[] = $feature;
+            } else {
+                if ($filter == $feature->properties->ignicao) {
+                    $geojson->features[] = $feature;
+                }
+            }
         }
         return $geojson;
     }

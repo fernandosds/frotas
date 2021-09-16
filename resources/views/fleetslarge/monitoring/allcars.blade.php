@@ -61,8 +61,8 @@
 
     #returnButton {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 64px;
+        right: 10px;
         padding: 10px;
         z-index: 400;
     }
@@ -116,7 +116,7 @@
     function createRealtimeLayer(url, container) {
         return realtime = L.realtime(url, {
             interval: 30 * 1000,
-            container: clusterGroup,
+            container: container,
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {
                         'icon': feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon
@@ -136,7 +136,9 @@
         }),
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
-        realtime = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition')}}", subgroup).addTo(map);
+        subgroup2 = L.featureGroup.subGroup(clusterGroup),
+        realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -149,9 +151,15 @@
         }
     ).addTo(map);
 
-    realtime.on('update', function() {
-        realtime.getBounds();
-    });
+    L.control.layers(null, {
+            'Ignição ON': realtime1,
+            'Ignição OFF': realtime2
+        }).addTo(map);
+
+
+        realtime1.on('update', function () {
+            realtime1.getBounds();
+        });
 
     /**
      *
