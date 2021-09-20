@@ -12,8 +12,8 @@ function ClientHttp(String $url, array $post = [])
 {
 
     $baseRequest = Http::withHeaders(['Content-Type' => 'application/json'])
-                                    ->withOptions(['verify' => false])
-                                    ->timeout(120);
+        ->withOptions(['verify' => false])
+        ->timeout(120);
 
     if (!empty($post)) {
         $response = $baseRequest->post($url, $post);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FleetsLarge;
 
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
+use App\Services\FleetLargeMovidaService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,7 @@ use PhpParser\Node\Expr\Print_;
 class DashboardController extends Controller
 {
 
+    private $fleetLargeMovidaService;
 
     /**
      * @var $apiFleetLargeService
@@ -32,9 +34,10 @@ class DashboardController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
+        $this->fleetLargeMovidaService = $fleetLargeMovidaService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
 
@@ -56,15 +59,18 @@ class DashboardController extends Controller
         if (empty($customer->hash)) {
             return redirect('access_denied');
         }
-        $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
-        $data['totalJson'] = count($data['fleetslarge']);
 
         // Entrar no dashboard Movida
         if (Auth::user()->customer_id == 7) {
+            $data['fleetslarge'] = $this->fleetLargeMovidaService->allCars($customer->hash);
+            return  response()->json($data['fleetslarge']);
+            $data['totalJson'] = count($data['fleetslarge']);
             return response()->view('fleetslarge.dashboard.movida', $data);
         }
         // Entrar no dashboard Santander
         if (Auth::user()->customer_id == 8) {
+            $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
+            $data['totalJson'] = count($data['fleetslarge']);
             return response()->view('fleetslarge.dashboard.santander', $data);
         }
     }
