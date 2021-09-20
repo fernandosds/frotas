@@ -352,6 +352,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/cars/all', 'FleetsLarge\MonitoringController@allCars')->name('fleetslarges.monitoring.allCars');
             Route::get('/cars/position/{ignition?}', 'FleetsLarge\MonitoringController@carsPosition')->name('fleetslarges.monitoring.carsPosition');
             Route::get('/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPosition')->name('fleetslarges.monitoring.lastPosition');
+            Route::get('/movida/lojas', 'FleetsLarge\MonitoringController@movidaPosition')->name('fleetslarges.monitoring.movidaPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');
         });
     });
