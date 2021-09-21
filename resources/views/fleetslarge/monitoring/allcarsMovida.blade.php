@@ -187,9 +187,9 @@
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup),
         realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
 
-
-    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", clusterGroup )
-    map.addLayer(clusterGroup);
+    var markersCluster = L.markerClusterGroup().addTo(map);
+    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
+    map.addLayer(markersCluster);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
