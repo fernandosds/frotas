@@ -76,8 +76,8 @@
     }
 
     #map {
-        height: 90vh;
-        width: 90vw;
+        height: 100vh;
+        width: 100vw;
     }
 
     .customBtnLeafLet{
