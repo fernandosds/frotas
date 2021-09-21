@@ -163,10 +163,9 @@
                 const planes = data.data;
                 let markers;
                 for (var i = 0; i < planes.length; i++) {
-                    container.addLayer(new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
+                    new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
                         icon: logoMovidaIcon
-                    })
-                       .bindPopup('<p>Loja: ' + planes[i].Loja + '</p>'));
+                    }).bindPopup('<p>Loja: ' + planes[i].Loja + '</p>').addTo(container);
                 }
             }
         });
@@ -186,7 +185,7 @@
         subgroup3 = L.featureGroup.subGroup(clusterGroup),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
         realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map),
-        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", subgroup3).addTo(map);
+        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", subgroup3);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
