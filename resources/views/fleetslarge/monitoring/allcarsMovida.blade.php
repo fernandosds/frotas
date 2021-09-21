@@ -212,6 +212,7 @@
         realtime1.getBounds();
     });
 
+    /*
     let editableLayers = new L.FeatureGroup();
         map.addLayer(editableLayers);
 
@@ -329,8 +330,8 @@
                     .always(function () {
                         alert("complete");
                     });*/
-            }
-        });
+        //    }
+        //});
 
     /**
      *
