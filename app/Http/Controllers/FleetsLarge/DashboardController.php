@@ -63,7 +63,7 @@ class DashboardController extends Controller
         // Entrar no dashboard Movida
         if (Auth::user()->customer_id == 7) {
             $data['fleetslarge'] = $this->fleetLargeMovidaService->allCars($customer->hash);
-            return  response()->json($data['fleetslarge']);
+            //return  response()->json($data['fleetslarge']);
             $data['totalJson'] = count($data['fleetslarge']);
             return response()->view('fleetslarge.dashboard.movida', $data);
         }

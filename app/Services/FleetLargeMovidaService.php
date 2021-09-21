@@ -27,6 +27,7 @@ class FleetLargeMovidaService extends ApiFleetLargeService
     private function relationshipEventWithCar(Collection $events,  $cars)
     {
         $newCars = [];
+        //$cars = json_encode($cars, true);
         foreach ($cars as $car) {
             $car['event'] = [];
             if ($events->firstWhere('placa_veiculo', $car['placa'])) {
@@ -42,6 +43,13 @@ class FleetLargeMovidaService extends ApiFleetLargeService
     private function getByHash($hash)
     {
         $url = $this->host . "/" . $hash . ".json";
+        return ClientHttp($url);
+    }
+
+
+    public function getLojaMovida()
+    {
+        $url = $this->host . "/c0a36838-870e-4df0-ad91-939148f3eb04.json";
         return ClientHttp($url);
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FleetsLarge;
 
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
+use App\Services\FleetLargeMovidaService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
@@ -30,9 +31,10 @@ class MonitoringController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
+        $this->fleetLargeMovidaService = $fleetLargeMovidaService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
 
@@ -50,6 +52,45 @@ class MonitoringController extends Controller
     {
         return view('fleetslarge.monitoring.index');
     }
+
+    /**
+     * @param String $device
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function movidaPosition()
+    {
+        $lojasMovida = $this->fleetLargeMovidaService->getLojaMovida();
+        foreach ($lojasMovida as $data => $dat) {
+            $arr = ([
+                "operacao"                    => $dat['Tem Operacao?'],
+                "lp_longitude"                => substr($dat['Longitude'], 0, -4),
+                "lp_latitude"                 => substr($dat['Latitude'], 0, -4),
+                "sigla"                       => $dat['Sigla'],
+                "complemento"                 => $dat['Complemento'],
+                "status"                      => $dat['Status'],
+                "cep"                         => $dat['CEP'],
+                "endereco"                    => $dat['Endereço'],
+                "uf"                          => $dat['UF'],
+                "numero"                      => $dat['Número'],
+                "horario_atendimento"         => $dat['Horário de Atendimento'],
+                "_id"                         => $dat['_id'],
+                "bairro"                      => $dat['Bairro'],
+                "tipo_filial"                 => $dat['Tipo Filial'],
+                "regiao"                      => $dat['Região'],
+                "loja"                        => $dat['Loja'],
+                "mapa"                        => $dat['Mapa'],
+                "cidade"                      => $dat['Cidade'],
+                "referencias"                 => $dat['Referencias'],
+            ]);
+            $lojaMovida[] = $arr;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' =>  $lojaMovida
+        ], 200);
+    }
+
 
     /**
      * @param String $device
@@ -124,6 +165,7 @@ class MonitoringController extends Controller
         }
         return response()->json(['status' => 'success'], 200);
     }
+
     /**
      * @param null $chassis
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -151,7 +193,15 @@ class MonitoringController extends Controller
 
     public function allCars()
     {
-        return view('fleetslarge.monitoring.allcars');
+        // Entrar no Mapa todos os carros Movida
+        if (Auth::user()->customer_id == 7) {
+            return view('fleetslarge.monitoring.allcarsMovida');
+        }
+
+        // Entrar no Mapa todos os carros Santander
+        if (Auth::user()->customer_id == 8) {
+            return view('fleetslarge.monitoring.allcars');
+        }
     }
 
     public function carsPosition($ignition = '')

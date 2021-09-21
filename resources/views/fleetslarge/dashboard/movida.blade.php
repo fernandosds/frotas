@@ -303,6 +303,8 @@
                                 <th class="santander" style="width: 220;">Filial</th>
                                 <th class="santander">Status</th>
                                 <th class="hidden">Empresa</th>
+                                <th class="hidden">Ocorrência</th>
+                                <th class="hidden">Status</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
@@ -322,6 +324,8 @@
                                 <td class="santander">{{$driver['filial']}}</td>
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
                                 <td class="hidden">{{$driver['empresa']}}</td>
+                                <td class="hidden">---</td>
+                                <td class="hidden">---</td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
