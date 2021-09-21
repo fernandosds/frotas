@@ -303,13 +303,15 @@
                                 <th class="santander" style="width: 220;">Filial</th>
                                 <th class="santander">Status</th>
                                 <th class="hidden">Empresa</th>
-                                <th class="hidden">Ocorrência</th>
-                                <th class="hidden">Status</th>
+                                <th>Ocorrência</th>
+                                <th>Status</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
                             @foreach ($fleetslarge as $driver)
+
+
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
@@ -324,8 +326,8 @@
                                 <td class="santander">{{$driver['filial']}}</td>
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
                                 <td class="hidden">{{$driver['empresa']}}</td>
-                                <td class="hidden">---</td>
-                                <td class="hidden">---</td>
+                                <td><?php print_r($driver['event'] != [] ? $driver['event']['ocorrencia'] : ' Sem ocorrência')  ?></td>
+                                <td><?php print_r($driver['event'] != [] ? $driver['event']['status'] : ' ')  ?></td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
@@ -342,6 +344,7 @@
                                     </button>
                                     <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver['chassis']}}" class="btn btn-warning btn-elevate btn-circle btn-icon"><span class="fa fa-map-marked-alt"></span></a>
                                 </td>
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -424,7 +427,7 @@
     }
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13];
+        columns = [0, 1, 2, 4, 5, 6, 7, 9, 10, 11, 13, 14];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
