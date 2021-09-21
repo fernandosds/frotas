@@ -180,15 +180,13 @@
             zoomControl: true,
             maxZoom: 18,
             minZoom: 3,
-        }),
-        clusterGroup = L.markerClusterGroup().addTo(map),
-        subgroup = L.featureGroup.subGroup(clusterGroup),
-        subgroup2 = L.featureGroup.subGroup(clusterGroup),
-        realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
+        });
 
     var markersCluster = L.markerClusterGroup().addTo(map);
-    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
+    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster );
+    let subgroup2 = L.featureGroup.subGroup(markersCluster)
+    let realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup);
+    let realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
     map.addLayer(markersCluster);
 
     L.tileLayer(
