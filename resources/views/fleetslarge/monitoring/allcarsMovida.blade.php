@@ -155,17 +155,24 @@
         })
     }
 
-    function lastPosition(url, container) {
-            return realtime = L.realtime(url, {
-                interval: 30 * 1000000000,
-                container: container,
-                pointToLayer: function (feature, latlng) {
-                    return L.marker(latlng, {
-                        'icon': logoMovidaIcon
-                    });
+    function lastPosition(url) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                const planes = data.data;
+                let markers;
+                for (var i = 0; i < planes.length; i++) {
+                   markers.push(new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
+                        icon: logoMovidaIcon
+                    })
+                       .bindPopup('<p>Loja: ' + planes[i].Loja + '</p>'));
                 }
-            })
-        }
+
+                return markers;
+            }
+        });
+    }
 
 
     var map = L.map('map', {
@@ -178,10 +185,9 @@
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
-        subgroup3 = L.featureGroup.subGroup(clusterGroup),
+        subgroup3 = L.featureGroup.subGroup(clusterGroup, lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}")),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2),
-        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", subgroup3);
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
