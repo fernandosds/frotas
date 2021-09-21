@@ -61,9 +61,13 @@
 
     #returnButton {
         position: absolute;
-        top: 64px;
-        right: 10px;
+        top: 10px;
+        left: 55px;
         padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0,0,0,0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
         z-index: 400;
     }
 
@@ -75,15 +79,32 @@
         height: 90vh;
         width: 90vw;
     }
+
+    .customBtnLeafLet{
+        box-sizing: border-box;
+        background-clip: padding-box;
+        border: 2px solid rgba(0,0,0,0.2);
+        border-radius: 4px;
+        width: 34px;
+        height: 34px;
+        position: absolute;
+        z-index: 4444;
+        right: 10px;
+        top: 266px;
+    }
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css" />
+
 @endsection
 
 @section('content')
 
-<div id="map" class="map" style="width: 100%; height: 800px;float:left;"></div>
+<div id="map" class="map"></div>
+<button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
 
 @endsection
@@ -96,6 +117,7 @@
 <script src="https://unpkg.com/leaflet.featuregroup.subgroup"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-realtime/2.2.0/leaflet-realtime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
 <script>
     const greenCarIcon = new L.Icon({
@@ -133,25 +155,17 @@
         })
     }
 
-    /**
-     * Marker - Última posição válida
-     */
-    function lastPosition(url) {
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(data) {
-                const planes = data.data;
-                for (var i = 0; i < planes.length; i++) {
-                    new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
-                            icon: logoMovidaIcon
-                        })
-                        .addTo(map);
+    function lastPosition(url, container) {
+            return realtime = L.realtime(url, {
+                interval: 30 * 1000,
+                container: container,
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        'icon': logoMovidaIcon
+                    });
                 }
-            }
-        });
-        return true;
-    }
+            })
+        }
 
 
     var map = L.map('map', {
@@ -164,9 +178,10 @@
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
+        subgroup3 = L.featureGroup.subGroup(clusterGroup),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
-    movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}");
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2),
+        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", subgroup3);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -181,13 +196,134 @@
 
     L.control.layers(null, {
         'Ignição ON': realtime1,
-        'Ignição OFF': realtime2
+        'Ignição OFF': realtime2,
+        'Lojas': movidaLojas
     }).addTo(map);
 
 
     realtime1.on('update', function() {
         realtime1.getBounds();
     });
+
+    let editableLayers = new L.FeatureGroup();
+        map.addLayer(editableLayers);
+
+        var MyCustomMarker = L.Icon.extend({
+            options: {
+                iconUrl: '{{url("markers/car_blue.png")}}',
+                iconSize: [64, 64],
+                iconAnchor: [35, 62],
+                popupAnchor: [1, -34],
+            }
+        });
+
+        let options = {
+            position: 'topright',
+            draw: {
+                polyline: {
+                    shapeOptions: {
+                        color: '#f357a1',
+                        weight: 10
+                    }
+                },
+                polygon: {
+                    allowIntersection: false, // Restricts shapes to simple polygons
+                    drawError: {
+                        color: '#e1e100', // Color the shape will turn when intersects
+                        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                    },
+                    shapeOptions: {
+                        color: '#bada55'
+                    }
+                },
+                circle: false, // Turns off this drawing tool
+                rectangle: {
+                    shapeOptions: {
+                        clickable: false
+                    }
+                },
+                marker: {
+                    icon: new MyCustomMarker()
+                }
+            },
+            edit: {
+                featureGroup: editableLayers, //REQUIRED!!
+                remove: false
+            }
+        };
+
+        let drawControl = new L.Control.Draw(options);
+        map.addControl(drawControl);
+
+        map.on(L.Draw.Event.CREATED, function (e) {
+            let type = e.layerType,
+                layer = e.layer;
+
+            if (type === 'marker') {
+                layer.bindPopup('A popup!');
+            }
+
+            editableLayers.addLayer(layer);
+        });
+
+        $('.btnSaveDraw').click(function () {
+            // Extract GeoJson from featureGroup
+            var payloadMap = editableLayers.toGeoJSON();
+            if (payloadMap.features.length > 0) {
+                let payload = {
+                    "_token": "{{ csrf_token() }}", data: { markers: payloadMap, name: '' }
+                }
+                Swal.fire({
+                    title: 'Dê um nome para suas marcações',
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Salvar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (name) => {
+                        payload.data.name = name;
+                        return fetch("{{route('map.markers.save')}}", {
+                            method: "POST", headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }, body: JSON.stringify(payload)
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.json())
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.value.isConfirmed) {
+                        Swal.fire({
+                            title: `Nova Marcação criada`,
+                        });
+                        editableLayers.clearLayers();
+                    }
+                })
+                /*$.ajax("{{route('map.markers.save')}}", {method: "POST", data:{
+                        "_token": "{{ csrf_token() }}",data:data}})
+                    .done(function () {
+                        alert("success");
+                    })
+                    .fail(function () {
+                        alert("error");
+                    })
+                    .always(function () {
+                        alert("complete");
+                    });*/
+            }
+        });
 
     /**
      *
