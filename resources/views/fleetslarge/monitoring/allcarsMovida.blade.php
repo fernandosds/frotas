@@ -112,7 +112,7 @@
 @section('scripts')
 
 <!-- Make sure you put this AFTER Leaflet's CSS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.0.6/dist/leaflet.markercluster-src.js"></script>
 <script src="https://unpkg.com/leaflet.featuregroup.subgroup"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
