@@ -165,8 +165,8 @@
                 for (var i = 0; i < planes.length; i++) {
                     var marker = L.marker(L.latLng(planes[i].lp_latitude, planes[i].lp_longitude), {
                         icon: logoMovidaIcon
-                    }).bindPopup('<p>Loja: ' + planes[i].Loja + '</p>');
-                    marker.bindPopup(title);
+                    });
+                    marker.bindPopup('<p>Loja: ' + planes[i].Loja + '</p>');
                     markerList.push(marker);
                 }
             }
