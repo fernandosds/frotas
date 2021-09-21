@@ -91,6 +91,16 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'host' => env('DB_HOST', '10.20.3.165'),
+            'port' => env('DB_PORT', 27017),
+            'database' => env('DB_DATABASE', 'SAT_GeoObjects'),
+            'options' => [
+                'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
+            ],
+        ],
+
     ],
 
     /*
@@ -123,7 +133,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

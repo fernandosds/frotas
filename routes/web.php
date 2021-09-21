@@ -353,6 +353,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/cars/position/{ignition?}', 'FleetsLarge\MonitoringController@carsPosition')->name('fleetslarges.monitoring.carsPosition');
             Route::get('/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPosition')->name('fleetslarges.monitoring.lastPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');
+            Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
         });
     });
 
