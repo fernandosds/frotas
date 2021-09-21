@@ -184,6 +184,7 @@
 
     var markersCluster = L.markerClusterGroup().addTo(map);
     lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster );
+    let subgroup = L.featureGroup.subGroup(markersCluster)
     let subgroup2 = L.featureGroup.subGroup(markersCluster)
     let realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup);
     let realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
