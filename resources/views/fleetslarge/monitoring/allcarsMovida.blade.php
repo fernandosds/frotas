@@ -157,7 +157,7 @@
 
     function lastPosition(url, container) {
             return realtime = L.realtime(url, {
-                interval: 30 * 1000,
+                interval: 30 * 1000000000,
                 container: container,
                 pointToLayer: function (feature, latlng) {
                     return L.marker(latlng, {
