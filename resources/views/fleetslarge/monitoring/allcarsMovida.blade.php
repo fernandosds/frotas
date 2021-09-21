@@ -209,7 +209,7 @@
     L.control.layers(null, {
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
-        //'Lojas': markersCluster
+        'Lojas': markersCluster
     }).addTo(map);
 
 
