@@ -155,7 +155,7 @@
         })
     }
 
-    function lastPosition(url, container) {
+    /*function lastPosition(url, container) {
             var markerList = [];
         $.ajax({
             url: url,
@@ -172,8 +172,28 @@
             }
 
         });
-        return markerList;
-    }
+        return L.layerGroup(markerList);
+    }*/
+
+    /**
+         * Marker - Última posição válida
+         */
+        function lastPosition(url) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    const planes = data.data;
+                    for (var i = 0; i < planes.length; i++) {
+                        new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
+                            icon: logoMovidaIcon
+                        })
+                            .addTo(map);
+                    }
+                }
+            });
+            return true;
+        }
 
 
     var map = L.map('map', {
@@ -186,9 +206,12 @@
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
-        movidaLojas = L.featureGroup.subGroup(clusterGroup, lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}")).addTo(map),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map),
+        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}");
+        // movidaLojas = L.featureGroup.subGroup(clusterGroup, [lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}")]).addTo(map),
+
+
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
