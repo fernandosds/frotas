@@ -155,7 +155,7 @@
         })
     }
 
-    function lastPosition(url) {
+    function lastPosition(url, container) {
         $.ajax({
             url: url,
             type: 'GET',
@@ -163,13 +163,11 @@
                 const planes = data.data;
                 let markers;
                 for (var i = 0; i < planes.length; i++) {
-                   markers.push(new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
+                    container.addLayer(new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
                         icon: logoMovidaIcon
                     })
                        .bindPopup('<p>Loja: ' + planes[i].Loja + '</p>'));
                 }
-
-                return markers;
             }
         });
     }
@@ -185,9 +183,10 @@
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
-        subgroup3 = L.featureGroup.subGroup(clusterGroup, lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}")),
+        subgroup3 = L.featureGroup.subGroup(clusterGroup),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map),
+        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", subgroup3).addTo(map);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
