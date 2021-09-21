@@ -188,12 +188,12 @@
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
-        realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
+        realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
 
-    var markersCluster = L.markerClusterGroup().addTo(map);
-    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
-    map.addLayer(markersCluster);
+    //var markersCluster = L.markerClusterGroup().addTo(map);
+    //lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
+    //map.addLayer(markersCluster);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -209,7 +209,7 @@
     L.control.layers(null, {
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
-        'Lojas': markersCluster
+        //'Lojas': markersCluster
     }).addTo(map);
 
 
