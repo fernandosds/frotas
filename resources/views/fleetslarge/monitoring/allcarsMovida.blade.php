@@ -155,7 +155,7 @@
         })
     }
 
-    /*function lastPosition(url, container) {
+    function lastPosition(url, container) {
             var markerList = [];
         $.ajax({
             url: url,
@@ -167,33 +167,11 @@
                         icon: logoMovidaIcon
                     });
                     marker.bindPopup('<p>Loja: ' + planes[i].Loja + '</p>');
-                    markerList.push(marker);
+                    markersCluster.addLayer(marker);
                 }
             }
-
         });
-        return L.layerGroup(markerList);
-    }*/
-
-    /**
-         * Marker - Última posição válida
-         */
-        function lastPosition(url) {
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function (data) {
-                    const planes = data.data;
-                    for (var i = 0; i < planes.length; i++) {
-                        new L.marker([planes[i].lp_latitude, planes[i].lp_longitude], {
-                            icon: logoMovidaIcon
-                        })
-                            .addTo(map);
-                    }
-                }
-            });
-            return true;
-        }
+    }
 
 
     var map = L.map('map', {
@@ -207,11 +185,11 @@
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map),
-        movidaLojas = lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}");
-        // movidaLojas = L.featureGroup.subGroup(clusterGroup, [lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}")]).addTo(map),
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
 
-
+    var markersCluster = L.markerClusterGroup().addTo(map);
+    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
+    map.addLayer(markersCluster);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -227,7 +205,7 @@
     L.control.layers(null, {
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
-        'Lojas': movidaLojas
+        'Lojas': markersCluster
     }).addTo(map);
 
 
