@@ -146,6 +146,10 @@
         return realtime = L.realtime(url, {
             interval: 30 * 1000,
             container: container,
+            getFeatureId: function (f) {
+                return f.properties.placa;
+            },
+            cache: true,
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {
                         'icon': feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon
@@ -166,7 +170,7 @@
                     var marker = L.marker(L.latLng(planes[i].lp_latitude, planes[i].lp_longitude), {
                         icon: logoMovidaIcon
                     });
-                    marker.bindPopup('<p>Loja: ' + planes[i].Loja + '</p>');
+                    marker.bindPopup('<p>Loja: ' + planes[i].loja + '</p>');
                     markersCluster.addLayer(marker);
                 }
             }
@@ -180,14 +184,15 @@
             zoomControl: true,
             maxZoom: 18,
             minZoom: 3,
-        });
+        }),
+        clusterGroup = L.markerClusterGroup().addTo(map),
+        subgroup = L.featureGroup.subGroup(clusterGroup),
+        subgroup2 = L.featureGroup.subGroup(clusterGroup),
+        realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup),
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
 
     var markersCluster = L.markerClusterGroup().addTo(map);
-    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster );
-    let subgroup = L.featureGroup.subGroup(markersCluster)
-    let subgroup2 = L.featureGroup.subGroup(markersCluster)
-    let realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup);
-    let realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
+    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
     map.addLayer(markersCluster);
 
     L.tileLayer(
@@ -202,9 +207,9 @@
     ).addTo(map);
 
     L.control.layers(null, {
-        'Lojas': markersCluster,
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
+        'Lojas': markersCluster
     }).addTo(map);
 
 
@@ -212,7 +217,6 @@
         realtime1.getBounds();
     });
 
-    /*
     let editableLayers = new L.FeatureGroup();
         map.addLayer(editableLayers);
 
@@ -330,8 +334,8 @@
                     .always(function () {
                         alert("complete");
                     });*/
-        //    }
-        //});
+            }
+        });
 
     /**
      *
