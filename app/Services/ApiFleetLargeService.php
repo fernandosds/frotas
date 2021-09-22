@@ -67,6 +67,13 @@ class ApiFleetLargeService
             $feature->properties->ignicao = $item->lp_ignicao;
             $feature->properties->chassis = $item->chassis;
             $feature->properties->placa = $item->placa;
+            $feature->properties->filial = $item->filial;
+            $feature->properties->cliente_local_retirada = $item->cliente_local_retirada;
+            $feature->properties->cliente_datadev = $item->cliente_datadev;
+            $feature->properties->cliente_dataretirada = $item->cliente_dataretirada;
+            $feature->properties->cliente_distancia_endereco_residencial = $item->cliente_distancia_endereco_residencial;
+            $feature->properties->cliente_distancia_local_retirada = $item->cliente_distancia_local_retirada;
+            $feature->properties->cliente_distancia_local_devolucao = $item->cliente_distancia_local_devolucao;
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];
