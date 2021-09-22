@@ -128,6 +128,10 @@
         padding: 5px;
     }
 
+    .marker-check-label{
+        padding-left: 5px;
+    }
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -243,7 +247,7 @@
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
         'Lojas': markersCluster
-    }).addTo(map);
+    }, { collapsed: false }).addTo(map);
 
 
     realtime1.on('update', function() {
@@ -287,7 +291,6 @@
             },
             edit: {
                 featureGroup: editableLayers, //REQUIRED!!
-                remove: false
             }
         };
 
@@ -351,6 +354,7 @@
                             title: `Nova Marcação criada`,
                         });
                         editableLayers.clearLayers();
+                        getList();
                     }
                 });
             }
@@ -368,18 +372,28 @@
            $('.markerList').toggle();
     });
 
+    $('body').on('click', 'input.check-markers', function () {
+            // do something
+        });
+
+    $('.markerList ').on('click',function(){
+
+        console.log('aki');
+    });
+
     function getList(){
         $.ajax("{{route('map.markers.list')}}", {
                 method: "GET",
             })
             .done(function (response) {
                 const data = response.result;
+                $('.markerList').empty();
                 data.map(function(element){
 
                     $('.markerList').append('<div class="markerItem">'+
-                        '<input type="checkbox" class="form-check-input" id="'+
-                        element._id+'">'+
-                        '<label class="form-check-label" for="'+element._id+'">'+
+                        '<input type="checkbox" class="check-markers"' +
+                        'id="'+ element._id+'"  value="'+element._id +'">'+
+                        '<label class="marker-check-label" for="'+element._id+'">'+
                         element.name+'</label></div >');
                 });
             })
