@@ -246,9 +246,8 @@ class DashboardController extends Controller
     public function showEventPlaca($placa)
     {
         $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
-
+        $events = [];
         foreach ($data['ocorrences'] as $data => $dat) {
-
             if ($dat['placa_veiculo'] == $placa) {
                 $events[] = $dat;
             }

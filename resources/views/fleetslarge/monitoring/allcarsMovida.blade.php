@@ -139,12 +139,9 @@
         popupAnchor: [1, -34],
     });
 
-
-
-
     function createRealtimeLayer(url, container) {
         return realtime = L.realtime(url, {
-            interval: 30 * 1000,
+            interval: 60 * 1000,
             container: container,
             getFeatureId: function (f) {
                 return f.properties.placa;
@@ -176,7 +173,6 @@
             }
         });
     }
-
 
     var map = L.map('map', {
             center: [-12.452992588205499, -50.42986682751686],
@@ -303,6 +299,7 @@
                             }, body: JSON.stringify(payload)
                         })
                             .then(response => {
+                                console.log(response);
                                 if (!response.ok) {
                                     throw new Error(response.json())
                                 }
