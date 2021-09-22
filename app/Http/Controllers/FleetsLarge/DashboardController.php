@@ -63,7 +63,6 @@ class DashboardController extends Controller
         // Entrar no dashboard Movida
         if (Auth::user()->customer_id == 7) {
             $data['fleetslarge'] = $this->fleetLargeMovidaService->allCars($customer->hash);
-            //return  response()->json($data['fleetslarge']);
             $data['totalJson'] = count($data['fleetslarge']);
             return response()->view('fleetslarge.dashboard.movida', $data);
         }
@@ -244,8 +243,17 @@ class DashboardController extends Controller
      * @param CarRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update()
+    public function showEventPlaca($placa)
     {
+        $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
+
+        foreach ($data['ocorrences'] as $data => $dat) {
+
+            if ($dat['placa_veiculo'] == $placa) {
+                $events[] = $dat;
+            }
+        }
+        return response()->view('fleetslarge.dashboard.event_movida.list', compact('events'));
     }
 
     /**

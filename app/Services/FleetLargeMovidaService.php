@@ -51,6 +51,12 @@ class FleetLargeMovidaService extends ApiFleetLargeService
         return ClientHttp($url);
     }
 
+    public function getEventCar($hash)
+    {
+        $url = $this->getByHash($hash);
+        return $url;
+    }
+
     /**
      * @param String $device
      * @param Int $minutes

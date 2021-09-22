@@ -204,54 +204,16 @@
                             </div>
                         </div>
                         <br />
-                        <div class="row hidden" id="timeline">
-                            <div class="col-12">
-                                <br />
-                                <h4>Timeline da solicitação</h4>
-                                <section class="time-line-box">
-                                    <div class="swiper-container text-center">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide">
-                                                <div class="timestamp"><span id="dt_entrada"></span></div>
-                                                <div id="status_dt_entrada" class="status"><span>Entrada</span></div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="timestamp"><span id="dt_tecnico_acionado"></span></div>
-                                                <div id="status_dt_tecnico_acionado" class="status"><span>Técnico acionado</span></div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="timestamp"><span id="dt_inicio_instalacao"></span></div>
-                                                <div id="status_dt_inicio_instalacao" class="status"><span>Inicio instalação</span></div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="timestamp"><span id="dt_termino_instalacao"></span></div>
-                                                <div id="status_dt_termino_instalacao" class="status"><span>Término instalação</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <br />
                 <br />
                 <div class="row">
                     <div class="col-12">
-                        <h4>Dados do Rastreador</h4>
-                        <br />
-                        <div style="width: 400px; height: 100px; overflow-y: scroll;">
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
+                        <div class="center" id="list_events">
+
                         </div>
+                        <br />
                         <br />
                     </div>
                 </div>

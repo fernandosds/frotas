@@ -339,7 +339,7 @@
                                         <i class="fa fa-search-plus"></i>
                                     </button>
                                     @endif
-                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['empresa']=='Santander' ) style="display: none;" @endif @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
+                                    <button type="button" class="btn btn-info btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalClient" data-chassi="{{$driver['chassis']}}" @if( $driver['status_veiculo'] !='LOCACAO' ) disabled @endif>
                                         <i class="fa fa-file-contract"></i>
                                     </button>
                                     <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver['chassis']}}" class="btn btn-warning btn-elevate btn-circle btn-icon"><span class="fa fa-map-marked-alt"></span></a>
@@ -355,7 +355,7 @@
     </div>
 </div>
 
-@include('fleetslarge.dashboard.modalVehicle')
+@include('fleetslarge.dashboard.modalMovida')
 
 @endsection
 
@@ -485,7 +485,6 @@
             url: "{{url('')}}/fleetslarges/find/" + chassi,
             type: 'GET',
             success: function(response) {
-                console.log(response)
                 $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
                 $('.placa').val(response.placa)
                 $('.empresa').val(response.empresa)
@@ -556,7 +555,8 @@
                     });
                 }
 
-                updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+                eventStatus(response.placa)
+
             },
             error: function(error) {
                 if (error.responseJSON.status == "internal_error") {
@@ -593,39 +593,17 @@
         });
     })
 
-
     /**
-     * Update Timeline cliente Santander
+     * Adicionando Status de Evento
      */
-    function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, dt_termino_instalacao) {
-        if (dt_entrada != '') {
-            $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
-            $('#status_dt_entrada').addClass('timelinePointActive');
-        } else {
-            $('#dt_entrada').html('Aguarde...')
-        }
-
-        if (dt_tecnico_acionado != '') {
-            $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
-            $('#status_dt_tecnico_acionado').addClass('timelinePointActive');
-        } else {
-            $('#dt_tecnico_acionado').html('Aguarde...')
-        }
-
-        if (dt_inicio_instalacao != '') {
-            $('#dt_inicio_instalacao').html(dt_inicio_instalacao.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
-            $('#status_dt_inicio_instalacao').addClass('timelinePointActive');
-        } else {
-            $('#dt_inicio_instalacao').html('Aguarde...')
-        }
-
-        if (dt_termino_instalacao != '') {
-            $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*).*/, '$3.$2.$1 às $4:$5:$6'))
-            $('#status_dt_termino_instalacao').addClass('timelinePointActive');
-        } else {
-            $('#dt_termino_instalacao').html('Aguarde...')
-        }
-
+    function eventStatus(placa) {
+        $.ajax({
+            url: "{{url('')}}/fleetslarges/show/event/" + placa,
+            type: 'GET',
+            success: function(response) {
+                $('#list_events').html(response)
+            }
+        })
     }
 </script>
 @endsection
