@@ -398,9 +398,11 @@
     })
 
     $(document).on('click', '.spanText', function() {
-        console.log($(this).attr('value'));
+        // console.log($(this).attr('value'));
+        dataTable.search($(this).attr('value')).draw();
 
     });
+
 
     function reloadValue() {
         $.ajax({
