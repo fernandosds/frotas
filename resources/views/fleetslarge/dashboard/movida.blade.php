@@ -326,8 +326,8 @@
                                 <td class="santander">{{$driver['filial']}}</td>
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
                                 <td class="hidden">{{$driver['empresa']}}</td>
-                                <td><?php print_r($driver['event'] != [] ? $driver['event']['ocorrencia'] : ' Sem ocorrência')  ?></td>
-                                <td><?php print_r($driver['event'] != [] ? $driver['event']['status'] : ' ')  ?></td>
+                                <td>{{ count($driver['event']) > 0 ? $driver['event']['ocorrencia'] : ' Sem ocorrência' }}</td>
+                                <td>{{ count($driver['event']) > 0 ? $driver['event']['status'] : ' '}}</td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')

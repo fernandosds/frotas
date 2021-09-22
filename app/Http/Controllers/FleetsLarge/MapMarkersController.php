@@ -19,7 +19,7 @@ class MapMarkersController extends Controller
     public function save(MapMarkersRequest $request)
     {
         try {
-            $this->mapMarkersService->save($request->data->name, $request->data->markers);
+            //$this->mapMarkersService->save($request->data->name, $request->data->markers);
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true], 201);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false], 400);
