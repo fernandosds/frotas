@@ -184,7 +184,6 @@
             },
             cache: true,
             pointToLayer: function(feature, latlng) {
-                console.log(feature)
                 return L.marker(latlng, {
                         'icon': feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon
                     })
@@ -192,8 +191,8 @@
                         '<br /><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
                         '<strong><br>Filial:</strong>  ' + feature.properties.filial + ' ' +
                         '<strong><br>Local de retirada:</strong>  ' + feature.properties.cliente_local_retirada + ' ' +
-                        '<strong><br>Data da retirada:</strong>  ' + feature.properties.cliente_dataretirada + ' ' +
-                        '<strong><br>Data de devolução:</strong>  ' + feature.properties.cliente_datadev + ' ' +
+                        '<strong><br>Data da retirada:</strong>  ' + feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8') + ' ' +
+                        '<strong><br>Data de devolução:</strong>  ' + feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8') + ' ' +
                         '<strong><br> Dist. loja devol. | Dist. local ret. | Dist. end. resid. </strong> <br> ' +
                         ' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;' + feature.properties.cliente_distancia_local_devolucao + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_local_retirada + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_endereco_residencial + '.km' +
                         ' ');
