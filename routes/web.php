@@ -356,6 +356,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/movida/lojas', 'FleetsLarge\MonitoringController@movidaPosition')->name('fleetslarges.monitoring.movidaPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');
             Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
+            Route::get('/map/markers', 'FleetsLarge\MapMarkersController@getList')->name('map.markers.list');
         });
     });
 

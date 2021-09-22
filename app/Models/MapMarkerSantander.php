@@ -2,10 +2,21 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model;
 
-class MapMarkerSantander extends Model
+use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+
+class MapMarkerSantander extends Eloquent
 {
+    protected $connection = 'mongodb';
+    protected $collection = 'Movida_Polygons';
 
-    protected $collection = 'Santander_Polygons';
+    protected $fillable = [
+        'name', 'markers'
+    ];
+
+    /*public function create($data)
+    //{
+
+    }*/
 }
