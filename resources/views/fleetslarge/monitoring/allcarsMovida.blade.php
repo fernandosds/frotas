@@ -103,7 +103,7 @@
         position: absolute;
         z-index: 4444;
         left: 10px;
-        top: 193px;
+        top: 223px;
     }
 
     .markerList {
@@ -275,31 +275,32 @@
     });
 
     let options = {
-        position: 'topleft',
-        draw: {
-            polyline: false,
-            circlemarker: false,
-            marker: false,
-            circle: false, // Turns off this drawing tool
-            polygon: {
-                allowIntersection: false, // Restricts shapes to simple polygons
-                drawError: {
-                    color: '#e1e100', // Color the shape will turn when intersects
+            position: 'topleft',
+            draw: {
+                polyline: false,
+                circlemarker: false,
+                marker: false,
+                circle: false, // Turns off this drawing tool
+                polygon: {
+                    allowIntersection: false, // Restricts shapes to simple polygons
+                    drawError: {
+                        color: '#e1e100', // Color the shape will turn when intersects
+                    },
+                    shapeOptions: {
+                        color: '#bada55'
+                    }
                 },
-                shapeOptions: {
-                    color: '#bada55'
-                }
-            },
-            rectangle: {
-                shapeOptions: {
-                    clickable: false
-                }
+                rectangle: {
+                    shapeOptions: {
+                        clickable: false
+                    }
+                },
+
             },
             edit: {
                 featureGroup: editableLayers, //REQUIRED!!
             }
-        }
-    };
+        };
 
     let drawControl = new L.Control.Draw(options);
     map.addControl(drawControl);
@@ -385,13 +386,30 @@
         $('.markerList').toggle();
     });
 
-    $('body').on('click', 'input.check-markers', function () {
-            // do something
-        });
+    let ListLayers = [];
 
-    $('.markerList ').on('click',function(){
-
-        console.log('aki');
+    $('.markerList').on('click','.checkMarkers',function(){
+        if($(this).is(':checked')){
+            $.ajax("{{route('map.markers.list')}}/"+ $(this).val(), {
+                method: "GET",
+            })
+                .done(function (response) {
+                    const data = response.result;
+                     var geojson = L.geoJson(data.markers).addTo(map);
+                    //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
+                })
+                .fail(function () { });
+        }else{
+             $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
+                method: "GET",
+            })
+                .done(function (response) {
+                    const data = response.result;
+                    map.removeLayer(data.markers);
+                    //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
+                })
+                .fail(function () { });
+        }
     });
 
     function getList(){
@@ -404,7 +422,7 @@
                 data.map(function(element){
 
                     $('.markerList').append('<div class="markerItem">'+
-                        '<input type="checkbox" class="check-markers"' +
+                        '<input type="checkbox" class="checkMarkers"' +
                         'id="'+ element._id+'"  value="'+element._id +'">'+
                         '<label class="marker-check-label" for="'+element._id+'">'+
                         element.name+'</label></div >');

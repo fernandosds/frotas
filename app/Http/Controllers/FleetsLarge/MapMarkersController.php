@@ -32,7 +32,17 @@ class MapMarkersController extends Controller
 
         try {
             $result = $this->mapMarkersService->getList();
-            return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 201);
+            return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 200);
+        } catch (\Exception $e) {
+            return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $result = $this->mapMarkersService->getMarker($id);
+            return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
         }
