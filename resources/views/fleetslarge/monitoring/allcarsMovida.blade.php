@@ -199,13 +199,19 @@
             type: 'GET',
             success: function(data) {
                 const planes = data.data;
-                console.log(planes)
                 for (var i = 0; i < planes.length; i++) {
                     var marker = L.marker(L.latLng(planes[i].lp_latitude, planes[i].lp_longitude), {
                         icon: logoMovidaIcon
                     });
-                    //marker.bindPopup('<p>Loja: ' + planes[i].loja + '</p>');
-                    marker.bindPopup('<strong>' + planes[i].loja + '</strong><br /><br>' + planes[i].loja + '<br>' + planes[i].loja + '');
+                    marker.bindPopup('<strong>' + planes[i].loja +
+                        '<br /><br> Endereço:</strong> ' + planes[i].endereco + ' ' +
+                        '<strong><br>Complemento:</strong>  ' + planes[i].complemento + ' ' +
+                        '<strong><br>Número:</strong> ' + planes[i].numero + ' ' +
+                        '<strong><br>Bairro:</strong>  ' + planes[i].bairro + ' ' +
+                        '<strong><br>Cidade:</strong>  ' + planes[i].cidade + ' ' +
+                        '<strong><br>Região:</strong>  ' + planes[i].regiao + ' ' +
+                        '<strong><br>Sigla:</strong>  ' + planes[i].sigla + ' ' +
+                        '<strong><br /><br> Horário de Atendimento:</strong> ' + planes[i].horario_atendimento + ' ');
                     markersCluster.addLayer(marker);
                 }
             }
