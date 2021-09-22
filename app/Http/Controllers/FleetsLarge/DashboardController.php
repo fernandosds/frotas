@@ -174,6 +174,10 @@ class DashboardController extends Controller
         try {
             if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
                 $empresa = 'Movida';
+                $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
+
+                $grid06 = $data['ocorrences'];
+
                 foreach ($data['fleetslarge'] as $data => $dat) {
 
                     if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
@@ -223,7 +227,8 @@ class DashboardController extends Controller
                     "grid02"   => $grid02 ?? '',
                     "grid03"   => $grid03 ?? '',
                     "grid04"   => $grid04 ?? '',
-                    "grid05"   => $grid05 ?? ''
+                    "grid05"   => $grid05 ?? '',
+                    "grid06"   => $grid06 ?? ''
                 ]
             ], 200);
         } catch (\Exception $e) {

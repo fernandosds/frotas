@@ -65,19 +65,19 @@
         left: 55px;
         padding: 10px;
         z-index: 400;
-        border: 2px solid rgba(0,0,0,0.2);
+        border: 2px solid rgba(0, 0, 0, 0.2);
         background-clip: padding-box;
         border-radius: 5px;
         z-index: 400;
     }
 
-    #markerButton{
+    #markerButton {
         position: absolute;
         top: 10px;
         left: 125px;
         padding: 10px;
         z-index: 400;
-        border: 2px solid rgba(0,0,0,0.2);
+        border: 2px solid rgba(0, 0, 0, 0.2);
         background-clip: padding-box;
         border-radius: 5px;
         z-index: 400;
@@ -93,10 +93,10 @@
         width: 100vw;
     }
 
-    .customBtnLeafLet{
+    .customBtnLeafLet {
         box-sizing: border-box;
         background-clip: padding-box;
-        border: 2px solid rgba(0,0,0,0.2);
+        border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         width: 34px;
         height: 34px;
@@ -106,8 +106,8 @@
         top: 193px;
     }
 
-    .markerList{
-        border: 2px solid rgba(0,0,0,0.2);
+    .markerList {
+        border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         min-width: 34px;
         min-height: 34px;
@@ -124,7 +124,7 @@
         font-weight: bold;
     }
 
-    .markerItem{
+    .markerItem {
         padding: 5px;
     }
 
@@ -184,7 +184,7 @@
         return realtime = L.realtime(url, {
             interval: 60 * 1000,
             container: container,
-            getFeatureId: function (f) {
+            getFeatureId: function(f) {
                 return f.properties.placa;
             },
             cache: true,
@@ -198,17 +198,25 @@
     }
 
     function lastPosition(url, container) {
-            var markerList = [];
+        var markerList = [];
         $.ajax({
             url: url,
             type: 'GET',
-            success: function (data) {
+            success: function(data) {
                 const planes = data.data;
                 for (var i = 0; i < planes.length; i++) {
                     var marker = L.marker(L.latLng(planes[i].lp_latitude, planes[i].lp_longitude), {
                         icon: logoMovidaIcon
                     });
-                    marker.bindPopup('<p>Loja: ' + planes[i].loja + '</p>');
+                    marker.bindPopup('<strong>' + planes[i].loja +
+                        '<br /><br> Endereço:</strong> ' + planes[i].endereco + ' ' +
+                        '<strong><br>Complemento:</strong>  ' + planes[i].complemento + ' ' +
+                        '<strong><br>Número:</strong> ' + planes[i].numero + ' ' +
+                        '<strong><br>Bairro:</strong>  ' + planes[i].bairro + ' ' +
+                        '<strong><br>Cidade:</strong>  ' + planes[i].cidade + ' ' +
+                        '<strong><br>Região:</strong>  ' + planes[i].regiao + ' ' +
+                        '<strong><br>Sigla:</strong>  ' + planes[i].sigla + ' ' +
+                        '<strong><br /><br> Horário de Atendimento:</strong> ' + planes[i].horario_atendimento + ' ');
                     markersCluster.addLayer(marker);
                 }
             }
@@ -229,7 +237,7 @@
         realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
 
     var markersCluster = L.markerClusterGroup().addTo(map);
-    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster )
+    lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster)
     map.addLayer(markersCluster);
 
     L.tileLayer(
@@ -255,110 +263,115 @@
     });
 
     let editableLayers = new L.FeatureGroup();
-        map.addLayer(editableLayers);
+    map.addLayer(editableLayers);
 
-        var MyCustomMarker = L.Icon.extend({
-            options: {
-                iconUrl: '{{url("markers/car_blue.png")}}',
-                iconSize: [64, 64],
-                iconAnchor: [35, 62],
-                popupAnchor: [1, -34],
-            }
-        });
+    var MyCustomMarker = L.Icon.extend({
+        options: {
+            iconUrl: '{{url("markers/car_blue.png")}}',
+            iconSize: [64, 64],
+            iconAnchor: [35, 62],
+            popupAnchor: [1, -34],
+        }
+    });
 
-        let options = {
-            position: 'topleft',
-            draw: {
-                polyline: false,
-                circlemarker:false,
-                marker: false,
-                circle: false, // Turns off this drawing tool
-                polygon: {
-                    allowIntersection: false, // Restricts shapes to simple polygons
-                    drawError: {
-                        color: '#e1e100', // Color the shape will turn when intersects
-                    },
-                    shapeOptions: {
-                        color: '#bada55'
-                    }
+    let options = {
+        position: 'topleft',
+        draw: {
+            polyline: false,
+            circlemarker: false,
+            marker: false,
+            circle: false, // Turns off this drawing tool
+            polygon: {
+                allowIntersection: false, // Restricts shapes to simple polygons
+                drawError: {
+                    color: '#e1e100', // Color the shape will turn when intersects
                 },
-                rectangle: {
-                    shapeOptions: {
-                        clickable: false
-                    }
-                },
-
+                shapeOptions: {
+                    color: '#bada55'
+                }
+            },
+            rectangle: {
+                shapeOptions: {
+                    clickable: false
+                }
             },
             edit: {
                 featureGroup: editableLayers, //REQUIRED!!
             }
-        };
+        }
+    };
 
-        let drawControl = new L.Control.Draw(options);
-        map.addControl(drawControl);
+    let drawControl = new L.Control.Draw(options);
+    map.addControl(drawControl);
 
-        map.on(L.Draw.Event.CREATED, function (e) {
-            let type = e.layerType,
-                layer = e.layer;
+    map.on(L.Draw.Event.CREATED, function(e) {
+        let type = e.layerType,
+            layer = e.layer;
 
-            if (type === 'marker') {
-                layer.bindPopup('A popup!');
-            }
+        if (type === 'marker') {
+            layer.bindPopup('A popup!');
+        }
 
-            editableLayers.addLayer(layer);
-        });
+        editableLayers.addLayer(layer);
+    });
 
-        $('.btnSaveDraw').click(function () {
-            // Extract GeoJson from featureGroup
-            var payloadMap = editableLayers.toGeoJSON();
-            if (payloadMap.features.length > 0) {
-                let payload = {
-                    "_token": "{{ csrf_token() }}", data: { markers: payloadMap, name: '' }
+    $('.btnSaveDraw').click(function() {
+        // Extract GeoJson from featureGroup
+        var payloadMap = editableLayers.toGeoJSON();
+        if (payloadMap.features.length > 0) {
+            let payload = {
+                "_token": "{{ csrf_token() }}",
+                data: {
+                    markers: payloadMap,
+                    name: ''
                 }
-                Swal.fire({
-                    title: 'Dê um nome para suas marcações',
-                    input: 'text',
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Salvar',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (name) => {
-                        payload.data.name = name;
-                       return fetch("{{route('map.markers.save')}}", {
-                            method: "POST", headers: {
+            }
+            Swal.fire({
+                title: 'Dê um nome para suas marcações',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Salvar',
+                showLoaderOnConfirm: true,
+                preConfirm: (name) => {
+                    payload.data.name = name;
+                    return fetch("{{route('map.markers.save')}}", {
+                            method: "POST",
+                            headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
-                            }, body: JSON.stringify(payload)
+                            },
+                            body: JSON.stringify(payload)
                         })
-                            .then(response => {
-                                if (!response.ok) {
-                                    return response.json().then(text => {
-                                        throw new Error(text.errors['data.name'][0]);
-                                    })
-                                }
-                                return response.json()
-                            })
-                            .catch(error => {
-                               console.log(error)
-                                Swal.showValidationMessage(
-                                    error
-                                )
-                            });
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-                }).then((result) => {
-                    if (result.value.isConfirmed) {
-                        Swal.fire({
-                            title: `Nova Marcação criada`,
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(text => {
+                                    throw new Error(text.errors['data.name'][0]);
+                                })
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            Swal.showValidationMessage(
+                                error
+                            )
                         });
-                        editableLayers.clearLayers();
-                        getList();
-                    }
-                });
-            }
-        });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.value.isConfirmed) {
+                    Swal.fire({
+                        title: `Nova Marcação criada`,
+                    });
+                    editableLayers.clearLayers();
+                    getList();
+                }
+            });
+        }
+    });
 
     /**
      *
@@ -368,8 +381,8 @@
         window.location.href = "{{route('fleetslarges.index')}}";
     });
 
-    $("#markerButton").click(function () {
-           $('.markerList').toggle();
+    $("#markerButton").click(function() {
+        $('.markerList').toggle();
     });
 
     $('body').on('click', 'input.check-markers', function () {
@@ -385,7 +398,7 @@
         $.ajax("{{route('map.markers.list')}}", {
                 method: "GET",
             })
-            .done(function (response) {
+            .done(function(response) {
                 const data = response.result;
                 $('.markerList').empty();
                 data.map(function(element){
@@ -397,8 +410,7 @@
                         element.name+'</label></div >');
                 });
             })
-            .fail(function () {
-            });
+            .fail(function() {});
     }
     getList();
 </script>
