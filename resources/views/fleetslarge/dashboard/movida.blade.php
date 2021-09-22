@@ -208,8 +208,20 @@
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusSinistro"></span> </h1>
-                <p class="card-text h5"><span id="statusCard03">Total de veículos sinistrados.</p>
+                <div class="kt-portlet__body">
+                    <div class="kt-portlet__content">
+                        <h1 class="card-title display-4"><span id="statusSinistro"></span> </h1>
+                        <p class="card-text h5"><span id="statusCard03">Total de veículos sinistrados.</p>
+                    </div>
+                </div>
+                <br />
+                <div class="kt-portlet__body">
+                    <div class="kt-portlet__content">
+                        <h2 class="card-text display-4">
+                            <p class="card-text h5"> <span id="statusCard06">Total de ocorrências.</p>
+                        </h2>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -228,47 +240,6 @@
                 <br />
                 <h1 class="card-title display-4"><span id="statusSemComunicacao"></h1>
                 <p class="card-text h5"><span id="statusCard05">Total de veículos sem comunicação.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br />
-<br />
-<div class="row hidden" id="dashboardSantander">
-    <div class="col-xl-3">
-        <div class="card text-white bg-primary col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusSinistro"></span> </h1>
-                <p class="card-text h5"><span id="statusCard06"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3">
-        <div class="card text-white bg-primary col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusParadoEmLoja"></h1>
-                <p class="card-text h5"><span id="statusCard07"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3" id='divCard05'>
-        <div class="card text-white bg-primary  col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusSemComunicacao"></h1>
-                <p class="card-text h5"><span id="statusCard08"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3" id='divCard05'>
-        <div class="card text-white bg-primary  col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusSemComunicacao"></h1>
-                <p class="card-text h5"><span id="statusCard09"></p>
             </div>
         </div>
     </div>
