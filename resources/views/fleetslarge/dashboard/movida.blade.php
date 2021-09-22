@@ -161,6 +161,39 @@
         height: 100%;
         position: relative;
     }
+
+    .text-white {
+        color: #fff !important;
+        border-radius: 10px;
+        box-shadow: 0 6px 6px 2px #9898
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-clip: border-box;
+        border: 1px solid #ebedf2;
+        height: 160px;
+    }
+
+    .card-body {
+        position: absolute;
+        margin-top: 1%;
+        -webkit-box-flex: 1;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+        width: auto;
+        height: 10px;
+    }
+
+    .row {
+        margin-top: 17px;
+    }
 </style>
 @endsection
 
@@ -178,7 +211,9 @@
         <div class="card text-white bg-success col-md-12">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4">{{$totalJson}}</h1>
+                <h1 class="card-title display-4">{{$totalJson}}
+                    <span class="fa fa-car-side"></span>
+                </h1>
                 <p class="card-text h5" id="">Quantidade de veículos.</p>
             </div>
         </div>
@@ -187,8 +222,11 @@
         <div class="card text-white col-md-12 bg-success" id="divColor01">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> <span id="statusComunicando"></h1>
-                <p class="card-text h5"><span id="statusCard01">Total de veículos comunicando.</p>
+                <h1 class="card-title display-4">
+                    <span class="spanText" id="statusComunicando" value="texto">&nbsp;</span>
+                    <span class="fa fa-rss"></span>
+                </h1>
+                <p class="card-text h5">Veículos comunicando.</p>
             </div>
         </div>
     </div>
@@ -196,8 +234,11 @@
         <div class="card text-white col-md-12 bg-warning" id="divColor02">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusAvaria"></h1>
-                <p class="card-text h5"><span id="statusCard02">Total de veículos com avaria.</p>
+                <h1 class="card-title display-4">
+                    <span class="spanText" id="statusAvaria" value="avaria">&nbsp;</span>
+                    <span class="fa fa-car-crash"></span>
+                </h1>
+                <p class="card-text h5"><span id="statusCard02">Veículos com avaria.</p>
             </div>
         </div>
     </div>
@@ -207,19 +248,29 @@
     <div class="col-xl-4" id="dashboardSinistro">
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
-                <br />
-                <div class="kt-portlet__body">
-                    <div class="kt-portlet__content">
-                        <h1 class="card-title display-4"><span id="statusSinistro"></span> </h1>
-                        <p class="card-text h5"><span id="statusCard03">Total de veículos sinistrados.</p>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="kt-portlet__body">
+                            <div class="kt-portlet__content">
+                                <h1 class="card-title display-4">
+                                    <span class="spanText" id="statusSinistro">&nbsp;</span>
+                                    <span class="fa fa-car"></span>
+                                </h1>
+                                <p class="card-text h5"><span id="statusCard03">Veículos sinistrados.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <div class="kt-portlet__body">
-                    <div class="kt-portlet__content">
-                        <h2 class="card-text display-4">
-                            <p class="card-text h5"> <span id="statusCard06">Total de ocorrências.</p>
-                        </h2>
+                    <hr width=“2” size=“100”>
+                    <div class="col-6">
+                        <div class="kt-portlet__body">
+                            <div class="kt-portlet__content">
+                                <h1 class="card-title display-4">
+                                    <span class="spanText" id="statusOcorrencia" value="Roubo/Furto">&nbsp;</span>
+                                    <span class="fa fa-phone"></span>
+                                </h1>
+                                <p class="card-text h5">Ocorrências.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -229,8 +280,11 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor04">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusParadoEmLoja"></h1>
-                <p class="card-text h5"><span id="statusCard04">Total de veículos parado em loja.</p>
+                <h1 class="card-title display-4">
+                    <span class="spanText" id="statusParadoEmLoja">&nbsp;</span>
+                    <span class="fa fa-car"></span>
+                </h1>
+                <p class="card-text h5"><span id="statusCard04">Veículos parado em loja.</p>
             </div>
         </div>
     </div>
@@ -238,8 +292,11 @@
         <div class="card text-white col-md-12 bg-warning" id='divColor05'>
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusSemComunicacao"></h1>
-                <p class="card-text h5"><span id="statusCard05">Total de veículos sem comunicação.</p>
+                <h1 class="card-title display-4">
+                    <span class="spanText" id="statusSemComunicacao">&nbsp;</span>
+                    <span class="fa fa-warehouse"></span>
+                </h1>
+                <p class="card-text h5"><span id="statusCard05">Veículos sem comunicação.</p>
             </div>
         </div>
     </div>
@@ -340,6 +397,11 @@
         reloadValue()
     })
 
+    $(document).on('click', '.spanText', function() {
+        console.log($(this).attr('value'));
+
+    });
+
     function reloadValue() {
         $.ajax({
             url: "{{route('fleetslarges.showAllStatus')}}",
@@ -369,6 +431,12 @@
                     $('#statusComunicando').html(0)
                 } else {
                     $('#statusComunicando').html(response.data.grid01.length)
+                }
+
+                if (response.data.grid06 == "") {
+                    $('#statusOcorrencia').html(0)
+                } else {
+                    $('#statusOcorrencia').html(response.data.grid06.length)
                 }
 
             }
