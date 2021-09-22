@@ -27,18 +27,18 @@ class DashboardController extends Controller
      * @var ApiDeviceService
      * @var CustomerService
      */
-    private $apiDeviceServic;
+    private $apiDeviceService;
 
     /**
      * BoardingController constructor.
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceService, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
-        $this->apiDeviceServic = $apiDeviceServic;
+        $this->apiDeviceService = $apiDeviceService;
         $this->customerService = $customerService;
 
         $this->data = [

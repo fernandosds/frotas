@@ -71,6 +71,19 @@
         z-index: 400;
     }
 
+    #markerButton{
+        position: absolute;
+        top: 10px;
+        left: 125px;
+        padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0,0,0,0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        z-index: 400;
+
+    }
+
     .content {
         background-color: #666;
     }
@@ -89,8 +102,30 @@
         height: 34px;
         position: absolute;
         z-index: 4444;
-        right: 10px;
-        top: 266px;
+        left: 10px;
+        top: 193px;
+    }
+
+    .markerList{
+        border: 2px solid rgba(0,0,0,0.2);
+        border-radius: 4px;
+        min-width: 34px;
+        min-height: 34px;
+        position: absolute;
+        padding: 5px 15px;
+        z-index: 4445;
+        left: 125px;
+        top: 60px;
+        background: #f0f0f0;
+        display: none;
+        opacity: 0.8;
+        flex-direction: column;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .markerItem{
+        padding: 5px;
     }
 
 </style>
@@ -106,6 +141,8 @@
 <div id="map" class="map"></div>
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
+<button id="markerButton">Marcações</button>
+<div class='markerList'></div>
 
 @endsection
 
@@ -226,33 +263,27 @@
         });
 
         let options = {
-            position: 'topright',
+            position: 'topleft',
             draw: {
-                polyline: {
-                    shapeOptions: {
-                        color: '#f357a1',
-                        weight: 10
-                    }
-                },
+                polyline: false,
+                circlemarker:false,
+                marker: false,
+                circle: false, // Turns off this drawing tool
                 polygon: {
                     allowIntersection: false, // Restricts shapes to simple polygons
                     drawError: {
                         color: '#e1e100', // Color the shape will turn when intersects
-                        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
                     },
                     shapeOptions: {
                         color: '#bada55'
                     }
                 },
-                circle: false, // Turns off this drawing tool
                 rectangle: {
                     shapeOptions: {
                         clickable: false
                     }
                 },
-                marker: {
-                    icon: new MyCustomMarker()
-                }
+
             },
             edit: {
                 featureGroup: editableLayers, //REQUIRED!!
@@ -292,24 +323,26 @@
                     showLoaderOnConfirm: true,
                     preConfirm: (name) => {
                         payload.data.name = name;
-                        return fetch("{{route('map.markers.save')}}", {
+                       return fetch("{{route('map.markers.save')}}", {
                             method: "POST", headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             }, body: JSON.stringify(payload)
                         })
                             .then(response => {
-                                console.log(response);
                                 if (!response.ok) {
-                                    throw new Error(response.json())
+                                    return response.json().then(text => {
+                                        throw new Error(text.errors['data.name'][0]);
+                                    })
                                 }
                                 return response.json()
                             })
                             .catch(error => {
+                               console.log(error)
                                 Swal.showValidationMessage(
-                                    `Request failed: ${error}`
+                                    error
                                 )
-                            })
+                            });
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
@@ -319,18 +352,7 @@
                         });
                         editableLayers.clearLayers();
                     }
-                })
-                /*$.ajax("{{route('map.markers.save')}}", {method: "POST", data:{
-                        "_token": "{{ csrf_token() }}",data:data}})
-                    .done(function () {
-                        alert("success");
-                    })
-                    .fail(function () {
-                        alert("error");
-                    })
-                    .always(function () {
-                        alert("complete");
-                    });*/
+                });
             }
         });
 
@@ -341,5 +363,29 @@
     $("#returnButton").click(function() {
         window.location.href = "{{route('fleetslarges.index')}}";
     });
+
+    $("#markerButton").click(function () {
+           $('.markerList').toggle();
+    });
+
+    function getList(){
+        $.ajax("{{route('map.markers.list')}}", {
+                method: "GET",
+            })
+            .done(function (response) {
+                const data = response.result;
+                data.map(function(element){
+
+                    $('.markerList').append('<div class="markerItem">'+
+                        '<input type="checkbox" class="form-check-input" id="'+
+                        element._id+'">'+
+                        '<label class="form-check-label" for="'+element._id+'">'+
+                        element.name+'</label></div >');
+                });
+            })
+            .fail(function () {
+            });
+    }
+    getList();
 </script>
 @endsection

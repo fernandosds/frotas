@@ -93,12 +93,9 @@ return [
 
         'mongodb' => [
             'driver' => 'mongodb',
-            'host' => env('DB_HOST', '10.20.3.165'),
-            'port' => env('DB_PORT', 27017),
-            'database' => env('DB_DATABASE', 'SAT_GeoObjects'),
-            'options' => [
-                'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
-            ],
+            'host' => env('DB_HOST_MONGO', '10.20.3.165'),
+            'port' => env('DB_PORT_MONGO', 27017),
+            'database' => env('DB_DATABASE_MONGO', 'SAT_GeoObjects'),
         ],
 
     ],
