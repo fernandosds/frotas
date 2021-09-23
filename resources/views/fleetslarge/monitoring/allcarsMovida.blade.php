@@ -103,7 +103,7 @@
         position: absolute;
         z-index: 4444;
         left: 10px;
-        top: 193px;
+        top: 223px;
     }
 
     .markerList {
@@ -127,6 +127,11 @@
     .markerItem {
         padding: 5px;
     }
+
+    .marker-check-label{
+        padding-left: 5px;
+    }
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -258,7 +263,7 @@
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
         'Lojas': markersCluster
-    }).addTo(map);
+    }, { collapsed: false }).addTo(map);
 
 
     realtime1.on('update', function() {
@@ -278,33 +283,32 @@
     });
 
     let options = {
-        position: 'topleft',
-        draw: {
-            polyline: false,
-            circlemarker: false,
-            marker: false,
-            circle: false, // Turns off this drawing tool
-            polygon: {
-                allowIntersection: false, // Restricts shapes to simple polygons
-                drawError: {
-                    color: '#e1e100', // Color the shape will turn when intersects
+            position: 'topleft',
+            draw: {
+                polyline: false,
+                circlemarker: false,
+                marker: false,
+                circle: false, // Turns off this drawing tool
+                polygon: {
+                    allowIntersection: false, // Restricts shapes to simple polygons
+                    drawError: {
+                        color: '#e1e100', // Color the shape will turn when intersects
+                    },
+                    shapeOptions: {
+                        color: '#bada55'
+                    }
                 },
-                shapeOptions: {
-                    color: '#bada55'
-                }
-            },
-            rectangle: {
-                shapeOptions: {
-                    clickable: false
-                }
-            },
+                rectangle: {
+                    shapeOptions: {
+                        clickable: false
+                    }
+                },
 
-        },
-        edit: {
-            featureGroup: editableLayers, //REQUIRED!!
-            remove: false
-        }
-    };
+            },
+            edit: {
+                featureGroup: editableLayers, //REQUIRED!!
+            }
+        };
 
     let drawControl = new L.Control.Draw(options);
     map.addControl(drawControl);
@@ -372,6 +376,7 @@
                         title: `Nova Marcação criada`,
                     });
                     editableLayers.clearLayers();
+                    getList();
                 }
             });
         }
@@ -389,19 +394,46 @@
         $('.markerList').toggle();
     });
 
-    function getList() {
+    let ListLayers = [];
+
+    $('.markerList').on('click','.checkMarkers',function(){
+        if($(this).is(':checked')){
+            $.ajax("{{route('map.markers.list')}}/"+ $(this).val(), {
+                method: "GET",
+            })
+                .done(function (response) {
+                    const data = response.result;
+                     var geojson = L.geoJson(data.markers).addTo(map);
+                    //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
+                })
+                .fail(function () { });
+        }else{
+             $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
+                method: "GET",
+            })
+                .done(function (response) {
+                    const data = response.result;
+                    map.removeLayer(data.markers);
+                    //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
+                })
+                .fail(function () { });
+        }
+    });
+
+    function getList(){
         $.ajax("{{route('map.markers.list')}}", {
                 method: "GET",
             })
             .done(function(response) {
                 const data = response.result;
-                data.map(function(element) {
+                $('.markerList').empty();
+                data.map(function(element){
 
-                    $('.markerList').append('<div class="markerItem">' +
-                        '<input type="checkbox" class="form-check-input" id="' +
-                        element._id + '">' +
-                        '<label class="form-check-label" for="' + element._id + '">' +
-                        element.name + '</label></div >');
+                    $('.markerList').append('<div class="markerItem">'+
+                        '<input type="checkbox" class="checkMarkers"' +
+                        'id="'+ element._id+'"  value="'+element._id +'">'+
+                        '<label class="marker-check-label" for="'+element._id+'">'+
+                        element.name+'</label></div >');
                 });
             })
             .fail(function() {});

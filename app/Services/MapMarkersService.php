@@ -39,4 +39,13 @@ class MapMarkersService
             return $e;
         }
     }
+
+    public function getMarker($id)
+    {
+        try {
+            return $this->mapMarkersRepository->getMarker($id);
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
 }

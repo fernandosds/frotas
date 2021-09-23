@@ -47,6 +47,17 @@ class MapMarkersRepository extends AbstractRepository
         }
     }
 
+    public function getMarker($id)
+    {
+        try {
+            $this->fixModel();
+            return $this->model->find($id);
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
+
     public function getByCustomer()
     {
         if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8) {
