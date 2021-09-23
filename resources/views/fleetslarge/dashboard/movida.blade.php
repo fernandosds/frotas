@@ -218,7 +218,7 @@
                 <h1 class="card-title display-4">{{$totalJson}}
                     <span class="fa fa-car-side"></span>
                 </h1>
-                <p class="card-text h5" id="">Quantidade de veículos.</p>
+                <p class="card-text h5" id="">Quantidade de veículos</p>
             </div>
         </div>
     </div>
@@ -230,7 +230,7 @@
                     <span class="spanText" id="statusComunicando" value="Comunicando">&nbsp;</span>
                     <span class="fa fa-rss"></span>
                 </h1>
-                <p class="card-text h5">Veículos comunicando.</p>
+                <p class="card-text h5">Veículos comunicando</p>
             </div>
         </div>
     </div>
@@ -242,7 +242,7 @@
                     <span class="spanText" id="statusAvaria" value="avaria">&nbsp;</span>
                     <span class="fa fa-car-crash"></span>
                 </h1>
-                <p class="card-text h5"><span id="statusCard02">Veículos com avaria.</p>
+                <p class="card-text h5"><span id="statusCard02">Veículos com avaria</p>
             </div>
         </div>
     </div>
@@ -260,7 +260,7 @@
                                     <span class="spanText" id="statusSinistro">&nbsp;</span>
                                     <span class="fa fa-car"></span>
                                 </h1>
-                                <p class="card-text h5"><span id="statusCard03">Sinistrados.</p>
+                                <p class="card-text h5"><span id="statusCard03">Sinistrados</p>
                             </div>
                         </div>
                     </div>
@@ -272,7 +272,7 @@
                                     <span class="spanText" id="statusOcorrencia" value="Roubo/Furto">&nbsp;</span>
                                     <span class="fa fa-phone"></span>
                                 </h1>
-                                <p class="card-text h5">Recuperado.</p>
+                                <p class="card-text h5">Recuperado</p>
                             </div>
                         </div>
                     </div>
@@ -344,8 +344,6 @@
                         </thead>
                         <tbody id="tbodyVehicle">
                             @foreach ($fleetslarge as $driver)
-
-
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
@@ -411,26 +409,19 @@
         //"sLengthSelect": "form-control textName"
     });
 
-    /**
-     *
-            if ($(this).attr('value') == 'Roubo/Furto') {
-
-            }
-     */
-
     $(document).on('click', '.spanText', function() {
         if ($(this).attr('value') == 'avaria') {
-            $('.textName').val('avaria').focus().trigger('.textName')
+            $('.textName').val('avaria').click().focus()
         } else if ($(this).attr('value') == 'Roubo/Furto') {
-            $('.textName').val('Roubo/Furto').focus().trigger('.textName')
+            $('.textName').val('Roubo/Furto').click()
         } else if ($(this).attr('value') == 'Parado em Loja') {
-            $('.textName').val('Parado em Loja').focus().trigger('.textName')
+            $('.textName').val('Parado em Loja').click()
         } else if ($(this).attr('value') == 'Comunicando') {
-            $('.textName').val('Comunicando').focus().trigger('.textName')
+            $('.textName').val('Comunicando').click()
         } else if ($(this).attr('value') == 'Sem Comunicação') {
-            $('.textName').val('Sem Comunicação').focus().trigger('.textName')
+            $('.textName').val('Sem Comunicação').click()
         } else {
-            $('.textName').val('Sem Comunicação').focus().trigger('.textName')
+            $('.textName').val('Sem Comunicação').click()
         }
 
     });
