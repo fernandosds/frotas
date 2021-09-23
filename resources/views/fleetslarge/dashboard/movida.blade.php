@@ -256,7 +256,7 @@
                                     <span class="spanText" id="statusSinistro">&nbsp;</span>
                                     <span class="fa fa-car"></span>
                                 </h1>
-                                <p class="card-text h5"><span id="statusCard03">Veículos sinistrados.</p>
+                                <p class="card-text h5"><span id="statusCard03">Ocorrências.</p>
                             </div>
                         </div>
                     </div>
@@ -268,7 +268,7 @@
                                     <span class="spanText" id="statusOcorrencia" value="Roubo/Furto">&nbsp;</span>
                                     <span class="fa fa-phone"></span>
                                 </h1>
-                                <p class="card-text h5">Ocorrências.</p>
+                                <p class="card-text h5">Não recuperado.</p>
                             </div>
                         </div>
                     </div>
@@ -394,15 +394,30 @@
      * Rastrea isca automaticamente
      */
     $(document).ready(function() {
+        reloadStatusOcorrences()
         reloadValue()
     })
 
     $(document).on('click', '.spanText', function() {
-        // console.log($(this).attr('value'));
-        dataTable.search($(this).attr('value')).draw();
-
+        console.log($(this).attr('value'));
     });
 
+
+    function reloadStatusOcorrences() {
+        $.ajax({
+            url: "{{route('fleetslarges.showOcorrenceStatus')}}",
+            type: 'GET',
+            success: function(response) {
+                console.log(response.data)
+                if (response.data.grid06 == "") {
+                    $('#statusOcorrencia').html(0)
+                } else {
+                    $('#statusOcorrencia').html(response.data.grid06.length)
+                }
+
+            }
+        });
+    }
 
     function reloadValue() {
         $.ajax({
@@ -435,11 +450,7 @@
                     $('#statusComunicando').html(response.data.grid01.length)
                 }
 
-                if (response.data.grid06 == "") {
-                    $('#statusOcorrencia').html(0)
-                } else {
-                    $('#statusOcorrencia').html(response.data.grid06.length)
-                }
+
 
             }
         });
@@ -458,6 +469,7 @@
             if (progressBar == 0) {
                 $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-danger');
                 $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
+                reloadStatusOcorrences()
                 reloadValue()
                 progressBar = 100;
             } else {

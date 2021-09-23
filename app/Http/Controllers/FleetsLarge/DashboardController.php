@@ -27,18 +27,18 @@ class DashboardController extends Controller
      * @var ApiDeviceService
      * @var CustomerService
      */
-    private $apiDeviceService;
+    private $apiDeviceServic;
 
     /**
      * BoardingController constructor.
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceService, CustomerService $customerService)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
-        $this->apiDeviceService = $apiDeviceService;
+        $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
 
         $this->data = [
@@ -166,6 +166,35 @@ class DashboardController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function showOcorrenceStatus()
+    {
+        $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
+
+        $grid06 = [];
+        foreach ($data['ocorrences'] as $data => $dat) {
+            if (is_null($dat['data_recuperacao'])) {
+                $arr[] = $dat;
+                $grid06 = $arr;
+            }
+        }
+
+        try {
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    "grid06"   => $grid06 ?? ''
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showAllStatus()
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
@@ -174,9 +203,6 @@ class DashboardController extends Controller
         try {
             if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
                 $empresa = 'Movida';
-                $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
-
-                $grid06 = $data['ocorrences'];
 
                 foreach ($data['fleetslarge'] as $data => $dat) {
 
