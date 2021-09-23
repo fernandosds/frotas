@@ -20,8 +20,8 @@ class MapMarkersController extends Controller
     {
         try {
             $json = $request->json()->all();
-            //$result = $this->mapMarkersService->save($json['data']['name'], $json['data']['markers']);
-            $result = [];
+            $result = $this->mapMarkersService->save($json['data']['name'], $json['data']['markers']);
+            //$result = [];
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 201);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
@@ -30,10 +30,9 @@ class MapMarkersController extends Controller
 
     public function getList()
     {
-
         try {
-            //$result = $this->mapMarkersService->getList();
-            $result = [];
+            $result = $this->mapMarkersService->getList();
+            //$result = [];
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
@@ -43,8 +42,8 @@ class MapMarkersController extends Controller
     public function show($id)
     {
         try {
-            //$result = $this->mapMarkersService->getMarker($id);
-            $result = [];
+            $result = $this->mapMarkersService->getMarker($id);
+            //$result = [];
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
