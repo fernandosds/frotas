@@ -66,6 +66,7 @@ class ApiFleetLargeService
             $feature->properties->id = $item->modelo;
             $feature->properties->ignicao = $item->lp_ignicao;
             $feature->properties->chassis = $item->chassis;
+            $feature->properties->modelo_veiculo = $item->modelo_veiculo;
             $feature->properties->placa = $item->placa;
             $feature->properties->filial = $item->filial;
             $feature->properties->cliente_local_retirada = $item->cliente_local_retirada;

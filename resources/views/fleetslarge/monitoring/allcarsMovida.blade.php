@@ -128,10 +128,9 @@
         padding: 5px;
     }
 
-    .marker-check-label{
+    .marker-check-label {
         padding-left: 5px;
     }
-
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -192,9 +191,10 @@
                 return L.marker(latlng, {
                         'icon': feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon
                     })
-                    .bindPopup('<strong>' + feature.properties.placa + ' ' +
-                        '<br /><br /><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
-                        '<br /><strong><br>Filial:</strong>  ' + feature.properties.filial + ' ' +
+                    .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                        '<br /><br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                        '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
+                        '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.filial + ' ' +
                         '<br /><strong><br>Local de retirada:</strong>  ' + feature.properties.cliente_local_retirada + ' ' +
                         '<br /><strong><br>Data da retirada:</strong>  ' + feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') + ' ' +
                         '<br /><strong><br>Data de devolução:</strong>  ' + feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') + ' ' +
@@ -263,7 +263,9 @@
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
         'Lojas': markersCluster
-    }, { collapsed: false }).addTo(map);
+    }, {
+        collapsed: false
+    }).addTo(map);
 
 
     realtime1.on('update', function() {
@@ -283,32 +285,32 @@
     });
 
     let options = {
-            position: 'topleft',
-            draw: {
-                polyline: false,
-                circlemarker: false,
-                marker: false,
-                circle: false, // Turns off this drawing tool
-                polygon: {
-                    allowIntersection: false, // Restricts shapes to simple polygons
-                    drawError: {
-                        color: '#e1e100', // Color the shape will turn when intersects
-                    },
-                    shapeOptions: {
-                        color: '#bada55'
-                    }
+        position: 'topleft',
+        draw: {
+            polyline: false,
+            circlemarker: false,
+            marker: false,
+            circle: false, // Turns off this drawing tool
+            polygon: {
+                allowIntersection: false, // Restricts shapes to simple polygons
+                drawError: {
+                    color: '#e1e100', // Color the shape will turn when intersects
                 },
-                rectangle: {
-                    shapeOptions: {
-                        clickable: false
-                    }
-                },
-
+                shapeOptions: {
+                    color: '#bada55'
+                }
             },
-            edit: {
-                featureGroup: editableLayers, //REQUIRED!!
-            }
-        };
+            rectangle: {
+                shapeOptions: {
+                    clickable: false
+                }
+            },
+
+        },
+        edit: {
+            featureGroup: editableLayers, //REQUIRED!!
+        }
+    };
 
     let drawControl = new L.Control.Draw(options);
     map.addControl(drawControl);
@@ -396,44 +398,44 @@
 
     let ListLayers = [];
 
-    $('.markerList').on('click','.checkMarkers',function(){
-        if($(this).is(':checked')){
-            $.ajax("{{route('map.markers.list')}}/"+ $(this).val(), {
-                method: "GET",
-            })
-                .done(function (response) {
+    $('.markerList').on('click', '.checkMarkers', function() {
+        if ($(this).is(':checked')) {
+            $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
+                    method: "GET",
+                })
+                .done(function(response) {
                     const data = response.result;
-                     var geojson = L.geoJson(data.markers).addTo(map);
+                    var geojson = L.geoJson(data.markers).addTo(map);
                     //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
                 })
-                .fail(function () { });
-        }else{
-             $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
-                method: "GET",
-            })
-                .done(function (response) {
+                .fail(function() {});
+        } else {
+            $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
+                    method: "GET",
+                })
+                .done(function(response) {
                     const data = response.result;
                     map.removeLayer(data.markers);
                     //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
                 })
-                .fail(function () { });
+                .fail(function() {});
         }
     });
 
-    function getList(){
+    function getList() {
         $.ajax("{{route('map.markers.list')}}", {
                 method: "GET",
             })
             .done(function(response) {
                 const data = response.result;
                 $('.markerList').empty();
-                data.map(function(element){
+                data.map(function(element) {
 
-                    $('.markerList').append('<div class="markerItem">'+
+                    $('.markerList').append('<div class="markerItem">' +
                         '<input type="checkbox" class="checkMarkers"' +
-                        'id="'+ element._id+'"  value="'+element._id +'">'+
-                        '<label class="marker-check-label" for="'+element._id+'">'+
-                        element.name+'</label></div >');
+                        'id="' + element._id + '"  value="' + element._id + '">' +
+                        '<label class="marker-check-label" for="' + element._id + '">' +
+                        element.name + '</label></div >');
                 });
             })
             .fail(function() {});
