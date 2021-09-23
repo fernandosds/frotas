@@ -12,7 +12,7 @@ class MapMarkerMovida extends Eloquent
     protected $collection = 'Movida_Polygons';
 
     protected $fillable = [
-        'name', 'markers'
+        'name', 'markers', 'type'
     ];
 
     /*public function create($data)

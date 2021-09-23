@@ -22,10 +22,10 @@ class MapMarkersService
         $this->mapMarkersRepository = $mapMarkersRepository;
     }
 
-    public function save($name, $markers)
+    public function save($name, $type, $markers)
     {
         try {
-            return $this->mapMarkersRepository->create(['markers' => $markers, 'name' => $name]);
+            return $this->mapMarkersRepository->create(['markers' => $markers, 'type' => $type, 'name' => $name]);
         } catch (\Exception $e) {
             return $e;
         }

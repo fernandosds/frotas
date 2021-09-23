@@ -30,6 +30,7 @@ class MapMarkersRepository extends AbstractRepository
             $this->fixModel();
             $this->model->name = $data['name'];
             $this->model->markers = $data['markers'];
+            $this->model->type = $data['type'];
             $this->model->save();
             return $this->model;
         } catch (\Exception $e) {

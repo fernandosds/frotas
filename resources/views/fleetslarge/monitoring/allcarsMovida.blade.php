@@ -117,19 +117,30 @@
         left: 125px;
         top: 60px;
         background: #f0f0f0;
-        display: none;
+        display: flex;
+        flex-wrap: wrap;
         opacity: 0.8;
-        flex-direction: column;
         color: #000;
         font-weight: bold;
+        width: 25vw;
+        height: 50vh;
+        overflow: scroll;
+        height: 50vh;
+        overflow-x: hidden;
     }
 
     .markerItem {
         padding: 5px;
+        width: 33%;
+        box-sizing: border-box;
     }
 
     .marker-check-label {
         padding-left: 5px;
+    }
+
+    .hidden{
+        display: none;
     }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
@@ -145,7 +156,7 @@
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
 <button id="markerButton">Cercas</button>
-<div class='markerList'></div>
+<div class='markerList hidden'></div>
 
 @endsection
 
@@ -338,16 +349,23 @@
                 }
             }
             Swal.fire({
-                title: 'Dê um nome para suas marcações',
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
+                title: 'Configure sua nova cerca!',
+                html:'<div class="form-group">'+
+                    '<label> Nome da Cerca</label>'+
+                    '<input type="text" class="form-control" id="cercaName" placeholder="Nome da Cerca">'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label>Tipo de cerca</label>'+
+                    '<select class="form-control" id="cercaType">'+
+                    '<option value="in">Entrada</option>'+
+                    '<option value="out">Saída</option>'+
+                    '</select></div>',
                 showCancelButton: true,
                 confirmButtonText: 'Salvar',
                 showLoaderOnConfirm: true,
-                preConfirm: (name) => {
-                    payload.data.name = name;
+                preConfirm: (value) => {
+                    payload.data.name = $('#cercaName').val();
+                    payload.data.type = $('#cercaType').val();
                     return fetch("{{route('map.markers.save')}}", {
                             method: "POST",
                             headers: {
@@ -375,7 +393,7 @@
             }).then((result) => {
                 if (result.value.isConfirmed) {
                     Swal.fire({
-                        title: `Nova Marcação criada`,
+                        title: `Nova Marcação criada`, type:'success'
                     });
                     editableLayers.clearLayers();
                     getList();
@@ -393,15 +411,14 @@
     });
 
     $("#markerButton").click(function() {
-        $('.markerList').toggle();
+        $('.markerList').toggleClass("hidden");
     });
 
-    let ListLayers = [];
+    let listLayers = [];
 
     $('.markerList').on('click','.checkMarkers',function(){
+        const idLayer = $(this).val();
         if($(this).is(':checked')){
-
-            const idLayer = $(this).val();
             $.ajax("{{route('map.markers.list')}}/"+ $(this).val(), {
                 method: "GET",
             })
@@ -414,20 +431,20 @@
                         "opacity": 0.65
                     };
                      var geojson = L.geoJson(data.markers,{style: myStyle}).addTo(map);
+                     listLayers.push({"id": idLayer, "layer":geojson});
 
                     //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
                 })
                 .fail(function() {});
         } else {
-            $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
-                    method: "GET",
-                })
-                .done(function(response) {
-                    const data = response.result;
-                    map.removeLayer(data.markers);
-                    //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
-                })
-                .fail(function() {});
+            const layer = listLayers.filter(item => item.id == idLayer);
+            layer[0].layer.clearLayers();
+
+            for (let i = 0; i < listLayers.length; i++) {
+                if (listLayers[i].id == idLayer) {
+                    listLayers.splice(i, 1);
+                }
+            }
         }
     });
 
