@@ -206,9 +206,9 @@
                         '<br /><br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
                         '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
                         '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.filial + ' ' +
-                        '<br /><strong><br>Local de retirada:</strong>  ' + feature.properties.cliente_local_retirada + ' ' +
-                        '<br /><strong><br>Data da retirada:</strong>  ' + feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') + ' ' +
-                        '<br /><strong><br>Data de devolução:</strong>  ' + feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') + ' ' +
+                        '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
+                        '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
+                        '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
                         '<br /><strong><br> Dist. loja devol. | Dist. local ret. | Dist. end. resid. </strong> <br> ' +
                         ' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;' + feature.properties.cliente_distancia_local_devolucao + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_local_retirada + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_endereco_residencial + '.km' +
                         ' ');
