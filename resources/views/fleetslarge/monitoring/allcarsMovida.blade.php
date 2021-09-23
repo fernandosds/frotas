@@ -145,7 +145,7 @@
 <div id="map" class="map"></div>
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
-<button id="markerButton">Marcações</button>
+<button id="markerButton">Cercas</button>
 <div class='markerList'></div>
 
 @endsection
@@ -398,12 +398,21 @@
 
     $('.markerList').on('click','.checkMarkers',function(){
         if($(this).is(':checked')){
+
+            const idLayer = $(this).val();
             $.ajax("{{route('map.markers.list')}}/"+ $(this).val(), {
                 method: "GET",
             })
                 .done(function (response) {
                     const data = response.result;
-                     var geojson = L.geoJson(data.markers).addTo(map);
+                    const myData=data.markers;
+                    var myStyle = {
+                        "color": "#ff7800",
+                        "weight": 5,
+                        "opacity": 0.65
+                    };
+                     var geojson = L.geoJson(data.markers,{style: myStyle}).addTo(map);
+
                     //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
                 })
                 .fail(function () { });
