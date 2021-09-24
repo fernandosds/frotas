@@ -499,13 +499,14 @@
                     const data = response.result;
                     const myData=data.markers;
                     const layerName=data.name;
+                    const layerType=data.type;
                     var myStyle = {
                         "color": "#ff7800",
                         "weight": 5,
                         "opacity": 0.65
                     };
                      var geojson = L.geoJson(data.markers,{style: myStyle, onEachFeature: function (feature, layer) {
-                            layer.bindPopup('<strong>' + layerName + '</strong>');
+                            layer.bindPopup('<strong>Cerca:' + layerName + ' - Tipo:' + layerType+ '</strong>');
                         }}).addTo(map);
                      listLayers.push({"id": idLayer, "layer":geojson});
 
