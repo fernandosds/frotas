@@ -239,7 +239,7 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">
-                    <span class="spanText" id="statusAvaria" value="avaria">&nbsp;</span>
+                    <span class="spanText" id="statusAvaria" value="Avaria">&nbsp;</span>
                     <span class="fa fa-car-crash"></span>
                 </h1>
                 <p class="card-text h5"><span id="statusCard02">Veículos com avaria</p>
@@ -257,7 +257,7 @@
                         <div class="kt-portlet__body">
                             <div class="kt-portlet__content">
                                 <h1 class="card-title display-4">
-                                    <span class="spanText" id="statusSinistro">&nbsp;</span>
+                                    <span class="spanText" id="statusSinistro" value="Total de Sinistro">&nbsp;</span>
                                     <span class="fa fa-car"></span>
                                 </h1>
                                 <p class="card-text h5"><span id="statusCard03">Sinistrados</p>
@@ -269,7 +269,7 @@
                         <div class="kt-portlet__body">
                             <div class="kt-portlet__content">
                                 <h1 class="card-title display-4">
-                                    <span class="spanText" id="statusOcorrencia" value="Recuperado de ocorrencia">&nbsp;</span>
+                                    <span class="spanText" id="statusOcorrencia" value="Recuperado de Ocorrência">&nbsp;</span>
                                     <span class="fa fa-phone"></span>
                                 </h1>
                                 <p class="card-text h5">Recuperado</p>
@@ -340,6 +340,7 @@
                                 <th class="hidden">Comunicando</th>
                                 <th class="hidden">Parado</th>
                                 <th class="hidden">Recuperado de ocorrencia</th>
+                                <th class="hidden">Total</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
@@ -363,7 +364,8 @@
                                 <td>{{ count($driver['event']) > 0 ? $driver['event']['ocorrencia'] : ' Sem ocorrência' }}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->diffInDays(\Carbon\Carbon::now()) > 7 ? 'Sem Comunicação' : 'Comunicando' }}</td>
                                 <td class="hidden">{{$driver['status_veiculo'] != 'LOCACAO' ? 'Parado em Loja' : ' ' }}</td>
-                                <td class="hidden"><?php print_r($driver['event'] != [] && $driver['event']['data_recuperacao']  ? 'Recuperado de ocorrencia'  : ' ')  ?></td>
+                                <td class="hidden"><?php print_r($driver['event'] != [] && $driver['event']['data_recuperacao']  ? 'Recuperado de Ocorrência'  : ' ')  ?></td>
+                                <td class="hidden"><?php print_r(count($driver['event']) ? 'Total de Sinistro'  : ' ')  ?></td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
@@ -412,10 +414,15 @@
     });
 
     $(document).on('click', '.spanText', function() {
-        if ($(this).attr('value') == 'avaria') {
-            $('.textName').val('avaria').click().focus()
-        } else if ($(this).attr('value') == 'Roubo/Furto') {
-            $('.textName').val('Roubo/Furto').click()
+
+    });
+
+
+    $(document).on('click', '.spanText', function() {
+        if ($(this).attr('value') == 'Avaria') {
+            $('.textName').val('Avaria').click().focus()
+        } else if ($(this).attr('value') == 'Recuperado de Ocorrência') {
+            $('.textName').val('Recuperado de Ocorrência').click()
         } else if ($(this).attr('value') == 'Parado em Loja') {
             $('.textName').val('Parado em Loja').click()
         } else if ($(this).attr('value') == 'Comunicando') {
@@ -423,7 +430,7 @@
         } else if ($(this).attr('value') == 'Sem Comunicação') {
             $('.textName').val('Sem Comunicação').click()
         } else {
-            $('.textName').val('Recuperado de ocorrencia').click()
+            $('.textName').val('Total de Sinistro').click()
         }
 
     });
