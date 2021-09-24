@@ -123,24 +123,36 @@
         color: #000;
         font-weight: bold;
         width: 25vw;
-        height: 50vh;
+        max-height: 50vh;
         overflow: scroll;
-        height: 50vh;
         overflow-x: hidden;
+        justify-content: space-between;
+        align-items: baseline;
+        align-content: baseline;
     }
 
     .markerItem {
-        padding: 5px;
-        width: 33%;
+        padding: 5px 0px;
+        width: 50%;
         box-sizing: border-box;
     }
 
     .marker-check-label {
         padding-left: 5px;
+        white-space: nowrap;
+        overflow: clip;
+        text-overflow: ellipsis;
+        width: 60%;
     }
 
     .hidden{
         display: none;
+    }
+
+    .btnRemove{
+        margin-right: 10px;
+        color: rgb(255, 0, 0);
+        cursor: pointer;
     }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
@@ -383,7 +395,6 @@
                             return response.json()
                         })
                         .catch(error => {
-                            console.log(error)
                             Swal.showValidationMessage(
                                 error
                             )
@@ -393,7 +404,7 @@
             }).then((result) => {
                 if (result.value.isConfirmed) {
                     Swal.fire({
-                        title: `Nova Marcação criada`, type:'success'
+                        title: `Nova Cerca criada`, type:'success'
                     });
                     editableLayers.clearLayers();
                     getList();
@@ -415,6 +426,68 @@
     });
 
     let listLayers = [];
+
+    $('.markerList').on('click', '.btnRemove', function () {
+        Swal.fire({
+            title: `Remover a cerca "` + $(this).data('name') + `" ?`,
+            text: 'Essa ação não pode ser desfeita, para confirmar digite o nome da cerca.',
+            type:"warning",
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Remover',
+            showLoaderOnConfirm: true,
+            preConfirm: (cerca) => {
+                console.log(cerca);
+                console.log($(this).data('name'));
+                if(cerca !== $(this).data('name').toString()){
+                    Swal.showValidationMessage(
+                        "Nome da cerca diferente do informado!"
+                    );
+                }else{
+                    let payload = {
+                        "_token": "{{ csrf_token() }}",
+                        data: {
+                            id: $(this).data('id'),
+                            name: $(this).data('name')
+                        }
+                    }
+                    return fetch("{{route('map.markers.delete')}}", {
+                        method: "DELETE",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(text => {
+                                    throw new Error(text.errors['data.name'][0]);
+                                })
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                error
+                            )
+                        });
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.value.isConfirmed) {
+                Swal.fire({
+                    title: `Cerca removida!`, type: 'success'
+                });
+                editableLayers.clearLayers();
+                getList();
+            }
+        });
+    });
 
     $('.markerList').on('click','.checkMarkers',function(){
         const idLayer = $(this).val();
@@ -459,8 +532,8 @@
                 const data = response.result;
                 $('.markerList').empty();
                 data.map(function(element) {
-
                     $('.markerList').append('<div class="markerItem">' +
+                        '<i class="fa fa-trash btnRemove" data-id="'+ element._id+'" data-name="'+ element.name+'"></i>' +
                         '<input type="checkbox" class="checkMarkers"' +
                         'id="' + element._id + '"  value="' + element._id + '">' +
                         '<label class="marker-check-label" for="' + element._id + '">' +
