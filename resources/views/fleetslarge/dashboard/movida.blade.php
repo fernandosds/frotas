@@ -269,7 +269,7 @@
                         <div class="kt-portlet__body">
                             <div class="kt-portlet__content">
                                 <h1 class="card-title display-4">
-                                    <span class="spanText" id="statusOcorrencia" value="Roubo/Furto">&nbsp;</span>
+                                    <span class="spanText" id="statusOcorrencia" value="Recuperado de ocorrencia">&nbsp;</span>
                                     <span class="fa fa-phone"></span>
                                 </h1>
                                 <p class="card-text h5">Recuperado</p>
@@ -332,13 +332,14 @@
                                 <th class="hidden">Voltagem</th>
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
-                                <th class="santander">Sinistrado</th>
+                                <th class="hidden">Sinistrado</th>
                                 <th class="santander" style="width: 220;">Filial</th>
                                 <th class="santander">Status</th>
                                 <th class="hidden">Empresa</th>
                                 <th>Ocorrência</th>
                                 <th class="hidden">Comunicando</th>
                                 <th class="hidden">Parado</th>
+                                <th class="hidden">Recuperado de ocorrencia</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
@@ -355,13 +356,14 @@
                                 <td class="hidden">{{$driver['lp_voltagem']}}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
-                                <td class="santander">{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
+                                <td class="hidden">{{$driver['sinistrado'] == 'TRUE' ? 'Sim' : 'Nao'}}</td>
                                 <td class="santander">{{$driver['filial']}}</td>
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
                                 <td class="hidden">{{$driver['empresa']}}</td>
                                 <td>{{ count($driver['event']) > 0 ? $driver['event']['ocorrencia'] : ' Sem ocorrência' }}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->diffInDays(\Carbon\Carbon::now()) > 7 ? 'Sem Comunicação' : 'Comunicando' }}</td>
                                 <td class="hidden">{{$driver['status_veiculo'] != 'LOCACAO' ? 'Parado em Loja' : ' ' }}</td>
+                                <td class="hidden"><?php print_r($driver['event'] != [] && $driver['event']['data_recuperacao']  ? 'Recuperado de ocorrencia'  : ' ')  ?></td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
@@ -421,7 +423,7 @@
         } else if ($(this).attr('value') == 'Sem Comunicação') {
             $('.textName').val('Sem Comunicação').click()
         } else {
-            $('.textName').val('Sem Comunicação').click()
+            $('.textName').val('Recuperado de ocorrencia').click()
         }
 
     });

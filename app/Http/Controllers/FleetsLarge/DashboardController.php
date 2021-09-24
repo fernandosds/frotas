@@ -171,6 +171,7 @@ class DashboardController extends Controller
         $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
 
         $grid06 = [];
+
         foreach ($data['ocorrences'] as $data => $dat) {
             if (!is_null($dat['data_recuperacao'])) {
                 $arr[] = $dat;
@@ -205,7 +206,7 @@ class DashboardController extends Controller
             if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
                 $empresa = 'Movida';
 
-                $arr3[] = $data['ocorrences'];
+                $arr3 = $data['ocorrences'];
                 $grid03 = $arr3;
 
                 foreach ($data['fleetslarge'] as $data => $dat) {
