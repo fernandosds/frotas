@@ -506,7 +506,7 @@
                         "opacity": 0.65
                     };
                      var geojson = L.geoJson(data.markers,{style: myStyle, onEachFeature: function (feature, layer) {
-                            layer.bindPopup('<strong>Cerca:' + layerName + ' - Tipo:' + layerType+ '</strong>');
+                            layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType+ '</b>');
                         }}).addTo(map);
                      listLayers.push({"id": idLayer, "layer":geojson});
 
