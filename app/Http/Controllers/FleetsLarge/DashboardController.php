@@ -172,7 +172,7 @@ class DashboardController extends Controller
 
         $grid06 = [];
         foreach ($data['ocorrences'] as $data => $dat) {
-            if (is_null($dat['data_recuperacao'])) {
+            if (!is_null($dat['data_recuperacao'])) {
                 $arr[] = $dat;
                 $grid06 = $arr;
             }
@@ -199,10 +199,14 @@ class DashboardController extends Controller
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
         $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
+        $data['ocorrences'] = $this->fleetLargeMovidaService->getEventCar('c58de3ae-f519-4ec6-bd87-4e011c1cb2ea');
 
         try {
             if ($data['fleetslarge'][0]['empresa'] == 'Movida') {
                 $empresa = 'Movida';
+
+                $arr3[] = $data['ocorrences'];
+                $grid03 = $arr3;
 
                 foreach ($data['fleetslarge'] as $data => $dat) {
 
@@ -215,12 +219,12 @@ class DashboardController extends Controller
                         $arr2[] = $this->resultJson($dat);
                         $grid02 = $arr2;
                     }
-
+                    /**
                     if ($dat['sinistrado'] == "TRUE") {
                         $arr3[] = $this->resultJson($dat);
                         $grid03 = $arr3;
                     }
-
+                     */
                     if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
                         $arr4[] = $this->resultJson($dat);
                         $grid04 = $arr4;

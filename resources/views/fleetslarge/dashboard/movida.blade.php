@@ -194,6 +194,10 @@
     .row {
         margin-top: 17px;
     }
+
+    .spanText {
+        cursor: pointer;
+    }
 </style>
 @endsection
 
@@ -214,7 +218,7 @@
                 <h1 class="card-title display-4">{{$totalJson}}
                     <span class="fa fa-car-side"></span>
                 </h1>
-                <p class="card-text h5" id="">Quantidade de veículos.</p>
+                <p class="card-text h5" id="">Quantidade de veículos</p>
             </div>
         </div>
     </div>
@@ -223,10 +227,10 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">
-                    <span class="spanText" id="statusComunicando" value="texto">&nbsp;</span>
+                    <span class="spanText" id="statusComunicando" value="Comunicando">&nbsp;</span>
                     <span class="fa fa-rss"></span>
                 </h1>
-                <p class="card-text h5">Veículos comunicando.</p>
+                <p class="card-text h5">Veículos comunicando</p>
             </div>
         </div>
     </div>
@@ -238,7 +242,7 @@
                     <span class="spanText" id="statusAvaria" value="avaria">&nbsp;</span>
                     <span class="fa fa-car-crash"></span>
                 </h1>
-                <p class="card-text h5"><span id="statusCard02">Veículos com avaria.</p>
+                <p class="card-text h5"><span id="statusCard02">Veículos com avaria</p>
             </div>
         </div>
     </div>
@@ -248,7 +252,7 @@
     <div class="col-xl-4" id="dashboardSinistro">
         <div class="card text-white bg-danger col-md-12">
             <div class="card-body">
-                <div class="row">
+                <div class="row ">
                     <div class="col-6">
                         <div class="kt-portlet__body">
                             <div class="kt-portlet__content">
@@ -256,7 +260,7 @@
                                     <span class="spanText" id="statusSinistro">&nbsp;</span>
                                     <span class="fa fa-car"></span>
                                 </h1>
-                                <p class="card-text h5"><span id="statusCard03">Ocorrências.</p>
+                                <p class="card-text h5"><span id="statusCard03">Sinistrados</p>
                             </div>
                         </div>
                     </div>
@@ -268,7 +272,7 @@
                                     <span class="spanText" id="statusOcorrencia" value="Roubo/Furto">&nbsp;</span>
                                     <span class="fa fa-phone"></span>
                                 </h1>
-                                <p class="card-text h5">Não recuperado.</p>
+                                <p class="card-text h5">Recuperado</p>
                             </div>
                         </div>
                     </div>
@@ -281,7 +285,7 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">
-                    <span class="spanText" id="statusParadoEmLoja">&nbsp;</span>
+                    <span class="spanText" id="statusParadoEmLoja" value="Parado em Loja">&nbsp;</span>
                     <span class="fa fa-car"></span>
                 </h1>
                 <p class="card-text h5"><span id="statusCard04">Veículos parado em loja.</p>
@@ -293,7 +297,7 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">
-                    <span class="spanText" id="statusSemComunicacao">&nbsp;</span>
+                    <span class="spanText" id="statusSemComunicacao" value="Sem Comunicação">&nbsp;</span>
                     <span class="fa fa-warehouse"></span>
                 </h1>
                 <p class="card-text h5"><span id="statusCard05">Veículos sem comunicação.</p>
@@ -320,6 +324,7 @@
                             <tr class="headerTable">
                                 <th>Placa</th>
                                 <th style="width: 220px;">Modelo</th>
+                                <th class="hidden">Chassis</th>
                                 <th class="hidden">Endereço</th>
                                 <th class="hidden">Estado</th>
                                 <th class="hidden">Satelite</th>
@@ -332,17 +337,17 @@
                                 <th class="santander">Status</th>
                                 <th class="hidden">Empresa</th>
                                 <th>Ocorrência</th>
-                                <th>Status</th>
+                                <th class="hidden">Comunicando</th>
+                                <th class="hidden">Parado</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
                             @foreach ($fleetslarge as $driver)
-
-
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
+                                <td class="hidden">{{$driver['chassis']}}</td>
                                 <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['cidade']}} {{$driver['end_uf']}}</td>
                                 <td class="hidden">{{$driver['estado']}}</td>
                                 <td class="hidden">{{$driver['lp_satelite']}}</td>
@@ -355,7 +360,8 @@
                                 <td class="santander">{{$driver['status_veiculo']}}</td>
                                 <td class="hidden">{{$driver['empresa']}}</td>
                                 <td>{{ count($driver['event']) > 0 ? $driver['event']['ocorrencia'] : ' Sem ocorrência' }}</td>
-                                <td>{{ count($driver['event']) > 0 ? $driver['event']['status'] : ' '}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->diffInDays(\Carbon\Carbon::now()) > 7 ? 'Sem Comunicação' : 'Comunicando' }}</td>
+                                <td class="hidden">{{$driver['status_veiculo'] != 'LOCACAO' ? 'Parado em Loja' : ' ' }}</td>
 
                                 <td>
                                     @if ($driver['sinistrado'] == 'TRUE')
@@ -398,8 +404,26 @@
         reloadValue()
     })
 
+    $.extend($.fn.dataTableExt.oStdClasses, {
+        "sFilterInput": "textName",
+        //"sLengthSelect": "form-control textName"
+    });
+
     $(document).on('click', '.spanText', function() {
-        console.log($(this).attr('value'));
+        if ($(this).attr('value') == 'avaria') {
+            $('.textName').val('avaria').click().focus()
+        } else if ($(this).attr('value') == 'Roubo/Furto') {
+            $('.textName').val('Roubo/Furto').click()
+        } else if ($(this).attr('value') == 'Parado em Loja') {
+            $('.textName').val('Parado em Loja').click()
+        } else if ($(this).attr('value') == 'Comunicando') {
+            $('.textName').val('Comunicando').click()
+        } else if ($(this).attr('value') == 'Sem Comunicação') {
+            $('.textName').val('Sem Comunicação').click()
+        } else {
+            $('.textName').val('Sem Comunicação').click()
+        }
+
     });
 
 
@@ -408,7 +432,6 @@
             url: "{{route('fleetslarges.showOcorrenceStatus')}}",
             type: 'GET',
             success: function(response) {
-                console.log(response.data)
                 if (response.data.grid06 == "") {
                     $('#statusOcorrencia').html(0)
                 } else {
@@ -424,6 +447,7 @@
             url: "{{route('fleetslarges.showAllStatus')}}",
             type: 'GET',
             success: function(response) {
+                console.log(response.data.grid03)
                 if (response.data.grid05 == "") {
                     $('#statusAvaria').html(0)
                 } else {
@@ -483,6 +507,9 @@
         columns = [0, 1, 2, 4, 5, 6, 7, 9, 10, 11, 13, 14];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
+            "search": {
+                "search": ''
+            },
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
