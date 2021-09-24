@@ -499,7 +499,7 @@
                     const data = response.result;
                     const myData=data.markers;
                     const layerName=data.name;
-                    const layerType=data.type;
+                    const layerType=data.type == 'in'?"Entrada":'Saída';
                     var myStyle = {
                         "color": "#ff7800",
                         "weight": 5,
