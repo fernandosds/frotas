@@ -75,6 +75,7 @@ class ApiFleetLargeService
             $feature->properties->cliente_distancia_endereco_residencial = $item->cliente_distancia_endereco_residencial;
             $feature->properties->cliente_distancia_local_retirada = $item->cliente_distancia_local_retirada;
             $feature->properties->cliente_distancia_local_devolucao = $item->cliente_distancia_local_devolucao;
+            $feature->properties->cliente_data_posicao = $item->lp_ultima_transmissao;
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];

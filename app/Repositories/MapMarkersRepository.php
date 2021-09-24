@@ -31,8 +31,19 @@ class MapMarkersRepository extends AbstractRepository
             $this->model->name = $data['name'];
             $this->model->markers = $data['markers'];
             $this->model->type = $data['type'];
+            $this->model->user_id = Auth::user()->id;
             $this->model->save();
             return $this->model;
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
+    public function deleteMarker($id, $name)
+    {
+        try {
+            $this->fixModel();
+            return $this->model->find($id);
         } catch (\Exception $e) {
             return $e;
         }
@@ -77,5 +88,10 @@ class MapMarkersRepository extends AbstractRepository
         if (Auth::user()->customer_id == 8) {
             $this->model = $this->modelSantander;
         }
+    }
+
+    public function delete($id)
+    {
+        return $this->model->find($id)->delete();
     }
 }

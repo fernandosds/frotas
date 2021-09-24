@@ -359,6 +359,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
             Route::get('/map/markers', 'FleetsLarge\MapMarkersController@getList')->name('map.markers.list');
             Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersController@show')->name('map.markers.show');
+            Route::delete('/map/markers', 'FleetsLarge\MapMarkersController@delete')->name('map.markers.delete');
         });
     });
 
