@@ -303,7 +303,7 @@
                 <br />
                 <h1 class="card-title display-4">
                     <span class="spanText" id="statusSemComunicacao" value="Sem Comunicação">&nbsp;</span>
-                    <span class="fa fa-warehouse"></span>
+                    <span class="fa fa-phone-slash"></span>
                 </h1>
                 <p class="card-text h5"><span id="statusCard05">Veículos sem comunicação.</p>
             </div>
