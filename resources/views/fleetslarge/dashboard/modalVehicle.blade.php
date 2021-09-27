@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
-                        <h4>Dados da Locadora</h4>
+                        <h4>Dados da Loja</h4>
                         <br />
                         <br />
                         <div class="row">

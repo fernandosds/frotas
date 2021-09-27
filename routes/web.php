@@ -344,6 +344,8 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['middleware' => ['user.access_level:fleetslarge'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
+        Route::get('/analyze/installation', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeInstallation');
+        Route::get('/analyzes/car', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeCar');
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
         Route::get('/show/event/{placa}', 'FleetsLarge\DashboardController@showEventPlaca')->name('fleetslarges.showEventPlaca');
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');

@@ -161,6 +161,16 @@
         height: 100%;
         position: relative;
     }
+
+    .text-white {
+        color: #fff !important;
+        border-radius: 10px;
+        box-shadow: 0 6px 6px 2px #9898
+    }
+
+    .row {
+        margin-top: 17px;
+    }
 </style>
 @endsection
 
@@ -178,7 +188,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor01">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> <span id="statusComunicando"></h1>
+                <h1 class="card-title display-4"> <span id="statusComunicando">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
             </div>
         </div>
@@ -187,7 +197,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor02">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusAvaria"></h1>
+                <h1 class="card-title display-4"><span id="statusAvaria">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
             </div>
         </div>
@@ -199,7 +209,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor04">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusParadoEmLoja"></h1>
+                <h1 class="card-title display-4"><span id="statusParadoEmLoja">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
             </div>
         </div>
@@ -208,49 +218,8 @@
         <div class="card text-white col-md-12 bg-primary" id='divColor05'>
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusSemComunicacao"></h1>
+                <h1 class="card-title display-4"><span id="statusSemComunicacao">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br />
-<br />
-<div class="row hidden" id="dashboardSantander">
-    <div class="col-xl-3">
-        <div class="card text-white bg-primary col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusSinistro"></span> </h1>
-                <p class="card-text h5"><span id="statusCard06"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3">
-        <div class="card text-white bg-primary col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusParadoEmLoja"></h1>
-                <p class="card-text h5"><span id="statusCard07"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3" id='divCard05'>
-        <div class="card text-white bg-primary  col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusSemComunicacao"></h1>
-                <p class="card-text h5"><span id="statusCard08"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3" id='divCard05'>
-        <div class="card text-white bg-primary  col-md-12">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-12"><span id="statusSemComunicacao"></h1>
-                <p class="card-text h5"><span id="statusCard09"></p>
             </div>
         </div>
     </div>

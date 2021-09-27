@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FleetsLarge;
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
+use App\Services\FleetLargeSantanderService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,8 @@ use PhpParser\Node\Expr\Print_;
 
 class DashboardController extends Controller
 {
+
+    private $fleetLargeSantanderService;
 
     private $fleetLargeMovidaService;
 
@@ -34,10 +37,11 @@ class DashboardController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, FleetLargeSantanderService $fleetLargeSantanderService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
+        $this->fleetLargeSantanderService = $fleetLargeSantanderService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
 
@@ -220,12 +224,7 @@ class DashboardController extends Controller
                         $arr2[] = $this->resultJson($dat);
                         $grid02 = $arr2;
                     }
-                    /**
-                    if ($dat['sinistrado'] == "TRUE") {
-                        $arr3[] = $this->resultJson($dat);
-                        $grid03 = $arr3;
-                    }
-                     */
+
                     if (Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) > 7) {
                         $arr4[] = $this->resultJson($dat);
                         $grid04 = $arr4;
@@ -265,14 +264,6 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
-    }
-
-    /**
-     * @param Int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Int $id)
-    {
     }
 
     /**
@@ -357,5 +348,28 @@ class DashboardController extends Controller
 
         ]);
         return $arr;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function analyze()
+    {
+        $data = [
+            'icon' => 'fa-car-alt',
+            'title' => 'Grandes Frotas',
+            'menu_open_fleetslarges_iframe' => 'kt-menu__item--open'
+        ];
+
+        // Iframe com os dados de instalação
+        if (Route::currentRouteName() == 'fleetslarges.analyzeInstallation') {
+            $data['hash'] = '519a68a7-1b0b-4f38-901c-d602a203a21e';
+        }
+
+        // Iframe com os dados do veículo
+        if (Route::currentRouteName() == 'fleetslarges.analyzeCar') {
+            $data['hash'] = 'd1c7e435-37ef-46aa-9105-4a2a957edc3e';
+        }
+        return response()->view('fleetslarge.iframe.dashboardSantander', $data);
     }
 }
