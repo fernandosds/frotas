@@ -189,12 +189,31 @@
         iconAnchor: [35, 62],
         popupAnchor: [1, -34],
     });
+    const greenAlertCarIcon = new L.Icon({
+            iconUrl: '{{url("markers/car_green_alert.png")}}',
+            iconSize: [64, 64],
+            iconAnchor: [35, 62],
+            popupAnchor: [1, -34],
+        });
     const redCarIcon = new L.Icon({
         iconUrl: '{{url("markers/car_red.png")}}',
         iconSize: [64, 64],
         iconAnchor: [35, 62],
         popupAnchor: [1, -34],
     });
+    const redAlertCarIcon = new L.Icon({
+            iconUrl: '{{url("markers/car_red_alert.png")}}',
+            iconSize: [64, 64],
+            iconAnchor: [35, 62],
+            popupAnchor: [1, -34],
+        });
+
+    const orangeCarIcon = new L.Icon({
+            iconUrl: '{{url("markers/car_orange.png")}}',
+            iconSize: [64, 64],
+            iconAnchor: [35, 62],
+            popupAnchor: [1, -34],
+        });
     const logoMovidaIcon = new L.Icon({
         iconUrl: '{{url("markers/logo_movida.png")}}',
         iconSize: [40, 40],
@@ -211,8 +230,21 @@
             },
             cache: true,
             pointToLayer: function(feature, latlng) {
+                let carIcon = feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon;
+
+                if (feature.properties.ignicao == 1 && !feature.properties.cliente_posicao_recente) {
+                    carIcon = greenAlertCarIcon
+                }
+
+                if (feature.properties.ignicao == 0 && !feature.properties.cliente_posicao_recente) {
+                    carIcon = redAlertCarIcon
+                }
+                if(feature.properties.deliver == true){
+                    carIcon = orangeCarIcon;
+                }
+
                 return L.marker(latlng, {
-                        'icon': feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon
+                        'icon': carIcon
                     })
                     .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
                         '<br /><br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
@@ -264,8 +296,10 @@
         clusterGroup = L.markerClusterGroup().addTo(map),
         subgroup = L.featureGroup.subGroup(clusterGroup),
         subgroup2 = L.featureGroup.subGroup(clusterGroup),
+        subgroup3 = L.featureGroup.subGroup(clusterGroup),
         realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
+        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map),
+        realtime3 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsForDeliver', 1)}}", subgroup3).addTo(map);
 
     var markersCluster = L.markerClusterGroup().addTo(map);
     lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster)
@@ -285,6 +319,7 @@
     L.control.layers(null, {
         'Ignição ON': realtime1,
         'Ignição OFF': realtime2,
+        'Entrega Hoje': realtime3,
         'Lojas': markersCluster
     }, {
         collapsed: false
