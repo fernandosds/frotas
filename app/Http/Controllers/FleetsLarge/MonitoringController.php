@@ -192,6 +192,12 @@ class MonitoringController extends Controller
 
     //Dashboard de todos os carros
 
+    public function events()
+    {
+        $fleetslarge = $this->apiFleetLargeService->events('3e808287-c81f-402e-b681-252e9a834d4a');
+        return response()->json($fleetslarge, 200);
+    }
+
     public function allCars()
     {
         // Entrar no Mapa todos os carros Movida

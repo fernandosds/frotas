@@ -154,6 +154,43 @@
         color: rgb(255, 0, 0);
         cursor: pointer;
     }
+
+    .eventos{
+        width: 34px;
+        height: 34px;
+        background: #f0f0f0;
+        position: absolute;
+        top: 256px;
+        left: 10px;
+        z-index: 455;
+        display: flex;
+        border-radius: 4px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        transition: all .2s ease-in-out;
+    }
+
+    .eventos.active{
+        height: 35vh;
+        width: 45vw;
+        opacity: 0.8;
+    }
+
+    .iconEvent{
+        font-size: 13px;
+        color: #000;
+        padding: 7px 10px;
+        cursor: pointer;
+    }
+
+    .tableEvents{
+        flex: 1;
+        justify-content: flex-start;
+        align-items: flex-start;
+        display: flex;
+        margin: 0 auto;
+        overflow-y: scroll;
+    }
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -163,7 +200,19 @@
 @endsection
 
 @section('content')
+<div class="eventos">
+    <i class="fas fa-clipboard-list iconEvent"></i>
+    <div class='tableEvents hidden'>
+        <table class="table">
+            <thead>
+            <tr><th>Data</th><th>Placa</th><th>Descricão</th></tr>
+            </thead>
+            <tbody class="tableEventsRows">
 
+            </tbody>
+        </table>
+    </div>
+</div>
 <div id="map" class="map"></div>
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
@@ -183,6 +232,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
 <script>
+
+    $('.eventos').on('click', function () {
+            $(this).toggleClass('active');
+            $('.tableEvents').toggleClass('hidden');
+        });
+
     const greenCarIcon = new L.Icon({
         iconUrl: '{{url("markers/car_green.png")}}',
         iconSize: [64, 64],
@@ -578,6 +633,22 @@
             })
             .fail(function() {});
     }
+
+    function getEvents() {
+            $.ajax("{{route('fleetslarges.monitoring.events')}}", {
+                method: "GET",
+            })
+                .done(function (response) {
+                    moment.locale('pt-br');
+                    const data = response;
+                    $('.tableEventsRows').empty();
+                    data.map(function (element) {
+                        $('.tableEventsRows').append('<tr><td>'+ moment(element.data).format('DD/MM/YYYY HH:mm:ss')+'</td><td>' + element.placa_veiculo +'</td><td>' + element.descricao +'</td></tr>');
+                    });
+                })
+                .fail(function () { });
+        }
     getList();
+    getEvents();
 </script>
 @endsection

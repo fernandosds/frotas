@@ -32,6 +32,12 @@ class ApiFleetLargeService
         return ClientHttp($url);
     }
 
+    public function events($hash)
+    {
+        $url = $this->host . "/" . $hash . ".json";
+        return ClientHttp($url);
+    }
+
     /**
      * @return array
      */
