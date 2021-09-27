@@ -418,29 +418,20 @@
         //"sLengthSelect": "form-control textName"
     });
 
-    function clickInput() {
-        $('.textName').focus().click();
-    }
 
     $(document).on('click', '.spanText', function() {
         if ($(this).attr('value') == 'Avaria') {
-            $('.textName').val('Avaria')
-            setTimeout(clickInput, 1000)
+            $('.textName').val('Avaria').focus().click()
         } else if ($(this).attr('value') == 'Recuperado de Ocorrência') {
-            $('.textName').val('Recuperado de Ocorrência')
-            setTimeout(clickInput, 1000)
+            $('.textName').val('Recuperado de Ocorrência').focus().click()
         } else if ($(this).attr('value') == 'Parado em Loja') {
-            $('.textName').val('Parado em Loja')
-            setTimeout(clickInput, 1000)
+            $('.textName').val('Parado em Loja').focus().click()
         } else if ($(this).attr('value') == 'Comunicando') {
-            $('.textName').val('Comunicando')
-            setTimeout(clickInput, 1000)
+            $('.textName').val('Comunicando').focus().click()
         } else if ($(this).attr('value') == 'Sem Comunicação') {
-            $('.textName').val('Sem Comunicação')
-            setTimeout(clickInput, 1000)
+            $('.textName').val('Sem Comunicação').focus().click()
         } else {
-            $('.textName').val('Total de Sinistro')
-            setTimeout(clickInput, 1000)
+            $('.textName').val('Total de Sinistro').focus().click()
         }
 
     });
