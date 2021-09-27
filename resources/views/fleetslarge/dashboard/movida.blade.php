@@ -198,6 +198,12 @@
     .spanText {
         cursor: pointer;
     }
+
+    .card-danger {
+        margin-top: 22px;
+        margin-right: -20px;
+        margin-left: 32px;
+    }
 </style>
 @endsection
 
@@ -251,7 +257,7 @@
 <div class="row" id="div-grid-vehicle2">
     <div class="col-xl-4" id="dashboardSinistro">
         <div class="card text-white bg-danger col-md-12">
-            <div class="card-body">
+            <div class="card-danger">
                 <div class="row ">
                     <div class="col-6">
                         <div class="kt-portlet__body">
@@ -264,7 +270,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr width=“2” size=“100”>
                     <div class="col-6">
                         <div class="kt-portlet__body">
                             <div class="kt-portlet__content">
@@ -413,24 +418,20 @@
         //"sLengthSelect": "form-control textName"
     });
 
-    $(document).on('click', '.spanText', function() {
-
-    });
-
 
     $(document).on('click', '.spanText', function() {
         if ($(this).attr('value') == 'Avaria') {
-            $('.textName').val('Avaria').click().focus()
+            $('.textName').val('Avaria').focus().click()
         } else if ($(this).attr('value') == 'Recuperado de Ocorrência') {
-            $('.textName').val('Recuperado de Ocorrência').click()
+            $('.textName').val('Recuperado de Ocorrência').focus().click()
         } else if ($(this).attr('value') == 'Parado em Loja') {
-            $('.textName').val('Parado em Loja').click()
+            $('.textName').val('Parado em Loja').focus().click()
         } else if ($(this).attr('value') == 'Comunicando') {
-            $('.textName').val('Comunicando').click()
+            $('.textName').val('Comunicando').focus().click()
         } else if ($(this).attr('value') == 'Sem Comunicação') {
-            $('.textName').val('Sem Comunicação').click()
+            $('.textName').val('Sem Comunicação').focus().click()
         } else {
-            $('.textName').val('Total de Sinistro').click()
+            $('.textName').val('Total de Sinistro').focus().click()
         }
 
     });
@@ -456,7 +457,6 @@
             url: "{{route('fleetslarges.showAllStatus')}}",
             type: 'GET',
             success: function(response) {
-                console.log(response.data.grid03)
                 if (response.data.grid05 == "") {
                     $('#statusAvaria').html(0)
                 } else {
