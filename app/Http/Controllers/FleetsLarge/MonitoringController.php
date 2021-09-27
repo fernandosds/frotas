@@ -17,6 +17,7 @@ class MonitoringController extends Controller
 {
     /**
      * @var $apiFleetLargeService
+     * ApiFleetLargeService
      */
     private $apiFleetLargeService;
 
@@ -204,19 +205,41 @@ class MonitoringController extends Controller
         }
     }
 
-    public function carsPosition($ignition = '')
+    public function getGeoJson($filter)
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
-        $fleetslarge = $this->apiFleetLargeService->allCarsDashboard($customer->hash, $ignition);
+        $fleetslarge = $this->apiFleetLargeService->allCarsDashboard($customer->hash, $filter);
 
         return response()->json($fleetslarge, 200);
+    }
+
+    public function carsPosition($ignition = '')
+    {
+        $filter = [];
+        if ($ignition === '0' || $ignition === '1') {
+            $filter = ['ignicao' => $ignition];
+        }
+
+        return $this->getGeoJson($filter);
+    }
+
+
+
+    public function carsForDeliver($now = '')
+    {
+        $filter = [];
+        if ($now === '0' || $now === '1') {
+            $filter = ['cliente_datadev' => $now];
+        }
+
+        return $this->getGeoJson($filter);
     }
 
     /**
      * @param Int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    function resultJson($dat)
+    public function resultJson($dat)
     {
         $arr[] = ([
             "lp_satelite"               => $dat['lp_satelite'] ?? '',

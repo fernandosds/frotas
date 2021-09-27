@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Carbon;
 use stdClass;
 
 
@@ -34,17 +35,12 @@ class ApiFleetLargeService
     /**
      * @return array
      */
-    public function allCarsDashboard($hash, $ignition = '')
+    public function allCarsDashboard($hash, $filter = [])
     {
-        $filter = '';
-        if ($ignition === '1') {
-            $filter = 1;
+        $applyFilter = false;
+        if (count($filter) > 0) {
+            $applyFilter = true;
         }
-
-        if ($ignition === '0') {
-            $filter = 0;
-        }
-
 
         $url = curl_init($this->host . "/" . $hash . ".json");
         curl_setopt($url, CURLOPT_RETURNTRANSFER, 1);
@@ -69,27 +65,64 @@ class ApiFleetLargeService
             $feature->properties->modelo_veiculo = $item->modelo_veiculo;
             $feature->properties->placa = $item->placa;
             $feature->properties->filial = $item->filial;
-            $feature->properties->cliente_local_retirada = $item->cliente_local_retirada;
             $feature->properties->cliente_datadev = $item->cliente_datadev;
             $feature->properties->cliente_dataretirada = $item->cliente_dataretirada;
+            $feature->properties->cliente_local_retirada = $item->cliente_local_retirada;
+            $feature->properties->deliver = false;
+            if (!empty($item->cliente_datadev)) {
+                $feature->properties->cliente_datadev = (Carbon::parse($item->cliente_datadev))->subHours(3)->format('d/m/Y H:i:s');
+                if ((Carbon::parse($item->cliente_datadev))->subHours(3)->isSameDay()) {
+                    $feature->properties->deliver = true;
+                }
+            }
+            if (!empty($item->cliente_dataretirada)) {
+                $feature->properties->cliente_dataretirada = (Carbon::parse($item->cliente_dataretirada))->subHours(3)->format('d/m/Y H:i:s');
+            }
             $feature->properties->cliente_distancia_endereco_residencial = $item->cliente_distancia_endereco_residencial;
             $feature->properties->cliente_distancia_local_retirada = $item->cliente_distancia_local_retirada;
             $feature->properties->cliente_distancia_local_devolucao = $item->cliente_distancia_local_devolucao;
             $feature->properties->cliente_data_posicao = $item->lp_ultima_transmissao;
+            $feature->properties->cliente_posicao_recente = $this->checkTimePosition($item->lp_ultima_transmissao);
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];
             $feature->geometry = $geometry;
 
-            if ($filter === '') {
-                $geojson->features[] = $feature;
-            } else {
-                if ($filter == $feature->properties->ignicao) {
+            if ($applyFilter) {
+                if ($this->applyFilter($filter, $feature)) {
                     $geojson->features[] = $feature;
                 }
+            } else {
+                $geojson->features[] = $feature;
             }
         }
         return $geojson;
+    }
+
+    private function checkTimePosition($time)
+    {
+        $now = new Carbon();
+        $to = Carbon::parse($time);
+        $diff_in_minutes = $to->diffInMinutes($now);
+        return $diff_in_minutes <= 180;
+    }
+
+    private function applyFilter($filters, $data)
+    {
+        $filtered = true;
+        foreach ($filters as $filter => $value) {
+            if ($filter == 'ignicao' && $data->properties->{$filter} != $value) {
+                $filtered = false;
+            }
+            if (
+                $filter == 'cliente_datadev' &&
+                (!empty($data->properties->{$filter}) && Carbon::createFromFormat('d/m/Y H:i:s', $data->properties->{$filter})->isSameDay() != $value) ||
+                empty($data->properties->{$filter})
+            ) {
+                $filtered = false;
+            }
+        }
+        return $filtered;
     }
 
     /**
