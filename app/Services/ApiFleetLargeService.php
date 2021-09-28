@@ -47,7 +47,7 @@ class ApiFleetLargeService
         if (count($filter) > 0) {
             $applyFilter = true;
         }
-        dd($this->host . "/" . $hash . ".json");
+
         $url = curl_init($this->host . "/" . $hash . ".json");
         curl_setopt($url, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($url, CURLOPT_FOLLOWLOCATION, true);
