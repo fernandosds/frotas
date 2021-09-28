@@ -88,7 +88,9 @@ class ApiFleetLargeService
             $feature->properties->cliente_distancia_local_retirada = $item->cliente_distancia_local_retirada;
             $feature->properties->cliente_distancia_local_devolucao = $item->cliente_distancia_local_devolucao;
             $feature->properties->cliente_data_posicao = $item->lp_ultima_transmissao;
-            $feature->properties->cliente_posicao_recente = $this->checkTimePosition($item->lp_ultima_transmissao);
+            $diffTime = $this->checkTimePosition($item->lp_ultima_transmissao);
+            $feature->properties->cliente_posicao_recente = $diffTime['recente'];
+            $feature->properties->cliente_posicao_diff = $diffTime['diff'];
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];
@@ -108,9 +110,9 @@ class ApiFleetLargeService
     private function checkTimePosition($time)
     {
         $now = new Carbon();
-        $to = Carbon::parse($time)->subHours(3);
+        $to = Carbon::parse($time);
         $diff_in_minutes = $to->diffInMinutes($now);
-        return $diff_in_minutes <= 180;
+        return ['recente' => $diff_in_minutes <= 180, 'diff' => $diff_in_minutes];
     }
 
     private function applyFilter($filters, $data)
