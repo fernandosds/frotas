@@ -104,7 +104,6 @@
 @section('content')
 
 <div id="map" class="map"></div>
-<button class="customBtnLeafLet btnSaveDraw" ><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
 
 @endsection
@@ -195,7 +194,9 @@
     L.control.layers(null, {
             'Ignição ON': realtime1,
             'Ignição OFF': realtime2
-        }).addTo(map);
+        }, {
+        collapsed: false
+    }).addTo(map);
 //,    'Mapa de Calor': heat
 
         realtime1.on('update', function () {
