@@ -300,27 +300,12 @@
                     carIcon = orangeCarIcon;
                 }
 
-                var marker = L.marker(latlng, {
-                    'icon': carIcon
-                })
+                return L.marker(latlng, {
+                        'icon': carIcon
+                    })
 
-                marker.bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                    '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
-                    '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
-                    '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
-                    '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
-                    '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
-                    '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                    '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                    '<br /><strong><br> Dist. loja devol. | Dist. local ret. | Dist. end. resid. </strong> <br> ' +
-                    ' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;' + feature.properties.cliente_distancia_local_devolucao + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_local_retirada + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_endereco_residencial + '.km' +
-                    ' ');
-                markersCluster.addLayer(marker);
-
-                if (feature.properties.lp_velocidade != 0) {
-                    marker.bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                    .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
                         '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
-                        '<br /><strong><br>Velocidade:</strong>  ' + feature.properties.lp_velocidade + ' km/h ' +
                         '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
                         '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
                         '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
@@ -330,21 +315,6 @@
                         '<br /><strong><br> Dist. loja devol. | Dist. local ret. | Dist. end. resid. </strong> <br> ' +
                         ' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;' + feature.properties.cliente_distancia_local_devolucao + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_local_retirada + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_endereco_residencial + '.km' +
                         ' ');
-                }
-
-                if (feature.properties.cliente_distancia_local_devolucao == null) {
-                    marker.bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                        '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
-                        '<br /><strong><br>Velocidade:</strong>  ' + feature.properties.lp_velocidade + ' km/h ' +
-                        '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
-                        '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
-                        '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
-                        '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
-                        '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                        '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                        ' ');
-                }
-
             }
         })
     }
@@ -685,7 +655,7 @@
                 const data = response;
                 $('.tableEventsRows').empty();
                 data.map(function(element) {
-                    $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3,'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
+                    $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3, 'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
                 });
             })
             .fail(function() {});
