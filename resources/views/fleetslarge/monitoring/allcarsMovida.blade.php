@@ -656,7 +656,7 @@
                 const data = response;
                 $('.tableEventsRows').empty();
                 data.map(function(element) {
-                    $('.tableEventsRows').append('<tr><td>' + moment(element.data).format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
+                    $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3,'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
                 });
             })
             .fail(function() {});
