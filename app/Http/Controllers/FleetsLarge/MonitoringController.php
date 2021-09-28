@@ -221,7 +221,7 @@ class MonitoringController extends Controller
 
     public function carsPosition($ignition = '')
     {
-        $filter = ['ignicao' => $ignition];
+        $filter = ['ignicao' => $ignition == 1 ? 'ON' : 'OFF'];
         return $this->getGeoJson($filter);
     }
 

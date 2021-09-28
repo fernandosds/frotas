@@ -66,7 +66,7 @@ class ApiFleetLargeService
             $feature->type = "Feature";
             $feature->properties = new stdClass();
             $feature->properties->id = $item->modelo;
-            $feature->properties->ignicao = (string) $item->lp_ignicao;
+            $feature->properties->ignicao = $item->lp_ignicao == '1' ? 'ON' : 'OFF';
             $feature->properties->chassis = $item->chassis;
             $feature->properties->modelo_veiculo = $item->modelo_veiculo;
             $feature->properties->placa = $item->placa;
