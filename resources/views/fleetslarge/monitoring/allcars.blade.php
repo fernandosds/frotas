@@ -190,7 +190,7 @@
 
                     console.log(heatMarkers);
                 }
-                heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
+                heat = L.heatLayer(heatMarkers, { radius: 25 , gradient:{1:'red'}}).addTo(map);
             }
         });
 
