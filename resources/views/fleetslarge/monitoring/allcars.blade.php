@@ -118,6 +118,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-realtime/2.2.0/leaflet-realtime.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
 
 <script>
     const greenCarIcon = new L.Icon({
@@ -151,6 +152,21 @@
             }
         })
     }
+
+    $.ajax({
+            url: "{{route('fleetslarges.monitoring.carsPosition')}}",
+            type: 'GET',
+            success: function (data) {
+                const planes = data.data;
+                let heatMarkers = [];
+                for (var i = 0; i < planes.length; i++) {
+                    heatMarkers.push([ planes[i].lp_latitude, planes[i].lp_longitude, 0.5]);// lat, lng, intensity
+                }
+                const heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
+            }
+        });
+
+
 
     var map = L.map('map', {
             center: [-12.452992588205499, -50.42986682751686],
@@ -292,17 +308,6 @@
                     editableLayers.clearLayers();
                 }
             })
-            /*$.ajax("{{route('map.markers.save')}}", {method: "POST", data:{
-                    "_token": "{{ csrf_token() }}",data:data}})
-                .done(function () {
-                    alert("success");
-                })
-                .fail(function () {
-                    alert("error");
-                })
-                .always(function () {
-                    alert("complete");
-                });*/
         }
     });
 
