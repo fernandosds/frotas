@@ -5,6 +5,7 @@ namespace App\Services;
 
 use Illuminate\Support\Carbon;
 use stdClass;
+use Illuminate\Support\Facades\Auth;
 
 
 class ApiFleetLargeService
@@ -78,22 +79,24 @@ class ApiFleetLargeService
             $feature->properties->status_veiculo = $item->status_veiculo;
             $feature->properties->cliente_local_retirada = $item->cliente_local_retirada;
             $feature->properties->deliver = false;
-            if (!empty($item->cliente_datadev)) {
-                $feature->properties->cliente_datadev = (Carbon::parse($item->cliente_datadev))->subHours(3)->format('d/m/Y H:i:s');
-                if ((Carbon::parse($item->cliente_datadev))->subHours(3)->isSameDay()) {
-                    $feature->properties->deliver = true;
+            if (Auth::user()->customer_id == 7) {
+                if (!empty($item->cliente_datadev)) {
+                    $feature->properties->cliente_datadev = (Carbon::parse($item->cliente_datadev))->subHours(3)->format('d/m/Y H:i:s');
+                    if ((Carbon::parse($item->cliente_datadev))->subHours(3)->isSameDay()) {
+                        $feature->properties->deliver = true;
+                    }
                 }
+                if (!empty($item->cliente_dataretirada)) {
+                    $feature->properties->cliente_dataretirada = (Carbon::parse($item->cliente_dataretirada))->subHours(3)->format('d/m/Y H:i:s');
+                }
+                $feature->properties->cliente_distancia_endereco_residencial = $item->cliente_distancia_endereco_residencial;
+                $feature->properties->cliente_distancia_local_retirada = $item->cliente_distancia_local_retirada;
+                $feature->properties->cliente_distancia_local_devolucao = $item->cliente_distancia_local_devolucao;
+                $feature->properties->cliente_data_posicao = $item->lp_ultima_transmissao;
+                $diffTime = $this->checkTimePosition($item->lp_ultima_transmissao);
+                $feature->properties->cliente_posicao_recente = $diffTime['recente'];
+                $feature->properties->cliente_posicao_diff = $diffTime['diff'];
             }
-            if (!empty($item->cliente_dataretirada)) {
-                $feature->properties->cliente_dataretirada = (Carbon::parse($item->cliente_dataretirada))->subHours(3)->format('d/m/Y H:i:s');
-            }
-            $feature->properties->cliente_distancia_endereco_residencial = $item->cliente_distancia_endereco_residencial;
-            $feature->properties->cliente_distancia_local_retirada = $item->cliente_distancia_local_retirada;
-            $feature->properties->cliente_distancia_local_devolucao = $item->cliente_distancia_local_devolucao;
-            $feature->properties->cliente_data_posicao = $item->lp_ultima_transmissao;
-            $diffTime = $this->checkTimePosition($item->lp_ultima_transmissao);
-            $feature->properties->cliente_posicao_recente = $diffTime['recente'];
-            $feature->properties->cliente_posicao_diff = $diffTime['diff'];
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];
