@@ -117,9 +117,7 @@ class ApiFleetLargeService
     {
         $filtered = true;
         foreach ($filters as $filter => $value) {
-
-            var_dump($data->properties->ignicao, $value);
-            if ($filter === 'ignicao' && $data->properties->ignicao != $value) {
+            if ($filter === 'ignicao' && $data->properties->ignicao !== $value) {
                 $filtered = false;
             } elseif (
                 $filter == 'cliente_datadev' &&
@@ -129,7 +127,6 @@ class ApiFleetLargeService
                 $filtered = false;
             }
         }
-        dd($filtered);
         return $filtered;
     }
 
