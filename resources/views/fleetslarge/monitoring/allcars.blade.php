@@ -136,17 +136,22 @@
 
 
     function createRealtimeLayer(url, container) {
-        return realtime = L.realtime(url, {
-            interval: 30 * 1000,
-            container: container,
+            return realtime = L.realtime(url, {
+                interval: 60 * 1000,
+                container: container,
+                getFeatureId: function (f) {
+                    return f.properties.placa;
+                },
+                cache: true,
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {
-                        'icon': feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon
+                        'icon': feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon
                     })
                     .bindPopup('<p>Placa: ' + feature.properties.placa + '</p> <p>Chassis: ' + feature.properties.chassis + '</p>');
             }
         })
     }
+
 
 
     var map = L.map('map', {
@@ -156,11 +161,11 @@
             maxZoom: 18,
             minZoom: 3,
         }),
-        clusterGroup = L.markerClusterGroup().addTo(map),
-        subgroup = L.featureGroup.subGroup(clusterGroup),
-        subgroup2 = L.featureGroup.subGroup(clusterGroup),
-        realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-        realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2);
+            clusterGroup = L.markerClusterGroup().addTo(map),
+            subgroup = L.featureGroup.subGroup(clusterGroup),
+            subgroup2 = L.featureGroup.subGroup(clusterGroup),
+            realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
+            realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map);
 
     L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
