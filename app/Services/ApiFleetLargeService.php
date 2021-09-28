@@ -119,6 +119,9 @@ class ApiFleetLargeService
         foreach ($filters as $filter => $value) {
             if ($filter === 'ignicao' && $data->properties->ignicao !== $value) {
                 $filtered = false;
+                if ($value == '0') {
+                    $filtered = true;
+                }
             } elseif (
                 $filter == 'cliente_datadev' &&
                 (!empty($data->properties->{$filter}) && Carbon::createFromFormat('d/m/Y H:i:s', $data->properties->{$filter})->isSameDay() != $value) ||
