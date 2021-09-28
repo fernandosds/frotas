@@ -43,9 +43,7 @@ class ApiFleetLargeService
      */
     public function allCarsDashboard($hash, $filter = [])
     {
-        $applyFilter = true;
-        var_dump(count($filter));
-        dd($filter);
+        $applyFilter = false;
         if (count($filter) > 0) {
             $applyFilter = true;
         }
@@ -120,7 +118,8 @@ class ApiFleetLargeService
         $filtered = true;
         foreach ($filters as $filter => $value) {
             echo $value . ' - ' . $data->properties->ignicao;
-            if ($filter == 'ignicao' && $data->properties->ignicao != $value) {
+            die();
+            if ($filter === 'ignicao' && $data->properties->ignicao != $value) {
                 $filtered = false;
             } elseif (
                 $filter == 'cliente_datadev' &&
