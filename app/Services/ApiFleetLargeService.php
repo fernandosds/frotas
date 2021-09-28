@@ -117,6 +117,8 @@ class ApiFleetLargeService
     {
         $filtered = true;
         foreach ($filters as $filter => $value) {
+            dd($value);
+
             if ($filter === 'ignicao' && $data->properties->ignicao !== $value) {
                 $filtered = false;
                 if ($value == '0') {
