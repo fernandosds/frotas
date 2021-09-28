@@ -236,26 +236,6 @@
                 </div>
                 <br />
                 <br />
-                <div class="row">
-                    <div class="col-12">
-                        <h4>Dados do Rastreador</h4>
-                        <br />
-                        <div style="width: 400px; height: 100px; overflow-y: scroll;">
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                            test<br />
-                        </div>
-                        <br />
-                    </div>
-                </div>
-                <br />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalClient" id="btn_cliente">Dados do cliente</button>
