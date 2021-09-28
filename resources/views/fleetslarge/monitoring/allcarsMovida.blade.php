@@ -145,17 +145,17 @@
         width: 60%;
     }
 
-    .hidden{
+    .hidden {
         display: none;
     }
 
-    .btnRemove{
+    .btnRemove {
         margin-right: 10px;
         color: rgb(255, 0, 0);
         cursor: pointer;
     }
 
-    .eventos{
+    .eventos {
         width: 34px;
         height: 34px;
         background: #f0f0f0;
@@ -169,20 +169,20 @@
         transition: all .2s ease-in-out;
     }
 
-    .eventos.active{
+    .eventos.active {
         height: 35vh;
         width: 45vw;
         opacity: 0.8;
     }
 
-    .iconEvent{
+    .iconEvent {
         font-size: 13px;
         color: #000;
         padding: 7px 10px;
         cursor: pointer;
     }
 
-    .tableEvents{
+    .tableEvents {
         flex: 1;
         justify-content: flex-start;
         align-items: flex-start;
@@ -190,7 +190,6 @@
         margin: 0 auto;
         overflow-y: scroll;
     }
-
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -205,7 +204,11 @@
     <div class='tableEvents hidden'>
         <table class="table">
             <thead>
-            <tr><th>Data</th><th>Placa</th><th>Descricão</th></tr>
+                <tr>
+                    <th>Data</th>
+                    <th>Placa</th>
+                    <th>Descricão</th>
+                </tr>
             </thead>
             <tbody class="tableEventsRows">
 
@@ -232,11 +235,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
 <script>
-
-    $('.eventos').on('click', function () {
-            $(this).toggleClass('active');
-            $('.tableEvents').toggleClass('hidden');
-        });
+    $('.eventos').on('click', function() {
+        $(this).toggleClass('active');
+        $('.tableEvents').toggleClass('hidden');
+    });
 
     const greenCarIcon = new L.Icon({
         iconUrl: '{{url("markers/car_green.png")}}',
@@ -245,11 +247,11 @@
         popupAnchor: [1, -34],
     });
     const greenAlertCarIcon = new L.Icon({
-            iconUrl: '{{url("markers/car_green_alert.png")}}',
-            iconSize: [64, 64],
-            iconAnchor: [35, 62],
-            popupAnchor: [1, -34],
-        });
+        iconUrl: '{{url("markers/car_green_alert.png")}}',
+        iconSize: [64, 64],
+        iconAnchor: [35, 62],
+        popupAnchor: [1, -34],
+    });
     const redCarIcon = new L.Icon({
         iconUrl: '{{url("markers/car_red.png")}}',
         iconSize: [64, 64],
@@ -257,18 +259,18 @@
         popupAnchor: [1, -34],
     });
     const redAlertCarIcon = new L.Icon({
-            iconUrl: '{{url("markers/car_red_alert.png")}}',
-            iconSize: [64, 64],
-            iconAnchor: [35, 62],
-            popupAnchor: [1, -34],
-        });
+        iconUrl: '{{url("markers/car_red_alert.png")}}',
+        iconSize: [64, 64],
+        iconAnchor: [35, 62],
+        popupAnchor: [1, -34],
+    });
 
     const orangeCarIcon = new L.Icon({
-            iconUrl: '{{url("markers/car_orange.png")}}',
-            iconSize: [64, 64],
-            iconAnchor: [35, 62],
-            popupAnchor: [1, -34],
-        });
+        iconUrl: '{{url("markers/car_orange.png")}}',
+        iconSize: [64, 64],
+        iconAnchor: [35, 62],
+        popupAnchor: [1, -34],
+    });
     const logoMovidaIcon = new L.Icon({
         iconUrl: '{{url("markers/logo_movida.png")}}',
         iconSize: [40, 40],
@@ -294,17 +296,20 @@
                 if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
                     carIcon = redAlertCarIcon
                 }
-                if(feature.properties.deliver == true){
+                if (feature.properties.deliver == true) {
                     carIcon = orangeCarIcon;
                 }
 
                 return L.marker(latlng, {
                         'icon': carIcon
                     })
+
                     .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                        '<br /><br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                        '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
+                        '<br /><strong><br>Velocidade:</strong>  ' + feature.properties.lp_velocidade + ' km/h ' +
+                        '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
                         '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
-                        '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.filial + ' ' +
+                        '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
                         '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
                         '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
                         '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
@@ -452,15 +457,15 @@
             }
             Swal.fire({
                 title: 'Configure sua nova cerca!',
-                html:'<div class="form-group">'+
-                    '<label> Nome da Cerca</label>'+
-                    '<input type="text" class="form-control" id="cercaName" placeholder="Nome da Cerca">'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label>Tipo de cerca</label>'+
-                    '<select class="form-control" id="cercaType">'+
-                    '<option value="in">Entrada</option>'+
-                    '<option value="out">Saída</option>'+
+                html: '<div class="form-group">' +
+                    '<label> Nome da Cerca</label>' +
+                    '<input type="text" class="form-control" id="cercaName" placeholder="Nome da Cerca">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                    '<label>Tipo de cerca</label>' +
+                    '<select class="form-control" id="cercaType">' +
+                    '<option value="in">Entrada</option>' +
+                    '<option value="out">Saída</option>' +
                     '</select></div>',
                 showCancelButton: true,
                 confirmButtonText: 'Salvar',
@@ -494,7 +499,8 @@
             }).then((result) => {
                 if (result.value.isConfirmed) {
                     Swal.fire({
-                        title: `Nova Cerca criada`, type:'success'
+                        title: `Nova Cerca criada`,
+                        type: 'success'
                     });
                     editableLayers.clearLayers();
                     getList();
@@ -517,11 +523,11 @@
 
     let listLayers = [];
 
-    $('.markerList').on('click', '.btnRemove', function () {
+    $('.markerList').on('click', '.btnRemove', function() {
         Swal.fire({
             title: `Remover a cerca "` + $(this).data('name') + `" ?`,
             text: 'Essa ação não pode ser desfeita, para confirmar digite o nome da cerca.',
-            type:"warning",
+            type: "warning",
             input: 'text',
             inputAttributes: {
                 autocapitalize: 'off'
@@ -532,11 +538,11 @@
             preConfirm: (cerca) => {
                 console.log(cerca);
                 console.log($(this).data('name'));
-                if(cerca !== $(this).data('name').toString()){
+                if (cerca !== $(this).data('name').toString()) {
                     Swal.showValidationMessage(
                         "Nome da cerca diferente do informado!"
                     );
-                }else{
+                } else {
                     let payload = {
                         "_token": "{{ csrf_token() }}",
                         data: {
@@ -545,13 +551,13 @@
                         }
                     }
                     return fetch("{{route('map.markers.delete')}}", {
-                        method: "DELETE",
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    })
+                            method: "DELETE",
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        })
                         .then(response => {
                             if (!response.ok) {
                                 return response.json().then(text => {
@@ -571,7 +577,8 @@
         }).then((result) => {
             if (result.value.isConfirmed) {
                 Swal.fire({
-                    title: `Cerca removida!`, type: 'success'
+                    title: `Cerca removida!`,
+                    type: 'success'
                 });
                 editableLayers.clearLayers();
                 getList();
@@ -579,26 +586,32 @@
         });
     });
 
-    $('.markerList').on('click','.checkMarkers',function(){
+    $('.markerList').on('click', '.checkMarkers', function() {
         const idLayer = $(this).val();
-        if($(this).is(':checked')){
-            $.ajax("{{route('map.markers.list')}}/"+ $(this).val(), {
-                method: "GET",
-            })
-                .done(function (response) {
+        if ($(this).is(':checked')) {
+            $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
+                    method: "GET",
+                })
+                .done(function(response) {
                     const data = response.result;
-                    const myData=data.markers;
-                    const layerName=data.name;
-                    const layerType=data.type == 'in'?"Entrada":'Saída';
+                    const myData = data.markers;
+                    const layerName = data.name;
+                    const layerType = data.type == 'in' ? "Entrada" : 'Saída';
                     var myStyle = {
                         "color": "#ff7800",
                         "weight": 5,
                         "opacity": 0.65
                     };
-                     var geojson = L.geoJson(data.markers,{style: myStyle, onEachFeature: function (feature, layer) {
-                            layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType+ '</b>');
-                        }}).addTo(map);
-                     listLayers.push({"id": idLayer, "layer":geojson});
+                    var geojson = L.geoJson(data.markers, {
+                        style: myStyle,
+                        onEachFeature: function(feature, layer) {
+                            layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
+                        }
+                    }).addTo(map);
+                    listLayers.push({
+                        "id": idLayer,
+                        "layer": geojson
+                    });
 
                     //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
                 })
@@ -624,7 +637,7 @@
                 $('.markerList').empty();
                 data.map(function(element) {
                     $('.markerList').append('<div class="markerItem">' +
-                        '<i class="fa fa-trash btnRemove" data-id="'+ element._id+'" data-name="'+ element.name+'"></i>' +
+                        '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
                         '<input type="checkbox" class="checkMarkers"' +
                         'id="' + element._id + '"  value="' + element._id + '">' +
                         '<label class="marker-check-label" for="' + element._id + '">' +
@@ -635,19 +648,19 @@
     }
 
     function getEvents() {
-            $.ajax("{{route('fleetslarges.monitoring.events')}}", {
+        $.ajax("{{route('fleetslarges.monitoring.events')}}", {
                 method: "GET",
             })
-                .done(function (response) {
-                    moment.locale('pt-br');
-                    const data = response;
-                    $('.tableEventsRows').empty();
-                    data.map(function (element) {
-                        $('.tableEventsRows').append('<tr><td>'+ moment(element.data).format('DD/MM/YYYY HH:mm:ss')+'</td><td>' + element.placa_veiculo +'</td><td>' + element.descricao +'</td></tr>');
-                    });
-                })
-                .fail(function () { });
-        }
+            .done(function(response) {
+                moment.locale('pt-br');
+                const data = response;
+                $('.tableEventsRows').empty();
+                data.map(function(element) {
+                    $('.tableEventsRows').append('<tr><td>' + moment(element.data).format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
+                });
+            })
+            .fail(function() {});
+    }
     getList();
     getEvents();
 </script>

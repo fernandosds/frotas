@@ -245,10 +245,10 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">
-                    <span class="spanText" id="statusAvaria" value="Avaria">&nbsp;</span>
-                    <span class="fa fa-car-crash"></span>
+                    <span class="spanText" id="statusSemComunicacao" value="Sem Comunicação">&nbsp;</span>
+                    <span class="fa fa-phone-slash"></span>
                 </h1>
-                <p class="card-text h5"><span id="statusCard02">Veículos com avaria</p>
+                <p class="card-text h5"><span id="statusCard05">Veículos sem comunicação.</p>
             </div>
         </div>
     </div>
@@ -302,10 +302,10 @@
             <div class="card-body">
                 <br />
                 <h1 class="card-title display-4">
-                    <span class="spanText" id="statusSemComunicacao" value="Sem Comunicação">&nbsp;</span>
-                    <span class="fa fa-phone-slash"></span>
+                    <span class="spanText" id="statusAvaria" value="Avaria">&nbsp;</span>
+                    <span class="fa fa-car-crash"></span>
                 </h1>
-                <p class="card-text h5"><span id="statusCard05">Veículos sem comunicação.</p>
+                <p class="card-text h5"><span id="statusCard02">Veículos com avaria</p>
             </div>
         </div>
     </div>
@@ -416,6 +416,13 @@
     $.extend($.fn.dataTableExt.oStdClasses, {
         "sFilterInput": "textName",
         //"sLengthSelect": "form-control textName"
+    });
+
+    /**
+     * Correção do scroll do modal
+     */
+    $('#modalClient').on('hidden.bs.modal', function(e) {
+        $("body").addClass("modal-open");
     });
 
 

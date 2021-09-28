@@ -71,8 +71,11 @@ class ApiFleetLargeService
             $feature->properties->modelo_veiculo = $item->modelo_veiculo;
             $feature->properties->placa = $item->placa;
             $feature->properties->filial = $item->filial;
+            $feature->properties->cliente_localdev = $item->cliente_localdev;
             $feature->properties->cliente_datadev = $item->cliente_datadev;
             $feature->properties->cliente_dataretirada = $item->cliente_dataretirada;
+            $feature->properties->lp_velocidade = $item->lp_velocidade;
+            $feature->properties->status_veiculo = $item->status_veiculo;
             $feature->properties->cliente_local_retirada = $item->cliente_local_retirada;
             $feature->properties->deliver = false;
             if (!empty($item->cliente_datadev)) {
