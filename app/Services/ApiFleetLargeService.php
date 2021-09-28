@@ -47,7 +47,7 @@ class ApiFleetLargeService
         if (count($filter) > 0) {
             $applyFilter = true;
         }
-
+        dd($this->host . "/" . $hash . ".json");
         $url = curl_init($this->host . "/" . $hash . ".json");
         curl_setopt($url, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($url, CURLOPT_FOLLOWLOCATION, true);
@@ -117,8 +117,6 @@ class ApiFleetLargeService
     {
         $filtered = true;
         foreach ($filters as $filter => $value) {
-            var_dump($filter, $data->properties->ignicao, $value, $data->properties->ignicao != $value, $filter === 'ignicao');
-            die();
             if ($filter === 'ignicao' && $data->properties->ignicao !== $value) {
                 $filtered = false;
             } elseif (
