@@ -194,7 +194,8 @@
 
     L.control.layers(null, {
             'Ignição ON': realtime1,
-            'Ignição OFF': realtime2
+            'Ignição OFF': realtime2,
+            'Mapa de Calor': heat
         }).addTo(map);
 
 
