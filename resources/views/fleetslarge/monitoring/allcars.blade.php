@@ -158,10 +158,10 @@
             url: "{{route('fleetslarges.monitoring.carsPosition')}}",
             type: 'GET',
             success: function (data) {
-                const planes = data.data;
+                const planes = data.features;
                 let heatMarkers = [];
                 for (var i = 0; i < planes.length; i++) {
-                    heatMarkers.push([ planes[i].lp_latitude, planes[i].lp_longitude, 0.5]);// lat, lng, intensity
+                    heatMarkers.push([ planes[i].geometry.coordinates[1], planes[i].geometry.coordinates[0], 0.5]);// lat, lng, intensity
                 }
                 heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
             }
