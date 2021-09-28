@@ -370,6 +370,11 @@ class DashboardController extends Controller
         if (Route::currentRouteName() == 'fleetslarges.analyzeCar') {
             $data['hash'] = 'd1c7e435-37ef-46aa-9105-4a2a957edc3e';
         }
+
+        // Iframe com os dados da base
+        if (Route::currentRouteName() == 'fleetslarges.analyzeBase') {
+            $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
+        }
         return response()->view('fleetslarge.iframe.dashboardSantander', $data);
     }
 }
