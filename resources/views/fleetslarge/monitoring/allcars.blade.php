@@ -152,6 +152,7 @@
             }
         })
     }
+    let heat;
 
     $.ajax({
             url: "{{route('fleetslarges.monitoring.carsPosition')}}",
@@ -162,7 +163,7 @@
                 for (var i = 0; i < planes.length; i++) {
                     heatMarkers.push([ planes[i].lp_latitude, planes[i].lp_longitude, 0.5]);// lat, lng, intensity
                 }
-                const heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
+                heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
             }
         });
 
