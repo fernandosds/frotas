@@ -117,8 +117,8 @@ class ApiFleetLargeService
     {
         $filtered = true;
         foreach ($filters as $filter => $value) {
-            echo $value . ' - ' . $data->properties->ignicao;
-            die();
+
+            var_dump($data->properties->ignicao, $value);
             if ($filter === 'ignicao' && $data->properties->ignicao != $value) {
                 $filtered = false;
             } elseif (
@@ -129,6 +129,7 @@ class ApiFleetLargeService
                 $filtered = false;
             }
         }
+        dd($filtered);
         return $filtered;
     }
 
