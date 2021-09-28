@@ -186,7 +186,7 @@
                 const planes = data.features;
                 let heatMarkers = [];
                 for (var i = 0; i < planes.length; i++) {
-                    heatMarkers.push([planes[i].geometry.coordinates[1], planes[i].geometry.coordinates[0], 0.5]);// lat, lng, intensity
+                    heatMarkers.push([planes[i].geometry.coordinates[1], planes[i].geometry.coordinates[0], 1]);// lat, lng, intensity
 
                     console.log(heatMarkers);
                 }
