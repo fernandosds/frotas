@@ -17,7 +17,7 @@ class MonitoringController extends Controller
 {
     /**
      * @var $apiFleetLargeService
-     * ApiFleetLargeService
+     * @var ApiFleetLargeService
      */
     private $apiFleetLargeService;
 
