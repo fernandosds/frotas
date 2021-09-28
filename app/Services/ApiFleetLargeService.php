@@ -43,7 +43,9 @@ class ApiFleetLargeService
      */
     public function allCarsDashboard($hash, $filter = [])
     {
-        $applyFilter = false;
+        $applyFilter = true;
+        var_dump(count($filter));
+        dd($filter);
         if (count($filter) > 0) {
             $applyFilter = true;
         }
