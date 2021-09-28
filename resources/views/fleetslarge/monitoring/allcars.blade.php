@@ -150,7 +150,7 @@
             }
         })
     }
-    /*let heat;
+    let heat;
 
     $.ajax({
             url: "{{route('fleetslarges.monitoring.carsPosition')}}",
@@ -163,7 +163,7 @@
                 }
                 heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
             }
-        });*/
+        });
 
 
 
@@ -193,7 +193,8 @@
 
     L.control.layers(null, {
             'Ignição ON': realtime1,
-            'Ignição OFF': realtime2
+            'Ignição OFF': realtime2,
+            'Mapa Calor': heat
         }, {
         collapsed: false
     }).addTo(map);
