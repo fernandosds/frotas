@@ -66,7 +66,7 @@ class ApiFleetLargeService
             $feature->type = "Feature";
             $feature->properties = new stdClass();
             $feature->properties->id = $item->modelo;
-            $feature->properties->ignicao = $item->lp_ignicao;
+            $feature->properties->ignicao = (string) $item->lp_ignicao;
             $feature->properties->chassis = $item->chassis;
             $feature->properties->modelo_veiculo = $item->modelo_veiculo;
             $feature->properties->placa = $item->placa;
@@ -117,10 +117,6 @@ class ApiFleetLargeService
     {
         $filtered = true;
         foreach ($filters as $filter => $value) {
-            if ($value == '0') {
-                return  true;
-            }
-
             if ($filter === 'ignicao' && $data->properties->ignicao !== $value) {
                 $filtered = false;
             } elseif (
