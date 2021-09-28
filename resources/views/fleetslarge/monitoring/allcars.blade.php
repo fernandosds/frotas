@@ -150,20 +150,6 @@
             }
         })
     }
-    let heat;
-
-    $.ajax({
-            url: "{{route('fleetslarges.monitoring.carsPosition')}}",
-            type: 'GET',
-            success: function (data) {
-                const planes = data.features;
-                let heatMarkers = [];
-                for (var i = 0; i < planes.length; i++) {
-                    heatMarkers.push([ planes[i].geometry.coordinates[1], planes[i].geometry.coordinates[0], 0.5]);// lat, lng, intensity
-                }
-                heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
-            }
-        });
 
 
 
@@ -191,10 +177,27 @@
         }
     ).addTo(map);
 
+    let heat;
+
+        $.ajax({
+            url: "{{route('fleetslarges.monitoring.carsPosition')}}",
+            type: 'GET',
+            success: function (data) {
+                const planes = data.features;
+                let heatMarkers = [];
+                for (var i = 0; i < planes.length; i++) {
+                    heatMarkers.push([planes[i].geometry.coordinates[1], planes[i].geometry.coordinates[0], 1]);// lat, lng, intensity
+
+                    console.log(heatMarkers);
+                }
+                heat = L.heatLayer(heatMarkers, { radius: 25 }).addTo(map);
+            }
+        });
+
+
     L.control.layers(null, {
             'Ignição ON': realtime1,
-            'Ignição OFF': realtime2,
-            'Mapa Calor': heat
+            'Ignição OFF': realtime2
         }, {
         collapsed: false
     }).addTo(map);
