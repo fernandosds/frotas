@@ -188,7 +188,7 @@
                 for (var i = 0; i < planes.length; i++) {
                     heatMarkers.push([planes[i].geometry.coordinates[1], planes[i].geometry.coordinates[0], 1]);// lat, lng, intensity
                 }
-                heat = L.heatLayer(heatMarkers, { radius: 50 , blur: 25,gradient:{1:'red'}}).addTo(map);
+                heat = L.heatLayer(heatMarkers, { radius: 50 , blur: 25,gradient:{1:'red', 0: 'blue'}}).addTo(map);
             }
         });
 
