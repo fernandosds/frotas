@@ -285,13 +285,13 @@
             },
             cache: true,
             pointToLayer: function(feature, latlng) {
-                let carIcon = feature.properties.ignicao == 1 ? greenCarIcon : redCarIcon;
+                let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
-                if (feature.properties.ignicao == 1 && !feature.properties.cliente_posicao_recente) {
+                if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
                     carIcon = greenAlertCarIcon
                 }
 
-                if (feature.properties.ignicao == 0 && !feature.properties.cliente_posicao_recente) {
+                if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
                     carIcon = redAlertCarIcon
                 }
                 if(feature.properties.deliver == true){

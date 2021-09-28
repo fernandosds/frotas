@@ -108,7 +108,7 @@ class ApiFleetLargeService
     private function checkTimePosition($time)
     {
         $now = new Carbon();
-        $to = Carbon::parse($time);
+        $to = Carbon::parse($time)->subHours(3);
         $diff_in_minutes = $to->diffInMinutes($now);
         return $diff_in_minutes <= 180;
     }
