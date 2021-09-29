@@ -171,6 +171,11 @@
     .row {
         margin-top: 17px;
     }
+
+    .card-total {
+        margin-top: -52px;
+        text-align: center;
+    }
 </style>
 @endsection
 
@@ -220,6 +225,18 @@
                 <br />
                 <h1 class="card-title display-4"><span id="statusSemComunicacao">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card text-white bg-primary col-md-12">
+            <div class="card-body card-total">
+                <br />
+                <h1 class="card-title display-12"><span id="statusSinistro">&nbsp;</span> </h1>
+                <h1 class="card-title display-12">{{$totalJson}} INSTALAÇÕES EFETUADAS </h1>
             </div>
         </div>
     </div>
