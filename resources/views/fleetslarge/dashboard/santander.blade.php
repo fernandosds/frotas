@@ -176,6 +176,10 @@
         margin-top: -52px;
         text-align: center;
     }
+
+    .spanText {
+        cursor: pointer;
+    }
 </style>
 @endsection
 
@@ -193,7 +197,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor01">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> <span id="statusComunicando">&nbsp;</span></h1>
+                <h1 class="card-title display-4"> <span id="grid04">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
             </div>
         </div>
@@ -202,7 +206,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor02">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusAvaria">&nbsp;</span></h1>
+                <h1 class="card-title display-4"><span id="grid01">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
             </div>
         </div>
@@ -214,7 +218,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor04">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusParadoEmLoja">&nbsp;</span></h1>
+                <h1 class="card-title display-4"><span id="grid02">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
             </div>
         </div>
@@ -223,7 +227,7 @@
         <div class="card text-white col-md-12 bg-primary" id='divColor05'>
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="statusSemComunicacao">&nbsp;</span></h1>
+                <h1 class="card-title display-4"><span id="grid03">&nbsp;</span></h1>
                 <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
             </div>
         </div>
@@ -235,8 +239,8 @@
         <div class="card text-white bg-primary col-md-12">
             <div class="card-body card-total">
                 <br />
-                <h1 class="card-title display-12"><span id="statusSinistro">&nbsp;</span> </h1>
-                <h1 class="card-title display-12">{{$totalJson}} INSTALAÇÕES EFETUADAS </h1>
+                <h1 class="card-title display-12">&nbsp;</span> </h1>
+                <h1 class="card-title display-12"><span class="spanText" id="grid05" value="instalado"></span> INSTALAÇÕES EFETUADAS </h1>
             </div>
         </div>
     </div>
@@ -265,8 +269,9 @@
                                 <th class="hidden">Velocidade</th>
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
-                                <th class="santanderOpen">Loja</th>
+                                <th>Loja</th>
                                 <th class="hidden">Empresa</th>
+                                <th class="hidden">Situação</th>
                                 <th style="width: 150px;"></th>
                             </tr>
                         </thead>
@@ -280,18 +285,13 @@
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
-                                <td class="santanderOpen">{{$driver['cliente']}}</td>
+                                <td>{{$driver['cliente']}}</td>
                                 <td class="hidden">{{$driver['empresa']}}</td>
+                                <td class="hidden">{{$driver['situacao']}}</td>
                                 <td>
-                                    @if ($driver['sinistrado'] == 'TRUE')
-                                    <button type="button" class="btn btn-danger btn-elevate btn-circle btn-icon btn-vehicle-data" id="btn-modalVehicle" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
-                                        <i class="fa fa-search-plus"></i>
-                                    </button>
-                                    @else
                                     <button type="button" class="btn btn-success  btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
                                         <i class="fa fa-search-plus"></i>
                                     </button>
-                                    @endif
                                     <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver['chassis']}}" class="btn btn-warning btn-elevate btn-circle btn-icon"><span class="fa fa-map-marked-alt"></span></a>
                                 </td>
                             </tr>
@@ -318,7 +318,6 @@
         reloadValue()
     })
 
-    // $('#dashboardSantander').removeClass('hidden'); ** JÁ TEM 4 GRIDS OCULTO COM A CLASSE HIDDEN, DESCOMENTAR ESTA LINHA QUANDO SURGIR A NECESSIDADE.
     $('#timeline').removeClass('hidden');
 
     function reloadValue() {
@@ -326,10 +325,11 @@
             url: "{{route('fleetslarges.showAllStatus')}}",
             type: 'GET',
             success: function(response) {
-                $('#statusAvaria').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#statusParadoEmLoja').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#statusSemComunicacao').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#statusComunicando').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                $('#grid01').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                $('#grid02').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                $('#grid03').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                $('#grid04').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+                $('#grid05').html(response.data.grid03.length)
             }
         });
     }
@@ -556,5 +556,15 @@
         }
 
     }
+
+    $.extend($.fn.dataTableExt.oStdClasses, {
+        "sFilterInput": "textName",
+    });
+
+    $(document).on('click', '.spanText', function() {
+        if ($(this).attr('value') == 'instalado') {
+            $('.textName').val('instalado').focus().click()
+        }
+    });
 </script>
 @endsection

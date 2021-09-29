@@ -73,7 +73,6 @@ class DashboardController extends Controller
         // Entrar no dashboard Santander
         if (Auth::user()->customer_id == 8) {
             $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
-            $data['totalJson'] = count($data['fleetslarge']);
             return response()->view('fleetslarge.dashboard.santander', $data);
         }
     }
@@ -239,6 +238,16 @@ class DashboardController extends Controller
 
             if ($data['fleetslarge'][0]['empresa'] == 'Santander') {
                 $empresa = 'Santander';
+
+                $customer = $this->customerService->show(Auth::user()->customer_id);
+
+                $instalado = $this->apiFleetLargeService->allCars($customer->hash);
+                foreach ($instalado as $data => $dat) {
+                    if ($dat['situacao'] == "INSTALADO") {
+                        $arr3[] = $this->resultJson($dat);
+                        $grid03 = $arr3;
+                    }
+                }
 
                 $mediaHora = $this->apiFleetLargeService->mediaHours();
                 foreach ($mediaHora as $data => $dat) {
