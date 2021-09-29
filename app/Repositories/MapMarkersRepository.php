@@ -31,7 +31,7 @@ class MapMarkersRepository extends AbstractRepository
             $this->model->name = $data['name'];
             $this->model->type = $data['type'];
             $this->model->lenght_of_stay = $data['lenght_of_stay'];
-            $this->model->to_deliver = $data['delivery'];
+            $this->model->to_deliver = $data['to_deliver'];
             $this->model->markers = $data['markers'];
             $this->model->user_id = Auth::user()->id;
             $this->model->save();

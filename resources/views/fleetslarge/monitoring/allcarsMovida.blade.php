@@ -461,7 +461,7 @@
     });
 
     $("body").on("focus", ".rowTimeItem", function () {
-        $('.stay_time').mask('000000',{ 'translation': { 0: { pattern: /[0-9]/ } } });
+        $('.lenght_of_stay').mask('######',{ translation: { '#': { pattern: /[0-9]/ } } });
     });
 
     $('.btnSaveDraw').click(function() {
@@ -490,10 +490,10 @@
                     '<div class="form-group" style="margin-bottom:5px" >'+
                     '<label for="stay_time">Tempo de permanencia <small>Em minutos</small></label>'+
                     '</div><div class="form-group rowTime">'+
-                    '<input type="text" class="form-control rowTimeItem lenght_of_stay" name="lenght_of_stay" data-mask="999999">'+
+                    '<input type="text" class="form-control rowTimeItem lenght_of_stay" name="lenght_of_stay">'+
                     '</div>'+
                     '<div class="form-check">'+
-                    '<input type="checkbox" class="form-check-input 24hrs" id="24hrs" name="24hr">'+
+                    '<input type="checkbox" class="form-check-input 24hrs" id="to_deliver" name="24hr">'+
                     '<label class="form-check-label" for="24hrs">Alertar somente se entrega do veículo for nas próximas 24hrs</label>'+
                     '</div>',
                 showCancelButton: true,
@@ -503,7 +503,7 @@
                     payload.data.name = $('#cercaName').val();
                     payload.data.type = $('#cercaType').val();
                     payload.data.lenght_of_stay = $('.lenght_of_stay').val();
-                    payload.data.delivery = $('#24hrs').is(':checked');
+                    payload.data.to_deliver = $('#to_deliver').is(':checked');
                     return fetch("{{route('map.markers.save')}}", {
                             method: "POST",
                             headers: {
@@ -515,7 +515,30 @@
                         .then(response => {
                             if (!response.ok) {
                                 return response.json().then(text => {
-                                    throw new Error(text.errors['data.name'][0]);
+                                    console.log(text.errors);
+                                    let errors = [];
+                                    if(text.errors['data.name']){
+                                        errors.push(text.errors['data.name'][0]);
+                                    }
+
+                                    if (text.errors['data.lenght_of_stay']) {
+                                        errors.push(text.errors['data.lenght_of_stay'][0]);
+                                    }
+
+                                    if (text.errors['data.to_deliver']) {
+                                        errors.push(text.errors['data.to_deliver'][0]);
+                                    }
+
+                                    if (text.errors['data.markers']) {
+                                        errors.push(text.errors['data.markers'][0]);
+                                    }
+
+                                    if (text.errors['data.type']) {
+                                        errors.push(text.errors['data.type'][0]);
+                                    }
+
+                                    throw new Error(errors.reduce((x, y) => '<br>' + x + ',<br> ' + y ));
+
                                 })
                             }
                             return response.json()
