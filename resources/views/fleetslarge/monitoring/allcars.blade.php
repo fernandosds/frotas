@@ -14,7 +14,6 @@
     .div-device-status {
         margin-left: 20px;
         margin-top: 17px;
-
     }
 
     .div-btn-start {
@@ -25,7 +24,6 @@
         margin-left: 17px;
         margin-bottom: 15px;
     }
-
 
     .modal-grid {
         float: right;

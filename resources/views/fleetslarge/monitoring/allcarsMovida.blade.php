@@ -190,6 +190,22 @@
         margin: 0 auto;
         overflow-y: scroll;
     }
+
+    .rowTime{
+        flex-direction: row;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .rowTimeItem{
+        width: 70px;
+        margin: 0 5px;
+    }
+
+    .form-group label,.form-check label{
+        color:#666 !important;
+    }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -233,8 +249,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-realtime/2.2.0/leaflet-realtime.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
+    $(document).ready(function () {
     $('.eventos').on('click', function() {
         $(this).toggleClass('active');
         $('.tableEvents').toggleClass('hidden');
@@ -473,6 +490,10 @@
         editableLayers.addLayer(layer);
     });
 
+    $("body").on("focus", ".rowTimeItem", function () {
+        $('.stay_time').mask('000000',{ 'translation': { 0: { pattern: /[0-9]/ } } });
+    });
+
     $('.btnSaveDraw').click(function() {
         // Extract GeoJson from featureGroup
         var payloadMap = editableLayers.toGeoJSON();
@@ -495,13 +516,24 @@
                     '<select class="form-control" id="cercaType">' +
                     '<option value="in">Entrada</option>' +
                     '<option value="out">Saída</option>' +
-                    '</select></div>',
+                    '</select></div>'+
+                    '<div class="form-group" style="margin-bottom:5px" >'+
+                    '<label for="stay_time">Tempo de permanencia <small>Em minutos</small></label>'+
+                    '</div><div class="form-group rowTime">'+
+                    '<input type="text" class="form-control rowTimeItem lenght_of_stay" name="lenght_of_stay" data-mask="999999">'+
+                    '</div>'+
+                    '<div class="form-check">'+
+                    '<input type="checkbox" class="form-check-input 24hrs" id="24hrs" name="24hr">'+
+                    '<label class="form-check-label" for="24hrs">Alertar somente se entrega do veículo for nas próximas 24hrs</label>'+
+                    '</div>',
                 showCancelButton: true,
                 confirmButtonText: 'Salvar',
                 showLoaderOnConfirm: true,
                 preConfirm: (value) => {
                     payload.data.name = $('#cercaName').val();
                     payload.data.type = $('#cercaType').val();
+                    payload.data.lenght_of_stay = $('.lenght_of_stay').val();
+                    payload.data.delivery = $('#24hrs').is(':checked');
                     return fetch("{{route('map.markers.save')}}", {
                             method: "POST",
                             headers: {
@@ -692,5 +724,6 @@
     }
     getList();
     getEvents();
+    });
 </script>
 @endsection

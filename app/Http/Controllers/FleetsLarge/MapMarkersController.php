@@ -21,7 +21,7 @@ class MapMarkersController extends Controller
     {
         try {
             $json = $request->json()->all();
-            $result = $this->mapMarkersService->save($json['data']['name'], $json['data']['type'], $json['data']['markers']);
+            $result = $this->mapMarkersService->save($json['data']);
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 201);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
