@@ -263,6 +263,7 @@
                         <thead>
                             <tr class="headerTable">
                                 <th>Placa</th>
+                                <th>Chassis</th>
                                 <th style="width: 220px;">Modelo</th>
                                 <th class="hidden">Endereço</th>
                                 <th class="hidden">Estado</th>
@@ -270,7 +271,15 @@
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
                                 <th>Loja</th>
-                                <th class="hidden">Empresa</th>
+                                <th>Nº Proposta</th>
+                                <th class="hidden">Dt. Entrada</th>
+                                <th>Dt. Entrada</th>
+                                <th class="hidden">Dt. Ac. Técnico</th>
+                                <th>Dt. Ac. Técnico</th>
+                                <th class="hidden">Dt. Início Inst.</th>
+                                <th>Dt. Início Inst.</th>
+                                <th class="hidden">Dt. Término Inst.</th>
+                                <th>Dt. Término Inst.</th>
                                 <th class="hidden">Situação</th>
                                 <th style="width: 150px;"></th>
                             </tr>
@@ -279,6 +288,7 @@
                             @foreach ($fleetslarge as $driver)
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
+                                <td>{{$driver['chassis']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
                                 <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['cidade']}} {{$driver['end_uf']}}</td>
                                 <td class="hidden">{{$driver['estado']}}</td>
@@ -286,7 +296,15 @@
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td>{{$driver['cliente']}}</td>
-                                <td class="hidden">{{$driver['empresa']}}</td>
+                                <td>{{$driver['contrato']}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver['dt_entrada'])->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver['dt_entrada']}}</span>{{\Carbon\Carbon::parse($driver['dt_entrada'])->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver['dt_tecnico_acionado'])->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver['dt_tecnico_acionado']}}</span>{{\Carbon\Carbon::parse($driver['dt_tecnico_acionado'])->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver['dt_inicio_instalacao'])->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver['dt_inicio_instalacao']}}</span>{{\Carbon\Carbon::parse($driver['dt_inicio_instalacao'])->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver['dt_termino_instalacao'])->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver['dt_termino_instalacao']}}</span>{{\Carbon\Carbon::parse($driver['dt_termino_instalacao'])->format('d/m/Y H:i:s')}}</td>
                                 <td class="hidden">{{$driver['situacao']}}</td>
                                 <td>
                                     <button type="button" class="btn btn-success  btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver['chassis']}}">
@@ -357,7 +375,7 @@
     }
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 7, 8];
+        columns = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +

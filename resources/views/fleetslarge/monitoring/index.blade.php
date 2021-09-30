@@ -238,7 +238,6 @@
         iconAnchor: [35, 62],
         popupAnchor: [1, -34],
     });
-    console.log(truckIcon);
 
     var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
 
@@ -348,8 +347,7 @@
                 }).addTo(mymap);
 
                 $('#last-address').html(
-                    '<b>Último endereço válido:</b> ' + data.end_logradouro +
-                    ' <b>Cidade:</b> ' + data.end_cidade
+                    '<b>Último endereço válido:</b> ' + data.endereco
                 );
                 Swal.close()
             }

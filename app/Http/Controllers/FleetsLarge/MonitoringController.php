@@ -105,6 +105,7 @@ class MonitoringController extends Controller
         $veiculo[] = '';
         foreach ($fleetslarge as $data => $dat) {
             if ($chassi == $dat['chassis']) {
+
                 return  $arr = ([
                     "lp_satelite"               => $dat['lp_satelite'] ?? '',
                     "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
@@ -160,10 +161,12 @@ class MonitoringController extends Controller
                     "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
                     "veiculo_odometro"          => $dat['veiculo_odometro'] ?? '',
                     "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
+                    "endereco"                  => $this->apiDeviceServic->getAddress($dat['lp_latitude'], $dat['lp_longitude'])
                 ]);
                 $veiculo = $arr;
             }
         }
+
         return response()->json(['status' => 'success'], 200);
     }
 
@@ -298,8 +301,7 @@ class MonitoringController extends Controller
             "t_inicio_servico"          => $dat['t_inicio_servico'] ?? '',
             "dt_inicio_instalacao"      => $dat['dt_inicio_instalacao'] ?? '',
             "dt_tecnico_acionado"       => $dat['dt_tecnico_acionado'] ?? '',
-            "t_instalacao"              => $dat['t_instalacao'] ?? '',
-
+            "t_instalacao"              => $dat['t_instalacao'] ?? ''
         ]);
         return $arr;
     }
