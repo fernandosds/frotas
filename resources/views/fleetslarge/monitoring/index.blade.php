@@ -58,6 +58,10 @@
     .hidden {
         display: none;
     }
+
+    .modal .modal-content {
+        width: 1000px;
+    }
 </style>
 @endsection
 

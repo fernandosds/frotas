@@ -263,7 +263,7 @@
                         <thead>
                             <tr class="headerTable">
                                 <th>Placa</th>
-                                <th>Chassis</th>
+                                <th class="hidden">Chassis</th>
                                 <th style="width: 220px;">Modelo</th>
                                 <th class="hidden">Endereço</th>
                                 <th class="hidden">Estado</th>
@@ -272,14 +272,14 @@
                                 <th>Última Transmissão</th>
                                 <th>Loja</th>
                                 <th>Nº Proposta</th>
-                                <th class="hidden">Dt. Entrada</th>
-                                <th>Dt. Entrada</th>
-                                <th class="hidden">Dt. Ac. Técnico</th>
-                                <th>Dt. Ac. Técnico</th>
-                                <th class="hidden">Dt. Início Inst.</th>
-                                <th>Dt. Início Inst.</th>
-                                <th class="hidden">Dt. Término Inst.</th>
-                                <th>Dt. Término Inst.</th>
+                                <th class="hidden">Data de entrada</th>
+                                <th>Data de entrada</th>
+                                <th class="hidden">Data de acionamento Técnico</th>
+                                <th>Data de acionamento Técnico</th>
+                                <th class="hidden">Data de início de instalação</th>
+                                <th>Data de início de instalação</th>
+                                <th class="hidden">Data de término de instalação</th>
+                                <th>Data de término de instalação</th>
                                 <th class="hidden">Situação</th>
                                 <th style="width: 150px;"></th>
                             </tr>
@@ -288,7 +288,7 @@
                             @foreach ($fleetslarge as $driver)
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
-                                <td>{{$driver['chassis']}}</td>
+                                <td class="hidden">{{$driver['chassis']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
                                 <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['cidade']}} {{$driver['end_uf']}}</td>
                                 <td class="hidden">{{$driver['estado']}}</td>

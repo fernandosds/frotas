@@ -14,6 +14,8 @@
                 <th class="hidden">Sinal</th>
                 <th class="hidden">Tensão</th>
                 <th>Velocidade</th>
+                <th>Endereço</th>
+                <th>Ignição</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +33,8 @@
                 <td class="hidden">{{ $position['sinal'] }}</td>
                 <td class="hidden">{{ $position['tensao'] }}</td>
                 <td>{{ $position['velocidade'] }} km/h</td>
+                <td>{{ $position['endereco'] }}</td>
+                <td>{{ $position['ignicao'] }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -49,14 +53,14 @@
                     extend: 'pdf',
                     title: 'SAT Company :: Relatorio de Posicoes_' + date,
                     exportOptions: {
-                        columns: [0, 2, 4, 5, 6, 7, 9, 10, 11]
+                        columns: [0, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13]
                     }
                 },
                 {
                     extend: 'excel',
                     title: 'SAT Company :: Relatorio de Posicoes_' + date,
                     exportOptions: {
-                        columns: [0, 2, 4, 5, 6, 7, 9, 10, 11]
+                        columns: [0, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13]
                     }
                 }
             ],

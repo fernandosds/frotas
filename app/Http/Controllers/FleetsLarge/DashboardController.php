@@ -370,20 +370,26 @@ class DashboardController extends Controller
             'menu_open_fleetslarges_iframe' => 'kt-menu__item--open'
         ];
 
-        // Iframe com os dados de instalação
+        // Iframe com os dados de instalação -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeInstallation') {
             $data['hash'] = '519a68a7-1b0b-4f38-901c-d602a203a21e';
         }
 
-        // Iframe com os dados do veículo
+        // Iframe com os dados do veículo -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeCar') {
             $data['hash'] = 'd1c7e435-37ef-46aa-9105-4a2a957edc3e';
         }
 
-        // Iframe com os dados da base
+        // Iframe com os dados da base -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeBase') {
             $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
         }
+
+        // Iframe com os dados da base -- MOVIDA
+        if (Route::currentRouteName() == 'fleetslarges.analyzeFrota') {
+            $data['hash'] = '71f1dfc6-4d1c-451a-aa52-47cfbd54cb33';
+        }
+
         return response()->view('fleetslarge.iframe.dashboardSantander', $data);
     }
 }
