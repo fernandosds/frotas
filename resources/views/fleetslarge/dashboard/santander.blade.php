@@ -376,6 +376,7 @@
 
     $(document).ready(function() {
         columns = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18];
+        columsPdf = [0, 1, 2, 3, 4, 5, 6, 8];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
@@ -385,7 +386,7 @@
                     extend: 'pdf',
                     title: 'SAT Company :: Grid de Veiculos_' + date,
                     exportOptions: {
-                        columns: columns
+                        columns: columsPdf
                     },
                     orientation: 'landscape',
                 },
