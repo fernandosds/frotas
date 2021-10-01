@@ -1,8 +1,11 @@
 @extends('layouts.app_map')
 
 @section("styles")
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
 
 <style>
     .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar .kt-portlet__head-wrapper,
@@ -87,6 +90,18 @@
         font-size: 28px;
         text-shadow: 1px 1px 5px black;
     }
+
+    path.leaflet-interactive.animate {
+    stroke-dasharray: 1920;
+    stroke-dashoffset: 1920;
+    animation: dash 20s linear 3s forwards;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
 </style>
 @endsection
 
@@ -141,6 +156,13 @@
                 <div class="col-sm-2 col-6">
                     <i class="fa fa-rss"></i> <label for="">Última Transmissão</label><br />
                     <b for="" id="lp_ultima_transmissao">---</b>
+                </div>
+
+                <div class="col-sm-2 col-6">
+
+                    <i class="fa fa-rss"></i> <label for="">Filtrar Transmissões</label><br />
+                            <label for="">Data Final</label>
+                            <input class="form-control" type="date" value="2021-10-01" id="last_date">
                 </div>
             </div>
         </div>
@@ -223,7 +245,8 @@
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 <script>
     /**
      * Pega o chassi atual passado por parâmetro
@@ -268,7 +291,7 @@
         popupAnchor: [1, -34],
     });
 
-    var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
+    var mymap = L.map('mapid').setView([-25.675470, -48.461930], 15);
 
     var baseLayers = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg', {
         attribution: '&copy; <a href="https://www.satcompany.com.br">SAT Company</a>',
@@ -278,6 +301,25 @@
         zoomOffset: -1,
         accessToken: 'your.mapbox.access.token'
     }).addTo(mymap);
+
+
+
+    let yourWaypoints = [
+        L.latLng(-25.675470, -48.461930),
+        L.latLng(-25.676310, -48.469650),
+        L.latLng(-25.677180, -48.466570),
+        L.latLng(-25.677000, -48.468160),
+    ];
+
+    var control = L.Routing.control({
+            waypoints: yourWaypoints,
+            language: 'pt-BR',
+            lineOptions: {
+                styles: [{ className: 'animate2' }] // Adding animate class
+            },
+            routeWhileDragging: false,
+            draggable:false,
+        }).addTo(mymap);
 
 
     /**
@@ -379,6 +421,10 @@
                     icon: truckIcon
                 }).addTo(mymap);
 
+
+
+
+
                 $('#last-address').html(
                     '<b>Último endereço válido:</b> ' + data.endereco
                 );
@@ -387,6 +433,29 @@
         });
         return true;
     }
+
+    $('.btnRoutingHistoric').click(function(){
+         $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                const points = data.data;
+                let waypoints = [];
+                points.map((point) =>{
+                    waypoints.push(L.latLng(57.6792, 11.949));
+                });
+                var control = L.Routing.control({
+                    waypoints: waypoints,
+                    lineOptions: {
+                        styles: [{ className: 'animate' }] // Adding animate class
+                    },
+                    routeWhileDragging: true
+                }).addTo(mymap);
+
+            }
+        });
+
+    });
 
 
     /**
