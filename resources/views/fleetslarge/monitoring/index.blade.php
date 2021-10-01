@@ -449,6 +449,7 @@
         return true;
     }
 
+    var searchRouteGroup = L.featureGroup().addTo(mymap);
     $('.btnSearchRoute').click(function(){
         $('.date_route').removeClass('inputError');
         if(searchRouteBlock){
@@ -476,6 +477,7 @@
             type: 'POST',
             data:payload,
             success: function (data) {
+                searchRouteGroup.clearLayers();
                 const points = data.positions;
                 let yourWaypoints = [];
                 points.map((point) =>{
@@ -483,14 +485,14 @@
                         radius: 15,
                             fillOpacity: 0.5,
                                 color: 'orange'
-                    }).on('mouseover', function (e) {
+                    }).bindPopup('<strong><br>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
+                    .on('mouseover', function (e) {
                         e.target.setStyle({
                             radius: 20
 
                         });
 
-                            document.getElementById("detail").innerHTML = '<br>Data: ';
-                        document.getElementById("detail").style.display = "block";
+                        this.openPopup();
 
                     })
                     .on('mouseout', function (e) {
@@ -498,9 +500,8 @@
                             radius: 15
 
                         });
-                        document.getElementById("detail").style.display = "none";
-                    }).addTo(mymap);
-
+                        this.closePopup();
+                    }).addTo(searchRouteGroup);
 
                 });
             }
