@@ -68,7 +68,7 @@
 
     .streetViewBtn{
         position: absolute;
-        top: 225px;
+        top: 265px;
         left: 10px;
         background-color: #eee;
         z-index: 440;
@@ -89,6 +89,29 @@
     .streetViewBtn:hover{
         font-size: 28px;
         text-shadow: 1px 1px 5px black;
+    }
+
+    .btnSearchRoute{
+        background-color: #eee;
+        background-clip: padding-box;
+        border-radius: 5px;
+        font-size: 16px !important;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: absolute;
+        bottom: 1px;
+    }
+
+    .noBorder{
+        border:none !important;
+    }
+
+    .inputError{
+        border: 1px solid rgb(255, 0, 0);
     }
 
     path.leaflet-interactive.animate {
@@ -143,12 +166,12 @@
                     <b for="" id="chassis">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6">
+                <div class="col-sm-1 col-6">
                     <i class="fa fa-car-side" id="icon-nivel-bateria"></i> <label for=""> Modelo</label><br />
                     <b for="" id="modelo_veiculo">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6">
+                <div class="col-sm-1 col-6">
                     <i class="fa  fa-car-alt"></i> <label for="">Categoria</label><br />
                     <b for="" id="categoria_veiculo">---</b>
                 </div>
@@ -158,18 +181,32 @@
                     <b for="" id="lp_ultima_transmissao">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6">
-
-                    <i class="fa fa-rss"></i> <label for="">Filtrar Transmissões</label><br />
+                <div class="col-sm-3 col-6">
+                    <i class="fa fa-search"></i> <label for="">Filtrar Transmissões</label><br />
+                    <div class="row noBorder">
+                        <div class="col-sm-5 noBorder">
+                            <label for="">Data Inicial</label>
+                            <input class="form-control date_route" type="date" value="{{Carbon\Carbon::create()}}" id="start_date_route">
+                        </div>
+                        <div class="col-sm-5 noBorder">
                             <label for="">Data Final</label>
-                            <input class="form-control" type="date" value="2021-10-01" id="last_date">
+                            <input class="form-control date_route" type="date" value="{{Carbon\Carbon::create()}}" id="last_date_route">
+                        </div>
+
+                        <div class="col-sm-2 noBorder">
+                            <div class="btnSearchRoute noBorder">
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-1 col-12 div-btn-start">
-            <div class="form-row align-items-center">
-                <div class="col-sm-2 col-3 my-1">
+            <div class="form-row align-items-center" style="float:right;">
+                <div class="col-sm-2 col-3 my-1 right">
                     <a href="{{route('fleetslarges.index')}}" class="btn btn-warning mb-2" id="btn-start">Voltar</a>
                 </div>
             </div>
@@ -253,6 +290,7 @@
      */
     chassi_url = "{{$chassi}}";
     var modelo = "";
+    searchRouteBlock = true;
 
     var loading = '<i class="fa fa-spinner fa-pulse"></i>';
     $("#placa").html(loading);
@@ -301,26 +339,6 @@
         zoomOffset: -1,
         accessToken: 'your.mapbox.access.token'
     }).addTo(mymap);
-
-
-
-    let yourWaypoints = [
-        L.latLng(-25.675470, -48.461930),
-        L.latLng(-25.676310, -48.469650),
-        L.latLng(-25.677180, -48.466570),
-        L.latLng(-25.677000, -48.468160),
-    ];
-
-    var control = L.Routing.control({
-            waypoints: yourWaypoints,
-            language: 'pt-BR',
-            lineOptions: {
-                styles: [{ className: 'animate2' }] // Adding animate class
-            },
-            routeWhileDragging: false,
-            draggable:false,
-        }).addTo(mymap);
-
 
     /**
      * Rastrea isca automaticamente
@@ -377,6 +395,7 @@
             url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
             type: 'GET',
             success: function(data) {
+                searchRouteBlock = false;
                 if (data.lp_ignicao == "1") {
                     $("#lp_ignicao").css({
                         "color": "green"
@@ -421,10 +440,6 @@
                     icon: truckIcon
                 }).addTo(mymap);
 
-
-
-
-
                 $('#last-address').html(
                     '<b>Último endereço válido:</b> ' + data.endereco
                 );
@@ -434,27 +449,62 @@
         return true;
     }
 
-    $('.btnRoutingHistoric').click(function(){
-         $.ajax({
-            url: url,
-            type: 'GET',
-            success: function (data) {
-                const points = data.data;
-                let waypoints = [];
-                points.map((point) =>{
-                    waypoints.push(L.latLng(57.6792, 11.949));
-                });
-                var control = L.Routing.control({
-                    waypoints: waypoints,
-                    lineOptions: {
-                        styles: [{ className: 'animate' }] // Adding animate class
-                    },
-                    routeWhileDragging: true
-                }).addTo(mymap);
+    $('.btnSearchRoute').click(function(){
+        $('.date_route').removeClass('inputError');
+        if(searchRouteBlock){
+            return;
+        }
+        if($("#start_date_route").val() == '' || $("#last_date_route").val() == ''){
+            if($("#start_date_route").val() == ''){
+                $("#start_date_route").addClass('inputError');
+            }
+            if($("#last_date_route").val() == ''){
+                $("#last_date_route").addClass('inputError');
+            }
+            return;
+        }
 
+        const payload = {
+            "_token": "{{ csrf_token() }}",
+            "start_date": $("#start_date_route").val(),
+            "last_date": $("#last_date_route").val(),
+            "chassis": chassi_url,
+            "modelo": modelo,
+        }
+         $.ajax({
+            url: "{{route('fleetslarges.monitoring.routes')}}",
+            type: 'POST',
+            data:payload,
+            success: function (data) {
+                const points = data.positions;
+                let yourWaypoints = [];
+                points.map((point) =>{
+                    L.circleMarker([point.latitude, point.longitude], {
+                        radius: 15,
+                            fillOpacity: 0.5,
+                                color: 'orange'
+                    }).on('mouseover', function (e) {
+                        e.target.setStyle({
+                            radius: 20
+
+                        });
+
+                            document.getElementById("detail").innerHTML = '<br>Data: ';
+                        document.getElementById("detail").style.display = "block";
+
+                    })
+                    .on('mouseout', function (e) {
+                        e.target.setStyle({
+                            radius: 15
+
+                        });
+                        document.getElementById("detail").style.display = "none";
+                    }).addTo(mymap);
+
+
+                });
             }
         });
-
     });
 
 

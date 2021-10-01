@@ -362,6 +362,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/cars/events', 'FleetsLarge\MonitoringController@events')->name('fleetslarges.monitoring.events');
             Route::get('/movida/lojas', 'FleetsLarge\MonitoringController@movidaPosition')->name('fleetslarges.monitoring.movidaPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');
+            Route::post('/grid/routes', 'FleetsLarge\MonitoringController@route')->name('fleetslarges.monitoring.routes');
             Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
             Route::get('/map/markers', 'FleetsLarge\MapMarkersController@getList')->name('map.markers.list');
             Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersController@show')->name('map.markers.show');
