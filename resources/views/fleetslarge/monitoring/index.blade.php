@@ -62,6 +62,31 @@
     .modal .modal-content {
         width: 1000px;
     }
+
+    .streetViewBtn{
+        position: absolute;
+        top: 225px;
+        left: 10px;
+        background-color: #eee;
+        z-index: 440;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        color: #fdbf2d;
+        font-size: 20px;
+        transition: all 0.5s ease;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .streetViewBtn:hover{
+        font-size: 28px;
+        text-shadow: 1px 1px 5px black;
+    }
 </style>
 @endsection
 
@@ -136,7 +161,7 @@
     </div>
 
 </div>
-
+<div class="streetViewBtn"><i class="fas fa-street-view"></i></div>
 <div id="mapid" class="mapid" style="width: 100%; height: 800px;float:left;"></div>
 
 <div class="modal fade bd-print-grid" id="modal-grid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -203,7 +228,7 @@
     /**
      * Pega o chassi atual passado por parâmetro
      */
-    chassi_url = window.location.href.split('/')[5];
+    chassi_url = "{{$chassi}}";
     var modelo = "";
 
     var loading = '<i class="fa fa-spinner fa-pulse"></i>';
@@ -299,6 +324,8 @@
         }
     }
 
+    let streetPositionLink = '';
+
     /**
      * Marker - Última posição válida
      */
@@ -343,6 +370,8 @@
                 if (mymap.hasLayer(marker_event)) {
                     mymap.removeLayer(marker_event);
                 }
+
+                streetPositionLink = 'http://maps.google.com/maps?q=&cbll=' + data.lp_latitude + ',' + data.lp_longitude +'&layer=c';
 
                 mymap.panTo(new L.LatLng(data.lp_latitude, data.lp_longitude));
 
@@ -407,6 +436,9 @@
         $('#categoria_veiculo').html('---');
     }
 
+    $(".streetViewBtn").click(function(){
+        window.open(streetPositionLink, '_blank');
+    });
 
 
     $('#btn-grid').click(function() {

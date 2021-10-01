@@ -49,9 +49,9 @@ class MonitoringController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($chassi = 0)
     {
-        return view('fleetslarge.monitoring.index');
+        return view('fleetslarge.monitoring.index', ['chassi' => $chassi]);
     }
 
     /**
