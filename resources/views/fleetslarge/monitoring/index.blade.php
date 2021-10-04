@@ -122,11 +122,31 @@
         animation: dash 20s linear 3s forwards;
     }
 
-@keyframes dash {
-    to {
-        stroke-dashoffset: 0;
+    @keyframes dash {
+        to {
+            stroke-dashoffset: 0;
+        }
     }
-}
+
+    .gradient{
+        position: absolute;
+        z-index: 455;
+        width: 15vw;
+        height: 20px;
+        border: 1px solid #000;
+        right: 15px;
+        bottom: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .gradientItem{
+        flex:1;
+    }
+
+    .hidden {
+            display: none;
+    }
 </style>
 @endsection
 
@@ -264,6 +284,8 @@
         </div>
     </div>
 </div>
+
+<div class="gradient hidden"></div>
 
 @include('fleetslarge.monitoring.modalGrid')
 
@@ -453,7 +475,10 @@
         return true;
     }
 
+    let markersToShowPopUp = [];
+
     var searchRouteGroup = L.featureGroup().addTo(mymap);
+
     $('.btnSearchRoute').click(function(){
 
         $('.date_route').removeClass('inputError');
@@ -488,19 +513,23 @@
             success: function (data) {
                 searchRouteGroup.clearLayers();
                 const points = data.positions;
+                markersToShowPopUp = [];
 
                 const colors = chroma.scale(["#ff0800", "#03ff00"]).mode("lch").colors(points.length);
                 let yourWaypoints = [];
                 let aux = 0;
+                $('.gradient').toggleClass('hidden');
                 points.map((point) =>{
                     if(!isNaN(point.latitude) && !isNaN(point.longitude)){
+                        $('.gradient').append('<div class="gradientItem" data-item="' + aux + '" style="background-color:'+ colors[aux] +'"></div>');
                         const pointB = new L.LatLng(point.latitude, point.longitude);
                         yourWaypoints.push(pointB);
-                        L.circleMarker([point.latitude, point.longitude], {
+                        let markerCustom = L.circleMarker([point.latitude, point.longitude], {
                             radius: 15,
                             fillOpacity: 0.5,
                             color: colors[aux],
-                        }).bindPopup('<strong><br>'+ aux+' - Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
+                            className: 'gradientItem' + aux
+                        }).bindPopup('<strong>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
                         .on('mouseover', function (e) {
                             e.target.setStyle({
                                 radius: 20
@@ -518,6 +547,8 @@
                             this.closePopup();
                         }).addTo(searchRouteGroup);
 
+                        marker._icon.classList.add("className");
+                        markersToShowPopUp.push(markerCustom);
                         aux++;
                     }
 
@@ -642,6 +673,13 @@
 
             }
         });
+    });
+
+
+
+    $('.gradient').on('mouseover', '.gradientItem', function () {
+        let gradientItemIndex = $(this).data('item');
+        markersToShowPopUp[gradientItemIndex].openPopup();
     });
 </script>
 @endsection
