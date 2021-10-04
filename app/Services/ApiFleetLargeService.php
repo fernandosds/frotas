@@ -161,4 +161,11 @@ class ApiFleetLargeService
         $url = $this->host_apis . "movida_positions/?start={$dateStart}&end={$dateEnd}&id={$device}";
         return ClientHttp($url);
     }
+
+    public function getRoutePath(String $dateStart, String $dateEnd, String $device)
+    {
+        $positions = collect($this->getGridModel($dateStart, $dateEnd, $device));
+        $sorted = $positions->sortBy('data_gps', SORT_NATURAL);
+        return $sorted->values()->all();
+    }
 }

@@ -288,6 +288,7 @@
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.polyline.snakeanim@0.2.0/L.Polyline.SnakeAnim.min.js"></script>
 <script>
     /**
      * Pega o chassi atual passado por parâmetro
@@ -492,31 +493,42 @@
                 let yourWaypoints = [];
                 let aux = 0;
                 points.map((point) =>{
-                    L.circleMarker([point.latitude, point.longitude], {
-                        radius: 15,
-                        fillOpacity: 0.5,
-                        color: colors[aux],
-                    }).bindPopup('<strong><br>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
-                    .on('mouseover', function (e) {
-                        e.target.setStyle({
-                            radius: 20
+                    if(!isNaN(point.latitude) && !isNaN(point.longitude)){
+                        const pointB = new L.LatLng(point.latitude, point.longitude);
+                        yourWaypoints.push(pointB);
+                        L.circleMarker([point.latitude, point.longitude], {
+                            radius: 15,
+                            fillOpacity: 0.5,
+                            color: colors[aux],
+                        }).bindPopup('<strong><br>'+ aux+' - Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
+                        .on('mouseover', function (e) {
+                            e.target.setStyle({
+                                radius: 20
 
-                        });
+                            });
 
-                        this.openPopup();
+                            this.openPopup();
 
-                    })
-                    .on('mouseout', function (e) {
-                        e.target.setStyle({
-                            radius: 15
+                        })
+                        .on('mouseout', function (e) {
+                            e.target.setStyle({
+                                radius: 15
 
-                        });
-                        this.closePopup();
-                    }).addTo(searchRouteGroup);
+                            });
+                            this.closePopup();
+                        }).addTo(searchRouteGroup);
 
-                    aux++;
+                        aux++;
+                    }
 
                 });
+                var firstpolyline = new L.polyline(yourWaypoints, {
+                    color: 'red',
+                    weight: 3,
+                    opacity: 0.5,
+                    smoothFactor: 1,
+                    snakingSpeed: 200
+                }).addTo(searchRouteGroup).snakeIn();
             },
             complete:function(){
                 $('.find').show();
