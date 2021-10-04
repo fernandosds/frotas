@@ -58,7 +58,7 @@
         margin-bottom: 0px !important;
     }
 
-    .hidden {
+    .hidden, .load {
         display: none;
     }
 
@@ -114,11 +114,13 @@
         border: 1px solid rgb(255, 0, 0);
     }
 
+    .dis{pointer-events:none}
+
     path.leaflet-interactive.animate {
-    stroke-dasharray: 1920;
-    stroke-dashoffset: 1920;
-    animation: dash 20s linear 3s forwards;
-}
+        stroke-dasharray: 1920;
+        stroke-dashoffset: 1920;
+        animation: dash 20s linear 3s forwards;
+    }
 
 @keyframes dash {
     to {
@@ -195,7 +197,8 @@
 
                         <div class="col-sm-2 noBorder">
                             <div class="btnSearchRoute noBorder">
-                                <i class="fa fa-search"></i>
+                                <i class="fa fa-search find"></i>
+                                <i class="fas fa-spinner fa-spin load"></i>
                             </div>
                         </div>
 
@@ -284,6 +287,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js" ></script>
 <script>
     /**
      * Pega o chassi atual passado por parâmetro
@@ -390,7 +394,6 @@
      * Marker - Última posição válida
      */
     function lastPosition(chassi_device) {
-
         $.ajax({
             url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
             type: 'GET',
@@ -451,6 +454,7 @@
 
     var searchRouteGroup = L.featureGroup().addTo(mymap);
     $('.btnSearchRoute').click(function(){
+
         $('.date_route').removeClass('inputError');
         if(searchRouteBlock){
             return;
@@ -464,6 +468,10 @@
             }
             return;
         }
+
+        $(".btnSearchRoute").addClass("dis");
+        $('.find').hide();
+        $('.load').show();
 
         const payload = {
             "_token": "{{ csrf_token() }}",
@@ -479,12 +487,15 @@
             success: function (data) {
                 searchRouteGroup.clearLayers();
                 const points = data.positions;
+
+                const colors = chroma.scale(["#ff0800", "#03ff00"]).mode("lch").colors(points.length);
                 let yourWaypoints = [];
+                let aux = 0;
                 points.map((point) =>{
                     L.circleMarker([point.latitude, point.longitude], {
                         radius: 15,
-                            fillOpacity: 0.5,
-                                color: 'orange'
+                        fillOpacity: 0.5,
+                        color: colors[aux],
                     }).bindPopup('<strong><br>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
                     .on('mouseover', function (e) {
                         e.target.setStyle({
@@ -503,9 +514,17 @@
                         this.closePopup();
                     }).addTo(searchRouteGroup);
 
+                    aux++;
+
                 });
+            },
+            complete:function(){
+                $('.find').show();
+                $('.load').hide();
+                $(".btnSearchRoute").removeClass("dis");
             }
         });
+
     });
 
 
