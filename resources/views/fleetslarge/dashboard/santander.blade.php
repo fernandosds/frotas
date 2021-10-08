@@ -265,6 +265,8 @@
                                 <th>Placa</th>
                                 <th class="hidden">Chassis</th>
                                 <th style="width: 220px;">Modelo</th>
+                                <th class="hidden">Latitude</th>
+                                <th class="hidden">Longitude</th>
                                 <th class="hidden">Endereço</th>
                                 <th class="hidden">Estado</th>
                                 <th class="hidden">Velocidade</th>
@@ -290,6 +292,8 @@
                                 <td>{{$driver['placa']}}</td>
                                 <td class="hidden">{{$driver['chassis']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
+                                <td class="hidden">{{$driver['lp_latitude']}}</td>
+                                <td class="hidden">{{$driver['lp_longitude']}}</td>
                                 <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['cidade']}} {{$driver['end_uf']}}</td>
                                 <td class="hidden">{{$driver['estado']}}</td>
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
@@ -375,7 +379,7 @@
     }
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18];
+        columns = [0, 1, 2, 3, 4, 5, 6, 8,  10, 12, 14, 16, 18, 20];
         columsPdf = [0, 1, 2, 3, 4, 5, 6, 8];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
