@@ -454,6 +454,7 @@
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeFrota')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Frota</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeEventos')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Eventos</span></a></li>
                     </ul>
                 </div>
             </li>

@@ -390,6 +390,11 @@ class DashboardController extends Controller
             $data['hash'] = '71f1dfc6-4d1c-451a-aa52-47cfbd54cb33';
         }
 
+        // Iframe com os Eventos -- MOVIDA
+        if (Route::currentRouteName() == 'fleetslarges.analyzeEventos') {
+            $data['hash'] = 'a139e839-e5d0-480c-b3cd-6a01d37b8927';
+        }
+
         return response()->view('fleetslarge.iframe.dashboardSantander', $data);
     }
 }
