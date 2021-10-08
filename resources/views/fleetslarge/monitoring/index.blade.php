@@ -58,7 +58,7 @@
         margin-bottom: 0px !important;
     }
 
-    .hidden {
+    .hidden, .load {
         display: none;
     }
 
@@ -68,7 +68,7 @@
 
     .streetViewBtn{
         position: absolute;
-        top: 225px;
+        top: 265px;
         left: 10px;
         background-color: #eee;
         z-index: 440;
@@ -91,17 +91,62 @@
         text-shadow: 1px 1px 5px black;
     }
 
-    path.leaflet-interactive.animate {
-    stroke-dasharray: 1920;
-    stroke-dashoffset: 1920;
-    animation: dash 20s linear 3s forwards;
-}
-
-@keyframes dash {
-    to {
-        stroke-dashoffset: 0;
+    .btnSearchRoute{
+        background-color: #eee;
+        background-clip: padding-box;
+        border-radius: 5px;
+        font-size: 16px !important;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: absolute;
+        bottom: 1px;
     }
-}
+
+    .noBorder{
+        border:none !important;
+    }
+
+    .inputError{
+        border: 1px solid rgb(255, 0, 0);
+    }
+
+    .dis{pointer-events:none}
+
+    path.leaflet-interactive.animate {
+        stroke-dasharray: 1920;
+        stroke-dashoffset: 1920;
+        animation: dash 20s linear 3s forwards;
+    }
+
+    @keyframes dash {
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    .gradient{
+        position: absolute;
+        z-index: 455;
+        width: 15vw;
+        height: 20px;
+        border: 1px solid #000;
+        right: 15px;
+        bottom: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .gradientItem{
+        flex:1;
+    }
+
+    .hidden {
+            display: none;
+    }
 </style>
 @endsection
 
@@ -143,12 +188,12 @@
                     <b for="" id="chassis">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6">
+                <div class="col-sm-1 col-6">
                     <i class="fa fa-car-side" id="icon-nivel-bateria"></i> <label for=""> Modelo</label><br />
                     <b for="" id="modelo_veiculo">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6">
+                <div class="col-sm-1 col-6">
                     <i class="fa  fa-car-alt"></i> <label for="">Categoria</label><br />
                     <b for="" id="categoria_veiculo">---</b>
                 </div>
@@ -158,18 +203,33 @@
                     <b for="" id="lp_ultima_transmissao">---</b>
                 </div>
 
-                <div class="col-sm-2 col-6">
-
-                    <i class="fa fa-rss"></i> <label for="">Filtrar Transmissões</label><br />
+                <div class="col-sm-3 col-6">
+                    <i class="fa fa-search"></i> <label for="">Filtrar Transmissões</label><br />
+                    <div class="row noBorder">
+                        <div class="col-sm-5 noBorder">
+                            <label for="">Data Inicial</label>
+                            <input class="form-control date_route" type="date" value="{{Carbon\Carbon::create()}}" id="start_date_route">
+                        </div>
+                        <div class="col-sm-5 noBorder">
                             <label for="">Data Final</label>
-                            <input class="form-control" type="date" value="2021-10-01" id="last_date">
+                            <input class="form-control date_route" type="date" value="{{Carbon\Carbon::create()}}" id="last_date_route">
+                        </div>
+
+                        <div class="col-sm-2 noBorder">
+                            <div class="btnSearchRoute noBorder">
+                                <i class="fa fa-search find"></i>
+                                <i class="fas fa-spinner fa-spin load"></i>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-1 col-12 div-btn-start">
-            <div class="form-row align-items-center">
-                <div class="col-sm-2 col-3 my-1">
+            <div class="form-row align-items-center" style="float:right;">
+                <div class="col-sm-2 col-3 my-1 right">
                     <a href="{{route('fleetslarges.index')}}" class="btn btn-warning mb-2" id="btn-start">Voltar</a>
                 </div>
             </div>
@@ -225,6 +285,8 @@
     </div>
 </div>
 
+<div class="gradient hidden"></div>
+
 @include('fleetslarge.monitoring.modalGrid')
 
 @endsection
@@ -247,12 +309,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.polyline.snakeanim@0.2.0/L.Polyline.SnakeAnim.min.js"></script>
 <script>
     /**
      * Pega o chassi atual passado por parâmetro
      */
     chassi_url = "{{$chassi}}";
     var modelo = "";
+    searchRouteBlock = true;
 
     var loading = '<i class="fa fa-spinner fa-pulse"></i>';
     $("#placa").html(loading);
@@ -301,26 +366,6 @@
         zoomOffset: -1,
         accessToken: 'your.mapbox.access.token'
     }).addTo(mymap);
-
-
-
-    let yourWaypoints = [
-        L.latLng(-25.675470, -48.461930),
-        L.latLng(-25.676310, -48.469650),
-        L.latLng(-25.677180, -48.466570),
-        L.latLng(-25.677000, -48.468160),
-    ];
-
-    var control = L.Routing.control({
-            waypoints: yourWaypoints,
-            language: 'pt-BR',
-            lineOptions: {
-                styles: [{ className: 'animate2' }] // Adding animate class
-            },
-            routeWhileDragging: false,
-            draggable:false,
-        }).addTo(mymap);
-
 
     /**
      * Rastrea isca automaticamente
@@ -372,11 +417,11 @@
      * Marker - Última posição válida
      */
     function lastPosition(chassi_device) {
-
         $.ajax({
             url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
             type: 'GET',
             success: function(data) {
+                searchRouteBlock = false;
                 if (data.lp_ignicao == "1") {
                     $("#lp_ignicao").css({
                         "color": "green"
@@ -421,10 +466,6 @@
                     icon: truckIcon
                 }).addTo(mymap);
 
-
-
-
-
                 $('#last-address').html(
                     '<b>Último endereço válido:</b> ' + data.endereco
                 );
@@ -434,24 +475,96 @@
         return true;
     }
 
-    $('.btnRoutingHistoric').click(function(){
-         $.ajax({
-            url: url,
-            type: 'GET',
-            success: function (data) {
-                const points = data.data;
-                let waypoints = [];
-                points.map((point) =>{
-                    waypoints.push(L.latLng(57.6792, 11.949));
-                });
-                var control = L.Routing.control({
-                    waypoints: waypoints,
-                    lineOptions: {
-                        styles: [{ className: 'animate' }] // Adding animate class
-                    },
-                    routeWhileDragging: true
-                }).addTo(mymap);
+    let markersToShowPopUp = [];
 
+    var searchRouteGroup = L.featureGroup().addTo(mymap);
+
+    $('.btnSearchRoute').click(function(){
+
+        $('.date_route').removeClass('inputError');
+        if(searchRouteBlock){
+            return;
+        }
+        if($("#start_date_route").val() == '' || $("#last_date_route").val() == ''){
+            if($("#start_date_route").val() == ''){
+                $("#start_date_route").addClass('inputError');
+            }
+            if($("#last_date_route").val() == ''){
+                $("#last_date_route").addClass('inputError');
+            }
+            return;
+        }
+
+        $(".btnSearchRoute").addClass("dis");
+        $('.find').hide();
+        $('.load').show();
+
+        const payload = {
+            "_token": "{{ csrf_token() }}",
+            "start_date": $("#start_date_route").val(),
+            "last_date": $("#last_date_route").val(),
+            "chassis": chassi_url,
+            "modelo": modelo,
+        }
+         $.ajax({
+            url: "{{route('fleetslarges.monitoring.routes')}}",
+            type: 'POST',
+            data:payload,
+            success: function (data) {
+                searchRouteGroup.clearLayers();
+                const points = data.positions;
+                markersToShowPopUp = [];
+
+                const colors = chroma.scale(["#ff0800", "#03ff00"]).mode("lch").colors(points.length);
+                let yourWaypoints = [];
+                let aux = 0;
+                $('.gradient').toggleClass('hidden');
+                points.map((point) =>{
+                    if(!isNaN(point.latitude) && !isNaN(point.longitude)){
+                        $('.gradient').append('<div class="gradientItem" data-item="' + aux + '" style="background-color:'+ colors[aux] +'"></div>');
+                        const pointB = new L.LatLng(point.latitude, point.longitude);
+                        yourWaypoints.push(pointB);
+                        let markerCustom = L.circleMarker([point.latitude, point.longitude], {
+                            radius: 15,
+                            fillOpacity: 0.5,
+                            color: colors[aux],
+                            className: 'gradientItem' + aux
+                        }).bindPopup('<strong>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
+                        .on('mouseover', function (e) {
+                            e.target.setStyle({
+                                radius: 20
+
+                            });
+
+                            this.openPopup();
+
+                        })
+                        .on('mouseout', function (e) {
+                            e.target.setStyle({
+                                radius: 15
+
+                            });
+                            this.closePopup();
+                        }).addTo(searchRouteGroup);
+
+                        marker._icon.classList.add("className");
+                        markersToShowPopUp.push(markerCustom);
+                        aux++;
+                    }
+
+                });
+                var firstpolyline = new L.polyline(yourWaypoints, {
+                    color: 'red',
+                    weight: 3,
+                    opacity: 0.5,
+                    smoothFactor: 1,
+                    snakingSpeed: 200
+                }).addTo(searchRouteGroup).snakeIn();
+            },
+            complete:function(){
+                $('.find').show();
+                $('.load').hide();
+                $(".btnSearchRoute").removeClass("dis");
             }
         });
 
@@ -560,6 +673,13 @@
 
             }
         });
+    });
+
+
+
+    $('.gradient').on('mouseover', '.gradientItem', function () {
+        let gradientItemIndex = $(this).data('item');
+        markersToShowPopUp[gradientItemIndex].openPopup();
     });
 </script>
 @endsection

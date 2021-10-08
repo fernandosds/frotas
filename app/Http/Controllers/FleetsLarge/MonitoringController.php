@@ -193,6 +193,13 @@ class MonitoringController extends Controller
         return response()->view('fleetslarge.monitoring.list', $data);
     }
 
+    public function route(Request $request)
+    {
+
+        $positions = $this->apiFleetLargeService->getRoutePath($request->start_date, $request->last_date, $request->modelo);
+        return response()->json(['status' => 'success', 'positions' => $positions], 200);
+    }
+
     //Dashboard de todos os carros
 
     public function events()
