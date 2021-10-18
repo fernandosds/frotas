@@ -73,7 +73,17 @@ class DashboardController extends Controller
         // Entrar no dashboard Santander
         if (Auth::user()->customer_id == 8) {
             $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
-            return response()->view('fleetslarge.dashboard.santander', $data);
+
+            $carros = [];
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                $arr[] = $this->resultJson($dat);
+                $carros = $arr;
+            }
+            //print_r($carros);
+            //die();
+
+            return response()->view('fleetslarge.dashboard.santander', compact('carros'));
         }
     }
 
@@ -147,7 +157,6 @@ class DashboardController extends Controller
                         "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
                         "veiculo_odometro"          => $dat['veiculo_odometro'] ?? '',
                         "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
-
                         "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
                         "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
                         "dt_entrada"                => $dat['dt_entrada'] ?? '',
@@ -297,7 +306,8 @@ class DashboardController extends Controller
      */
     function resultJson($dat)
     {
-        $arr[] = ([
+        // $arr[]
+        $arr = ([
             "lp_satelite"               => $dat['lp_satelite'] ?? '',
             "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
             "dif_date"                  => $dat['dif_date'] ?? '',
@@ -309,6 +319,7 @@ class DashboardController extends Controller
             "status_veiculo_dt"         => $dat['status_veiculo_dt'] ?? '',
             "modelo_veiculo_aprimorado" => $dat['modelo_veiculo_aprimorado'] ?? '',
             "placa"                     => $dat['placa'] ?? '',
+            "placa_mercosul"            => $this->apiFleetLargeService->fixPlate($dat['placa']),
             "empresa"                   => $dat['empresa'] ?? '',
             "r12s_proximos"             => $dat['r12s_proximos'] ?? '',
             "dif_date"                  => $dat['dif_date'] ?? '',
@@ -323,6 +334,11 @@ class DashboardController extends Controller
             "qtd_dispositivos"          => $dat['qtd_dispositivos'] ?? '',
             "categoria_veiculo"         => $dat['categoria_veiculo'] ?? '',
             "cidade"                    => $dat['cidade'] ?? '',
+            "end_cidade"                => $dat['end_cidade'] ?? '',
+            "end_logradouro"            => $dat['end_logradouro'] ?? '',
+            "end_bairro"                => $dat['end_bairro'] ?? '',
+            "end_cep"                   => $dat['end_cep'] ?? '',
+            "end_uf"                    => $dat['end_uf'] ?? '',
             "operadora"                 => $dat['operadora'] ?? '',
             "cliente"                   => $dat['cliente'] ?? '',
             "data_instalacao"           => $dat['data_instalacao'] ?? '',
@@ -345,7 +361,7 @@ class DashboardController extends Controller
             "cliente_endereco"          => $dat['cliente_endereco'] ?? '',
             "cliente_foto_cnh"          => $dat['cliente_foto_cnh'] ?? '',
             "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
-
+            "contrato"                  => $dat['contrato'] ?? '',
             "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
             "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
             "dt_entrada"                => $dat['dt_entrada'] ?? '',
@@ -354,6 +370,8 @@ class DashboardController extends Controller
             "dt_inicio_instalacao"      => $dat['dt_inicio_instalacao'] ?? '',
             "dt_tecnico_acionado"       => $dat['dt_tecnico_acionado'] ?? '',
             "t_instalacao"              => $dat['t_instalacao'] ?? '',
+            "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
+            "situacao"                  => $dat['situacao'] ?? '',
 
         ]);
         return $arr;

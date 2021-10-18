@@ -263,8 +263,9 @@
                         <thead>
                             <tr class="headerTable">
                                 <th>Placa</th>
+                                <th>Placa - Mercosul</th>
                                 <th class="hidden">Chassis</th>
-                                <th style="width: 220px;">Modelo</th>
+                                <th style="width: 80px;">Modelo</th>
                                 <th class="hidden">Latitude</th>
                                 <th class="hidden">Longitude</th>
                                 <th class="hidden">Endereço</th>
@@ -272,7 +273,7 @@
                                 <th class="hidden">Velocidade</th>
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
-                                <th>Loja</th>
+                                <th style="width: 78px;">Loja</th>
                                 <th>Nº Proposta</th>
                                 <th class="hidden">Data de entrada</th>
                                 <th>Data de entrada</th>
@@ -283,18 +284,19 @@
                                 <th class="hidden">Data de término de instalação</th>
                                 <th>Data de término de instalação</th>
                                 <th class="hidden">Situação</th>
-                                <th style="width: 150px;"></th>
+                                <th style="width: 200px;"></th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
-                            @foreach ($fleetslarge as $driver)
+                            @foreach ($carros as $driver)
                             <tr id='_tr_car_{{$driver["chassis"]}}'>
                                 <td>{{$driver['placa']}}</td>
+                                <td>{{$driver['placa_mercosul']}}</td>
                                 <td class="hidden">{{$driver['chassis']}}</td>
                                 <td>{{$driver['modelo_veiculo']}}</td>
                                 <td class="hidden">{{$driver['lp_latitude']}}</td>
                                 <td class="hidden">{{$driver['lp_longitude']}}</td>
-                                <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['cidade']}} {{$driver['end_uf']}}</td>
+                                <td class="hidden">{{$driver['end_logradouro']}}, {{$driver['end_bairro']}} - {{$driver['end_cidade']}} {{$driver['end_uf']}}</td>
                                 <td class="hidden">{{$driver['estado']}}</td>
                                 <td class="hidden">{{$driver['lp_velocidade']}}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
@@ -379,8 +381,8 @@
     }
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 8, 10, 11, 12, 14, 16, 18, 20];
-        columsPdf = [0, 1, 2, 3, 4, 8, 10, 11];
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 17, 19, 21];
+        columsPdf = [0, 1, 2, 3, 4, 6, 7, 9];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
