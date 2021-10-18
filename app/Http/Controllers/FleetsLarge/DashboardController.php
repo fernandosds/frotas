@@ -80,9 +80,6 @@ class DashboardController extends Controller
                 $arr[] = $this->resultJson($dat);
                 $carros = $arr;
             }
-            //print_r($carros);
-            //die();
-
             return response()->view('fleetslarge.dashboard.santander', compact('carros'));
         }
     }
