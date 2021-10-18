@@ -145,7 +145,7 @@
                     </div>
                 </form>
             </div>
-
+            @if( Auth::user()->type == 'sat' || Auth::user()->type == 'fle')
             <div class="col-sm-4">
                 @if(Route::is('user.edit'))
                 <form id="form-create-permission">
@@ -266,6 +266,7 @@
                     </div>
                 </form>
             </div>
+            @endif
             @endif
         </div>
 
