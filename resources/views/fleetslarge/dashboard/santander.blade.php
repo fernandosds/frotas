@@ -381,8 +381,8 @@
     }
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 17, 19, 21];
-        columsPdf = [0, 1, 2, 3, 4, 6, 7, 9];
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21];
+        columsPdf = [0, 1, 2, 3, 4, 5, 9, 12];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
