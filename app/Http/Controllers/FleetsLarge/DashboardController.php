@@ -220,7 +220,7 @@ class DashboardController extends Controller
 
                 foreach ($data['fleetslarge'] as $data => $dat) {
 
-                    if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 7) {
+                    if ($dat['sinistrado'] == "FALSE" && Carbon::parse($dat['lp_ultima_transmissao'])->diffInDays(Carbon::now()) < 8) {
                         $arr[] = $this->resultJson($dat);
                         $grid01 = $arr;
                     }
