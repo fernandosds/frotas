@@ -315,7 +315,7 @@
                         carIcon = redAlertCarIcon
                     }
                     if (feature.properties.deliver == true) {
-                        carIcon = orangeCarIcon;
+                       //carIcon = orangeCarIcon;
                     }
 
                     if (feature.properties.cliente_distancia_local_devolucao != null) {
