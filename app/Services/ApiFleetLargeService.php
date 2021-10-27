@@ -68,6 +68,7 @@ class ApiFleetLargeService
             $feature->properties = new stdClass();
             $feature->properties->id = $item->modelo;
             $feature->properties->ignicao = $item->lp_ignicao == '1' ? 'ON' : 'OFF';
+            $feature->properties->qtd_contrato = $item->qtd_contrato ?? 0;
             $feature->properties->chassis = $item->chassis;
             $feature->properties->modelo_veiculo = $item->modelo_veiculo;
             $feature->properties->placa = $item->placa;
@@ -119,7 +120,7 @@ class ApiFleetLargeService
         $now = new Carbon();
         $to = Carbon::parse($time);
         $diff_in_minutes = $to->diffInMinutes($now);
-        return ['recente' => $diff_in_minutes <= 180, 'diff' => $diff_in_minutes];
+        return ['recente' => $diff_in_minutes <= 1, 'diff' => $diff_in_minutes];
     }
 
     private function applyFilter($filters, $data)
@@ -132,6 +133,10 @@ class ApiFleetLargeService
                 $filter == 'cliente_datadev' &&
                 (!empty($data->properties->{$filter}) && Carbon::createFromFormat('d/m/Y H:i:s', $data->properties->{$filter})->isSameDay() != $value) ||
                 empty($data->properties->{$filter})
+            ) {
+                $filtered = false;
+            } elseif (
+                $filter == 'qtd_contrato' && $data->properties->{$filter} > $value
             ) {
                 $filtered = false;
             }

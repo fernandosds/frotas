@@ -359,6 +359,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/cars/all', 'FleetsLarge\MonitoringController@allCars')->name('fleetslarges.monitoring.allCars');
             Route::get('/cars/position/{ignition?}', 'FleetsLarge\MonitoringController@carsPosition')->name('fleetslarges.monitoring.carsPosition');
             Route::get('/cars/deliver/{deliver?}', 'FleetsLarge\MonitoringController@carsForDeliver')->name('fleetslarges.monitoring.carsForDeliver');
+            Route::get('/cars/loyalty/{loyalty?}', 'FleetsLarge\MonitoringController@carsForLoyalty')->name('fleetslarges.monitoring.carsLoyalty');
             Route::get('/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPosition')->name('fleetslarges.monitoring.lastPosition');
             Route::get('/cars/events', 'FleetsLarge\MonitoringController@events')->name('fleetslarges.monitoring.events');
             Route::get('/movida/lojas', 'FleetsLarge\MonitoringController@movidaPosition')->name('fleetslarges.monitoring.movidaPosition');
