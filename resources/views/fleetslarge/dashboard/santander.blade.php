@@ -180,6 +180,16 @@
     .spanText {
         cursor: pointer;
     }
+    .btn-excel{
+        padding: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        border: 2px solid #fff;
+    }
+    .no-link{
+        text-decoration: none;
+        color: #fff !important;
+    }
 </style>
 @endsection
 
@@ -193,7 +203,7 @@
 </div>
 
 <div class="row" id="div-grid-vehicle">
-    <div class="col-xl-6" id="divCard01">
+    <div class="col-md-6" id="divCard01">
         <div class="card text-white col-md-12 bg-primary" id="divColor01">
             <div class="card-body">
                 <br />
@@ -202,7 +212,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6" id="divCard02">
+    <div class="col-md-6" id="divCard02">
         <div class="card text-white col-md-12 bg-primary" id="divColor02">
             <div class="card-body">
                 <br />
@@ -214,7 +224,7 @@
 </div>
 
 <div class="row" id="div-grid-vehicle2">
-    <div class="col-xl-6" id="divCard04">
+    <div class="col-md-6" id="divCard04">
         <div class="card text-white col-md-12 bg-primary" id="divColor04">
             <div class="card-body">
                 <br />
@@ -223,7 +233,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6" id='divCard05'>
+    <div class="col-md-6" id='divCard05'>
         <div class="card text-white col-md-12 bg-primary" id='divColor05'>
             <div class="card-body">
                 <br />
@@ -235,13 +245,20 @@
 </div>
 
 <div class="row">
-    <div class="col-xl-12">
+    <div class="col-md-12">
         <div class="card text-white bg-primary col-md-12">
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
                 <h1 class="card-title display-12"><span class="spanText" id="grid05" value="instalado"></span> INSTALAÇÕES EFETUADAS </h1>
             </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-success text-white center btn-excel col-md-12">
+            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
         </div>
     </div>
 </div>
