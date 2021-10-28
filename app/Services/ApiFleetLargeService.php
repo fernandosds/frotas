@@ -120,7 +120,7 @@ class ApiFleetLargeService
         $now = new Carbon();
         $to = Carbon::parse($time);
         $diff_in_minutes = $to->diffInMinutes($now);
-        return ['recente' => $diff_in_minutes <= 1, 'diff' => $diff_in_minutes];
+        return ['recente' => $diff_in_minutes <= 180, 'diff' => $diff_in_minutes];
     }
 
     private function applyFilter($filters, $data)
