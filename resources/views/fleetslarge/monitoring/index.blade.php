@@ -624,6 +624,9 @@
 
 
     $('#btn-grid').click(function() {
+        $("#message").empty();
+        $("#message").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+
         var chassis = chassi_url;
         $.ajax({
             type: 'POST',
@@ -637,9 +640,13 @@
                 "last_date": $('#last_date').val()
             },
             success: function(response) {
+
+                $("#message").empty();
                 $('#list_grid').html(response);
             },
             error: function(error) {
+
+                $("#message").empty();
                 if (error.responseJSON.status == "internal_error") {
                     Swal.fire({
                         type: 'error',

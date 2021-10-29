@@ -32,7 +32,7 @@
             <hr />
             <div class="center" id="list_grid">
                 <div id="message">
-                    <h4><i class="fa fa-exclamation-triangle"></i> Nenhum registro. </h4>
+                    <h4>Selecione um período.</h4>
                 </div>
             </div>
             <div class="modal-footer">

@@ -49,6 +49,7 @@
             dom: "<'row'<'col-md-4'l><'col-md-8'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+                "order": [[1, "desc"]],
             buttons: [{
                     extend: 'pdf',
                     title: 'SAT Company :: Relatorio de Posicoes_' + date,
@@ -89,15 +90,16 @@
                 }
             },
             columnDefs: [{
-                targets: [0],
+                targets: [2],
                 orderData: [0, 1]
             }, {
-                targets: [1],
+                targets: [2],
                 orderData: [1, 0]
             }, {
                 targets: [4],
                 orderData: [4, 0]
             }],
+
         });
     });
 </script>
