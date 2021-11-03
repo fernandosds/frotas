@@ -190,6 +190,15 @@
         text-decoration: none;
         color: #fff !important;
     }
+
+    .installed, .waiting, .vehiclesTotal{
+        cursor: pointer;
+    }
+
+    .installed:hover, .waiting:hover, .vehiclesTotal:hover{
+        background-color: #4556df !important;
+    }
+
 </style>
 @endsection
 
@@ -245,12 +254,32 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="card text-white bg-primary col-md-12">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary col-md-12 installed">
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h1 class="card-title display-12"><span class="spanText" id="grid05" value="instalado"></span> INSTALAÇÕES EFETUADAS </h1>
+                <h3 class="card-title display-12"><span class="spanText" id="grid05" value="instalado"></span> INSTALAÇÕES EFETUADAS </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary col-md-12 waiting">
+            <div class="card-body card-total">
+                <br />
+                <h1 class="card-title display-12">&nbsp;</span> </h1>
+                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao"
+                        ></span> AGUARDANDO INSTALAÇÃO </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
+            <div class="card-body card-total">
+                <br />
+                <h1 class="card-title display-12">&nbsp;</span> </h1>
+                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"
+                        ></span> TOTAL </h3>
             </div>
         </div>
     </div>
@@ -263,8 +292,6 @@
     </div>
 </div>
 
-<br />
-<br />
 
 <div class="row">
     <div class="col-lg-12">
@@ -370,7 +397,9 @@
                 $('#grid02').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
                 $('#grid03').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
                 $('#grid04').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#grid05').html(response.data.grid03.length)
+                $('#grid05').html(response.data.grid03.length);
+                $('#gridAguardandoInstalacao').html(response.data.grid06.length);
+                $('#gridTotal').html(Number(response.data.grid06.length) + Number(response.data.grid03.length));
             }
         });
     }
@@ -449,6 +478,21 @@
         });
 
     });
+
+
+    $('.installed').click(function(){
+        $('#example').DataTable().columns(21).search("INSTALADO|OS ABERTA DE RETIRADA|RETIRADO", true, false, true).draw();
+    });
+
+    $('.waiting').click(function () {
+        $('#example').DataTable().columns(21).search('REAGENDAMENTO|OS ABERTA DE INSTALAçãO|VEICULO INDISPONIVEL', true, false, true).draw();
+    });
+
+    $('.vehiclesTotal').click(function () {
+        $('#example').DataTable().columns(21).search('').draw();
+    });
+
+
 
     /* Details vehicle */
     $('.btn-vehicle-data').click(function() {

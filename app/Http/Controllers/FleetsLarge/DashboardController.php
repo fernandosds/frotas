@@ -248,10 +248,15 @@ class DashboardController extends Controller
                 $customer = $this->customerService->show(Auth::user()->customer_id);
 
                 $instalado = $this->apiFleetLargeService->allCars($customer->hash);
+                $situacoesDeInstalado =  ['INSTALADO', 'OS ABERTA DE RETIRADA', 'RETIRADO'];
+                $situacoesDeAgendado =  ['OS ABERTA DE INSTALAçãO', 'REAGENDAMENTO', 'VEICULO INDISPONIVEL'];
                 foreach ($instalado as $data => $dat) {
-                    if ($dat['situacao'] == "INSTALADO") {
+                    if (in_array($dat['situacao'], $situacoesDeInstalado)) {
                         $arr3[] = $this->resultJson($dat);
                         $grid03 = $arr3;
+                    } else if (in_array($dat['situacao'], $situacoesDeAgendado)) {
+                        $arr6[] = $this->resultJson($dat);
+                        $grid06 = $arr6;
                     }
                 }
 
