@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
 use App\Services\FleetLargeSantanderService;
+use App\Services\FleetLargeMapfreService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ use PhpParser\Node\Expr\Print_;
 
 class DashboardController extends Controller
 {
+
+    private $fleetLargeMapfreService;
 
     private $fleetLargeSantanderService;
 
@@ -37,11 +40,12 @@ class DashboardController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, FleetLargeSantanderService $fleetLargeSantanderService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
+    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, FleetLargeMapfreService $fleetLargeMapfreService,  FleetLargeSantanderService $fleetLargeSantanderService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
     {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
         $this->fleetLargeSantanderService = $fleetLargeSantanderService;
+        $this->fleetLargeMapfreService = $fleetLargeMapfreService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
 
@@ -81,6 +85,19 @@ class DashboardController extends Controller
                 $carros = $arr;
             }
             return response()->view('fleetslarge.dashboard.santander', compact('carros'));
+        }
+
+        // Entrar no dashboard Mapfre
+        if (Auth::user()->customer_id == 11) {
+            $data['fleetslarge'] = $this->fleetLargeMapfreService->allCars($customer->hash);
+
+            $carros = [];
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                $arr[] = $this->resultJsonMapfre($dat);
+                $carros = $arr;
+            }
+            return response()->view('fleetslarge.dashboard.mapfre', compact('carros'));
         }
     }
 
@@ -416,5 +433,46 @@ class DashboardController extends Controller
         }
 
         return response()->view('fleetslarge.iframe.dashboardSantander', $data);
+    }
+
+
+    /**
+     * @param Int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    function resultJsonMapfre($dat)
+    {
+        $arr = ([
+            "lp_satelite"               => $dat['lp_satelite'] ?? '',
+            "placa"                     => $dat['placa'] ?? '',
+            "placa_mercosul"            => $this->apiFleetLargeService->fixPlate($dat['placa']),
+            "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
+            "empresa"                   => $dat['empresa'] ?? '',
+            "estado"                    => $dat['estado'] ?? '',
+            "lp_longitude"              => $dat['lp_longitude'] ?? '',
+            "BI_FIPE_TAB → modelo"      => $dat['BI_FIPE_TAB → modelo'] ?? '',
+            "end_logradouro"            => $dat['end_logradouro'] ?? '',
+            "status_veiculo_dt"         => $dat['status_veiculo_dt'] ?? '',
+            "lp_voltagem"               => $dat['lp_voltagem'] ?? '',
+            "end_bairro"                => $dat['end_bairro'] ?? '',
+            "status"                    => $dat['status'] ?? '',
+            "end_cep"                   => $dat['end_cep'] ?? '',
+            "chassis"                   => $dat['chassis'] ?? '',
+            "end_cidade"                => $dat['end_cidade'] ?? '',
+            "qtd_dispositivos"          => $dat['qtd_dispositivos'] ?? '',
+            "end_uf"                    => $dat['end_uf'] ?? '',
+            "cidade"                    => $dat['cidade'] ?? '',
+            "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'] ?? '',
+            "cliente"                   => $dat['cliente'] ?? '',
+            "data_instalacao"           => $dat['data_instalacao'] ?? '',
+            "cod_empreesa"              => $dat['cod_empreesa'] ?? '',
+            "lp_latitude"               => $dat['lp_latitude'] ?? '',
+            "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
+            "modelo"                    => $dat['modelo'] ?? '',
+            "versao"                    => $dat['versao'] ?? '',
+            "BI_FIPE_TAB → tipo"        => $dat['BI_FIPE_TAB → tipo'] ?? '',
+        ]);
+        return $arr;
     }
 }
