@@ -204,6 +204,7 @@
 
 @section('content')
 
+<!--
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
@@ -252,7 +253,7 @@
         </div>
     </div>
 </div>
-
+-->
 <div class="row">
     <div class="col-lg-12">
         <!--begin::Portlet-->
@@ -308,32 +309,33 @@
 
 @section('scripts')
 <script>
-    resetGrid()
+   //resetGrid()
     /**
      * Rastrea isca automaticamente
      */
-    $(document).ready(function() {
+    /*
+     $(document).ready(function() {
         reloadValue()
     })
+ */
+   // $('#timeline').removeClass('hidden');
 
-    $('#timeline').removeClass('hidden');
-
-    function reloadValue() {
-        $.ajax({
-            url: "{{route('fleetslarges.showAllStatus')}}",
-            type: 'GET',
-            success: function(response) {
-                $('#grid01').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#grid02').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#grid03').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#grid04').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-                $('#grid05').html(response.data.grid03.length);
-                $('#gridAguardandoInstalacao').html(response.data.grid06.length);
-                $('#gridTotal').html(Number(response.data.grid06.length) + Number(response.data.grid03.length));
-            }
-        });
-    }
-
+  //  function reloadValue() {
+  //      $.ajax({
+  //          url: "{{route('fleetslarges.showAllStatus')}}",
+  //          type: 'GET',
+  //          success: function(response) {
+  //              $('#grid01').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+  //              $('#grid02').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+  //              $('#grid03').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+  //              $('#grid04').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
+  //              $('#grid05').html(response.data.grid03.length);
+  //              $('#gridAguardandoInstalacao').html(response.data.grid06.length);
+  //              $('#gridTotal').html(Number(response.data.grid06.length) + Number(response.data.grid03.length));
+  //          }
+  //      });
+  //  }
+/*
     function resetGrid() {
         // Progress bar
         $('#div-progress-bar-fleetlarge').show();
@@ -355,7 +357,7 @@
             $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
         }, 1000);
     }
-
+*/
     $(document).ready(function() {
         columns = [0, 1, 2, 3, 4, 5];
         columsPdf = [0, 1, 2, 3, 4, 5];
