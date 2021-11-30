@@ -166,6 +166,7 @@ class MonitoringController extends Controller
                     "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
                     "veiculo_odometro"          => $dat['veiculo_odometro'] ?? '',
                     "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
+                    "modelo_fipe_tab"           => $dat['BI_FIPE_TAB → modelo'] ?? '',
                     "endereco"                  => $this->apiDeviceServic->getAddress($dat['lp_latitude'], $dat['lp_longitude'])
                 ]);
                 $veiculo = $arr;

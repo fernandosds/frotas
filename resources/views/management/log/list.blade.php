@@ -41,7 +41,7 @@
                         @foreach ($logs as $log)
                             <tr id="_tr_user_{{$log->id}}">
                                 <!--<th scope="row">{{$loop->iteration}}</th>-->
-                                <td>{{$log->user->name}}</td>
+                                <td>{{$log->user->name ?? ''}}</td>
                                 <td>{{$log->description}}</td>
                                 <td>{{date_format($log->created_at, "d/m/Y H:m:s")}}</td>
                                 <td>

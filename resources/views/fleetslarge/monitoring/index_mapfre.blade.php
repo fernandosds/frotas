@@ -375,7 +375,7 @@
                 $("#lp_ignicao").html(data.lp_ignicao != "1" ? "OFF" : "ON");
                 $("#lp_velocidade").html(data.lp_velocidade + " km/h");
                 $("#chassis").html(data.chassis);
-                $("#modelo_veiculo").html(data.modelo_veiculo);
+                $("#modelo_veiculo").html(data.modelo_fipe_tab);
                 $("#categoria_veiculo").html(data.categoria_veiculo);
                 $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'));
                 $(".modelo").html(data.modelo);

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\FleetsLarge;
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
-use App\Services\FleetLargeSantanderService;
 use App\Services\FleetLargeMapfreService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
@@ -40,11 +39,15 @@ class DashboardController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, FleetLargeMapfreService $fleetLargeMapfreService,  FleetLargeSantanderService $fleetLargeSantanderService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
-    {
+    public function __construct(
+        ApiFleetLargeService $apiFleetLargeService,
+        FleetLargeMovidaService $fleetLargeMovidaService,
+        FleetLargeMapfreService $fleetLargeMapfreService,
+        ApiDeviceService $apiDeviceServic,
+        CustomerService $customerService
+    ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
-        $this->fleetLargeSantanderService = $fleetLargeSantanderService;
         $this->fleetLargeMapfreService = $fleetLargeMapfreService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;

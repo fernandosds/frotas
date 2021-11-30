@@ -115,7 +115,7 @@ class DeviceRepository extends AbstractRepository
             } else {
                 return ['status' => 'error', 'message' => 'Ísca não encontrada'];
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             return ['status' => 'error', 'message' => $e->getMessage(), 'data' => ''];
         }
@@ -130,7 +130,6 @@ class DeviceRepository extends AbstractRepository
 
         $devices = $this->model
 
-            //->where('customer_id', $contract_devices->customer_id)
             ->where('technologie_id', $contract_devices->technologie_id)
             ->where('contract_id', $contract_devices->contract_id)
             ->get();
