@@ -204,56 +204,6 @@
 
 @section('content')
 
-<!--
-<div class="kt-section " id="div-progress-bar-fleetlarge">
-    <br />
-    <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
-    </div>
-</div>
-
-<div class="row" id="div-grid-vehicle">
-    <div class="col-md-6" id="divCard01">
-        <div class="card text-white col-md-12 bg-primary" id="divColor01">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"> <span id="grid04">&nbsp;</span></h1>
-                <p class="card-text h5"><span id="statusCard01"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id="divCard02">
-        <div class="card text-white col-md-12 bg-primary" id="divColor02">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="grid01">&nbsp;</span></h1>
-                <p class="card-text h5"><span id="statusCard02"></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row" id="div-grid-vehicle2">
-    <div class="col-md-6" id="divCard04">
-        <div class="card text-white col-md-12 bg-primary" id="divColor04">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="grid02">&nbsp;</span></h1>
-                <p class="card-text h5"><span id="statusCard04"></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id='divCard05'>
-        <div class="card text-white col-md-12 bg-primary" id='divColor05'>
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="grid03">&nbsp;</span></h1>
-                <p class="card-text h5"><span id="statusCard05"></p>
-            </div>
-        </div>
-    </div>
-</div>
--->
 <div class="row">
     <div class="col-lg-12">
         <!--begin::Portlet-->
@@ -309,55 +259,6 @@
 
 @section('scripts')
 <script>
-   //resetGrid()
-    /**
-     * Rastrea isca automaticamente
-     */
-    /*
-     $(document).ready(function() {
-        reloadValue()
-    })
- */
-   // $('#timeline').removeClass('hidden');
-
-  //  function reloadValue() {
-  //      $.ajax({
-  //          url: "{{route('fleetslarges.showAllStatus')}}",
-  //          type: 'GET',
-  //          success: function(response) {
-  //              $('#grid01').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-  //              $('#grid02').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-  //              $('#grid03').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-  //              $('#grid04').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-  //              $('#grid05').html(response.data.grid03.length);
-  //              $('#gridAguardandoInstalacao').html(response.data.grid06.length);
-  //              $('#gridTotal').html(Number(response.data.grid06.length) + Number(response.data.grid03.length));
-  //          }
-  //      });
-  //  }
-/*
-    function resetGrid() {
-        // Progress bar
-        $('#div-progress-bar-fleetlarge').show();
-        progressBar = 100;
-        setInterval(function() {
-            $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
-            if (progressBar < 11) {
-                $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-primary');
-                $('#progress_bar_fleetlarge').addClass("progress-bar kt-bg-danger");
-            }
-            if (progressBar == 0) {
-                $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-danger');
-                $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
-                reloadValue()
-                progressBar = 100;
-            } else {
-                progressBar = progressBar - 1;
-            }
-            $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
-        }, 1000);
-    }
-*/
     $(document).ready(function() {
         columns = [0, 1, 2, 3, 4, 5];
         columsPdf = [0, 1, 2, 3, 4, 5];
