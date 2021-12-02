@@ -221,6 +221,7 @@
                                 <th>Placa</th>
                                 <th>Placa Mercosul</th>
                                 <th>Modelo</th>
+                                <th>Tecnologia</th>
                                 <th>Chassis</th>
                                 <th class="hidden">Última Transmissão</th>
                                 <th>Última Transmissão</th>
@@ -234,6 +235,7 @@
                                 <td>{{$driver['placa']}}</td>
                                 <td>{{$driver['placa_mercosul']}}</td>
                                 <td>{{$driver['BI_FIPE_TAB → modelo']}}</td>
+                                <td>{{$driver['tecnologia']}}</td>
                                 <td>{{$driver['chassis']}}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver['lp_ultima_transmissao']}}</span>{{\Carbon\Carbon::parse($driver['lp_ultima_transmissao'])->format('d/m/Y H:i:s')}}</td>
@@ -260,8 +262,8 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5];
-        columsPdf = [0, 1, 2, 3, 4, 5];
+        columns = [0, 1, 2, 3, 4, 5, 7];
+        columsPdf = [0, 1, 2, 3, 4, 5, 7];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +

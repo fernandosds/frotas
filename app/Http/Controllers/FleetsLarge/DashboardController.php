@@ -453,6 +453,7 @@ class DashboardController extends Controller
             "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
             "empresa"                   => $dat['empresa'] ?? '',
             "estado"                    => $dat['estado'] ?? '',
+            "tecnologia"                => $dat['tecnologia'] ?? '',
             "lp_longitude"              => $dat['lp_longitude'] ?? '',
             "BI_FIPE_TAB → modelo"      => $dat['BI_FIPE_TAB → modelo'] ?? '',
             "end_logradouro"            => $dat['end_logradouro'] ?? '',
