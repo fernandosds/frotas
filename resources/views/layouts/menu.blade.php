@@ -460,9 +460,10 @@
             </li>
             @endif
 
-            <!-- Iframe Movida -->
-            @if( Auth::user()->customer_id == 11)
+            <!-- Iframe SOMPO -->
             <!--
+            @if( Auth::user()->customer_id == 6)
+
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges_iframe ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-chart-bar"></i></span>
@@ -472,14 +473,13 @@
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Frota</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Eventos</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeFrotaSompo')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Frota</span></a></li>
                     </ul>
                 </div>
             </li>
--->
-            @endif
 
+            @endif
+-->
             @if( Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8)
             <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                 <a href="{{route('fleetslarges.monitoring.allCars')}}" class="kt-menu__link ">

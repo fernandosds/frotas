@@ -57,6 +57,9 @@ class MonitoringController extends Controller
         if (Auth::user()->customer_id == 11) {
             return view('fleetslarge.monitoring.index_mapfre', ['chassi' => $chassi]);
         }
+        if (Auth::user()->customer_id == 6) {
+            return view('fleetslarge.monitoring.sompo.index', ['chassi' => $chassi]);
+        }
     }
 
     /**

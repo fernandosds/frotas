@@ -349,6 +349,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/analyzes/base', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeBase');
         Route::get('/analyzes/frota', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeFrota'); // Movida
         Route::get('/analyzes/eventos', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeEventos'); // Movida
+        Route::get('/analyzes/sompo/frota', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeFrotaSompo'); // SOMPO
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
         Route::get('/show/event/{placa}', 'FleetsLarge\DashboardController@showEventPlaca')->name('fleetslarges.showEventPlaca');
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');

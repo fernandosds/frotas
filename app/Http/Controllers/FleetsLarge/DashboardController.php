@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
 use App\Services\FleetLargeMapfreService;
+use App\Services\FleetLargeSompoService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ class DashboardController extends Controller
 
     private $fleetLargeMapfreService;
 
-    private $fleetLargeSantanderService;
+    private $fleetLargeSompoService;
 
     private $fleetLargeMovidaService;
 
@@ -43,12 +44,14 @@ class DashboardController extends Controller
         ApiFleetLargeService $apiFleetLargeService,
         FleetLargeMovidaService $fleetLargeMovidaService,
         FleetLargeMapfreService $fleetLargeMapfreService,
+        FleetLargeSompoService $fleetLargeSompoService,
         ApiDeviceService $apiDeviceServic,
         CustomerService $customerService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
         $this->fleetLargeMapfreService = $fleetLargeMapfreService;
+        $this->fleetLargeSompoService = $fleetLargeSompoService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
 
@@ -97,10 +100,23 @@ class DashboardController extends Controller
             $carros = [];
 
             foreach ($data['fleetslarge'] as $data => $dat) {
-                $arr[] = $this->resultJsonMapfre($dat);
+                $arr[] = $this->resultJsonSeguradora($dat);
                 $carros = $arr;
             }
             return response()->view('fleetslarge.dashboard.mapfre', compact('carros'));
+        }
+
+        // Entrar no dashboard SOMPO
+        if (Auth::user()->customer_id == 6) {
+            $data['fleetslarge'] = $this->fleetLargeSompoService->allCars($customer->hash);
+
+            $carros = [];
+
+            foreach ($data['fleetslarge'] as $data => $dat) {
+                $arr[] = $this->resultJsonSeguradora($dat);
+                $carros = $arr;
+            }
+            return response()->view('fleetslarge.dashboard.sompo.sompo', compact('carros'));
         }
     }
 
@@ -435,6 +451,11 @@ class DashboardController extends Controller
             $data['hash'] = 'a139e839-e5d0-480c-b3cd-6a01d37b8927';
         }
 
+        // Iframe com os Eventos -- SOMPO
+        if (Route::currentRouteName() == 'fleetslarges.analyzeFrotaSompo') {
+            $data['hash'] = '277a22c0-5a64-46bc-93f1-832cfa7b46b9';
+        }
+
         return response()->view('fleetslarge.iframe.dashboardSantander', $data);
     }
 
@@ -444,7 +465,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
 
-    function resultJsonMapfre($dat)
+    function resultJsonSeguradora($dat)
     {
         $arr = ([
             "lp_satelite"               => $dat['lp_satelite'] ?? '',
