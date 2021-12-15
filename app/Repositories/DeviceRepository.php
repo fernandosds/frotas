@@ -100,13 +100,16 @@ class DeviceRepository extends AbstractRepository
     {
 
         try {
+            $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
             $data = DB::table('devices')
                 ->join('contracts', 'contracts.id', '=', 'devices.contract_id')
                 ->join('technologies', 'technologies.id', '=', 'devices.technologie_id')
                 ->select('devices.uniqid', 'devices.id', 'devices.contract_id AS contract_id', 'contracts.status', 'devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
                 ->where('contracts.status', 1)
                 ->where('devices.model', $device)
-                ->where('devices.customer_id', Auth::user()->customer_id)
+                ->when(!$adminSat, function ($query) {
+                    return $query->where('devices.customer_id', Auth::user()->customer_id);
+                })
                 ->first();
 
             if ($data) {
@@ -127,14 +130,19 @@ class DeviceRepository extends AbstractRepository
      */
     public function filterByContractDevice($contract_devices)
     {
+        try {
 
-        $devices = $this->model
+            $devices = $this->model
 
-            ->where('technologie_id', $contract_devices->technologie_id)
-            ->where('contract_id', $contract_devices->contract_id)
-            ->get();
+                ->where('technologie_id', $contract_devices->technologie_id)
+                ->where('contract_id', $contract_devices->contract_id)
+                ->get();
 
-        return $devices;
+            return $devices;
+        } catch (\Exception $e) {
+
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
     }
 
     /**
@@ -143,6 +151,13 @@ class DeviceRepository extends AbstractRepository
      */
     public function validDevice(String $device)
     {
+
+        if (Auth::user()->email == 'admin@satcompany.com.br') {
+            return $this->model->where('model', $device)
+                ->whereNotNull('contract_id')
+                ->count();
+        }
+
         return $this->model->where('model', $device)
             ->where('customer_id', Auth::user()->customer_id)
             ->whereNotNull('contract_id')

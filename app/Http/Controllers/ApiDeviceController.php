@@ -14,6 +14,7 @@ use App\Services\ApiDeviceService;
 use App\Http\Controllers\Iscas\BoardingController;
 use App\Services\Iscas\BoardingService;
 use App\Http\Controllers\Iscas\FunctionController;
+use Illuminate\Support\Facades\Auth;
 
 class ApiDeviceController
 {
@@ -55,7 +56,6 @@ class ApiDeviceController
         $last_position = $this->apiDeviceService->getLastPosition($device);
 
         $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
-
 
         $return = [];
         if ($last_position['status'] == "sucesso") {

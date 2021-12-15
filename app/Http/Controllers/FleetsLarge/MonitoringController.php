@@ -213,7 +213,15 @@ class MonitoringController extends Controller
 
     public function events()
     {
-        $fleetslarge = $this->apiFleetLargeService->events('3e808287-c81f-402e-b681-252e9a834d4a');
+        //Eventos Movida
+        if (Auth::user()->customer_id == 7) {
+            $fleetslarge = $this->apiFleetLargeService->events('3e808287-c81f-402e-b681-252e9a834d4a');
+        }
+
+        //Eventos Mapfre
+        if (Auth::user()->customer_id == 11) {
+            $fleetslarge = $this->apiFleetLargeService->events('425e18d1-407b-4cee-ac8e-fa4d20604f8a');
+        }
         return response()->json($fleetslarge, 200);
     }
 
@@ -227,6 +235,11 @@ class MonitoringController extends Controller
         // Entrar no Mapa todos os carros Santander
         if (Auth::user()->customer_id == 8) {
             return view('fleetslarge.monitoring.allcars');
+        }
+
+        // Entrar no Mapa todos os carros Mapfre
+        if (Auth::user()->customer_id == 11) {
+            return view('fleetslarge.monitoring.mapfre.allcarsMapfre');
         }
     }
 

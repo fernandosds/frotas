@@ -99,6 +99,11 @@ class ApiFleetLargeService
                 $feature->properties->cliente_posicao_recente = $diffTime['recente'];
                 $feature->properties->cliente_posicao_diff = $diffTime['diff'];
             }
+            if (Auth::user()->customer_id == 11) {
+                $feature->properties->categoria_veiculo = $item->categoria_veiculo;
+                $feature->properties->lp_ultima_transmissao = $item->lp_ultima_transmissao = (Carbon::parse($item->lp_ultima_transmissao))->subHours(3)->format('d/m/Y H:i:s');;
+                $feature->properties->data_instalacao = $item->data_instalacao = (Carbon::parse($item->data_instalacao))->subHours(3)->format('d/m/Y H:i:s');;
+            }
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->lp_longitude, (float) $item->lp_latitude];

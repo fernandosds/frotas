@@ -110,23 +110,6 @@ class MonitoringController extends Controller
                             'r12' => (isset($check_pairing['CheckStatusIsca']['r12'])) ? $check_pairing['CheckStatusIsca']['r12'] : '',
                         ];
                     }
-
-                    /*
-                    // Paring
-                    $pairing = [
-                        'status' => false,
-                        'message' => "A ísca {$device} não esta pareada com o rastreador {$boarding->pair_device}."
-                    ];
-
-                    $api_pairing = $this->apiDeviceService->getPairing($device, $boarding->pair_device);
-                    if($api_pairing['status'] == "sucesso"){
-                        if($api_pairing['body'][0]['msgs'] > 0){
-                            $pairing = [
-                                'status' => true,
-                                'message' => "A ísca {$device} esta pareada com o rastreador {$boarding->pair_device}."
-                            ];
-                        }
-                    }*/
                 } else {
                     $pairing = [
                         'status' => 'false',
@@ -134,7 +117,6 @@ class MonitoringController extends Controller
                     ];
                 }
             } else {
-
                 return response()->json(['status' => 'error', 'errors' => 'Ísca não embarcada'], 200);
             }
 

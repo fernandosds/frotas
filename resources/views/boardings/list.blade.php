@@ -21,6 +21,7 @@
 
 @section('content')
 
+
 <div class="row">
     <div class="col-sm-12">
         <a href="{{url('boardings/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">

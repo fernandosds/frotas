@@ -118,6 +118,7 @@ class BoardingController extends Controller
      */
     public function index()
     {
+
         $data = $this->data;
         $data['boardings'] = $this->boardingService->getAllActive();
 
@@ -175,11 +176,6 @@ class BoardingController extends Controller
             return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo utilizado!"], 404);
         }
 
-        /*$test_for_boarding = $this->apiDeviceServic->testDevice($device->model);
-        if (isset($test_for_boarding['code']) && $test_for_boarding['code'] == 400) {
-            return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo fora dos parâmetros para embarcar."], 404);
-        }*/
-
         // Token validation
         if (Auth::user()->required_validation) {
 
@@ -194,17 +190,9 @@ class BoardingController extends Controller
                 die;
             }
         }
-
-        // $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
-
         if ($in_use) {
             return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo utilizado!"], 404);
         }
-
-        /*$test_for_boarding = $this->apiDeviceServic->testDevice($device->model);
-        if (isset($test_for_boarding['code']) && $test_for_boarding['code'] == 400) {
-            return response()->json(['status' => 'validation_error', 'errors' => "Dispositivo fora dos parâmetros para embarcar."], 404);
-        }*/
 
         try {
             $request->merge([
@@ -240,7 +228,7 @@ class BoardingController extends Controller
             $this->boardingService->finish($id);
             saveLog(['value' => $id, 'type' => 'Encerrou embarque', 'local' => 'BoardingController', 'funcao' => 'finish']);
             return response()->json(['status' => 'success'], 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);
         }
     }
@@ -252,20 +240,10 @@ class BoardingController extends Controller
     public function testDevice(String $model)
     {
         $device = $this->deviceService->findByModel($model);
-        /*if ($device['status'] == 'error') {
-            // return $device;
-        }*/
-
         $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
         if ($in_use) {
             return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo ou encerre o embarque anterior.'];
         }
-
-        /*$test_for_boarding = $this->apiDeviceServic->testDevice($model);
-        if (isset($test_for_boarding['code']) && $test_for_boarding['code'] == 400) {
-            return ['message' => 'Dispositivo fora dos parâmetros para embarcar.'];
-        }*/
-
         $return['status'] = $device['status'];
         if ($device['status'] == 'success') {
             $return['device_type'] = $device['data']->technologie;
@@ -296,10 +274,8 @@ class BoardingController extends Controller
      */
     public function view(Int $id)
     {
-
         $data = $this->data;
         $data['boarding'] = $this->boardingService->show($id);
-
         return response()->view('boardings.view', $data);
     }
 
@@ -308,7 +284,6 @@ class BoardingController extends Controller
      */
     public function tokenValidation(String $token)
     {
-
         return $this->apiUserService->tokenValidation(Auth::user()->validation_token, $token);
     }
 
@@ -335,8 +310,6 @@ class BoardingController extends Controller
      */
     public function saveHistory(Request $request)
     {
-
-
         try {
             $this->serviceHistoryService->saveHistory($request);
             return response()->json(['status' => 'success'], 200);

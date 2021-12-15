@@ -45,8 +45,12 @@ class BoardingRepository extends AbstractRepository
      */
     public function getCurrentBoardingByDeviceId(Int $id)
     {
+        $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
+
         return $this->model->where('device_id', $id)
-            ->where('customer_id', Auth::user()->customer_id)
+            ->when(!$adminSat, function ($query) {
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })
             ->where('active', 1)
             ->first();
     }
@@ -57,8 +61,12 @@ class BoardingRepository extends AbstractRepository
      */
     public function getAllActive()
     {
-        return $this->model->where('customer_id', Auth::user()->customer_id)
+        $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
+        return $this->model
             ->where('active', 1)
+            ->when(!$adminSat, function ($query) {
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })
             ->paginate(100);
     }
 
@@ -69,9 +77,12 @@ class BoardingRepository extends AbstractRepository
      */
     public function paginateFinished(Int $limit)
     {
+        $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
         return $this->model
             ->where('active', '0')
-            ->where('customer_id', Auth::user()->customer_id)
+            ->when(!$adminSat, function ($query) {
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })
             ->orderBy('id', 'desc')
             ->paginate($limit);
     }
@@ -81,8 +92,11 @@ class BoardingRepository extends AbstractRepository
      */
     public function getAllPairActive()
     {
+        $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
         return $this->model->where('active', 1)
-            ->where('customer_id', Auth::user()->customer_id)
+            ->when(!$adminSat, function ($query) {
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })
             ->whereNotNull('pair_device')
             ->get();
     }
@@ -93,11 +107,14 @@ class BoardingRepository extends AbstractRepository
      */
     public function getCurrentBoardingByDevice(String $device)
     {
+        $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
         return DB::table('boardings')
             ->join('devices', 'devices.id', '=', 'boardings.device_id')
             ->select('boardings.*')
             ->where('devices.model', $device)
-            ->where('boardings.customer_id', Auth::user()->customer_id)
+            ->when(!$adminSat, function ($query) {
+                return $query->where('boardings.customer_id', Auth::user()->customer_id);
+            })
             ->where('boardings.active', 1)
             ->first();
     }

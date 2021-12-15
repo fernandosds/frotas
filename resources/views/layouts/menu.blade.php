@@ -442,8 +442,9 @@
                 </div>
             </li>
             @endif
-            <!-- Iframe Movida -->
+            <!-- Menu Movida -->
             @if( Auth::user()->customer_id == 7)
+            <!-- Iframe Movida -->
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges_iframe ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-chart-bar"></i></span>
@@ -480,7 +481,8 @@
 
             @endif
 -->
-            @if( Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8)
+            <!-- Mapa Geral -->
+            @if( Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 11)
             <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                 <a href="{{route('fleetslarges.monitoring.allCars')}}" class="kt-menu__link ">
                     <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
