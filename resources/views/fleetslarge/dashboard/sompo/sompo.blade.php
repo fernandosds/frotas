@@ -266,6 +266,9 @@
         columsPdf = [0, 1, 2, 3, 4, 5, 7];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#example').DataTable({
+            "order": [
+                [7, "desc"]
+            ],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
