@@ -39,16 +39,17 @@ class ServiceHistoryRepository extends AbstractRepository
             ->update(['active' => 0]);
     }
 
-/**
+    /**
      * @param Int $id
      * @return mixed
      */
     public function showByCustomerId(Int $deviceId)
     {
 
+
         return $this->model->where('device_id', $deviceId)
             ->where('customer_id', Auth::user()->customer_id)
-            ->orderBy('id','desc')
+            ->orderBy('id', 'desc')
             ->get();
     }
 }

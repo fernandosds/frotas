@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
+use Illuminate\Support\Facades\Auth;
 //use Illuminate\Http\Request;
 //use App\User;
 
@@ -48,6 +49,10 @@ class HomeController extends Controller
      */
     public function accessDenied()
     {
+
+        if (Auth::user()->email == 'admin@satcompany.com.br') {
+            return view('access_denied_admin');
+        };
 
         $data['managements'] = $this->userService->getAllAdmins();
 

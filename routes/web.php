@@ -23,8 +23,9 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('index');
     Route::get('/access_denied', 'HomeController@accessDenied')->name('access_denied');
+    Route::get('/access_denied_admin', 'HomeController@accessDenied')->name('access_denied_admin');
 
     /**
      * API device routes
@@ -42,12 +43,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'Iscas\BoardingController@index');
         Route::get('/finished', 'Iscas\BoardingController@finished');
         Route::get('/view/{id}', 'Iscas\BoardingController@view');
-        Route::get('/new', 'Iscas\BoardingController@new');
-        Route::post('/save', 'Iscas\BoardingController@save');
-        Route::get('/delete/{id}', 'Iscas\BoardingController@destroy');
-        Route::get('/finish/{id}', 'Iscas\BoardingController@finish');
-        Route::get('/test-device/{model}', 'Iscas\BoardingController@testDevice');
-        Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation');
+        Route::get('/new', 'Iscas\BoardingController@new')->middleware('user.admin');
+        Route::post('/save', 'Iscas\BoardingController@save')->middleware('user.admin');
+        Route::get('/delete/{id}', 'Iscas\BoardingController@destroy')->middleware('user.admin');
+        Route::get('/finish/{id}', 'Iscas\BoardingController@finish')->middleware('user.admin');
+        Route::get('/test-device/{model}', 'Iscas\BoardingController@testDevice')->middleware('user.admin');
+        Route::get('/token-validation/{token}', 'Iscas\BoardingController@tokenValidation')->middleware('user.admin');
 
         Route::post('/addtime', 'Iscas\BoardingController@addTime')->middleware('user.access_level:management');
 
@@ -56,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/save', 'Iscas\BoardingController@saveHistory');
         });
 
-        Route::group(['prefix' => 'trackers'], function () {
+        Route::group(['middleware' => ['user.admin'], 'prefix' => 'trackers'], function () {
             Route::get('/verify/{tracker}', 'Iscas\TrackerController@findTrackerByModel');
             Route::post('/verify', 'Iscas\TrackerController@getTracker');
             Route::get('/unavailabletracker', 'Iscas\TrackerController@unavailableTracker')->name('unavailabletracker');
@@ -80,7 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Contracts History routes
      */
-    Route::group(['prefix' => 'contracts'], function () {
+    Route::group(['middleware' => ['user.admin'], 'prefix' => 'contracts'], function () {
         Route::get('/history', 'Iscas\ContractController@historyContract');
         Route::get('/show/{id}', 'Iscas\ContractController@show');
     });
@@ -88,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * COMMERCIAL routes
      */
-    Route::group(['middleware' => ['user.access_level:commercial'], 'prefix' => 'commercial'], function () {
+    Route::group(['middleware' => ['user.access_level:commercial', 'user.admin'], 'prefix' => 'commercial'], function () {
 
         /**
          * Clients routes
@@ -153,7 +154,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * LOGISTIC  routes
      */
-    Route::group(['middleware' => ['user.access_level:logistic'], 'prefix' => 'logistics'], function () {
+    Route::group(['middleware' => ['user.access_level:logistic', 'user.admin'], 'prefix' => 'logistics'], function () {
 
         /**
          * Contracts Logistics  routes
@@ -182,7 +183,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * PRODUCTION routes
      */
-    Route::group(['middleware' => ['user.access_level:production'], 'prefix' => 'production'], function () {
+    Route::group(['middleware' => ['user.access_level:production', 'user.admin'], 'prefix' => 'production'], function () {
 
         /**
          * Devices routes
@@ -213,7 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * MANAGEMENT routes
      */
-    Route::group(['middleware' => ['user.access_level:management'], 'prefix' => 'management'], function () {
+    Route::group(['middleware' => ['user.access_level:management', 'user.admin'], 'prefix' => 'management'], function () {
 
         /**
          * User routes
@@ -241,7 +242,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Type of Loads routes
      */
-    Route::group(['prefix' => 'typeofloads'], function () {
+    Route::group(['middleware' => ['user.admin'], 'prefix' => 'typeofloads'], function () {
 
         Route::get('/', 'Iscas\TypeOfLoadController@index');
         Route::get('/new', 'Iscas\TypeOfLoadController@new');
@@ -254,7 +255,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Accommodation Locations routes
      */
-    Route::group(['prefix' => 'accommodationlocations'], function () {
+    Route::group(['middleware' => ['user.admin'], 'prefix' => 'accommodationlocations'], function () {
 
         Route::get('/', 'Iscas\AccommodationLocationsController@index');
         Route::get('/new', 'Iscas\AccommodationLocationsController@new');
@@ -277,7 +278,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Fleets routes
      */
-    Route::group(['prefix' => 'fleets'], function () {
+    Route::group(['middleware' => ['user.admin'], 'prefix' => 'fleets'], function () {
 
         Route::get('/monitoring', 'Fleets\MonitoringController@index')->middleware(['user.fleet_management:monitoring']);
         Route::get('/monitoring/positions', 'Fleets\MonitoringController@positions')->middleware(['user.fleet_management:monitoring']);
@@ -342,7 +343,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Fleets Large routes
      */
-    Route::group(['middleware' => ['user.access_level:fleetslarge'], 'prefix' => 'fleetslarges'], function () {
+    Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
         Route::get('/analyze/installation', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeInstallation');
         Route::get('/analyzes/car', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeCar');

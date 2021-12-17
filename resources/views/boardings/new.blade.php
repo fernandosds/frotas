@@ -323,7 +323,7 @@
                         <hr />
                         <div class="col-lg-12 ml-lg-auto">
                             <button type="button" class="btn btn-brand" id="btn-boarding-save"><i class="fa fa-fire"></i> Ativar</button>
-                            <a href="{{url('devices')}}" class="btn btn-secondary">Voltar</a>
+                            <a href="{{route('index')}}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
 

@@ -22,6 +22,7 @@
 @section('content')
 
 
+@if (Auth::user()->email != 'admin@satcompany.com.br')
 <div class="row">
     <div class="col-sm-12">
         <a href="{{url('boardings/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
@@ -29,7 +30,7 @@
         </a><br /><br />
     </div>
 </div>
-
+@endif
 
 <div class="row">
 
@@ -81,9 +82,11 @@
 
                     @if ($boarding->active)
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-block btn-sm  btn-warning btn-finish-boarding" data-id="{{$boarding->id}}">
+
+                        <button type="button" class="btn btn-block btn-sm  btn-warning btn-finish-boarding" data-id="{{$boarding->id}}" @if( Auth::user()->email == 'admin@satcompany.com.br' ) disabled @endif>
                             <span class="fa fa-times"></span> Encerrar
                         </button>
+
                     </div>
                     <div class="col-md-4">
                         <a href="{{url('monitoring')}}/{{$boarding->device->model}}" class="btn btn-block btn-sm btn-success">
@@ -97,7 +100,7 @@
                 </div>
                 <div class="row chart-row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-block btn-sm btn-primary btn-register-ticket" data-toggle="modal" data-target="#modalTickets" data-backdrop="static" data-id="{{$boarding->device->model}}">
+                        <button type="button" class="btn btn-block btn-sm btn-primary btn-register-ticket" data-toggle="modal" data-target="#modalTickets" data-backdrop="static" data-id="{{$boarding->device->model}}" @if( Auth::user()->email == 'admin@satcompany.com.br' ) disabled @endif>
                             <span class="fa fa-pencil-alt"></span> Registrar Atendimento
                         </button>
                     </div>

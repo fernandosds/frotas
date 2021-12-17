@@ -251,6 +251,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-realtime/2.2.0/leaflet-realtime.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
+<script src='http://momentjs.com/downloads/moment.min.js'></script>
 <script>
     $(document).ready(function() {
         $('.eventos').on('click', function() {
@@ -301,15 +302,16 @@
                 pointToLayer: function(feature, latlng) {
                     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
-                    if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
+                    var given = moment(feature.properties.lp_ultima_transmissao, "DD/MM/YYYY");
+                    var current = moment().startOf('day');
+
+
+                    if (feature.properties.ignicao == 'ON' && moment.duration(given.diff(current)).asDays() <= -7) {
                         carIcon = greenAlertCarIcon
                     }
 
-                    if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
+                    if (feature.properties.ignicao == 'OFF' && moment.duration(given.diff(current)).asDays() <= -7) {
                         carIcon = redAlertCarIcon
-                    }
-                    if (feature.properties.deliver == true) {
-                        //carIcon = orangeCarIcon;
                     }
 
                     return L.marker(latlng, {

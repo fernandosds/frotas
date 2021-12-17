@@ -65,11 +65,13 @@
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('boardings/finished')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Encerrados</span></a></li>
                     </ul>
                 </div>
+                @if (Auth::user()->email != 'admin@satcompany.com.br')
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('boardings/new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo</span></a></li>
                     </ul>
                 </div>
+                @endif
             </li>
             <!--
             <li class="kt-menu__item " aria-haspopup="true">
@@ -95,7 +97,7 @@
                 </a>
             </li>
             @endif
-
+            @if (Auth::user()->email != 'admin@satcompany.com.br')
 
             @if( Auth::user()->access_level == 'management' )
 
@@ -489,6 +491,7 @@
                     <span class="kt-menu__link-text">Mapa Geral</span>
                 </a>
             </li>
+            @endif
             @endif
             @endif
             @endif

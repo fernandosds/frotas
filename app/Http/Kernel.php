@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'user.sat' => \App\Http\Middleware\UserSatCompany::class,
         'user.access_level' => \App\Http\Middleware\AccessLevel::class,
         'user.fleet_management' => \App\Http\Middleware\AccessFleetManagement::class,
+        'user.admin' => \App\Http\Middleware\UserAdmin::class,
 
     ];
 }
