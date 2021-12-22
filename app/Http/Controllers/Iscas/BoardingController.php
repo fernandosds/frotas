@@ -7,6 +7,7 @@ use App\Http\Requests\BoardingRequest;
 use App\Services\ApiDeviceService;
 use App\Services\ApiUserService;
 use App\Services\Iscas\BoardingService;
+use App\Services\CustomerService;
 use App\Services\DeviceService;
 use App\Services\Iscas\ServiceHistoryService;
 use App\Services\Iscas\TypeOfLoadService;
@@ -33,6 +34,11 @@ class BoardingController extends Controller
      * @var BoardingService
      */
     private $boardingService;
+
+    /**
+     * @var CustomerService
+     */
+    private $customerService;
 
     /**
      * @var DeviceService
@@ -77,6 +83,7 @@ class BoardingController extends Controller
      * @param TypeOfLoadService $typeOfLoadService
      * @param AccommodationLocationsService $accommodationLocationsService
      * @param TrackerService $trackerService
+     * @param CustomerService $customerService
      * @param ApiUserService $apiUserService
      * @param ServiceHistoryService $serviceHistoryService
      * @param FunctionController $functionController
@@ -89,6 +96,7 @@ class BoardingController extends Controller
         TypeOfLoadService $typeOfLoadService,
         AccommodationLocationsService $accommodationLocationsService,
         TrackerService $trackerService,
+        CustomerService $customerService,
         ApiUserService $apiUserService,
         ServiceHistoryService $serviceHistoryService,
         FunctionController $functionController
@@ -100,6 +108,7 @@ class BoardingController extends Controller
         $this->typeOfLoadService = $typeOfLoadService;
         $this->accommodationLocationsService = $accommodationLocationsService;
         $this->trackerService = $trackerService;
+        $this->customerService = $customerService;
         $this->apiUserService = $apiUserService;
         $this->serviceHistoryService = $serviceHistoryService;
         $this->functionController = $functionController;
@@ -116,15 +125,14 @@ class BoardingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
         $data = $this->data;
-        $data['boardings'] = $this->boardingService->getAllActive();
+        $data['boardings'] = $this->boardingService->getAllActive($request->customer_id);
+        $data['customers'] = $this->customerService->getAllCustomerDevice();
 
         return response()->view('boardings.list', $data);
     }
-
 
     public function finished()
     {

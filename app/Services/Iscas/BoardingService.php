@@ -59,9 +59,9 @@ class BoardingService
     /**
      * @return mixed
      */
-    public function getAllActive()
+    public function getAllActive($customer_id)
     {
-        return $this->boardingRepository->getAllActive();
+        return $this->boardingRepository->getAllActive($customer_id);
     }
 
     /**

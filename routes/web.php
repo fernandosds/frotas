@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
      * boardings device routes
      */
     Route::group(['prefix' => 'boardings'], function () {
-        Route::get('/', 'Iscas\BoardingController@index');
+        Route::get('/', 'Iscas\BoardingController@index')->name('index.boardings');
         Route::get('/finished', 'Iscas\BoardingController@finished');
         Route::get('/view/{id}', 'Iscas\BoardingController@view');
         Route::get('/new', 'Iscas\BoardingController@new')->middleware('user.admin');

@@ -113,4 +113,12 @@ class CustomerService
 
         return $this->customerRepository->search($request);
     }
+
+    /**
+     * @return CustomerRepository|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getAllCustomerDevice($customer_id = null)
+    {
+        return $this->customerRepository->getAllCustomerDevice($customer_id);
+    }
 }

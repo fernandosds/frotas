@@ -16,11 +16,19 @@
     .progress-bar-row {
         margin-top: 30px;
     }
+
+    .btn-warning{
+        height: 49px;
+    }
+
+    #btn-filtrar-clientes {
+        height: 34px;
+        margin-top: 28px;
+    }
 </style>
 @endsection
 
 @section('content')
-
 
 @if (Auth::user()->email != 'admin@satcompany.com.br')
 <div class="row">
@@ -30,6 +38,29 @@
         </a><br /><br />
     </div>
 </div>
+@endif
+
+@if (Auth::user()->email == 'admin@satcompany.com.br')
+<section class="section">
+    <form action="{{route('index.boardings')}}" method="get">
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="input">Selecione um cliente</label>
+                <select class="form-control" name="customer_id" id="customer_id">
+                    <option value="">Todos os clientes</option>
+                    @foreach( $customers as $customer )
+                    <option value="{{$customer->id}}" {{ $customer->id == $boardings[0]['customer_id'] ? 'selected' : ''}}>{{$customer->name}}</option>
+                    @endforeach
+                </select><br /><br />
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-sm  btn-success" id="btn-filtrar-clientes">
+                    <span class="fa fa-fw fa-search"></span> Pesquisar
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
 @endif
 
 <div class="row">
@@ -45,48 +76,34 @@
     @endif
 
     @foreach ($boardings as $boarding)
-
-    <div class="col-sm-6 col-xl-4" id="div-{{$boarding->id}}">
-
+    <div class="col-sm-6 col-xl-4 allBoarding" id="div-{{$boarding->id}}">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-widget14">
-
                 <input type="hidden" name="device_number" id="device_number" class="form-control" maxlength="20" value="{{ $boarding->device->model?? '' }}">
-
                 <div class="kt-widget14__content">
                     <div class="kt-widget14__chart">
                         <div id="container-speed-{{$boarding->id}}" class="chart-container"></div>
                     </div>
                     <div class="kt-widget14__legends">
-
                         <h3 class="kt-widget14__title">
                             <i class="fas fa-shipping-fast text-success"></i> {{$boarding->device->model}}
                         </h3>
-
                         {{$boarding->transporter ?? ''}}<br /><br />
-
                         <b>Última Transmissão</b><br />
                         <span id="span-last-transmission-{{$boarding->id}}"><i class="fa fa-spinner fa-pulse"></i> </span><br />
-
                     </div>
-
                 </div>
-
                 <div class="progress-bar-row">
                     <i class="far fa-flag"></i>
                     <i class="fa fa-flag-checkered pull-right"></i>
                     <div class="progress progress-sm" id="progress-{{$boarding->id}}"></div>
                 </div>
-
                 <div class="row chart-row">
-
                     @if ($boarding->active)
                     <div class="col-md-4">
-
                         <button type="button" class="btn btn-block btn-sm  btn-warning btn-finish-boarding" data-id="{{$boarding->id}}" @if( Auth::user()->email == 'admin@satcompany.com.br' ) disabled @endif>
                             <span class="fa fa-times"></span> Encerrar
                         </button>
-
                     </div>
                     <div class="col-md-4">
                         <a href="{{url('monitoring')}}/{{$boarding->device->model}}" class="btn btn-block btn-sm btn-success">
@@ -108,11 +125,8 @@
 
             </div>
         </div>
-
     </div>
-
     @endforeach
-
 </div>
 
 @include('boardings.modalServiceHistory')
@@ -234,16 +248,6 @@
 
         }
     });
-    // $.ajax({
-    //     type: 'GET',
-    //     url: 'http://localhost:8000/monitoring/map/last-position/99A00105',
-    //     success: function (response) {
-    //         console.log(response)
-    //     }
-    // });
-
-
-
 
     @endforeach
 
@@ -297,13 +301,10 @@
                                 timer: 10000
                             })
                         }
-
                     }
                 });
-
             }
         })
-
     })
 
 

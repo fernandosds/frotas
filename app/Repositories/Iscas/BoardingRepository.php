@@ -59,14 +59,19 @@ class BoardingRepository extends AbstractRepository
      * @param Int $id
      * @return mixed
      */
-    public function getAllActive()
+    public function getAllActive($customer_id)
     {
+
         $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
         return $this->model
             ->where('active', 1)
             ->when(!$adminSat, function ($query) {
                 return $query->where('customer_id', Auth::user()->customer_id);
             })
+            ->when($customer_id != null, function ($query) use ($customer_id) {
+                return $query->where('customer_id', $customer_id);
+            })
+            ->orderBy('customer_id', 'asc')
             ->paginate(100);
     }
 
