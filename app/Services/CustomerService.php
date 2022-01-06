@@ -53,9 +53,9 @@ class CustomerService
      */
     public function save(Request $request)
     {
-
         $customer = $this->customerRepository->create($request->all());
-        $this->log->saveCustomerLog($customer);
+        saveLog(['value' => $request['name'], 'type' => 'Cadastrou_o_cliente', 'local' => 'CustomerService', 'funcao' => 'save']);
+       // $this->log->saveCustomerLog($customer);
         return $customer;
     }
 
@@ -66,9 +66,9 @@ class CustomerService
      */
     public function update(Request $request, $id)
     {
-
         $customer = $this->customerRepository->update($id, $request->all());
-        $this->log->updateCustomerLog($request->all());
+        saveLog(['value' => $request['name'], 'type' => 'Atualizou_o_cliente', 'local' => 'CustomerService', 'funcao' => 'update']);
+        //$this->log->updateCustomerLog($request->all());
         return $customer;
     }
 
@@ -80,6 +80,7 @@ class CustomerService
     {
 
         $customer =  $this->customerRepository->showid($id);
+        saveLog(['value' => $customer->name, 'type' => 'Monitorou_o_cliente', 'local' => 'CustomerService', 'funcao' => 'update']);
         return ($customer) ? $customer : abort(404);
     }
 
@@ -90,7 +91,9 @@ class CustomerService
     public function destroy(Int $id)
     {
         $customer = $this->show($id);
-        $this->log->deleteCustomerLog($customer);
+
+        saveLog(['value' => $customer->name, 'type' => 'Excluiu_o_cliente', 'local' => 'CustomerService', 'funcao' => 'destroy']);
+       // $this->log->deleteCustomerLog($customer);
         return $this->customerRepository->delete($id);
     }
 

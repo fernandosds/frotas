@@ -156,8 +156,9 @@ class UserService
      */
     public function show(Int $id)
     {
-
         $user =  $this->userRepository->find($id);
+        saveLog(['value' => $user->name, 'type' => 'Monitorou_o_usuario', 'local' => 'UserService', 'funcao' => 'show']);
+        $this->log->showUserLog($user->customer_id, $user->name, 'Monitorou o usuario');
 
         return ($user) ? $user : abort(404);
     }

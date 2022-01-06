@@ -104,6 +104,18 @@ class LogRepository extends AbstractRepository
                 'customer_id' => $customer['customer_id'],
                 'description' => "$data {$user['name']}",
             ]);
+        $logUser->save();
+        return $logUser;
+    }
+
+    public function showUserLog($customer, $user, $data)
+    {
+        $logUser = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' => $customer,
+                'description' => "$data {$user}",
+            ]);
 
         $logUser->save();
         return $logUser;
