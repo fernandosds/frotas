@@ -63,6 +63,7 @@ class BoardingRepository extends AbstractRepository
     {
 
         $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
+
         return $this->model
             ->where('active', 1)
             ->when(!$adminSat, function ($query) {
@@ -97,11 +98,17 @@ class BoardingRepository extends AbstractRepository
      */
     public function getAllPairActive()
     {
+        /*
         $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
+
         return $this->model->where('active', 1)
             ->when(!$adminSat, function ($query) {
                 return $query->where('customer_id', Auth::user()->customer_id);
             })
+            ->whereNotNull('pair_device')
+            ->get();
+            */
+        return $this->model->where('active', 1)
             ->whereNotNull('pair_device')
             ->get();
     }

@@ -95,4 +95,43 @@ class LogRepository extends AbstractRepository
         $logCustomer->save();
         return $logCustomer;
     }
+
+    public function updateUserLog($customer, $user, $data)
+    {
+        $logUser = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' => $customer['customer_id'],
+                'description' => "$data {$user['name']}",
+            ]);
+
+        $logUser->save();
+        return $logUser;
+    }
+
+    public function saveUserLog($user, $data)
+    {
+        $logUser = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' => $user['customer_id'],
+                'description' => "$data {$user['name']}",
+            ]);
+
+        $logUser->save();
+        return $logUser;
+    }
+
+    public function destroyUserLog($customer, $data)
+    {
+        $logUser = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' => $customer['customer_id'],
+                'description' => "$data {$customer['name']}",
+            ]);
+
+        $logUser->save();
+        return $logUser;
+    }
 }

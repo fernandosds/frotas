@@ -31,17 +31,15 @@ class DeviceController extends Controller
 
         $boardings = $this->boardingService->getAllPairActive();
 
+
         $return = [];
-        foreach( $boardings as $boarding ){
+        foreach ($boardings as $boarding) {
             $return[] = [
                 'ISCA' => $boarding->device->model,
                 'R12' => $boarding->pair_device
             ];
-
         };
 
         return response()->json($return);
-
     }
-
 }

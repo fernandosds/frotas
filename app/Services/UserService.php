@@ -8,6 +8,7 @@ use App\Mail\QRCodeMail;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Mail\ResetEmail;
+use App\Repositories\LogRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
@@ -18,17 +19,19 @@ class UserService
     private $sendEmailResetPassword;
     private $userRepository;
     private $apiUserService;
+    private $log;
 
     /**
      * UserService constructor.
      * @param UserRepository $userRepository
      * @param ResetEmail $sendEmailResetPassword
      */
-    public function __construct(UserRepository $userRepository, ResetEmail $sendEmailResetPassword, ApiUserService $apiUserService)
+    public function __construct(UserRepository $userRepository, ResetEmail $sendEmailResetPassword, ApiUserService $apiUserService, LogRepository $log)
     {
         $this->userRepository = $userRepository;
         $this->sendEmailResetPassword = $sendEmailResetPassword;
         $this->apiUserService = $apiUserService;
+        $this->log = $log;
     }
 
     /**
@@ -111,6 +114,9 @@ class UserService
         // New Secret
         $this->checkValidationToken($request);
 
+        $this->log->saveUserLog($request->all(), 'Cadastrou o usuario');
+        saveLog(['value' => $request['name'], 'type' => 'Cadastrou_usuario', 'local' => 'UserService', 'funcao' => 'save']);
+
         $user = $this->userRepository->create($request->all());
 
         // QRCode
@@ -127,14 +133,19 @@ class UserService
      */
     public function update(Request $request, $id)
     {
+        $customer_id = $this->userRepository->find($id);
 
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
             $this->checkTokenUpdate($request);
 
+
+            $this->log->updateUserLog($customer_id, $request->all(), 'Atualizou a senha do usuario');
+            saveLog(['value' => $request['name'], 'type' => 'Atualizou_a_senha_do_usuario', 'local' => 'UserService', 'funcao' => 'update']);
             return  $this->userRepository->update($id, $request->all());
         }
-
+        saveLog(['value' => $request['name'], 'type' => 'Atualizou_os_dados_cadastrais_do_usuario', 'local' => 'UserService', 'funcao' => 'update']);
+        $this->log->updateUserLog($customer_id, $request->all(), 'Atualizou o usuario');
         $this->checkTokenUpdate($request);
         return $this->userRepository->update($id, $request->except('password'));
     }
@@ -157,9 +168,10 @@ class UserService
      */
     public function destroy(Int $id)
     {
+        $customer_id = $this->userRepository->find($id);
 
-
-
+        saveLog(['value' => $customer_id['name'], 'type' => 'Deletou_o_usuario', 'local' => 'UserService', 'funcao' => 'destroy']);
+        $this->log->destroyUserLog($customer_id, 'Deletou o usuario');
         return $this->userRepository->delete($id);
     }
 

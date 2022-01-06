@@ -46,6 +46,7 @@ class UserRequest extends FormRequest
                 ],
                 'password' => 'same:confirm_password',
             ], $return);
+
         }
 
         return $return;

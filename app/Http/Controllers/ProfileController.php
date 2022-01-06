@@ -29,7 +29,7 @@ class ProfileController extends Controller
      */
     public function editprofile()
     {
-        
+
         $id = Auth::user()->id;
 
         $data = $this->data;
@@ -44,19 +44,16 @@ class ProfileController extends Controller
      * @return array|\Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
-    {       
-        
+    {
         $id = Auth::user()->id;
 
         try {
 
             $this->userService->update($request, $id);
             return response()->json(['status' => 'success'], 200);
-        
         } catch (\Exception $e) {
-        
+
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-        
         }
     }
 }

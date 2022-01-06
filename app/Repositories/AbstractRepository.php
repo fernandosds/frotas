@@ -38,7 +38,6 @@ class AbstractRepository
     public function show(int $id)
     {
         return $this->model->where('id', $id)->first();
-
     }
 
     /**
@@ -60,12 +59,11 @@ class AbstractRepository
     public function paginate(Int $limit, $customer_id = null)
     {
 
-        if($customer_id){
-            return $this->model->where('customer_id',$customer_id)->orderBy('id','desc')->paginate($limit);
+        if ($customer_id) {
+            return $this->model->where('customer_id', $customer_id)->orderBy('id', 'desc')->paginate($limit);
         }
 
-        return $this->model->orderBy('id','desc')->paginate($limit);
-
+        return $this->model->orderBy('id', 'desc')->paginate($limit);
     }
 
     /**
@@ -90,7 +88,6 @@ class AbstractRepository
     {
 
         return $this->find($id)->update($data);
-
     }
 
 
@@ -102,8 +99,6 @@ class AbstractRepository
      */
     public function delete(int $id)
     {
-
         return $this->model->find($id)->delete();
-
     }
 }
