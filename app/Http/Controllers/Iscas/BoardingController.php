@@ -248,11 +248,14 @@ class BoardingController extends Controller
     public function testDevice(String $model)
     {
         $device = $this->deviceService->findByModel($model);
+
         $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
         if ($in_use) {
             return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo ou encerre o embarque anterior.'];
         }
+
         $return['status'] = $device['status'];
+
         if ($device['status'] == 'success') {
             $return['device_type'] = $device['data']->technologie;
             $return['model'] = $device['data']->model;
@@ -262,6 +265,7 @@ class BoardingController extends Controller
             $test_device = $this->apiDeviceServic->getLastPosition($model);
 
             if ($test_device['status'] == "sucesso") {
+
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
                 $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'], Carbon::now());
             } else {
