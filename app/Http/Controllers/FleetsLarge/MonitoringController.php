@@ -10,6 +10,7 @@ use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\LogRepository;
 use Carbon\Carbon;
 use stdClass;
 
@@ -32,12 +33,18 @@ class MonitoringController extends Controller
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
      */
-    public function __construct(ApiFleetLargeService $apiFleetLargeService, FleetLargeMovidaService $fleetLargeMovidaService, ApiDeviceService $apiDeviceServic, CustomerService $customerService)
-    {
+    public function __construct(
+        ApiFleetLargeService $apiFleetLargeService,
+        FleetLargeMovidaService $fleetLargeMovidaService,
+        ApiDeviceService $apiDeviceServic,
+        CustomerService $customerService,
+        LogRepository $log
+    ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
+        $this->log = $log;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -52,12 +59,15 @@ class MonitoringController extends Controller
     public function index($chassi = 0)
     {
         if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8) {
+            saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.index', ['chassi' => $chassi]);
         }
         if (Auth::user()->customer_id == 11) {
+            saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.index_mapfre', ['chassi' => $chassi]);
         }
         if (Auth::user()->customer_id == 6) {
+            saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.sompo.index', ['chassi' => $chassi]);
         }
     }

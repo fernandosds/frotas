@@ -29,12 +29,12 @@ class ApiDeviceService
 
         if (true) {
             $this->host_siscon = "http://10.20.3.84:83/siscon/new-siscon/public/";
-            $this->host = "http://10.20.3.36:6524";
+            $this->host = "http://10.20.3.36:6529";
             $this->host_apis = "https://api.satcompany.com.br";
         } else {
 
             $this->host_siscon = "http://201.91.1.155:83/siscon/new-siscon/public/";
-            $this->host = "http://189.16.50.195:6524";
+            $this->host = "http://189.16.50.195:6529";
             $this->host_apis = "https://api.satcompany.com.br";
         }
     }
