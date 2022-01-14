@@ -59,9 +59,11 @@ class BoardingService
     /**
      * @return mixed
      */
-    public function getAllActive($customer_id)
+    public function getAllActive($customer_id, $device = false)
     {
-        return $this->boardingRepository->getAllActive($customer_id);
+        $device_id = $this->deviceRepository->findDevice($device);
+
+        return $this->boardingRepository->getAllActive($customer_id, $device_id);
     }
 
     /**

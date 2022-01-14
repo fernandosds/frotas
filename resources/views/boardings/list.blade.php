@@ -17,7 +17,7 @@
         margin-top: 30px;
     }
 
-    .btn-warning{
+    .btn-warning {
         height: 49px;
     }
 
@@ -49,9 +49,14 @@
                 <select class="form-control" name="customer_id" id="customer_id">
                     <option value="">Todos os clientes</option>
                     @foreach( $customers as $customer )
-                    <option value="{{$customer->id}}" {{ $customer->id == $boardings[0]['customer_id'] ? 'selected' : ''}}>{{$customer->name}}</option>
+                    <option value="{{$customer->id}}" {{ $customer->id == $customer_id ? 'selected' : ''}}>{{$customer->name}}</option>
                     @endforeach
                 </select><br /><br />
+            </div>
+            <div class="col-sm-4">
+                <label for="input">Digite um número de isca</label>
+                <input class="form-control" type="text" name="device" id="device">
+                <br /><br />
             </div>
             <div class="col-sm-4">
                 <button type="submit" class="btn btn-sm  btn-success" id="btn-filtrar-clientes">

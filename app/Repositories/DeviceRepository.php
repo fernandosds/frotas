@@ -168,7 +168,7 @@ class DeviceRepository extends AbstractRepository
      * @param int $customer_id
      * @return \Illuminate\Support\Collection
      */
-    public function findDevice($device)
+    public function findDevice($device = null)
     {
         return $this->model->where('model', $device)
             ->first();

@@ -128,8 +128,9 @@ class BoardingController extends Controller
     public function index(Request $request)
     {
         $data = $this->data;
-        $data['boardings'] = $this->boardingService->getAllActive($request->customer_id);
+        $data['boardings'] = $this->boardingService->getAllActive($request->customer_id, $request->device);
         $data['customers'] = $this->customerService->getAllCustomerDevice();
+        $data['customer_id'] = $request->customer_id;
 
         return response()->view('boardings.list', $data);
     }
