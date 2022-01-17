@@ -28,7 +28,7 @@ class DeviceRepository extends AbstractRepository
     {
         $customer = $this->model
             ->where('customer_id', $customer_id)
-            ->paginate(15);
+            ->get();
         return $customer;
     }
 
