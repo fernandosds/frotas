@@ -15,20 +15,28 @@
                     <table id="stock" class="display" style="width:50%">
                         <thead>
                             <tr class="headerTable">
-                            <th scope="col">Produto</th>
-                            <th scope="col">Modelo</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Status</th>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
                             @foreach ($devices as $device)
-                                <tr id="_tr_user_{{$device->id}}">
-                                    <td>{{'Iscas'}}</td>
-                                    <td>{{$device->model}}</td>
-                                    <td>{{$device->technologie->type ?? ''}}</td>
-                                    <td>{{$device->status ?? ''}}</td>
-                                </tr>
+                            <tr id="_tr_user_{{$device->id}}">
+                                <td>{{'Iscas'}}</td>
+                                <td>{{$device->model}}</td>
+                                <td>{{$device->technologie->type ?? ''}}</td>
+                                <td>{{$device->status ?? ''}}</td>
+                            </tr>
+                            @endforeach
+                            @foreach ($trackers as $tracker)
+                            <tr id="_tr_user_{{$tracker->id}}">
+                                <td>{{'Disp. Móvel'}}</td>
+                                <td>{{$tracker->model ?? ''}}</td>
+                                <td> --- </td>
+                                <td>{{$tracker->status ?? ''}}</td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -44,8 +52,6 @@
 
 @section('scripts')
 <script>
-
-
     $(document).ready(function() {
         columns = [0, 1, 2, 3];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
@@ -62,7 +68,7 @@
                     exportOptions: {
                         columns: columns
                     },
-                    orientation: 'landscape',
+                    orientation: 'portrait',
                 },
                 {
                     extend: 'excel',
@@ -100,6 +106,5 @@
         });
 
     });
-
 </script>
 @endsection
