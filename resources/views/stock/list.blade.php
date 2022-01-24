@@ -16,6 +16,7 @@
                         <thead>
                             <tr class="headerTable">
                                 <th scope="col">Produto</th>
+                                <th scope="col">Cliente</th>
                                 <th scope="col">Modelo</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Status</th>
@@ -25,6 +26,7 @@
                             @foreach ($devices as $device)
                             <tr id="_tr_user_{{$device->id}}">
                                 <td>{{'Iscas'}}</td>
+                                <td>{{$device->customer->name}}</td>
                                 <td>{{$device->model}}</td>
                                 <td>{{$device->technologie->type ?? ''}}</td>
                                 <td>{{$device->status ?? ''}}</td>
@@ -45,15 +47,12 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2, 3];
+        columns = [0, 1, 2, 3, 4];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#stock').DataTable({
             "search": {

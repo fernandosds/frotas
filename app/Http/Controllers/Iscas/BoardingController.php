@@ -177,7 +177,7 @@ class BoardingController extends Controller
 
             $this->trackerService->updateStatusTracker($tracker->model);
         }
-        $this->deviceService->updateStatusDevice($device);
+        $this->deviceService->updateStatusDevice($device, 'em andamento');
 
         $in_use = $this->boardingService->getCurrentBoardingByDevice($device->model);
 
@@ -231,6 +231,11 @@ class BoardingController extends Controller
     {
         try {
             $boarding = $this->boardingService->show($id);
+
+            $device = $this->deviceService->show($boarding['device_id']);
+
+            $this->deviceService->updateStatusDevice($device, 'indisponivel');
+
             if ($boarding['attatch_device'] == 'movel') {
                 $this->trackerService->updateStatusTracker($boarding['pair_device']);
             }

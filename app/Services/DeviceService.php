@@ -178,9 +178,9 @@ class DeviceService
      * @param Int $id
      * @return mixed|void
      */
-    public function updateStatusDevice($device)
+    public function updateStatusDevice($device, $status)
     {
-        $device =  $this->device->updateStatusDevice($device);
+        $device =  $this->device->updateStatusDevice($device, $status);
         return $device;
     }
 }
