@@ -28,11 +28,13 @@ class DeviceRepository extends AbstractRepository
     {
         $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
 
+
         $customer = $this->model
-        ->when(!$adminSat, function ($query) {
-            return $query->where('customer_id', Auth::user()->customer_id);
-        })
+            ->when(!$adminSat, function ($query) {
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })
             ->get();
+
         return $customer;
     }
 
@@ -181,10 +183,8 @@ class DeviceRepository extends AbstractRepository
     public function updateStatusDevice($device, $status)
     {
         return $this->model
-                ->where('model', '=', $device->model)
-                ->where('customer_id', '=', Auth::user()->customer_id)
-                ->update(['status' =>  $status]);
+            ->where('model', '=', $device->model)
+            ->where('customer_id', '=', Auth::user()->customer_id)
+            ->update(['status' =>  $status]);
     }
-
-
 }

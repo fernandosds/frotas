@@ -17,6 +17,11 @@ class Device extends Model
     protected $table = 'devices';
 
     /**
+     * @var string
+     */
+    protected $with = ["boardings"];
+
+    /**
      * @var array
      */
     protected $fillable = [
@@ -84,5 +89,14 @@ class Device extends Model
     public function contractdevice()
     {
         return $this->HasMany('App\Models\ContractDevice', ContractDevice::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function boardings()
+    {
+        return $this->HasMany('App\Models\Boarding')
+            ->orderBy('created_at', 'desc');
     }
 }

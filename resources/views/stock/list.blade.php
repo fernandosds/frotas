@@ -20,6 +20,8 @@
                                 <th scope="col">Modelo</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Data de embarque</th>
+                                <th scope="col">Data de encerramento</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
@@ -30,6 +32,8 @@
                                 <td>{{$device->model}}</td>
                                 <td>{{$device->technologie->type ?? ''}}</td>
                                 <td>{{$device->status ?? ''}}</td>
+                                <td>{{$device->boardings[0]->created_at ?? ''}}</td>
+                                <td>{{$device->boardings[0]->finished_at ?? ''}}</td>
                             </tr>
                             @endforeach
                             @foreach ($trackers as $tracker)
