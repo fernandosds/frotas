@@ -89,6 +89,10 @@ class DashboardController extends Controller
             $jsonString = json_encode($data['fleetslarge']);
             $items = collect(json_decode($jsonString));
 
+            foreach ($items as $item) {
+                $item->placa_mercosul =  $this->apiFleetLargeService->fixPlate($item->placa);
+            }
+
             if ($request->min && $request->max) {
 
                 $min = Carbon::createFromFormat('d/m/Y',  $request->min);
@@ -134,7 +138,10 @@ class DashboardController extends Controller
 
             $carros = $result;
 
-            return response()->view('fleetslarge.dashboard.santander', compact('carros', 'ttlInicioServico', 'ttlAcionamentoTecnico', 'ttlInstalacao', 'ttlSolicInstalado', 'instalado', 'agendado', 'total', 'dataMin', 'dataMax'));
+            return response()->view(
+                'fleetslarge.dashboard.santander',
+                compact('carros', 'ttlInicioServico', 'ttlAcionamentoTecnico', 'ttlInstalacao', 'ttlSolicInstalado', 'instalado', 'agendado', 'total', 'dataMin', 'dataMax')
+            );
         }
 
         // Entrar no dashboard Mapfre
@@ -390,6 +397,7 @@ class DashboardController extends Controller
                 }
             }
 
+
             return response()->json([
                 'status' => 'success',
                 'data' => [
@@ -488,7 +496,6 @@ class DashboardController extends Controller
             "contrato"                  => $dat['contrato'] ?? '',
             "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
             "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
-            "dt_ter_inst_form"          => substr($dat['dt_termino_instalacao'], 0, -9) ?? '',
             "dt_entrada"                => $dat['dt_entrada'] ?? '',
             "t_solicitado_instalado"    => $dat['t_solicitado_instalado'] ?? '',
             "t_inicio_servico"          => $dat['t_inicio_servico'] ?? '',

@@ -443,7 +443,6 @@
 
     });
 
-
     function reloadStatusOcorrences() {
         $.ajax({
             url: "{{route('fleetslarges.showOcorrenceStatus')}}",
@@ -464,6 +463,7 @@
             url: "{{route('fleetslarges.showAllStatus')}}",
             type: 'GET',
             success: function(response) {
+
                 if (response.data.grid05 == "") {
                     $('#statusAvaria').html(0)
                 } else {

@@ -338,7 +338,7 @@
                         <thead>
                             <tr class="headerTable">
                                 <th>Placa</th>
-                                <th class="hidden"></th>
+                                <th>Placa - Mercosul</th>
                                 <th class="hidden">Chassis</th>
                                 <th style="width: 80px;">Modelo</th>
                                 <th class="hidden">Latitude</th>
@@ -366,7 +366,7 @@
                             @foreach ($carros as $driver)
                             <tr id='_tr_car_{{$driver->chassis}}'>
                                 <td>{{$driver->placa}}</td>
-                                <td class="hidden"></td>
+                                <td>{{$driver->placa_mercosul}}</td>
                                 <td class="hidden">{{$driver->chassis}}</td>
                                 <td>{{$driver->modelo_veiculo}}</td>
                                 <td class="hidden">{{$driver->lp_latitude}}</td>
