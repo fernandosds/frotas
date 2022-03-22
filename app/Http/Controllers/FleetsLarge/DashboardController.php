@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Print_;
+use stdClass;
 
 class DashboardController extends Controller
 {
@@ -67,8 +67,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $customer = $this->customerService->show(Auth::user()->customer_id);
         if (empty($customer->hash)) {
             return redirect('access_denied');
@@ -84,13 +85,56 @@ class DashboardController extends Controller
         if (Auth::user()->customer_id == 8) {
             $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
 
-            $carros = [];
+            $carros = new stdClass();
+            $jsonString = json_encode($data['fleetslarge']);
+            $items = collect(json_decode($jsonString));
 
-            foreach ($data['fleetslarge'] as $data => $dat) {
-                $arr[] = $this->resultJson($dat);
-                $carros = $arr;
+            if ($request->min && $request->max) {
+
+                $min = Carbon::createFromFormat('d/m/Y',  $request->min);
+                $minData = $min->format('Y-m-d');
+
+                $max = Carbon::createFromFormat('d/m/Y',  $request->max);
+                $maxData = $max->addDays(1)->format('Y-m-d');
+                $filtered = $items->whereBetween('dt_termino_instalacao', [$minData, $maxData]);
+
+                $filteredSolicInst = $items->whereBetween('dt_termino_instalacao', [$minData, $maxData])->where('situacao', 'INSTALADO');
+
+                $result = $filtered;
+                $ttlInicioServico = $this->mediaHour($result, 't_inicio_servico');
+                $ttlAcionamentoTecnico = $this->mediaHour($result, 't_acionamento_tecnico');
+                $ttlInstalacao = $this->mediaHour($result, 't_instalacao');
+                $ttlSolicInstalado =  $this->mediaHour($filteredSolicInst, 't_solicitado_instalado');
+                $dashboardInstalado =  $this->situacaoInstalado($result);
+            } else {
+
+                $result = $items->all();
+                $mediaHora = $this->apiFleetLargeService->mediaHours();
+                $jsonString = json_encode($mediaHora);
+                $items = collect(json_decode($jsonString));
+
+                foreach ($items as $mh) {
+                    $inicioServico          =  explode(".", $mh->tempo_inicio_servico);
+                    $acionamentoTecnico     = explode(".", $mh->tempo_acionamento_tecnico);
+                    $instalacao             = explode(".", $mh->tempo_instalacao);
+                    $solicitacao            = explode(".", $mh->tempo_solicitado_instalado);
+
+                    $ttlInicioServico       = $inicioServico[0];
+                    $ttlAcionamentoTecnico  = $acionamentoTecnico[0];
+                    $ttlInstalacao          = $instalacao[0];
+                    $ttlSolicInstalado      = $solicitacao[0];
+                }
+                $dashboardInstalado =  $this->situacaoInstalado($result);
             }
-            return response()->view('fleetslarge.dashboard.santander', compact('carros'));
+            $instalado = $dashboardInstalado[0];
+            $agendado = $dashboardInstalado[1];
+            $total = $instalado + $agendado;
+            $dataMin = $request->min;
+            $dataMax = $request->max;
+
+            $carros = $result;
+
+            return response()->view('fleetslarge.dashboard.santander', compact('carros', 'ttlInicioServico', 'ttlAcionamentoTecnico', 'ttlInstalacao', 'ttlSolicInstalado', 'instalado', 'agendado', 'total', 'dataMin', 'dataMax'));
         }
 
         // Entrar no dashboard Mapfre
@@ -117,6 +161,74 @@ class DashboardController extends Controller
                 $carros = $arr;
             }
             return response()->view('fleetslarge.dashboard.sompo.sompo', compact('carros'));
+        }
+    }
+
+    public function situacaoInstalado($items)
+    {
+
+        $situacoesDeInstalado =  ['INSTALADO', 'OS ABERTA DE RETIRADA', 'RETIRADO'];
+        $situacoesDeAgendado =  ['OS ABERTA DE INSTALAçãO', 'REAGENDAMENTO', 'VEICULO INDISPONIVEL'];
+
+        $totalInstalado = 0;
+        $totalAgendado = 0;
+        foreach ($items as $data => $dat) {
+            if (in_array($dat->situacao, $situacoesDeInstalado)) {
+                $totalInstalado = $totalInstalado + 1;
+            }
+            if (in_array($dat->situacao, $situacoesDeAgendado)) {
+                $totalAgendado = $totalAgendado + 1;
+            }
+        }
+        return  [$totalInstalado, $totalAgendado];
+    }
+
+    public function mediaHour($result, $value)
+    {
+
+        try {
+            $ttlAcionamentoTecnico = 0;
+            $aux = 0;
+            foreach ($result as $key => $data) {
+                $aux++;
+                $time = explode(':', str_replace('-', '', $data->$value));
+                switch (count($time)) {
+                    case 3:
+                        $hour = $time[0] == '0' ? '0' : 3600 * $time[0];
+                        $minute = $time[1] == '0' ? '0' : 60 * $time[1];
+                        $init =  $hour + $minute + $time[2];
+                        break;
+                    case 2:
+                        $minute = $time[1] == '0' ? '0' : 60 * $time[1];
+                        $init =  $minute + $time[1];
+                        break;
+                    case 1:
+                        $init =  $time[0];
+                        break;
+                }
+                $ttlAcionamentoTecnico += $init;
+            }
+            $init = ($ttlAcionamentoTecnico / $aux);
+            $hours = floor($init / 3600);
+            $minutes = floor(($init / 60) % 60);
+            $seconds = $init % 60;
+
+            if ($hours < 10) {
+                $hours = '0' . $hours;
+            }
+            if ($minutes < 10) {
+                $minutes = '0' . $minutes;
+            }
+            if ($seconds < 10) {
+                $seconds = '0' . $seconds;
+            }
+
+            // $data = $hours + $minutes + $seconds;
+            $hora =  $hours . ':' . $minutes . ':' . $seconds;
+
+            return $hora;
+        } catch (\Exception $e) {
+            //echo 'Exceção capturada: ',  $e->getMessage(), "\n";
         }
     }
 
@@ -278,33 +390,6 @@ class DashboardController extends Controller
                 }
             }
 
-            if ($data['fleetslarge'][0]['empresa'] == 'Santander') {
-                $empresa = 'Santander';
-
-                $customer = $this->customerService->show(Auth::user()->customer_id);
-
-                $instalado = $this->apiFleetLargeService->allCars($customer->hash);
-                $situacoesDeInstalado =  ['INSTALADO', 'OS ABERTA DE RETIRADA', 'RETIRADO'];
-                $situacoesDeAgendado =  ['OS ABERTA DE INSTALAçãO', 'REAGENDAMENTO', 'VEICULO INDISPONIVEL'];
-                foreach ($instalado as $data => $dat) {
-                    if (in_array($dat['situacao'], $situacoesDeInstalado)) {
-                        $arr3[] = $this->resultJson($dat);
-                        $grid03 = $arr3;
-                    } else if (in_array($dat['situacao'], $situacoesDeAgendado)) {
-                        $arr6[] = $this->resultJson($dat);
-                        $grid06 = $arr6;
-                    }
-                }
-
-                $mediaHora = $this->apiFleetLargeService->mediaHours();
-                foreach ($mediaHora as $data => $dat) {
-                    $grid05 = $dat['tempo_inicio_servico'];
-                    $grid04 = $dat['tempo_solicitado_instalado'];
-                    $grid02 = $dat['tempo_acionamento_tecnico'];
-                    $grid01 =  $dat['tempo_instalacao'];
-                }
-            }
-
             return response()->json([
                 'status' => 'success',
                 'data' => [
@@ -342,6 +427,7 @@ class DashboardController extends Controller
      * @param Int $id
      * @return \Illuminate\Http\RedirectResponse
      */
+
     function resultJson($dat)
     {
         // $arr[]
@@ -402,6 +488,7 @@ class DashboardController extends Controller
             "contrato"                  => $dat['contrato'] ?? '',
             "t_acionamento_tecnico"     => $dat['t_acionamento_tecnico'] ?? '',
             "dt_termino_instalacao"     => $dat['dt_termino_instalacao'] ?? '',
+            "dt_ter_inst_form"          => substr($dat['dt_termino_instalacao'], 0, -9) ?? '',
             "dt_entrada"                => $dat['dt_entrada'] ?? '',
             "t_solicitado_instalado"    => $dat['t_solicitado_instalado'] ?? '',
             "t_inicio_servico"          => $dat['t_inicio_servico'] ?? '',
