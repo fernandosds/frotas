@@ -165,7 +165,7 @@ class DashboardController extends Controller
         $items = collect(json_decode($jsonString));
 
         foreach ($items as $mh) {
-            $inicioServico          =  explode(".", $mh->tempo_inicio_servico);
+            $inicioServico          = explode(".", $mh->tempo_inicio_servico);
             $acionamentoTecnico     = explode(".", $mh->tempo_acionamento_tecnico);
             $instalacao             = explode(".", $mh->tempo_instalacao);
             $solicitacao            = explode(".", $mh->tempo_solicitado_instalado);

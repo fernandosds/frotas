@@ -223,7 +223,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor01">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> <span id="grid04">{{$ttlInicioServico}}</span></h1>
+                <h1 class="card-title display-4"> <span id="grid04">00:00:00</span></h1>
                 <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
             </div>
         </div>
@@ -232,7 +232,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor02">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="grid01">{{$ttlAcionamentoTecnico}}</span></h1>
+                <h1 class="card-title display-4"><span id="grid01">00:00:00</span></h1>
                 <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
             </div>
         </div>
@@ -244,7 +244,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor04">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="grid02">{{$ttlInstalacao}}</span></h1>
+                <h1 class="card-title display-4"><span id="grid02">00:00:00</span></h1>
                 <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
             </div>
         </div>
@@ -253,7 +253,7 @@
         <div class="card text-white col-md-12 bg-primary" id='divColor05'>
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="grid03">{{$ttlSolicInstalado}}</span></h1>
+                <h1 class="card-title display-4"><span id="grid03">00:00:00</span></h1>
                 <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
             </div>
         </div>
@@ -543,7 +543,7 @@
                 console.log(response)
                 $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
                 $('.placa').val(response.placa)
-                $('.empresa').val("ITAU SEGUROS")
+                $('.empresa').val("ITAU")
                 $('#r12s_proximos').val(response.r12s_proximos)
                 $('#dif_date').val(response.dif_date)
                 $('.lp_longitude').val(response.lp_longitude)
