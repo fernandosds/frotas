@@ -71,6 +71,7 @@ class DashboardController extends Controller
     {
 
         $customer = $this->customerService->show(Auth::user()->customer_id);
+
         if (empty($customer->hash)) {
             return redirect('access_denied');
         }
@@ -143,6 +144,52 @@ class DashboardController extends Controller
                 compact('carros', 'ttlInicioServico', 'ttlAcionamentoTecnico', 'ttlInstalacao', 'ttlSolicInstalado', 'instalado', 'agendado', 'total', 'dataMin', 'dataMax')
             );
         }
+
+        // TESTE PARA O ITAU
+
+        // Entrar no dashboard Itau
+        if (Auth::user()->customer_id == 13) {
+            $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
+        }
+
+        $carros = new stdClass();
+        $jsonString = json_encode($data['fleetslarge']);
+        $items = collect(json_decode($jsonString));
+
+        foreach ($items as $item) {
+            $item->placa_mercosul =  $this->apiFleetLargeService->fixPlate($item->placa);
+        }
+        $result = $items->all();
+        $mediaHora = $this->apiFleetLargeService->mediaHours();
+        $jsonString = json_encode($mediaHora);
+        $items = collect(json_decode($jsonString));
+
+        foreach ($items as $mh) {
+            $inicioServico          =  explode(".", $mh->tempo_inicio_servico);
+            $acionamentoTecnico     = explode(".", $mh->tempo_acionamento_tecnico);
+            $instalacao             = explode(".", $mh->tempo_instalacao);
+            $solicitacao            = explode(".", $mh->tempo_solicitado_instalado);
+
+            $ttlInicioServico       = $inicioServico[0];
+            $ttlAcionamentoTecnico  = $acionamentoTecnico[0];
+            $ttlInstalacao          = $instalacao[0];
+            $ttlSolicInstalado      = $solicitacao[0];
+        }
+        $dashboardInstalado =  $this->situacaoInstalado($result);
+        $instalado = $dashboardInstalado[0];
+        $agendado = $dashboardInstalado[1];
+        $total = $instalado + $agendado;
+        $dataMin = $request->min;
+        $dataMax = $request->max;
+
+        $carros = $result;
+
+        return response()->view(
+            'fleetslarge.dashboard.itau',
+            compact('carros', 'ttlInicioServico', 'ttlAcionamentoTecnico', 'ttlInstalacao', 'ttlSolicInstalado', 'instalado', 'agendado', 'total', 'dataMin', 'dataMax')
+        );
+
+        // FIM DO TESTE ITAU
 
         // Entrar no dashboard Mapfre
         if (Auth::user()->customer_id == 11) {

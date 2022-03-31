@@ -58,7 +58,7 @@ class MonitoringController extends Controller
      */
     public function index($chassi = 0)
     {
-        if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8) {
+        if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13) {
             saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.index', ['chassi' => $chassi]);
         }
