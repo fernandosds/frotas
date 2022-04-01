@@ -484,7 +484,7 @@
             @endif
 -->
             <!-- Mapa Geral -->
-            @if( Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 11)
+            @if( Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 11 || Auth::user()->customer_id == 13)
             <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                 <a href="{{route('fleetslarges.monitoring.allCars')}}" class="kt-menu__link ">
                     <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>

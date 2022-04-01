@@ -243,7 +243,7 @@ class MonitoringController extends Controller
         }
 
         // Entrar no Mapa todos os carros Santander
-        if (Auth::user()->customer_id == 8) {
+        if (Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13 ) {
             return view('fleetslarge.monitoring.allcars');
         }
 
