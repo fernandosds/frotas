@@ -340,16 +340,16 @@
                             <form action="{{route('fleetslarges.index')}}" id="form-filtra-dados" method="GET">
                                 <div class="form-group row">
                                     <label class="col-form-label">De: </label>
-                                    <div class="col-lg-3 col-md-9 col-sm-12">
+                                    <div class="col-lg-4 col-md-9 col-sm-12">
                                         <input type="text" class="form-control " id="min" name="min" placeholder="Selecione a data" value="{{$dataMin ?? ''}}" />
                                     </div>
                                     <label class="col-form-label">até: </label>
-                                    <div class="col-lg-3 col-md-9 col-sm-12">
+                                    <div class="col-lg-4 col-md-9 col-sm-12">
                                         <input type="text" class="form-control " id="max" name="max" placeholder="Selecione a data" value="{{$dataMax ?? ''}}" />
                                     </div>
                                     <div class="col">
                                         <button type="submit" class="btn btn-success btn-sm btn-icon btn-circle" id="filtrar" title="Filtrar"><i class="la la-check"></i></button>
-                                        <a href="{{url('fleetslarges')}}" class="btn btn-danger btn-sm btn-icon btn-circle" title="Apagar filtro"><i class="flaticon-delete"></i></a>
+                                        <a href="{{url('fleetslarges')}}" class="btn btn-danger btn-sm btn-icon btn-circle" title="Remover filtro"><i class="flaticon-delete"></i></a>
                                     </div>
                                 </div>
                                 <small id="message" class="text-danger"></small>
