@@ -90,8 +90,15 @@ class DashboardController extends Controller
             $jsonString = json_encode($data['fleetslarge']);
             $items = collect(json_decode($jsonString));
 
+
             foreach ($items as $item) {
                 $item->placa_mercosul =  $this->apiFleetLargeService->fixPlate($item->placa);
+
+                if (str_contains($item->cliente, '(RENEG)')) {
+                    $item->projeto = 'RENEGOCIACAO';
+                } else {
+                    $item->projeto = 'FINANCEIRA';
+                }
             }
 
             if ($request->min && $request->max) {

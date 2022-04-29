@@ -206,6 +206,25 @@
     .vehiclesTotal:hover {
         background-color: #4556df !important;
     }
+
+    .grid-status {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    .grid-item {
+        padding: 20px;
+        text-align: left;
+        display: flex;
+        column-gap: 10px;
+    }
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ebedf2;
+    }
 </style>
 @endsection
 
@@ -316,23 +335,41 @@
                 </div>
 
                 <div class="kt-portlet__body">
-                    <form action="{{route('fleetslarges.index')}}" id="form-filtra-dados" method="GET">
-                        <div class="form-group row">
-                            <label class="col-form-label">De: </label>
-                            <div class="col-lg-2 col-md-9 col-sm-12">
-                                <input type="text" class="form-control " id="min" name="min" placeholder="Selecione a data" value="{{$dataMin ?? ''}}" />
+                    <div class="row kt-margin-b-20">
+                        <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                            <form action="{{route('fleetslarges.index')}}" id="form-filtra-dados" method="GET">
+                                <div class="form-group row">
+                                    <label class="col-form-label">De: </label>
+                                    <div class="col-lg-3 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control " id="min" name="min" placeholder="Selecione a data" value="{{$dataMin ?? ''}}" />
+                                    </div>
+                                    <label class="col-form-label">até: </label>
+                                    <div class="col-lg-3 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control " id="max" name="max" placeholder="Selecione a data" value="{{$dataMax ?? ''}}" />
+                                    </div>
+                                    <div class="col-lg-2 col-md-9 col-sm-12">
+                                        <button type="submit" class="btn btn-brand btn-elevate btn-icon" id="filtrar"><i class="la la-check"></i></button>
+                                        <a href="{{url('fleetslarges')}}" class="btn btn-brand btn-elevate btn-icon"><span class="la la-eraser"></span></a>
+                                    </div>
+                                </div>
+                                <small id="message" class="text-danger"></small>
+                            </form>
+                        </div>
+                        <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                            <label>Projeto:</label>
+                            <div class="kt-checkbox-inline grid-status">
+                                <div class="grid-item">
+                                    <input class="checkbox" type="checkbox" name="pos" value="RENEGOCIACAO"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEGOCIACAO</span>
+                                </div>
+                                <div class="grid-item">
+                                    <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
+                                </div>
                             </div>
-                            <label class="col-form-label">até: </label>
-                            <div class="col-lg-2 col-md-9 col-sm-12">
-                                <input type="text" class="form-control " id="max" name="max" placeholder="Selecione a data" value="{{$dataMax ?? ''}}" />
-                            </div>
-                            <div class="col-lg-2 col-md-9 col-sm-12">
-                                <button type="submit" class="btn btn-brand btn-elevate btn-icon" id="filtrar"><i class="la la-check"></i></button>
-                                <a href="{{url('fleetslarges')}}" class="btn btn-brand btn-elevate btn-icon"><span class="la la-eraser"></span></a>
+                            <div class="obs">
+                                <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                             </div>
                         </div>
-                        <small id="message" class="text-danger"></small>
-                    </form>
+                    </div>
                     <!--begin: Datatable -->
                     <table id="example" class="display" style="width:50%">
                         <thead>
@@ -358,6 +395,7 @@
                                 <th>Data de início de instalação</th>
                                 <th class="hidden">Data de término de instalação</th>
                                 <th>Data de término de instalação</th>
+                                <th>Projeto</th>
                                 <th class="hidden">Situação</th>
                                 <th style="width: 200px;"></th>
                             </tr>
@@ -386,6 +424,11 @@
                                 <td><span style="display:none">{{$driver->dt_inicio_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
+                                @if ($driver->projeto == 'RENEGOCIACAO')
+                                <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
+                                @elseif ($driver->projeto == 'FINANCEIRA')
+                                <td><span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
+                                @endif
                                 <td class="hidden">{{$driver->situacao}}</td>
                                 <td>
                                     <button type="button" class="btn btn-success  btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
@@ -458,23 +501,6 @@
 
     $('#timeline').removeClass('hidden');
 
-    //
-    //function reloadValue() {
-    //    $.ajax({
-    //        url: "{{route('fleetslarges.showAllStatus')}}",
-    //        type: 'GET',
-    //        success: function(response) {
-    //            //$('#grid01').html(response.data.grid05.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-    //            //$('#grid02').html(response.data.grid02.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-    //            //$('#grid03').html(response.data.grid04.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-    //            //$('#grid04').html(response.data.grid01.replace(/(\d*):(\d*):(\d*).*/, '$1:$2:$3'))
-    //            //$('#grid05').html(response.data.grid03.length);
-    //            //$('#gridAguardandoInstalacao').html(response.data.grid06.length);
-    //            //$('#gridTotal').html(Number(response.data.grid06.length) + Number(response.data.grid03.length));
-    //        }
-    //    });
-    //}
-    //
 
     function resetGrid() {
         // Progress bar
@@ -500,11 +526,11 @@
 
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21];
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 22];
         columsPdf = [0, 1, 2, 3, 4, 5, 9, 12];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
-        $('#example').DataTable({
-            "bDestroy": true,
+        var oTable = $('#example').DataTable({
+            //"bDestroy": true,
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
@@ -549,6 +575,28 @@
                 }
             },
 
+        });
+
+        let totalRowCount = new Array();
+
+        function tableOneRowCount() {
+            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
+            totalRowCount['renegociacao'] = oTable.rows(':contains("RENEGOCIACAO")').data().length;
+
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
+
+            return totalRowCount;
+        }
+
+        tableOneRowCount();
+
+        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="pos"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(21).search(status, true, false, false).draw(false);
         });
 
     });
