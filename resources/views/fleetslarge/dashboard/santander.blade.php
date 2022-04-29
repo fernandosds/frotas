@@ -347,9 +347,9 @@
                                     <div class="col-lg-3 col-md-9 col-sm-12">
                                         <input type="text" class="form-control " id="max" name="max" placeholder="Selecione a data" value="{{$dataMax ?? ''}}" />
                                     </div>
-                                    <div class="col-lg-2 col-md-9 col-sm-12">
-                                        <button type="submit" class="btn btn-brand btn-elevate btn-icon" id="filtrar"><i class="la la-check"></i></button>
-                                        <a href="{{url('fleetslarges')}}" class="btn btn-brand btn-elevate btn-icon"><span class="la la-eraser"></span></a>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-success btn-sm btn-icon btn-circle" id="filtrar" title="Filtrar"><i class="la la-check"></i></button>
+                                        <a href="{{url('fleetslarges')}}" class="btn btn-danger btn-sm btn-icon btn-circle" title="Apagar filtro"><i class="flaticon-delete"></i></a>
                                     </div>
                                 </div>
                                 <small id="message" class="text-danger"></small>
