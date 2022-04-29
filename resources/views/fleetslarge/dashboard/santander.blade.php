@@ -359,7 +359,7 @@
                             <label>Projeto:</label>
                             <div class="kt-checkbox-inline grid-status">
                                 <div class="grid-item">
-                                    <input class="checkbox" type="checkbox" name="pos" value="RENEGOCIACAO"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEGOCIACAO</span>
+                                    <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
                                 </div>
                                 <div class="grid-item">
                                     <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
@@ -425,7 +425,7 @@
                                 <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
                                 <td><span style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
                                 @if ($driver->projeto == 'RENEGOCIACAO')
-                                <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
+                                <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span></td>
                                 @elseif ($driver->projeto == 'FINANCEIRA')
                                 <td><span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
                                 @endif
@@ -526,7 +526,7 @@
 
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 22];
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21,  22];
         columsPdf = [0, 1, 2, 3, 4, 5, 9, 12];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
@@ -581,7 +581,7 @@
 
         function tableOneRowCount() {
             totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
-            totalRowCount['renegociacao'] = oTable.rows(':contains("RENEGOCIACAO")').data().length;
+            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
 
             $('#financeira').html(totalRowCount['financeira']);
             $('#renegociacao').html(totalRowCount['renegociacao']);
@@ -596,22 +596,23 @@
             var status = $('input:checkbox[name="pos"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
-            $('#example').DataTable().column(21).search(status, true, false, false).draw(false);
+            $('#example').DataTable().column(21).search(status, true, false, false).draw();
         });
+
 
     });
 
 
     $('.installed').click(function() {
-        $('#example').DataTable().columns(21).search("INSTALADO|OS ABERTA DE RETIRADA|RETIRADO", true, false, true).draw();
+        $('#example').DataTable().columns(22).search("INSTALADO|OS ABERTA DE RETIRADA|RETIRADO", true, false, true).draw();
     });
 
     $('.waiting').click(function() {
-        $('#example').DataTable().columns(21).search('REAGENDAMENTO|OS ABERTA DE INSTALAçãO|VEICULO INDISPONIVEL', true, false, true).draw();
+        $('#example').DataTable().columns(22).search('REAGENDAMENTO|OS ABERTA DE INSTALAçãO|VEICULO INDISPONIVEL', true, false, true).draw();
     });
 
     $('.vehiclesTotal').click(function() {
-        $('#example').DataTable().columns(21).search('').draw();
+        $('#example').DataTable().columns(22).search('').draw();
     });
 
 
