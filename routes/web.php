@@ -356,6 +356,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');
         Route::get('/show/status/ocorrence', 'FleetsLarge\DashboardController@showOcorrenceStatus')->name('fleetslarges.showOcorrenceStatus');
 
+
+        // Rotas para o banco PSA
+        Route::group(['prefix' => 'psa'], function () {
+            Route::get('/find/{chassis}', 'FleetsLarge\PsaController@findByChassi')->name('fleetslarges.bancopsa.findByChassi');
+        });
+
         Route::group(['prefix' => 'monitoring'], function () {
             Route::get('/{chassis?}', 'FleetsLarge\MonitoringController@index')->name('fleetslarges.monitoring.index');
             Route::get('/cars/all', 'FleetsLarge\MonitoringController@allCars')->name('fleetslarges.monitoring.allCars');

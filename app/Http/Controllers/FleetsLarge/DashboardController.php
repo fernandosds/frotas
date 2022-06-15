@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use stdClass;
 
+// Conectando o fleetslarge através do banco
+use App\Services\FleetsLarge\PsaService;
+
+
 class DashboardController extends Controller
 {
 
@@ -24,6 +28,8 @@ class DashboardController extends Controller
 
     private $fleetLargeMovidaService;
 
+    private $fleetslargeDashboardService;
+
     /**
      * @var $apiFleetLargeService
      */
@@ -32,6 +38,7 @@ class DashboardController extends Controller
     /**
      * @var ApiDeviceService
      * @var CustomerService
+     * @var PsaService
      */
     private $apiDeviceServic;
 
@@ -46,7 +53,8 @@ class DashboardController extends Controller
         FleetLargeMapfreService $fleetLargeMapfreService,
         FleetLargeSompoService $fleetLargeSompoService,
         ApiDeviceService $apiDeviceServic,
-        CustomerService $customerService
+        CustomerService $customerService,
+        PsaService $psaService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
@@ -54,6 +62,7 @@ class DashboardController extends Controller
         $this->fleetLargeSompoService = $fleetLargeSompoService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
+        $this->psaService = $psaService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -72,6 +81,7 @@ class DashboardController extends Controller
 
         ini_set('memory_limit', '256M');
         $customer = $this->customerService->show(Auth::user()->customer_id);
+
 
         if (empty($customer->hash)) {
             return redirect('access_denied');
@@ -157,6 +167,7 @@ class DashboardController extends Controller
 
         // Entrar no dashboard Itau
         if (Auth::user()->customer_id == 13) {
+
             $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
 
 
@@ -224,6 +235,12 @@ class DashboardController extends Controller
                 $carros = $arr;
             }
             return response()->view('fleetslarge.dashboard.sompo.sompo', compact('carros'));
+        }
+
+        // Entrar no dashboard banco PSA
+        if (Auth::user()->customer_id == 14) {
+            $data['carros'] = $this->psaService->all();
+            return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
     }
 

@@ -86,3 +86,19 @@ function saveLog($data)
         return $e->getMessage();
     }
 }
+
+function fixPlate($plate)
+{
+    $plate = strtoupper($plate);
+    $placa = array('old' => $plate, 'new' => $plate);
+    if (strlen($plate) === 7) {
+        if (!is_numeric(substr($plate, 4, 1))) {
+            $stringConvertida = array_search(substr($plate, 4, 1), array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'));
+            $placa['old'] = substr($plate, 0, 4) . $stringConvertida . substr($plate, 5, 2);
+        } else {
+            $stringConvertida = array_search(substr($plate, 4, 1), array('A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6, 'H' => 7, 'I' => 8, 'J' => 9));
+            $placa['new'] = substr($plate, 0, 4) . $stringConvertida . substr($plate, 5, 2);
+        }
+    }
+    return $placa['new'];
+}

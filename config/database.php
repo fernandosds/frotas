@@ -63,6 +63,18 @@ return [
             ]) : [],
         ],
 
+        'bi' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_BI_HOST', '10.20.3.174'),
+            'database'  => env('DB_BI_DATABASE', 'BI_ADM'),
+            'username'  => env('DB_BI_USERNAME', 'bi'),
+            'password'  => env('DB_BI_PASSWORD', 'zxc123zxc'),
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

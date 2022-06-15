@@ -225,11 +225,18 @@
         height: 20px;
         border: 1px solid #ebedf2;
     }
+
+
+    div #datatable {
+        width: 80% !important;
+    }
 </style>
 @endsection
 
 @section('content')
 
+
+<!--
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
@@ -242,7 +249,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor01">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"> <span id="grid04">{{$ttlInicioServico}}</span></h1>
+                <h1 class="card-title display-4"> <span id="grid04"></span></h1>
                 <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
             </div>
         </div>
@@ -251,7 +258,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor02">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="grid01">{{$ttlAcionamentoTecnico}}</span></h1>
+                <h1 class="card-title display-4"><span id="grid01"></span></h1>
                 <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
             </div>
         </div>
@@ -263,7 +270,7 @@
         <div class="card text-white col-md-12 bg-primary" id="divColor04">
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="grid02">{{$ttlInstalacao}}</span></h1>
+                <h1 class="card-title display-4"><span id="grid02"></span></h1>
                 <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
             </div>
         </div>
@@ -272,20 +279,20 @@
         <div class="card text-white col-md-12 bg-primary" id='divColor05'>
             <div class="card-body">
                 <br />
-                <h1 class="card-title display-4"><span id="grid03">{{$ttlSolicInstalado}}</span></h1>
+                <h1 class="card-title display-4"><span id="grid03"></span></h1>
                 <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
             </div>
         </div>
     </div>
 </div>
-
+-->
 <div class="row">
     <div class="col-md-4">
         <div class="card text-white bg-primary col-md-12 installed">
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="grid05" value="instalado">{{$instalado}}</span> INSTALAÇÕES EFETUADAS </h3>
+                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="instalado"></span> INSTALAÇÕES EFETUADAS </h3>
             </div>
         </div>
     </div>
@@ -294,7 +301,7 @@
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao">{{$agendado}}</span> AGUARDANDO INSTALAÇÃO </h3>
+                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao"></span>&nbsp; AGUARDANDO INSTALAÇÃO </h3>
             </div>
         </div>
     </div>
@@ -303,11 +310,13 @@
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridTotal">{{$total}}</span> TOTAL </h3>
+                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> &nbsp; TOTAL DE REGISTROS </h3>
             </div>
         </div>
     </div>
 </div>
+
+<!--
 <div class="row">
     <div class="col-md-12">
         <div class="btn-success text-white center btn-excel col-md-12">
@@ -315,10 +324,9 @@
         </div>
     </div>
 </div>
-
+--->
 
 <div class="row">
-
     <!--begin::Portlet-->
     <div class="kt-portlet kt-portlet--mobile">
         <br />
@@ -336,24 +344,14 @@
 
             <div class="kt-portlet__body">
                 <div class="row kt-margin-b-20">
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <form action="{{route('fleetslarges.index')}}" id="form-filtra-dados" method="GET">
-                            <div class="form-group row">
-                                <label class="col-form-label">De: </label>
-                                <div class="col-lg-4 col-md-9 col-sm-12">
-                                    <input type="text" class="form-control " id="min" name="min" placeholder="Selecione a data" value="{{$dataMin ?? ''}}" />
-                                </div>
-                                <label class="col-form-label">até: </label>
-                                <div class="col-lg-4 col-md-9 col-sm-12">
-                                    <input type="text" class="form-control " id="max" name="max" placeholder="Selecione a data" value="{{$dataMax ?? ''}}" />
-                                </div>
-                                <div class="col">
-                                    <button type="submit" class="btn btn-success btn-sm btn-icon btn-circle" id="filtrar" title="Filtrar"><i class="fa fa-search"></i></button>
-                                    <a href="{{url('fleetslarges')}}" class="btn btn-danger btn-sm btn-icon btn-circle" title="Remover filtro"><i class="flaticon-delete"></i></a>
-                                </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                        <label>Data de entrada:</label>
+                        <div class="input-group">
+                            <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
                             </div>
-                            <small id="message" class="text-danger"></small>
-                        </form>
+                        </div>
                     </div>
                     <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>Projeto:</label>
@@ -371,75 +369,81 @@
                     </div>
                 </div>
                 <!--begin: Datatable -->
-                <table id="example" class="display" style="width:50%">
-                    <thead>
-                        <tr class="headerTable">
-                            <th>Placa</th>
-                            <th>Placa - Mercosul</th>
-                            <th class="hidden">Chassis</th>
-                            <th style="width: 80px;">Modelo</th>
-                            <th class="hidden">Latitude</th>
-                            <th class="hidden">Longitude</th>
-                            <th class="hidden">Endereço</th>
-                            <th class="hidden">Estado</th>
-                            <th class="hidden">Velocidade</th>
-                            <th class="hidden">Última Transmissão</th>
-                            <th>Última Transmissão</th>
-                            <th style="width: 78px;">Loja</th>
-                            <th>Nº Proposta</th>
-                            <th class="hidden">Data de entrada</th>
-                            <th>Data de entrada</th>
-                            <th class="hidden">Data de acionamento Técnico</th>
-                            <th>Data de acionamento Técnico</th>
-                            <th class="hidden">Data de início de instalação</th>
-                            <th>Data de início de instalação</th>
-                            <th class="hidden">Data de término de instalação</th>
-                            <th>Data de término de instalação</th>
-                            <th>Projeto</th>
-                            <th class="hidden">Situação</th>
-                            <th style="width: 200px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyVehicle">
-                        @foreach ($carros as $driver)
-                        <tr id='_tr_car_{{$driver->chassis}}'>
-                            <td>{{$driver->placa}}</td>
-                            <td>{{$driver->placa_mercosul}}</td>
-                            <td class="hidden">{{$driver->chassis}}</td>
-                            <td>{{$driver->modelo_veiculo}}</td>
-                            <td class="hidden">{{$driver->lp_latitude}}</td>
-                            <td class="hidden">{{$driver->lp_longitude}}</td>
-                            <td class="hidden">{{$driver->end_logradouro}}, {{$driver->end_bairro}} - {{$driver->end_cidade}} {{$driver->end_uf}}</td>
-                            <td class="hidden">{{$driver->estado}}</td>
-                            <td class="hidden">{{$driver->lp_velocidade}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
-                            <td><span style="display:none">{{$driver->lp_ultima_transmissao}}</span>{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
-                            <td>{{$driver->cliente}}</td>
-                            <td>{{$driver->contrato}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
-                            <td><span style="display:none">{{$driver->dt_entrada}}</span>{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
-                            <td><span style="display:none">{{$driver->dt_tecnico_acionado}}</span>{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
-                            <td><span style="display:none">{{$driver->dt_inicio_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
-                            <td><span style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
-                            @if ($driver->projeto == 'RENEGOCIACAO')
-                            <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span></td>
-                            @elseif ($driver->projeto == 'FINANCEIRA')
-                            <td><span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
-                            @endif
-                            <td class="hidden">{{$driver->situacao}}</td>
-                            <td>
-                                <button type="button" class="btn btn-success  btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
-                                    <i class="fa fa-search-plus"></i>
-                                </button>
-                                <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-warning btn-elevate btn-circle btn-icon"><span class="fa fa-map-marked-alt"></span></a>
 
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                <table id="example" class="display">
+                    <div id="datatable">
+                        <thead>
+                            <tr class="headerTable">
+                                <th>Placa</th>
+                                <th>Placa - Mercosul</th>
+                                <th class="hidden">Chassis</th>
+                                <th>Modelo</th>
+                                <th class="hidden">Data - Instalacao</th>
+                                <th class="hidden">Latitude</th>
+                                <th class="hidden">Longitude</th>
+                                <th class="hidden">Endereço</th>
+                                <th class="hidden">Estado</th>
+                                <th class="hidden">Velocidade</th>
+                                <th class="hidden">Última Transmissão</th>
+                                <th>Última Transmissão</th>
+                                <th style="width: 78px;">Loja</th>
+                                <th>Nº Proposta</th>
+                                <th class="hidden">Data de entrada</th>
+                                <th>Data de entrada</th>
+                                <th class="hidden">Data de acionamento Técnico</th>
+                                <th>Data de acionamento Técnico</th>
+                                <th class="hidden">Data de início de instalação</th>
+                                <th>Data de início de instalação</th>
+                                <th class="hidden">Data de término de instalação</th>
+                                <th>Data de término de instalação</th>
+                                <th>Projeto</th>
+                                <th class="hidden">Situação</th>
+                                <th class="hidden">Status_Geral</th>
+                                <th style="width: 200px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyVehicle">
+                            @foreach ($carros as $driver)
+                            <tr id='_tr_car_{{$driver->chassis}}'>
+                                <td>{{$driver->placa}}</td>
+                                <td>{{$driver->placa_mercosul}}</td>
+                                <td class="hidden">{{$driver->chassis}}</td>
+                                <td>{{$driver->modelo_veiculo}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver->data_inst)->format('d/m/Y')}}</td>
+                                <td class="hidden">{{$driver->lp_latitude}}</td>
+                                <td class="hidden">{{$driver->lp_longitude}}</td>
+                                <td class="hidden">{{$driver->end_logradouro}}, {{$driver->end_bairro}} - {{$driver->end_cidade}} {{$driver->end_uf}}</td>
+                                <td class="hidden">{{$driver->estado}}</td>
+                                <td class="hidden">{{$driver->lp_velocidade}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver->lp_ultima_transmissao}}</span>{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
+                                <td>{{$driver->cliente}}</td>
+                                <td>{{$driver->contrato}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver->dt_entrada}}</span>{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver->dt_tecnico_acionado}}</span>{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver->dt_inicio_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
+                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
+                                <td><span style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
+                                @if ($driver->projeto == 'RENEGOCIACAO')
+                                <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span></td>
+                                @elseif ($driver->projeto == 'FINANCEIRA')
+                                <td><span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
+                                @endif
+                                <td class="hidden">{{$driver->situacao}}</td>
+                                <td class="hidden">{{$driver->status_situacao}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
+                                        <i class="fa fa-search-plus"></i>
+                                    </button>
+                                    <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </div>
                 </table>
                 <!--end: Datatable -->
             </div>
@@ -452,44 +456,11 @@
 @endsection
 
 @section('scripts')
-<script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
-    // var min, max
-    $(document).ready(function() {
-        // Create date inputs
-        min = new DateTime($('#min'), {
-            language: "pt-BR",
-            format: 'DD/MM/YYYY'
-        });
-        max = new DateTime($('#max'), {
-            language: "pt-BR",
-            format: 'DD/MM/YYYY'
-        });
-
-    });
-
-    $("form").submit(function(event) {
-        var min = $('#min').val()
-        var max = $('#max').val()
-        var partesDataMin = min.split("/");
-        var partesDataMax = max.split("/");
-
-        var dataMin = new Date(partesDataMin[2], partesDataMin[1] - 1, partesDataMin[0]);
-        var dataMax = new Date(partesDataMax[2], partesDataMax[1] - 1, partesDataMax[0]);
-
-        if (dataMin > dataMax) {
-            $("#message").text("A data inicial não deve ser maior que a final").show().fadeOut(1500);
-            event.preventDefault();
-        }
-    });
-
-    $("#eraser").click(function() {
-        var min = minDate.val('');
-        var max = maxDate.val('');
-    });
-
-
     resetGrid()
     /**
      * Rastrea isca automaticamente
@@ -524,12 +495,14 @@
     }
 
 
+
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 22];
-        columsPdf = [0, 1, 2, 3, 4, 5, 9, 12];
+        columns = [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14, 16, 18, 20, 22, 23];
+        columsPdf = [0, 1, 2, 3, 7, 8, 10, 14, 16, 18, 20];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
             //"bDestroy": true,
+            "order": [19, 'desc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
@@ -576,42 +549,171 @@
 
         });
 
+
+        // INICIO DATARANGEPICKER
+        var startdate;
+        var enddate;
+        $('input[name="dates"]').daterangepicker({
+                "singleDatePicker": false,
+                ranges: {
+                    "Todos": [moment().subtract(5, 'years'), moment()],
+                    "Hoje": [moment(), moment()],
+                    'Dia anterior': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
+                    'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
+                    'Este mês': [moment().startOf('month'), moment().endOf('month')],
+                    'Mês passado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                "opens": "right",
+                "locale": {
+                    "format": "DD/MM/YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Aplicar",
+                    "cancelLabel": "Cancelar",
+                    "fromLabel": "De",
+                    "toLabel": "Até",
+                    "customRangeLabel": "Definir período",
+                    "daysOfWeek": [
+                        "Dom",
+                        "Seg",
+                        "Ter",
+                        "Qua",
+                        "Qui",
+                        "Sex",
+                        "Sáb"
+                    ],
+                    "monthNames": [
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
+                        "Julho",
+                        "Agosto",
+                        "Setembro",
+                        "Outubro",
+                        "Novembro",
+                        "Dezembro"
+                    ],
+                    "firstDay": 0
+                }
+            },
+            function(start, end, label) {
+                var s = moment(start.toISOString());
+                var e = moment(end.toISOString());
+                startdate = s.format("YYYY-MM-DD");
+                enddate = e.format("YYYY-MM-DD");
+            }
+        );
+
+        // FILTRO POR DATA DE ENTRADA
+        //Filter the datatable on the datepicker apply event with reportage 1
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            startdate = picker.startDate.format('YYYY-MM-DD');
+            enddate = picker.endDate.format('YYYY-MM-DD');
+            $.fn.dataTableExt.afnFiltering.push(
+                function(oSettings, aData, iDataIndex) {
+                    if (startdate != undefined) {
+                        var coldate = aData[4].split("/");
+                        var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
+                        var date = moment(d.toISOString());
+                        date = date.format("YYYY-MM-DD");
+                        dateMin = startdate.replace(/-/g, "");
+                        dateMax = enddate.replace(/-/g, "");
+                        date = date.replace(/-/g, "");
+                        if (dateMin == "" && date <= dateMax) {
+                            return true;
+                        } else if (dateMin == "" && date <= dateMax) {
+                            return true;
+                        } else if (dateMin <= date && "" == dateMax) {
+                            return true;
+                        } else if (dateMin <= date && date <= dateMax) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            );
+            oTable.draw();
+        });
+
         let totalRowCount = new Array();
+
+        oTable.on('draw', function() {
+            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
+                search: 'applied'
+            }).count();
+
+
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
+
+
+            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
+            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+
+
+
+        });
+
+        var info = oTable.page.info();
+        var count = info.recordsTotal;
+        $('#gridTotal').html(count);
+
 
         function tableOneRowCount() {
             totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
             totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
+            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")').data().length;
+            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")').data().length;
 
             $('#financeira').html(totalRowCount['financeira']);
             $('#renegociacao').html(totalRowCount['renegociacao']);
+            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
+            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
 
             return totalRowCount;
         }
 
         tableOneRowCount();
 
-        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
+        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS (RENEG OU FINANCEIRA)
         $('input:checkbox').on('change', function() {
             var status = $('input:checkbox[name="pos"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
-            $('#example').DataTable().column(21).search(status, true, false, false).draw();
+            $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
 
     });
 
 
+
+
     $('.installed').click(function() {
-        $('#example').DataTable().columns(22).search("INSTALADO|OS ABERTA DE RETIRADA|RETIRADO", true, false, true).draw();
+        $('#example').DataTable().columns(24).search("Instalacao_Efetuada", true, false, true).draw();
     });
 
     $('.waiting').click(function() {
-        $('#example').DataTable().columns(22).search('REAGENDAMENTO|OS ABERTA DE INSTALAçãO|VEICULO INDISPONIVEL', true, false, true).draw();
+        $('#example').DataTable().columns(24).search('Aguardando_Instalacao', true, false, true).draw();
     });
 
     $('.vehiclesTotal').click(function() {
-        $('#example').DataTable().columns(22).search('').draw();
+        $('#example').DataTable().columns(24).search('').draw();
     });
 
 
@@ -620,69 +722,54 @@
     $('.btn-vehicle-data').click(function() {
         var chassi = $(this).data('chassi');
         $.ajax({
-            url: "{{url('')}}/fleetslarges/find/" + chassi,
+            url: "{{url('')}}/fleetslarges/psa/find/" + chassi,
             type: 'GET',
             success: function(response) {
-                console.log(response)
-                $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
-                $('.placa').val(response.placa)
-                $('.empresa').val(response.empresa)
-                $('#r12s_proximos').val(response.r12s_proximos)
-                $('#dif_date').val(response.dif_date)
-                $('.lp_longitude').val(response.lp_longitude)
-                $('.estado').val(response.estado)
-                $('.lp_latitude').val(response.lp_latitude)
-                $('.telefone').val(response.telefone)
-                $('.status').val(response.status)
-                $('.iccid').val(response.iccid)
-                $('.chassis').val(response.chassis)
-                $('.modelo_veiculo').val(response.modelo_veiculo)
-                $('.qtd_dispositivos').val(response.qtd_dispositivos)
-                $('.categoria_veiculo').val(response.categoria_veiculo)
-                $('.cidade').val(response.cidade)
-                $('.operadora').val(response.operadora)
-                $('.cliente').val(response.cliente)
-                $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                $('.cod_empresa').val(response.cod_empresa)
-                $('.codigo_fipe').val(response.codigo_fipe)
-                $('.modelo').val(response.modelo)
-                $('.point').val(response.point)
-                $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                $('.versao').val(response.versao)
-                $('.lp_satelite').val(response.lp_satelite)
-                $('.lp_ignicao').val(response.lp_ignicao)
-                $('.r12s_proximos').val(response.r12s_proximos)
-                $('#dif_date').val(response.dif_date)
-                $('.lp_voltagem').val(response.lp_voltagem)
-                $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
-                $('#r12s_proximos').val(response.r12s_proximos)
-                $('#dif_date').val(response.dif_date)
-                $('.lp_velocidade').val(response.lp_velocidade + " km/h")
-                $('#point').val(response.point)
-                $('.filial').val(response.filial)
-                $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                $('#status_veiculo').val(response.status_veiculo)
-                $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
-                $('.end_cep').val(response.end_cep)
-                $('.end_logradouro').val(response.end_logradouro)
-                $('.end_bairro').val(response.end_bairro)
-                $('.end_uf').val(response.end_uf)
-                $('.cliente_foto').attr('src', response.cliente_foto);
-                $('#cliente_cpf').val(response.cliente_cpf)
-                $('#cliente_nome').val(response.cliente_nome)
-                $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                $('#cliente_celular').val(response.cliente_celular)
-                $('#cliente_localdev').val(response.cliente_localdev)
-                $('#cliente_local_retirada').val(response.cliente_local_retirada)
-                $('#cliente_contrato').val(response.cliente_contrato)
-                $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                $('#cliente_email').val(response.cliente_email)
-                $('#cliente_endereco').val(response.cliente_endereco)
-                $('.cidade').val(response.end_cidade)
-                $('#cliente_cnh').val(response.cliente_cnh)
-                $('.veiculo_odometro').val(response.veiculo_odometro)
-                $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
-                $('.cliente_foto').attr('href', response.cliente_foto)
+                $('.categoria_veiculo').val(response.data.categoria_veiculo)
+                $('.chassis').val(response.data.chassis)
+                $('.cidade').val(response.data.cidade)
+                $('.cliente').val(response.data.cliente)
+                $('.cod_empresa').val(response.data.cod_empresa)
+                $('.codigo_fipe').val(response.data.codigo_fipe)
+                if (response.data.data_instalacao) {
+                    $('.data_instalacao').val(response.data.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                }
+                $('#dif_date').val(response.data.dif_date)
+                $('.empresa').val(response.data.empresa)
+                $('.end_bairro').val(response.data.end_bairro)
+                $('.end_cep').val(response.data.end_cep)
+                $('.end_cidade').val(response.data.end_cidade)
+                $('.end_logradouro').val(response.data.end_logradouro)
+                $('.end_uf').val(response.data.end_uf)
+                $('.estado').val(response.data.estado)
+                $('.filial').val(response.data.filial)
+                $('.iccid').val(response.data.iccid)
+                $('.lp_ignicao').val(response.data.lp_ignicao)
+                $('.lp_latitude').val(response.data.lp_latitude)
+                $('.lp_longitude').val(response.data.lp_longitude)
+                $('.lp_satelite').val(response.data.lp_satelite)
+                if (response.data.lp_ultima_transmissao) {
+                    $('.lp_ultima_transmissao').val(response.data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                }
+                $('.lp_velocidade').val(response.data.lp_velocidade + " km/h")
+                $('.lp_voltagem').val(response.data.lp_voltagem)
+                $('.modelo').val(response.data.modelo)
+                $('.modelo_veiculo').val(response.data.modelo_veiculo)
+                $('#modelo_veiculo_aprimorado').val(response.data.modelo_veiculo_aprimorado)
+                $('.operadora').val(response.data.operadora)
+                $('.placa').val(response.data.placa)
+                $('.point').val(response.data.point)
+                $('.qtd_dispositivos').val(response.data.qtd_dispositivos)
+                $('.r12s_proximos').val(response.data.r12s_proximos)
+                $('#sinistrado').val(response.data.sinistrado != "FALSE" ? "SIM" : "NÃO")
+                $('.status').val(response.data.status)
+                $('#status_veiculo').val(response.data.status_veiculo)
+                if (response.data.status_veiculo_dt) {
+                    $('#status_veiculo_dt').val(response.data.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+
+                }
+                $('.telefone').val(response.data.telefone)
+                $('.versao').val(response.data.versao)
 
                 if (response.status_veiculo != "LOCACAO") {
                     $("#btn_cliente").css({
@@ -694,7 +781,10 @@
                     });
                 }
 
-                updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+                if (response.dt_entrada) {
+                    updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+                }
+
             },
             error: function(error) {
                 if (error.responseJSON.status == "internal_error") {
