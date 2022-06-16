@@ -360,6 +360,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Rotas para o banco PSA
         Route::group(['prefix' => 'psa'], function () {
             Route::get('/find/{chassis}', 'FleetsLarge\PsaController@findByChassi')->name('fleetslarges.bancopsa.findByChassi');
+            Route::get('/monitoring/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPositionPSA')->name('fleetslarges.monitoring.lastPositionPSA');
         });
 
         Route::group(['prefix' => 'monitoring'], function () {

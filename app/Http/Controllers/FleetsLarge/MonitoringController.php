@@ -7,6 +7,7 @@ use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
+use App\Services\FleetsLarge\PsaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,10 @@ class MonitoringController extends Controller
     /**
      * @var ApiDeviceService
      * @var CustomerService
+     * @var PsaService
      */
     private $apiDeviceServic;
+    private $psaService;
 
     /**
      * BoardingController constructor.
@@ -38,13 +41,15 @@ class MonitoringController extends Controller
         FleetLargeMovidaService $fleetLargeMovidaService,
         ApiDeviceService $apiDeviceServic,
         CustomerService $customerService,
-        LogRepository $log
+        LogRepository $log,
+        PsaService $psaService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
         $this->log = $log;
+        $this->psaService = $psaService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -58,9 +63,14 @@ class MonitoringController extends Controller
      */
     public function index($chassi = 0)
     {
-        if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13 || Auth::user()->customer_id == 14) {
+        if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13) {
             saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.index', ['chassi' => $chassi]);
+        }
+
+        if (Auth::user()->customer_id == 14) {
+            saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
+            return view('fleetslarge.monitoring.index_banco_psa', ['chassi' => $chassi]);
         }
         if (Auth::user()->customer_id == 11) {
             saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
@@ -243,7 +253,7 @@ class MonitoringController extends Controller
         }
 
         // Entrar no Mapa todos os carros Santander
-        if (Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13 ) {
+        if (Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13) {
             return view('fleetslarge.monitoring.allcars');
         }
 
@@ -343,5 +353,21 @@ class MonitoringController extends Controller
             "t_instalacao"              => $dat['t_instalacao'] ?? ''
         ]);
         return $arr;
+    }
+
+    /**
+     * @param String $device
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function lastPositionPSA(String $chassi)
+    {
+        try {
+            $fleetslarges = $this->psaService->findByChassi($chassi);
+
+
+            return response()->json(['status' => 'success', 'data' => $fleetslarges], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 }
