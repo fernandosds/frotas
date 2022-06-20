@@ -435,7 +435,7 @@
                                 <td class="hidden">{{$driver->situacao}}</td>
                                 <td class="hidden">{{$driver->status_situacao}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
+                                    <button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehiclePSA" data-chassi="{{$driver->chassis}}">
                                         <i class="fa fa-search-plus"></i>
                                     </button>
                                     <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>
@@ -451,7 +451,7 @@
     </div>
 </div>
 
-@include('fleetslarge.dashboard.modalVehicle')
+@include('fleetslarge.dashboard.modalVehiclePSA')
 
 @endsection
 
@@ -725,6 +725,7 @@
             url: "{{url('')}}/fleetslarges/psa/find/" + chassi,
             type: 'GET',
             success: function(response) {
+                console.log(response.data)
                 $('.categoria_veiculo').val(response.data.categoria_veiculo)
                 $('.chassis').val(response.data.chassis)
                 $('.cidade').val(response.data.cidade)
@@ -770,16 +771,7 @@
                 }
                 $('.telefone').val(response.data.telefone)
                 $('.versao').val(response.data.versao)
-
-                if (response.status_veiculo != "LOCACAO") {
-                    $("#btn_cliente").css({
-                        "display": "none"
-                    });
-                } else {
-                    $("#btn_cliente").css({
-                        "display": "inline"
-                    });
-                }
+                $('.contrato').val(response.data.contrato)
 
                 updateTimeline(response.data.dt_entrada, response.data.dt_inicio_instalacao, response.data.dt_tecnico_acionado, response.data.dt_termino_instalacao)
 
@@ -857,15 +849,5 @@
     $.extend($.fn.dataTableExt.oStdClasses, {
         "sFilterInput": "textName",
     });
-
-    $(document).on('click', '.spanText', function() {
-        if ($(this).attr('value') == 'instalado') {
-            $('.textName').val('instalado').focus().click()
-        }
-    });
-    $('#filtrar').click(function() {
-        var min = new DateTime($('#min').val());
-        var min = new DateTime($('#max').val());
-    })
 </script>
 @endsection
