@@ -21,14 +21,14 @@ class LogRepository extends AbstractRepository
     public function saveLog($user, $data)
     {
 
-        $ip = $_SERVER['REMOTE_ADDR'];;
+        $ip = $_SERVER['REMOTE_ADDR'];
 
         $logUser = $this->model
             ->create([
                 'user_name' => $user,
                 'customer_id' => Auth::user()->customer_id,
                 'description' => "$data",
-                'host_ip' => "$ip",
+                //         'host_ip' => "$ip",
             ]);
 
         $logUser->save();
