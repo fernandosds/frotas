@@ -41,7 +41,7 @@ class BoardingService
 
         $boarding = $this->boardingRepository->create($request->all());
         $device = $this->deviceRepository->show($boarding->device_id);
-        $this->log->saveBoardingLog($boarding, $device->model);
+
         return $boarding;
     }
 
@@ -83,7 +83,6 @@ class BoardingService
     {
         $boarding = $this->show($id);
         $device = $this->deviceRepository->show($boarding['device_id']);
-        $this->log->finishBoardingLog($boarding, $device->model);
         return $this->boardingRepository->finish($id);
     }
 

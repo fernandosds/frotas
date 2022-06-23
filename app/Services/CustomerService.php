@@ -55,7 +55,6 @@ class CustomerService
     {
         $customer = $this->customerRepository->create($request->all());
         saveLog(['value' => $request['name'], 'type' => 'Cadastrou_o_cliente', 'local' => 'CustomerService', 'funcao' => 'save']);
-       // $this->log->saveCustomerLog($customer);
         return $customer;
     }
 
@@ -68,7 +67,7 @@ class CustomerService
     {
         $customer = $this->customerRepository->update($id, $request->all());
         saveLog(['value' => $request['name'], 'type' => 'Atualizou_o_cliente', 'local' => 'CustomerService', 'funcao' => 'update']);
-        //$this->log->updateCustomerLog($request->all());
+
         return $customer;
     }
 
@@ -93,7 +92,6 @@ class CustomerService
         $customer = $this->show($id);
 
         saveLog(['value' => $customer->name, 'type' => 'Excluiu_o_cliente', 'local' => 'CustomerService', 'funcao' => 'destroy']);
-       // $this->log->deleteCustomerLog($customer);
         return $this->customerRepository->delete($id);
     }
 

@@ -91,10 +91,12 @@ class LogService
         return $this->log->find($id);
     }
 
+    /*
     public function monitoringBoarding($device)
     {
         return $this->log->monitoringBoarding($device);
     }
+    */
 
     public function saveLog($user, $mensagem)
     {

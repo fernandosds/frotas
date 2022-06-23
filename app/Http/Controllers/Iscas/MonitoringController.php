@@ -52,9 +52,11 @@ class MonitoringController extends Controller
     public function index($device = null)
     {
 
+
         $data = $this->data;
         $data['device'] = $device;
-        $this->logService->monitoringBoarding($device);
+
+        $this->logService->saveLog(strval(Auth::user()->name), 'Monitorou isca: ' . strval($device));
 
         saveLog(['value' => $device, 'type' => 'Monitorou isca', 'local' => 'MonitoringController', 'funcao' => 'index']);
         return view('monitoring.index', $data);
