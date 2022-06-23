@@ -344,6 +344,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Fleets Large routes
      */
     Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
+        Route::get('/telemetria', 'FleetsLarge\DashboardController@logTelemetria')->name('fleetslarges.telemetria');
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
         Route::get('/analyze/installation', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeInstallation');
         Route::get('/analyzes/car', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeCar');

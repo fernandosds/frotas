@@ -786,5 +786,15 @@
         var min = new DateTime($('#min').val());
         var min = new DateTime($('#max').val());
     })
+
+
+    //Log Relatório de Telemetria
+    $('.no-link').click(function() {
+        var chassi = $(this).data('chassi');
+        $.ajax({
+            url: "{{route('fleetslarges.telemetria')}}",
+            type: 'GET',
+        });
+    })
 </script>
 @endsection

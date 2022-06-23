@@ -69,7 +69,7 @@ class MonitoringController extends Controller
     public function index($chassi = 0)
     {
         if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13) {
-            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou o monitoramento do veículo chassi: ' . $chassi);
+            $this->logService->saveLog(strval(Auth::user()->name), 'Dashboard: Acessou o monitoramento do veículo chassi: ' . $chassi);
             saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.index', ['chassi' => $chassi]);
         }
@@ -214,6 +214,7 @@ class MonitoringController extends Controller
         $data['positions'] = $this->apiFleetLargeService->getGridModel($request->first_date, $request->last_date, $request->modelo);
 
         if (in_array("Nenhum registro encontrado", $data['positions'])) {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições: Não localizou registro para o chassi: ' . $request->chassis);
             return response()->json(['status' => 'validation_error', 'errors' => "Nenhum registro encontrado."], 404);
         };
 
@@ -222,11 +223,12 @@ class MonitoringController extends Controller
         };
 
         if ($request->first_date > $request->last_date) {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições:   Data invalida, data de inicio maior que a data final, ou diferença entre data superior a 5 dias para o chassi: ' . $request->chassis);
             return response()->json(['status' => 'validation_error', 'errors' => "Data invalida, data de inicio maior que a data final, ou diferença entre data superior a 5 dias"], 404);
         }
 
         if (Auth::user()->customer_id == 8) {
-            $this->logService->saveLog(strval(Auth::user()->name), 'Verificou o histórico de posições do chassi: '. $request->chassis. ' no período de: ' . Carbon::parse($request->first_date)->format('d/m/Y') . ' até ' .  Carbon::parse($request->last_date)->format('d/m/Y') . '.');
+            $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições: Verificou o histórico de posições do chassi: ' . $request->chassis . ' no período de: ' . Carbon::parse($request->first_date)->format('d/m/Y') . ' até ' .  Carbon::parse($request->last_date)->format('d/m/Y') . '.');
         }
 
         return response()->view('fleetslarge.monitoring.list', $data);
@@ -264,6 +266,7 @@ class MonitoringController extends Controller
 
         // Entrar no Mapa todos os carros Santander
         if (Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13) {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Mapa Geral: Acessou o menu Mapa Geral ');
             return view('fleetslarge.monitoring.allcars');
         }
 

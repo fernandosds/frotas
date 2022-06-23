@@ -327,7 +327,7 @@ class DashboardController extends Controller
         $customer = $this->customerService->show(Auth::user()->customer_id);
         $chassis = Route::getCurrentRoute()->parameters()['chassis'];
 
-        $this->logService->saveLog(strval(Auth::user()->name), ' Verificou o registro do veículo chassi: ' . $chassis);
+        $this->logService->saveLog(strval(Auth::user()->name), 'Dashboard: Verificou o registro do veículo chassi: ' . $chassis);
         try {
             $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
             $arr[] = '';
@@ -602,19 +602,19 @@ class DashboardController extends Controller
 
         // Iframe com os dados de instalação -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeInstallation') {
-            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou a análise de instalações.');
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou a análise de instalações.');
             $data['hash'] = '519a68a7-1b0b-4f38-901c-d602a203a21e';
         }
 
         // Iframe com os dados do veículo -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeCar') {
-            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou a análise de Veículos (Telemetria).');
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou a análise de Veículos (Telemetria).');
             $data['hash'] = 'd1c7e435-37ef-46aa-9105-4a2a957edc3e';
         }
 
         // Iframe com os dados da base -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeBase') {
-            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou a análise de Base.');
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou a análise de Base.');
             $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
         }
 
@@ -676,5 +676,10 @@ class DashboardController extends Controller
             "BI_FIPE_TAB → tipo"        => $dat['BI_FIPE_TAB → tipo'] ?? '',
         ]);
         return $arr;
+    }
+
+    public function logTelemetria()
+    {
+        return  $this->logService->saveLog(strval(Auth::user()->name), 'Telemetria: Gerou relatório de Telemetria.');
     }
 }
