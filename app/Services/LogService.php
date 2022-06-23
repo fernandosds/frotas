@@ -27,7 +27,7 @@ class LogService
      * @param Int $limit
      * @return mixed
      */
-    public function paginate(Int $limit = 15)
+    public function paginate(Int $limit = 10000)
     {
         return $this->log->paginate($limit, Auth::user()->customer_id);
     }
@@ -94,5 +94,10 @@ class LogService
     public function monitoringBoarding($device)
     {
         return $this->log->monitoringBoarding($device);
+    }
+
+    public function saveLog($user, $mensagem)
+    {
+        return $this->log->saveLog($user,  $mensagem);
     }
 }

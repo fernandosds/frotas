@@ -71,7 +71,7 @@ class User extends Authenticatable
         saveLog(['value' => Auth::user()->email, 'type' => 'Efetuou o login no sistema', 'local' => 'User', 'funcao' => 'registerAccess']);
         // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
         return $this->logs()->create([
-            'user_id'   => $this->id,
+            'user_name'   => strval(Auth::user()->name),
             'customer_id' =>  Auth::user()->customer_id,
             'description' => 'Efetuou o login no sistema',
         ]);
@@ -82,7 +82,7 @@ class User extends Authenticatable
         saveLog(['value' => Auth::user()->email, 'type' => 'Saiu do sistema', 'local' => 'User', 'funcao' => 'registerClose']);
         // Cadastra na tabela accesses um novo registro com as informações do usuário logado + data e hora
         return $this->logs()->create([
-            'user_id'   => $this->id,
+            'user_name'   => strval(Auth::user()->name),
             'customer_id' =>  Auth::user()->customer_id,
             'description' => 'Saiu do sistema',
         ]);

@@ -225,6 +225,14 @@
         height: 20px;
         border: 1px solid #ebedf2;
     }
+
+    th {
+        font-size: 12px;
+    }
+
+    td {
+        font-size: 12px;
+    }
 </style>
 @endsection
 
@@ -348,8 +356,8 @@
                                     <input type="text" class="form-control " id="max" name="max" placeholder="Selecione a data" value="{{$dataMax ?? ''}}" />
                                 </div>
                                 <div class="col">
-                                    <button type="submit" class="btn btn-success btn-sm btn-icon btn-circle" id="filtrar" title="Filtrar"><i class="fa fa-search"></i></button>
-                                    <a href="{{url('fleetslarges')}}" class="btn btn-danger btn-sm btn-icon btn-circle" title="Remover filtro"><i class="flaticon-delete"></i></a>
+                                    <button type="submit" class="btn btn-outline-hover-success  btn-sm btn-icon btn-circle" id="filtrar" title="Filtrar"><i class="fa fa-search"></i></button>
+                                    <a href="{{url('fleetslarges')}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle" title="Remover filtro"><i class="flaticon-delete"></i></a>
                                 </div>
                             </div>
                             <small id="message" class="text-danger"></small>
@@ -431,10 +439,10 @@
                             @endif
                             <td class="hidden">{{$driver->situacao}}</td>
                             <td>
-                                <button type="button" class="btn btn-success  btn-elevate btn-circle btn-icon btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
+                                <button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
                                     <i class="fa fa-search-plus"></i>
                                 </button>
-                                <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-warning btn-elevate btn-circle btn-icon"><span class="fa fa-map-marked-alt"></span></a>
+                                <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>
 
                             </td>
                         </tr>

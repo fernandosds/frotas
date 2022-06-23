@@ -65,7 +65,6 @@ class UserController extends Controller
      */
     public function edit(Int $id)
     {
-
         $data = $this->data;
         $data['user'] = $this->userService->show($id);
         $data['customers'] = $this->customerService->all();
@@ -80,7 +79,6 @@ class UserController extends Controller
     {
         try {
             $this->userService->save($request);
-            //saveLog(['value' => $request->name, 'type' => 'Salvou usuario', 'local' => 'UserController', 'funcao' => 'save']);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -108,10 +106,12 @@ class UserController extends Controller
      */
     public function destroy(Int $id)
     {
-        $user = $this->userService->show($id);
-        saveLog(['value' => $user->name, 'type' => 'Excluiu usuario', 'local' => 'UserController', 'funcao' => 'destroy']);
-        $this->userService->destroy($id);
-        return back()->with(['status' => 'Deleted successfully']);
+        try {
+            $this->userService->destroy($id);
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Mail\QRCodeMail;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Mail\ResetEmail;
+use Illuminate\Support\Facades\Route;
 use App\Repositories\LogRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -114,7 +115,9 @@ class UserService
         // New Secret
         $this->checkValidationToken($request);
 
-        $this->log->saveUserLog($request->all(), 'Cadastrou o usuario');
+        $this->log->saveLog(strval(Auth::user()->name), 'Cadastrou o usuario: ' . strval($request->name));
+
+
         saveLog(['value' => $request['name'], 'type' => 'Cadastrou_usuario', 'local' => 'UserService', 'funcao' => 'save']);
 
         $user = $this->userRepository->create($request->all());
@@ -133,20 +136,26 @@ class UserService
      */
     public function update(Request $request, $id)
     {
-        $customer_id = $this->userRepository->find($id);
 
         if (isset($request->password)) {
             $request->merge(['password' => Hash::make($request->password)]);
-            $this->checkTokenUpdate($request);
 
+            if (Route::currentRouteName() != "profiles.update") {
+                $this->checkTokenUpdate($request);
+            }
 
-            $this->log->updateUserLog($customer_id, $request->all(), 'Atualizou a senha do usuario');
+            $this->log->saveLog(strval(Auth::user()->name), 'Atualizou a senha do usuario: ' . strval($request->name));
             saveLog(['value' => $request['name'], 'type' => 'Atualizou_a_senha_do_usuario', 'local' => 'UserService', 'funcao' => 'update']);
             return  $this->userRepository->update($id, $request->all());
         }
+
+        $this->log->saveLog(strval(Auth::user()->name), 'Atualizou os dados cadastrais do usuario: ' . strval($request->name));
         saveLog(['value' => $request['name'], 'type' => 'Atualizou_os_dados_cadastrais_do_usuario', 'local' => 'UserService', 'funcao' => 'update']);
-        $this->log->updateUserLog($customer_id, $request->all(), 'Atualizou o usuario');
-        $this->checkTokenUpdate($request);
+
+        if (Route::currentRouteName() != "profiles.update") {
+            $this->checkTokenUpdate($request);
+        }
+
         return $this->userRepository->update($id, $request->except('password'));
     }
 
@@ -157,8 +166,9 @@ class UserService
     public function show(Int $id)
     {
         $user =  $this->userRepository->find($id);
+
+        $this->log->saveLog(strval(Auth::user()->name), 'Monitorou o usuario: ' . strval($user->name));
         saveLog(['value' => $user->name, 'type' => 'Monitorou_o_usuario', 'local' => 'UserService', 'funcao' => 'show']);
-        $this->log->showUserLog($user->customer_id, $user->name, 'Monitorou o usuario');
 
         return ($user) ? $user : abort(404);
     }
@@ -169,14 +179,15 @@ class UserService
      */
     public function destroy(Int $id)
     {
-        $customer_id = $this->userRepository->find($id);
+        $customer = $this->userRepository->find($id);
 
-        saveLog(['value' => $customer_id['name'], 'type' => 'Deletou_o_usuario', 'local' => 'UserService', 'funcao' => 'destroy']);
-        $this->log->destroyUserLog($customer_id, 'Deletou o usuario');
+        $this->log->saveLog(strval(Auth::user()->name), 'Deletou o usuario: ' . strval($customer['name']));
+        saveLog(['value' => $customer['name'], 'type' => 'Deletou_o_usuario', 'local' => 'UserService', 'funcao' => 'destroy']);
+
         return $this->userRepository->delete($id);
     }
 
-    /**]
+    /**
      * @param $id
      * @return mixed
      */

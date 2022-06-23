@@ -9,6 +9,7 @@ use App\Services\FleetLargeMapfreService;
 use App\Services\FleetLargeSompoService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
+use App\Services\LogService;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,8 @@ class DashboardController extends Controller
 
     private $fleetslargeDashboardService;
 
+    private $logService;
+
     /**
      * @var $apiFleetLargeService
      */
@@ -39,6 +42,7 @@ class DashboardController extends Controller
      * @var ApiDeviceService
      * @var CustomerService
      * @var PsaService
+     * @var LogService
      */
     private $apiDeviceServic;
 
@@ -54,7 +58,8 @@ class DashboardController extends Controller
         FleetLargeSompoService $fleetLargeSompoService,
         ApiDeviceService $apiDeviceServic,
         CustomerService $customerService,
-        PsaService $psaService
+        PsaService $psaService,
+        LogService $logService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
@@ -63,6 +68,7 @@ class DashboardController extends Controller
         $this->apiDeviceServic = $apiDeviceServic;
         $this->customerService = $customerService;
         $this->psaService = $psaService;
+        $this->logService = $logService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -321,8 +327,8 @@ class DashboardController extends Controller
         $customer = $this->customerService->show(Auth::user()->customer_id);
         $chassis = Route::getCurrentRoute()->parameters()['chassis'];
 
+        $this->logService->saveLog(strval(Auth::user()->name), ' Verificou o registro do veículo chassi: ' . $chassis);
         try {
-
             $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
             $arr[] = '';
             foreach ($fleetslarge as $data => $dat) {
@@ -393,6 +399,7 @@ class DashboardController extends Controller
                     ]);
                 }
             }
+
             saveLog(['value' => $chassis, 'type' => 'Verificou o chassi', 'local' => 'DashboardController', 'funcao' => 'findByChassi']);
             return response()->json(['stat' => 'success'], 200);
         } catch (\Exception $e) {
@@ -595,16 +602,19 @@ class DashboardController extends Controller
 
         // Iframe com os dados de instalação -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeInstallation') {
+            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou a análise de instalações.');
             $data['hash'] = '519a68a7-1b0b-4f38-901c-d602a203a21e';
         }
 
         // Iframe com os dados do veículo -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeCar') {
+            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou a análise de Veículos (Telemetria).');
             $data['hash'] = 'd1c7e435-37ef-46aa-9105-4a2a957edc3e';
         }
 
         // Iframe com os dados da base -- SANTANDER
         if (Route::currentRouteName() == 'fleetslarges.analyzeBase') {
+            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou a análise de Base.');
             $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
         }
 

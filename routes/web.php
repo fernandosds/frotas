@@ -272,7 +272,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'profiles'], function () {
         Route::get('/edit', 'ProfileController@editprofile');
         Route::post('/save', 'ProfileController@save');
-        Route::put('/update', 'ProfileController@update');
+        Route::put('/update', 'ProfileController@update')->name('profiles.update');
     });
 
     /**

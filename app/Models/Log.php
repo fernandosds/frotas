@@ -21,7 +21,7 @@ class Log extends Model
      */
     protected $dates = ['created_at', 'updated_at'];
 
-    protected $fillable = ['user_id', 'customer_id', 'device_id', 'description', 'contract_id'];
+    protected $fillable = ['user_id', 'customer_id', 'device_id', 'user_name', 'description', 'contract_id'];
 
     /**
      * @return array
@@ -32,6 +32,7 @@ class Log extends Model
             'user_id'                   => $this->user_id,
             'customer_id'               => $this->customer_id,
             'device_id'                 => $this->device_id,
+            'user_name'                 => $this->user_name,
             'description'               => $this->description,
             'contract_id'               => $this->contract_id,
 

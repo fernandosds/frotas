@@ -17,7 +17,7 @@ class LogRepository extends AbstractRepository
     {
         $this->model = $model;
     }
-
+/*
     public function saveCustomerLog($customer)
     {
         $logCustomer = $this->model
@@ -125,15 +125,15 @@ class LogRepository extends AbstractRepository
     {
         $logUser = $this->model
             ->create([
-                'user_id' => Auth::user()->id,
-                'customer_id' => $user['customer_id'],
-                'description' => "$data {$user['name']}",
+                'user_name' => strval(Auth::user()->name),
+                'customer_id' => Auth::user()->customer_id,
+                'description' =>  $data,
             ]);
 
         $logUser->save();
         return $logUser;
     }
-
+*/
     public function destroyUserLog($customer, $data)
     {
         $logUser = $this->model
@@ -141,6 +141,34 @@ class LogRepository extends AbstractRepository
                 'user_id' => Auth::user()->id,
                 'customer_id' => $customer['customer_id'],
                 'description' => "$data {$customer['name']}",
+            ]);
+
+        $logUser->save();
+        return $logUser;
+    }
+
+/*
+    public function saveLog($customer, $user, $data)
+    {
+        $logUser = $this->model
+            ->create([
+                'user_id' => Auth::user()->id,
+                'customer_id' => $customer,
+                'description' => "$data {$user}",
+            ]);
+
+        $logUser->save();
+        return $logUser;
+    }
+*/
+    public function saveLog($user, $data)
+    {
+
+        $logUser = $this->model
+            ->create([
+                'user_name' => $user,
+                'customer_id' => Auth::user()->customer_id,
+                'description' => "$data",
             ]);
 
         $logUser->save();

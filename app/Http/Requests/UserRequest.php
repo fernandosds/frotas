@@ -42,7 +42,7 @@ class UserRequest extends FormRequest
             $return = array_merge([
                 'email' => [
                     'required',
-                    Rule::unique('users')->ignore($this->id),
+                    Rule::unique('users')->ignore($this->id)->whereNull('deleted_at'),
                 ],
                 'password' => 'same:confirm_password',
             ], $return);

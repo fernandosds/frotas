@@ -36,6 +36,7 @@ class LogController extends Controller
         $data = $this->data;
         $data['logs'] = $this->logService->paginate();
 
+
         return response()->view('management.log.list', $data);
     }
 
@@ -44,7 +45,7 @@ class LogController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-   /**   public function show(Int $id)
+    /**   public function show(Int $id)
     {
 
         $data = $this->data;
@@ -52,7 +53,7 @@ class LogController extends Controller
 
         return response()->view('log.list', $data);
     }
-*/
+     */
     /**
      * Store a newly created resource in storage.
      *
@@ -71,6 +72,4 @@ class LogController extends Controller
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
-
-
 }

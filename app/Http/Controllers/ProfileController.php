@@ -6,6 +6,7 @@ use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class ProfileController extends Controller
 {
@@ -45,6 +46,8 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+
+
         $id = Auth::user()->id;
 
         try {

@@ -7,6 +7,7 @@ use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
+use App\Services\LogService;
 use App\Services\FleetsLarge\PsaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,11 +31,13 @@ class MonitoringController extends Controller
      */
     private $apiDeviceServic;
     private $psaService;
+    private $logService;
 
     /**
      * BoardingController constructor.
      * @param DashboardController $apiFleetLargeService
      * @param ApiDeviceService $apiDeviceServic
+     * @var LogService
      */
     public function __construct(
         ApiFleetLargeService $apiFleetLargeService,
@@ -42,7 +45,8 @@ class MonitoringController extends Controller
         ApiDeviceService $apiDeviceServic,
         CustomerService $customerService,
         LogRepository $log,
-        PsaService $psaService
+        PsaService $psaService,
+        LogService $logService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
@@ -50,6 +54,7 @@ class MonitoringController extends Controller
         $this->customerService = $customerService;
         $this->log = $log;
         $this->psaService = $psaService;
+        $this->logService = $logService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -64,6 +69,7 @@ class MonitoringController extends Controller
     public function index($chassi = 0)
     {
         if (Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13) {
+            $this->logService->saveLog(strval(Auth::user()->name), ' Acessou o monitoramento do veículo chassi: ' . $chassi);
             saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.index', ['chassi' => $chassi]);
         }
@@ -217,6 +223,10 @@ class MonitoringController extends Controller
 
         if ($request->first_date > $request->last_date) {
             return response()->json(['status' => 'validation_error', 'errors' => "Data invalida, data de inicio maior que a data final, ou diferença entre data superior a 5 dias"], 404);
+        }
+
+        if (Auth::user()->customer_id == 8) {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Verificou o histórico de posições do chassi: '. $request->chassis. ' no período de: ' . Carbon::parse($request->first_date)->format('d/m/Y') . ' até ' .  Carbon::parse($request->last_date)->format('d/m/Y') . '.');
         }
 
         return response()->view('fleetslarge.monitoring.list', $data);
