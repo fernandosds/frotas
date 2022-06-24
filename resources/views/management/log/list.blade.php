@@ -45,15 +45,28 @@
 
         <!-- CONTENT -->
         <div class="kt-portlet__body">
+            <div class="row kt-margin-b-20">
+                <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                    <label>Data de evento:</label>
+                    <div class="input-group">
+                        <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
 
             <table id="example" class="display">
                 <thead>
                     <tr>
                         <th scope="col">Usuário</th>
                         <th scope="col">Descrição</th>
-                       <!-- <th scope="col">IP</th> -->
+                        <!-- <th scope="col">IP</th> -->
                         <th scope="col">Data</th>
                         <th class="hidden">Data</th>
+                        <th class="hidden">Data Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,9 +74,10 @@
                     <tr id="_tr_user_{{$log->id}}">
                         <td>{{$log->user_name}}</td>
                         <td>{{$log->description}}</td>
-                      <!--  <td>{{$log->host_ip}}</td> -->
+                        <!--  <td>{{$log->host_ip}}</td> -->
                         <td><span style="display:none">{{$log->created_at}}</span>{{\Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i:s')}}</td>
                         <td class="hidden">{{\Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i:s')}}</td>
+                        <td class="hidden">{{\Carbon\Carbon::parse($log->created_at)->format('d/m/Y')}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -203,7 +217,7 @@
             $.fn.dataTableExt.afnFiltering.push(
                 function(oSettings, aData, iDataIndex) {
                     if (startdate != undefined) {
-                        var coldate = aData[4].split("/");
+                        var coldate = aData[4].split("/"); // Precisa alterar este número para a coluna correspondente
                         var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                         var date = moment(d.toISOString());
                         date = date.format("YYYY-MM-DD");
