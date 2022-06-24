@@ -55,8 +55,19 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                    <label for="input">Selecione um usuário</label>
+                    <select class="form-control" name="user_name" id="user_name">
+                        <option value="">Todos os usuários</option>
+                        @foreach( $users as $user )
+                        <option value="{{$user->name}}">{{$user->name}}</option>
+                        @endforeach
+                    </select><br /><br />
+                </div>
             </div>
-            <br />
+
+            </br>
 
             <table id="example" class="display">
                 <thead>
@@ -150,7 +161,6 @@
             },
 
         });
-
 
         // INICIO DATARANGEPICKER
         var startdate;
@@ -300,6 +310,10 @@
             $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
+        //FUNÇÃO PARA FILTRAR AS ATIVIDADES DOS USUÁRIOS
+        $('#user_name').on('change', function() {
+            oTable.columns(0).search(this.value).draw();
+        });
 
     });
 

@@ -5,19 +5,22 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\LogService;
+use App\Services\UserService;
 
 class LogController extends Controller
 {
     private $logService;
+    private $userService;
     private $data;
 
     /**
      * LogController constructor.
      * @param LogService $logService
      */
-    public function __construct(LogService $logService)
+    public function __construct(LogService $logService, UserService $userService)
     {
         $this->logService = $logService;
+        $this->userService = $userService;
 
         $this->data = [
             'icon' => 'flaticon2-contract',
@@ -35,7 +38,7 @@ class LogController extends Controller
     {
         $data = $this->data;
         $data['logs'] = $this->logService->paginate();
-
+        $data['users'] = $this->userService->paginate();
 
         return response()->view('management.log.list', $data);
     }

@@ -55,7 +55,7 @@ class UserService
      * @param Int $limit
      * @return mixed
      */
-    public function paginate(Int $limit = 15)
+    public function paginate(Int $limit = 120)
     {
 
         if (Auth::user()->type == "sat") {
