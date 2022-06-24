@@ -47,7 +47,7 @@
         <div class="kt-portlet__body">
             <div class="row kt-margin-b-20">
                 <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                    <label>Data de evento:</label>
+                    <label>Data do evento:</label>
                     <div class="input-group">
                         <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
                         <div class="input-group-append">
