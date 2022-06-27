@@ -91,8 +91,6 @@ trait AuthenticatesUsers
             }
         }
 
-        $var->registerLog($request->all(), 'Login: O usuário: ' . strval($request->name) . ' tentou efetuar um login às: ' .  $data . ' às ' . $hora);
-
 
         $request->validate([
             $this->username() => 'required|string',
@@ -168,6 +166,12 @@ trait AuthenticatesUsers
      */
     protected function sendFailedLoginResponse(Request $request)
     {
+        $var = new UserController();
+
+        $data = Carbon::now()->format('d/m/Y');
+        $hora = Carbon::now()->format('H:m:s');
+
+        $var->registerLog($request->all(), 'Login: O usuário: ' . strval($request->name) . ' tentou efetuar um login às: ' .  $data . ' às ' . $hora);
 
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
