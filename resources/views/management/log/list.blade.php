@@ -17,7 +17,7 @@
     }
 </style>
 
-
+@endsection
 @section('content')
 
 <div class="kt-portlet">
@@ -248,66 +248,6 @@
                 }
             );
             oTable.draw();
-        });
-
-        let totalRowCount = new Array();
-
-        oTable.on('draw', function() {
-            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
-                search: 'applied'
-            }).count();
-
-            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
-                search: 'applied'
-            }).count();
-
-            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
-                search: 'applied'
-            }).count();
-
-            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
-                search: 'applied'
-            }).count();
-
-
-            $('#financeira').html(totalRowCount['financeira']);
-            $('#renegociacao').html(totalRowCount['renegociacao']);
-
-
-            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
-
-
-
-        });
-
-        var info = oTable.page.info();
-        var count = info.recordsTotal;
-        $('#gridTotal').html(count);
-
-
-        function tableOneRowCount() {
-            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
-            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
-            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")').data().length;
-            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")').data().length;
-
-            $('#financeira').html(totalRowCount['financeira']);
-            $('#renegociacao').html(totalRowCount['renegociacao']);
-            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
-
-            return totalRowCount;
-        }
-
-        tableOneRowCount();
-
-        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS (RENEG OU FINANCEIRA)
-        $('input:checkbox').on('change', function() {
-            var status = $('input:checkbox[name="pos"]:checked').map(function() {
-                return '^' + this.value + '$';
-            }).get().join('|');
-            $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
         //FUNÇÃO PARA FILTRAR AS ATIVIDADES DOS USUÁRIOS

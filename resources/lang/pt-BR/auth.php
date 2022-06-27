@@ -13,5 +13,6 @@ return [
     */
 
     'failed'   => 'Credenciais informadas não correspondem com nossos registros.',
+    'blocked'  => 'Este usuário está bloqueado! Entre em contato com o administrador do sistema.',
     'throttle' => 'Você realizou muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
 ];
