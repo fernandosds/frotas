@@ -50,7 +50,7 @@ class UserController extends Controller
         return  DB::table('users')
             ->select('name', 'status', 'email', 'customer_id', 'deleted_at')
             ->where('email', $email)
-            ->whereNull('deleted_at')
+           // ->whereNull('deleted_at')
             ->first();
     }
 
