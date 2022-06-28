@@ -18,17 +18,19 @@ class LogRepository extends AbstractRepository
         $this->model = $model;
     }
 
-    public function saveLog($user, $data)
+    public function saveLog($user, $data, $ip = null)
     {
-
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = null;
+        if (isset($_COOKIE['ipClient'])) {
+            $ip = strval($_COOKIE['ipClient']);
+        }
 
         $logUser = $this->model
             ->create([
                 'user_name' => $user,
                 'customer_id' => Auth::user()->customer_id,
                 'description' => "$data",
-                //         'host_ip' => "$ip",
+                'host_ip' => "$ip",
             ]);
 
         $logUser->save();

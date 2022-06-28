@@ -387,6 +387,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::get('/logout', function () {
         \illuminate\Support\Facades\Auth::logout();
+        setcookie("ipClient", "", time() - 3600);
         return redirect('/');
     })->name('logout');
 });

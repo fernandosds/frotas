@@ -132,6 +132,17 @@
     $('.cep').mask(('00000-000'));
 
 
+    // Registrando em cookie o ip do cliente
+    var ip = $.getJSON("https://api.ipify.org?format=json",
+        function(data) {
+            Cookies.set("ipClient", data.ip, {
+                expires: 7
+            });
+        })
+
+    /*
+    alert(Cookies.get("example"));
+*/
     /**
      * Mask CPF / CNPJ
      *

@@ -74,7 +74,7 @@
                     <tr>
                         <th scope="col">Usuário</th>
                         <th scope="col">Descrição</th>
-                        <!-- <th scope="col">IP</th> -->
+                        <th scope="col">IP</th>
                         <th scope="col">Data</th>
                         <th class="hidden">Data</th>
                         <th class="hidden">Data Timestamp</th>
@@ -85,7 +85,7 @@
                     <tr id="_tr_user_{{$log->id}}">
                         <td>{{$log->user_name}}</td>
                         <td>{{$log->description}}</td>
-                        <!--  <td>{{$log->host_ip}}</td> -->
+                        <td>{{$log->host_ip}}</td>
                         <td><span style="display:none">{{$log->created_at}}</span>{{\Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i:s')}}</td>
                         <td class="hidden">{{\Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i:s')}}</td>
                         <td class="hidden">{{\Carbon\Carbon::parse($log->created_at)->format('d/m/Y')}}</td>
@@ -110,11 +110,11 @@
 
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2];
-        columsPdf = [0, 1, 2];
+        columns = [0, 1, 2, 4];
+        columsPdf = [0, 1, 2, 4];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
-            "order": [02, 'desc'],
+            "order": [03, 'desc'],
             //"bDestroy": true,
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +

@@ -50,7 +50,7 @@ class UserController extends Controller
         return  DB::table('users')
             ->select('name', 'status', 'email', 'customer_id', 'deleted_at')
             ->where('email', $email)
-           // ->whereNull('deleted_at')
+            // ->whereNull('deleted_at')
             ->first();
     }
 
@@ -69,7 +69,10 @@ class UserController extends Controller
         $time->setTimestamp($unixTime);
         $timestamps = $time->format('Y-m-d H:i:s');
 
-        $ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+        $ip = null;
+        if (isset($_COOKIE['ipClient'])) {
+            $ip = strval($_COOKIE['ipClient']);
+        }
 
         $values =  [
             'user_name' => strval($data['name']),
