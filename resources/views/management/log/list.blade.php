@@ -93,8 +93,6 @@
                     @endforeach
                 </tbody>
             </table>
-
-
         </div>
 
     </div>
@@ -227,7 +225,7 @@
             $.fn.dataTableExt.afnFiltering.push(
                 function(oSettings, aData, iDataIndex) {
                     if (startdate != undefined) {
-                        var coldate = aData[4].split("/"); // Precisa alterar este número para a coluna correspondente
+                        var coldate = aData[5].split("/"); // Precisa alterar este número para a coluna correspondente (COLUNA  DATA TIMESTAMP)
                         var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                         var date = moment(d.toISOString());
                         date = date.format("YYYY-MM-DD");
