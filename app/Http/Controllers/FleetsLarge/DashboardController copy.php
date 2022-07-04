@@ -18,7 +18,6 @@ use stdClass;
 
 // Conectando o fleetslarge através do banco
 use App\Services\FleetsLarge\PsaService;
-use App\Services\FleetsLarge\SantanderService;
 
 
 class DashboardController extends Controller
@@ -44,7 +43,6 @@ class DashboardController extends Controller
      * @var CustomerService
      * @var PsaService
      * @var LogService
-     * @var SantanderService
      */
     private $apiDeviceServic;
 
@@ -61,9 +59,7 @@ class DashboardController extends Controller
         ApiDeviceService $apiDeviceServic,
         CustomerService $customerService,
         PsaService $psaService,
-        LogService $logService,
-        SantanderService $santanderService
-
+        LogService $logService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
@@ -73,7 +69,6 @@ class DashboardController extends Controller
         $this->customerService = $customerService;
         $this->psaService = $psaService;
         $this->logService = $logService;
-        $this->santanderService = $santanderService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -104,15 +99,78 @@ class DashboardController extends Controller
             $data['totalJson'] = count($data['fleetslarge']);
             return response()->view('fleetslarge.dashboard.movida', $data);
         }
-
         // Entrar no dashboard Santander
         if (Auth::user()->customer_id == 8) {
-            $data['carros'] = $this->santanderService->all();
-            return response()->view('fleetslarge.dashboard.santander', $data);
+            $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
+
+            $carros = new stdClass();
+            $jsonString = json_encode($data['fleetslarge']);
+            $items = collect(json_decode($jsonString));
+
+
+            foreach ($items as $item) {
+                $item->placa_mercosul =  $this->apiFleetLargeService->fixPlate($item->placa);
+
+                if (str_contains($item->cliente, '(RENEG)')) {
+                    $item->projeto = 'RENEGOCIACAO';
+                } else {
+                    $item->projeto = 'FINANCEIRA';
+                }
+            }
+
+            if ($request->min && $request->max) {
+
+                $min = Carbon::createFromFormat('d/m/Y',  $request->min);
+                $minData = $min->format('Y-m-d');
+
+                $max = Carbon::createFromFormat('d/m/Y',  $request->max);
+                $maxData = $max->addDays(1)->format('Y-m-d');
+                $filtered = $items->whereBetween('dt_termino_instalacao', [$minData, $maxData]);
+
+                $filteredSolicInst = $items->whereBetween('dt_termino_instalacao', [$minData, $maxData])->where('situacao', 'INSTALADO');
+
+                $result = $filtered;
+                $ttlInicioServico = $this->mediaHour($result, 't_inicio_servico');
+                $ttlAcionamentoTecnico = $this->mediaHour($result, 't_acionamento_tecnico');
+                $ttlInstalacao = $this->mediaHour($result, 't_instalacao');
+                $ttlSolicInstalado =  $this->mediaHour($filteredSolicInst, 't_solicitado_instalado');
+                $dashboardInstalado =  $this->situacaoInstalado($result);
+            } else {
+
+                $result = $items->all();
+                $mediaHora = $this->apiFleetLargeService->mediaHours();
+                $jsonString = json_encode($mediaHora);
+                $items = collect(json_decode($jsonString));
+
+                foreach ($items as $mh) {
+                    $inicioServico          =  explode(".", $mh->tempo_inicio_servico);
+                    $acionamentoTecnico     = explode(".", $mh->tempo_acionamento_tecnico);
+                    $instalacao             = explode(".", $mh->tempo_instalacao);
+                    $solicitacao            = explode(".", $mh->tempo_solicitado_instalado);
+
+                    $ttlInicioServico       = $inicioServico[0];
+                    $ttlAcionamentoTecnico  = $acionamentoTecnico[0];
+                    $ttlInstalacao          = $instalacao[0];
+                    $ttlSolicInstalado      = $solicitacao[0];
+                }
+                $dashboardInstalado =  $this->situacaoInstalado($result);
+            }
+            $instalado = $dashboardInstalado[0];
+            $agendado = $dashboardInstalado[1];
+            $total = $instalado + $agendado;
+            $dataMin = $request->min;
+            $dataMax = $request->max;
+
+            $carros = $result;
+
+            return response()->view(
+                'fleetslarge.dashboard.santander',
+                compact('carros', 'ttlInicioServico', 'ttlAcionamentoTecnico', 'ttlInstalacao', 'ttlSolicInstalado', 'instalado', 'agendado', 'total', 'dataMin', 'dataMax')
+            );
         }
 
-
         // TESTE PARA O ITAU
+
         // Entrar no dashboard Itau
         if (Auth::user()->customer_id == 13) {
 
@@ -209,6 +267,55 @@ class DashboardController extends Controller
             }
         }
         return  [$totalInstalado, $totalAgendado];
+    }
+
+    public function mediaHour($result, $value)
+    {
+
+        try {
+            $ttlAcionamentoTecnico = 0;
+            $aux = 0;
+            foreach ($result as $key => $data) {
+                $aux++;
+                $time = explode(':', str_replace('-', '', $data->$value));
+                switch (count($time)) {
+                    case 3:
+                        $hour = $time[0] == '0' ? '0' : 3600 * $time[0];
+                        $minute = $time[1] == '0' ? '0' : 60 * $time[1];
+                        $init =  $hour + $minute + $time[2];
+                        break;
+                    case 2:
+                        $minute = $time[1] == '0' ? '0' : 60 * $time[1];
+                        $init =  $minute + $time[1];
+                        break;
+                    case 1:
+                        $init =  $time[0];
+                        break;
+                }
+                $ttlAcionamentoTecnico += $init;
+            }
+            $init = ($ttlAcionamentoTecnico / $aux);
+            $hours = floor($init / 3600);
+            $minutes = floor(($init / 60) % 60);
+            $seconds = $init % 60;
+
+            if ($hours < 10) {
+                $hours = '0' . $hours;
+            }
+            if ($minutes < 10) {
+                $minutes = '0' . $minutes;
+            }
+            if ($seconds < 10) {
+                $seconds = '0' . $seconds;
+            }
+
+            // $data = $hours + $minutes + $seconds;
+            $hora =  $hours . ':' . $minutes . ':' . $seconds;
+
+            return $hora;
+        } catch (\Exception $e) {
+            //echo 'Exceção capturada: ',  $e->getMessage(), "\n";
+        }
     }
 
     /**

@@ -140,9 +140,7 @@
             });
         })
 
-    /*
-    alert(Cookies.get("example"));
-*/
+
     /**
      * Mask CPF / CNPJ
      *

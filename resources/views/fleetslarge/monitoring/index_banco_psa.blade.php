@@ -425,7 +425,7 @@
             type: 'GET',
             success: function(data) {
                 searchRouteBlock = false;
-                if (data.lp_ignicao == "1") {
+                if (data.data.lp_ignicao == "1") {
                     $("#lp_ignicao").css({
                         "color": "green"
                     });
@@ -470,11 +470,10 @@
                     icon: truckIcon
                 }).addTo(mymap);
 
-                /*
                 $('#last-address').html(
-                    '<b>Último endereço válido:</b> ' + data.data.endereco
+                    '<b>Último endereço válido:</b> ' + data.data.end_logradouro + ', ' + data.data.end_cidade + ', ' + data.data.end_uf + ' - ' + data.data.estado + '.  <b>CEP:</b> ' + data.data.end_cep + '.'
                 );
-                */
+
                 Swal.close()
             }
         });

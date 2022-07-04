@@ -376,8 +376,6 @@ class MonitoringController extends Controller
     {
         try {
             $fleetslarges = $this->psaService->findByChassi($chassi);
-
-
             return response()->json(['status' => 'success', 'data' => $fleetslarges], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
