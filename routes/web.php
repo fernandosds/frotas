@@ -357,17 +357,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');
         Route::get('/show/status/ocorrence', 'FleetsLarge\DashboardController@showOcorrenceStatus')->name('fleetslarges.showOcorrenceStatus');
 
-        Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'cercas'], function () {
-            Route::get('/', 'FleetsLarge\CercaController@index')->name('fleetslarges.cerca');
-            Route::get('/new', 'FleetsLarge\CercaController@new')->name('fleetslarges.listagem');
-
-        });
-
-
         // Rotas para o banco PSA
         Route::group(['prefix' => 'psa'], function () {
             Route::get('/find/{chassis}', 'FleetsLarge\PsaController@findByChassi')->name('fleetslarges.bancopsa.findByChassi');
             Route::get('/monitoring/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPositionPSA')->name('fleetslarges.monitoring.lastPositionPSA');
+        });
+
+         // Rotas para as cercas Santander
+         Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'cercas'], function () {
+            Route::get('/', 'FleetsLarge\CercaController@index')->name('fleetslarges.cerca.list');
+            Route::get('/new', 'FleetsLarge\CercaController@new')->name('fleetslarges.cerca.new');
         });
 
         Route::group(['prefix' => 'monitoring'], function () {

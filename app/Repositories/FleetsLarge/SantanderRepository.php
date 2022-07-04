@@ -31,4 +31,17 @@ class SantanderRepository extends AbstractRepository
         return $this->model->where('chassis', $chassis)
             ->first();
     }
+
+    /**
+     * Find one register
+     *
+     * @param string $chassis
+     * @return mixed
+     */
+    public function getPlate()
+    {
+        return
+            $this->model->select('placa', 'chassis')
+            ->get();
+    }
 }
