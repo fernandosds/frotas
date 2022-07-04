@@ -3,13 +3,13 @@
 
 namespace App\Services\FleetsLarge;
 
-use App\Repositories\FleetsLarge\PsaRepository;
+use App\Repositories\FleetsLarge\SantanderRepository;
 
-class PsaService
+class SantanderService
 {
-    public function __construct(PsaRepository $psa)
+    public function __construct(SantanderRepository $santander)
     {
-        $this->psa = $psa;
+        $this->santander = $santander;
     }
 
     /**
@@ -17,7 +17,7 @@ class PsaService
      */
     public function all()
     {
-        $cars = $this->psa->all();
+        $cars = $this->santander->all();
 
         $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
         $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
@@ -25,6 +25,7 @@ class PsaService
         foreach ($cars as $car) {
             $car->placa_mercosul = fixPlate($car->placa);
             $car->periodo = explode(" ",  $car->data_instalacao);
+
             $car->data_inst = $car->periodo[0];
             $car->hora_inst = $car->periodo[1] ?? "00:00:00";
 
