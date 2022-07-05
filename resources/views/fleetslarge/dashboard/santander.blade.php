@@ -734,6 +734,19 @@
 
         let totalRowCount = new Array();
 
+        oTable.on('draw', function() {
+            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
+                search: 'applied'
+            }).count();
+
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
+        });
+
         function tableOneRowCount() {
             totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
             totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
@@ -755,6 +768,7 @@
 
             return totalRowCount;
         }
+
 
         tableOneRowCount();
 
