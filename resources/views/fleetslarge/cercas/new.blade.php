@@ -31,13 +31,13 @@
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label for="exampleSelect2" class="col-form-label">Placas: </label>
+
                         <select class="form-control leftBox seguradoresLeft col-md-10" id="seguradoresRight" multiple size="10">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
+                            @foreach($cars as $driver)
+                                <option value="">{{$driver->placa}}</option>
+                            @endforeach
                         </select>
+
                     </div>
                     <div class="col-lg-2">
                         <div class="kt-input-icon kt-input-icon--right btn-distribuir">
@@ -48,7 +48,8 @@
                     <div class="col-lg-4">
                         <div class="kt-input-icon kt-input-icon--right">
                             <label for="exampleSelect2" class="col-form-label">Placa direcionada: </label>
-                            <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" id="seguradoresLeft" name='seguradoras[]'>
+                            <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
+                                <!-- <option value=""></option> -->
                             </select>
                         </div>
                     </div>

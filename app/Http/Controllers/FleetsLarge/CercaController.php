@@ -26,8 +26,8 @@ class CercaController extends Controller
     public function new()
     {
         $data['cars'] = $this->cercaService->getPlate();
-        var_dump($data['cars']);die();
+        // var_dump($data['cars']);die();
 
-        return view('fleetslarge.cercas.new');
+        return view('fleetslarge.cercas.new', $data);
     }
 }
