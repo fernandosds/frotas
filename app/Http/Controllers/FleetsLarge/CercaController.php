@@ -20,7 +20,7 @@ class CercaController extends Controller
 
     public function index()
     {
-        return view('fleetslarge.cercas.lista');
+        return view('fleetslarge.cercas.list');
     }
 
     public function new()
@@ -28,6 +28,6 @@ class CercaController extends Controller
         $data['cars'] = $this->cercaService->getPlate();
         var_dump($data['cars']);die();
 
-        return view('fleetslarge.cercas.cerca');
+        return view('fleetslarge.cercas.new');
     }
 }
