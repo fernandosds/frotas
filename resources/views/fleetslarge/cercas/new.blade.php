@@ -33,8 +33,8 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-lg-4">
-                    <label for="exampleSelect2" class="col-form-label">Placas: </label>
+                <div class="col-lg-4" style="margin-top: 5px;">
+                        <label for="exampleSelect2" class="col-form-label">Placas: </label></br>
                     <select class="form-control col-md-10 leftBox seguradoresLeft js-example-basic-multiple" id="seguradoresRight" multiple="multiple">
                         @foreach($cars as $driver)
                         <option value="">{{$driver->placa}}</option>
