@@ -6,7 +6,7 @@ namespace App\Services\FleetsLarge;
 use App\Repositories\FleetsLarge\CercaRepository;
 use App\Repositories\FleetsLarge\SantanderRepository;
 
-class CercaService
+class GrupoCercaService
 {
     public function __construct(SantanderRepository $santander/*CercaRepository $cerca*/)
     {

@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\FleetsLarge;
 
 use App\Http\Controllers\Controller;
-use App\Services\FleetsLarge\CercaService;
+use App\Services\FleetsLarge\GrupoCercaService;
 use Illuminate\Http\Request;
 
-class CercaController extends Controller
+class GrupoCercaController extends Controller
 {
 
 
     /**
      * FleetController constructor.
      */
-    public function __construct(CercaService $cercaService)
+    public function __construct(GrupoCercaService $grupocercaService)
     {
-        $this->cercaService = $cercaService;
+        $this->grupocercaService = $grupocercaService;
     }
 
     public function index()
@@ -25,7 +25,7 @@ class CercaController extends Controller
 
     public function new()
     {
-        $data['cars'] = $this->cercaService->getPlate();
+        $data['cars'] = $this->grupocercaService->getPlate();
         // var_dump($data['cars']);die();
 
         return view('fleetslarge.cercas.new', $data);

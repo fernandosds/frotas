@@ -365,8 +365,8 @@ Route::group(['middleware' => 'auth'], function () {
 
          // Rotas para as cercas Santander
          Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'cercas'], function () {
-            Route::get('/', 'FleetsLarge\CercaController@index')->name('fleetslarges.cerca.list');
-            Route::get('/new', 'FleetsLarge\CercaController@new')->name('fleetslarges.cerca.new');
+            Route::get('/', 'FleetsLarge\GrupoCercaController@index')->name('fleetslarges.cerca.list');
+            Route::get('/new', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new');
         });
 
         Route::group(['prefix' => 'monitoring'], function () {
