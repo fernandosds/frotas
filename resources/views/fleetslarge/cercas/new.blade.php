@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style type="text/css">
 	.btn-distribuir {
 		display: grid;
@@ -31,13 +33,11 @@
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label for="exampleSelect2" class="col-form-label">Placas: </label>
-
-                        <select class="form-control leftBox seguradoresLeft col-md-10" id="seguradoresRight" multiple size="10">
+                        <select class="form-control col-md-10 leftBox seguradoresLeft js-example-basic-multiple" id="seguradoresRight" multiple="multiple">
                             @foreach($cars as $driver)
                                 <option value="">{{$driver->placa}}</option>
                             @endforeach
                         </select>
-
                     </div>
                     <div class="col-lg-2">
                         <div class="kt-input-icon kt-input-icon--right btn-distribuir">
@@ -73,6 +73,7 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 function moveSelected(classNAme) {
 		const leftBox = $('.' + classNAme);
@@ -88,6 +89,9 @@ function moveSelected(classNAme) {
 		$('.' + leftBox.attr('id')).empty().append(my_options);
 	}
 
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
 </script>
 
 @endsection
