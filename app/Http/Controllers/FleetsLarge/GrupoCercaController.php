@@ -30,4 +30,14 @@ class GrupoCercaController extends Controller
 
         return view('fleetslarge.cercas.new', $data);
     }
+
+    public function save(Request $request)
+    {
+
+        var_dump($request->all());
+        die();
+
+        // $data['cars'] = $this->grupocercaService->getPlate();
+        // return view('fleetslarge.cercas.new', $data);
+    }
 }
