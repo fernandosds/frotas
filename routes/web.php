@@ -368,8 +368,15 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/', 'FleetsLarge\GrupoCercaController@index')->name('fleetslarges.cerca.list');
             Route::get('/new', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new');
             Route::post('/save', 'FleetsLarge\GrupoCercaController@save')->name('fleetslarges.cerca.save');
-            Route::get('/list', 'FleetsLarge\GrupoUsuariosController@index')->name('fleetslarges.cerca.listUsers');
         });
+
+        // Rotas para Grupo de usuários cercas Santander
+        Route::group(['prefix' => 'grupos'], function () {
+            Route::get('/list', 'FleetsLarge\GrupoUsuariosController@index')->name('fleetslarges.grupo.list');
+            Route::get('/new', 'FleetsLarge\GrupoUsuariosController@new')->name('fleetslarges.grupo.new');
+        });
+
+
 
         Route::group(['prefix' => 'monitoring'], function () {
             Route::get('/{chassis?}', 'FleetsLarge\MonitoringController@index')->name('fleetslarges.monitoring.index');

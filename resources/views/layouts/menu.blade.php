@@ -427,6 +427,11 @@
                 </div>
             </li>
 
+            <li class="kt-menu__section ">
+                <h4 class="kt-menu__section-text">CERCAS</h4>
+                <i class="kt-menu__section-icon flaticon-more-v2"></i>
+            </li>
+
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <!-- GRANDES FROTAS -->
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -452,10 +457,16 @@
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.cerca.listUsers')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Usuário</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Usuário</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.grupo.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Usuário</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.grupo.new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Usuário</span></a></li>
                     </ul>
                 </div>
+            </li>
+
+
+            <li class="kt-menu__section ">
+                <h4 class="kt-menu__section-text">ANÁLISE DE DADOS</h4>
+                <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
 
 
@@ -517,6 +528,13 @@
 
             @endif
 -->
+
+
+            <li class="kt-menu__section ">
+                <h4 class="kt-menu__section-text">MAPA</h4>
+                <i class="kt-menu__section-icon flaticon-more-v2"></i>
+            </li>
+
             <!-- Mapa Geral -->
             @if( Auth::user()->customer_id == 7 || Auth::user()->customer_id == 8 || Auth::user()->customer_id == 11 || Auth::user()->customer_id == 13)
             <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
