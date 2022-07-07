@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\GrupoCerca;
 
 class GrupoCercaRelacionamento extends Model
 {
@@ -13,4 +14,8 @@ class GrupoCercaRelacionamento extends Model
         'chassis',
         'created_at'
     ];
+
+    public function grupoCerca(){
+        return $this->hasOne(GrupoCerca::class, 'grupo_id', 'id');
+    }
 }

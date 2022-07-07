@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     <tr id="">
-                        <td>Fulano</td>
+                        <td>nome</td>
                         <td>50</td>
                         <td>
                             <i class="text-success fa fa-circle"></i> Ativo
@@ -60,7 +60,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr id="">
+                    <!-- <tr id="">
                         <td>Fulano</td>
                         <td>50</td>
                         <td>
@@ -74,22 +74,7 @@
                                 </button>
                             </div>
                         </td>
-                    </tr>
-                    <tr id="">
-                        <td>Fulano</td>
-                        <td>50</td>
-                        <td>
-                            <i class="text-success fa fa-circle"></i> Ativo
-                        </td>
-                        <td style="width: 200px;">
-                            <div class="pull-right">
-                                <a href="#" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
-                                <button type="button" title="Deletar Usuário" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-user">
-                                    <span class="fa fa-fw fa-trash"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

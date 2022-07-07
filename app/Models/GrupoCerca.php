@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\GrupoCercaRelacionamentos;
+
 
 class GrupoCerca extends Model
 {
@@ -15,13 +17,12 @@ class GrupoCerca extends Model
     protected $table = 'grupos_cercas';
 
 
-
     /**
      * @var array
      */
     protected $dates = ['created_at', 'updated_at'];
 
-    protected $fillable = ['id', 'nome', 'id_usuario'];
+    protected $fillable = ['id', 'nome', 'id_usuario', 'status'];
 
     /**
      * @return array
@@ -31,7 +32,12 @@ class GrupoCerca extends Model
         return [
             'id'                 => $this->id,
             'nome'               => $this->nome,
-            'id_usuario'         => $this->id_usuario
+            'id_usuario'         => $this->id_usuario,
+            'status'             => $this->status
         ];
+    }
+
+    public function grupoCercaRelacionamento(){
+        return $this->belongsToMany(GrupoCercaRelacionamento::class, 'id', 'grupo_id');
     }
 }

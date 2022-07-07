@@ -3,15 +3,16 @@
 
 namespace App\Services\FleetsLarge;
 
-use App\Repositories\FleetsLarge\CercaRepository;
+use App\Repositories\FleetsLarge\CercasRepository;
 use App\Repositories\FleetsLarge\SantanderRepository;
 
 class GrupoCercaService
 {
-    public function __construct(SantanderRepository $santander/*CercaRepository $cerca*/)
+    public function __construct(SantanderRepository $santander, CercasRepository $cerca)
     {
         // $this->cerca = $cerca;
         $this->santander = $santander;
+        $this->cerca     = $cerca;
     }
 
     /**
@@ -30,5 +31,9 @@ class GrupoCercaService
     {
         $cars = $this->santander->getPlate();
         return $cars;
+    }
+
+    public function saveCercaGrupo($id, $data){
+        $this->cerca->saveCercaGrupo($id, $data);
     }
 }
