@@ -27,4 +27,12 @@ class GrupoUsuariosController extends Controller
         $data['users'] = $this->userService->paginate();
         return view('fleetslarge.cercas.grupo_usuario.new', $data);
     }
+
+    public function save(Request $request)
+    {
+
+        var_dump($request->all());
+        die();
+
+    }
 }
