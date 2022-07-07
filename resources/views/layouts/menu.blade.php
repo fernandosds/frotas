@@ -442,6 +442,21 @@
                     </ul>
                 </div>
             </li>
+            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <!-- GRANDES FROTAS -->
+                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                    <span class="kt-menu__link-icon"><i class="flaticon-users-1"></i></i></span>
+                    <span class="kt-menu__link-text">Grupo Usuários</span>
+                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                    <ul class="kt-menu__subnav">
+                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.cerca.listUsers')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Usuário</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo Usuário</span></a></li>
+                    </ul>
+                </div>
+            </li>
 
 
             <!-- Iframe Santander -->

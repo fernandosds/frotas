@@ -368,6 +368,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/', 'FleetsLarge\GrupoCercaController@index')->name('fleetslarges.cerca.list');
             Route::get('/new', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new');
             Route::post('/save', 'FleetsLarge\GrupoCercaController@save')->name('fleetslarges.cerca.save');
+            Route::get('/list', 'FleetsLarge\GrupoUsuariosController@index')->name('fleetslarges.cerca.listUsers');
         });
 
         Route::group(['prefix' => 'monitoring'], function () {
