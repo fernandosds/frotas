@@ -16,7 +16,7 @@
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
-                Grupo de Cercas e Veículos
+                Grupo de Usuários
             </h3>
         </div>
     </div>
@@ -28,18 +28,19 @@
         <div class="kt-portlet__body">
             <div class="form-group row">
                 <div class="col-lg-4">
-                    <label>Nome Cerca:</label>
+                    <label>Nome Grupo:</label>
                     <input type="text" class="form-control" id="name">
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-lg-4" style="margin-top: 5px;">
                         <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
-                    <select class="form-control col-md-10 leftBox seguradoresLeft js-example-basic-multiple" id="seguradoresRight" multiple="multiple">
+                    <select class="form-control col-md-10 leftBox seguradoresLeft" id="seguradoresRight" multiple size="10">
                         @foreach($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
+                    <span class="form-text text-muted"> *Selecione um ou mais usuários e os direcione para o quadro á direita.</span>
                 </div>
                 <div class="col-lg-2">
                     <div class="kt-input-icon kt-input-icon--right btn-distribuir">
@@ -51,7 +52,6 @@
                     <div class="kt-input-icon kt-input-icon--right">
                         <label for="exampleSelect2" class="col-form-label">Incluir Usuários: </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
-                            <!-- <option value=""></option> -->
                         </select>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
             <div class="kt-form__actions">
                 <div class="row">
                     <div class="col-lg-3 ml-lg-auto">
-                        <button type="button" class="btn btn-success" id="btn-cerca-save">Confirmar</button>
+                        <button type="button" class="btn btn-success" id="btn-user-save">Confirmar</button>
                         <a href="#" class="btn btn-secondary">Voltar</a>
                     </div>
                 </div>
@@ -91,17 +91,14 @@
         $('.' + leftBox.attr('id')).empty().append(my_options);
     }
 
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
 
-    $('#btn-cerca-save').click(function() {
+    $('#btn-user-save').click(function() {
         cerca_id = $('#id').val();
 
         var data = {
             _token: '{{csrf_token()}}',
-            placas: $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
-            name: $('#name').val()
+            users: $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
+            nameGroup: $('#name').val()
         }
 
         ajax_store(cerca_id, "fleetslarges/cercas", data);

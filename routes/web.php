@@ -375,6 +375,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'grupos'], function () {
             Route::get('/list', 'FleetsLarge\GrupoUsuariosController@index')->name('fleetslarges.grupo.list');
             Route::get('/new', 'FleetsLarge\GrupoUsuariosController@new')->name('fleetslarges.grupo.new');
+            Route::post('/save', 'FleetsLarge\GrupoUsuariosController@save')->name('fleetslarges.grupo.save');
         });
 
 
