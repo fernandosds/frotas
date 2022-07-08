@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group row" style="margin-top: -10px;">
+                    <div class="form-group row" style="margin-top: -10px;"> 
                         <div class="col-lg-4" style="margin-top: 60px;">
                             <div class="kt-input-icon kt-input-icon--right btn-distribuir">
                                 <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
