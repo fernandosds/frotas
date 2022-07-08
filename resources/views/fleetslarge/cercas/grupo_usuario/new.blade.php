@@ -97,11 +97,11 @@
 
         var data = {
             _token: '{{csrf_token()}}',
-            placas: $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
-            name: $('#name').val()
+            users: $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
+            nameGroup: $('#name').val()
         }
 
-        ajax_store(cerca_id, "fleetslarges/cercas/", data);
+        ajax_store(cerca_id, "fleetslarges/cercas", data);
 
     });
 </script>
