@@ -45,21 +45,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr id="">
-                        <td>nome</td>
-                        <td>50</td>
-                        <td>
-                            <i class="text-success fa fa-circle"></i> Ativo
-                        </td>
-                        <td style="width: 200px;">
-                            <div class="pull-right">
-                                <a href="#" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
-                                <button type="button" title="Deletar Usuário" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-user">
-                                    <span class="fa fa-fw fa-trash"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach($grupos as $grupo)
+                        <tr id="">
+                            <td>{{$grupo->nome}}</td>
+                            <td>{{count($grupo->grupoCercaRelacionamento)}}</td>
+                            <td>
+                                @if($grupo->status)
+                                    <i class="text-success fa fa-circle"></i> Ativo
+                                @else 
+                                    <i class="text-error fa fa-circle"></i> Inativo
+                                @endif
+                            </td>
+                            <td style="width: 200px;">
+                                <div class="pull-right">
+                                    <a href="{{ route('fleetslarges.cerca.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
+                                    <button type="button" title="Deletar Usuário" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-user">
+                                        <span class="fa fa-fw fa-trash"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                     <!-- <tr id="">
                         <td>Fulano</td>
                         <td>50</td>

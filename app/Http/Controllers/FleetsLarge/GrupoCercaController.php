@@ -24,49 +24,79 @@ class GrupoCercaController extends Controller
 
     public function index()
     {
-        $grupos = GrupoCerca::all();
-        return view('fleetslarge.cercas.list', $grupos);
+        $data['grupos'] = GrupoCerca::with('grupoCercaRelacionamento')->get();
+        return view('fleetslarge.cercas.list', $data);
     }
 
-    public function new()
+    public function new(Request $request)
     {
+        
         $data['cars'] = $this->grupocercaService->getPlate();
-
-        return view('fleetslarge.cercas.new', $data);
+        if(!isset($request->id)){
+            return view('fleetslarge.cercas.new', $data);
+        }else{
+            
+            $gruposCerca = GrupoCerca::with('grupoCercaRelacionamento')->where('id', $request->id)->first();
+            $placas = $this->grupocercaService->getPlaceGroupAll($gruposCerca->grupoCercaRelacionamento);
+            $data['grupo']  = $gruposCerca;
+            $data['placas'] = $placas; 
+            return view('fleetslarge.cercas.new', $data);
+        }
     }
 
     public function save(Request $request)
     {
+       
         $placas = $request->placas;
+        //SE ID GRUPO FOR NULL ENTÃO É CADASTRO
+        if(is_null($request->id_grupo)){
+            $grupoCerca = new GrupoCerca();
+            $grupoCerca->created_at = Carbon::now();
+        }else{
+            $grupoCerca = GrupoCerca::find($request->id_grupo);
+            $grupoCerca->updated_at = Carbon::now();
+        }
 
-        $grupoCerca = new GrupoCerca();
         $grupoCerca->nome       = $request->name;
         $grupoCerca->user_id    = Auth::user()->id;
-        $grupoCerca->created_at = Carbon::now();
-
+        
         if($grupoCerca->save()){
             $arrGrupoCercaRelacionamento = [];
+            $arrMontagem = [];
             foreach($placas as $placa){
                 $car = BancoSantander::where('placa', $placa)->first();
-                $arrMontagem = [
+                $arrMontagem[] = [
                     'grupo_id'      => $grupoCerca->id,
-                    'chassis'        => $car->chassis,
+                    'chassis'       => $car->chassis,
                     'created_at'    => Carbon::now()
                 ];
 
                 $arrGrupoCercaRelacionamento[] = $arrMontagem;
-
-                //COMENTAR ESSAS DUAS LINHAS
+            }
+            if(is_null($request->id_grupo)){
                 $grupoRelacionamento  =  new GrupoCercaRelacionamento();
-                $result = $grupoRelacionamento->insert($arrMontagem) ? true : false;
+                return $grupoRelacionamento->insert($arrMontagem)
+                    ? response()->json(['status' => 'success'], 200) 
+                    : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+            }else{
+                if(GrupoCercaRelacionamento::where('grupo_id', $grupoCerca->id)->delete()){
+                    $grupoRelacionamento  =  new GrupoCercaRelacionamento();
+                    return $grupoRelacionamento->insert($arrMontagem) 
+                        ? response()->json(['status' => 'success'], 200) 
+                        : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+                }
             }
 
-            try {
-                $this->grupocercaService->saveCercaGrupo($grupoCerca->id, $arrGrupoCercaRelacionamento);
-                return response()->json(['status' => 'success'], 200);
-            } catch (\Exception $e) {
-                return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
-            }
+            // try {
+            //     $this->grupocercaService->saveCercaGrupo($grupoCerca->id, $arrGrupoCercaRelacionamento);
+            //     return response()->json(['status' => 'success'], 200);
+            // } catch (\Exception $e) {
+            //     return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+            // }
         }
+    }
+
+    public function delete(Request $request){
+
     }
 }

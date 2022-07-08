@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\GrupoCerca;
+use App\Models\BancoSantander;
 
 class GrupoCercaRelacionamento extends Model
 {
@@ -16,6 +17,7 @@ class GrupoCercaRelacionamento extends Model
     ];
 
     public function grupoCerca(){
-        return $this->hasOne(GrupoCerca::class, 'grupo_id', 'id');
+        return $this->hasOne(GrupoCerca::class, 'id', 'grupo_id');
     }
+
 }

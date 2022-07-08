@@ -32,8 +32,17 @@ class GrupoCercaService
         $cars = $this->santander->getPlate();
         return $cars;
     }
+    public function getPlaceGroupAll($gruposRelacionamento){
+        $placas = array();
+        foreach($gruposRelacionamento as $grupoRelacionamento){
+            $santanderAll = $this->santander->findByChassi($grupoRelacionamento->chassis);
 
-    public function saveCercaGrupo($id, $data){
-        $this->cerca->saveCercaGrupo($id, $data);
+            $placas[] = $santanderAll->placa;
+        }
+        return $placas;
+    }
+
+    public function saveCercaGrupo($id, $id_grupo, $data){
+        $this->cerca->saveCercaGrupo($id, $id_grupo, $data);
     }
 }

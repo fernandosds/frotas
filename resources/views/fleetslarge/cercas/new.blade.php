@@ -30,8 +30,9 @@
                 <div class="col-md-6">
                     <div class="form-group row">
                         <div class="col-lg-12">
+                            <input type="hidden" name="grupo" id="grupo" value="{{isset($grupo) ? $grupo->id : null}}">
                             <label for="name">Nome Cerca:</label>
-                            <input type="text" class="form-control" style="background-color: #ffffff;" id="name">
+                            <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
                         </div>
                         <div class="col-lg-12">
                             <label for="exampleSelect2" class="col-form-label">Placas: </label><br><!--  js-example-basic-multiple-->
@@ -56,6 +57,11 @@
                                 <label for="exampleSelect2" class="col-form-label">Placa direcionada: </label>
                                 <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
                                     <!-- <option value=""></option> -->
+                                    @if(isset($placas))
+                                        @foreach($placas as $placa)
+                                            <option value="">{{$placa}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -105,11 +111,13 @@
 
     $('#btn-cerca-save').click(function() {
         cerca_id = $('#id').val();
+        var id_grupo = $('#grupo').val();
 
         var data = {
             _token: '{{csrf_token()}}',
             placas: $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
-            name: $('#name').val()
+            name: $('#name').val(),
+            id_grupo: id_grupo,
         }
 
         ajax_store(cerca_id, "fleetslarges/cercas", data);
