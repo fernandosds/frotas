@@ -4,20 +4,20 @@
 namespace App\Repositories\FleetsLarge;
 
 
-use App\Models\GrupoCerca;
-use App\Models\GrupoCercaRelacionamento;
+use App\Models\GrupoUsuario;
+use App\Models\GrupoUsuarioelacionamento;
 use App\Repositories\AbstractRepository;
 use Illuminate\Support\Facades\Auth;
 
-class CercasRepository extends AbstractRepository
+class UsuariosRepository extends AbstractRepository
 {
 
-    public function __construct(GrupoCerca $model)
+    public function __construct(GrupoUsuario $model)
     {
         $this->model = $model;
     }
 
-    public function saveCercaGrupo($id, $data)
+    public function saveGrupoUsuario($id, $data)
     {
         try {
             $cercas = $this->model->find($id);
