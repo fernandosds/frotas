@@ -369,7 +369,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new');
             Route::get('/new/{id}', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new.edit');
             Route::post('/save', 'FleetsLarge\GrupoCercaController@save')->name('fleetslarges.cerca.save');
-            Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
+            Route::get('/delete/{id}', 'FleetsLarge\GrupoCercaController@destroy')->name('fleetslarges.cerca.destroy');
+           // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
         });
 
         // Rotas para Grupo de usuários cercas Santander

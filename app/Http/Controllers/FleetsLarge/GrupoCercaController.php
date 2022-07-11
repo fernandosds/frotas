@@ -17,9 +17,10 @@ class GrupoCercaController extends Controller
     /**
      * FleetController constructor.
      */
-    public function __construct(GrupoCercaService $grupocercaService)
+    public function __construct(GrupoCercaService $grupocercaService, GrupoCercaRelacionamentoService $grupocercaRelacionamentoService)
     {
         $this->grupocercaService = $grupocercaService;
+        $this->grupocercaRelacionamentoService = $grupocercaRelacionamentoService;
     }
 
     public function index()
@@ -91,7 +92,10 @@ class GrupoCercaController extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function destroy(Int $id)
     {
+        $this->grupocercaRelacionamentoService->destroy($id);
+        $this->grupocercaService->destroy($id);
+        return back()->with(['status' => 'Deleted successfully']);
     }
 }

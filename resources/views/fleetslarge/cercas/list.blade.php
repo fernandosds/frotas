@@ -52,7 +52,7 @@
                         <td style="width: 200px;">
                             <div class="pull-right">
                                 <a href="{{ route('fleetslarges.cerca.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
-                                <button type="button" title="Excluir cerca" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-user">
+                                <button type="button" title="Excluir cerca" data-id="{{$grupo->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-cerca">
                                     <span class="fa fa-fw fa-trash"></span>
                                 </button>
                             </div>
@@ -74,13 +74,13 @@
 
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2, 3];
-        columsPdf = [0, 1, 2, 3];
+        columns = [0, 1];
+        columsPdf = [0, 1];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
             "order": [00, 'asc'],
             "columnDefs": [{
-                "targets": 05,
+                "targets": 02,
                 "orderable": false
             }],
             //"bDestroy": true,
@@ -131,5 +131,14 @@
         });
 
     });
+
+
+    /* Deletar */
+    $('.btn-delete-cerca').click(function() {
+        var id = $(this).data('id');
+        console.log(id)
+        var url = "{{url('fleetslarges/cercas/delete')}}/" + id;
+        ajax_delete(id, url)
+    })
 </script>
 @endsection
