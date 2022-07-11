@@ -27,49 +27,49 @@
         @csrf
         <input type="hidden" name="id" id="id" value="{{ $cerca->id ?? '' }}" />
         <div class="kt-portlet__body">
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <input type="hidden" name="grupo" id="grupo" value="{{isset($grupo) ? $grupo->id : null}}">
-                            <label for="name">Nome Cerca:</label>
-                            <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
-                        </div>
+            <div class="form-group row">
+                <div class="col-lg-4">
+                    <input type="hidden" name="grupo" id="grupo" value="{{isset($grupo) ? $grupo->id : null}}">
+                    <label for="name">Nome Cerca:</label>
+                    <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-4">
+                    <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
+                    <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10">
+                        @foreach($cars as $driver)
+                        <option value="">{{$driver->placa}}</option>405
+                        @endforeach
+                    </select>
+                    <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
+                </div>
+                <div class="col-lg-2">
+                    <div class="kt-input-icon kt-input-icon--right btn-distribuir">
+                        <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
-                            <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10">
-                                @foreach($cars as $driver)
-                                    <option value="">{{$driver->placa}}</option>405
-                                @endforeach
-                            </select>
-                            <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="kt-input-icon kt-input-icon--right btn-distribuir">
-                                <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
-                                <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="kt-input-icon kt-input-icon--right">
-                                <label for="exampleSelect2" class="col-form-label">Placa direcionada: </label>
-                                <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
-                                    @if(isset($placas))
-                                        @foreach($placas as $placa)
-                                            <option value="">{{$placa}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="kt-input-icon kt-input-icon--right">
+                        <label for="exampleSelect2" class="col-form-label">Placa direcionada: </label>
+                        <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
+                            @if(isset($placas))
+                            @foreach($placas as $placa)
+                            <option value="">{{$placa}}</option>
+                            @endforeach
+                            @endif
+                        </select>
                     </div>
+                </div>
+            </div>
         </div>
         <div class="kt-portlet__foot">
             <div class="kt-form__actions">
                 <div class="row">
                     <div class="col-lg-3 ml-lg-auto">
                         <button type="button" class="btn btn-success" id="btn-cerca-save">Confirmar</button>
-                        <a href="#" class="btn btn-secondary">Voltar</a>
+                        <a href="{{route('fleetslarges.cerca.list')}}" class="btn btn-secondary">Voltar</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,6 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-
     function moveSelected(classNAme) {
         const leftBox = $('.' + classNAme);
         var $options = $("." + classNAme + " option:selected").clone();
