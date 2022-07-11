@@ -7,8 +7,8 @@
     .btn-distribuir {
         display: grid;
         row-gap: 15px;
-        margin-top: 5rem;
-        margin-left: 3rem;
+        margin-top: 8rem;
+        margin-left: 2rem;
     }
 </style>
 
@@ -16,6 +16,7 @@
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
+                <i class="la la-user"></i>
                 Grupo de Usuários
             </h3>
         </div>
@@ -40,7 +41,7 @@
                         <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
-                    <span class="form-text text-muted"> *Selecione um ou mais usuários e os direcione para o quadro á direita.</span>
+                    <span class="form-text text-muted"> <i class="flaticon-questions-circular-button"></i> Selecione um ou mais usuários e os direcione para o quadro á direita.</span>
                 </div>
                 <div class="col-lg-2">
                     <div class="kt-input-icon kt-input-icon--right btn-distribuir">
@@ -48,7 +49,7 @@
                         <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4" style="margin-top: 9px;">
                     <div class="kt-input-icon kt-input-icon--right">
                         <label for="exampleSelect2" class="col-form-label">Incluir Usuários: </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
