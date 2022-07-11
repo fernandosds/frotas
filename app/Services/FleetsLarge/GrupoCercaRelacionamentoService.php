@@ -46,10 +46,4 @@ class GrupoCercaRelacionamentoService
         $this->cerca->saveCercaGrupo($id, $id_grupo, $data);
     }
 
-
-    public function destroy($id)
-    {
-        $cerca = $this->cerca->delete($id);
-        return $cerca;
-    }
 }

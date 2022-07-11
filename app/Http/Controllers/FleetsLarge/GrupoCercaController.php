@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FleetsLarge;
 
 use App\Http\Controllers\Controller;
 use App\Services\FleetsLarge\GrupoCercaService;
+use App\Services\FleetsLarge\GrupoCercaRelacionamentoService;
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
 use App\Models\BancoSantander;
@@ -94,8 +95,7 @@ class GrupoCercaController extends Controller
 
     public function destroy(Int $id)
     {
-        $this->grupocercaRelacionamentoService->destroy($id);
-        $this->grupocercaService->destroy($id);
-        return back()->with(['status' => 'Deleted successfully']);
+        return $this->grupocercaService->destroy($id);
+        // return Redirect::back()->with(['status' => 'Deleted successfully'], 200);
     }
 }

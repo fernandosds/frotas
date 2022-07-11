@@ -70,6 +70,7 @@
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript" src="{{asset('js/bootstrap-select-teste.js')}}"></script>
 
 <script>
     $(document).ready(function() {
@@ -135,7 +136,6 @@
     /* Deletar */
     $('.btn-delete-cerca').click(function() {
         var id = $(this).data('id');
-        console.log(id)
         var url = "{{url('fleetslarges/cercas/delete')}}/" + id;
         ajax_delete(id, url)
     })
