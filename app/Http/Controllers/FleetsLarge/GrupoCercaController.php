@@ -50,6 +50,12 @@ class GrupoCercaController extends Controller
     {
 
         $placas = $request->placas;
+        // dd(count($placas));
+
+        if(count($placas) > 50){
+            return response()->json(['status' => 'error', 'errors' => 'Não é permitido adicionar mais de 50 placas no grupo'], 400);
+        }
+
         //SE ID GRUPO FOR NULL ENTÃO É CADASTRO
         if (is_null($request->id_grupo)) {
             $grupoCerca = new GrupoCerca();
