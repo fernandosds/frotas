@@ -357,11 +357,27 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');
         Route::get('/show/status/ocorrence', 'FleetsLarge\DashboardController@showOcorrenceStatus')->name('fleetslarges.showOcorrenceStatus');
 
-
         // Rotas para o banco PSA
         Route::group(['prefix' => 'psa'], function () {
             Route::get('/find/{chassis}', 'FleetsLarge\PsaController@findByChassi')->name('fleetslarges.bancopsa.findByChassi');
             Route::get('/monitoring/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPositionPSA')->name('fleetslarges.monitoring.lastPositionPSA');
+        });
+
+        // Rotas para as cercas Santander
+        Route::group(['prefix' => 'cercas'], function () {
+            Route::get('/', 'FleetsLarge\GrupoCercaController@index')->name('fleetslarges.cerca.list');
+            Route::get('/new', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new');
+            Route::get('/new/{id}', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new.edit');
+            Route::post('/save', 'FleetsLarge\GrupoCercaController@save')->name('fleetslarges.cerca.save');
+            Route::get('/delete/{id}', 'FleetsLarge\GrupoCercaController@destroy')->name('fleetslarges.cerca.destroy');
+           // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
+        });
+
+        // Rotas para Grupo de usuários cercas Santander
+        Route::group(['prefix' => 'grupos'], function () {
+            Route::get('/list', 'FleetsLarge\GrupoUsuariosController@index')->name('fleetslarges.grupo.list');
+            Route::get('/new', 'FleetsLarge\GrupoUsuariosController@new')->name('fleetslarges.grupo.new');
+            Route::post('/save', 'FleetsLarge\GrupoUsuariosController@save')->name('fleetslarges.grupo.save');
         });
 
         Route::group(['prefix' => 'monitoring'], function () {
