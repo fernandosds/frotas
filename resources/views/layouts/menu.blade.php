@@ -447,9 +447,12 @@
                     </ul>
                 </div>
             </li>
+
+
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <!-- GRANDES FROTAS -->
-                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+
+                <!--     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="flaticon-users-1"></i></i></span>
                     <span class="kt-menu__link-text">Grupo Usuários</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
@@ -462,7 +465,7 @@
                     </ul>
                 </div>
             </li>
-
+-->
 
             <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">ANÁLISE DE DADOS</h4>

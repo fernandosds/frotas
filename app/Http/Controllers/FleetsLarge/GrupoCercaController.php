@@ -49,10 +49,13 @@ class GrupoCercaController extends Controller
     public function save(Request $request)
     {
 
-        $placas = $request->placas;
-        // dd(count($placas));
+        if (empty($request->name)) {
+            return response()->json(['status' => 'error', 'errors' => 'Não é permitido criar um Grupo de Cerca com o campo nome vazio'], 400);
+        }
 
-        if(count($placas) > 50){
+        $placas = $request->placas;
+
+        if (count($placas) > 50) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido adicionar mais de 50 placas no grupo'], 400);
         }
 

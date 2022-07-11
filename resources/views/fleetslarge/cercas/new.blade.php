@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="kt-input-icon kt-input-icon--right">
-                        <label for="exampleSelect2" class="col-form-label">Placa direcionada: </label>
+                        <label for="exampleSelect2" class="col-form-label">Placa(s) adicionada(s): </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
                             @if(isset($placas))
                                 @foreach($placas as $placa)
