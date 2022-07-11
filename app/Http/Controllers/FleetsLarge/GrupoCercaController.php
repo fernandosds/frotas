@@ -8,6 +8,7 @@ use App\Services\FleetsLarge\GrupoCercaRelacionamentoService;
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
 use App\Models\BancoSantander;
+use App\Services\LogService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -15,13 +16,17 @@ use Carbon\Carbon;
 class GrupoCercaController extends Controller
 {
 
+    private $logService;
+
     /**
      * FleetController constructor.
+     * @var LogService
      */
-    public function __construct(GrupoCercaService $grupocercaService, GrupoCercaRelacionamentoService $grupocercaRelacionamentoService)
+    public function __construct(GrupoCercaService $grupocercaService, GrupoCercaRelacionamentoService $grupocercaRelacionamentoService, LogService $logService)
     {
         $this->grupocercaService = $grupocercaService;
         $this->grupocercaRelacionamentoService = $grupocercaRelacionamentoService;
+        $this->logService = $logService;
     }
 
     public function index()
@@ -64,6 +69,7 @@ class GrupoCercaController extends Controller
             $grupoCerca = new GrupoCerca();
             $grupoCerca->created_at = Carbon::now();
         } else {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Monitorou a cerca ' . $request->id_grupo);
             $grupoCerca = GrupoCerca::find($request->id_grupo);
             $grupoCerca->updated_at = Carbon::now();
         }
@@ -75,6 +81,7 @@ class GrupoCercaController extends Controller
             $arrGrupoCercaRelacionamento = [];
             $arrMontagem = [];
             if (!$placas) {
+                $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Tentou criar uma cerca com mais de 50 veículos');
                 return response()->json(['status' => 'error', 'errors' => 'Necessário adicionar uma placa para gravar o grupo de cerca'], 400);
             }
             foreach ($placas as $placa) {
@@ -88,12 +95,14 @@ class GrupoCercaController extends Controller
             }
             if (is_null($request->id_grupo)) {
                 $grupoRelacionamento  =  new GrupoCercaRelacionamento();
+                $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Criou a cerca: ' . $request->name);
                 return $grupoRelacionamento->insert($arrMontagem)
                     ? response()->json(['status' => 'success'], 200)
                     : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
             } else {
                 if (GrupoCercaRelacionamento::where('grupo_id', $grupoCerca->id)->delete()) {
                     $grupoRelacionamento  =  new GrupoCercaRelacionamento();
+                    $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Editou a cerca: ' . $grupoCerca->id);
                     return $grupoRelacionamento->insert($arrMontagem)
                         ? response()->json(['status' => 'success'], 200)
                         : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -104,6 +113,7 @@ class GrupoCercaController extends Controller
 
     public function destroy(Int $id)
     {
+        $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Deletou a cerca: ' . $id);
         return $this->grupocercaService->destroy($id);
     }
 }
