@@ -167,7 +167,7 @@
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "Nenhum registro encontrado",
-                "sEmptyTable": "Nenhum registro disponível nesta tabela",
+                "sEmptyTable": "Nenhuma cerca cadastrada no sistema",
                 "sInfo": "Mostrando registros de _START_ até _END_ de um total de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando registros de 0 até 0 de um total de 0 registros",
                 "sInfoFiltered": "(filtrado de um total de _MAX_ registros)",

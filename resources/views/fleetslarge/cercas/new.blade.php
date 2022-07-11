@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-lg-3 ml-lg-auto">
                         <button type="button" class="btn btn-success" id="btn-cerca-save">Confirmar</button>
-                        <a href="#" class="btn btn-secondary">Voltar</a>
+                        <a href="{{route('fleetslarges.cerca.list')}}" class="btn btn-secondary">Voltar</a>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,6 @@
 <script src="{{ asset('js/teste/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ asset('js/teste/bootstrap-select.js') }}"></script>
 <script>
-
     function moveSelected(classNAme) {
         const leftBox = $('.' + classNAme);
         var $options = $("." + classNAme + " option:selected").clone();
