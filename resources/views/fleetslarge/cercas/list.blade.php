@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     @foreach($grupos as $grupo)
-                    <tr id="">
+                    <tr id="_tr_user_{{$grupo->id}}">
                         <td>{{$grupo->nome}}</td>
                         <td>{{count($grupo->grupoCercaRelacionamento)}}</td>
                         <td style="width: 200px;">
@@ -71,7 +71,6 @@
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="{{asset('js/bootstrap-select-teste.js')}}"></script>
 
 <script>
     $(document).ready(function() {

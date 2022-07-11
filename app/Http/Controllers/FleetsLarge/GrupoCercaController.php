@@ -96,6 +96,5 @@ class GrupoCercaController extends Controller
     public function destroy(Int $id)
     {
         return $this->grupocercaService->destroy($id);
-        // return Redirect::back()->with(['status' => 'Deleted successfully'], 200);
     }
 }
