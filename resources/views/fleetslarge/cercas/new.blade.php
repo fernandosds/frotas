@@ -2,7 +2,7 @@
 
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link href="{{asset('js/select2-teste.css')}}" rel="stylesheet" type="text/css" />
+
 <style type="text/css">
     .btn-distribuir {
         display: grid;
@@ -33,19 +33,13 @@
                             <label for="name">Nome Cerca:</label>
                             <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
                         </div>
-<<<<<<< HEAD
-                        <div class="col-lg-12">
-                            <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
-                            <select class="form-control col-md-12  leftBox  seguradoresLeft" id="seguradoresRight" multiple="multiple">
-=======
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-4">
                             <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
                             <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10">
->>>>>>> 3c4a96f58050418bac8401a13c7d77d894c4edd5
                                 @foreach($cars as $driver)
-                                <option value="">{{$driver->placa}}</option>
+                                    <option value="">{{$driver->placa}}</option>405
                                 @endforeach
                             </select>
                             <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
