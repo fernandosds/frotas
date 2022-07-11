@@ -26,6 +26,7 @@
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
                 <h3 class="kt-portlet__head-title">
+                    <i class="fa fa-car-alt"></i>
                     Grupo de Cercas e Veículos
                 </h3>
             </div>

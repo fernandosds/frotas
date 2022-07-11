@@ -7,8 +7,8 @@
     .btn-distribuir {
         display: grid;
         row-gap: 15px;
-        margin-top: 5rem;
-        margin-left: 3rem;
+        margin-top: 8rem;
+        margin-left: 2rem;
     }
 </style>
 
@@ -16,6 +16,7 @@
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
+                <i class="fa fa-car-alt"></i>
                 Grupo de Cercas e Veículos
             </h3>
         </div>
@@ -26,37 +27,39 @@
         @csrf
         <input type="hidden" name="id" id="id" value="{{ $cerca->id ?? '' }}" />
         <div class="kt-portlet__body">
-            <div class="row">
-                <div class="col-md-6">
                     <div class="form-group row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-4">
                             <input type="hidden" name="grupo" id="grupo" value="{{isset($grupo) ? $grupo->id : null}}">
                             <label for="name">Nome Cerca:</label>
                             <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
                         </div>
+<<<<<<< HEAD
                         <div class="col-lg-12">
                             <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
                             <select class="form-control col-md-12  leftBox  seguradoresLeft" id="seguradoresRight" multiple="multiple">
+=======
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
+                            <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10">
+>>>>>>> 3c4a96f58050418bac8401a13c7d77d894c4edd5
                                 @foreach($cars as $driver)
                                 <option value="">{{$driver->placa}}</option>
                                 @endforeach
                             </select>
+                            <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row" style="margin-top: -10px;"> 
-                        <div class="col-lg-4" style="margin-top: 60px;">
+                        <div class="col-lg-2">
                             <div class="kt-input-icon kt-input-icon--right btn-distribuir">
                                 <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
                                 <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-4">
                             <div class="kt-input-icon kt-input-icon--right">
                                 <label for="exampleSelect2" class="col-form-label">Placa direcionada: </label>
                                 <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
-                                    <!-- <option value=""></option> -->
                                     @if(isset($placas))
                                         @foreach($placas as $placa)
                                             <option value="">{{$placa}}</option>
@@ -66,8 +69,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
         <div class="kt-portlet__foot">
             <div class="kt-form__actions">
