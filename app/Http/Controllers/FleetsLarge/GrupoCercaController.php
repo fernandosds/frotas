@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\FleetsLarge;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use App\Services\FleetsLarge\GrupoCercaService;
+use App\Services\UserService;
 use App\Services\FleetsLarge\GrupoCercaRelacionamentoService;
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
+use App\Models\GrupoUsuarioRelacionamento;
 use App\Models\BancoSantander;
 use App\Services\LogService;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +25,12 @@ class GrupoCercaController extends Controller
      * FleetController constructor.
      * @var LogService
      */
-    public function __construct(GrupoCercaService $grupocercaService, GrupoCercaRelacionamentoService $grupocercaRelacionamentoService, LogService $logService)
+    public function __construct(GrupoCercaService $grupocercaService, GrupoCercaRelacionamentoService $grupocercaRelacionamentoService, LogService $logService, UserService $userService)
     {
         $this->grupocercaService = $grupocercaService;
         $this->grupocercaRelacionamentoService = $grupocercaRelacionamentoService;
         $this->logService = $logService;
+        $this->userService = $userService;
     }
 
     public function index()
@@ -38,6 +42,7 @@ class GrupoCercaController extends Controller
     public function new(Request $request)
     {
 
+        $data['users'] = $this->userService->paginate();
         $data['cars'] = $this->grupocercaService->getPlate();
         if (!isset($request->id)) {
             return view('fleetslarge.cercas.new', $data);
@@ -54,11 +59,13 @@ class GrupoCercaController extends Controller
     public function save(Request $request)
     {
 
+        
         if (empty($request->name)) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido criar um Grupo de Cerca com o campo nome vazio'], 400);
         }
 
         $placas = $request->placas;
+        $usuarios = $request->usuarios;
 
         if (count($placas) > 50) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido adicionar mais de 50 placas no grupo'], 400);
@@ -76,7 +83,6 @@ class GrupoCercaController extends Controller
 
         $grupoCerca->nome       = $request->name;
         $grupoCerca->user_id    = Auth::user()->id;
-
         if ($grupoCerca->save()) {
             $arrGrupoCercaRelacionamento = [];
             $arrMontagem = [];
@@ -93,17 +99,34 @@ class GrupoCercaController extends Controller
                 ];
                 $arrGrupoCercaRelacionamento[] = $arrMontagem;
             }
+
+            foreach($usuarios as $usuario){
+                $user = User::where('name', $usuario)->first();
+                $arrMontagemUser[] = [
+                    'id_grupo'      => $grupoCerca->id,
+                    'id_usuario'    => $user->id,
+                    'nome_usuario'  => $usuario,
+                    'created_at'    => Carbon::now()
+                ];
+            }
+
             if (is_null($request->id_grupo)) {
-                $grupoRelacionamento  =  new GrupoCercaRelacionamento();
+                $grupoRelacionamento    =  new GrupoCercaRelacionamento();
+                $grupoUsuario           =  new GrupoUsuarioRelacionamento();
                 $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Criou a cerca: ' . $request->name);
-                return $grupoRelacionamento->insert($arrMontagem)
+
+                return $grupoRelacionamento->insert($arrMontagem) && $grupoUsuario->insert($arrMontagemUser)
                     ? response()->json(['status' => 'success'], 200)
                     : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+
             } else {
-                if (GrupoCercaRelacionamento::where('grupo_id', $grupoCerca->id)->delete()) {
+                $validation = GrupoCercaRelacionamento::where('grupo_id', $grupoCerca->id)->delete() && GrupoUsuarioRelacionamento::where('id_grupo', $grupoCerca->id)->delete() ? true : false;
+                if ($validation) {
                     $grupoRelacionamento  =  new GrupoCercaRelacionamento();
+                    $grupoUsuario           =  new GrupoUsuarioRelacionamento();
                     $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Editou a cerca: ' . $grupoCerca->id);
-                    return $grupoRelacionamento->insert($arrMontagem)
+                    
+                    return $grupoRelacionamento->insert($arrMontagem) && $grupoUsuario->insert($arrMontagemUser)
                         ? response()->json(['status' => 'success'], 200)
                         : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
                 }

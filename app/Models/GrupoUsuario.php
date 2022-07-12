@@ -20,7 +20,7 @@ class GrupoUsuario extends Model
      */
     protected $dates = ['created_at', 'updated_at'];
 
-    protected $fillable = ['id', 'nome', 'id_usuario', 'status'];
+    protected $fillable = ['id', 'nome', 'id_usuario', 'status', 'created_at', 'update_at'];
 
     /**
      * @return array
@@ -36,6 +36,6 @@ class GrupoUsuario extends Model
     }
 
     public function grupoUsuarioRelacionamento(){
-        return $this->hasMany(GrupoUsuarioRelacionamento::class, 'id', 'id_grupo');
+        return $this->hasMany(GrupoUsuarioRelacionamento::class, 'id_grupo', 'id');
     }
 }

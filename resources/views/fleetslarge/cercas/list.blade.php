@@ -8,11 +8,9 @@
     .hidden {
         display: none;
     }
-
     th {
         font-size: 12px;
     }
-
     td {
         font-size: 12px;
     }
@@ -127,12 +125,8 @@
                     "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
                 }
             },
-
         });
-
     });
-
-
     /* Deletar */
     $('.btn-delete-cerca').click(function() {
         var id = $(this).data('id');

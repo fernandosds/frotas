@@ -377,7 +377,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'grupos'], function () {
             Route::get('/list', 'FleetsLarge\GrupoUsuariosController@index')->name('fleetslarges.grupo.list');
             Route::get('/new', 'FleetsLarge\GrupoUsuariosController@new')->name('fleetslarges.grupo.new');
+            Route::get('/new/{id}', 'FleetsLarge\GrupoUsuariosController@new')->name('fleetslarges.grupo.edit');
             Route::post('/save', 'FleetsLarge\GrupoUsuariosController@save')->name('fleetslarges.grupo.save');
+            Route::get('/delete/{id}', 'FleetsLarge\GrupoUsuariosController@destroy')->name('fleetslarges.grupo.destroy');
         });
 
         Route::group(['prefix' => 'monitoring'], function () {

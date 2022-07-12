@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\GrupoUsuario;
+use App\Models\GrupoCerca;
 
 class GrupoUsuarioRelacionamento extends Model
 {
@@ -12,10 +13,12 @@ class GrupoUsuarioRelacionamento extends Model
     protected $fillable = [
         'id_grupo',
         'id_usuario',
-        'created_at'
+        'nome_usuario',
+        'created_at',
+        'updated_at'
     ];
 
-    public function grupoUsuario(){
-        return $this->hasMany(GrupoUsuario::class, 'id_grupo', 'id');
+    public function grupoCerca(){
+        return $this->hasMany(GrupoCerca::class, 'id_grupo', 'id');
     }
 }

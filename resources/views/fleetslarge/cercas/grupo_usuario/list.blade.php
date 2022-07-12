@@ -8,11 +8,9 @@
     .hidden {
         display: none;
     }
-
     th {
         font-size: 12px;
     }
-
     td {
         font-size: 12px;
     }
@@ -24,16 +22,45 @@
 
         <!-- HEADER -->
         <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title">
-                <i class="la la-user"></i>
-                Grupo de Usuários
-            </h3>
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    <i class="fa fa-car-alt"></i>
+                    Grupo de Usuários
+                </h3>
+            </div>
+        </div>
+
+
+        <!-- CONTENT -->
+        <div class="kt-portlet__body">
+            <table id="example" class="display">
+                <thead>
+                    <tr>
+                        <!-- <th scope="col"></th> -->
+                        <th scope="col">Nome do grupo</th>
+                        <th scope="col">Total de usuarios</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($usuarios as $usuario)
+                    <tr id="_tr_user_{{$usuario->id}}">
+                        <td>{{$usuario->nome}}</td>
+                        <td>{{count($usuario->grupoUsuarioRelacionamento)}}</td>
+                        <td style="width: 200px;">
+                            <div class="pull-right">
+                                <a href="{{ route('fleetslarges.grupo.new') }}/{{$usuario->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
+                                <button type="button" title="Excluir cerca" data-id="{{$usuario->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-grupo">
+                                    <span class="fa fa-fw fa-trash"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-
-
-
 </div>
 
 @endsection
@@ -45,13 +72,13 @@
 
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2, 3];
-        columsPdf = [0, 1, 2, 3];
+        columns = [0, 1];
+        columsPdf = [0, 1];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
             "order": [00, 'asc'],
             "columnDefs": [{
-                "targets": 05,
+                "targets": 02,
                 "orderable": false
             }],
             //"bDestroy": true,
@@ -98,10 +125,13 @@
                     "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
                 }
             },
-
         });
-
     });
+    /* Deletar */
+    $('.btn-delete-grupo').click(function() {
+        var id = $(this).data('id');
+        var url = "{{url('fleetslarges/grupos/delete')}}/" + id;
+        ajax_delete(id, url)
+    })
 </script>
 @endsection
-

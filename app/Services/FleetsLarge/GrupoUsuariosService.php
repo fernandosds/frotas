@@ -36,4 +36,10 @@ class GrupoUsuariosService
     public function saveGrupoUsuario($id, $data){
         $this->grupoUsuario->saveGrupoUsuario($id, $data);
     }
+
+    public function destroy($id)
+    {
+        $cerca = $this->grupoUsuario->delete($id);
+        return $cerca;
+    }
 }
