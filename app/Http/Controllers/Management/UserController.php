@@ -107,7 +107,6 @@ class UserController extends Controller
     public function destroy(Int $id)
     {
         try {
-            $this->userService->destroy($id);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);

@@ -4,18 +4,28 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style type="text/css">
-.btn-distribuir {
+<<<<<<< HEAD .btn-distribuir {
     display: grid;
     row-gap: 15px;
     margin-top: 5rem;
     margin-left: 3rem;
 }
+
+=======.btn-distribuir {
+    display: grid;
+    row-gap: 15px;
+    margin-top: 8rem;
+    margin-left: 2rem;
+}
+
+>>>>>>>69203617124881c3fa9902177658b18d0daf85bb
 </style>
 
 <div class="kt-portlet">
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
+                <i class="la la-user"></i>
                 Grupo de Usuários
             </h3>
         </div>
@@ -41,8 +51,13 @@
                         <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
-                    <span class="form-text text-muted"> *Selecione um ou mais usuários e os direcione para o quadro á
+                    <<<<<<< HEAD <span class="form-text text-muted"> *Selecione um ou mais usuários e os direcione para
+                        o quadro á
                         direita.</span>
+                        =======
+                        <span class="form-text text-muted"> <i class="flaticon-questions-circular-button"></i> Selecione
+                            um ou mais usuários e os direcione para o quadro á direita.</span>
+                        >>>>>>> 69203617124881c3fa9902177658b18d0daf85bb
                 </div>
                 <div class="col-lg-2">
                     <div class="kt-input-icon kt-input-icon--right btn-distribuir">
@@ -54,7 +69,7 @@
                                 class="la la-arrow-left"></i></button>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4" style="margin-top: 9px;">
                     <div class="kt-input-icon kt-input-icon--right">
                         <label for="exampleSelect2" class="col-form-label">Incluir usuários no grupo: </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight"

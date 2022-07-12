@@ -26,6 +26,7 @@
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
                 <h3 class="kt-portlet__head-title">
+                    <i class="fa fa-car-alt"></i>
                     Grupo de Cercas e Veículos
                 </h3>
             </div>
@@ -38,43 +39,26 @@
                 <thead>
                     <tr>
                         <!-- <th scope="col"></th> -->
-                        <th scope="col">Nome</th>
+                        <th scope="col">Nome da Cerca</th>
                         <th scope="col">Total Veículos</th>
-                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr id="">
-                        <td>nome</td>
-                        <td>50</td>
-                        <td>
-                            <i class="text-success fa fa-circle"></i> Ativo
-                        </td>
+                    @foreach($grupos as $grupo)
+                    <tr id="_tr_user_{{$grupo->id}}">
+                        <td>{{$grupo->nome}}</td>
+                        <td>{{count($grupo->grupoCercaRelacionamento)}}</td>
                         <td style="width: 200px;">
                             <div class="pull-right">
-                                <a href="#" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
-                                <button type="button" title="Deletar Usuário" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-user">
+                                <a href="{{ route('fleetslarges.cerca.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
+                                <button type="button" title="Excluir cerca" data-id="{{$grupo->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-cerca">
                                     <span class="fa fa-fw fa-trash"></span>
                                 </button>
                             </div>
                         </td>
                     </tr>
-                    <!-- <tr id="">
-                        <td>Fulano</td>
-                        <td>50</td>
-                        <td>
-                            <i class="text-success fa fa-circle"></i> Ativo
-                        </td>
-                        <td style="width: 200px;">
-                            <div class="pull-right">
-                                <a href="#" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
-                                <button type="button" title="Deletar Usuário" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-user">
-                                    <span class="fa fa-fw fa-trash"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr> -->
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -90,13 +74,13 @@
 
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2, 3];
-        columsPdf = [0, 1, 2, 3];
+        columns = [0, 1];
+        columsPdf = [0, 1];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
             "order": [00, 'asc'],
             "columnDefs": [{
-                "targets": 05,
+                "targets": 02,
                 "orderable": false
             }],
             //"bDestroy": true,
@@ -148,5 +132,12 @@
 
     });
 
+
+    /* Deletar */
+    $('.btn-delete-cerca').click(function() {
+        var id = $(this).data('id');
+        var url = "{{url('fleetslarges/cercas/delete')}}/" + id;
+        ajax_delete(id, url)
+    })
 </script>
 @endsection

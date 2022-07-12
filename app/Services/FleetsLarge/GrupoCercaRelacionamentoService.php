@@ -6,10 +6,11 @@ namespace App\Services\FleetsLarge;
 use App\Repositories\FleetsLarge\CercasRepository;
 use App\Repositories\FleetsLarge\SantanderRepository;
 
-class GrupoCercaService
+class GrupoCercaRelacionamentoService
 {
     public function __construct(SantanderRepository $santander, CercasRepository $cerca)
     {
+        // $this->cerca = $cerca;
         $this->santander = $santander;
         $this->cerca     = $cerca;
     }
@@ -45,10 +46,4 @@ class GrupoCercaService
         $this->cerca->saveCercaGrupo($id, $id_grupo, $data);
     }
 
-
-    public function destroy($id)
-    {
-        $cerca = $this->cerca->delete($id);
-        return $cerca;
-    }
 }

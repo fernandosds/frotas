@@ -38,6 +38,6 @@ class GrupoCerca extends Model
     }
 
     public function grupoCercaRelacionamento(){
-        return $this->belongsToMany(GrupoCercaRelacionamento::class, 'id', 'grupo_id');
+        return $this->hasMany(GrupoCercaRelacionamento::class, 'grupo_id', 'id');
     }
 }
