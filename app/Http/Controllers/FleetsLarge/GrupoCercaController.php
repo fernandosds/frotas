@@ -98,13 +98,9 @@ class GrupoCercaController extends Controller
             }
         }
     }
-<<<<<<< HEAD
-}
-=======
 
     public function destroy(Int $id)
     {
         return $this->grupocercaService->destroy($id);
     }
 }
->>>>>>> 69203617124881c3fa9902177658b18d0daf85bb
