@@ -2,9 +2,9 @@
 
 @section('content')
 <style>
-    .modal-backdrop {
-        z-index: 0;
-    }
+.modal-backdrop {
+    z-index: 0;
+}
 </style>
 
 <div class="kt-portlet">
@@ -45,7 +45,8 @@
                     <div class="form-group col-md-1">
                         <label for="">&nbsp</label>
                         <br />
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-backdrop="static">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
+                            data-backdrop="static">
                             +
                         </button>
                     </div>
@@ -53,11 +54,13 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="">Endereço</label>
-                        <input type="text" class="form-control automaker" name="address" value="{{ $driver->address ?? '' }}">
+                        <input type="text" class="form-control automaker" name="address"
+                            value="{{ $driver->address ?? '' }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputCpfCnpj">CPF</label>
-                        <input type="text" id="input_cpf" name="cpf" class="form-control input_cpf_cnpj" maxlength="14" value="{{ $driver->cpf ?? '' }}">
+                        <input type="text" id="input_cpf" name="cpf" class="form-control input_cpf_cnpj" maxlength="14"
+                            value="{{ $driver->cpf ?? '' }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -67,7 +70,8 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputComplement">Telefone</label>
-                        <input type="text" class="form-control mask_input_contact" name="phone" value="{{ $driver->phone ?? '' }}">
+                        <input type="text" class="form-control mask_input_contact" name="phone"
+                            value="{{ $driver->phone ?? '' }}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputNumber">Email</label>
@@ -79,12 +83,14 @@
 
                     <div class="form-group col-md-4">
                         <label for="inputAddress">CNH</label>
-                        <input type="text" class="form-control" name="cnh" maxlength="11" value="{{ $driver->cnh ?? '' }}">
+                        <input type="text" class="form-control" name="cnh" maxlength="11"
+                            value="{{ $driver->cnh ?? '' }}">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="inputAddress">Validade da CNH</label>
-                        <input type="date" class="form-control" name="validation" value="{{ $driver->admission ?? '' }}">
+                        <input type="date" class="form-control" name="validation"
+                            value="{{ $driver->admission ?? '' }}">
                     </div>
 
                     <div class="form-group col-md-1">
@@ -140,7 +146,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form class="kt-form kt-form--label-right" id="form-create-card">
@@ -170,34 +177,34 @@
 
 @section('scripts')
 <script>
-    /**
+/**
          Modal
          */
 
-    $('#myModal').on('shown.bs.modal', function() {
-        $('#myInput').trigger('focus')
-    })
+$('#myModal').on('shown.bs.modal', function() {
+    $('#myInput').trigger('focus')
+})
 
-    /**
-         Gravar motorista
-         */
-    $(function() {
+/**
+     Gravar motorista
+     */
+$(function() {
 
-        var driver_id = $('#id').val();
-        $('#btn-driver-save').click(function() {
-            ajax_store(driver_id, "fleets/drivers", $('#form-create-driver').serialize());
-        });
-
+    var driver_id = $('#id').val();
+    $('#btn-driver-save').click(function() {
+        ajax_store(driver_id, "fleets/drivers", $('#form-create-driver').serialize());
     });
 
-    /**
+});
+
+/**
             Gravar cartão
 */
-    $(function() {
-        var card_id = $('#id').val();
-        $('#btn-card-save').click(function() {
-            ajax_store_cards_driver(card_id, "fleets/cards", $('#form-create-card').serialize());
-        });
+$(function() {
+    var card_id = $('#id').val();
+    $('#btn-card-save').click(function() {
+        ajax_store_cards_driver(card_id, "fleets/cards", $('#form-create-card').serialize());
     });
+});
 </script>
 @endsection

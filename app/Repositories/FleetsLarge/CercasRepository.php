@@ -20,6 +20,14 @@ class CercasRepository extends AbstractRepository
 
     public function saveCercaGrupo($id, $data)
     {
+<<<<<<< HEAD
+        try {
+            $cercas = $this->model->find($id);
+            $cercas->detach();
+            $this->model->grupoCerca()->syncWithoutDetaching($data);
+            return response()->json(['status' => 'success', 'data' => $data], 201);
+
+=======
         try {    
             // $cercas = $this->model->find($id);
             // $cercas->detach();
@@ -27,6 +35,7 @@ class CercasRepository extends AbstractRepository
             // return response()->json(['status' => 'success', 'data' => $data], 201);
 
             
+>>>>>>> 69203617124881c3fa9902177658b18d0daf85bb
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }

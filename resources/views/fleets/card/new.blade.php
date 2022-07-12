@@ -25,14 +25,16 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputName">Nº de série</label>
-                                <input type="text" name="serial_number" class="form-control" value="{{ $card->serial_number ?? '' }}">
+                                <input type="text" name="serial_number" class="form-control"
+                                    value="{{ $card->serial_number ?? '' }}">
                             </div>
                         </div>
                         <div class="kt-portlet__foot">
                             <div class="kt-form__actions">
                                 <div class="row">
                                     <div class="col-lg-12 ml-lg-auto">
-                                        <button type="button" class="btn btn-brand" id="btn-card-save">Cadastrar</button>
+                                        <button type="button" class="btn btn-brand"
+                                            id="btn-card-save">Cadastrar</button>
                                         <a href="{{url('fleets/cards')}}" class="btn btn-secondary">Voltar</a>
                                     </div>
                                 </div>
@@ -49,14 +51,14 @@
 
 @section('scripts')
 <script>
-    /**
-         Gravar cartão
-         */
-    $(function() {
-        var card_id = $('#id').val();
-        $('#btn-card-save').click(function() {
-            ajax_store(card_id, "fleets/cards", $('#form-create-card').serialize());
-        });
+/**
+Gravar cartão
+*/
+$(function() {
+    var card_id = $('#id').val();
+    $('#btn-card-save').click(function() {
+        ajax_store(card_id, "fleets/cards", $('#form-create-card').serialize());
     });
+});
 </script>
 @endsection
