@@ -22,7 +22,7 @@ class UsuariosRepository extends AbstractRepository
         try {
             $cercas = $this->model->find($id);
             $cercas->detach();
-            $this->model->grupoCerca()->syncWithoutDetaching($data);
+            $this->model->grupoUsuarioRelacionamento()->syncWithoutDetaching($data);
             return response()->json(['status' => 'success', 'data' => $data], 201);
 
         } catch (\Exception $e) {

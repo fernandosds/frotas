@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\GrupoUsuarioRelacionamento;
 
 class GrupoUsuario extends Model
 {
@@ -34,7 +35,7 @@ class GrupoUsuario extends Model
         ];
     }
 
-    public function grupoCercaRelacionamento(){
-        return $this->belongsToMany(GrupoCercaRelacionamento::class, 'id', 'grupo_id');
+    public function grupoUsuarioRelacionamento(){
+        return $this->hasMany(GrupoUsuarioRelacionamento::class, 'id', 'id_grupo');
     }
 }
