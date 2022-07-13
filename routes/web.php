@@ -370,8 +370,23 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/new/{id}', 'FleetsLarge\GrupoCercaController@new')->name('fleetslarges.cerca.new.edit');
             Route::post('/save', 'FleetsLarge\GrupoCercaController@save')->name('fleetslarges.cerca.save');
             Route::get('/delete/{id}', 'FleetsLarge\GrupoCercaController@destroy')->name('fleetslarges.cerca.destroy');
-           // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
+            // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
         });
+
+        // Rotas para o mapa Poligono Santander
+        Route::group(['prefix' => 'poligono'], function () {
+            Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');
+            Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
+            Route::get('/map/markers', 'FleetsLarge\MapMarkersController@getList')->name('map.markers.list');
+            Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersController@show')->name('map.markers.show');
+            Route::delete('/map/markers', 'FleetsLarge\MapMarkersController@delete')->name('map.markers.delete');
+
+            // Rotas para Grupo de usuários cercas Santander
+            Route::group(['prefix' => 'cars'], function () {
+                Route::get('/grupos/lista', 'FleetsLarge\MonitoringCercaSantanderController@index')->name('fleetslarges.poligono.cars.index');
+            });
+        });
+
 
         Route::group(['prefix' => 'monitoring'], function () {
             Route::get('/{chassis?}', 'FleetsLarge\MonitoringController@index')->name('fleetslarges.monitoring.index');
