@@ -265,13 +265,13 @@
 <div class='markerList hidden'></div>
 
 <div class='groupCars'>
-    @if(empty($grupos))
+    @if(isset($grupos))
     <label>Grupos de Veículos Cadastrados</label>
     <br> </br>
     <div class="kt-checkbox-list">
         @foreach($grupos as $grupo)
         <label class="kt-checkbox">
-            <input type="checkbox"> {{$grupo->nome}}
+            <input type="checkbox" name="array[]" value="{{$grupo->id}}"> {{$grupo->nome}}
             <span></span>
         </label>
         @endforeach
@@ -294,6 +294,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
     $(document).ready(function() {
+        var checked = new Array(); //criamos um novo array
+
+        $("input[name='array[]']:checked").each(function() //percorremos todos os checkbox marcados
+            {
+                checked.push($(this).val()); //adicionamos todos em nosso array
+                //    });
+                console.log(checked)
+                // $.post("check.php", {
+                //     lista: checked,
+                // }, function(retorno) {
+                //==== Fazer algo depois ====
+                alert(retorno);
+            });
+        //
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
             $('.tableEvents').toggleClass('hidden');
@@ -768,22 +782,22 @@
                 .fail(function() {});
         }
 
-        function getEvents() {
-            $.ajax("{{route('fleetslarges.monitoring.events')}}", {
-                    method: "GET",
-                })
-                .done(function(response) {
-                    moment.locale('pt-br');
-                    const data = response;
-                    $('.tableEventsRows').empty();
-                    data.map(function(element) {
-                        $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3, 'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
-                    });
-                })
-                .fail(function() {});
-        }
+        //function getEvents() {
+        //    $.ajax("{{route('fleetslarges.monitoring.events')}}", {
+        //            method: "GET",
+        //        })
+        //        .done(function(response) {
+        //            moment.locale('pt-br');
+        //            const data = response;
+        //            $('.tableEventsRows').empty();
+        //            data.map(function(element) {
+        //                $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3, 'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
+        //            });
+        //        })
+        //        .fail(function() {});
+        //}
         getList();
-        getEvents();
+        // getEvents();
     });
 </script>
 @endsection
