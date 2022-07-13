@@ -448,6 +448,13 @@
                 </div>
             </li>
 
+            <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
+                <a href="{{route('fleetslarges.poligono.index')}}" class="kt-menu__link ">
+                    <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
+                    <span class="kt-menu__link-text">Mapa Monitoramento Veículos</span>
+                </a>
+            </li>
+
 
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
 

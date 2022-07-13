@@ -9,15 +9,10 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 class MapMarkerSantander extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'Movida_Polygons';
+    protected $collection = 'Santander_Polygons';
 
     protected $fillable = [
         'name', 'markers',
         'type', 'user_id'
     ];
-
-    /*public function create($data)
-    //{
-
-    }*/
 }
