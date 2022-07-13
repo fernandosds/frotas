@@ -30,13 +30,6 @@ class MapMarkersSantanderController extends Controller
     {
         $data['grupos'] = $this->grupocercaService->allGroup();
 
-        /*if (isset($data['grupos'])) {
-            print_r('dentro');
-            die();
-        }
-        print_r('fora');
-        die();
-        */
         $this->logService->saveLog(strval(Auth::user()->name), 'Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas ');
         return view('fleetslarge.monitoring.allcarsSantander', $data);
     }
