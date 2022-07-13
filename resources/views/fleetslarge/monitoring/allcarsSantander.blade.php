@@ -131,6 +131,31 @@
         align-content: baseline;
     }
 
+    .groupCars {
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        min-width: 34px;
+        min-height: 122px;
+        position: absolute;
+        padding: 5px 15px;
+        z-index: 4445;
+        left: 125px;
+        top: 60px;
+        background: #f0f0f0;
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+        color: #000;
+        font-weight: bold;
+        width: 15vw;
+        max-height: 50vh;
+        overflow: scroll;
+        overflow-x: hidden;
+        justify-content: space-between;
+        align-items: baseline;
+        align-content: baseline;
+    }
+
     .markerItem {
         padding: 5px 0px;
         width: 50%;
@@ -239,6 +264,22 @@
 <button id="markerButton">Cercas</button>
 <div class='markerList hidden'></div>
 
+<div class='groupCars'>
+    @if(empty($grupos))
+    <label>Grupos de Veículos Cadastrados</label>
+    <br> </br>
+    <div class="kt-checkbox-list">
+        @foreach($grupos as $grupo)
+        <label class="kt-checkbox">
+            <input type="checkbox"> {{$grupo->nome}}
+            <span></span>
+        </label>
+        @endforeach
+    </div>
+    @else
+    <label>Não existe Grupos de veículos cadastrados</label>
+    @endif
+</div>
 @endsection
 
 @section('scripts')
@@ -315,7 +356,7 @@
                         carIcon = redAlertCarIcon
                     }
                     if (feature.properties.deliver == true) {
-                       //carIcon = orangeCarIcon;
+                        //carIcon = orangeCarIcon;
                     }
 
                     if (feature.properties.cliente_distancia_local_devolucao != null) {

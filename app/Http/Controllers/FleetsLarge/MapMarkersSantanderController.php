@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MapMarkersRequest;
 use App\Http\Requests\MapMarkersDeleteRequest;
 use App\Services\MapMarkersSantanderService;
+use App\Services\FleetsLarge\GrupoCercaService;
 use App\Services\LogService;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +16,11 @@ class MapMarkersSantanderController extends Controller
 
     private $mapMarkersSantanderService;
     private $logService;
+    private $grupocercaService;
 
-    public function __construct(MapMarkersSantanderService $mapMarkersSantanderService, LogService $logService)
+    public function __construct(GrupoCercaService $grupocercaService, MapMarkersSantanderService $mapMarkersSantanderService, LogService $logService)
     {
+        $this->grupocercaService = $grupocercaService;
         $this->mapMarkersSantanderService = $mapMarkersSantanderService;
         $this->logService = $logService;
     }
@@ -25,8 +28,17 @@ class MapMarkersSantanderController extends Controller
 
     public function index()
     {
+        $data['grupos'] = $this->grupocercaService->allGroup();
+
+        /*if (isset($data['grupos'])) {
+            print_r('dentro');
+            die();
+        }
+        print_r('fora');
+        die();
+        */
         $this->logService->saveLog(strval(Auth::user()->name), 'Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas ');
-        return view('fleetslarge.monitoring.allcarsSantander');
+        return view('fleetslarge.monitoring.allcarsSantander', $data);
     }
 
     public function save(MapMarkersRequest $request)

@@ -9,7 +9,7 @@
 
 namespace App\Services;
 
-use App\Repositories\MapMarkersRepository;
+use App\Repositories\MapMarkersSantanderRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +18,7 @@ class MapMarkersSantanderService
 {
     public $mapMarkersRepository;
 
-    public function __construct(MapMarkersRepository $mapMarkersRepository)
+    public function __construct(MapMarkersSantanderRepository $mapMarkersRepository)
     {
         $this->mapMarkersRepository = $mapMarkersRepository;
     }

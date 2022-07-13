@@ -5,17 +5,14 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\MapMarkerSantander;
-use App\Models\MapMarkerMapfre;
 
-class MapMarkersRepository extends AbstractRepository
+class MapMarkersSantanderRepository extends AbstractRepository
 {
 
     private $modelMovida;
-    private $modelSantander;
 
     /**
      * UserRepository constructor.
-     * @param MapMarkerMovida $modelMovida
      * @param MapMarkerSantander $modelSantander
      */
     public function __construct(MapMarkerSantander $modelSantander)
