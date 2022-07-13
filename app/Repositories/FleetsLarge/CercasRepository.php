@@ -6,16 +6,18 @@ namespace App\Repositories\FleetsLarge;
 
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
+use App\Models\GrupoUsuarioRelacionamento;
 use App\Repositories\AbstractRepository;
 use Illuminate\Support\Facades\Auth;
 
 class CercasRepository extends AbstractRepository
 {
 
-    public function __construct(GrupoCerca $model, GrupoCercaRelacionamento $modelCercaRelacionamento)
+    public function __construct(GrupoCerca $model, GrupoCercaRelacionamento $modelCercaRelacionamento, GrupoUsuarioRelacionamento $modelUsuarioRelacionamento)
     {
         $this->model = $model;
         $this->modelCercaRelacionamento = $modelCercaRelacionamento;
+        $this->modelUsuarioRelacionamento = $modelUsuarioRelacionamento;
     }
 
     public function saveCercaGrupo($id, $data)
@@ -34,6 +36,7 @@ class CercasRepository extends AbstractRepository
     public function delete($id){
         try{
             $this->modelCercaRelacionamento->where('grupo_id', $id)->delete();
+            $this->modelUsuarioRelacionamento->where('id_grupo', $id)->delete();
             $this->model->where('id', $id)->delete();
             $data = GrupoCerca::all();
             return response()->json(['status' => 'success', 'data' => $data], 201);

@@ -35,7 +35,7 @@ class GrupoCercaController extends Controller
 
     public function index()
     {
-        $data['grupos'] = GrupoCerca::with('grupoCercaRelacionamento')->get();
+        $data['grupos'] = GrupoCerca::with('grupoCercaRelacionamento')->with('grupoUsuarioRelacionamento')->get();
         return view('fleetslarge.cercas.list', $data);
     }
 
@@ -51,6 +51,8 @@ class GrupoCercaController extends Controller
             $gruposCerca = GrupoCerca::with('grupoCercaRelacionamento')->where('id', $request->id)->first();
             $placas = $this->grupocercaService->getPlaceGroupAll($gruposCerca->grupoCercaRelacionamento);
             $data['grupo']  = $gruposCerca;
+            $gruposUsuarios = GrupoCerca::with('grupoUsuarioRelacionamento')->where('id', $request->id)->first();
+            $data['usuarios']  = $gruposUsuarios;
             $data['placas'] = $placas;
             return view('fleetslarge.cercas.new', $data);
         }
@@ -95,6 +97,7 @@ class GrupoCercaController extends Controller
                 $arrMontagem[] = [
                     'grupo_id'      => $grupoCerca->id,
                     'chassis'       => $car->chassis,
+                    'dispositivo'   => $car->modelo,
                     'created_at'    => Carbon::now()
                 ];
                 $arrGrupoCercaRelacionamento[] = $arrMontagem;
@@ -122,7 +125,7 @@ class GrupoCercaController extends Controller
             } else {
                 $validation = GrupoCercaRelacionamento::where('grupo_id', $grupoCerca->id)->delete() && GrupoUsuarioRelacionamento::where('id_grupo', $grupoCerca->id)->delete() ? true : false;
                 if ($validation) {
-                    $grupoRelacionamento  =  new GrupoCercaRelacionamento();
+                    $grupoRelacionamento    =  new GrupoCercaRelacionamento();
                     $grupoUsuario           =  new GrupoUsuarioRelacionamento();
                     $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Editou a cerca: ' . $grupoCerca->id);
                     

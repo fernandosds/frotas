@@ -39,6 +39,7 @@
                         <!-- <th scope="col"></th> -->
                         <th scope="col">Nome da Cerca</th>
                         <th scope="col">Total Veículos</th>
+                        <th scope="col">Total Usuários</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -47,6 +48,7 @@
                     <tr id="_tr_user_{{$grupo->id}}">
                         <td>{{$grupo->nome}}</td>
                         <td>{{count($grupo->grupoCercaRelacionamento)}}</td>
+                        <td>{{count($grupo->grupoUsuarioRelacionamento)}}</td>
                         <td style="width: 200px;">
                             <div class="pull-right">
                                 <a href="{{ route('fleetslarges.cerca.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
@@ -72,7 +74,7 @@
 
 <script>
     $(document).ready(function() {
-        columns = [0, 1];
+        columns = [0, 1, 2];
         columsPdf = [0, 1];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({

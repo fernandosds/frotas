@@ -84,6 +84,11 @@
                     <div class="kt-input-icon kt-input-icon--right">
                         <label for="exampleSelect2" class="col-form-label">Incluir Usuários: </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox usuariosRight" id="usuariosLeft" name='usuarios[]'>
+                            @if(isset($grupo))
+                                @foreach($usuarios->grupoUsuarioRelacionamento as $usuarioRelacionamento)
+                                    <option value="">{{$usuarioRelacionamento->nome_usuario}}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -124,22 +129,27 @@
         })
         $('.' + leftBox.attr('id')).empty().append(my_options);
     }
-    function moveSelectedUsuarios(classNAme) {
-        const leftBoxU = $('.' + classNAme);
-        var $options = $("." + classNAme + " option:selected").clone();
-        $('.' + leftBoxU.attr('id')).append($options);
-        $("." + classNAme + " option:selected").remove();
-        var my_options = $('.' + leftBoxU.attr('id') + " option");
-        my_options.sort(function(a, b) {
-            if (a.text > b.text) return 1;
-            else if (a.text < b.text) return -1;
-            else return 0
-        })
-        $('.' + leftBoxU.attr('id')).empty().append(my_options);
+    function moveSelectedUsuarios(classNAmeU) {
+
+        const leftBoxU = $('.' + classNAmeU);
+        
+        var $optionsU = $("." + classNAmeU + " option:selected").clone();
+        $('.' + leftBoxU.attr('id')).append($optionsU);
+        $("." + classNAmeU + " option:selected").remove();
+        var my_optionsU = $('.' + leftBoxU.attr('id') + " option");
+        // my_optionsU.sort(function(a, b) {
+        //     if (a.text > b.text) return 1;
+        //     else if (a.text < b.text) return -1;
+        //     else return 0
+        // })
+        my_optionsU.sort();
+        $('.' + leftBoxU.attr('id')).empty().append(my_optionsU);
     }
+
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2();
     });
+
     $('#btn-cerca-save').click(function() {
         cerca_id = $('#id').val();
         var id_grupo = $('#grupo').val();

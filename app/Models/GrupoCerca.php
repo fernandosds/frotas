@@ -40,4 +40,8 @@ class GrupoCerca extends Model
     public function grupoCercaRelacionamento(){
         return $this->hasMany(GrupoCercaRelacionamento::class, 'grupo_id', 'id');
     }
+
+    public function grupoUsuarioRelacionamento(){
+        return $this->hasMany(GrupoUsuarioRelacionamento::class, 'id_grupo', 'id');
+    }
 }
