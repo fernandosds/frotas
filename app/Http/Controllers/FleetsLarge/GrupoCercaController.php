@@ -41,18 +41,33 @@ class GrupoCercaController extends Controller
 
     public function new(Request $request)
     {
-
-        $data['users'] = $this->userService->paginate();
-        $data['cars'] = $this->grupocercaService->getPlate();
+        
+        
         if (!isset($request->id)) {
+            $data['cars'] = $this->grupocercaService->getPlate();
+            $data['users'] = $this->userService->paginate();
             return view('fleetslarge.cercas.new', $data);
         } else {
-
+            $removeUser  = [];
+            $removePlate = [];
             $gruposCerca = GrupoCerca::with('grupoCercaRelacionamento')->where('id', $request->id)->first();
+
             $placas = $this->grupocercaService->getPlaceGroupAll($gruposCerca->grupoCercaRelacionamento);
             $data['grupo']  = $gruposCerca;
             $gruposUsuarios = GrupoCerca::with('grupoUsuarioRelacionamento')->where('id', $request->id)->first();
             $data['usuarios']  = $gruposUsuarios;
+
+            foreach($gruposUsuarios->grupoUsuarioRelacionamento as $grupoUsuarioRelacionamento){
+                $removeUser[] = $grupoUsuarioRelacionamento->nome_usuario;
+            }
+
+            foreach($gruposCerca->grupoCercaRelacionamento as $grupoCercaRelacionamento){
+                $plate = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
+                $removePlate[] = $plate->placa;
+                
+            }
+            $data['cars'] = $this->grupocercaService->removePlates($removePlate);
+            $data['users'] = $this->userService->getRemoveUsers($removeUser);
             $data['placas'] = $placas;
             return view('fleetslarge.cercas.new', $data);
         }
@@ -61,7 +76,6 @@ class GrupoCercaController extends Controller
     public function save(Request $request)
     {
 
-        
         if (empty($request->name)) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido criar um Grupo de Cerca com o campo nome vazio'], 400);
         }
@@ -69,7 +83,7 @@ class GrupoCercaController extends Controller
         $placas = $request->placas;
         $usuarios = $request->usuarios;
 
-        if (count($placas) > 50) {
+        if (count($placas) > 30) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido adicionar mais de 50 placas no grupo'], 400);
         }
 
@@ -141,5 +155,9 @@ class GrupoCercaController extends Controller
     {
         $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Deletou a cerca: ' . $id);
         return $this->grupocercaService->destroy($id);
+    }
+
+    public function validatePlacaUser(array $placa, $usuarios){
+
     }
 }

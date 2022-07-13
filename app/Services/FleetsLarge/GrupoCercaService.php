@@ -51,4 +51,12 @@ class GrupoCercaService
         $cerca = $this->cerca->delete($id);
         return $cerca;
     }
+
+    public function removePlates($removePlates){
+        return $this->santander->removePlates($removePlates);
+    }
+
+    public function findByChassi($chassis){
+        return $this->santander->findByChassi($chassis);
+    }
 }

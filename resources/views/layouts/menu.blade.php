@@ -436,14 +436,14 @@
                 <!-- GRANDES FROTAS -->
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-map-marker-alt"></i></span>
-                    <span class="kt-menu__link-text">Cercas</span>
+                    <span class="kt-menu__link-text">Monitoramento</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.cerca.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista Cerca</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.cerca.new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Nova Cerca</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.cerca.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Lista monitoramento</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.cerca.new')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Novo monitoramento</span></a></li>
                     </ul>
                 </div>
             </li>

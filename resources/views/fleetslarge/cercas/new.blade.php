@@ -67,7 +67,7 @@
             <div class="form-group row">
                 <div class="col-lg-4" style="margin-top: 5px;">
                         <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
-                    <select class="form-control col-md-10 leftBox usuariosLeft" id="usuariosRight" multiple size="10">
+                    <select class="form-control col-md-10 leftBoxU usuariosLeft" id="usuariosRight" multiple size="10">
                         @foreach($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
@@ -122,11 +122,11 @@
         $('.' + leftBox.attr('id')).append($options);
         $("." + classNAme + " option:selected").remove();
         var my_options = $('.' + leftBox.attr('id') + " option");
-        my_options.sort(function(a, b) {
-            if (a.text > b.text) return 1;
-            else if (a.text < b.text) return -1;
-            else return 0
-        })
+        // my_options.sort(function(a, b) {
+        //     if (a.text > b.text) return 1;
+        //     else if (a.text < b.text) return -1;
+        //     else return 0
+        // })
         $('.' + leftBox.attr('id')).empty().append(my_options);
     }
     function moveSelectedUsuarios(classNAmeU) {
@@ -142,7 +142,7 @@
         //     else if (a.text < b.text) return -1;
         //     else return 0
         // })
-        my_optionsU.sort();
+        // my_optionsU.sort();
         $('.' + leftBoxU.attr('id')).empty().append(my_optionsU);
     }
 

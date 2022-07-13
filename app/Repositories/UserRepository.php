@@ -31,6 +31,10 @@ class UserRepository extends AbstractRepository
             ->get();
     }
 
+    public function getRemoveUsers($removeUser){
+        return $this->model->where('customer_id', 8)->whereNotIn('name', $removeUser)->get();
+    }
+
     /**
      * @param Int $id
      * @return mixed

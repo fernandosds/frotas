@@ -65,6 +65,10 @@ class UserService
         return $this->userRepository->paginate($limit, Auth::user()->customer_id);
     }
 
+    public function getRemoveUsers($removeUser){
+        return $this->userRepository->getRemoveUsers($removeUser);
+    }
+
     /**
      * @param Request $request
      * @return mixed

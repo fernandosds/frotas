@@ -44,6 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach($grupos as $grupo)
                     <tr id="_tr_user_{{$grupo->id}}">
                         <td>{{$grupo->nome}}</td>

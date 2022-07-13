@@ -44,4 +44,8 @@ class SantanderRepository extends AbstractRepository
             $this->model->select('placa', 'chassis')
             ->get();
     }
+
+    public function removePlates($removePlate){
+        return $this->model->whereNotIn('placa', $removePlate)->get();
+    }
 }
