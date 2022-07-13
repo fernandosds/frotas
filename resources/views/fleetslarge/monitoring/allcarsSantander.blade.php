@@ -130,7 +130,11 @@
         align-items: baseline;
         align-content: baseline;
     }
-
+    .headerGroupCar{
+    }
+    .AllGroupCars{
+        float: right;
+    }
     .groupCars {
         border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
@@ -154,6 +158,7 @@
         justify-content: space-between;
         align-items: baseline;
         align-content: baseline;
+        width: auto;
     }
 
     .markerItem {
@@ -265,21 +270,24 @@
 <div class='markerList hidden'></div>
 
 <div class='groupCars'>
-    @if(isset($grupos))
-    <label>Grupos de Veículos Cadastrados</label>
-    <br> </br>
-    <div class="kt-checkbox-list">
-        @foreach($grupos as $grupo)
-        <label class="kt-checkbox">
-            <input type="checkbox" name="array[]" value="{{$grupo->id}}"> {{$grupo->nome}}
-            <span></span>
-        </label>
-        @endforeach
+    <div class="headerGroupCar">
+        @if(isset($grupos))
+            <label>Grupos de Veículos Cadastrados</label>
+            <br> </br>
+            <div class="kt-checkbox-list">
+                @foreach($grupos as $grupo)
+                <label class="kt-checkbox">
+                    <input type="checkbox" class="monitoramento" onclick="getGrupo()" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
+                    <span></span>
+                </label>
+                @endforeach
+            </div>
+        @else
+            <label>Não existe Grupos de veículos cadastrados</label>
+        @endif
     </div>
-    @else
-    <label>Não existe Grupos de veículos cadastrados</label>
-    @endif
 </div>
+
 @endsection
 
 @section('scripts')
@@ -293,21 +301,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
-    $(document).ready(function() {
-        var checked = new Array(); //criamos um novo array
+    
 
-        $("input[name='array[]']:checked").each(function() //percorremos todos os checkbox marcados
-            {
-                checked.push($(this).val()); //adicionamos todos em nosso array
-                //    });
-                console.log(checked)
-                // $.post("check.php", {
-                //     lista: checked,
-                // }, function(retorno) {
-                //==== Fazer algo depois ====
-                alert(retorno);
-            });
-        //
+    function getGrupo(){
+        var grupo = new Array();
+        $('input.monitoramento:checkbox:checked').each(function () {
+            grupo.push($(this).val());
+        });
+
+        var data = {
+            // _token: '{{csrf_token()}}',
+            grupo: grupo,
+        }
+        $.ajax({
+            url: "poligono/map/markers/grupoRelacionamento",
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            },
+            data: data,
+            // data: data,
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+    $(document).ready(function() {
+
+        // var checked = new Array(); //criamos um novo array
+
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
             $('.tableEvents').toggleClass('hidden');
@@ -467,14 +491,17 @@
             }
         ).addTo(map);
 
-        L.control.layers(null, {
-            'Ignição ON': realtime1,
-            'Ignição OFF': realtime2,
-            'Entrega Hoje': realtime3,
-            'Lojas': markersCluster
-        }, {
-            collapsed: false
-        }).addTo(map);
+        L.control.layers(null, 
+            // {
+            //     'Ignição ON': realtime1,
+            //     'Ignição OFF': realtime2,
+            //     'Entrega Hoje': realtime3,
+            //     'Lojas': markersCluster
+            // },
+            {
+                collapsed: false
+            }
+        ).addTo(map);
 
 
         realtime1.on('update', function() {
