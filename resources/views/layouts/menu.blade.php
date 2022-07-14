@@ -426,7 +426,7 @@
                     </ul>
                 </div>
             </li>
-
+            @if( Auth::user()->customer_id == 8)
             <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">MONITORAMENTO</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
@@ -447,7 +447,7 @@
                     </ul>
                 </div>
             </li>
-
+            @endif
             <!--
             <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
                 <a href="#" class="kt-menu__link ">
@@ -569,3 +569,4 @@
         </ul>
     </div>
 </div>
+
