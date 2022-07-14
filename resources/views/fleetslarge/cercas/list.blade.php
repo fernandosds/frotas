@@ -8,9 +8,11 @@
     .hidden {
         display: none;
     }
+
     th {
         font-size: 12px;
     }
+
     td {
         font-size: 12px;
     }
@@ -21,12 +23,24 @@
     <div class="kt-portlet kt-portlet--mobile">
 
         <!-- HEADER -->
-        <div class="kt-portlet__head">
+        <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand {{$icon}}"></i>
+                </span>
                 <h3 class="kt-portlet__head-title">
-                    <i class="fa fa-car-alt"></i>
-                    Grupo de Cercas e Veículos
+                    {{$title}}
                 </h3>
+            </div>
+
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+                        <a href="{{route('fleetslarges.cerca.new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <i class="la la-plus"></i> Novo
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -368,12 +368,6 @@
             iconAnchor: [35, 62],
             popupAnchor: [1, -34],
         });
-        const logoMovidaIcon = new L.Icon({
-            iconUrl: '{{url("markers/logo_movida.png")}}',
-            iconSize: [40, 40],
-            iconAnchor: [35, 62],
-            popupAnchor: [1, -34],
-        });
 
         function createRealtimeLayer(url, container) {
             return realtime = L.realtime(url, {
@@ -435,32 +429,6 @@
             })
         }
 
-        function lastPosition(url, container) {
-            var markerList = [];
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(data) {
-                    const planes = data.data;
-                    for (var i = 0; i < planes.length; i++) {
-                        var marker = L.marker(L.latLng(planes[i].lp_latitude, planes[i].lp_longitude), {
-                            icon: logoMovidaIcon
-                        });
-                        marker.bindPopup('<strong>' + planes[i].loja +
-                            '<br /><br /><br> Endereço:</strong> ' + planes[i].endereco + ' ' +
-                            '<br /><strong><br>Complemento:</strong>  ' + planes[i].complemento + ' ' +
-                            '<br /><strong><br>Número:</strong> ' + planes[i].numero + ' ' +
-                            '<br /><strong><br>Bairro:</strong>  ' + planes[i].bairro + ' ' +
-                            '<br /><strong><br>Cidade:</strong>  ' + planes[i].cidade + ' ' +
-                            '<br /><strong><br>Região:</strong>  ' + planes[i].regiao + ' ' +
-                            '<br /><strong><br>Sigla:</strong>  ' + planes[i].sigla + ' ' +
-                            '<strong><br /><br> Horário de Atendimento:</strong> ' + planes[i].horario_atendimento + ' ');
-                        markersCluster.addLayer(marker);
-                    }
-                }
-            });
-        }
-
         var map = L.map('map', {
                 center: [-12.452992588205499, -50.42986682751686],
                 zoom: 5,
@@ -473,7 +441,7 @@
             grupo = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map);
 
         var markersCluster = L.markerClusterGroup().addTo(map);
-        lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster)
+
         map.addLayer(markersCluster);
 
         L.tileLayer(

@@ -31,18 +31,25 @@ class GrupoCercaController extends Controller
         $this->grupocercaRelacionamentoService = $grupocercaRelacionamentoService;
         $this->logService = $logService;
         $this->userService = $userService;
+
+        $this->data = [
+            'icon' => 'fa fa-car-side',
+            'title' => 'Grupo de Monitoramento Veicular',
+            'menu_open_monitoramento' => 'kt-menu__item--open'
+        ];
     }
 
     public function index()
     {
+        $data = $this->data;
         $data['grupos'] = GrupoCerca::with('grupoCercaRelacionamento')->with('grupoUsuarioRelacionamento')->get();
         return view('fleetslarge.cercas.list', $data);
     }
 
     public function new(Request $request)
     {
-        
-        
+
+        $data = $this->data;
         if (!isset($request->id)) {
             $data['cars'] = $this->grupocercaService->getPlate();
             $data['users'] = $this->userService->paginate();
@@ -64,7 +71,7 @@ class GrupoCercaController extends Controller
             foreach($gruposCerca->grupoCercaRelacionamento as $grupoCercaRelacionamento){
                 $plate = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
                 $removePlate[] = $plate->placa;
-                
+
             }
             $data['cars'] = $this->grupocercaService->removePlates($removePlate);
             $data['users'] = $this->userService->getRemoveUsers($removeUser);
@@ -75,7 +82,7 @@ class GrupoCercaController extends Controller
 
     public function save(Request $request)
     {
-
+        $data = $this->data;
         if (empty($request->name)) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido criar um Grupo de Cerca com o campo nome vazio'], 400);
         }
@@ -142,7 +149,7 @@ class GrupoCercaController extends Controller
                     $grupoRelacionamento    =  new GrupoCercaRelacionamento();
                     $grupoUsuario           =  new GrupoUsuarioRelacionamento();
                     $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Editou a cerca: ' . $grupoCerca->id);
-                    
+
                     return $grupoRelacionamento->insert($arrMontagem) && $grupoUsuario->insert($arrMontagemUser)
                         ? response()->json(['status' => 'success'], 200)
                         : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -153,6 +160,7 @@ class GrupoCercaController extends Controller
 
     public function destroy(Int $id)
     {
+        $data = $this->data;
         $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Deletou a cerca: ' . $id);
         return $this->grupocercaService->destroy($id);
     }
