@@ -76,22 +76,23 @@ class MapMarkersSantanderController extends Controller
         }
     }
 
-    public function getGrupoRelacionamento(Request $request){
-        if(empty($request->grupo))
-            return array();
-        
-        $placas = array();
-        $resultsGrupo = $this->grupocercaService->getGrupoCercaSantander($request->grupo);
-        foreach($resultsGrupo as $resultGrupo){
-            foreach($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento){
-                $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
-                $placas[] = $placa->placa;
-                // foreach($grupoCercaRelacionamento as $cerca){
-                //     dd($grupoCercaRelacionamento);
-                //     dd($this->grupocercaService->findByChassi($cerca->chassis));
-                // }
+    public function getGrupoRelacionamento(Request $request)
+    {
+        try {
+            if (empty($request->grupo))
+                return array();
+
+            $placas = array();
+            $resultsGrupo = $this->grupocercaService->getGrupoCercaSantander($request->grupo);
+            foreach ($resultsGrupo as $resultGrupo) {
+                foreach ($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento) {
+                    $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
+                    $placas[] = $placa->placa;
+                }
             }
+            return response()->json(['status' => 'success', 'data' =>  $placas], 200);
+        } catch (\Exception $e) {
+            return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
         }
-        return $placas;
     }
 }
