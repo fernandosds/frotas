@@ -11,8 +11,6 @@ use App\Services\MapMarkersSantanderService;
 use App\Services\FleetsLarge\GrupoCercaService;
 use App\Services\LogService;
 
-
-
 class MapMarkersSantanderController extends Controller
 {
 
@@ -79,7 +77,21 @@ class MapMarkersSantanderController extends Controller
     }
 
     public function getGrupoRelacionamento(Request $request){
-        $result = $this->grupocercaService->getGrupoCercaSantander($request->grupo);
-        return $result;
+        if(empty($request->grupo))
+            return array();
+        
+        $placas = array();
+        $resultsGrupo = $this->grupocercaService->getGrupoCercaSantander($request->grupo);
+        foreach($resultsGrupo as $resultGrupo){
+            foreach($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento){
+                $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
+                $placas[] = $placa->placa;
+                // foreach($grupoCercaRelacionamento as $cerca){
+                //     dd($grupoCercaRelacionamento);
+                //     dd($this->grupocercaService->findByChassi($cerca->chassis));
+                // }
+            }
+        }
+        return $placas;
     }
 }

@@ -319,6 +319,9 @@
             type: "POST",
             data: form_data,
             success: function(response) {
+                // response.forEach(function(grupo, i){
+                //     console.log(grupo);
+                // });
                 responseGrupo.push(response);
             },
             error: function(error) {
@@ -329,7 +332,6 @@
     }
     
     $(document).ready(function() {
-        console.log(responseGrupo);
         // var checked = new Array(); //criamos um novo array
 
         $('.eventos').on('click', function() {
@@ -369,8 +371,11 @@
             popupAnchor: [1, -34],
         });
 
-        function createRealtimeLayer(url, container) {
-            return realtime = L.realtime(url, {
+        
+
+        function createRealtimeLayer(responseGrupo, container) {
+
+            return realtime = L.realtime(responseGrupo, {
                 interval: 60 * 1000,
                 container: container,
                 getFeatureId: function(f) {
@@ -426,7 +431,7 @@
 
                     }
                 }
-            })
+            });
         }
 
         var map = L.map('map', {
@@ -438,7 +443,7 @@
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup),
-            grupo = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map);
+            grupo = createRealtimeLayer(responseGrupo, subgroup).addTo(map);
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 

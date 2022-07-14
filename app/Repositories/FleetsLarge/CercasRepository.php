@@ -46,9 +46,8 @@ class CercasRepository extends AbstractRepository
     }
 
     public function getGrupoCercaSantander($arrGrupo){
-        // dd($arrGrupo);
-        
-            return $this->model->with('grupoCercaRelacionamento')
+
+        return $this->model->with('grupoCercaRelacionamento')
             ->with('grupoUsuarioRelacionamento')
             ->whereIn('id', $arrGrupo)
             ->get();
