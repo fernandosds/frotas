@@ -130,11 +130,13 @@
         align-items: baseline;
         align-content: baseline;
     }
-    .headerGroupCar{
-    }
-    .AllGroupCars{
+
+    .headerGroupCar {}
+
+    .AllGroupCars {
         float: right;
     }
+
     .groupCars {
         border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
@@ -283,7 +285,7 @@
                 @endforeach
             </div>
         @else
-            <label>Não existe Grupos de veículos cadastrados</label>
+        <label>Não existe Grupos de veículos cadastrados</label>
         @endif
     </div>
 </div>
@@ -302,11 +304,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
 
-
-
-    function getGrupo(){
+    var responseGrupo = new Array();
+    function getGrupo() {
         var grupo = new Array();
-        $('input.monitoramento:checkbox:checked').each(function () {
+        $('input.monitoramento:checkbox:checked').each(function() {
             grupo.push($(this).val());
         });
         var route = "/fleetslarges/poligono/map/markers/grupoRelacionamento";
@@ -320,20 +321,22 @@
             type: "POST",
             data: form_data,
             success: function(response) {
-                // response.forEach(function(grupo, i){
-                //     console.log(grupo);
-                // });
-                responseGrupo.push(response);
+                responseGrupo.push(response.data);
+                //createRealtimeLayer(responseGrupo, container)
+                //console.log('response.data: ' + response.data)
+
             },
             error: function(error) {
-                
+
             }
         });
-
     }
-    
+    console.log('responseGrupo: ' + responseGrupo)
+
     $(document).ready(function() {
+        getGrupo()
         // var checked = new Array(); //criamos um novo array
+        console.log('responseGrupo: ' + responseGrupo)
 
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
@@ -372,14 +375,15 @@
             popupAnchor: [1, -34],
         });
 
-        
-
         function createRealtimeLayer(responseGrupo, container) {
 
+            console.log('Entrou')
+            console.log(responseGrupo)
             return realtime = L.realtime(responseGrupo, {
                 interval: 60 * 1000,
                 container: container,
                 getFeatureId: function(f) {
+                    console.log(f)
                     return f.properties.placa;
                 },
                 cache: true,
@@ -461,23 +465,6 @@
                 accessToken: "pk.eyJ1IjoicGF1bG9zZXJnaW9waHAiLCJhIjoiY2trZnRkeXduMDRwdzJucXlwZXh3bmtvZCJ9.TaVN_xJSnhd64wOkK69nyg"
             }
         ).addTo(map);
-
-        L.control.layers(null, 
-            // {
-            //     'Ignição ON': realtime1,
-            //     'Ignição OFF': realtime2,
-            //     'Entrega Hoje': realtime3,
-            //     'Lojas': markersCluster
-            // },
-            {
-                collapsed: false
-            }
-        ).addTo(map);
-
-
-        realtime1.on('update', function() {
-            realtime1.getBounds();
-        });
 
         let editableLayers = new L.FeatureGroup();
         map.addLayer(editableLayers);
@@ -795,6 +782,8 @@
         //        .fail(function() {});
         //}
         getList();
+
+
         // getEvents();
     });
 </script>
