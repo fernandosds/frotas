@@ -375,7 +375,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Rotas para o mapa Poligono Santander
         Route::group(['prefix' => 'poligono'], function () {
-            Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');
+           // Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');
             Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
             Route::get('/map/markers', 'FleetsLarge\MapMarkersController@getList')->name('map.markers.list');
             Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersController@show')->name('map.markers.show');
