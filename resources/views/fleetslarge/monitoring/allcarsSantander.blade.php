@@ -277,7 +277,7 @@
             <div class="kt-checkbox-list">
                 @foreach($grupos as $grupo)
                 <label class="kt-checkbox">
-                    <input type="checkbox" class="monitoramento" onclick="getGrupo()" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
+                    <input type="checkbox" class="monitoramento" onclick="getGrupo()" id="grupo" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
                     <span></span>
                 </label>
                 @endforeach
@@ -301,7 +301,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
-    var responseGrupo = new Array();
+
+
 
     function getGrupo(){
         var grupo = new Array();
@@ -444,6 +445,7 @@
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup),
             grupo = createRealtimeLayer(responseGrupo, subgroup).addTo(map);
+            console.log(grupo);
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
