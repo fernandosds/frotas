@@ -382,6 +382,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::delete('/map/markers', 'FleetsLarge\MapMarkersController@delete')->name('map.markers.delete');
             Route::post('/map/markers/grupoRelacionamento', 'FleetsLarge\MapMarkersSantanderController@getGrupoRelacionamento')->name('map.markers.grupoRelacionamento');
 
+            // Route::post('/map/markers/allGrupo', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.AllGrupo');
+            Route::get('/map/markers/allGrupo', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.AllGrupo');
             // Rotas para Grupo de usuários cercas Santander
             Route::group(['prefix' => 'cars'], function () {
                 Route::get('/grupos/lista', 'FleetsLarge\MonitoringCercaSantanderController@index')->name('fleetslarges.poligono.cars.index');

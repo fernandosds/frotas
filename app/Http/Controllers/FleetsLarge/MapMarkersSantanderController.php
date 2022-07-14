@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MapMarkersRequest;
 use App\Http\Requests\MapMarkersDeleteRequest;
 use App\Services\MapMarkersSantanderService;
+use App\Services\ApiFleetLargeSantanderService;
 use App\Services\FleetsLarge\GrupoCercaService;
 use App\Services\LogService;
 
@@ -18,11 +19,12 @@ class MapMarkersSantanderController extends Controller
     private $logService;
     private $grupocercaService;
 
-    public function __construct(GrupoCercaService $grupocercaService, MapMarkersSantanderService $mapMarkersSantanderService, LogService $logService)
+    public function __construct(GrupoCercaService $grupocercaService, MapMarkersSantanderService $mapMarkersSantanderService, LogService $logService, ApiFleetLargeSantanderService $apiFleetLargeSantanderService)
     {
         $this->grupocercaService = $grupocercaService;
         $this->mapMarkersSantanderService = $mapMarkersSantanderService;
         $this->logService = $logService;
+        $this->apiFleetLargeSantanderService = $apiFleetLargeSantanderService;
     }
 
 
@@ -91,6 +93,18 @@ class MapMarkersSantanderController extends Controller
                 }
             }
             return response()->json(['status' => 'success', 'data' =>  $placas], 200);
+        } catch (\Exception $e) {
+            return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
+        }
+    }
+
+
+    public function allGrupo(Request $request){
+
+        try {
+            $fleetslargeSantander = $this->apiFleetLargeSantanderService->allGrupoSantander();
+
+            return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
         }

@@ -324,19 +324,16 @@
                 responseGrupo.push(response.data);
                 //createRealtimeLayer(responseGrupo, container)
                 //console.log('response.data: ' + response.data)
-
             },
             error: function(error) {
 
             }
         });
     }
-    console.log('responseGrupo: ' + responseGrupo)
 
     $(document).ready(function() {
         getGrupo()
         // var checked = new Array(); //criamos um novo array
-        console.log('responseGrupo: ' + responseGrupo)
 
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
@@ -448,8 +445,9 @@
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup),
-            grupo = createRealtimeLayer(responseGrupo, subgroup).addTo(map);
-            console.log(grupo);
+            // grupo = createRealtimeLayer(responseGrupo, subgroup).addTo(map);
+            realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
+
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -767,6 +765,21 @@
                 .fail(function() {});
         }
 
+
+        // function getAllGrupo() {
+        //     var form_data = {
+        //         _token: '{{csrf_token()}}',
+        //     }
+        //     $.ajax("{{route('map.markers.AllGrupo')}}", {
+        //             method: "POST",
+        //             data: form_data
+        //         })
+        //         .done(function(response) {
+        //             console.log(response)
+        //         })
+        //         .fail(function() {});
+        // }
+
         //function getEvents() {
         //    $.ajax("{{route('fleetslarges.monitoring.events')}}", {
         //            method: "GET",
@@ -782,6 +795,7 @@
         //        .fail(function() {});
         //}
         getList();
+        // getAllGrupo();
 
 
         // getEvents();
