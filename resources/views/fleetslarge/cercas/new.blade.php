@@ -15,12 +15,15 @@
 <div class="kt-portlet">
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand {{$icon}}"></i>
+            </span>
             <h3 class="kt-portlet__head-title">
-                <i class="fa fa-car-alt"></i>
-                Grupo de Cercas e Veículos
+                {{$title}} @if(Route::is('fleetslarges.cerca.new'))<small>Novo</small> @else<small>Editar</small> @endif
             </h3>
         </div>
     </div>
+
 
     <!--begin::Form-->
     <form class="kt-form kt-form--label-right" id="form-create-cerca">
@@ -39,7 +42,7 @@
                     <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
                     <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10">
                         @foreach($cars as $driver)
-                            <option value="">{{$driver->placa}}</option>405
+                        <option value="">{{$driver->placa}}</option>405
                         @endforeach
                     </select>
                     <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
@@ -55,9 +58,9 @@
                         <label for="exampleSelect2" class="col-form-label">Placa(s) adicionada(s): </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
                             @if(isset($placas))
-                                @foreach($placas as $placa)
-                                    <option value="">{{$placa}}</option>
-                                @endforeach
+                            @foreach($placas as $placa)
+                            <option value="">{{$placa}}</option>
+                            @endforeach
                             @endif
                         </select>
                     </div>
@@ -66,10 +69,10 @@
             <!-- INCLUDE DE USUARIOS-->
             <div class="form-group row">
                 <div class="col-lg-4" style="margin-top: 5px;">
-                        <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
+                    <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
                     <select class="form-control col-md-10 leftBoxU usuariosLeft" id="usuariosRight" multiple size="10">
                         @foreach($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
                     <span class="form-text text-muted"> <i class="flaticon-questions-circular-button"></i> Selecione um ou mais usuários e os direcione para o quadro á direita.</span>
@@ -85,9 +88,9 @@
                         <label for="exampleSelect2" class="col-form-label">Incluir Usuários: </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox usuariosRight" id="usuariosLeft" name='usuarios[]'>
                             @if(isset($grupo))
-                                @foreach($usuarios->grupoUsuarioRelacionamento as $usuarioRelacionamento)
-                                    <option value="">{{$usuarioRelacionamento->nome_usuario}}</option>
-                                @endforeach
+                            @foreach($usuarios->grupoUsuarioRelacionamento as $usuarioRelacionamento)
+                            <option value="">{{$usuarioRelacionamento->nome_usuario}}</option>
+                            @endforeach
                             @endif
                         </select>
                     </div>
@@ -129,10 +132,11 @@
         // })
         $('.' + leftBox.attr('id')).empty().append(my_options);
     }
+
     function moveSelectedUsuarios(classNAmeU) {
 
         const leftBoxU = $('.' + classNAmeU);
-        
+
         var $optionsU = $("." + classNAmeU + " option:selected").clone();
         $('.' + leftBoxU.attr('id')).append($optionsU);
         $("." + classNAmeU + " option:selected").remove();
