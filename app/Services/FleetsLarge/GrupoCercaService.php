@@ -66,4 +66,8 @@ class GrupoCercaService
         $grupo = $this->cerca->all();
         return $grupo;
     }
+
+    public function getGrupoCercaSantander($arrGrupo){
+        return $this->cerca->getGrupoCercaSantander($arrGrupo);
+    }
 }

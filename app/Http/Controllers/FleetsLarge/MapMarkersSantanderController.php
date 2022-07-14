@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\FleetsLarge;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MapMarkersRequest;
 use App\Http\Requests\MapMarkersDeleteRequest;
 use App\Services\MapMarkersSantanderService;
 use App\Services\FleetsLarge\GrupoCercaService;
 use App\Services\LogService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 
 class MapMarkersSantanderController extends Controller
@@ -78,6 +79,7 @@ class MapMarkersSantanderController extends Controller
     }
 
     public function getGrupoRelacionamento(Request $request){
-        dd($request->data);
+        $result = $this->grupocercaService->getGrupoCercaSantander($request->grupo);
+        return $result;
     }
 }

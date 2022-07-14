@@ -301,35 +301,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
-    
+    var responseGrupo = new Array();
 
     function getGrupo(){
         var grupo = new Array();
         $('input.monitoramento:checkbox:checked').each(function () {
             grupo.push($(this).val());
         });
-
-        var data = {
-            // _token: '{{csrf_token()}}',
+        var route = "/fleetslarges/poligono/map/markers/grupoRelacionamento";
+        var form_data = {
+            _token: '{{csrf_token()}}',
             grupo: grupo,
         }
+
         $.ajax({
-            url: "poligono/map/markers/grupoRelacionamento",
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            url: "{{url('')}}" + route,
+            type: "POST",
+            data: form_data,
+            success: function(response) {
+                responseGrupo.push(response);
             },
-            data: data,
-            // data: data,
-            success: function(data) {
-                console.log(data);
+            error: function(error) {
+                
             }
         });
-    }
-    $(document).ready(function() {
 
+    }
+    
+    $(document).ready(function() {
+        console.log(responseGrupo);
         // var checked = new Array(); //criamos um novo array
 
         $('.eventos').on('click', function() {
@@ -470,11 +470,7 @@
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup),
-            subgroup2 = L.featureGroup.subGroup(clusterGroup),
-            subgroup3 = L.featureGroup.subGroup(clusterGroup),
-            realtime1 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map),
-            realtime2 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 0)}}", subgroup2).addTo(map),
-            realtime3 = createRealtimeLayer("{{route('fleetslarges.monitoring.carsForDeliver', 1)}}", subgroup3).addTo(map);
+            grupo = createRealtimeLayer("{{route('fleetslarges.monitoring.carsPosition', 1)}}", subgroup).addTo(map);
 
         var markersCluster = L.markerClusterGroup().addTo(map);
         lastPosition("{{route('fleetslarges.monitoring.movidaPosition')}}", markersCluster)
