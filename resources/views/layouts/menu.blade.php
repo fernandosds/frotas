@@ -426,7 +426,7 @@
                     </ul>
                 </div>
             </li>
-
+            @if( Auth::user()->customer_id == 8)
             <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">MONITORAMENTO</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
@@ -454,7 +454,7 @@
                     <span class="kt-menu__link-text">Mapa Monitoramento</span>
                 </a>
             </li>
-
+            @endif
 
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
 
