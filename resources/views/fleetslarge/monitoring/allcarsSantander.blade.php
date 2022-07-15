@@ -274,16 +274,16 @@
 <div class='groupCars'>
     <div class="headerGroupCar">
         @if(isset($grupos))
-            <label>Grupos de Veículos Cadastrados</label>
-            <br> </br>
-            <div class="kt-checkbox-list">
-                @foreach($grupos as $grupo)
-                <label class="kt-checkbox">
-                    <input type="checkbox" class="monitoramento" onclick="getGrupo()" id="grupo" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
-                    <span></span>
-                </label>
-                @endforeach
-            </div>
+        <label>Grupos de Veículos Cadastrados</label>
+        <br> </br>
+        <div class="kt-checkbox-list">
+            @foreach($grupos as $grupo)
+            <label class="kt-checkbox">
+                <input type="checkbox" class="monitoramento" onclick="getGrupo()" id="grupo" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
+                <span></span>
+            </label>
+            @endforeach
+        </div>
         @else
         <label>Não existe Grupos de veículos cadastrados</label>
         @endif
@@ -303,8 +303,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
-
     var responseGrupo = new Array();
+
     function getGrupo() {
         var grupo = new Array();
         $('input.monitoramento:checkbox:checked').each(function() {
@@ -374,17 +374,16 @@
 
         function createRealtimeLayer(responseGrupo, container) {
 
-            console.log('Entrou')
-            console.log(responseGrupo)
             return realtime = L.realtime(responseGrupo, {
                 interval: 60 * 1000,
                 container: container,
                 getFeatureId: function(f) {
-                    console.log(f)
+                    console.log('f: ' + f)
                     return f.properties.placa;
                 },
                 cache: true,
                 pointToLayer: function(feature, latlng) {
+                    console.log('feature: ' + feature)
                     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
                     if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
@@ -445,9 +444,9 @@
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup),
-            // grupo = createRealtimeLayer(responseGrupo, subgroup).addTo(map);
             realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
 
+            console.log('realtime1: ' + realtime1)
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -766,19 +765,6 @@
         }
 
 
-        // function getAllGrupo() {
-        //     var form_data = {
-        //         _token: '{{csrf_token()}}',
-        //     }
-        //     $.ajax("{{route('map.markers.AllGrupo')}}", {
-        //             method: "POST",
-        //             data: form_data
-        //         })
-        //         .done(function(response) {
-        //             console.log(response)
-        //         })
-        //         .fail(function() {});
-        // }
 
         //function getEvents() {
         //    $.ajax("{{route('fleetslarges.monitoring.events')}}", {

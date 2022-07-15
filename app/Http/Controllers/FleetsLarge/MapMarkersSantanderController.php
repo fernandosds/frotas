@@ -99,11 +99,10 @@ class MapMarkersSantanderController extends Controller
     }
 
 
-    public function allGrupo(Request $request){
-
+    public function allGrupo()
+    {
         try {
             $fleetslargeSantander = $this->apiFleetLargeSantanderService->allGrupoSantander();
-
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
