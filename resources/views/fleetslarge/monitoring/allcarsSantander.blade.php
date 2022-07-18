@@ -710,20 +710,21 @@
                         var geojson = L.geoJson(data, {
                             style: myStyle,
                             pointToLayer: function(feature, latlng) {
-                                console.log(feature)
+                                console.log(feature.properties)
+                                let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
-                                //     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
-                                //     console.log(feature.properties.ignicao);
-                                //     if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
-                                //         carIcon = greenAlertCarIcon
-                                //     }
+                                if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
+                                    carIcon = greenAlertCarIcon
+                                }
 
-                                //     if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
-                                //         carIcon = redAlertCarIcon
-                                //     }
-                                //     if (feature.properties.deliver == true) {
-                                //         //carIcon = orangeCarIcon;
-                                //     }
+                                if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
+                                    carIcon = redAlertCarIcon
+                                }
+
+                                return L.marker(latlng, {
+                                    'icon': carIcon
+                                })
+
                             }
                         }).addTo(map);
 
