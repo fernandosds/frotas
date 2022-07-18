@@ -141,7 +141,7 @@
         border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         min-width: 34px;
-        min-height: 122px;
+        min-height: 34px;
         position: absolute;
         padding: 5px 15px;
         z-index: 4445;
@@ -153,14 +153,13 @@
         opacity: 0.8;
         color: #000;
         font-weight: bold;
-        width: 15vw;
+        width: 25vw;
         max-height: 50vh;
         overflow: scroll;
         overflow-x: hidden;
         justify-content: space-between;
         align-items: baseline;
         align-content: baseline;
-        width: auto;
     }
 
     .markerItem {
@@ -276,7 +275,7 @@
 <button id="returnButton">Voltar</button>
 <button id="markerButton">Cercas</button>
 <div class='markerList hidden'></div>
-<div class='groupCars'></div>
+<div class='groupCars hidden'></div>
 
 @endsection
 
@@ -293,34 +292,8 @@
 <script>
     var responseGrupo = new Array();
 
-    function getGrupo() {
-        var grupo = new Array();
-        $('input.monitoramento:checkbox:checked').each(function() {
-            grupo.push($(this).val());
-        });
-        var route = "/fleetslarges/poligono/map/markers/grupoRelacionamento";
-        var form_data = {
-            _token: '{{csrf_token()}}',
-            grupo: grupo,
-        }
-
-        $.ajax({
-            url: "{{url('')}}" + route,
-            type: "POST",
-            data: form_data,
-            success: function(response) {
-                responseGrupo.push(response.data);
-                //createRealtimeLayer(responseGrupo, container)
-                //console.log('response.data: ' + response.data)
-            },
-            error: function(error) {
-
-            }
-        });
-    }
-
     $(document).ready(function() {
-        getGrupo()
+
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
             $('.tableEvents').toggleClass('hidden');
@@ -360,7 +333,6 @@
 
         function createRealtimeLayer(responseGrupo, container) {
 
-            console.log('responseGrupo: ' + responseGrupo)
 
             return realtime = L.realtime(responseGrupo, {
                 interval: 60 * 1000,
@@ -371,9 +343,9 @@
                 },
                 cache: true,
                 pointToLayer: function(feature, latlng) {
-                    console.log('feature: ' + feature)
-                    let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
+                    let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
+                    console.log(feature.properties.ignicao);
                     if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
                         carIcon = greenAlertCarIcon
                     }
@@ -434,7 +406,7 @@
             subgroup = L.featureGroup.subGroup(clusterGroup),
             realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
 
-        console.log('realtime1: ' + realtime1)
+        // console.log('realtime1: ' + realtime1)
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -623,12 +595,12 @@
         });
 
         $("#markerButton").click(function() {
-            $('.markerList').toggleClass("hidden");
+            $('.groupCars').toggleClass("hidden");
         });
 
         let listLayers = [];
 
-        $('.markerList').on('click', '.btnRemove', function() {
+        $('.groupCars').on('click', '.btnRemove', function() {
             Swal.fire({
                 title: `Remover a cerca "` + $(this).data('name') + `" ?`,
                 text: 'Essa ação não pode ser desfeita, para confirmar digite o nome da cerca.',
@@ -686,39 +658,61 @@
                         type: 'success'
                     });
                     editableLayers.clearLayers();
-                    getList();
+                    getListGrupo();
                 }
             });
         });
 
-        $('.markerList').on('click', '.checkMarkers', function() {
+        $('.groupCars').on('click', '.checkMarkersGrupo', function() {
             const idLayer = $(this).val();
+
+            var grupo = new Array();
+            $('input.checkMarkersGrupo:checkbox:checked').each(function() {
+                grupo.push($(this).val());
+            });
+
+            var form_data = {
+                _token: '{{csrf_token()}}',
+                grupo: grupo,
+            }
+
             if ($(this).is(':checked')) {
-                $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
-                        method: "GET",
+                $.ajax("{{route('map.markers.grupoRelacionamento')}}/", {
+                        method: "POST", data: form_data
                     })
                     .done(function(response) {
-                        const data = response.result;
-                        const myData = data.markers;
-                        const layerName = data.name;
-                        const layerType = data.type == 'in' ? "Entrada" : 'Saída';
+                        const data = response.data;
+                        const myData = data;
+
                         var myStyle = {
                             "color": "#ff7800",
                             "weight": 5,
                             "opacity": 0.65
                         };
-                        var geojson = L.geoJson(data.markers, {
+                        var geojson = L.geoJson(data, {
                             style: myStyle,
-                            onEachFeature: function(feature, layer) {
-                                layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
-                            }
+                            // pointToLayer: function(feature, latlng) {
+
+                            //     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
+                            //     console.log(feature.properties.ignicao);
+                            //     if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
+                            //         carIcon = greenAlertCarIcon
+                            //     }
+
+                            //     if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
+                            //         carIcon = redAlertCarIcon
+                            //     }
+                            //     if (feature.properties.deliver == true) {
+                            //         //carIcon = orangeCarIcon;
+                            //     }
+                            // }
                         }).addTo(map);
                         listLayers.push({
                             "id": idLayer,
                             "layer": geojson
                         });
 
-                        //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
+                        // L.geoJSON(data, { style: $(this).val() }).addTo(map);
                     })
                     .fail(function() {});
             } else {
@@ -733,65 +727,28 @@
             }
         });
 
-        function getList() {
-            $.ajax("{{route('map.markers.list')}}", {
-                    method: "GET",
-                })
-                .done(function(response) {
-                    const data = response.result;
-                    $('.markerList').empty();
-                    data.map(function(element) {
-                        $('.markerList').append('<div class="markerItem">' +
-                            '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
-                            '<input type="checkbox" class="checkMarkers"' +
-                            'id="' + element._id + '"  value="' + element._id + '">' +
-                            '<label class="marker-check-label" for="' + element._id + '">' +
-                            element.name + '</label></div >');
-                    });
-                })
-                .fail(function() {});
-        }
+
 
         function getListGrupo() {
-            $.ajax("{{route('fleetslarges.poligono.index')}}", {
+            $.ajax("{{route('map.markers.All')}}", {
                     method: "GET",
                 })
                 .done(function(response) {
-                    const data = response.result;
+                    const grupos = response.data;
                     $('.groupCars').empty();
-                    data.map(function(element) {
-                        $('.groupCars').append('<div class="markerItemGruop">' +
+                    console.log(grupos);
+                    grupos.map(function(element) {
+                        $('.groupCars').append('<div class="markerItemGrupo">' +
                             '<input type="checkbox" class="checkMarkersGrupo"' +
-                            'id="' + element._id + '"  value="' + element._id + '">' +
-                            '<label class="marker-check-label" for="' + element._id + '">' +
-                            element.name + '</label></div >');
+                            'id="' + element.id + '" value="' + element.id + '">' +
+                            '<label class="marker-check-label" for="' + element.id + '">' +
+                            element.nome + '</label></div >');
                     });
                 })
                 .fail(function() {});
         }
 
-
-
-        //function getEvents() {
-        //    $.ajax("{{route('fleetslarges.monitoring.events')}}", {
-        //            method: "GET",
-        //        })
-        //        .done(function(response) {
-        //            moment.locale('pt-br');
-        //            const data = response;
-        //            $('.tableEventsRows').empty();
-        //            data.map(function(element) {
-        //                $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3, 'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
-        //            });
-        //        })
-        //        .fail(function() {});
-        //}
-        getList();
         getListGrupo();
-        // getAllGrupo();
-
-
-        // getEvents();
     });
 </script>
 @endsection

@@ -85,7 +85,25 @@ class MapMarkersSantanderController extends Controller
                 return array();
 
             $placas = array();
-            $resultsGrupo = $this->grupocercaService->getGrupoCercaSantander($request->grupo);
+            $collectionObject = $this->grupocercaService->getAllGrupoCercaSantanderParameters($request->grupo);
+            $result = $this->apiFleetLargeSantanderService->groupSelected($collectionObject);
+            // foreach ($resultsGrupo as $resultGrupo) {
+            //     foreach ($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento) {
+            //         $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
+            //         $placas[] = $placa->placa;
+            //     }
+            // }
+            return response()->json(['status' => 'success', 'data' =>  $result], 200);
+        } catch (\Exception $e) {
+            return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function getAllGrupo()
+    {
+        try {
+            $placas = array();
+            $resultsGrupo = $this->grupocercaService->getGrupoCercaSantander();
             foreach ($resultsGrupo as $resultGrupo) {
                 foreach ($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento) {
                     $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
@@ -99,10 +117,11 @@ class MapMarkersSantanderController extends Controller
     }
 
 
-    public function allGrupo()
+    public function allGrupoT()
     {
         try {
-            $fleetslargeSantander = $this->apiFleetLargeSantanderService->allGrupoSantander();
+            $fleetslargeSantander = $this->grupocercaService->allGroup(); 
+            // dd($fleetslargeSantander);
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);

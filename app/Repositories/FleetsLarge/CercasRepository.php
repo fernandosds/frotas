@@ -56,6 +56,20 @@ class CercasRepository extends AbstractRepository
 
     public function getAllGrupoCercaSantander()
     {
-        return GrupoCercaRelacionamento::with('santander')->get();
+        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->get();
+    }
+
+    public function getAllGrupoCercaSantanderParameters($arrGrupo)
+    {
+        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->whereIn('grupo_id', $arrGrupo)->get();
+    }
+
+
+    public function grupoSeletedSantander($arrIdsSeleted){
+        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->whereIn('grupo_id', $arrIdsSeleted)->get();
+    }
+
+    public function all(){
+        return GrupoCerca::with('grupoCercaRelacionamento')->get();
     }
 }
