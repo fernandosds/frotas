@@ -474,7 +474,7 @@
                         payload.data.type = $('#cercaType').val();
                         payload.data.lenght_of_stay = $('.lenght_of_stay').val();
                         payload.data.to_deliver = $('#to_deliver').is(':checked');
-                        return fetch("{{route('map.markers.save')}}", {
+                        return fetch("{{route('map.markers.poligono.save')}}", {
                                 method: "POST",
                                 headers: {
                                     'Accept': 'application/json',
@@ -564,8 +564,6 @@
                 confirmButtonText: 'Remover',
                 showLoaderOnConfirm: true,
                 preConfirm: (cerca) => {
-                    console.log(cerca);
-                    console.log($(this).data('name'));
                     if (cerca !== $(this).data('name').toString()) {
                         Swal.showValidationMessage(
                             "Nome da cerca diferente do informado!"
@@ -647,15 +645,14 @@
                                 let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
                                 return L.marker(latlng, {
-                                    'icon': carIcon
-                                })
+                                        'icon': carIcon
+                                    })
 
-                                .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                                '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
-                                '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis.toUpperCase() + ' ' +
-                                '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
-        
-                                ' ');
+                                    .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                                        '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                                        '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis.toUpperCase() + ' ' +
+                                        '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
+                                        ' ');
 
                             }
                         }).addTo(map);
@@ -678,11 +675,14 @@
             }
         });
 
+
+        // Exibe a lista de poligonos / cercas
         function getList() {
-            $.ajax("{{route('map.markers.list')}}", {
+            $.ajax("{{route('map.markers.poligono.list')}}", {
                     method: "GET",
                 })
                 .done(function(response) {
+                    console.log(response)
                     const data = response.result;
                     $('.markerList').empty();
                     data.map(function(element) {
@@ -698,7 +698,7 @@
         }
 
 
-
+        // Exibe a lista de grupos
         function getListGrupo() {
             $.ajax("{{route('map.markers.All')}}", {
                     method: "GET",
@@ -706,7 +706,6 @@
                 .done(function(response) {
                     const grupos = response.data;
                     $('.groupCars').empty();
-                    console.log(grupos);
                     grupos.map(function(element) {
                         $('.groupCars').append('<div class="markerItemGrupo">' +
                             '<input type="checkbox" class="checkMarkersGrupo"' +
@@ -717,7 +716,7 @@
                 })
                 .fail(function() {});
         }
-        getList();
+        // getList();
         getListGrupo();
     });
 </script>

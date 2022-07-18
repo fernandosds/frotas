@@ -9,7 +9,7 @@ use App\Models\MapMarkerSantander;
 class MapMarkersSantanderRepository extends AbstractRepository
 {
 
-    private $modelMovida;
+    private $modelSantander;
 
     /**
      * UserRepository constructor.
@@ -17,7 +17,7 @@ class MapMarkersSantanderRepository extends AbstractRepository
      */
     public function __construct(MapMarkerSantander $modelSantander)
     {
-        $this->modelSantander = $modelSantander;
+        $this->model = $modelSantander;
     }
 
     public function create(array $data)
@@ -50,7 +50,7 @@ class MapMarkersSantanderRepository extends AbstractRepository
         try {
             $customer_id = Auth::user()->customer_id;
             return $this->model
-                ->when($customer_id == 7, function ($query) {
+                ->when($customer_id == 8, function ($query) {
                     return $query->where('customer', 42);
                 }, function ($query) {
                     return $query->where('customer', 11);

@@ -99,6 +99,7 @@ class MapMarkersSantanderController extends Controller
         }
     }
 
+    /*
     public function getAllGrupo()
     {
         try {
@@ -116,11 +117,11 @@ class MapMarkersSantanderController extends Controller
         }
     }
 
-
+    */
     public function allGrupoT()
     {
         try {
-            $fleetslargeSantander = $this->grupocercaService->allGroup(); 
+            $fleetslargeSantander = $this->grupocercaService->allGroup();
             // dd($fleetslargeSantander);
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
