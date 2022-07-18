@@ -84,6 +84,19 @@
 
     }
 
+    #markerGroupButton {
+        position: absolute;
+        top: 10px;
+        left: 205px;
+        padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        z-index: 400;
+
+    }
+
     .content {
         background-color: #666;
     }
@@ -145,7 +158,7 @@
         position: absolute;
         padding: 5px 15px;
         z-index: 4445;
-        left: 125px;
+        left: 205px;
         top: 60px;
         background: #f0f0f0;
         display: flex;
@@ -274,6 +287,7 @@
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
 <button id="markerButton">Cercas</button>
+<button id="markerGroupButton">Grupos</button>
 <div class='markerList hidden'></div>
 <div class='groupCars hidden'></div>
 
@@ -332,7 +346,6 @@
         });
 
         function createRealtimeLayer(responseGrupo, container) {
-
 
             return realtime = L.realtime(responseGrupo, {
                 interval: 60 * 1000,
@@ -595,6 +608,10 @@
         });
 
         $("#markerButton").click(function() {
+            $('.markerList').toggleClass("hidden");
+        });
+
+        $("#markerGroupButton").click(function() {
             $('.groupCars').toggleClass("hidden");
         });
 
@@ -678,7 +695,8 @@
 
             if ($(this).is(':checked')) {
                 $.ajax("{{route('map.markers.grupoRelacionamento')}}/", {
-                        method: "POST", data: form_data
+                        method: "POST",
+                        data: form_data
                     })
                     .done(function(response) {
                         const data = response.data;
@@ -691,22 +709,24 @@
                         };
                         var geojson = L.geoJson(data, {
                             style: myStyle,
-                            // pointToLayer: function(feature, latlng) {
+                            pointToLayer: function(feature, latlng) {
+                                console.log(feature)
 
-                            //     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
-                            //     console.log(feature.properties.ignicao);
-                            //     if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
-                            //         carIcon = greenAlertCarIcon
-                            //     }
+                                //     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
+                                //     console.log(feature.properties.ignicao);
+                                //     if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
+                                //         carIcon = greenAlertCarIcon
+                                //     }
 
-                            //     if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
-                            //         carIcon = redAlertCarIcon
-                            //     }
-                            //     if (feature.properties.deliver == true) {
-                            //         //carIcon = orangeCarIcon;
-                            //     }
-                            // }
+                                //     if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
+                                //         carIcon = redAlertCarIcon
+                                //     }
+                                //     if (feature.properties.deliver == true) {
+                                //         //carIcon = orangeCarIcon;
+                                //     }
+                            }
                         }).addTo(map);
+
                         listLayers.push({
                             "id": idLayer,
                             "layer": geojson
@@ -726,6 +746,25 @@
                 }
             }
         });
+
+        function getList() {
+            $.ajax("{{route('map.markers.list')}}", {
+                    method: "GET",
+                })
+                .done(function(response) {
+                    const data = response.result;
+                    $('.markerList').empty();
+                    data.map(function(element) {
+                        $('.markerList').append('<div class="markerItem">' +
+                            '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
+                            '<input type="checkbox" class="checkMarkers"' +
+                            'id="' + element._id + '"  value="' + element._id + '">' +
+                            '<label class="marker-check-label" for="' + element._id + '">' +
+                            element.name + '</label></div >');
+                    });
+                })
+                .fail(function() {});
+        }
 
 
 
@@ -747,7 +786,7 @@
                 })
                 .fail(function() {});
         }
-
+        getList();
         getListGrupo();
     });
 </script>
