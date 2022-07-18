@@ -343,28 +343,17 @@
             popupAnchor: [1, -34],
         });
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 12e0d52e4a0706ba8dce04759cdb0446d68bf95b
         var map = L.map('map', {
                 center: [-12.452992588205499, -50.42986682751686],
                 zoom: 5,
                 zoomControl: true,
                 maxZoom: 18,
                 minZoom: 3,
-            },
+            }),
             clusterGroup = L.markerClusterGroup().addTo(map),
-<<<<<<< HEAD
-            subgroup = L.featureGroup.subGroup(clusterGroup));
-=======
             subgroup = L.featureGroup.subGroup(clusterGroup);
-<<<<<<< HEAD
-        //realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
->>>>>>> 12e0d52e4a0706ba8dce04759cdb0446d68bf95b
-=======
 
->>>>>>> 7cd6cf34c56333a89d7e9ff7979135ddd3907e85
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -713,18 +702,18 @@
                                         ' ');
 
                             }
-                        }).addTo(map);
-                        
+                        }, subgroup).addTo(map);
+
                         listLayers.push({
                             "id": idLayer,
                             "layer": geojson
                         });
-                        console.log(listLayers);
                     })
                     .fail(function() {});
             } else {
                 const layer = listLayers.filter(item => item.id == idLayer);
                 layer[0].layer.clearLayers();
+
                 for (let i = 0; i < listLayers.length; i++) {
                     if (listLayers[i].id == idLayer) {
                         listLayers.splice(i, 1);
