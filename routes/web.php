@@ -378,8 +378,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');
             Route::post('/map/markers', 'FleetsLarge\MapMarkersSantanderController@save')->name('map.markers.poligono.save');
             Route::get('/map/markers', 'FleetsLarge\MapMarkersSantanderController@getList')->name('map.markers.poligono.list');
-            // Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersSantanderController@show')->name('map.markers.show');
-            // Route::delete('/map/markers', 'FleetsLarge\MapMarkersSantanderController@delete')->name('map.markers.delete');
+           // Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersSantanderController@show')->name('map.markers.poligono.show');
+            Route::delete('/map/markers', 'FleetsLarge\MapMarkersSantanderController@delete')->name('map.markers.poligono.delete');
             Route::post('/map/markers/grupoRelacionamento', 'FleetsLarge\MapMarkersSantanderController@getGrupoRelacionamento')->name('map.markers.grupoRelacionamento');
             Route::get('/map/markers/allGrupo', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.AllGrupo');
             Route::get('/map/markers/all', 'FleetsLarge\MapMarkersSantanderController@allGrupoT')->name('map.markers.All');//acabar depois

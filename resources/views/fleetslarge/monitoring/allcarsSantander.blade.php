@@ -616,7 +616,8 @@
 
         let listLayers = [];
 
-        $('.groupCars').on('click', '.btnRemove', function() {
+        // Remove a cerca criada
+        $('.markerList').on('click', '.btnRemove', function() {
             Swal.fire({
                 title: `Remover a cerca "` + $(this).data('name') + `" ?`,
                 text: 'Essa ação não pode ser desfeita, para confirmar digite o nome da cerca.',
@@ -641,7 +642,7 @@
                                 name: $(this).data('name')
                             }
                         }
-                        return fetch("{{route('map.markers.delete')}}", {
+                        return fetch("{{route('map.markers.poligono.delete')}}", {
                                 method: "DELETE",
                                 headers: {
                                     'Accept': 'application/json',
@@ -673,6 +674,7 @@
                     });
                     editableLayers.clearLayers();
                     getListGrupo();
+                    getList();
                 }
             });
         });
