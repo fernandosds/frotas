@@ -27,25 +27,26 @@ class CercasRepository extends AbstractRepository
             $cercas->detach();
             $this->model->grupoCerca()->syncWithoutDetaching($data);
             return response()->json(['status' => 'success', 'data' => $data], 201);
-
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
 
-    public function delete($id){
-        try{
+    public function delete($id)
+    {
+        try {
             $this->modelCercaRelacionamento->where('grupo_id', $id)->delete();
             $this->modelUsuarioRelacionamento->where('id_grupo', $id)->delete();
             $this->model->where('id', $id)->delete();
             $data = GrupoCerca::all();
             return response()->json(['status' => 'success', 'data' => $data], 201);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
 
-    public function getGrupoCercaSantander($arrGrupo){
+    public function getGrupoCercaSantander($arrGrupo)
+    {
 
         return $this->model->with('grupoCercaRelacionamento')
             ->with('grupoUsuarioRelacionamento')
@@ -53,10 +54,8 @@ class CercasRepository extends AbstractRepository
             ->get();
     }
 
-    public function getAllGrupoCercaSantander(){
+    public function getAllGrupoCercaSantander()
+    {
         return GrupoCercaRelacionamento::with('santander')->get();
-
-        // return $this->model->with('grupoCercaRelacionamento')->with('grupoUsuarioRelacionamento')->get();
     }
-
 }

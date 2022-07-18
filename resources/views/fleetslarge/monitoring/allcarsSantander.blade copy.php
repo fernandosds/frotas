@@ -169,12 +169,6 @@
         box-sizing: border-box;
     }
 
-    .markerItemGrupo {
-        padding: 5px 0px;
-        width: 50%;
-        box-sizing: border-box;
-    }
-
     .marker-check-label {
         padding-left: 5px;
         white-space: nowrap;
@@ -276,7 +270,25 @@
 <button id="returnButton">Voltar</button>
 <button id="markerButton">Cercas</button>
 <div class='markerList hidden'></div>
-<div class='groupCars'></div>
+
+<div class='groupCars'>
+    <div class="headerGroupCar">
+        @if(isset($grupos))
+        <label>Grupos de Veículos Cadastrados</label>
+        <br> </br>
+        <div class="kt-checkbox-list">
+            @foreach($grupos as $grupo)
+            <label class="kt-checkbox">
+                <input type="checkbox" class="monitoramento" onclick="getGrupo()" id="grupo" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
+                <span></span>
+            </label>
+            @endforeach
+        </div>
+        @else
+        <label>Não existe Grupos de veículos cadastrados</label>
+        @endif
+    </div>
+</div>
 
 @endsection
 
@@ -752,24 +764,6 @@
                 .fail(function() {});
         }
 
-        function getListGrupo() {
-            $.ajax("{{route('fleetslarges.poligono.index')}}", {
-                    method: "GET",
-                })
-                .done(function(response) {
-                    const data = response.result;
-                    $('.groupCars').empty();
-                    data.map(function(element) {
-                        $('.groupCars').append('<div class="markerItemGruop">' +
-                            '<input type="checkbox" class="checkMarkersGrupo"' +
-                            'id="' + element._id + '"  value="' + element._id + '">' +
-                            '<label class="marker-check-label" for="' + element._id + '">' +
-                            element.name + '</label></div >');
-                    });
-                })
-                .fail(function() {});
-        }
-
 
 
         //function getEvents() {
@@ -787,7 +781,6 @@
         //        .fail(function() {});
         //}
         getList();
-        getListGrupo();
         // getAllGrupo();
 
 
