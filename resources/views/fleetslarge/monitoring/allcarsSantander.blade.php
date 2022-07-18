@@ -713,17 +713,24 @@
                                 console.log(feature.properties)
                                 let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
-                                if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
-                                    carIcon = greenAlertCarIcon
-                                }
+                                // if (feature.properties.ignicao == 'ON') {
+                                //     carIcon = greenAlertCarIcon
+                                // }
 
-                                if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
-                                    carIcon = redAlertCarIcon
-                                }
+                                // if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
+                                //     carIcon = redAlertCarIcon
+                                // }
 
                                 return L.marker(latlng, {
                                     'icon': carIcon
                                 })
+
+                                .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                                '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                                '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis.toUpperCase() + ' ' +
+                                '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
+        
+                                ' ');
 
                             }
                         }).addTo(map);
