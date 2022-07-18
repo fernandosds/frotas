@@ -345,81 +345,15 @@
             popupAnchor: [1, -34],
         });
 
-        function createRealtimeLayer(responseGrupo, container) {
-
-            return realtime = L.realtime(responseGrupo, {
-                interval: 60 * 1000,
-                container: container,
-                getFeatureId: function(f) {
-                    console.log('f: ' + f)
-                    return f.properties.placa;
-                },
-                cache: true,
-                pointToLayer: function(feature, latlng) {
-
-                    let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
-                    console.log(feature.properties.ignicao);
-                    if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
-                        carIcon = greenAlertCarIcon
-                    }
-
-                    if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
-                        carIcon = redAlertCarIcon
-                    }
-                    if (feature.properties.deliver == true) {
-                        //carIcon = orangeCarIcon;
-                    }
-
-                    if (feature.properties.cliente_distancia_local_devolucao != null) {
-
-                        return L.marker(latlng, {
-                                'icon': carIcon
-                            })
-
-                            .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                                '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
-                                '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
-                                '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
-                                '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
-                                '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
-                                '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
-                                '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                                '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                                '<br /><strong><br> Dist. loja devol. | Dist. local ret. | Dist. end. resid. </strong> <br> ' +
-                                ' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;' + feature.properties.cliente_distancia_local_devolucao + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_local_retirada + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_endereco_residencial + '.km' +
-                                ' ');
-                    } else {
-                        return L.marker(latlng, {
-                                'icon': carIcon
-                            })
-
-                            .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                                '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
-                                '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
-                                '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
-                                '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
-                                '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
-                                '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
-                                '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
-                                '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : ''));
-
-                    }
-                }
-            });
-        }
-
         var map = L.map('map', {
                 center: [-12.452992588205499, -50.42986682751686],
                 zoom: 5,
                 zoomControl: true,
                 maxZoom: 18,
                 minZoom: 3,
-            }),
+            },
             clusterGroup = L.markerClusterGroup().addTo(map),
-            subgroup = L.featureGroup.subGroup(clusterGroup),
-            realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
-
-        // console.log('realtime1: ' + realtime1)
+            subgroup = L.featureGroup.subGroup(clusterGroup));
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -710,16 +644,7 @@
                         var geojson = L.geoJson(data, {
                             style: myStyle,
                             pointToLayer: function(feature, latlng) {
-                                console.log(feature.properties)
                                 let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
-
-                                // if (feature.properties.ignicao == 'ON') {
-                                //     carIcon = greenAlertCarIcon
-                                // }
-
-                                // if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
-                                //     carIcon = redAlertCarIcon
-                                // }
 
                                 return L.marker(latlng, {
                                     'icon': carIcon
@@ -734,19 +659,17 @@
 
                             }
                         }).addTo(map);
-
+                        
                         listLayers.push({
                             "id": idLayer,
                             "layer": geojson
                         });
-
-                        // L.geoJSON(data, { style: $(this).val() }).addTo(map);
+                        console.log(listLayers);
                     })
                     .fail(function() {});
             } else {
                 const layer = listLayers.filter(item => item.id == idLayer);
                 layer[0].layer.clearLayers();
-
                 for (let i = 0; i < listLayers.length; i++) {
                     if (listLayers[i].id == idLayer) {
                         listLayers.splice(i, 1);
