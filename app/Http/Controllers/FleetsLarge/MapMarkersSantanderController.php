@@ -30,10 +30,8 @@ class MapMarkersSantanderController extends Controller
 
     public function index()
     {
-        $data['grupos'] = $this->grupocercaService->allGroup();
-
         $this->logService->saveLog(strval(Auth::user()->name), 'Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas ');
-        return view('fleetslarge.monitoring.allcarsSantander', $data);
+        return view('fleetslarge.monitoring.allcarsSantander');
     }
 
     public function save(MapMarkersRequest $request)
@@ -87,12 +85,7 @@ class MapMarkersSantanderController extends Controller
             $placas = array();
             $collectionObject = $this->grupocercaService->getAllGrupoCercaSantanderParameters($request->grupo);
             $result = $this->apiFleetLargeSantanderService->groupSelected($collectionObject);
-            // foreach ($resultsGrupo as $resultGrupo) {
-            //     foreach ($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento) {
-            //         $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
-            //         $placas[] = $placa->placa;
-            //     }
-            // }
+
             return response()->json(['status' => 'success', 'data' =>  $result], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
@@ -118,11 +111,11 @@ class MapMarkersSantanderController extends Controller
     }
 
     */
-    public function allGrupoT()
+    public function allGrupo()
     {
         try {
             $fleetslargeSantander = $this->grupocercaService->allGroup();
-            // dd($fleetslargeSantander);
+
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);

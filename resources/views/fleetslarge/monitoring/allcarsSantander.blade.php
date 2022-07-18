@@ -304,8 +304,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
-    var responseGrupo = new Array();
-
     $(document).ready(function() {
 
         $('.eventos').on('click', function() {
@@ -355,7 +353,7 @@
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup);
-        //realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
+
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -610,7 +608,6 @@
                         type: 'success'
                     });
                     editableLayers.clearLayers();
-                    getListGrupo();
                     getList();
                 }
             });
@@ -725,6 +722,26 @@
             }
         });
 
+        // Exibe a lista de grupos
+        function getListGrupo() {
+            $.ajax("{{route('map.markers.all')}}", {
+                    method: "GET",
+                })
+                .done(function(response) {
+                    const grupos = response.data;
+                    console.log('grupos getListGrupo:  ' + grupos)
+                    $('.groupCars').empty();
+                    grupos.map(function(element) {
+                        $('.groupCars').append('<div class="markerItemGrupo">' +
+                            '<input type="checkbox" class="checkMarkersGrupo"' +
+                            'id="' + element.id + '" value="' + element.id + '">' +
+                            '<label class="marker-check-label" for="' + element.id + '">' +
+                            element.nome + '</label></div >');
+                    });
+                })
+                .fail(function() {});
+        }
+
         // Exibe a lista de poligonos / cercas
         function getList() {
             $.ajax("{{route('map.markers.poligono.list')}}", {
@@ -732,6 +749,7 @@
                 })
                 .done(function(response) {
                     const data = response.result;
+                    console.log('data getList: ' + data)
                     $('.markerList').empty();
                     data.map(function(element) {
                         $('.markerList').append('<div class="markerItem">' +
@@ -745,27 +763,11 @@
                 .fail(function() {});
         }
 
-        // Exibe a lista de grupos
-        function getListGrupo() {
-            $.ajax("{{route('map.markers.All')}}", {
-                    method: "GET",
-                })
-                .done(function(response) {
-                    const grupos = response.data;
-                    $('.groupCars').empty();
-                   grupos.map(function(element) {
-                        $('.groupCars').append('<div class="markerItemGrupo">' +
-                            '<input type="checkbox" class="checkMarkersGrupo"' +
-                            'id="' + element.id + '" value="' + element.id + '">' +
-                            '<label class="marker-check-label" for="' + element.id + '">' +
-                            element.nome + '</label></div >');
-                    });
-                })
-                .fail(function() {});
-        }
 
-        getListGrupo();
         getList();
+        getListGrupo();
+
+
 
     });
 </script>
