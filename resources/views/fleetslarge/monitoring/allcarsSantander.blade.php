@@ -418,7 +418,7 @@
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
             subgroup = L.featureGroup.subGroup(clusterGroup);
-            //realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
+        //realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -755,7 +755,7 @@
                     method: "GET",
                 })
                 .done(function(response) {
-                    console.log(response)
+                    //console.log(response)
                     const data = response.result;
                     $('.markerList').empty();
                     data.map(function(element) {
@@ -789,7 +789,7 @@
                 })
                 .fail(function() {});
         }
-        // getList();
+        getList();
         getListGrupo();
     });
 </script>
