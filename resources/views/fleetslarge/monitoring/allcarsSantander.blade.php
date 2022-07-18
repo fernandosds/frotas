@@ -345,6 +345,10 @@
             popupAnchor: [1, -34],
         });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 12e0d52e4a0706ba8dce04759cdb0446d68bf95b
         var map = L.map('map', {
                 center: [-12.452992588205499, -50.42986682751686],
                 zoom: 5,
@@ -353,7 +357,12 @@
                 minZoom: 3,
             },
             clusterGroup = L.markerClusterGroup().addTo(map),
+<<<<<<< HEAD
             subgroup = L.featureGroup.subGroup(clusterGroup));
+=======
+            subgroup = L.featureGroup.subGroup(clusterGroup);
+        //realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
+>>>>>>> 12e0d52e4a0706ba8dce04759cdb0446d68bf95b
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -551,7 +560,8 @@
 
         let listLayers = [];
 
-        $('.groupCars').on('click', '.btnRemove', function() {
+        // Remove a cerca criada
+        $('.markerList').on('click', '.btnRemove', function() {
             Swal.fire({
                 title: `Remover a cerca "` + $(this).data('name') + `" ?`,
                 text: 'Essa ação não pode ser desfeita, para confirmar digite o nome da cerca.',
@@ -576,7 +586,7 @@
                                 name: $(this).data('name')
                             }
                         }
-                        return fetch("{{route('map.markers.delete')}}", {
+                        return fetch("{{route('map.markers.poligono.delete')}}", {
                                 method: "DELETE",
                                 headers: {
                                     'Accept': 'application/json',
@@ -608,10 +618,57 @@
                     });
                     editableLayers.clearLayers();
                     getListGrupo();
+                    getList();
                 }
             });
         });
 
+        // Exibe a cerca no mapa
+        $('.markerList').on('click', '.checkMarkers', function() {
+            const idLayer = $(this).val();
+            //console.log(idLayer)
+            if ($(this).is(':checked')) {
+                $.ajax("{{route('map.markers.poligono.list')}}/" + $(this).val(), {
+                        method: "GET",
+                    })
+                    .done(function(response) {
+                        const data = response.result;
+                        const myData = data.markers;
+                        const layerName = data.name;
+                        const layerType = data.type == 'in' ? "Entrada" : 'Saída';
+                        var myStyle = {
+                            "color": "#ff7800",
+                            "weight": 5,
+                            "opacity": 0.65
+                        };
+                        var geojson = L.geoJson(data.markers, {
+                            style: myStyle,
+                            onEachFeature: function(feature, layer) {
+                                layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
+                            }
+                        }).addTo(map);
+                        listLayers.push({
+                            "id": idLayer,
+                            "layer": geojson
+                        });
+
+                        //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
+                    })
+                    .fail(function() {});
+            } else {
+                const layer = listLayers.filter(item => item.id == idLayer);
+                layer[0].layer.clearLayers();
+
+                for (let i = 0; i < listLayers.length; i++) {
+                    if (listLayers[i].id == idLayer) {
+                        listLayers.splice(i, 1);
+                    }
+                }
+            }
+        });
+
+
+        //Exibe o grupo de veículos
         $('.groupCars').on('click', '.checkMarkersGrupo', function() {
             const idLayer = $(this).val();
 
@@ -675,14 +732,12 @@
             }
         });
 
-
         // Exibe a lista de poligonos / cercas
         function getList() {
             $.ajax("{{route('map.markers.poligono.list')}}", {
                     method: "GET",
                 })
                 .done(function(response) {
-                    console.log(response)
                     const data = response.result;
                     $('.markerList').empty();
                     data.map(function(element) {
@@ -697,7 +752,6 @@
                 .fail(function() {});
         }
 
-
         // Exibe a lista de grupos
         function getListGrupo() {
             $.ajax("{{route('map.markers.All')}}", {
@@ -706,7 +760,7 @@
                 .done(function(response) {
                     const grupos = response.data;
                     $('.groupCars').empty();
-                    grupos.map(function(element) {
+                   grupos.map(function(element) {
                         $('.groupCars').append('<div class="markerItemGrupo">' +
                             '<input type="checkbox" class="checkMarkersGrupo"' +
                             'id="' + element.id + '" value="' + element.id + '">' +
@@ -716,8 +770,10 @@
                 })
                 .fail(function() {});
         }
-        // getList();
+
         getListGrupo();
+        getList();
+
     });
 </script>
 @endsection

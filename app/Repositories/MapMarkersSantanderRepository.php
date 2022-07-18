@@ -49,13 +49,7 @@ class MapMarkersSantanderRepository extends AbstractRepository
     {
         try {
             $customer_id = Auth::user()->customer_id;
-            return $this->model
-                ->when($customer_id == 8, function ($query) {
-                    return $query->where('customer', 42);
-                }, function ($query) {
-                    return $query->where('customer', 11);
-                })
-                ->get(['name']);
+            return $this->model->get(['name']);
         } catch (\Exception $e) {
             return $e;
         }
