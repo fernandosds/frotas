@@ -702,7 +702,7 @@
                     })
                     .done(function(response) {
                         response.result.map(function(result){
-                            
+                            console.log(result)
                             const data = result;
                             const myData = data.markers;
                             const layerName = data.name;

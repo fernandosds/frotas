@@ -12,6 +12,7 @@ use App\Services\ApiFleetLargeSantanderService;
 use App\Services\FleetsLarge\GrupoCercaService;
 use App\Services\LogService;
 
+
 class MapMarkersSantanderController extends Controller
 {
 
@@ -31,6 +32,12 @@ class MapMarkersSantanderController extends Controller
     public function index()
     {
         $this->logService->saveLog(strval(Auth::user()->name), 'Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas ');
+        saveLog([
+            'value'     => strval(Auth::user()->name), 
+            'type'      => "Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas", 
+            'local'     => 'MapMarkersSantanderController', 
+            'funcao'    => 'index'
+        ]);
         return view('fleetslarge.monitoring.allcarsSantander');
     }
 
@@ -38,7 +45,15 @@ class MapMarkersSantanderController extends Controller
     {
         try {
             $json = $request->json()->all();
+
+            $type_cerca = $json['data']['type'] === 'in' ? "Entrada" : "Saída";
             $result = $this->mapMarkersSantanderService->save($json['data']);
+            saveLog([
+                'value'      => strval(Auth::user()->name), 
+                'type'       => "Criou a cerca: {$json['data']['name']} do tipo: {$type_cerca}", 
+                'local'      => 'MapMarkersSantanderController', 
+                'funcao'     => 'delete'
+            ]);
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 201);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
@@ -49,6 +64,13 @@ class MapMarkersSantanderController extends Controller
         try {
             $json = $request->json()->all();
             $result = $this->mapMarkersSantanderService->delete($json['data']['id'], $json['data']['name']);
+
+            saveLog([
+                'value'     => strval(Auth::user()->name), 
+                'type'      => "Deletou a cerca: {$json['data']['name']}", 
+                'local'     => 'MapMarkersSantanderController', 
+                'funcao'    => 'delete'
+            ]);
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 202);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);

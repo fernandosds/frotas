@@ -99,18 +99,29 @@ class GrupoCercaController extends Controller
             $grupoCerca = new GrupoCerca();
             $grupoCerca->created_at = Carbon::now();
         } else {
-            $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Monitorou a cerca ' . $request->id_grupo);
+            saveLog([
+                'value'     => strval(Auth::user()->name), 
+                'type'      => "Grupo: Monitorou o grupo {$request->name}", 
+                'local'     => 'GrupoCercaController', 
+                'funcao'    => 'save'
+            ]);
             $grupoCerca = GrupoCerca::find($request->id_grupo);
             $grupoCerca->updated_at = Carbon::now();
         }
 
         $grupoCerca->nome       = $request->name;
         $grupoCerca->user_id    = Auth::user()->id;
+
         if ($grupoCerca->save()) {
             $arrGrupoCercaRelacionamento = [];
             $arrMontagem = [];
             if (!$placas) {
-                $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Tentou criar uma cerca com mais de 50 veículos');
+                saveLog([
+                    'value'     => strval(Auth::user()->name), 
+                    'type'      => "Grupo: Tentou criar um grupo com mais de 50 veículos", 
+                    'local'     => 'GrupoCercaController', 
+                    'funcao'    => 'save'
+                ]);
                 return response()->json(['status' => 'error', 'errors' => 'Necessário adicionar uma placa para gravar o grupo de cerca'], 400);
             }
             foreach ($placas as $placa) {
@@ -161,11 +172,14 @@ class GrupoCercaController extends Controller
     public function destroy(Int $id)
     {
         $data = $this->data;
-        $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Deletou a cerca: ' . $id);
+        // $this->logService->saveLog(strval(Auth::user()->name), 'Cerca: Deletou a cerca: ' . $id);
+        saveLog([
+            'value'     => strval(Auth::user()->name), 
+            'type'      => "Grupo: Deletou o grupo", 
+            'local'     => 'GrupoCercaController', 
+            'funcao'    => 'destroy'
+        ]);
         return $this->grupocercaService->destroy($id);
     }
 
-    public function validatePlacaUser(array $placa, $usuarios){
-
-    }
 }
