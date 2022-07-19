@@ -84,19 +84,6 @@
 
     }
 
-    #markerGroupButton {
-        position: absolute;
-        top: 10px;
-        left: 205px;
-        padding: 10px;
-        z-index: 400;
-        border: 2px solid rgba(0, 0, 0, 0.2);
-        background-clip: padding-box;
-        border-radius: 5px;
-        z-index: 400;
-
-    }
-
     .content {
         background-color: #666;
     }
@@ -154,11 +141,11 @@
         border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         min-width: 34px;
-        min-height: 34px;
+        min-height: 122px;
         position: absolute;
         padding: 5px 15px;
         z-index: 4445;
-        left: 205px;
+        left: 125px;
         top: 60px;
         background: #f0f0f0;
         display: flex;
@@ -166,28 +153,17 @@
         opacity: 0.8;
         color: #000;
         font-weight: bold;
-        width: 25vw;
+        width: 15vw;
         max-height: 50vh;
         overflow: scroll;
         overflow-x: hidden;
         justify-content: space-between;
         align-items: baseline;
         align-content: baseline;
+        width: auto;
     }
 
     .markerItem {
-        padding: 5px 0px;
-        width: 50%;
-        box-sizing: border-box;
-    }
-
-    .markerItemGrupo {
-        padding: 5px 0px;
-        width: 50%;
-        box-sizing: border-box;
-    }
-
-    .markerItemGrupoCercas{
         padding: 5px 0px;
         width: 50%;
         box-sizing: border-box;
@@ -293,10 +269,26 @@
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
 <button id="markerButton">Cercas</button>
-<button id="markerGroupButton">Grupos</button>
 <div class='markerList hidden'></div>
-<div class='groupCars hidden'></div>
-<div class='groupCercas hidden'></div>
+
+<div class='groupCars'>
+    <div class="headerGroupCar">
+        @if(isset($grupos))
+        <label>Grupos de Veículos Cadastrados</label>
+        <br> </br>
+        <div class="kt-checkbox-list">
+            @foreach($grupos as $grupo)
+            <label class="kt-checkbox">
+                <input type="checkbox" class="monitoramento" onclick="getGrupo()" id="grupo" name="monitoramento[]" value="{{$grupo->id}}"> {{$grupo->nome}}
+                <span></span>
+            </label>
+            @endforeach
+        </div>
+        @else
+        <label>Não existe Grupos de veículos cadastrados</label>
+        @endif
+    </div>
+</div>
 
 @endsection
 
@@ -311,8 +303,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
-    $(document).ready(function() {
+    var responseGrupo = new Array();
 
+    function getGrupo() {
+        var grupo = new Array();
+        $('input.monitoramento:checkbox:checked').each(function() {
+            grupo.push($(this).val());
+        });
+        var route = "/fleetslarges/poligono/map/markers/grupoRelacionamento";
+        var form_data = {
+            _token: '{{csrf_token()}}',
+            grupo: grupo,
+        }
+
+        $.ajax({
+            url: "{{url('')}}" + route,
+            type: "POST",
+            data: form_data,
+            success: function(response) {
+                responseGrupo.push(response.data);
+                //createRealtimeLayer(responseGrupo, container)
+                //console.log('response.data: ' + response.data)
+            },
+            error: function(error) {
+
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        getGrupo()
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
             $('.tableEvents').toggleClass('hidden');
@@ -350,6 +370,70 @@
             popupAnchor: [1, -34],
         });
 
+        function createRealtimeLayer(responseGrupo, container) {
+
+            console.log('responseGrupo: ' + responseGrupo)
+
+            return realtime = L.realtime(responseGrupo, {
+                interval: 60 * 1000,
+                container: container,
+                getFeatureId: function(f) {
+                    console.log('f: ' + f)
+                    return f.properties.placa;
+                },
+                cache: true,
+                pointToLayer: function(feature, latlng) {
+                    console.log('feature: ' + feature)
+                    let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
+
+                    if (feature.properties.ignicao == 'ON' && !feature.properties.cliente_posicao_recente) {
+                        carIcon = greenAlertCarIcon
+                    }
+
+                    if (feature.properties.ignicao == 'OFF' && !feature.properties.cliente_posicao_recente) {
+                        carIcon = redAlertCarIcon
+                    }
+                    if (feature.properties.deliver == true) {
+                        //carIcon = orangeCarIcon;
+                    }
+
+                    if (feature.properties.cliente_distancia_local_devolucao != null) {
+
+                        return L.marker(latlng, {
+                                'icon': carIcon
+                            })
+
+                            .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                                '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
+                                '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                                '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
+                                '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
+                                '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
+                                '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
+                                '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
+                                '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
+                                '<br /><strong><br> Dist. loja devol. | Dist. local ret. | Dist. end. resid. </strong> <br> ' +
+                                ' &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;' + feature.properties.cliente_distancia_local_devolucao + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_local_retirada + '.km &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' + feature.properties.cliente_distancia_endereco_residencial + '.km' +
+                                ' ');
+                    } else {
+                        return L.marker(latlng, {
+                                'icon': carIcon
+                            })
+
+                            .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                                '<br /><br /><strong><br>Status:</strong>  ' + feature.properties.status_veiculo + ' ' +
+                                '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                                '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis + ' ' +
+                                '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
+                                '<br /><strong><br>Local de Devolução:</strong>  ' + feature.properties.cliente_localdev + ' ' +
+                                '<br /><strong><br>Local de retirada:</strong>  ' + (feature.properties.cliente_local_retirada ?? '') + ' ' +
+                                '<br /><strong><br>Data da retirada:</strong>  ' + (feature.properties.cliente_dataretirada ? feature.properties.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : '') + ' ' +
+                                '<br /><strong><br>Data de devolução:</strong>  ' + (feature.properties.cliente_datadev ? feature.properties.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6') : ''));
+
+                    }
+                }
+            });
+        }
 
         var map = L.map('map', {
                 center: [-12.452992588205499, -50.42986682751686],
@@ -359,8 +443,10 @@
                 minZoom: 3,
             }),
             clusterGroup = L.markerClusterGroup().addTo(map),
-            subgroup = L.featureGroup.subGroup(clusterGroup);
+            subgroup = L.featureGroup.subGroup(clusterGroup),
+            realtime1 = createRealtimeLayer("{{route('map.markers.AllGrupo')}}", subgroup).addTo(map);
 
+        console.log('realtime1: ' + realtime1)
 
         var markersCluster = L.markerClusterGroup().addTo(map);
 
@@ -481,7 +567,7 @@
                         payload.data.type = $('#cercaType').val();
                         payload.data.lenght_of_stay = $('.lenght_of_stay').val();
                         payload.data.to_deliver = $('#to_deliver').is(':checked');
-                        return fetch("{{route('map.markers.poligono.save')}}", {
+                        return fetch("{{route('map.markers.save')}}", {
                                 method: "POST",
                                 headers: {
                                     'Accept': 'application/json',
@@ -552,13 +638,8 @@
             $('.markerList').toggleClass("hidden");
         });
 
-        $("#markerGroupButton").click(function() {
-            $('.groupCars').toggleClass("hidden");
-        });
-
         let listLayers = [];
 
-        // Remove a cerca criada
         $('.markerList').on('click', '.btnRemove', function() {
             Swal.fire({
                 title: `Remover a cerca "` + $(this).data('name') + `" ?`,
@@ -572,6 +653,8 @@
                 confirmButtonText: 'Remover',
                 showLoaderOnConfirm: true,
                 preConfirm: (cerca) => {
+                    console.log(cerca);
+                    console.log($(this).data('name'));
                     if (cerca !== $(this).data('name').toString()) {
                         Swal.showValidationMessage(
                             "Nome da cerca diferente do informado!"
@@ -584,7 +667,7 @@
                                 name: $(this).data('name')
                             }
                         }
-                        return fetch("{{route('map.markers.poligono.delete')}}", {
+                        return fetch("{{route('map.markers.delete')}}", {
                                 method: "DELETE",
                                 headers: {
                                     'Accept': 'application/json',
@@ -598,7 +681,6 @@
                                         throw new Error(text.errors['data.name'][0]);
                                     })
                                 }
-                                window.location.href = "{{route('fleetslarges.poligono.index')}}"
                                 return response.json()
                             })
                             .catch(error => {
@@ -621,56 +703,34 @@
             });
         });
 
-        //Exibe o grupo de veículos
-        $('.groupCars').on('click', '.checkMarkersGrupo', function() {
+        $('.markerList').on('click', '.checkMarkers', function() {
             const idLayer = $(this).val();
-
-            var grupo = new Array();
-            $('input.checkMarkersGrupo:checkbox:checked').each(function() {
-                grupo.push($(this).val());
-            });
-
-            var form_data = {
-                _token: '{{csrf_token()}}',
-                grupo: grupo,
-            }
-
             if ($(this).is(':checked')) {
-                $.ajax("{{route('map.markers.grupoRelacionamento')}}/", {
-                        method: "POST",
-                        data: form_data
+                $.ajax("{{route('map.markers.list')}}/" + $(this).val(), {
+                        method: "GET",
                     })
                     .done(function(response) {
-                        const data = response.data;
-                        const myData = data;
-
+                        const data = response.result;
+                        const myData = data.markers;
+                        const layerName = data.name;
+                        const layerType = data.type == 'in' ? "Entrada" : 'Saída';
                         var myStyle = {
                             "color": "#ff7800",
                             "weight": 5,
                             "opacity": 0.65
                         };
-                        var geojson = L.geoJson(data, {
+                        var geojson = L.geoJson(data.markers, {
                             style: myStyle,
-                            pointToLayer: function(feature, latlng) {
-                                let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
-
-                                return L.marker(latlng, {
-                                        'icon': carIcon
-                                    })
-
-                                    .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
-                                        '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
-                                        '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis.toUpperCase() + ' ' +
-                                        '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
-                                        ' ');
-
+                            onEachFeature: function(feature, layer) {
+                                layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
                             }
-                        }, subgroup).addTo(map);
-
+                        }).addTo(map);
                         listLayers.push({
                             "id": idLayer,
                             "layer": geojson
                         });
+
+                        //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
                     })
                     .fail(function() {});
             } else {
@@ -685,87 +745,8 @@
             }
         });
 
-        $('.markerList').on('click', '.checkMarkers', function() {
-            const idLayer = $(this).val();
-            var cercas = new Array();
-            $('input.checkMarkers:checkbox:checked').each(function() {
-                cercas.push($(this).val());
-            });
-            var form_data = {
-                _token: '{{csrf_token()}}',
-                cercas: $(this).val(),
-            };
-            if ($(this).is(':checked')) {
-                $.ajax("{{route('map.markers.all.cercas')}}", {
-                        method: "POST",
-                        data: form_data
-                    })
-                    .done(function(response) {
-                        response.result.map(function(result){
-                            
-                            const data = result;
-                            const myData = data.markers;
-                            const layerName = data.name;
-                            const layerType = data.type == 'in' ? "Entrada" : 'Saída';
-
-                            var myStyle = {
-                                "color": "#ff7800",
-                                "weight": 5,
-                                "opacity": 0.65
-                            };
-                            var geojson = L.geoJson(data.markers, {
-                                style: myStyle,
-                                onEachFeature: function(feature, layer) {
-                                    layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
-                                }
-                            }).addTo(map);
-                            listLayers.push({
-                                "id": idLayer,
-                                "layer": geojson
-                            });
-
-                        })
-                        
-                    })
-                    .fail(function() {});
-            } else {
-
-                const layer = listLayers.filter(item => item.id == idLayer);
-                layer[0].layer.clearLayers();
-                
-                for (let i = 0; i < listLayers.length; i++) {
-
-                    if (listLayers[i].id == idLayer) {
-                        listLayers.splice(i, 1);
-                        continue;
-                    }
-                }
-            }
-        });
-        
-        // Exibe a lista de grupos
-        function getListGrupo() {
-
-            $.ajax("{{route('map.markers.all')}}", {
-                    method: "GET",
-                })
-                .done(function(response) {
-                    const grupos = response.data;
-                    $('.groupCars').empty();
-                    grupos.map(function(element) {
-                        $('.groupCars').append('<div class="markerItemGrupo">' +
-                            '<input type="checkbox" class="checkMarkersGrupo"' +
-                            'id="' + element.id + '" value="' + element.id + '">' +
-                            '<label class="marker-check-label" for="' + element.id + '">' +
-                            element.nome + '</label></div >');
-                    });
-                })
-                .fail(function() {});
-        }
-
-        // Exibe a lista de poligonos / cercas
         function getList() {
-            $.ajax("{{route('map.markers.poligono.list')}}", {
+            $.ajax("{{route('map.markers.list')}}", {
                     method: "GET",
                 })
                 .done(function(response) {
@@ -783,9 +764,27 @@
                 .fail(function() {});
         }
 
-        getList();
-        getListGrupo();
 
+
+        //function getEvents() {
+        //    $.ajax("{{route('fleetslarges.monitoring.events')}}", {
+        //            method: "GET",
+        //        })
+        //        .done(function(response) {
+        //            moment.locale('pt-br');
+        //            const data = response;
+        //            $('.tableEventsRows').empty();
+        //            data.map(function(element) {
+        //                $('.tableEventsRows').append('<tr><td>' + moment(element.data).subtract(3, 'hours').format('DD/MM/YYYY HH:mm:ss') + '</td><td>' + element.placa_veiculo + '</td><td>' + element.descricao + '</td></tr>');
+        //            });
+        //        })
+        //        .fail(function() {});
+        //}
+        getList();
+        // getAllGrupo();
+
+
+        // getEvents();
     });
 </script>
 @endsection

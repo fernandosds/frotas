@@ -7,6 +7,7 @@ namespace App\Repositories\FleetsLarge;
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
 use App\Models\GrupoUsuarioRelacionamento;
+use App\Models\MapMarkerSantander;
 use App\Repositories\AbstractRepository;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,31 +28,54 @@ class CercasRepository extends AbstractRepository
             $cercas->detach();
             $this->model->grupoCerca()->syncWithoutDetaching($data);
             return response()->json(['status' => 'success', 'data' => $data], 201);
-
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
 
-    public function delete($id){
-        try{
+    public function delete($id)
+    {
+        try {
             $this->modelCercaRelacionamento->where('grupo_id', $id)->delete();
             $this->modelUsuarioRelacionamento->where('id_grupo', $id)->delete();
             $this->model->where('id', $id)->delete();
             $data = GrupoCerca::all();
             return response()->json(['status' => 'success', 'data' => $data], 201);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
 
-    public function getGrupoCercaSantander($arrGrupo){
-        // dd($arrGrupo);
-        
-            return $this->model->with('grupoCercaRelacionamento')
+    public function getGrupoCercaSantander($arrGrupo)
+    {
+
+        return $this->model->with('grupoCercaRelacionamento')
             ->with('grupoUsuarioRelacionamento')
             ->whereIn('id', $arrGrupo)
             ->get();
     }
 
+    public function getAllGrupoCercaSantander()
+    {
+        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->get();
+    }
+
+    public function getAllGrupoCercaSantanderParameters($arrGrupo)
+    {
+        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->whereIn('grupo_id', $arrGrupo)->get();
+    }
+
+
+    public function grupoSeletedSantander($arrIdsSeleted){
+        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->whereIn('grupo_id', $arrIdsSeleted)->get();
+    }
+
+    public function all(){
+        return GrupoCerca::with('grupoCercaRelacionamento')->get();
+    }
+
+    public function getAllCercas($arrCercas){
+        $markers = MapMarkerSantander::where('_id', $arrCercas)->get();
+        return $markers;
+    }
 }

@@ -26,4 +26,8 @@ class GrupoCercaRelacionamento extends Model
         return $this->hasOne(GrupoUsuarioRelacionamento::class, 'id', 'id_grupo');
     }
 
+    public function santander(){
+        return $this->hasOne(BancoSantander::class, 'chassis', 'chassis');
+    }
+
 }

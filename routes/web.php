@@ -375,12 +375,16 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Rotas para o mapa Poligono Santander
         Route::group(['prefix' => 'poligono'], function () {
-           // Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');
-            Route::post('/map/markers', 'FleetsLarge\MapMarkersController@save')->name('map.markers.save');
-            Route::get('/map/markers', 'FleetsLarge\MapMarkersController@getList')->name('map.markers.list');
-            Route::get('/map/markers/{id}', 'FleetsLarge\MapMarkersController@show')->name('map.markers.show');
-            Route::delete('/map/markers', 'FleetsLarge\MapMarkersController@delete')->name('map.markers.delete');
+            Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');
+            Route::post('/map/markers', 'FleetsLarge\MapMarkersSantanderController@save')->name('map.markers.poligono.save');
+            Route::get('/map/markers', 'FleetsLarge\MapMarkersSantanderController@getList')->name('map.markers.poligono.list');
+            Route::delete('/map/markers', 'FleetsLarge\MapMarkersSantanderController@delete')->name('map.markers.poligono.delete');
             Route::post('/map/markers/grupoRelacionamento', 'FleetsLarge\MapMarkersSantanderController@getGrupoRelacionamento')->name('map.markers.grupoRelacionamento');
+            Route::get('/map/markers/all', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.all');
+
+            //CERCAS
+            Route::get('/map/markers/all/grupos', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.all.grupos');
+            Route::post('/map/markers/all/cercas', 'FleetsLarge\MapMarkersSantanderController@allGrupoCercas')->name('map.markers.all.cercas'); //acabar depois
             // Rotas para Grupo de usuários cercas Santander
             Route::group(['prefix' => 'cars'], function () {
                 Route::get('/grupos/lista', 'FleetsLarge\MonitoringCercaSantanderController@index')->name('fleetslarges.poligono.cars.index');
