@@ -187,6 +187,12 @@
         box-sizing: border-box;
     }
 
+    .markerItemGrupoCercas{
+        padding: 5px 0px;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
     .marker-check-label {
         padding-left: 5px;
         white-space: nowrap;
@@ -290,6 +296,7 @@
 <button id="markerGroupButton">Grupos</button>
 <div class='markerList hidden'></div>
 <div class='groupCars hidden'></div>
+<div class='groupCercas hidden'></div>
 
 @endsection
 
@@ -591,6 +598,7 @@
                                         throw new Error(text.errors['data.name'][0]);
                                     })
                                 }
+                                window.location.href = "{{route('fleetslarges.poligono.index')}}"
                                 return response.json()
                             })
                             .catch(error => {
@@ -612,51 +620,6 @@
                 }
             });
         });
-
-        // Exibe a cerca no mapa
-        $('.markerList').on('click', '.checkMarkers', function() {
-            const idLayer = $(this).val();
-            //console.log(idLayer)
-            if ($(this).is(':checked')) {
-                $.ajax("{{route('map.markers.poligono.list')}}/" + $(this).val(), {
-                        method: "GET",
-                    })
-                    .done(function(response) {
-                        const data = response.result;
-                        const myData = data.markers;
-                        const layerName = data.name;
-                        const layerType = data.type == 'in' ? "Entrada" : 'Saída';
-                        var myStyle = {
-                            "color": "#ff7800",
-                            "weight": 5,
-                            "opacity": 0.65
-                        };
-                        var geojson = L.geoJson(data.markers, {
-                            style: myStyle,
-                            onEachFeature: function(feature, layer) {
-                                layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
-                            }
-                        }).addTo(map);
-                        listLayers.push({
-                            "id": idLayer,
-                            "layer": geojson
-                        });
-
-                        //L.geoJSON(data.markers, { style: $(this).val() }).addTo(map);
-                    })
-                    .fail(function() {});
-            } else {
-                const layer = listLayers.filter(item => item.id == idLayer);
-                layer[0].layer.clearLayers();
-
-                for (let i = 0; i < listLayers.length; i++) {
-                    if (listLayers[i].id == idLayer) {
-                        listLayers.splice(i, 1);
-                    }
-                }
-            }
-        });
-
 
         //Exibe o grupo de veículos
         $('.groupCars').on('click', '.checkMarkersGrupo', function() {
@@ -722,14 +685,72 @@
             }
         });
 
+        $('.markerList').on('click', '.checkMarkers', function() {
+            const idLayer = $(this).val();
+            var cercas = new Array();
+            $('input.checkMarkers:checkbox:checked').each(function() {
+                cercas.push($(this).val());
+            });
+            var form_data = {
+                _token: '{{csrf_token()}}',
+                cercas: $(this).val(),
+            };
+            if ($(this).is(':checked')) {
+                $.ajax("{{route('map.markers.all.cercas')}}", {
+                        method: "POST",
+                        data: form_data
+                    })
+                    .done(function(response) {
+                        response.result.map(function(result){
+                            
+                            const data = result;
+                            const myData = data.markers;
+                            const layerName = data.name;
+                            const layerType = data.type == 'in' ? "Entrada" : 'Saída';
+
+                            var myStyle = {
+                                "color": "#ff7800",
+                                "weight": 5,
+                                "opacity": 0.65
+                            };
+                            var geojson = L.geoJson(data.markers, {
+                                style: myStyle,
+                                onEachFeature: function(feature, layer) {
+                                    layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
+                                }
+                            }).addTo(map);
+                            listLayers.push({
+                                "id": idLayer,
+                                "layer": geojson
+                            });
+
+                        })
+                        
+                    })
+                    .fail(function() {});
+            } else {
+
+                const layer = listLayers.filter(item => item.id == idLayer);
+                layer[0].layer.clearLayers();
+                
+                for (let i = 0; i < listLayers.length; i++) {
+
+                    if (listLayers[i].id == idLayer) {
+                        listLayers.splice(i, 1);
+                        continue;
+                    }
+                }
+            }
+        });
+        
         // Exibe a lista de grupos
         function getListGrupo() {
+
             $.ajax("{{route('map.markers.all')}}", {
                     method: "GET",
                 })
                 .done(function(response) {
                     const grupos = response.data;
-                    console.log('grupos getListGrupo:  ' + grupos)
                     $('.groupCars').empty();
                     grupos.map(function(element) {
                         $('.groupCars').append('<div class="markerItemGrupo">' +
@@ -749,7 +770,6 @@
                 })
                 .done(function(response) {
                     const data = response.result;
-                    console.log('data getList: ' + data)
                     $('.markerList').empty();
                     data.map(function(element) {
                         $('.markerList').append('<div class="markerItem">' +
@@ -763,11 +783,8 @@
                 .fail(function() {});
         }
 
-
         getList();
         getListGrupo();
-
-
 
     });
 </script>

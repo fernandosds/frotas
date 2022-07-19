@@ -74,4 +74,8 @@ class GrupoCercaService
     public function getAllGrupoCercaSantanderParameters($arrGrupo){
         return $this->cerca->getAllGrupoCercaSantanderParameters($arrGrupo);
     }
+
+    public function getAllCercas($arrCercas){
+        return $this->cerca->getAllCercas($arrCercas);
+    }
 }

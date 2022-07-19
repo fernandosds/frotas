@@ -7,6 +7,7 @@ namespace App\Repositories\FleetsLarge;
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
 use App\Models\GrupoUsuarioRelacionamento;
+use App\Models\MapMarkerSantander;
 use App\Repositories\AbstractRepository;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,5 +72,10 @@ class CercasRepository extends AbstractRepository
 
     public function all(){
         return GrupoCerca::with('grupoCercaRelacionamento')->get();
+    }
+
+    public function getAllCercas($arrCercas){
+        $markers = MapMarkerSantander::where('_id', $arrCercas)->get();
+        return $markers;
     }
 }

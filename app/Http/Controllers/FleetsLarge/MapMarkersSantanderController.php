@@ -114,9 +114,22 @@ class MapMarkersSantanderController extends Controller
     public function allGrupo()
     {
         try {
+            // dd("Entrou");
             $fleetslargeSantander = $this->grupocercaService->allGroup();
 
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
+        } catch (\Exception $e) {
+            return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function allGrupoCercas(Request $request)
+    {
+        try {
+
+            $fleetslargeSantander = $this->grupocercaService->getAllCercas($request->cercas);
+
+            return response()->json(['status' => 'success', 'result' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
         }
