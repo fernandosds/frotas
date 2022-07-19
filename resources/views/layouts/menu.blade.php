@@ -449,7 +449,7 @@
             </li>
 
             <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
-                <a href="#" class="kt-menu__link ">
+                <a href="{{route('fleetslarges.poligono.index')}}" class="kt-menu__link ">
                     <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
                     <span class="kt-menu__link-text">Mapa Monitoramento</span>
                 </a>
