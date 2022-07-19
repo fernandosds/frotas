@@ -459,14 +459,14 @@
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
 
 
+
+            <!-- Iframe Santander -->
+                @if( Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13)
             <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">ANÁLISE DE DADOS</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
 
-
-            <!-- Iframe Santander -->
-            @if( Auth::user()->customer_id == 8 || Auth::user()->customer_id == 13)
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges_iframe ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-chart-bar"></i></span>
