@@ -33,7 +33,7 @@ class MapMarkersSantanderController extends Controller
     {
         $this->logService->saveLog(strval(Auth::user()->name), 'Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas ');
         saveLog([
-            'value'     => strval(Auth::user()->name), 
+            'value'     => strval(Auth::user()->email), 
             'type'      => "Mapa Monitoramento Cercas: Acessou o Mapa de monitoramento de Cercas", 
             'local'     => 'MapMarkersSantanderController', 
             'funcao'    => 'index'
@@ -49,7 +49,7 @@ class MapMarkersSantanderController extends Controller
             $type_cerca = $json['data']['type'] === 'in' ? "Entrada" : "Saída";
             $result = $this->mapMarkersSantanderService->save($json['data']);
             saveLog([
-                'value'      => strval(Auth::user()->name), 
+                'value'      => strval(Auth::user()->email), 
                 'type'       => "Criou a cerca: {$json['data']['name']} do tipo: {$type_cerca}", 
                 'local'      => 'MapMarkersSantanderController', 
                 'funcao'     => 'delete'
@@ -66,7 +66,7 @@ class MapMarkersSantanderController extends Controller
             $result = $this->mapMarkersSantanderService->delete($json['data']['id'], $json['data']['name']);
 
             saveLog([
-                'value'     => strval(Auth::user()->name), 
+                'value'     => strval(Auth::user()->email), 
                 'type'      => "Deletou a cerca: {$json['data']['name']}", 
                 'local'     => 'MapMarkersSantanderController', 
                 'funcao'    => 'delete'
