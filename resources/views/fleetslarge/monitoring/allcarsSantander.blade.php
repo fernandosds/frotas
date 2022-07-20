@@ -185,6 +185,7 @@
         padding: 5px 0px;
         width: 50%;
         box-sizing: border-box;
+        display: inline;
     }
 
     .markerItemGrupoCercas{
@@ -262,6 +263,10 @@
     .form-group label,
     .form-check label {
         color: #666 !important;
+    }
+    .checkMarkersGrupo{
+        float: left;
+        margin-top: 3px;
     }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
@@ -753,11 +758,15 @@
                     const grupos = response.data;
                     $('.groupCars').empty();
                     grupos.map(function(element) {
-                        $('.groupCars').append('<div class="markerItemGrupo">' +
-                            '<input type="checkbox" class="checkMarkersGrupo"' +
-                            'id="' + element.id + '" value="' + element.id + '">' +
-                            '<label class="marker-check-label" for="' + element.id + '">' +
-                            element.nome + '</label></div >');
+                        $('.groupCars').append(
+                            '<div class="markerItemGrupo">' +
+                                '<div class="markerItemGrupoSub">'+
+                                    '<input type="checkbox" class="checkMarkersGrupo"' + 'id="' + element.id + '" value="' + element.id + '">' +
+                                    '<label class="marker-check-label" for="' + element.id + '">' 
+                                        +element.nome + 
+                                    '</label>' +
+                                '</div>'
+                            +'</div >');
                     });
                 })
                 .fail(function() {});
@@ -772,12 +781,16 @@
                     const data = response.result;
                     $('.markerList').empty();
                     data.map(function(element) {
-                        $('.markerList').append('<div class="markerItem">' +
-                            '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
-                            '<input type="checkbox" class="checkMarkers"' +
-                            'id="' + element._id + '"  value="' + element._id + '">' +
-                            '<label class="marker-check-label" for="' + element._id + '">' +
-                            element.name + '</label></div >');
+                        $('.markerList').append(
+                            '<div class="markerItem">' +
+                                '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
+                                '<div class="btnRemoveStyle"> '+
+                                    '<input type="checkbox" class="checkMarkers"' +'id="' + element._id + '"  value="' + element._id + '">' +
+                                    '<label class="marker-check-label" for="' + element._id + '">' 
+                                        +element.name + 
+                                    '</label>'+
+                                '</div>'+
+                            '</div >');
                     });
                 })
                 .fail(function() {});

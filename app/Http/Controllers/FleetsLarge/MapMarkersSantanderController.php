@@ -54,6 +54,7 @@ class MapMarkersSantanderController extends Controller
                 'local'      => 'MapMarkersSantanderController', 
                 'funcao'     => 'delete'
             ]);
+            $this->logService->saveLog(strval(Auth::user()->name), "Mapa Monitoramento Cercas: Criou a cerca: {$json['data']['name']} do tipo: {$type_cerca}");
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 201);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
@@ -71,6 +72,7 @@ class MapMarkersSantanderController extends Controller
                 'local'     => 'MapMarkersSantanderController', 
                 'funcao'    => 'delete'
             ]);
+            $this->logService->saveLog(strval(Auth::user()->name), "Mapa Monitoramento Cercas: Deletou a cerca: {$json['data']['name']}");
             return response()->json(['statusText' => 'ok', 'isConfirmed' => true, 'result' => $result], 202);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
