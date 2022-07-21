@@ -211,6 +211,8 @@ class MonitoringController extends Controller
      */
     public function grid(Request $request)
     {
+        ini_set('max_execution_time', 300);
+
         $data['positions'] = $this->apiFleetLargeService->getGridModel($request->first_date, $request->last_date, $request->modelo);
 
         if (in_array("Nenhum registro encontrado", $data['positions'])) {
