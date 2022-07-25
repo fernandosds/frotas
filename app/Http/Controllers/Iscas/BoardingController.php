@@ -14,6 +14,7 @@ use App\Services\Iscas\TypeOfLoadService;
 use App\Services\Iscas\AccommodationLocationsService;
 use App\Services\Iscas\TrackerService;
 use App\Http\Controllers\Iscas\TrackerController;
+use App\Services\LogService;
 use Carbon\Carbon;
 use DateTime;
 use Carbon\CarbonInterval;
@@ -29,6 +30,11 @@ class BoardingController extends Controller
      * @var TrackerController
      */
     private $trackerController;
+
+    /**
+     * @var LogService
+     */
+    private $logService;
 
     /**
      * @var BoardingService
@@ -87,6 +93,7 @@ class BoardingController extends Controller
      * @param ApiUserService $apiUserService
      * @param ServiceHistoryService $serviceHistoryService
      * @param FunctionController $functionController
+     * @param LogService $logService
      */
     public function __construct(
         TrackerController $trackerController,
@@ -99,7 +106,8 @@ class BoardingController extends Controller
         CustomerService $customerService,
         ApiUserService $apiUserService,
         ServiceHistoryService $serviceHistoryService,
-        FunctionController $functionController
+        FunctionController $functionController,
+        LogService $logService
     ) {
         $this->trackerController = $trackerController;
         $this->boardingService = $boardingService;
@@ -112,6 +120,7 @@ class BoardingController extends Controller
         $this->apiUserService = $apiUserService;
         $this->serviceHistoryService = $serviceHistoryService;
         $this->functionController = $functionController;
+        $this->logService = $logService;
 
         $this->data = [
             'icon' => 'fa fa-shipping-fast',
@@ -216,7 +225,13 @@ class BoardingController extends Controller
                 ]);
             }
             $this->boardingService->save($request);
-            saveLog(['value' => $device->model, 'type' => 'Novo_embarque', 'local' => 'BoardingController', 'funcao' => 'save']);
+            $this->logService->saveLog(strval(Auth::user()->name), 'Embarque: Iniciou o embarque da isca: ' . $device->model);
+            saveLog([
+                'value'     => strval(Auth::user()->name),
+                'type'      => 'Boarding: Iniciou o embarque da isca: ' . $device->model,
+                'local'     => 'BoardingController',
+                'funcao'    => 'save'
+            ]);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -240,7 +255,13 @@ class BoardingController extends Controller
                 $this->trackerService->updateStatusTracker($boarding['pair_device']);
             }
             $this->boardingService->finish($id);
-            saveLog(['value' => $id, 'type' => 'Encerrou embarque', 'local' => 'BoardingController', 'funcao' => 'finish']);
+            $this->logService->saveLog(strval(Auth::user()->name), 'Embarque: Encerrou o embarque da isca: ' . $device->model);
+            saveLog([
+                'value'     => strval(Auth::user()->name),
+                'type'      => 'Boarding: Encerrou o embarque da isca: ' . $device->model,
+                'local'     => 'BoardingController',
+                'funcao'    => 'finish'
+            ]);
             return response()->json(['status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'errors' => $e->getMessage()], 400);

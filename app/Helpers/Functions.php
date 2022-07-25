@@ -62,13 +62,19 @@ function saveLog($data)
 {
 
     try {
-        $message['user'] = Auth::user()->id;
-        $message['name'] = Auth::user()->name;
-        $message['ip'] = $_SERVER['REMOTE_ADDR'];
-        $message['value'] = $data['value'];
-        $message['type'] = $data['type'];
-        $message['local'] = $data['local'];
-        $message['funcao'] = $data['funcao'];
+
+        $ipClient = (isset($_COOKIE['ipClient'])) ? $_COOKIE['ipClient'] : $_SERVER['REMOTE_ADDR'];
+        $message = [
+            [
+                "user"      => Auth::user()->id,
+                "name"      => Auth::user()->name,
+                "ip"        => $ipClient,
+                "value"     => $data['value'],
+                "type"        => $data['type'],
+                "local"        => $data['local'],
+                "funcao"    => $data['funcao']
+            ]
+        ];
 
         $post = array(
             'component' => 'Iscas', 'level' => 5,

@@ -56,9 +56,13 @@ class MonitoringController extends Controller
         $data = $this->data;
         $data['device'] = $device;
 
-        $this->logService->saveLog(strval(Auth::user()->name), 'Monitorou isca: ' . strval($device));
-
-        saveLog(['value' => $device, 'type' => 'Monitorou isca', 'local' => 'MonitoringController', 'funcao' => 'index']);
+        $this->logService->saveLog(strval(Auth::user()->name), 'Monitoramento: Monitorou a isca: ' . strval($device));
+        saveLog([
+            'value'     => strval(Auth::user()->name),
+            'type'      => 'Monitoramento: Monitorou_a_isca: ' . strval($device),
+            'local'     => 'MonitoringController',
+            'funcao'    => 'index'
+        ]);
         return view('monitoring.index', $data);
     }
 
