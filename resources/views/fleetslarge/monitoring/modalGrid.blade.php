@@ -34,6 +34,7 @@
                 <div id="message">
                     <h4>Selecione um período.</h4>
                 </div>
+                <div class="center" id="response"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

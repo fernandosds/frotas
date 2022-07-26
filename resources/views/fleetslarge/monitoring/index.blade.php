@@ -625,8 +625,6 @@
 
     $('#btn-grid').click(function() {
         $("#message").empty();
-        $("#message").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-
         var chassis = chassi_url;
         $.ajax({
             type: 'POST',
@@ -639,10 +637,17 @@
                 "first_date": $('#first_date').val(),
                 "last_date": $('#last_date').val()
             },
+            beforeSend : function(){
+                $("#message").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+                $("response").empty();
+            },
+            complete : function(){
+                $("message").empty();
+            },
             success: function(response) {
 
                 $("#message").empty();
-                $('#list_grid').html(response);
+                $('#response').html(response);
             },
             error: function(error) {
 
