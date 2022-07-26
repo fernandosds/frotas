@@ -213,21 +213,21 @@ class MonitoringController extends Controller
     {
         ini_set('max_execution_time', 300);
 
-        $data['positions'] = $this->apiFleetLargeService->getGridModel($request->first_date, $request->last_date, $request->modelo);
-
-        if (in_array("Nenhum registro encontrado", $data['positions'])) {
-            $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições: Não localizou registro para o chassi: ' . $request->chassis);
-            return response()->json(['status' => 'validation_error', 'errors' => "Nenhum registro encontrado."], 404);
-        };
-
-        if (Carbon::parse($request->last_date)->diffInDays(Carbon::parse($request->first_date)) > 31) {
-            return response()->json(['status' => 'validation_error', 'errors' => "Período superior a 30 dias"], 404);
+        if (Carbon::parse($request->last_date)->diffInDays(Carbon::parse($request->first_date)) > 11) {
+            return response()->json(['status' => 'validation_error', 'errors' => "Período superior a 10 dias"], 404);
         };
 
         if ($request->first_date > $request->last_date) {
             $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições:   Data invalida, data de inicio maior que a data final, ou diferença entre data superior a 5 dias para o chassi: ' . $request->chassis);
             return response()->json(['status' => 'validation_error', 'errors' => "Data invalida, data de inicio maior que a data final, ou diferença entre data superior a 5 dias"], 404);
         }
+
+        $data['positions'] = $this->apiFleetLargeService->getGridModel($request->first_date, $request->last_date, $request->modelo);
+
+        if (in_array("Nenhum registro encontrado", $data['positions'])) {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições: Não localizou registro para o chassi: ' . $request->chassis);
+            return response()->json(['status' => 'validation_error', 'errors' => "Nenhum registro encontrado."], 404);
+        };
 
         if (Auth::user()->customer_id == 8) {
             $this->logService->saveLog(strval(Auth::user()->name), 'Histórico de posições: Verificou o histórico de posições do chassi: ' . $request->chassis . ' no período de: ' . Carbon::parse($request->first_date)->format('d/m/Y') . ' até ' .  Carbon::parse($request->last_date)->format('d/m/Y') . '.');
