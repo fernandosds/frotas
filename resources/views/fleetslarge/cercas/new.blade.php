@@ -10,6 +10,10 @@
         margin-top: 8rem;
         margin-left: 2rem;
     }
+    .form-style{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 </style>
 
 <div class="kt-portlet">
@@ -36,6 +40,23 @@
                     <label for="name">Nome Cerca:</label>
                     <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
                 </div>
+                <div class="col-lg-5" style="margin-left: 235px;">
+                    <label for="name" style="margin-left: -25px;">Recebimento Alerta:</label>
+                    <div class="row">
+                        <div class="md-col-6" style="margin-right: 35px;">
+                            <input class="form-check-input" type="checkbox" value="1" name="telephone" id="telephone" checked>
+                            <label class="form-check-label" for="telephone">
+                                Telefone
+                            </label>
+                        </div>
+                        <div class="md-col-6">
+                            <input class="form-check-input" type="checkbox" value="1" name="email" id="email" >
+                            <label class="form-check-label" for="email">
+                                E-mail
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group row">
                 <div class="col-lg-4">
@@ -58,9 +79,9 @@
                         <label for="exampleSelect2" class="col-form-label">Placa(s) adicionada(s): </label>
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
                             @if(isset($placas))
-                            @foreach($placas as $placa)
-                            <option value="">{{$placa}}</option>
-                            @endforeach
+                                @foreach($placas as $placa)
+                                <option value="">{{$placa}}</option>
+                                @endforeach
                             @endif
                         </select>
                     </div>
@@ -158,15 +179,17 @@
         cerca_id = $('#id').val();
         var id_grupo = $('#grupo').val();
         var data = {
-            _token: '{{csrf_token()}}',
-            placas: $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
-            usuarios: $(`#usuariosLeft option`).toArray().map(o => o.innerHTML),
-            name: $('#name').val(),
-            id_grupo: id_grupo,
+            _token:     '{{csrf_token()}}',
+            placas:     $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
+            usuarios:   $(`#usuariosLeft option`).toArray().map(o => o.innerHTML),
+            name:       $('#name').val(),
+            telephone:   $('#telephone:checked').val(),
+            email:      $('#email:checked').val(),
+            id_grupo:   id_grupo,
         }
         ajax_store(cerca_id, "fleetslarges/cercas", data);
     });
-    // $(".select2").select2();
+
 </script>
 
 @endsection

@@ -22,7 +22,7 @@ class GrupoCerca extends Model
      */
     protected $dates = ['created_at', 'updated_at'];
 
-    protected $fillable = ['id', 'nome', 'id_usuario', 'status'];
+    protected $fillable = ['id', 'nome', 'id_usuario', 'telephone', 'email','status'];
 
     /**
      * @return array
@@ -33,6 +33,8 @@ class GrupoCerca extends Model
             'id'                 => $this->id,
             'nome'               => $this->nome,
             'id_usuario'         => $this->id_usuario,
+            'telephone'          => $this->telephone,
+            'email'              => $this->email,
             'status'             => $this->status
         ];
     }

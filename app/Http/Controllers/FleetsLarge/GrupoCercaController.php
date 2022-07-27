@@ -48,11 +48,13 @@ class GrupoCercaController extends Controller
 
     public function new(Request $request)
     {
-
+        
         $data = $this->data;
+        
         if (!isset($request->id)) {
             $data['cars'] = $this->grupocercaService->getPlate();
             $data['users'] = $this->userService->paginate();
+            
             return view('fleetslarge.cercas.new', $data);
         } else {
             $removeUser  = [];
@@ -82,10 +84,14 @@ class GrupoCercaController extends Controller
     public function save(Request $request)
     {
         $data = $this->data;
+        // dd($data);
         if (empty($request->name)) {
             return response()->json(['status' => 'error', 'errors' => 'Não é permitido criar um Grupo com o campo nome vazio'], 400);
         }
 
+        if(!isset($request->email) && !isset($request->telephone)){
+            return response()->json(['status' => 'error', 'errors' => 'Seleciona o tipo de recebimento de alerta'], 400);
+        }
         $placas = $request->placas;
         $usuarios = $request->usuarios;
 
@@ -111,6 +117,9 @@ class GrupoCercaController extends Controller
 
         $grupoCerca->nome       = $request->name;
         $grupoCerca->user_id    = Auth::user()->id;
+        $grupoCerca->telephone  = (isset($request->telephone)) ? true : false;
+        $grupoCerca->email      = (isset($request->email)) ? true : false;
+        
         if ($grupoCerca->save()) {
             $arrGrupoCercaRelacionamento = [];
             $arrMontagem = [];
