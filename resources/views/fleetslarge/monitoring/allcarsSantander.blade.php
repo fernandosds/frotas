@@ -702,7 +702,7 @@
                     })
                     .done(function(response) {
                         response.result.map(function(result){
-                            
+
                             const data = result;
                             const myData = data.markers;
                             const layerName = data.name;
@@ -725,14 +725,14 @@
                             });
 
                         })
-                        
+
                     })
                     .fail(function() {});
             } else {
 
                 const layer = listLayers.filter(item => item.id == idLayer);
                 layer[0].layer.clearLayers();
-                
+
                 for (let i = 0; i < listLayers.length; i++) {
 
                     if (listLayers[i].id == idLayer) {
@@ -742,7 +742,7 @@
                 }
             }
         });
-        
+
         // Exibe a lista de grupos
         function getListGrupo() {
 
