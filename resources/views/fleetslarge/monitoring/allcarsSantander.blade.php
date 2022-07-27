@@ -187,7 +187,7 @@
         box-sizing: border-box;
     }
 
-    .markerItemGrupoCercas{
+    .markerItemGrupoCercas {
         padding: 5px 0px;
         width: 50%;
         box-sizing: border-box;
@@ -637,6 +637,7 @@
 
             if ($(this).is(':checked')) {
                 $.ajax("{{route('map.markers.grupoRelacionamento')}}/", {
+                        _token: '{{csrf_token()}}',
                         method: "POST",
                         data: form_data
                     })
@@ -701,7 +702,7 @@
                         data: form_data
                     })
                     .done(function(response) {
-                        response.result.map(function(result){
+                        response.result.map(function(result) {
 
                             const data = result;
                             const myData = data.markers;
