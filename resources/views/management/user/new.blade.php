@@ -46,8 +46,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-lg-3 col-sm-12">Email *</label>
-                            <div class="col-lg-9 col-md-9 col-sm-12">
+                            <div class="col-lg-5 col-md-9 col-sm-12">
                                 <input type="text" class="form-control" name="email" placeholder="Entre com o email" value="{{ $user->email ?? '' }}" required="True">
+                            </div>
+                            <label class="col-form-label col-lg-1 col-sm-12">Tel. *</label>
+                            <div class="col-lg-3 col-md-9 col-sm-12">
+                                <input type="text" class="form-control mask_input_contact" name="telephone" placeholder="Telefone" value="{{ $user->telephone ?? '' }}">
                             </div>
                         </div>
                         <div class="form-group row">
