@@ -636,11 +636,10 @@
             }
 
             if ($(this).is(':checked')) {
-                $.ajax("{{route('map.markers.grupoRelacionamento')}}/", {
-                        _token: '{{csrf_token()}}',
-                        method: "POST",
-                        data: form_data
-                    })
+                $.ajax("{{route('map.markers.grupoRelacionamento')}}", {
+                    method: "POST",
+                    data: form_data
+                })
                     .done(function(response) {
                         const data = response.data;
                         const myData = data;
