@@ -30,7 +30,7 @@
 
 
     <!--begin::Form-->
-    <form class="kt-form kt-form--label-right" id="form-create-cerca">
+    <form class="kt-form kt-form--label-right" name="formHidden" id="form-create-cerca">
         @csrf
         <input type="hidden" name="id" id="id" value="{{ $cerca->id ?? '' }}" />
         <div class="kt-portlet__body">
@@ -44,13 +44,32 @@
                     <label for="name" style="margin-left: -25px;">Recebimento Alerta:</label>
                     <div class="row">
                         <div class="md-col-6" style="margin-right: 35px;">
-                            <input class="form-check-input" type="checkbox" value="1" name="telephone" id="telephone" checked>
-                            <label class="form-check-label" for="telephone">
-                                Telefone
-                            </label>
+                            @if(isset($grupo))
+                                @if($grupo->telephone)
+                                    <input class="form-check-input" type="checkbox" value="1" name="telephone" id="telephone"  checked>
+                                @else
+                                    <input class="form-check-input" type="checkbox" value="1" name="telephone" id="telephone">
+                                @endif
+                                <label class="form-check-label" for="telephone">
+                                    Telefone
+                                </label>
+                            @else
+                                <input class="form-check-input" type="checkbox" value="1" name="telephone" id="telephone"  checked>
+                                <label class="form-check-label" for="telephone">
+                                    Telefone
+                                </label>
+                            @endif
                         </div>
                         <div class="md-col-6">
-                            <input class="form-check-input" type="checkbox" value="1" name="email" id="email" >
+                            @if(isset($grupo))
+                                @if($grupo->email)
+                                    <input class="form-check-input" type="checkbox" value="1" name="email" id="email" checked>
+                                @else 
+                                    <input class="form-check-input" type="checkbox" value="1" name="email" id="email" >
+                                @endif
+                            @else
+                                <input class="form-check-input" type="checkbox" value="1" name="email" id="email" >
+                            @endif
                             <label class="form-check-label" for="email">
                                 E-mail
                             </label>
@@ -62,16 +81,17 @@
                 <div class="col-lg-4">
                     <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
                     <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10">
+                        <option id="selectHidden" class="selectHidden" hidden disabled selected></option>
                         @foreach($cars as $driver)
-                        <option value="">{{$driver->placa}}</option>405
+                            <option value="">{{$driver->placa}}</option>
                         @endforeach
                     </select>
                     <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
                 </div>
                 <div class="col-lg-2">
                     <div class="kt-input-icon kt-input-icon--right btn-distribuir">
-                        <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
-                        <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
+                        <button type="button" class="btn btn-primary btn-sm btn-icon" id="rightSeg" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-sm btn-icon" id="leftSeg" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -80,7 +100,7 @@
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
                             @if(isset($placas))
                                 @foreach($placas as $placa)
-                                <option value="">{{$placa}}</option>
+                                    <option value="">{{$placa}}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -93,25 +113,25 @@
                     <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
                     <select class="form-control col-md-10 leftBoxU usuariosLeft" id="usuariosRight" multiple size="10">
                         @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+                            <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
                     <span class="form-text text-muted"> <i class="flaticon-questions-circular-button"></i> Selecione um ou mais usuários e os direcione para o quadro á direita.</span>
                 </div>
                 <div class="col-lg-2">
                     <div class="kt-input-icon kt-input-icon--right btn-distribuir">
-                        <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelectedUsuarios('usuariosLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
-                        <button type="button" class="btn btn-primary btn-sm btn-icon" onClick="moveSelectedUsuarios('usuariosRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
+                        <button type="button" class="btn btn-primary btn-sm btn-icon" id="rightUser" onClick="moveSelectedUsuarios('usuariosLeft')" title="Atribuir" ><i class="la la-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-sm btn-icon" id="leftUser" onClick="moveSelectedUsuarios('usuariosRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-4" style="margin-top: 9px;">
                     <div class="kt-input-icon kt-input-icon--right">
                         <label for="exampleSelect2" class="col-form-label">Incluir Usuários: </label>
-                        <select multiple size="10" class="form-control col-md-10 rightBox usuariosRight" id="usuariosLeft" name='usuarios[]'>
+                        <select multiple size="10" class="form-control col-md-10 rightBoxU usuariosRight" id="usuariosLeft" name='usuarios[]'>
                             @if(isset($grupo))
-                            @foreach($usuarios->grupoUsuarioRelacionamento as $usuarioRelacionamento)
-                            <option value="">{{$usuarioRelacionamento->nome_usuario}}</option>
-                            @endforeach
+                                @foreach($usuarios->grupoUsuarioRelacionamento as $usuarioRelacionamento)
+                                    <option value="">{{$usuarioRelacionamento->nome_usuario}}</option>
+                                @endforeach
                             @endif
                         </select>
                     </div>
@@ -140,35 +160,78 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    $("#rightSeg").click(function(){
+        $("selectHidden").attr('selected', 'selected');
+        $("selectHidden").attr('autofocus', 'selected');
+    });
     function moveSelected(classNAme) {
+        if('seguradoresLeft' === classNAme){
+            $("#rightSeg").empty();
+            $("#rightSeg").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }else if('seguradoresRight' === classNAme){
+            $("#leftSeg").empty();
+            $("#leftSeg").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }
         const leftBox = $('.' + classNAme);
-        var $options = $("." + classNAme + " option:selected").clone();
+        // var $options = $("." + classNAme + " option:selected").clone();
+        var $options = $("." + classNAme).find('option:selected').clone();
+
         $('.' + leftBox.attr('id')).append($options);
-        $("." + classNAme + " option:selected").remove();
+        $("." + classNAme).find('option:selected').remove();
         var my_options = $('.' + leftBox.attr('id') + " option");
-        // my_options.sort(function(a, b) {
-        //     if (a.text > b.text) return 1;
-        //     else if (a.text < b.text) return -1;
-        //     else return 0
-        // })
+        my_options.sort(function(a, b) {
+            if (a.text > b.text) return 1;
+            else if (a.text < b.text) return -1;
+            else return 0
+        })
         $('.' + leftBox.attr('id')).empty().append(my_options);
+
+        if('seguradoresLeft' === classNAme){
+            $("#rightSeg").empty();
+            $("#rightSeg").append('<i class="la la-arrow-right">');
+        }else{
+            $("#leftSeg").empty();
+            $("#leftSeg").append('<i class="la la-arrow-left"></i>');
+        } 
+
     }
+
 
     function moveSelectedUsuarios(classNAmeU) {
 
+        if('usuariosLeft' === classNAmeU){
+            console.log("Entrou!");
+            $("#rightUser").empty();
+            $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }else if('usuariosRight' === classNAmeU){
+            console.log("if else")
+            $("#leftUser").empty();
+            $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }
         const leftBoxU = $('.' + classNAmeU);
+        
+        var $optionsU = $("." + classNAmeU).find('option:selected').clone();
 
-        var $optionsU = $("." + classNAmeU + " option:selected").clone();
         $('.' + leftBoxU.attr('id')).append($optionsU);
-        $("." + classNAmeU + " option:selected").remove();
+
+        $("." + classNAmeU).find('option:selected').remove();
         var my_optionsU = $('.' + leftBoxU.attr('id') + " option");
-        // my_optionsU.sort(function(a, b) {
-        //     if (a.text > b.text) return 1;
-        //     else if (a.text < b.text) return -1;
-        //     else return 0
-        // })
-        // my_optionsU.sort();
+        my_optionsU.sort(function(a, b) {
+            if (a.text > b.text) return 1;
+            else if (a.text < b.text) return -1;
+            else return 0
+        })
+        my_optionsU.sort();
         $('.' + leftBoxU.attr('id')).empty().append(my_optionsU);
+
+        if('usuariosLeft' === classNAmeU){
+            $("#rightUser").empty();
+            $("#rightUser").append('<i class="la la-arrow-right">');
+        }else{
+            $("#leftUser").empty();
+            $("#leftUser").append('<i class="la la-arrow-left"></i>');
+        } 
+        
     }
 
     $(document).ready(function() {

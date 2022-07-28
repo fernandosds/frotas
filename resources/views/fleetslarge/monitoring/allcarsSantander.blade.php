@@ -753,11 +753,14 @@
                     const grupos = response.data;
                     $('.groupCars').empty();
                     grupos.map(function(element) {
-                        $('.groupCars').append('<div class="markerItemGrupo">' +
-                            '<input type="checkbox" class="checkMarkersGrupo"' +
-                            'id="' + element.id + '" value="' + element.id + '">' +
-                            '<label class="marker-check-label" for="' + element.id + '">' +
-                            element.nome + '</label></div >');
+                        $('.groupCars').append(
+                            '<div class="markerItemGrupo">' +
+                                '<div class="styleMakerGrupo">'+
+                                    '<input type="checkbox" class="checkMarkersGrupo"' +'id="' + element.id + '" value="' + element.id + '">' +
+                                    '<label class="marker-check-label" style="float: right; margin-right: 60px;" for="' + element.id + '">' + element.nome + '</label>'+
+                                '</div>'+
+                            '</div>'
+                        );
                     });
                 })
                 .fail(function() {});
@@ -772,12 +775,18 @@
                     const data = response.result;
                     $('.markerList').empty();
                     data.map(function(element) {
-                        $('.markerList').append('<div class="markerItem">' +
-                            '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
-                            '<input type="checkbox" class="checkMarkers"' +
-                            'id="' + element._id + '"  value="' + element._id + '">' +
-                            '<label class="marker-check-label" for="' + element._id + '">' +
-                            element.name + '</label></div >');
+                        $('.markerList').append(
+                            '<div class="markerItem">' +
+                                '<div class="row">'+
+                                    '<div class="md-col-2">'+
+                                        '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
+                                    '</div>'+
+                                    '<div class="md-col-10">'+
+                                        '<input type="checkbox" class="checkMarkers"' + 'id="' + element._id + '"  value="' + element._id + '">' +
+                                        '<label class="marker-check-label" for="' + element._id + '">' + element.name + '</label>' +
+                                    '</div>'+
+                                '</div>'
+                            +'</div >');
                     });
                 })
                 .fail(function() {});
