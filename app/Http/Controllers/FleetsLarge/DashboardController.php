@@ -90,7 +90,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
 
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '-1');
         $customer = $this->customerService->show(Auth::user()->customer_id);
 
 
