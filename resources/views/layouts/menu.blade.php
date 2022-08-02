@@ -426,6 +426,7 @@
                     </ul>
                 </div>
             </li>
+           <!--
             @if( Auth::user()->customer_id == 8)
             <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">MONITORAMENTO</h4>
@@ -433,8 +434,8 @@
             </li>
 
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                <!-- GRANDES FROTAS -->
-                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+-->                <!-- GRANDES FROTAS -->
+                    <!--    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-map-marker-alt"></i></span>
                     <span class="kt-menu__link-text">Central de Monitoramento</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
@@ -455,7 +456,7 @@
                 </a>
             </li>
             @endif
-
+-->
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
 
 
