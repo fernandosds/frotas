@@ -373,6 +373,26 @@ Route::group(['middleware' => 'auth'], function () {
             // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
         });
 
+        // Rotas para as garagem Santander
+        Route::group(['prefix' => 'garagem'], function () {
+            Route::get('/', 'FleetsLarge\GaragemController@index')->name('fleetslarges.garagem.list');
+            Route::get('/new', 'FleetsLarge\GaragemController@new')->name('fleetslarges.garagem.new');
+            Route::get('/new/{id}', 'FleetsLarge\GaragemController@new')->name('fleetslarges.garagem.new.edit');
+            Route::post('/save', 'FleetsLarge\GaragemController@save')->name('fleetslarges.garagem.save');
+            Route::get('/delete/{id}', 'FleetsLarge\GaragemController@destroy')->name('fleetslarges.garagem.destroy');
+            // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
+        });
+
+        // Rotas para os grupos alerta Santander
+        Route::group(['prefix' => 'alerta'], function () {
+            Route::get('/', 'FleetsLarge\GrupoAlertaController@index')->name('fleetslarges.alerta.list');
+            Route::get('/new', 'FleetsLarge\GrupoAlertaController@new')->name('fleetslarges.alerta.new');
+            Route::get('/new/{id}', 'FleetsLarge\GrupoAlertaController@new')->name('fleetslarges.alerta.new.edit');
+            Route::post('/save', 'FleetsLarge\GrupoAlertaController@save')->name('fleetslarges.alerta.save');
+            Route::get('/delete/{id}', 'FleetsLarge\GrupoAlertaController@destroy')->name('fleetslarges.alerta.destroy');
+            // Route::post('/delete{id}', 'FleetsLarge\GrupoCercaController@delete')->name('fleetslarges.cerca.delete');
+        });
+
         // Rotas para o mapa Poligono Santander
         Route::group(['prefix' => 'poligono'], function () {
             Route::get('/', 'FleetsLarge\MapMarkersSantanderController@index')->name('fleetslarges.poligono.index');

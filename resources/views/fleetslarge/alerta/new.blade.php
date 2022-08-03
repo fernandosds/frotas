@@ -30,7 +30,7 @@
                 <i class="kt-font-brand {{$icon}}"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{$title}} @if(Route::is('fleetslarges.cerca.new'))<small>Novo</small> @else<small>Editar</small> @endif
+                {{$title}} @if(Route::is('fleetslarges.alerta.new'))<small>Novo</small> @else<small>Editar</small> @endif
             </h3>
         </div>
     </div>
@@ -44,7 +44,7 @@
             <div class="form-group row">
                 <div class="col-lg-4">
                     <input type="hidden" name="grupo" id="grupo" value="{{isset($grupo) ? $grupo->id : null}}">
-                    <label for="name">Nome Cerca:</label>
+                    <label for="name">Nome Grupo:</label>
                     <input type="text" class="form-control" style="background-color: #ffffff;" value="{{isset($grupo) ? $grupo->nome : ''}}" id="name">
                 </div>
                 <div class="col-lg-5" style="margin-left: 235px;">
@@ -84,41 +84,13 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-lg-4">
-                    <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
-                    <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10" data-live-search="true">
-                        @foreach($cars as $driver)
-                            <option data-tokens="{{$driver->placa}}" value="">{{$driver->placa}}</option>
-                        @endforeach
-                    </select>
-                    <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
-                </div>
-                <div class="col-lg-2">
-                    <div class="kt-input-icon kt-input-icon--right btn-distribuir">
-                        <button type="button" class="btn btn-primary btn-sm btn-icon" id="rightSeg" onClick="moveSelected('seguradoresLeft')" title="Atribuir"><i class="la la-arrow-right"></i></button>
-                        <button type="button" class="btn btn-primary btn-sm btn-icon" id="leftSeg" onClick="moveSelected('seguradoresRight')" title="Desfazer atribuição"><i class="la la-arrow-left"></i></button>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="kt-input-icon kt-input-icon--right">
-                        <label for="exampleSelect2" class="col-form-label">Placa(s) adicionada(s): </label>
-                        <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
-                            @if(isset($placas))
-                                @foreach($placas as $placa)
-                                    <option value="">{{$placa}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
-            </div>
+
             <!-- INCLUDE DE USUARIOS-->
             <div class="form-group row">
                 <div class="col-lg-4" style="margin-top: 5px;">
                     <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
                     <div class="pickerUser">
-                        <select class="form-control col-md-10 selectpicker leftBoxU usuariosLeft" id="usuariosRight" multiple size="10" data-live-search="true" >
+                        <select class="form-control col-md-10 leftBoxU usuariosLeft" id="usuariosRight" multiple size="10" data-live-search="true" >
                             @foreach($users as $user)
                                 <option data-tokens="{{$user->name}}" value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
@@ -137,8 +109,8 @@
                         <label for="exampleSelect2" class="col-form-label">Incluir Usuários: </label>
                         <select multiple size="10" class="form-control col-md-10 rightBoxU usuariosRight" id="usuariosLeft" name='usuarios[]' >
                             @if(isset($grupo))
-                                @foreach($usuarios->grupoUsuarioRelacionamento as $usuarioRelacionamento)
-                                    <option data-tokens="{{$usuarioRelacionamento->nome_usuario}}" value="{{$usuarioRelacionamento->id}}">{{$usuarioRelacionamento->nome_usuario}}</option>
+                                @foreach($grupo->grupoAlertaRelacionamento as $grupoAlertaRelacionamento)
+                                    <option data-tokens="{{$grupoAlertaRelacionamento->nome_usuario}}" value="{{$grupoAlertaRelacionamento->id}}">{{$grupoAlertaRelacionamento->nome_usuario}}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -151,7 +123,7 @@
                 <div class="row">
                     <div class="col-lg-3 ml-lg-auto">
                         <button type="button" class="btn btn-success" id="btn-cerca-save">Confirmar</button>
-                        <a href="{{route('fleetslarges.cerca.list')}}" class="btn btn-secondary">Voltar</a>
+                        <a href="{{route('fleetslarges.alerta.list')}}" class="btn btn-secondary">Voltar</a>
                     </div>
                 </div>
             </div>
@@ -168,83 +140,30 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    function moveSelected(classNAme) {
-        if('seguradoresLeft' === classNAme){
-            $("#rightSeg").empty();
-            $("#rightSeg").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-        }else if('seguradoresRight' === classNAme){
-            $("#leftSeg").empty();
-            $("#leftSeg").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-        }
-        const leftBox = $('.' + classNAme);
-        
-        // var $options = $("." + classNAme + " option:selected").clone();
-        var $options = $("." + classNAme).find('option:selected').clone();
 
-        $('.' + leftBox.attr('id')).append($options);
-        $("." + classNAme).find('option:selected').remove();
-        var my_options = $('.' + leftBox.attr('id') + " option");
-        my_options.sort(function(a, b) {
+    function moveSelectedUsuarios(classNAmeU){
+        if('usuariosLeft' === classNAmeU){
+            console.log("Entrou!");
+            $("#rightUser").empty();
+            $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }else if('usuariosRight' === classNAmeU){
+            console.log("if else")
+            $("#leftUser").empty();
+            $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }
+        const leftBoxU = $('.' + classNAmeU);
+        
+        var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+        $('.' + leftBoxU.attr('id')).append($optionsU);
+        $("." + classNAmeU).find('option:selected').remove();
+        var my_optionsU = $('.' + leftBoxU.attr('id') + " option");
+        my_optionsU.sort(function(a, b) {
             if (a.text > b.text) return 1;
             else if (a.text < b.text) return -1;
             else return 0
         })
-        $('.' + leftBox.attr('id')).empty().append(my_options);
-
-        if('seguradoresLeft' === classNAme){
-            $("#rightSeg").empty();
-            $("#rightSeg").append('<i class="la la-arrow-right">');
-        }else{
-            $("#leftSeg").empty();
-            $("#leftSeg").append('<i class="la la-arrow-left"></i>');
-        } 
-
-    }
-
-    function moveSelectedUsuarios(classNAmeU) {
-        if('usuariosLeft' === classNAmeU){
-            $("#rightUser").empty();
-            $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-        }else if('usuariosRight' === classNAmeU){
-            $("#leftUser").empty();
-            $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-        }
-        const $allOptions = $("." + classNAmeU).find('option').clone();
-        console.log($allOptions);
-        if('usuariosLeft' === classNAmeU){
-            
-            var $optionsU = $("." + classNAmeU).find('option:selected').clone();
-            var $optionsUadd = $("." + classNAmeU).find('option');
-            $("." + 'usuariosRight').append($optionsU);
-            $optionsU.map(function(i, option){
-                $optionsUadd.map(function(iA, optionAdd){
-                    if(option.value === optionAdd.value){
-                        // $optionsU.append(optionAdd);
-                        $optionsUadd[iA].remove();
-                    }
-                })
-            });
-            // $("." + classNAmeU).find('option:selected').remove();
-            
-            // $("." + 'usuariosRight').find('option:selected').remove();
-            $("." + 'selectpicker').empty();
-            $("." + 'selectpicker').append($allOptions);
-
-        }else{
-
-            var $optionsU = $("." + classNAmeU).find('option:selected').clone();
-            var $optionsUadd = $("." + classNAmeU).find('option');
-
-            // $("." + classNAmeU).find('option:selected').remove();
-
-            $("." + 'usuariosRight').find('option:selected').remove();
-
-            $("." + 'selectpicker').remove();
-            $("." + 'pickerUser').append('<select class="form-control col-md-10 selectpicker leftBoxU usuariosLeft user" id="usuariosRight" multiple size="10" data-live-search="true" ></select>');
-            // $("." + 'selectpicker').append($allOptions);
-            
-        }
-
+        my_optionsU.sort();
+        $('.' + leftBoxU.attr('id')).empty().append(my_optionsU);
         if('usuariosLeft' === classNAmeU){
             $("#rightUser").empty();
             $("#rightUser").append('<i class="la la-arrow-right">');
@@ -252,8 +171,61 @@
             $("#leftUser").empty();
             $("#leftUser").append('<i class="la la-arrow-left"></i>');
         } 
-        
     }
+
+    // function moveSelectedUsuarios(classNAmeU) {
+    //     if('usuariosLeft' === classNAmeU){
+    //         $("#rightUser").empty();
+    //         $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+    //     }else if('usuariosRight' === classNAmeU){
+    //         $("#leftUser").empty();
+    //         $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+    //     }
+    //     const $allOptions = $("." + classNAmeU).find('option').clone();
+    //     console.log($allOptions);
+    //     if('usuariosLeft' === classNAmeU){
+            
+    //         var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+    //         var $optionsUadd = $("." + classNAmeU).find('option');
+    //         $("." + 'usuariosRight').append($optionsU);
+    //         $optionsU.map(function(i, option){
+    //             $optionsUadd.map(function(iA, optionAdd){
+    //                 if(option.value === optionAdd.value){
+    //                     // $optionsU.append(optionAdd);
+    //                     $optionsUadd[iA].remove();
+    //                 }
+    //             })
+    //         });
+    //         // $("." + classNAmeU).find('option:selected').remove();
+            
+    //         // $("." + 'usuariosRight').find('option:selected').remove();
+    //         $("." + 'selectpicker').empty();
+    //         $("." + 'selectpicker').append($allOptions);
+
+    //     }else{
+
+    //         var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+    //         var $optionsUadd = $("." + classNAmeU).find('option');
+
+    //         // $("." + classNAmeU).find('option:selected').remove();
+
+    //         $("." + 'usuariosRight').find('option:selected').remove();
+
+    //         $("." + 'selectpicker').remove();
+    //         $("." + 'pickerUser').append('<select class="form-control col-md-10 selectpicker leftBoxU usuariosLeft user" id="usuariosRight" multiple size="10" data-live-search="true" ></select>');
+    //         // $("." + 'selectpicker').append($allOptions);
+            
+    //     }
+
+    //     if('usuariosLeft' === classNAmeU){
+    //         $("#rightUser").empty();
+    //         $("#rightUser").append('<i class="la la-arrow-right">');
+    //     }else{
+    //         $("#leftUser").empty();
+    //         $("#leftUser").append('<i class="la la-arrow-left"></i>');
+    //     } 
+        
+    // }
 
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2();
@@ -264,14 +236,13 @@
         var id_grupo = $('#grupo').val();
         var data = {
             _token:     '{{csrf_token()}}',
-            placas:     $(`#seguradoresLeft option`).toArray().map(o => o.innerHTML),
             usuarios:   $(`#usuariosLeft option`).toArray().map(o => o.innerHTML),
             name:       $('#name').val(),
             telephone:  $('#telephone:checked').val(),
             email:      $('#email:checked').val(),
             id_grupo:   id_grupo,
         }
-        ajax_store(cerca_id, "fleetslarges/cercas", data);
+        ajax_store(cerca_id, "fleetslarges/alerta", data);
     });
 
 </script>
