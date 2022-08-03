@@ -18,6 +18,10 @@ class LogRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    public function table($limit){
+        return $this->model->orderBy('id', 'desc')->limit($limit)->get();
+    }
+
     public function saveLog($user, $data, $ip = null)
     {
         $ip = null;
@@ -36,4 +40,9 @@ class LogRepository extends AbstractRepository
         $logUser->save();
         return $logUser;
     }
+
+    public function orderLog(){
+        return $this->model->orderBy('id', 'Desc');
+    }
+
 }

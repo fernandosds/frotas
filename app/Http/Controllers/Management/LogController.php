@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Services\LogService;
 use App\Services\UserService;
 
@@ -37,10 +37,15 @@ class LogController extends Controller
     public function index()
     {
         $data = $this->data;
-        $data['logs'] = $this->logService->paginate();
         $data['users'] = $this->userService->paginate();
 
         return response()->view('management.log.list', $data);
+    }
+
+    public function data(){
+
+        $data['data'] = $this->logService->table(100);
+        return response()->json($data);
     }
 
     /**

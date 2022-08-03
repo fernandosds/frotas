@@ -231,6 +231,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'logs'], function () {
             Route::get('/', 'Management\LogController@index');
+            Route::get('/data', 'Management\LogController@data')->name('logs.data');
             Route::get('/new', 'Management\LogController@new');
             Route::post('/save', 'Management\LogController@save');
             Route::put('/update/{id}', 'Management\LogController@update');
