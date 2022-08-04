@@ -125,7 +125,6 @@ class GaragemController extends Controller
 
         
         if ($grupoGaragem->save()) {
-
             $arrGrupoCercaRelacionamento = [];
             $arrMontagem = [];
             if (!$placas) {
@@ -150,6 +149,7 @@ class GaragemController extends Controller
             }
 
             if (is_null($request->id_grupo)) {
+
                 $grupoRelacionamento    =  new GrupoGaragemRelacionamento();
                 $this->logService->saveLog(strval(Auth::user()->name), 'Grupo: Criou o grupo: ' . $request->name);
                 saveLog([
@@ -177,9 +177,12 @@ class GaragemController extends Controller
                     ? response()->json(['status' => 'success'], 200)
                     : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
             } else {
+                // dd(array('insert' => $arrMontagem, 'id_este_grupo' => $grupoGaragem->id));
+                
                 $validation = GrupoGaragemRelacionamento::where('grupo_id', $grupoGaragem->id)->delete() ? true : false;
                 $validationGAG = GrupoAlertaGaragem::where('id_grupo_garagem', $grupoGaragem->id)->delete() ? true : false;
-                if ($validation && $validationGAG) {
+                if ($validation) {
+
                     $grupoRelacionamento    =  new GrupoGaragemRelacionamento();
 
                     saveLog([
@@ -190,6 +193,8 @@ class GaragemController extends Controller
                     ]);
                     $this->logService->saveLog(strval(Auth::user()->name), 'Grupo: Editou o grupo: ' . $grupoGaragem->id);
 
+                    $validationGR = $grupoRelacionamento->insert($arrMontagem) ? true : false; 
+
                     if(!is_null($request->alertas) || !empty($request->alertas)){
 
                         foreach($request->alertas as $alerta){
@@ -198,14 +203,23 @@ class GaragemController extends Controller
                             $grupoAlertaGaragem->id_grupo_garagem = $grupoGaragem->id;
                             $grupoAlertaGaragem->id_grupo_alerta = $grupoAlerta->id;
     
-                            $grupoAlertaGaragem->save();
+                            $validationAG = $grupoAlertaGaragem->save() ? true : false;
                         }
 
                     }
-                    // dd($grupoAlertaGaragem);
-                    return $grupoRelacionamento->insert($arrMontagem) 
-                        ? response()->json(['status' => 'success'], 200)
-                        : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+
+                    if(isset($validationAG)){
+                        return $validationGR && $validationAG
+                            ? response()->json(['status' => 'success'], 200)
+                            : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+                    }else{
+                        return $validationGR
+                            ? response()->json(['status' => 'success'], 200)
+                            : response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+                    }
+
+                }else{
+                    return response()->json(['status' => 'internal_error', 'errors' => 'NÃO FOI POSSIVEL EXCLUIR OS DADOS DA GARAGEM'], 400);
                 }
             }
         }
