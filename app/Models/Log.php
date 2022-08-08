@@ -3,25 +3,35 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Carbon;
 
 class Log extends Model
 {
-
-
     /**
      * @var string
      */
     protected $table = 'logs';
 
-
-
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = [
+     'created_at',
+     'updated_at'];
+    protected $fillable = [
+        'user_id',
+        'customer_id',
+        'device_id',
+        'user_name',
+        'description',
+        'host_ip',
+        'contract_id',
+    ];
 
-    protected $fillable = ['user_id', 'customer_id', 'device_id', 'user_name', 'description', 'host_ip', 'contract_id'];
+    public function getCreatedAtAttribute($value)
+    {
+        return (new Carbon($value))->setTimezone('America/Sao_Paulo')->format('d/m/Y H:i:s');
+    }
 
     /**
      * @return array

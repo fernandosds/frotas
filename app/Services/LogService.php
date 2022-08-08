@@ -23,6 +23,11 @@ class LogService
         return $this->log->all();
     }
 
+    public function table(Int $limit = 100)
+    {
+        return $this->log->table($limit);
+    }
+
     /**
      * @param Int $limit
      * @return mixed
@@ -101,5 +106,9 @@ class LogService
     public function saveLog($user, $mensagem)
     {
         return $this->log->saveLog($user,  $mensagem);
+    }
+
+    public function orderLog(){
+        return $this->log->orderLog();
     }
 }

@@ -92,29 +92,9 @@ class MapMarkersSantanderController extends Controller
         }
     }
 
-    /*
-    public function getAllGrupo()
-    {
-        try {
-            $placas = array();
-            $resultsGrupo = $this->grupocercaService->getGrupoCercaSantander();
-            foreach ($resultsGrupo as $resultGrupo) {
-                foreach ($resultGrupo->grupoCercaRelacionamento as $grupoCercaRelacionamento) {
-                    $placa = $this->grupocercaService->findByChassi($grupoCercaRelacionamento->chassis);
-                    $placas[] = $placa->placa;
-                }
-            }
-            return response()->json(['status' => 'success', 'data' =>  $placas], 200);
-        } catch (\Exception $e) {
-            return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
-        }
-    }
-
-    */
     public function allGrupo()
     {
         try {
-            // dd("Entrou");
             $fleetslargeSantander = $this->grupocercaService->allGroup();
 
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);

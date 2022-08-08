@@ -36,7 +36,7 @@
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{route('fleetslarges.cerca.new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <a href="{{route('fleetslarges.alerta.new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                             <i class="la la-plus"></i> Novo
                         </a>
                     </div>
@@ -51,8 +51,7 @@
                 <thead>
                     <tr>
                         <!-- <th scope="col"></th> -->
-                        <th scope="col">Nome da Garagem</th>
-                        <th scope="col">Total Veículos</th>
+                        <th scope="col">Nome do Grupo</th>
                         <th scope="col">Total Usuários</th>
                         <th scope="col"></th>
                     </tr>
@@ -62,11 +61,10 @@
                     @foreach($grupos as $grupo)
                     <tr id="_tr_user_{{$grupo->id}}">
                         <td>{{$grupo->nome}}</td>
-                        <td>{{count($grupo->grupoCercaRelacionamento)}}</td>
-                        <td>{{count($grupo->grupoUsuarioRelacionamento)}}</td>
+                        <td>{{count($grupo->grupoAlertaRelacionamento)}}</td>
                         <td style="width: 200px;">
                             <div class="pull-right">
-                                <a href="{{ route('fleetslarges.cerca.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
+                                <a href="{{ route('fleetslarges.alerta.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
                                 <button type="button" title="Excluir cerca" data-id="{{$grupo->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-cerca">
                                     <span class="fa fa-fw fa-trash"></span>
                                 </button>
@@ -147,7 +145,7 @@
     /* Deletar */
     $('.btn-delete-cerca').click(function() {
         var id = $(this).data('id');
-        var url = "{{url('fleetslarges/cercas/delete')}}/" + id;
+        var url = "{{url('fleetslarges/alerta/delete')}}/" + id;
         ajax_delete(id, url)
     })
 </script>

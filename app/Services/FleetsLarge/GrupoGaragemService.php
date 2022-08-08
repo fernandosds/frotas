@@ -54,11 +54,6 @@ class GrupoCercaService
         return $cerca;
     }
 
-    public function destroyAlerta($id){
-        $data = $this->cerca->deleteAlerta($id);
-        return $data;
-    }
-
     public function removePlates($removePlates){
         return $this->santander->removePlates($removePlates);
     }

@@ -3,6 +3,11 @@
 
 namespace App\Repositories\FleetsLarge;
 
+use App\Models\GrupoGaragem;
+use App\Models\GrupoGaragemRelacionamento;
+
+use App\Models\GrupoAlerta;
+use App\Models\GrupoAlertaRelacionamento;
 
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
@@ -14,10 +19,21 @@ use Illuminate\Support\Facades\Auth;
 class CercasRepository extends AbstractRepository
 {
 
-    public function __construct(GrupoCerca $model, GrupoCercaRelacionamento $modelCercaRelacionamento, GrupoUsuarioRelacionamento $modelUsuarioRelacionamento)
+    public function __construct(
+        GrupoCerca $model, 
+        GrupoGaragem $modelGaragem, 
+        GrupoAlerta $modelAlerta, 
+        GrupoAlertaRelacionamento $modelAlertaRelacionamento, 
+        GrupoCercaRelacionamento $modelCercaRelacionamento, 
+        GrupoGaragemRelacionamento $modelGaragemRelacionamento, 
+        GrupoUsuarioRelacionamento $modelUsuarioRelacionamento)
     {
         $this->model = $model;
+        $this->modelGaragem = $modelGaragem;
+        $this->modelAlerta = $modelAlerta;
+        $this->modelAlertaRelacionamento = $modelAlertaRelacionamento;
         $this->modelCercaRelacionamento = $modelCercaRelacionamento;
+        $this->modelGaragemRelacionamento = $modelGaragemRelacionamento;
         $this->modelUsuarioRelacionamento = $modelUsuarioRelacionamento;
     }
 
@@ -36,10 +52,23 @@ class CercasRepository extends AbstractRepository
     public function delete($id)
     {
         try {
-            $this->modelCercaRelacionamento->where('grupo_id', $id)->delete();
-            $this->modelUsuarioRelacionamento->where('id_grupo', $id)->delete();
-            $this->model->where('id', $id)->delete();
-            $data = GrupoCerca::all();
+            $this->modelGaragemRelacionamento->where('grupo_id', $id)->delete();
+            // $this->modelUsuarioRelacionamento->where('id_grupo', $id)->delete();
+            $this->modelGaragem->where('id', $id)->delete();
+            $data = GrupoGaragem::all();
+            return response()->json(['status' => 'success', 'data' => $data], 201);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    public function deleteAlerta($id)
+    {
+        try {
+            $this->modelAlertaRelacionamento->where('id_grupo', $id)->delete();
+            // $this->modelUsuarioRelacionamento->where('id_grupo', $id)->delete();
+            $this->modelAlerta->where('id', $id)->delete();
+            $data = GrupoAlerta::all();
             return response()->json(['status' => 'success', 'data' => $data], 201);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
@@ -62,7 +91,7 @@ class CercasRepository extends AbstractRepository
 
     public function getAllGrupoCercaSantanderParameters($arrGrupo)
     {
-        return GrupoCercaRelacionamento::with('santander')->with('grupoCerca')->whereIn('grupo_id', $arrGrupo)->get();
+        return GrupoGaragemRelacionamento::with('santander')->with('grupoGaragem')->whereIn('grupo_id', $arrGrupo)->get();
     }
 
 
@@ -71,7 +100,7 @@ class CercasRepository extends AbstractRepository
     }
 
     public function all(){
-        return GrupoCerca::with('grupoCercaRelacionamento')->get();
+        return GrupoGaragem::with('grupoGaragemRelacionamento')->get();
     }
 
     public function getAllCercas($arrCercas){
