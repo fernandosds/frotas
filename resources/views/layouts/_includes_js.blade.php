@@ -1,22 +1,22 @@
 <script>
-    var KTAppOptions = {
-        "colors": {
-            "state": {
-                "brand": "#5d78ff",
-                "dark": "#282a3c",
-                "light": "#ffffff",
-                "primary": "#5867dd",
-                "success": "#34bfa3",
-                "info": "#36a3f7",
-                "warning": "#ffb822",
-                "danger": "#fd3995"
-            },
-            "base": {
-                "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-            }
+var KTAppOptions = {
+    "colors": {
+        "state": {
+            "brand": "#5d78ff",
+            "dark": "#282a3c",
+            "light": "#ffffff",
+            "primary": "#5867dd",
+            "success": "#34bfa3",
+            "info": "#36a3f7",
+            "warning": "#ffb822",
+            "danger": "#fd3995"
+        },
+        "base": {
+            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
         }
-    };
+    }
+};
 </script>
 
 <!-- end::Global Config -->
@@ -29,7 +29,8 @@
 <script src="{{asset('/assets/vendors/general/js-cookie/src/js.cookie.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/moment/min/moment.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js')}}" type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js')}}" type="text/javascript">
+</script>
 <script src="{{asset('/assets/vendors/general/sticky-js/dist/sticky.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('/assets/vendors/general/wnumb/wNumb.js')}}" type="text/javascript"></script>
 
@@ -43,12 +44,18 @@
 <!--begin:: Global Optional Vendors -->
 <!--<script src="{{asset('/assets/vendors/general/jquery-form/dist/jquery.form.min.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/block-ui/jquery.blockUI.js')}}" type="text/javascript"></script>-->
-<script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-datepicker/init.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-timepicker/init.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/bootstrap-daterangepicker/daterangepicker.js')}}" type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"
+    type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-datepicker/init.js')}}"
+    type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js')}}"
+    type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"
+    type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-timepicker/init.js')}}"
+    type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/bootstrap-daterangepicker/daterangepicker.js')}}" type="text/javascript">
+</script>
 <!--<script src="{{asset('/assets/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/bootstrap-maxlength/src/bootstrap-maxlength.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/custom/vendors/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js')}}" type="text/javascript"></script>-->
@@ -59,9 +66,12 @@
 <!--<script src="{{asset('/assets/vendors/general/ion-rangeslider/js/ion.rangeSlider.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/typeahead.js/dist/typeahead.bundle.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/handlebars/dist/handlebars.js')}}" type="text/javascript"></script>-->
-<script src="{{asset('/assets/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.numeric.extensions.js')}}" type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')}}" type="text/javascript">
+</script>
+<script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.date.extensions.js')}}"
+    type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/inputmask/dist/inputmask/inputmask.numeric.extensions.js')}}"
+    type="text/javascript"></script>
 <!--<script src="{{asset('/assets/vendors/general/nouislider/distribute/nouislider.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/owl.carousel/dist/owl.carousel.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/autosize/dist/autosize.js')}}" type="text/javascript"></script>-->
@@ -73,9 +83,12 @@
 <!--<script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-markdown/init.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/bootstrap-notify/bootstrap-notify.min.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/custom/components/vendors/bootstrap-notify/init.js')}}" type="text/javascript"></script>-->
-<script src="{{asset('/assets/vendors/general/jquery-validation/dist/jquery.validate.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/general/jquery-validation/dist/additional-methods.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/custom/components/vendors/jquery-validation/init.js')}}" type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/general/jquery-validation/dist/jquery.validate.js')}}" type="text/javascript">
+</script>
+<script src="{{asset('/assets/vendors/general/jquery-validation/dist/additional-methods.js')}}" type="text/javascript">
+</script>
+<script src="{{asset('/assets/vendors/custom/components/vendors/jquery-validation/init.js')}}" type="text/javascript">
+</script>
 <!--<script src="{{asset('/assets/vendors/general/toastr/build/toastr.min.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/raphael/raphael.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/morris.js/morris.js')}}" type="text/javascript"></script>-->
@@ -86,7 +99,8 @@
 <!--<script src="{{asset('/assets/vendors/general/counterup/jquery.counterup.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/es6-promise-polyfill/promise.min.js')}}" type="text/javascript"></script>-->
 <script src="{{asset('/assets/vendors/general/sweetalert2/dist/sweetalert2.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('/assets/vendors/custom/components/vendors/sweetalert2/init.js')}}" type="text/javascript"></script>
+<script src="{{asset('/assets/vendors/custom/components/vendors/sweetalert2/init.js')}}" type="text/javascript">
+</script>
 <!--<script src="{{asset('/assets/vendors/general/jquery.repeater/src/lib.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/jquery.repeater/src/jquery.input.js')}}" type="text/javascript"></script>-->
 <!--<script src="{{asset('/assets/vendors/general/jquery.repeater/src/repeater.js')}}" type="text/javascript"></script>-->
@@ -102,8 +116,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>
+<script type="text/javascript" language="javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" language="javascript"
+    src="https://cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>
 <!--end:: Global Optional Vendors -->
 
 <!--begin::Global Theme Bundle(used by all pages) -->
@@ -125,398 +141,399 @@
 <!--<script src="{{asset('/assets/app/custom/general/crud/forms/validation/form-widgets.js')}}" type="text/javascript"></script>-->
 
 <script>
-    /**
-     * Mask CEP
-     *
-     */
-    $('.cep').mask(('00000-000'));
+/**
+ * Mask CEP
+ *
+ */
+$('.cep').mask(('00000-000'));
 
 
-    // Registrando em cookie o ip do cliente
-    var ip = $.getJSON("https://api.ipify.org?format=json",
-        function(data) {
-            Cookies.set("ipClient", data.ip, {
-                expires: 7
-            });
-        })
+// Registrando em cookie o ip do cliente
+var ip = $.getJSON("https://api.ipify.org?format=json",
+    function(data) {
+        Cookies.set("ipClient", data.ip, {
+            expires: 7
+        });
+    })
 
 
-    /**
-     * Mask CPF / CNPJ
-     *
-     */
+/**
+ * Mask CPF / CNPJ
+ *
+ */
 
-    $(document).on('keydown', '.input_cpf_cnpj', function(e) {
-        var digit = e.key.replace(/\D/g, '');
-        var value = $(this).val().replace(/\D/g, '');
-        var size = value.concat(digit).length;
-        $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
-    });
+$(document).on('keydown', '.input_cpf_cnpj', function(e) {
+    var digit = e.key.replace(/\D/g, '');
+    var value = $(this).val().replace(/\D/g, '');
+    var size = value.concat(digit).length;
+    $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+});
 
-    /**
-     * Mask Contato
-     *
-     */
+/**
+ * Mask Contato
+ *
+ */
 
-    $(document).on('keydown', '.mask_input_contact', function(e) {
-        var digit = e.key.replace(/\D/g, '');
-        var value = $(this).val().replace(/\D/g, '');
-        var size = value.concat(digit).length;
-        $(this).mask((size <= 10) ? '(00)0000-0000' : '(00)00000-0000');
-    });
+$(document).on('keydown', '.mask_input_contact', function(e) {
+    var digit = e.key.replace(/\D/g, '');
+    var value = $(this).val().replace(/\D/g, '');
+    var size = value.concat(digit).length;
+    $(this).mask((size <= 10) ? '(00)0000-0000' : '(00)00000-0000');
+});
 
 
-    /*
-     * DELETE FUCTION
-     */
-    function ajax_delete(id, url) {
+/*
+ * DELETE FUCTION
+ */
+function ajax_delete(id, url) {
 
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        })
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
 
-        swalWithBootstrapButtons.fire({
-            title: 'Tem certeza?',
-            text: "Deseja realmente deletar o registro " + id,
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sim!',
-            cancelButtonText: 'Não!',
-            reverseButtons: true
-        }).then((result) => {
+    swalWithBootstrapButtons.fire({
+        title: 'Tem certeza?',
+        text: "Deseja realmente deletar o registro " + id,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim!',
+        cancelButtonText: 'Não!',
+        reverseButtons: true
+    }).then((result) => {
 
-            if (result.value) {
+        if (result.value) {
 
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                }).done(function(data) {
+            $.ajax({
+                url: url,
+                method: 'GET',
+            }).done(function(data) {
 
-                    if (data.status == 'error') {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Não foi possível excluir o registro',
-                            text: data.message,
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-                    } else {
-                        $('#_tr_user_' + id).hide()
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Registro excluído com sucesso',
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-                    }
-
-                }).fail(function(data) {
+                if (data.status == 'error') {
                     Swal.fire({
                         type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar excluir!',
+                        title: 'Não foi possível excluir o registro',
+                        text: data.message,
                         showConfirmButton: true,
                         timer: 10000
                     })
-                });
-
-            }
-        })
-    }
-
-    /*
-    INSERT FUNCTION
-     */
-    function ajax_store(id, route, form_data, reload = false) {
-
-        if (id != "") {
-            var url = "{{url('')}}/" + route + "/update/" + id;
-            var method = "PUT";
-        } else {
-            var url = "{{url('')}}/" + route + "/save";
-            var method = "POST";
-        }
-
-        $.ajax({
-            url: url,
-            type: method,
-            data: form_data,
-            success: function(response) {
-                if (response.status == "success") {
+                } else {
+                    $('#_tr_user_' + id).hide()
                     Swal.fire({
                         type: 'success',
-                        title: 'Registro salvo com sucesso',
-                        showConfirmButton: true,
-                        timer: 10000
-                    }).then((result) => {
-                        if (reload) {
-                            location.reload();
-                        } else {
-                            $(location).attr('href', '{{url("")}}/' + route);
-                        }
-
-                    })
-
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar salvar! ' + response.message,
+                        title: 'Registro excluído com sucesso',
                         showConfirmButton: true,
                         timer: 10000
                     })
-                    $('.btn').prop('disabled', false);
                 }
 
-            },
-            error: function(error) {
-                if (error.responseJSON.status == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
+            }).fail(function(data) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro ao tentar excluir!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+            });
 
-                } else if (error.responseJSON.status == "validation_error" || error.responseJSON.status == "error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
+        }
+    })
+}
 
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    console.log(errors)
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
+/*
+INSERT FUNCTION
+ */
+function ajax_store(id, route, form_data, reload = false) {
+
+    if (id != "") {
+        var url = "{{url('')}}/" + route + "/update/" + id;
+        var method = "PUT";
+    } else {
+        var url = "{{url('')}}/" + route + "/save";
+        var method = "POST";
+    }
+
+    $.ajax({
+        url: url,
+        type: method,
+        data: form_data,
+        success: function(response) {
+            if (response.status == "success") {
+                Swal.fire({
+                    type: 'success',
+                    title: 'Registro salvo com sucesso',
+                    showConfirmButton: true,
+                    timer: 10000
+                }).then((result) => {
+                    if (reload) {
+                        location.reload();
+                    } else {
+                        $(location).attr('href', '{{url("")}}/' + route);
+                    }
+
+                })
+
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro ao tentar salvar! ' + response.message,
+                    showConfirmButton: true,
+                    timer: 10000
+                })
                 $('.btn').prop('disabled', false);
             }
-        });
 
-    }
+        },
+        error: function(error) {
+            if (error.responseJSON.status == "internal_error") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
 
-    /*
-    AJAX FIND DATA
-     */
+            } else if (error.responseJSON.status == "validation_error" || error.responseJSON.status ==
+                "error") {
+                var items = error.responseJSON.errors;
+                Swal.fire({
+                    type: 'error',
+                    title: 'Erro!',
+                    html: 'Os seguintes erros foram encontrados: ' + items,
+                    footer: ' '
+                })
 
-    function ajax_find_data(input_search, form_search, route) {
-        if (input_search !== "") {
-            $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: "{{url('')}}/" + route + "/search",
-                async: true,
-                data: form_search,
-                success: function(response) {
-                    console.log(response.data);
-                    if (response.status == "success") {
-
-                        $("#btn-search").html('<i class="fa fa-search"></i>')
-                        $('#name').html(response.data.name)
-                        $('#cpf_cnpj').html(response.data.cpf_cnpj)
-                        $('#type').html(response.data.type)
-                        $('#cep').html(response.data.cep)
-                        $('#address').html(response.data.address)
-                        $('#complement').html(response.data.complement)
-                        $('#number').html(response.data.number)
-                        $('#city').html(response.data.city)
-                        $('#state').html(response.data.state)
-                        $('#id').html(response.data.id)
-                        $('#customer_id').val(response.data.id)
-                        return response.data;
-
-                    } else {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: response.message,
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-                        $("#input-search").val('')
-                        $("#btn-search").html('<i class="fa fa-search"></i>')
-                    }
-                }
-            });
-
-        } else {
-            Swal.fire({
-                type: 'warning',
-                title: 'Oops...',
-                text: 'Informe um CPF ou CNPJ',
-                showConfirmButton: true,
-                timer: 10000
-            })
+            } else {
+                var items = error.responseJSON.errors;
+                var errors = $.map(items, function(i) {
+                    return i.join('<br />');
+                });
+                console.log(errors)
+                Swal.fire({
+                    type: 'error',
+                    title: 'Erro!',
+                    html: 'Os seguintes erros foram encontrados: ' + errors,
+                    footer: ' '
+                })
+            }
+            $('.btn').prop('disabled', false);
         }
-    }
+    });
 
-    /*
-    INSERT PERMISSION
-    */
-    function ajax_permission(id, route, form_data, reload = false) {
+}
 
-        var url = "{{url('')}}/" + route + "/update/" + id;
-        var method = "POST";
-        console.log(form_data);
+/*
+AJAX FIND DATA
+ */
 
+function ajax_find_data(input_search, form_search, route) {
+    if (input_search !== "") {
+        $(this).html('<i class="fa fa-spinner fa-pulse"></i>')
         $.ajax({
-            url: url,
-            type: method,
-            data: form_data,
+            type: 'POST',
+            dataType: 'json',
+            url: "{{url('')}}/" + route + "/search",
+            async: true,
+            data: form_search,
             success: function(response) {
-                console.log(response)
+                console.log(response.data);
                 if (response.status == "success") {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Permissões configuradas!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
+
+                    $("#btn-search").html('<i class="fa fa-search"></i>')
+                    $('#name').html(response.data.name)
+                    $('#cpf_cnpj').html(response.data.cpf_cnpj)
+                    $('#type').html(response.data.type)
+                    $('#cep').html(response.data.cep)
+                    $('#address').html(response.data.address)
+                    $('#complement').html(response.data.complement)
+                    $('#number').html(response.data.number)
+                    $('#city').html(response.data.city)
+                    $('#state').html(response.data.state)
+                    $('#id').html(response.data.id)
+                    $('#customer_id').val(response.data.id)
+                    return response.data;
 
                 } else {
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
-                        text: 'Erro ao tentar salvar! ' + response.message,
+                        text: response.message,
                         showConfirmButton: true,
                         timer: 10000
                     })
+                    $("#input-search").val('')
+                    $("#btn-search").html('<i class="fa fa-search"></i>')
                 }
-
-            },
-            error: function(error) {
-                console.log(error.responseJSON)
-                if (error.responseJSON.status == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-
-                } else if (error.responseJSON.status == "validation_error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
-
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-
             }
         });
 
+    } else {
+        Swal.fire({
+            type: 'warning',
+            title: 'Oops...',
+            text: 'Informe um CPF ou CNPJ',
+            showConfirmButton: true,
+            timer: 10000
+        })
     }
+}
 
-    /**
+/*
+INSERT PERMISSION
+*/
+function ajax_permission(id, route, form_data, reload = false) {
+
+    var url = "{{url('')}}/" + route + "/update/" + id;
+    var method = "POST";
+    console.log(form_data);
+
+    $.ajax({
+        url: url,
+        type: method,
+        data: form_data,
+        success: function(response) {
+            console.log(response)
+            if (response.status == "success") {
+                Swal.fire({
+                    type: 'success',
+                    title: 'Permissões configuradas!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro ao tentar salvar! ' + response.message,
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+            }
+
+        },
+        error: function(error) {
+            console.log(error.responseJSON)
+            if (error.responseJSON.status == "internal_error") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+
+            } else if (error.responseJSON.status == "validation_error") {
+                var items = error.responseJSON.errors;
+                Swal.fire({
+                    type: 'error',
+                    title: 'Erro!',
+                    html: 'Os seguintes erros foram encontrados: ' + items,
+                    footer: ' '
+                })
+
+            } else {
+                var items = error.responseJSON.errors;
+                var errors = $.map(items, function(i) {
+                    return i.join('<br />');
+                });
+                Swal.fire({
+                    type: 'error',
+                    title: 'Erro!',
+                    html: 'Os seguintes erros foram encontrados: ' + errors,
+                    footer: ' '
+                })
+            }
+
+        }
+    });
+
+}
+
+/**
     INSERT FUNCTION
 */
-    function ajax_store_cards_driver(id, route, form_data, reload = false) {
+function ajax_store_cards_driver(id, route, form_data, reload = false) {
 
-        if (id != "") {
-            var url = "{{url('')}}/" + route + "/update/" + id;
-            var method = "PUT";
-        } else {
-            var url = "{{url('')}}/" + route + "/save";
-            var method = "POST";
-        }
-
-        $.ajax({
-            url: url,
-            type: method,
-            data: form_data,
-            success: function(response) {
-                console.log(response)
-                if (response.status == "success") {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Registro salvo com sucesso',
-                        showConfirmButton: true,
-                        timer: 10000
-                    }).then((result) => {
-                        $("#reloadOption").load(location.href + " #reloadOption>*", "");
-                        setTimeout(function() {
-                            $('#exampleModal').modal('hide')
-                        }, 1000);
-                    })
-
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar salvar! ' + response.message,
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-                }
-
-            },
-            error: function(error) {
-                console.log(error.responseJSON)
-                if (error.responseJSON.status == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-
-                } else if (error.responseJSON.status == "validation_error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
-
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-
-            }
-        });
-
+    if (id != "") {
+        var url = "{{url('')}}/" + route + "/update/" + id;
+        var method = "PUT";
+    } else {
+        var url = "{{url('')}}/" + route + "/save";
+        var method = "POST";
     }
+
+    $.ajax({
+        url: url,
+        type: method,
+        data: form_data,
+        success: function(response) {
+            console.log(response)
+            if (response.status == "success") {
+                Swal.fire({
+                    type: 'success',
+                    title: 'Registro salvo com sucesso',
+                    showConfirmButton: true,
+                    timer: 10000
+                }).then((result) => {
+                    $("#reloadOption").load(location.href + " #reloadOption>*", "");
+                    setTimeout(function() {
+                        $('#exampleModal').modal('hide')
+                    }, 1000);
+                })
+
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro ao tentar salvar! ' + response.message,
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+            }
+
+        },
+        error: function(error) {
+            console.log(error.responseJSON)
+            if (error.responseJSON.status == "internal_error") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+
+            } else if (error.responseJSON.status == "validation_error") {
+                var items = error.responseJSON.errors;
+                Swal.fire({
+                    type: 'error',
+                    title: 'Erro!',
+                    html: 'Os seguintes erros foram encontrados: ' + items,
+                    footer: ' '
+                })
+
+            } else {
+                var items = error.responseJSON.errors;
+                var errors = $.map(items, function(i) {
+                    return i.join('<br />');
+                });
+                Swal.fire({
+                    type: 'error',
+                    title: 'Erro!',
+                    html: 'Os seguintes erros foram encontrados: ' + errors,
+                    footer: ' '
+                })
+            }
+
+        }
+    });
+
+}
 </script>

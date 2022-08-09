@@ -22,7 +22,6 @@ class UserController extends Controller
     {
         $this->userService = $userService;
 
-
         $this->data = [
             'icon' => 'flaticon-user',
             'title' => 'Usuários',
@@ -74,6 +73,7 @@ class UserController extends Controller
             $ip = strval($_COOKIE['ipClient']);
         }
 
+        //dd($data);
         $values =  [
             'user_name' => strval($data['name']),
             'customer_id' => $data['customer_id'],

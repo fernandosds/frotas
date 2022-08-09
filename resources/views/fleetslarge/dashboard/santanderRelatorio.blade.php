@@ -246,88 +246,7 @@ td {
     </div>
 </div>
 
-<div class="row" id="div-grid-vehicle">
-    <div class="col-md-6" id="divCard01">
-        <div class="card text-white col-md-12 bg-primary" id="divColor01">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"> <span id="tempoMedio"></span></h1>
-                <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id="divCard02">
-        <div class="card text-white col-md-12 bg-primary" id="divColor02">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="tempoTecnico"></span></h1>
-                <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row" id="div-grid-vehicle2">
-    <div class="col-md-6" id="divCard04">
-        <div class="card text-white col-md-12 bg-primary" id="divColor04">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="tempoDeslocamento"></span></h1>
-                <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id='divCard05'>
-        <div class="card text-white col-md-12 bg-primary" id='divColor05'>
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="tempoAtendimento"></span></h1>
-                <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 installed">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada"
-                        value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 waiting">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao"
-                        value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> TOTAL </h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="btn-success text-white center btn-excel col-md-12">
-            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"
-                class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
-        </div>
-    </div>
-</div>
 
 
 <div class="row">
@@ -365,7 +284,7 @@ td {
                             <div class="grid-item">
                                 <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span
                                     class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span
-                                        id="renegociacao"></span>&nbsp; RENEG</span>
+                                        id="renegociacao"></span>&nbsp; RENEGOCIAÇÃO</span>
                             </div>
                             <div class="grid-item">
                                 <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span
@@ -613,26 +532,26 @@ $(document).ready(function() {
 
             }
 
-            $('#tempoMedio').html(totalGeralEntrada);
-            $('#tempoDeslocamento').html(totalGeralAcTecnico);
-            $('#tempoTecnico').html(totalGeralIniInst);
-            $('#tempoAtendimento').html(totalGeralTermInst);
+            // $('#tempoMedio').html(totalGeralEntrada);
+            // $('#tempoDeslocamento').html(totalGeralAcTecnico);
+            // $('#tempoTecnico').html(totalGeralIniInst);
+            // $('#tempoAtendimento').html(totalGeralTermInst);
 
-            if (totalGeralEntrada == 'NaN:NaN:NaN') {
-                $('#tempoMedio').html('00:00:00');
-            }
+            // if (totalGeralEntrada == 'NaN:NaN:NaN') {
+            //     $('#tempoMedio').html('00:00:00');
+            // }
 
-            if (totalGeralAcTecnico == 'NaN:NaN:NaN') {
-                $('#tempoDeslocamento').html('00:00:00');
-            }
+            // if (totalGeralAcTecnico == 'NaN:NaN:NaN') {
+            //     $('#tempoDeslocamento').html('00:00:00');
+            // }
 
-            if (totalGeralIniInst == 'NaN:NaN:NaN') {
-                $('#tempoTecnico').html('00:00:00');
-            }
+            // if (totalGeralIniInst == 'NaN:NaN:NaN') {
+            //     $('#tempoTecnico').html('00:00:00');
+            // }
 
-            if (totalGeralTermInst == 'NaN:NaN:NaN') {
-                $('#tempoAtendimento').html('00:00:00');
-            }
+            // if (totalGeralTermInst == 'NaN:NaN:NaN') {
+            //     $('#tempoAtendimento').html('00:00:00');
+            // }
         },
         dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
             "<'row'<'col-md-6'><'col-md-6'>>" +

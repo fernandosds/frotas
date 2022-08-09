@@ -82,6 +82,161 @@ class DashboardController extends Controller
         ];
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexDashSantander()
+    {
+
+        // Entrar no dashboard Santander
+        return response()->view(
+            'fleetslarge.dashboard.santanderDash');
+        // return response()->view(
+        //     'fleetslarge.dashboard.santanderDash',
+        //     compact(
+        //     'aInstalacao',
+        //     'eInstalacao',
+        //     'qtdeItems',
+        //     'nullInstalacao',
+        //     'tmatecnico',
+        //     'tmiservico')
+        // );
+
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dadosDashSantander()
+    {
+
+        //dd('Dados DashboardSantarder');
+
+        ini_set('memory_limit', '1024M');
+        //Dados da empresa
+        //$customer = $this->customerService->show(Auth::user()->customer_id);
+        //dd($customer);
+
+        // Entrar no dashboard Santander
+
+        $data['carros'] = $this->santanderService->all();
+        $jsonString = new stdClass();
+        $jsonString = json_encode($data['carros']);
+        $items = collect(json_decode($jsonString, true));
+        //dd($items);
+
+        $aInstalacao = 0;
+        $eInstalacao = 0;
+        $nullInstalacao = 0;
+        $tmatecnico_minuto = 0;
+        $tmatecnico_hora = 0;
+        $tmatecnico = 0;
+        $tmiservico_minuto = 0;
+        $tmiservico_hora = 0;
+        $tmiservico = 0;
+        $tmatendimento = 0;
+        $tmsinstalado = 0;
+        $tpInstalacao = 0;
+
+        //$item = new stdClass();
+        $qtdeItems = count($items);
+
+        $arrAguardando = [];
+
+        foreach($items as $item) {
+
+            //dd($item);
+
+            $situacao = isset($item['status_situacao']) ? $item['status_situacao'] : null;
+
+            //dd($situacao);
+
+            $tpInstalacao += 1;
+
+            if($situacao == "Aguardando_Instalacao"){
+                $aInstalacao += 1;
+            }
+            if($situacao == "Instalacao_Efetuada"){
+
+                //dd($item);
+                $eInstalacao += 1;
+
+                //CÁLCULO DE TEMPO MÉDIO PARA ACIONAR TÉCNICO
+                $trata_minuto_at_string = str_replace(":",".",substr($item['t_acionamento_tecnico'],3));
+                //dd($trata_minuto_at_string);
+                $trata_hora_at_string = str_replace(":",".",substr($item['t_acionamento_tecnico'],0,2));
+                //dd($trata_hora_at_string);
+                $trata_minuto_at_number = floatval($trata_minuto_at_string);
+                $trata_hora_at_number = floatval($trata_hora_at_string);
+                //dd($trata_minuto_at_number);
+
+                $tmatecnico_minuto += $trata_minuto_at_number;
+
+                //CÁLCULO DE TEMPO MÉDIO DE DESLOCAMENTO
+                $trata_minuto_md_string = str_replace(":",".",substr($item['t_inicio_servico'],3));
+                //dd($trata_minuto_md_string);
+                $trata_hora_md_string = str_replace(":",".",substr($item['t_inicio_servico'],0,2));
+                //dd($trata_hora_md_string);
+
+                $trata_minuto_md_number = floatval($trata_minuto_md_string);
+                $trata_hora_md_number = floatval($trata_hora_md_string);
+
+                $tmiservico_minuto += $trata_minuto_at_number;
+                $tmiservico_hora += $trata_hora_md_number;
+
+                //CÁLCULO DE TEMPO MÉDIO DE ATENDIMENTO
+
+                $tmatendimento = 0;
+
+            }
+
+            if($situacao == null){
+                $nullInstalacao += 1;
+            }
+
+        }
+
+        $tmatecnico = "00:".number_format($tmatecnico_minuto / $eInstalacao,2,":",".");
+
+        //Média tempo medio deslocamento hora para minuto
+        $tmiservico_hora_minuto = $tmiservico_hora * 60;
+
+        $tmiservico_hora = (($tmiservico_minuto + $tmiservico_hora_minuto) / $eInstalacao) / 60;
+
+        $tmiservico_minuto = round((($tmiservico_minuto + $tmiservico_hora_minuto) / $eInstalacao) / 60 / 60, 2);
+
+        $tmiservico = number_format($tmiservico_hora,0).":".substr(number_format($tmiservico_minuto,2,":","."),2).":00";
+
+        //dd($tmiservico);
+
+        return response()->json(array(
+            'aInstalacao'   => $aInstalacao,
+            'eInstalacao'   => $eInstalacao,
+            'tpInstalacao'  => $tpInstalacao,
+            'nullInstalacao' => $nullInstalacao,
+            'tmatecnico'   => $tmatecnico,
+            'tmiservico'   => $tmiservico,
+
+    ), 200);
+
+    // return response()->json([
+    //     'status' => 'success',
+    //     'data' => [
+    //         "aInstalacao"  => $aInstalacao ?? '',
+    //         "eInstalacao"  => $eInstalacao ?? '',
+    //         "tpInstalacao"   => $items ?? '',
+    //         "nullInstalacao" => $nullInstalacao ?? '',
+    //         "tmatecnico"   => $tmatecnico ?? '',
+    //         "tmiservico"   => $tmiservico ?? ''
+    //     ]
+    // ], 200);
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -111,13 +266,11 @@ class DashboardController extends Controller
             return response()->view('fleetslarge.dashboard.santander', $data);
         }
 
-
         // TESTE PARA O ITAU
         // Entrar no dashboard Itau
         if (Auth::user()->customer_id == 13) {
 
             $data['fleetslarge'] = $this->apiFleetLargeService->allCars($customer->hash);
-
 
             $carros = new stdClass();
             $jsonString = json_encode($data['fleetslarge']);

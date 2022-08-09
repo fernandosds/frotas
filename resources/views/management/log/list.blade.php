@@ -176,6 +176,19 @@ $(document).ready(function() {
 
     });
 
+    $.fn.dataTable.ext.errMode = 'throw';
+    $('#tableLog').on('error.dt', function(e, settings, techNote, message) {
+        Swal.fire({
+            type: 'error',
+            title: 'Não foi possível carregar página, sair e entrar no sistema novamente !',
+            text: e.message,
+            showConfirmButton: true,
+            timer: 10000
+        }).then(function() {
+            window.location.href = "/login";
+        })
+    })
+
     resetGrid();
     // INICIO DATARANGEPICKER
     var startdate;
@@ -311,7 +324,16 @@ $(document).ready(function() {
             success: function(response) {
                 $("#tableLog").load(" #tableLog", "");
             },
-            error: function(response) {}
+            error: function(response) {
+                console.log(response);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Não foi possível carregar página, sair e entrar no sistema novamente !',
+                    text: response.message,
+                    showConfirmButton: true,
+                    timer: 10000
+                })
+            }
         });
     }
 });

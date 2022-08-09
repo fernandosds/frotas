@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services\FleetsLarge;
 
 use App\Repositories\FleetsLarge\SantanderRepository;
@@ -22,6 +21,8 @@ class SantanderService
         $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
         $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
 
+        $total_instalacao = 0;
+
         foreach ($cars as $car) {
             $car->placa_mercosul = fixPlate($car->placa);
             $car->periodo = explode(" ",  $car->data_instalacao);
@@ -42,6 +43,7 @@ class SantanderService
             } else {
                 $car->projeto = 'FINANCEIRA';
             }
+            ++$total_instalacao;
         }
         return $cars;
     }
