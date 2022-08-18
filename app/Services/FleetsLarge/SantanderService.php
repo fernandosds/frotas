@@ -15,9 +15,9 @@ class SantanderService
     /**
      * @return mixed
      */
-    public function all()
+    public function all(Int $limit = 5000)
     {
-        $cars = $this->santander->all();
+        $cars = $this->santander->table($limit);
 
         $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
         $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
@@ -54,5 +54,4 @@ class SantanderService
         $chassi = $this->psa->findByChassi($chassis);
         return $chassi;
     }
-
 }

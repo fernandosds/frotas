@@ -329,7 +329,13 @@
                 <!--begin: Datatable -->
                 <table id="example" class="display" style="width:50%">
                     <thead>
-                        <tr>
+                        <tr class="headerTable">
+                            <th class="hidden">Hora - Dt. Entrada</th>
+                            <th class="hidden">Hora - Ac. Tecnico</th>
+                            <th class="hidden">Hora - Dt. Tecnico</th>
+                            <th class="hidden">Hora - Ac. Tecnico</th>
+                            <th class="hidden">Filtro - Dt. Entrada</th>
+                            <th class="hidden">Status_Geral</th>
                             <th>Placa</th>
                             <th>Placa - Mercosul</th>
                             <th class="hidden">Chassis</th>
@@ -339,20 +345,70 @@
                             <th class="hidden">Endereço</th>
                             <th class="hidden">Estado</th>
                             <th class="hidden">Velocidade</th>
+                            <th class="hidden">Última Transmissão</th>
                             <th>Última Transmissão</th>
                             <th style="width: 78px;">Loja</th>
                             <th>Nº Proposta</th>
+                            <th class="hidden">Data de entrada</th>
                             <th>Data de entrada</th>
+                            <th class="hidden">Data de acionamento Técnico</th>
                             <th>Data de acionamento Técnico</th>
+                            <th class="hidden">Data de início de instalação</th>
                             <th>Data de início de instalação</th>
+                            <th class="hidden">Data de término de instalação</th>
                             <th>Data de término de instalação</th>
                             <th>Projeto</th>
                             <th class="hidden">Situação</th>
-                            <th></th>
+                            <th style="width: 200px;"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbodyVehicle">
+                        @foreach ($carros as $driver)
+                        <tr id='_tr_car_{{$driver->chassis}}'>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y')}}</td>
+                            <td class="hidden">{{$driver->status_situacao}}</td>
+                            <td>{{$driver->placa}}</td>
+                            <td>{{$driver->placa_mercosul}}</td>
+                            <td class="hidden">{{$driver->chassis}}</td>
+                            <td>{{$driver->modelo_veiculo}}</td>
+                            <td class="hidden">{{$driver->lp_latitude}}</td>
+                            <td class="hidden">{{$driver->lp_longitude}}</td>
+                            <td class="hidden">{{$driver->end_logradouro}}, {{$driver->end_bairro}} - {{$driver->end_cidade}} {{$driver->end_uf}}</td>
+                            <td class="hidden">{{$driver->estado}}</td>
+                            <td class="hidden">{{$driver->lp_velocidade}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
+                            <td><span style="display:none">{{$driver->lp_ultima_transmissao}}</span>{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
+                            <td>{{$driver->cliente}}</td>
+                            <td>{{$driver->contrato}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
+                            <td><span style="display:none">{{$driver->dt_entrada}}</span>{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
+                            <td><span style="display:none">{{$driver->dt_tecnico_acionado}}</span>{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
+                            <td><span style="display:none">{{$driver->dt_inicio_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
+                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
+                            <td><span style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
+                            @if ($driver->projeto == 'RENEGOCIACAO')
+                            <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span></td>
+                            @elseif ($driver->projeto == 'FINANCEIRA')
+                            <td><span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
+                            @endif
+                            <td class="hidden">{{$driver->situacao}}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
+                                    <i class="fa fa-search-plus"></i>
+                                </button>
+                                <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>
+
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
+
                 </table>
                 <!--end: Datatable -->
             </div>
@@ -403,104 +459,13 @@
         }, 1000);
     }
 
-    // 2022-08-16 09:54:49.000
 
     $(document).ready(function() {
-        columns = [1];
-        columsPdf = [1];
+        columns = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 21, 23, 25, 27, 28];
+        columsPdf = [6, 7, 8, 9, 10, 11, 12, 13, 14];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
-            // ajax: "{{route('fleetslarges.data.santander')}}",
-            ajax: {
-                url: "{{route('fleetslarges.data.santander')}}",
-                "type": "GET",
-            },
-
-            columns: [{
-                    "data": "placa"
-                },
-                {
-                    "data": "placa"
-                },
-                {
-                    "data": "chassis",
-                    visible: false
-                },
-                {
-                    "data": "modelo_veiculo"
-                },
-                {
-                    "data": "lp_latitude",
-                    visible: false
-                },
-                {
-                    "data": "lp_longitude",
-                    visible: false
-                },
-                {
-                    "data": '',
-                    render: function(data, type, row) {
-                        return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
-                    },
-                    visible: false
-                },
-                {
-                    "data": "estado",
-                    visible: false
-                },
-                {
-                    "data": "lp_velocidade",
-                    visible: false
-                },
-                {
-                    "data": "lp_ultima_transmissao"
-                },
-                {
-                    "data": "cliente" // loja
-                },
-                {
-                    "data": "contrato"
-                },
-                {
-                    "data": "dt_entrada"
-                },
-                {
-                    "data": "dt_tecnico_acionado"
-                },
-                {
-                    "data": "dt_inicio_instalacao"
-                },
-                {
-                    "data": "dt_termino_instalacao"
-                },
-                {
-                    "data": "projeto",
-                    "width": "50px",
-                    render: function(data, type, row, meta) {
-                        if (row.projeto == 'RENEG') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto"> RENEG </span>'
-                        } else {
-                            return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto"> ' + row.projeto + '  </span>'
-                        }
-
-                    }
-                },
-                {
-                    "data": "situacao",
-                    visible: false
-                },
-                {
-                    "data": " ",
-                    "width": "70px",
-                    render: function(data, type, row, meta) {
-                        return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
-                            ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
-                    }
-                },
-            ],
-
-
-            //"order": [1, 'asc'],
+            //"bDestroy": true,
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
@@ -614,7 +579,7 @@
             $.fn.dataTableExt.afnFiltering.push(
                 function(oSettings, aData, iDataIndex) {
                     if (startdate != undefined) {
-                        var coldate = aData[1].split("/");
+                        var coldate = aData[4].split("/");
                         var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                         var date = moment(d.toISOString());
                         date = date.format("YYYY-MM-DD");
@@ -651,32 +616,31 @@
             $('#financeira').html(totalRowCount['financeira']);
             $('#renegociacao').html(totalRowCount['renegociacao']);
         });
-        /*
-                function tableOneRowCount() {
-                    totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
-                    totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
 
-                    totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
-                        search: 'applied'
-                    }).count();
+        function tableOneRowCount() {
+            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
+            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
 
-                    totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
-                        search: 'applied'
-                    }).count();
-                    console.log(totalRowCount['gridInstalacaoEfetuada'])
+            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
+                search: 'applied'
+            }).count();
 
-                    $('#financeira').html(totalRowCount['financeira']);
-                    $('#renegociacao').html(totalRowCount['renegociacao']);
+            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
+                search: 'applied'
+            }).count();
+            console.log(totalRowCount['gridInstalacaoEfetuada'])
 
-                    $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-                    $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
 
-                    return totalRowCount;
-                }
+            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
+            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+
+            return totalRowCount;
+        }
 
 
-                tableOneRowCount();
-                */
+        tableOneRowCount();
 
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {

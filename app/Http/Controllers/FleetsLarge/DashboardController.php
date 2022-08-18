@@ -107,8 +107,7 @@ class DashboardController extends Controller
 
         // Entrar no dashboard Santander
         if (Auth::user()->customer_id == 8) {
-            $data['carros'] = $this->santanderService->all();
-            return response()->view('fleetslarge.dashboard.santander', $data);
+            return response()->view('fleetslarge.dashboard.santander');
         }
 
 
@@ -187,11 +186,17 @@ class DashboardController extends Controller
 
         // Entrar no dashboard banco PSA
         if (Auth::user()->customer_id == 14) {
-            $data['carros'] = $this->psaService->all();
+            $data['data'] = $this->psaService->all();
             return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
     }
 
+    public function dataSantander()
+    {
+        $customer = $this->customerService->show(Auth::user()->customer_id);
+        $data['data'] = $this->apiFleetLargeService->allCars($customer->hash);
+        return response()->json($data);
+    }
     public function situacaoInstalado($items)
     {
 
