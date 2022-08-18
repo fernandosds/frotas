@@ -339,7 +339,8 @@
                             <th class="hidden">Endereço</th>
                             <th class="hidden">Estado</th>
                             <th class="hidden">Velocidade</th>
-               <!-- 9 -->   <th>Última Transmissão</th>
+                            <!-- 9 -->
+                            <th>Última Transmissão</th>
                             <th style="width: 78px;">Loja</th>
                             <th>Nº Proposta</th>
                             <th>Data de entrada</th>
@@ -420,9 +421,13 @@
                 "type": "GET",
             },
             order: [
-                [15, 'desc']
+                [12, 'desc']
             ],
             columnDefs: [{
+                    className: "hidden",
+                    "targets": [20]
+                },
+                {
                     orderable: false,
                     targets: 18
                 }, {
@@ -504,8 +509,7 @@
                 "data": "dt_entrada",
                 visible: false
             }, {
-                "data": "status_situacao",
-                visible: false
+                "data": "status_situacao"
             }, ],
 
 
@@ -661,6 +665,32 @@
             $('#renegociacao').html(totalRowCount['renegociacao']);
         });
 
+        function tableOneRowCount() {
+
+            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
+                search: 'applied'
+            }).count();
+
+            setTimeout(function() {
+                $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
+                $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+            }, 16000);
+
+            console.log(totalRowCount)
+            return totalRowCount;
+        }
+
+
+        setTimeout(function() {
+            tableOneRowCount();
+        }, 15000);
+
+
+
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {
             var status = $('input:checkbox[name="pos"]:checked').map(function() {
@@ -798,9 +828,6 @@
                 }
             });
         })
-
-
-
     });
 
 
