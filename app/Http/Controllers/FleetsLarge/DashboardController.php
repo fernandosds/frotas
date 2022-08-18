@@ -194,7 +194,27 @@ class DashboardController extends Controller
     public function dataSantander()
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
-        $data['data'] = $this->apiFleetLargeService->allCars($customer->hash);
+        $cars = $this->apiFleetLargeService->allCars($customer->hash);
+
+        $data = new stdClass();
+        $jsonString = json_encode($cars);
+        $items = collect(json_decode($jsonString));
+        $result = $items->all();
+
+        $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
+        $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
+
+        foreach ($items as $item) {
+            $item->placa_mercosul =  fixPlate($item->placa);
+            if (in_array($item->situacao, $aguardando_instalacao)) {
+                $item->status_situacao = "Aguardando_Instalacao";
+            }
+            if (in_array($item->situacao, $instalado)) {
+                $item->status_situacao = "Instalacao_Efetuada";
+            }
+        }
+        $data = $result;
+
         return response()->json($data);
     }
     public function situacaoInstalado($items)

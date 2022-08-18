@@ -349,6 +349,8 @@
                             <th>Projeto</th>
                             <th class="hidden">Situação</th>
                             <th></th>
+                            <th class="hidden">Filtro - Dt. Entrada</th>
+                            <th class="hidden">Status_Geral</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -366,8 +368,9 @@
 
 @section('scripts')
 <script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
     resetGrid()
@@ -413,91 +416,91 @@
             // ajax: "{{route('fleetslarges.data.santander')}}",
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
+                dataSrc: "",
                 "type": "GET",
             },
-
-            columns: [{
-                    "data": "placa"
-                },
-                {
-                    "data": "placa"
-                },
-                {
-                    "data": "chassis",
-                    visible: false
-                },
-                {
-                    "data": "modelo_veiculo"
-                },
-                {
-                    "data": "lp_latitude",
-                    visible: false
-                },
-                {
-                    "data": "lp_longitude",
-                    visible: false
-                },
-                {
-                    "data": '',
-                    render: function(data, type, row) {
-                        return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
-                    },
-                    visible: false
-                },
-                {
-                    "data": "estado",
-                    visible: false
-                },
-                {
-                    "data": "lp_velocidade",
-                    visible: false
-                },
-                {
-                    "data": "lp_ultima_transmissao"
-                },
-                {
-                    "data": "cliente" // loja
-                },
-                {
-                    "data": "contrato"
-                },
-                {
-                    "data": "dt_entrada"
-                },
-                {
-                    "data": "dt_tecnico_acionado"
-                },
-                {
-                    "data": "dt_inicio_instalacao"
-                },
-                {
-                    "data": "dt_termino_instalacao"
-                },
-                {
-                    "data": "projeto",
-                    "width": "50px",
-                    render: function(data, type, row, meta) {
-                        if (row.projeto == 'RENEG') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto"> RENEG </span>'
-                        } else {
-                            return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto"> ' + row.projeto + '  </span>'
-                        }
-
+            columnDefs: [{
+                    targets: [9, 12, 13, 14, 15],
+                    render: function(data) {
+                        return moment(data).format('DD/MM/YYYY HH:mm:ss');
                     }
                 },
                 {
-                    "data": "situacao",
-                    visible: false
-                },
-                {
-                    "data": " ",
-                    "width": "70px",
-                    render: function(data, type, row, meta) {
-                        return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
-                            ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
+                    targets: 19,
+                    render: function(data) {
+                        return moment(data).format('DD/MM/YYYY');
                     }
-                },
+                }
             ],
+            columns: [{
+                "data": "placa"
+            }, {
+                "data": "placa_mercosul"
+            }, {
+                "data": "chassis",
+                visible: false
+            }, {
+                "data": "modelo_veiculo"
+            }, {
+                "data": "lp_latitude",
+                visible: false
+            }, {
+                "data": "lp_longitude",
+                visible: false
+            }, {
+                "data": '',
+                render: function(data, type, row) {
+                    return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
+                },
+                visible: false
+            }, {
+                "data": "estado",
+                visible: false
+            }, {
+                "data": "lp_velocidade",
+                visible: false
+            }, {
+                "data": "lp_ultima_transmissao"
+            }, {
+                "data": "cliente" // loja
+            }, {
+                "data": "contrato"
+            }, {
+                "data": "dt_entrada"
+            }, {
+                "data": "dt_tecnico_acionado"
+            }, {
+                "data": "dt_inicio_instalacao"
+            }, {
+                "data": "dt_termino_instalacao"
+            }, {
+                "data": "projeto",
+                "width": "50px",
+                render: function(data, type, row, meta) {
+                    if (row.projeto == 'RENEG') {
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
+                    } else {
+                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
+                    }
+
+                }
+            }, {
+                "data": "situacao",
+                visible: false
+            }, {
+                "data": " ",
+                "width": "70px",
+                render: function(data, type, row, meta) {
+                    return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
+                        ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
+                }
+            }, {
+                "data": "dt_entrada",
+                visible: false
+            }, {
+                "data": "status_situacao",
+                visible: false
+            }, ],
 
 
             //"order": [1, 'asc'],
@@ -614,7 +617,7 @@
             $.fn.dataTableExt.afnFiltering.push(
                 function(oSettings, aData, iDataIndex) {
                     if (startdate != undefined) {
-                        var coldate = aData[1].split("/");
+                        var coldate = aData[19].split("/");
                         var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                         var date = moment(d.toISOString());
                         date = date.format("YYYY-MM-DD");
@@ -651,173 +654,149 @@
             $('#financeira').html(totalRowCount['financeira']);
             $('#renegociacao').html(totalRowCount['renegociacao']);
         });
-        /*
-                function tableOneRowCount() {
-                    totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
-                    totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
-
-                    totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
-                        search: 'applied'
-                    }).count();
-
-                    totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
-                        search: 'applied'
-                    }).count();
-                    console.log(totalRowCount['gridInstalacaoEfetuada'])
-
-                    $('#financeira').html(totalRowCount['financeira']);
-                    $('#renegociacao').html(totalRowCount['renegociacao']);
-
-                    $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-                    $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
-
-                    return totalRowCount;
-                }
-
-
-                tableOneRowCount();
-                */
 
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {
             var status = $('input:checkbox[name="pos"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
-            $('#example').DataTable().column(27).search(status, true, false, false).draw();
+            $('#example').DataTable().column(16).search(status, true, false, false).draw();
         });
 
 
-    });
-
-
-    $('.installed').click(function() {
-        $('#example').DataTable().columns(5).search("Instalacao_Efetuada", true, false, true).draw();
-    });
-
-    $('.waiting').click(function() {
-        $('#example').DataTable().columns(5).search('Aguardando_Instalacao', true, false, true).draw();
-    });
-
-    $('.vehiclesTotal').click(function() {
-        $('#example').DataTable().columns(5).search('').draw();
-    });
-
-
-
-    /* Details vehicle */
-    $('.btn-vehicle-data').click(function() {
-        var chassi = $(this).data('chassi');
-        $.ajax({
-            url: "{{url('')}}/fleetslarges/find/" + chassi,
-            type: 'GET',
-            success: function(response) {
-                console.log(response)
-                $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
-                $('.placa').val(response.placa)
-                $('.empresa').val(response.empresa)
-                $('#r12s_proximos').val(response.r12s_proximos)
-                $('#dif_date').val(response.dif_date)
-                $('.lp_longitude').val(response.lp_longitude)
-                $('.estado').val(response.estado)
-                $('.lp_latitude').val(response.lp_latitude)
-                $('.telefone').val(response.telefone)
-                $('.status').val(response.status)
-                $('.iccid').val(response.iccid)
-                $('.chassis').val(response.chassis)
-                $('.modelo_veiculo').val(response.modelo_veiculo)
-                $('.qtd_dispositivos').val(response.qtd_dispositivos)
-                $('.categoria_veiculo').val(response.categoria_veiculo)
-                $('.cidade').val(response.cidade)
-                $('.operadora').val(response.operadora)
-                $('.cliente').val(response.cliente)
-                $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                $('.cod_empresa').val(response.cod_empresa)
-                $('.codigo_fipe').val(response.codigo_fipe)
-                $('.modelo').val(response.modelo)
-                $('.point').val(response.point)
-                $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                $('.versao').val(response.versao)
-                $('.lp_satelite').val(response.lp_satelite)
-                $('.lp_ignicao').val(response.lp_ignicao)
-                $('.r12s_proximos').val(response.r12s_proximos)
-                $('#dif_date').val(response.dif_date)
-                $('.lp_voltagem').val(response.lp_voltagem)
-                $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
-                $('#r12s_proximos').val(response.r12s_proximos)
-                $('#dif_date').val(response.dif_date)
-                $('.lp_velocidade').val(response.lp_velocidade + " km/h")
-                $('#point').val(response.point)
-                $('.filial').val(response.filial)
-                $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                $('#status_veiculo').val(response.status_veiculo)
-                $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
-                $('.end_cep').val(response.end_cep)
-                $('.end_logradouro').val(response.end_logradouro)
-                $('.end_bairro').val(response.end_bairro)
-                $('.end_uf').val(response.end_uf)
-                $('.cliente_foto').attr('src', response.cliente_foto);
-                $('#cliente_cpf').val(response.cliente_cpf)
-                $('#cliente_nome').val(response.cliente_nome)
-                $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                $('#cliente_celular').val(response.cliente_celular)
-                $('#cliente_localdev').val(response.cliente_localdev)
-                $('#cliente_local_retirada').val(response.cliente_local_retirada)
-                $('#cliente_contrato').val(response.cliente_contrato)
-                $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-                $('#cliente_email').val(response.cliente_email)
-                $('#cliente_endereco').val(response.cliente_endereco)
-                $('.cidade').val(response.end_cidade)
-                $('#cliente_cnh').val(response.cliente_cnh)
-                $('.veiculo_odometro').val(response.veiculo_odometro)
-                $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
-                $('.cliente_foto').attr('href', response.cliente_foto)
-
-                if (response.status_veiculo != "LOCACAO") {
-                    $("#btn_cliente").css({
-                        "display": "none"
-                    });
-                } else {
-                    $("#btn_cliente").css({
-                        "display": "inline"
-                    });
-                }
-
-                updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
-            },
-            error: function(error) {
-                if (error.responseJSON.status == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-
-                } else if (error.responseJSON.status == "validation_error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
-
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-            }
+        $('.installed').click(function() {
+            $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
         });
-    })
+
+        $('.waiting').click(function() {
+            $('#example').DataTable().columns(20).search('Aguardando_Instalacao', true, false, true).draw();
+        });
+
+        $('.vehiclesTotal').click(function() {
+            $('#example').DataTable().columns(20).search('').draw();
+        });
+
+
+
+        /* Details vehicle */
+        $('.btn-vehicle-data').click(function() {
+            var chassi = $(this).data('chassi');
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/find/" + chassi,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response)
+                    $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
+                    $('.placa').val(response.placa)
+                    $('.empresa').val(response.empresa)
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_longitude').val(response.lp_longitude)
+                    $('.estado').val(response.estado)
+                    $('.lp_latitude').val(response.lp_latitude)
+                    $('.telefone').val(response.telefone)
+                    $('.status').val(response.status)
+                    $('.iccid').val(response.iccid)
+                    $('.chassis').val(response.chassis)
+                    $('.modelo_veiculo').val(response.modelo_veiculo)
+                    $('.qtd_dispositivos').val(response.qtd_dispositivos)
+                    $('.categoria_veiculo').val(response.categoria_veiculo)
+                    $('.cidade').val(response.cidade)
+                    $('.operadora').val(response.operadora)
+                    $('.cliente').val(response.cliente)
+                    $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                    $('.cod_empresa').val(response.cod_empresa)
+                    $('.codigo_fipe').val(response.codigo_fipe)
+                    $('.modelo').val(response.modelo)
+                    $('.point').val(response.point)
+                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                    $('.versao').val(response.versao)
+                    $('.lp_satelite').val(response.lp_satelite)
+                    $('.lp_ignicao').val(response.lp_ignicao)
+                    $('.r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_voltagem').val(response.lp_voltagem)
+                    $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_velocidade').val(response.lp_velocidade + " km/h")
+                    $('#point').val(response.point)
+                    $('.filial').val(response.filial)
+                    $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#status_veiculo').val(response.status_veiculo)
+                    $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
+                    $('.end_cep').val(response.end_cep)
+                    $('.end_logradouro').val(response.end_logradouro)
+                    $('.end_bairro').val(response.end_bairro)
+                    $('.end_uf').val(response.end_uf)
+                    $('.cliente_foto').attr('src', response.cliente_foto);
+                    $('#cliente_cpf').val(response.cliente_cpf)
+                    $('#cliente_nome').val(response.cliente_nome)
+                    $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#cliente_celular').val(response.cliente_celular)
+                    $('#cliente_localdev').val(response.cliente_localdev)
+                    $('#cliente_local_retirada').val(response.cliente_local_retirada)
+                    $('#cliente_contrato').val(response.cliente_contrato)
+                    $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#cliente_email').val(response.cliente_email)
+                    $('#cliente_endereco').val(response.cliente_endereco)
+                    $('.cidade').val(response.end_cidade)
+                    $('#cliente_cnh').val(response.cliente_cnh)
+                    $('.veiculo_odometro').val(response.veiculo_odometro)
+                    $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
+                    $('.cliente_foto').attr('href', response.cliente_foto)
+
+                    if (response.status_veiculo != "LOCACAO") {
+                        $("#btn_cliente").css({
+                            "display": "none"
+                        });
+                    } else {
+                        $("#btn_cliente").css({
+                            "display": "inline"
+                        });
+                    }
+
+                    updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+                },
+                error: function(error) {
+                    if (error.responseJSON.status == "internal_error") {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+
+                    } else if (error.responseJSON.status == "validation_error") {
+                        var items = error.responseJSON.errors;
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + items,
+                            footer: ' '
+                        })
+
+                    } else {
+                        var items = error.responseJSON.errors;
+                        var errors = $.map(items, function(i) {
+                            return i.join('<br />');
+                        });
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + errors,
+                            footer: ' '
+                        })
+                    }
+                }
+            });
+        })
+
+
+
+    });
+
 
     /**
      * Update Timeline cliente Santander
