@@ -489,7 +489,7 @@
                 visible: false
             }, {
                 "data": " ",
-                "width": "70px",
+                "width": "100px",
                 render: function(data, type, row, meta) {
                     return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
                         ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
@@ -679,7 +679,7 @@
 
 
         /* Details vehicle */
-        $('.btn-vehicle-data').click(function() {
+        $(document).on("click", ".btn-vehicle-data", function() {
             var chassi = $(this).data('chassi');
             $.ajax({
                 url: "{{url('')}}/fleetslarges/find/" + chassi,
