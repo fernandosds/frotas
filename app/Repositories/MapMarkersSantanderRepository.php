@@ -5,6 +5,11 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\MapMarkerSantander;
+use App\Models\CercaGaragem;
+use App\Models\GrupoAlerta;
+use App\Models\GrupoGaragem;
+use App\Models\GrupoAlertaGaragem;
+use Carbon\Carbon;
 
 class MapMarkersSantanderRepository extends AbstractRepository
 {
@@ -21,7 +26,8 @@ class MapMarkersSantanderRepository extends AbstractRepository
     }
 
     public function create(array $data)
-    {
+    {   
+        
         try {
             $this->model->name = $data['name'];
             $this->model->type = $data['type'];
@@ -29,9 +35,33 @@ class MapMarkersSantanderRepository extends AbstractRepository
             $this->model->to_deliver = $data['to_deliver'];
             $this->model->markers = $data['markers'];
             $this->model->user_id = Auth::user()->id;
-            $this->model->save();
-            return $this->model;
+            if($this->model->save()){
+
+                $grupoGaragens = GrupoGaragem::whereIn('nome', $data['garagens'])->get();
+
+                foreach($grupoGaragens as $grupoGaragem){
+                    $cercaGaragem = new CercaGaragem();
+                    $cercaGaragem->id_garagem = $grupoGaragem->id;
+                    $cercaGaragem->id_cerca   = $this->model->_id;
+                    
+                    $cercaGaragem->created_at = Carbon::now(); 
+                    $cercaGaragem->updated_at = Carbon::now();
+                    $validation = $cercaGaragem->save() ? true : false;
+                    if($validation){
+                        continue;
+                    }else{
+                        return Response()->Json(['status' => 'error', 'errors' => 'Não foi possivel gravar na table cerca_garagem'], 500);
+
+                    }
+                    return $this->model;
+                }
+
+            }else{
+                return Response()->Json(['status' => 'error', 'errors' => 'Não foi possivel gravar a cerca'], 500);
+            }
+
         } catch (\Exception $e) {
+            dd($e);
             return $e;
         }
     }
@@ -71,6 +101,10 @@ class MapMarkersSantanderRepository extends AbstractRepository
 
     public function delete($id)
     {
-        return $this->model->find($id)->delete();
+        $modelMarker = $this->model->find($id);
+        $validationMarkers = $modelMarker->delete() ? true : false;
+        if($validationMarkers){
+            return CercaGaragem::where('id_cerca', $modelMarker->_id)->delete();
+        }
     }
 }

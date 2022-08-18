@@ -53,7 +53,7 @@
                     <label for="exampleSelect2" class="col-form-label">Placas: </label><br>
                     <select class="form-control col-md-10  leftBox  seguradoresLeft" id="seguradoresRight" multiple size="10" data-live-search="true">
                         @foreach($cars as $driver)
-                            <option data-tokens="{{$driver->placa}}" value="">{{$driver->placa}}</option>
+                            <option data-tokens="{{$driver->placa}}" value="{{$driver->id}}">{{$driver->placa}}</option>
                         @endforeach
                     </select>
                     <span class="form-text text-muted"><i class="flaticon-questions-circular-button"></i> Selecione uma ou mais placas e direcione-as para o quadro á direita.</span>
@@ -70,7 +70,7 @@
                         <select multiple size="10" class="form-control col-md-10 rightBox seguradoresRight" id="seguradoresLeft" name='seguradoras[]'>
                             @if(isset($placas))
                                 @foreach($placas as $placa)
-                                    <option value="">{{$placa}}</option>
+                                    <option data-tokens="{{$placa}}" value="{{$placa}}">{{$placa}}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -136,6 +136,54 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+
+    // function moveSelected(classNAme) {
+    //     if('seguradoresLeft' === classNAme){
+    //         $("#rightSeg").empty();
+    //         $("#rightSeg").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+    //     }else if('seguradoresRight' === classNAme){
+    //         $("#leftSeg").empty();
+    //         $("#leftSeg").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+    //     }
+    //     const $allOptionsC = $("." + classNAme).find('option').clone();
+
+    //     if('seguradoresLeft' === classNAme){
+    //         var $optionsU = $("." + classNAme).find('option:selected').clone();
+    //         var $optionsUadd = $("." + classNAme).find('option');
+
+    //         $optionsUadd.map(function(iA, optionAdd){
+    //             $optionsU.map(function(i, option){
+    //                 if(optionAdd.value === option.value){
+    //                     $(".seguradoresRight option[value="+optionAdd.value+"]").remove();
+
+    //                 }
+    //             })
+    //         })
+    //         $("." + 'seguradoresRight').append($optionsU);
+
+    //         $('.filter-option').html("NADA SELECIONADO");
+    //         $('.selected').toggleClass('selected select');
+    //         $("." + 'selectpicker').empty();
+    //         $("." + 'selectpicker').append($allOptionsC);
+
+    //     }else{
+
+    //         var $optionsU = $("." + classNAme).find('option:selected').clone();
+    //         var $optionsUadd = $("." + classNAme).find('option');
+
+    //         $("." + 'seguradoresRight').find('option:selected').remove();
+
+    //     }
+
+    //     if('seguradoresLeft' === classNAme){
+    //         $("#rightSeg").empty();
+    //         $("#rightSeg").append('<i class="la la-arrow-right">');
+    //     }else{
+    //         $("#leftSeg").empty();
+    //         $("#leftSeg").append('<i class="la la-arrow-left"></i>');
+    //     } 
+        
+    // }
     function moveSelected(classNAme) {
         if('seguradoresLeft' === classNAme){
             $("#rightSeg").empty();
@@ -167,6 +215,54 @@
             $("#leftSeg").append('<i class="la la-arrow-left"></i>');
         } 
 
+    }
+
+    function moveSelectedAlertas(classNAmeU) {
+        if('alertasLeft' === classNAmeU){
+            $("#rightUser").empty();
+            $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }else if('alertasRight' === classNAmeU){
+            $("#leftUser").empty();
+            $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }
+        const $allOptions = $("." + classNAmeU).find('option').clone();
+
+        if('alertasLeft' === classNAmeU){
+            var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+            var $optionsUadd = $("." + classNAmeU).find('option');
+
+            $optionsUadd.map(function(iA, optionAdd){
+                $optionsU.map(function(i, option){
+                    if(optionAdd.value === option.value){
+                        $(".alertasRight option[value="+optionAdd.value+"]").remove();
+                    }
+                })
+            })
+
+            $("." + 'alertasRight').append($optionsU);
+
+            $('.filter-option').html("NADA SELECIONADO");
+            $('.selected').toggleClass('selected ');
+            $("." + 'selectpicker').empty();
+            $("." + 'selectpicker').append($allOptions);
+
+        }else{
+
+            var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+            var $optionsUadd = $("." + classNAmeU).find('option');
+
+            $("." + 'alertasRight').find('option:selected').remove();
+
+        }
+
+        if('alertasLeft' === classNAmeU){
+            $("#rightUser").empty();
+            $("#rightUser").append('<i class="la la-arrow-right">');
+        }else{
+            $("#leftUser").empty();
+            $("#leftUser").append('<i class="la la-arrow-left"></i>');
+        } 
+        
     }
 
     function moveSelectedAlertas(classNAmeU) {

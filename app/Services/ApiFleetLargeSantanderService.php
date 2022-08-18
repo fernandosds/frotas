@@ -61,8 +61,9 @@ class ApiFleetLargeSantanderService
         $geojson->features = [];
 
         $items = json_decode($allGrupo);
-        
+
         foreach ($items as $item) {
+
             $feature = new stdClass();
             $feature->type = "Feature";
             $feature->properties = new stdClass();
@@ -77,7 +78,6 @@ class ApiFleetLargeSantanderService
             $feature->properties->id_grupo = $item->grupo_id ?? "";
             $feature->properties->nome_grupo = $item->grupo_cerca->nome ?? "";
 
-
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->santander->lp_longitude, (float) $item->santander->lp_latitude];
@@ -85,7 +85,7 @@ class ApiFleetLargeSantanderService
 
             $geojson->features[] = $feature;
         }
-        // dd($geojson);
+
         return $geojson;
 
     }

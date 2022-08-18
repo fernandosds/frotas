@@ -55,7 +55,6 @@ class MapMarkersSantanderController extends Controller
         }
     }
 
-
     public function getList()
     {
         try {
@@ -82,7 +81,6 @@ class MapMarkersSantanderController extends Controller
             if (empty($request->grupo))
                 return array();
 
-            $placas = array();
             $collectionObject = $this->grupocercaService->getAllGrupoCercaSantanderParameters($request->grupo);
             $result = $this->apiFleetLargeSantanderService->groupSelected($collectionObject);
 
@@ -96,7 +94,6 @@ class MapMarkersSantanderController extends Controller
     {
         try {
             $fleetslargeSantander = $this->grupocercaService->allGroup();
-
             return response()->json(['status' => 'success', 'data' =>  $fleetslargeSantander], 200);
         } catch (\Exception $e) {
             return response()->json(['statusText' => 'error', 'isConfirmed' => false, 'error' => $e->getMessage()], 400);
