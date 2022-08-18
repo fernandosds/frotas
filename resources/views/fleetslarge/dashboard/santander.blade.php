@@ -339,7 +339,7 @@
                             <th class="hidden">Endereço</th>
                             <th class="hidden">Estado</th>
                             <th class="hidden">Velocidade</th>
-                            <th>Última Transmissão</th>
+               <!-- 9 -->   <th>Última Transmissão</th>
                             <th style="width: 78px;">Loja</th>
                             <th>Nº Proposta</th>
                             <th>Data de entrada</th>
@@ -419,7 +419,13 @@
                 dataSrc: "",
                 "type": "GET",
             },
+            order: [
+                [15, 'desc']
+            ],
             columnDefs: [{
+                    orderable: false,
+                    targets: 18
+                }, {
                     targets: [9, 12, 13, 14, 15],
                     render: function(data) {
                         return moment(data).format('DD/MM/YYYY HH:mm:ss');
@@ -430,7 +436,7 @@
                     render: function(data) {
                         return moment(data).format('DD/MM/YYYY');
                     }
-                }
+                },
             ],
             columns: [{
                 "data": "placa"
