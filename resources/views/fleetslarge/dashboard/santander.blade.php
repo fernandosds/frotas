@@ -413,6 +413,7 @@
         columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
         columsPdf = [1, 2, 3, 6, 7, 9, 12, 13, 14, 15];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
+        var dateTime = moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
         var oTable = $('#example').DataTable({
             // ajax: "{{route('fleetslarges.data.santander')}}",
             ajax: {
@@ -442,7 +443,7 @@
                         return moment(data).format('DD/MM/YYYY');
                     }
                 },
-            ],
+            ], //  "data": "dt_termino_instalacao",
             columns: [{
                 "data": "placa"
             }, {
@@ -483,7 +484,7 @@
             }, {
                 "data": "dt_inicio_instalacao"
             }, {
-                "data": "dt_termino_instalacao"
+                "data": "dt_termino_instalacao",
             }, {
                 "data": "projeto",
                 "width": "50px",

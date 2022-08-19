@@ -203,8 +203,13 @@ class DashboardController extends Controller
 
         $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
         $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
+        $today = date("Y-m-d H:i:s");
 
         foreach ($items as $item) {
+            $item->dt_tecnico_acionado = ($item->dt_tecnico_acionado == "") ? $today : $item->dt_tecnico_acionado;
+            $item->dt_termino_instalacao = ($item->dt_termino_instalacao == "") ? $today : $item->dt_termino_instalacao;
+            $item->dt_inicio_instalacao = ($item->dt_inicio_instalacao == "") ? $today : $item->dt_inicio_instalacao;
+
             $item->placa_mercosul =  fixPlate($item->placa);
             if (in_array($item->situacao, $aguardando_instalacao)) {
                 $item->status_situacao = "Aguardando_Instalacao";
