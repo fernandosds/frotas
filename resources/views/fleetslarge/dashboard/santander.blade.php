@@ -351,7 +351,7 @@
                             <th class="hidden">Situação</th>
                             <th></th>
                             <th class="hidden">Filtro - Dt. Entrada</th>
-                            <th class="hidden">Status_Geral</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -423,10 +423,7 @@
             order: [
                 [12, 'desc']
             ],
-            columnDefs: [{
-                    className: "hidden",
-                    "targets": [20]
-                },
+            columnDefs: [
                 {
                     orderable: false,
                     targets: 18
@@ -446,7 +443,7 @@
             columns: [{
                 "data": "placa"
             }, {
-                "data": "placa_mercosul"
+                "data": "placa"
             }, {
                 "data": "chassis",
                 visible: false
@@ -508,9 +505,7 @@
             }, {
                 "data": "dt_entrada",
                 visible: false
-            }, {
-                "data": "status_situacao"
-            }, ],
+            },  ],
 
 
             //"order": [1, 'asc'],
@@ -678,7 +673,7 @@
             setTimeout(function() {
                 $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
                 $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
-            }, 21000);
+            }, 16000);
 
             console.log(totalRowCount)
             return totalRowCount;
@@ -687,7 +682,7 @@
 
         setTimeout(function() {
             tableOneRowCount();
-        }, 20000);
+        }, 15000);
 
 
 
