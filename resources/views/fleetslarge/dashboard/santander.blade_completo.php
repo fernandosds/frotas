@@ -351,7 +351,7 @@
                             <th class="hidden">Situação</th>
                             <th></th>
                             <th class="hidden">Filtro - Dt. Entrada</th>
-
+                            <th class="hidden">Status_Geral</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -418,11 +418,16 @@
             // ajax: "{{route('fleetslarges.data.santander')}}",
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
+                dataSrc: "",
+                "type": "GET",
             },
             order: [
                 [12, 'desc']
             ],
-            columnDefs: [
+            columnDefs: [{
+                    className: "hidden",
+                    "targets": [20]
+                },
                 {
                     orderable: false,
                     targets: 18
@@ -442,7 +447,7 @@
             columns: [{
                 "data": "placa"
             }, {
-                "data": "placa"
+                "data": "placa_mercosul"
             }, {
                 "data": "chassis",
                 visible: false
@@ -504,7 +509,9 @@
             }, {
                 "data": "dt_entrada",
                 visible: false
-            },  ],
+            }, {
+                "data": "status_situacao"
+            }, ],
 
 
             //"order": [1, 'asc'],
