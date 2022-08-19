@@ -329,7 +329,7 @@
                     </div>
                 </div>
                 <!--begin: Datatable -->
-                <table id="example" class="display" style="width:50%">
+                <table id="example" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th>Placa</th>
