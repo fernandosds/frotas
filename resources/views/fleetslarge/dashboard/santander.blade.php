@@ -418,7 +418,6 @@
         var oTable = $('#example').DataTable({
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
-
                 dataSrc: "",
             },
             order: [

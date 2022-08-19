@@ -15,7 +15,7 @@ class SantanderService
     /**
      * @return mixed
      */
-    public function all(Int $limit = 70000)
+    public function all(Int $limit = 1)
     {
         $cars = $this->santander->table($limit);
 
