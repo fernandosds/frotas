@@ -193,7 +193,7 @@ class DashboardController extends Controller
 
     public function dataSantander()
     {
-
+        ini_set('memory_limit', '256M');
         $data = $this->santanderService->all();
         return response()->json($data);
 
