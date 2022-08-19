@@ -193,8 +193,12 @@ class DashboardController extends Controller
 
     public function dataSantander()
     {
-        $customer = $this->customerService->show(Auth::user()->customer_id);
-        $data = $this->apiFleetLargeService->allCars($customer->hash);
+
+        $data = $this->santanderService->all();
+        return response()->json($data);
+
+        //$customer = $this->customerService->show(Auth::user()->customer_id);
+        //$data = $this->apiFleetLargeService->allCars($customer->hash);
         // $cars = $this->apiFleetLargeService->allCars($customer->hash);
         /*
         $data = new stdClass();
@@ -221,7 +225,7 @@ class DashboardController extends Controller
         }
         $data = $result;
 */
-        return response()->json($data);
+       // return response()->json($data);
     }
     public function situacaoInstalado($items)
     {

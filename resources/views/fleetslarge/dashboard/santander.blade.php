@@ -246,6 +246,36 @@
 </div>
 
 <div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary col-md-12 installed">
+            <div class="card-body card-total">
+                <br />
+                <h1 class="card-title display-12">&nbsp;</span> </h1>
+                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary col-md-12 waiting">
+            <div class="card-body card-total">
+                <br />
+                <h1 class="card-title display-12">&nbsp;</span> </h1>
+                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao" value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
+            <div class="card-body card-total">
+                <br />
+                <h1 class="card-title display-12">&nbsp;</span> </h1>
+                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> TOTAL </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-12">
         <div class="btn-success text-white center btn-excel col-md-12">
             <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
@@ -322,7 +352,7 @@
                             <th class="hidden">Situação</th>
                             <th></th>
                             <th class="hidden">Filtro - Dt. Entrada</th>
-
+                            <th class="hidden">Status_Geral</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -384,16 +414,20 @@
         columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
         columsPdf = [1, 2, 3, 6, 7, 9, 12, 13, 14, 15];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
-        var dateTime = moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
+        var dateTime = moment(new Date()); //.format('DD/MM/YYYY HH:mm:ss');
         var oTable = $('#example').DataTable({
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
+
                 dataSrc: "",
             },
             order: [
                 [12, 'desc']
             ],
             columnDefs: [{
+                    className: "hidden",
+                    "targets": [20]
+                },{
                     orderable: false,
                     targets: 18
                 }, {
@@ -475,7 +509,9 @@
             }, {
                 "data": "dt_entrada",
                 visible: false
-            }, ],
+            }, {
+                "data": "status_situacao"
+            },],
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
@@ -522,8 +558,6 @@
             },
 
         });
-
-
 
         // INICIO DATARANGEPICKER
         var startdate;
