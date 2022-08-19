@@ -418,6 +418,7 @@
         var oTable = $('#example').DataTable({
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
+
                 dataSrc: "",
             },
             order: [
@@ -426,7 +427,7 @@
             columnDefs: [{
                     className: "hidden",
                     "targets": [20]
-                },{
+                }, {
                     orderable: false,
                     targets: 18
                 }, {
@@ -510,7 +511,7 @@
                 visible: false
             }, {
                 "data": "status_situacao"
-            },],
+            }, ],
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
