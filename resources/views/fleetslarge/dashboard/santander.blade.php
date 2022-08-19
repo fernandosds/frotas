@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
 <style>
@@ -374,7 +375,13 @@
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name=_token]').attr('content')
+        }
+    });
     resetGrid()
     /**
      * Rastrea isca automaticamente
@@ -416,9 +423,18 @@
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var dateTime = moment(new Date()); //.format('DD/MM/YYYY HH:mm:ss');
         var oTable = $('#example').DataTable({
+            processing: true,
+            //serverSide: true,
             ajax: {
-                url: "{{route('fleetslarges.data.santander')}}",
+                header: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
 
+                url: "{{url('')}}/fleetslarges/data/santander",
+                data: ({
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }),
                 dataSrc: "",
             },
             order: [
@@ -451,7 +467,8 @@
                 "data": "chassis",
                 visible: false
             }, {
-                "data": "modelo_veiculo"
+                "data": "modelo_veiculo",
+                "width": "40px",
             }, {
                 "data": "lp_latitude",
                 visible: false
@@ -489,7 +506,7 @@
                 "data": "projeto",
                 "width": "50px",
                 render: function(data, type, row, meta) {
-                    if (row.projeto == 'RENEG') {
+                    if (row.projeto == 'RENEGOCIACAO') {
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
                     } else {
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
