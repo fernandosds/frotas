@@ -244,35 +244,6 @@
         <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 installed">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 waiting">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao" value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> TOTAL </h3>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -415,7 +386,6 @@
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var dateTime = moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
         var oTable = $('#example').DataTable({
-            // ajax: "{{route('fleetslarges.data.santander')}}",
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
                 dataSrc: "",
@@ -423,8 +393,7 @@
             order: [
                 [12, 'desc']
             ],
-            columnDefs: [
-                {
+            columnDefs: [{
                     orderable: false,
                     targets: 18
                 }, {
@@ -476,9 +445,10 @@
             }, {
                 "data": "dt_entrada"
             }, {
-                "data": "dt_tecnico_acionado"
+                "data": "dt_tecnico_acionado",
             }, {
-                "data": "dt_inicio_instalacao"
+                "data": "dt_inicio_instalacao",
+
             }, {
                 "data": "dt_termino_instalacao",
             }, {
@@ -505,9 +475,7 @@
             }, {
                 "data": "dt_entrada",
                 visible: false
-            },  ],
-
-
+            }, ],
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
