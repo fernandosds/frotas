@@ -418,6 +418,7 @@
             // ajax: "{{route('fleetslarges.data.santander')}}",
             ajax: {
                 url: "{{route('fleetslarges.data.santander')}}",
+                dataSrc: "",
             },
             order: [
                 [12, 'desc']
