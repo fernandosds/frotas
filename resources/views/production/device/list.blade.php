@@ -37,7 +37,7 @@ td {
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
                         <a href="{{url('production/devices/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
-                            <i class="la la-plus"></i> Novo
+                            <i class="la la-plus"></i> Nova isca
                         </a>
                     </div>
                 </div>
@@ -54,7 +54,6 @@ td {
                         <th scope="col">Modelo</th>
                         <th scope="col">Tecnologia</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Status</th>
                         <th scope="col">Ação</th>
                     </tr>
@@ -67,7 +66,6 @@ td {
                         <td>{{$device->model}}</td>
                         <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
                         <td>{{$device->customer->name ?? ''}}</td>
-                        <td>{{$device->tipo ?? ''}}</td>
                         <td class="{{$device->status <> 'disponivel' ? 'text-success' : ''}}">
                             {{$device->status ?? ''}}
                         </td>

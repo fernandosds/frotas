@@ -245,27 +245,16 @@
                     <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <div class="kt-portlet__body">
                             <div class="form-row">
-                                <label for="input">Selecione uma bateria</label>
+                                <label for="input">Selecione tipo de bateria</label>
                                 <select class="form-control" name="atechnologie_id" id="atechnologie_id">
-                                    <option value="">{{$technologieRel->technologie->type}}</option>
+                                    <option value="">
+                                        {{ isset($technologieRel->technologie->type) ? $technologieRel->technologie->type : null }}
+                                    </option>
                                     @foreach( $technologies as $technologie )
                                     <option value=" {{$technologie->id}}" {{ $technologie->id == $technologie->id}}>
                                         {{$technologie->type}}
                                     </option>
                                     @endforeach
-                                </select><br /><br />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <div class="kt-portlet__body">
-                            <div class="form-row">
-                                <label for="input">Selecione Tipo</label>
-                                <select class="form-control" name="atipo" id="atipo">
-                                    <option selected {{$device->tipo}}>
-                                        {{ isset($device->tipo) ? $device->tipo : null }}</option>
-                                    <option value="isca">isca</option>
-                                    <option value="dispositivo">dispositivo</option>
                                 </select><br /><br />
                             </div>
                         </div>
@@ -615,5 +604,6 @@ $(function() {
     });
 });
 </script>
+
 
 @endsection

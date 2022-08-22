@@ -183,7 +183,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * PRODUCTION routes
      */
-    Route::group(['middleware' => ['user.access_level:production', 'user.admin'], 'prefix' => 'production'], function () {
+    Route::group(['middleware' => ['user.access_level:production'], 'prefix' => 'production'], function () {
 
         /**
          * Devices routes
