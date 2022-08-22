@@ -89,7 +89,7 @@
 
                 <!-- PRODUÇÃO ______________________________________________________________________________________________________________________ -->
             <li class="kt-menu__section ">
-                <h4 class="kt-menu__section-text">PRODUÇÃO</h4>
+                <h4 class="kt-menu__section-text">ADMINISTRAÇÃO</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
 
@@ -98,7 +98,7 @@
                 data-ktmenu-submenu-toggle="hover">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-truck-moving"></i></span>
-                    <span class="kt-menu__link-text">Produtos</span>
+                    <span class="kt-menu__link-text">Gestão de iscas</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
@@ -106,7 +106,7 @@
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('production/devices/')}}"
                                 class="kt-menu__link "><i
                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                    class="kt-menu__link-text">Lista de Produtos</span></a></li>
+                                    class="kt-menu__link-text">Lista de iscas</span></a></li>
                     </ul>
                 </div>
             </li>

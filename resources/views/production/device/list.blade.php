@@ -25,21 +25,20 @@ td {
         <!-- HEADER -->
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
-                <span class="kt-portlet__head-icon">
-                    <i class="kt-font-brand {{$icon}}"></i>
+                <span class="kt-menu__link-icon"><i class="fa fa-truck-moving"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    {{$title}}
+                    <span class="kt-menu__link-text">Lista de iscas</span>
                 </h3>
             </div>
 
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
-                    <div class="kt-portlet__head-actions">
-                        <a href="{{url('production/devices/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
-                            <i class="la la-plus"></i> Nova isca
-                        </a>
-                    </div>
+                    <a href="{{url('production/devices/new')}}">
+                        <button type="button" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                            title="Cadastro de isca"><span class="la la-plus"></span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -66,9 +65,26 @@ td {
                         <td>{{$device->model}}</td>
                         <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
                         <td>{{$device->customer->name ?? ''}}</td>
-                        <td class="{{$device->status <> 'disponivel' ? 'text-success' : ''}}">
+                        @if($device->status == 'disponivel')
+                        <td class="{{$device->status == 'disponivel' ? 'text-success' : ''}}">
                             {{$device->status ?? ''}}
                         </td>
+                        @endif
+                        @if($device->status == 'indisponivel')
+                        <td class="{{$device->status == 'indisponivel' ? 'text-danger' : ''}}">
+                            {{$device->status ?? ''}}
+                        </td>
+                        @endif
+                        @if($device->status == 'em andamento')
+                        <td class="{{$device->status == 'em andamento' ? 'text-warning' : ''}}">
+                            {{$device->status ?? ''}}
+                        </td>
+                        @endif
+                        @if($device->status == null)
+                        <td class="{{$device->status == null ? 'text-danger' : ''}}">
+                            {{'falta status'}}
+                        </td>
+                        @endif
                         <td style="width: 200px;">
                             <div class="pull-left">
                                 <a href="{{url('production/devices/edit')}}/{{$device->id}}">
