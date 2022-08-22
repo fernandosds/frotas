@@ -7,7 +7,7 @@
 <div class="card-body" style="background-color:#ffffdf;color:#272727;text-align:center;">
 
     <h4>
-        <i class="fas fa-exclamation-triangle"></i> Por favor atualizar o seu telefone no cadastro.
+        <i class="fas fa-exclamation-triangle"></i> Por favor, atualize seu contato telefônico.
         <a style="color:#272727;" href="{{url('management/users/edit')}}/{{Auth::user()->id}}" class="alert-link">
             Clique aqui.</a>
     </h4>

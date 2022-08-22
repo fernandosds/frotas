@@ -531,21 +531,26 @@
             </li>
 
             @if( Auth::user()->customer_id == 8)
-            <li class="kt-menu__section ">
+           <!-- <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">MONITORAMENTO</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
 
+<<<<<<< HEAD
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true"
                 data-ktmenu-submenu-toggle="hover">
+=======
+          <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"> -->
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                 <!-- GRANDES FROTAS -->
-                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+               <!--<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-map-marker-alt"></i></span>
                     <span class="kt-menu__link-text">Central de Monitoramento</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
+<<<<<<< HEAD
                         <<<<<<< HEAD <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
                                 class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span>
             </li>
@@ -572,6 +577,22 @@
         </ul>
     </div>
     </li>
+=======
+                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.garagem.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Garagem</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.alerta.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Grupo Alerta</span></a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
+                <a href="{{route('fleetslarges.poligono.index')}}" class="kt-menu__link ">
+                    <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
+                    <span class="kt-menu__link-text">Mapa Monitoramento</span>
+                </a>
+            </li> -->
+            @endif
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
     <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
         <a href="{{route('fleetslarges.poligono.index')}}" class="kt-menu__link ">

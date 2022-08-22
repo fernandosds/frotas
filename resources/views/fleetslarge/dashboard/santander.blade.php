@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
 <style>
@@ -246,48 +247,6 @@ td {
     </div>
 </div>
 
-<div class="row" id="div-grid-vehicle">
-    <div class="col-md-6" id="divCard01">
-        <div class="card text-white col-md-12 bg-primary" id="divColor01">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"> <span id="tempoMedio"></span></h1>
-                <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id="divCard02">
-        <div class="card text-white col-md-12 bg-primary" id="divColor02">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="tempoTecnico"></span></h1>
-                <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row" id="div-grid-vehicle2">
-    <div class="col-md-6" id="divCard04">
-        <div class="card text-white col-md-12 bg-primary" id="divColor04">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="tempoDeslocamento"></span></h1>
-                <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id='divCard05'>
-        <div class="card text-white col-md-12 bg-primary" id='divColor05'>
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="tempoAtendimento"></span></h1>
-                <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-md-4">
         <div class="card text-white bg-primary col-md-12 installed">
@@ -379,15 +338,9 @@ td {
                     </div>
                 </div>
                 <!--begin: Datatable -->
-                <table id="example" class="display" style="width:50%">
+                <table id="example" class="display" style="width:100%">
                     <thead>
-                        <tr class="headerTable">
-                            <th class="hidden">Hora - Dt. Entrada</th>
-                            <th class="hidden">Hora - Ac. Tecnico</th>
-                            <th class="hidden">Hora - Dt. Tecnico</th>
-                            <th class="hidden">Hora - Ac. Tecnico</th>
-                            <th class="hidden">Filtro - Dt. Entrada</th>
-                            <th class="hidden">Status_Geral</th>
+                        <tr>
                             <th>Placa</th>
                             <th>Placa - Mercosul</th>
                             <th class="hidden">Chassis</th>
@@ -397,23 +350,22 @@ td {
                             <th class="hidden">Endereço</th>
                             <th class="hidden">Estado</th>
                             <th class="hidden">Velocidade</th>
-                            <th class="hidden">Última Transmissão</th>
+                            <!-- 9 -->
                             <th>Última Transmissão</th>
                             <th style="width: 78px;">Loja</th>
                             <th>Nº Proposta</th>
-                            <th class="hidden">Data de entrada</th>
                             <th>Data de entrada</th>
-                            <th class="hidden">Data de acionamento Técnico</th>
                             <th>Data de acionamento Técnico</th>
-                            <th class="hidden">Data de início de instalação</th>
                             <th>Data de início de instalação</th>
-                            <th class="hidden">Data de término de instalação</th>
                             <th>Data de término de instalação</th>
                             <th>Projeto</th>
                             <th class="hidden">Situação</th>
-                            <th style="width: 200px;"></th>
+                            <th></th>
+                            <th class="hidden">Filtro - Dt. Entrada</th>
+                            <th class="hidden">Status_Geral</th>
                         </tr>
                     </thead>
+<<<<<<< HEAD
                     <tbody id="tbodyVehicle">
                         @foreach ($carros as $driver)
                         <tr id='_tr_car_{{$driver->chassis}}'>
@@ -486,8 +438,10 @@ td {
                             </td>
                         </tr>
                         @endforeach
+=======
+                    <tbody>
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                     </tbody>
-
                 </table>
                 <!--end: Datatable -->
             </div>
@@ -500,13 +454,22 @@ td {
 @endsection
 
 @section('scripts')
+<<<<<<< HEAD
 <script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}"
     type="text/javascript"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin="">
 </script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+=======
+<script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
+
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
+<<<<<<< HEAD
 resetGrid()
 /**
  * Rastrea isca automaticamente
@@ -642,6 +605,198 @@ $(document).ready(function() {
                 title: 'SAT Company :: Grid de Veiculos_' + date,
                 exportOptions: {
                     columns: columsPdf
+=======
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name=_token]').attr('content')
+        }
+    });
+    resetGrid()
+    /**
+     * Rastrea isca automaticamente
+     */
+    $(document).ready(function() {
+        // reloadValue()
+    })
+
+    $('#timeline').removeClass('hidden');
+
+
+    function resetGrid() {
+        // Progress bar
+        $('#div-progress-bar-fleetlarge').show();
+        progressBar = 100;
+        setInterval(function() {
+            $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
+            if (progressBar < 11) {
+                $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-primary');
+                $('#progress_bar_fleetlarge').addClass("progress-bar kt-bg-danger");
+            }
+            if (progressBar == 0) {
+                $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-danger');
+                $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
+                // reloadValue()
+                progressBar = 100;
+            } else {
+                progressBar = progressBar - 1;
+            }
+            $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+        }, 1000);
+    }
+
+    // 2022-08-16 09:54:49.000
+
+    $(document).ready(function() {
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+        columsPdf = [1, 2, 3, 6, 7, 9, 12, 13, 14, 15];
+        var date = $.datepicker.formatDate('dd_mm_yy', new Date());
+        var dateTime = moment(new Date()); //.format('DD/MM/YYYY HH:mm:ss');
+        var oTable = $('#example').DataTable({
+            processing: true,
+            //serverSide: true,
+            ajax: {
+                header: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+
+                url: "{{url('')}}/fleetslarges/data/santander",
+                data: ({
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }),
+                dataSrc: "",
+            },
+            order: [
+                [12, 'desc']
+            ],
+            columnDefs: [{
+                    className: "hidden",
+                    "targets": [20]
+                }, {
+                    orderable: false,
+                    targets: 18
+                }, {
+                    targets: [9, 12, 13, 14, 15],
+                    render: function(data) {
+                        return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                    }
+                },
+                {
+                    targets: 19,
+                    render: function(data) {
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                },
+            ], //  "data": "dt_termino_instalacao",
+            columns: [{
+                "data": "placa"
+            }, {
+                "data": "placa"
+            }, {
+                "data": "chassis",
+                visible: false
+            }, {
+                "data": "modelo_veiculo",
+                "width": "40px",
+            }, {
+                "data": "lp_latitude",
+                visible: false
+            }, {
+                "data": "lp_longitude",
+                visible: false
+            }, {
+                "data": '',
+                render: function(data, type, row) {
+                    return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
+                },
+                visible: false
+            }, {
+                "data": "estado",
+                visible: false
+            }, {
+                "data": "lp_velocidade",
+                visible: false
+            }, {
+                "data": "lp_ultima_transmissao"
+            }, {
+                "data": "cliente" // loja
+            }, {
+                "data": "contrato"
+            }, {
+                "data": "dt_entrada"
+            }, {
+                "data": "dt_tecnico_acionado",
+            }, {
+                "data": "dt_inicio_instalacao",
+
+            }, {
+                "data": "dt_termino_instalacao",
+            }, {
+                "data": "projeto",
+                "width": "50px",
+                render: function(data, type, row, meta) {
+                    if (row.projeto == 'RENEGOCIACAO') {
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
+                    } else {
+                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
+                    }
+
+                }
+            }, {
+                "data": "situacao",
+                visible: false
+            }, {
+                "data": " ",
+                "width": "100px",
+                render: function(data, type, row, meta) {
+                    return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
+                        ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
+                }
+            }, {
+                "data": "dt_entrada",
+                visible: false
+            }, {
+                "data": "status_situacao"
+            }, ],
+            //"order": [1, 'asc'],
+            dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
+                "<'row'<'col-md-6'><'col-md-6'>>" +
+                "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
+            buttons: [{
+                    extend: 'pdf',
+                    title: 'SAT Company :: Grid de Veiculos_' + date,
+                    exportOptions: {
+                        columns: columsPdf
+                    },
+                    orientation: 'landscape',
+                },
+                {
+                    extend: 'excel',
+                    title: 'SAT Company :: Grid de Veiculos_' + date,
+                    exportOptions: {
+                        columns: columns
+                    }
+                }
+            ],
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sEmptyTable": "Nenhum registro disponível nesta tabela",
+                "sInfo": "Mostrando registros de _START_ até _END_ de um total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros de 0 até 0 de um total de 0 registros",
+                "sInfoFiltered": "(filtrado de um total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Carregando...",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sLast": "Último",
+                    "sNext": "Seguinte",
+                    "sPrevious": "Anterior"
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                 },
                 orientation: 'landscape',
             },
@@ -678,6 +833,7 @@ $(document).ready(function() {
             }
         },
 
+<<<<<<< HEAD
     });
 
     // INICIO DATARANGEPICKER
@@ -694,6 +850,58 @@ $(document).ready(function() {
                 'Este mês': [moment().startOf('month'), moment().endOf('month')],
                 'Mês passado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
                     'month').endOf('month')]
+=======
+        });
+
+        // INICIO DATARANGEPICKER
+        var startdate;
+        var enddate;
+        $('input[name="dates"]').daterangepicker({
+                "singleDatePicker": false,
+                ranges: {
+                    "Todos": [moment().subtract(5, 'years'), moment()],
+                    "Hoje": [moment(), moment()],
+                    'Dia anterior': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
+                    'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
+                    'Este mês': [moment().startOf('month'), moment().endOf('month')],
+                    'Mês passado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                "opens": "right",
+                "locale": {
+                    "format": "DD/MM/YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Aplicar",
+                    "cancelLabel": "Cancelar",
+                    "fromLabel": "De",
+                    "toLabel": "Até",
+                    "customRangeLabel": "Definir período",
+                    "daysOfWeek": [
+                        "Dom",
+                        "Seg",
+                        "Ter",
+                        "Qua",
+                        "Qui",
+                        "Sex",
+                        "Sáb"
+                    ],
+                    "monthNames": [
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
+                        "Julho",
+                        "Agosto",
+                        "Setembro",
+                        "Outubro",
+                        "Novembro",
+                        "Dezembro"
+                    ],
+                    "firstDay": 0
+                }
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
             },
             "opens": "right",
             "locale": {
@@ -729,6 +937,7 @@ $(document).ready(function() {
                 ],
                 "firstDay": 0
             }
+<<<<<<< HEAD
         },
         function(start, end, label) {
             var s = moment(start.toISOString());
@@ -761,6 +970,35 @@ $(document).ready(function() {
                         return true;
                     } else if (dateMin <= date && date <= dateMax) {
                         return true;
+=======
+        );
+
+        // FILTRO POR DATA DE ENTRADA
+        //Filter the datatable on the datepicker apply event with reportage 1
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            startdate = picker.startDate.format('YYYY-MM-DD');
+            enddate = picker.endDate.format('YYYY-MM-DD');
+            $.fn.dataTableExt.afnFiltering.push(
+                function(oSettings, aData, iDataIndex) {
+                    if (startdate != undefined) {
+                        var coldate = aData[19].split("/");
+                        var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
+                        var date = moment(d.toISOString());
+                        date = date.format("YYYY-MM-DD");
+                        dateMin = startdate.replace(/-/g, "");
+                        dateMax = enddate.replace(/-/g, "");
+                        date = date.replace(/-/g, "");
+                        if (dateMin == "" && date <= dateMax) {
+                            return true;
+                        } else if (dateMin == "" && date <= dateMax) {
+                            return true;
+                        } else if (dateMin <= date && "" == dateMax) {
+                            return true;
+                        } else if (dateMin <= date && date <= dateMax) {
+                            return true;
+                        }
+                        return false;
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                     }
                     return false;
                 }
@@ -776,14 +1014,19 @@ $(document).ready(function() {
             search: 'applied'
         }).count();
 
+<<<<<<< HEAD
         totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
             search: 'applied'
         }).count();
+=======
+        function tableOneRowCount() {
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
         $('#financeira').html(totalRowCount['financeira']);
         $('#renegociacao').html(totalRowCount['renegociacao']);
     });
 
+<<<<<<< HEAD
     function tableOneRowCount() {
         totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
         totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
@@ -799,16 +1042,47 @@ $(document).ready(function() {
 
         $('#financeira').html(totalRowCount['financeira']);
         $('#renegociacao').html(totalRowCount['renegociacao']);
+=======
+            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
+                search: 'applied'
+            }).count();
+
+            setTimeout(function() {
+                $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
+                $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+            }, 16000);
+
+            console.log(totalRowCount)
+            return totalRowCount;
+        }
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
         $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
         $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
 
+<<<<<<< HEAD
         return totalRowCount;
     }
 
+=======
+        setTimeout(function() {
+            tableOneRowCount();
+        }, 15000);
+
+
+
+        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="pos"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(16).search(status, true, false, false).draw();
+        });
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
     tableOneRowCount();
 
+<<<<<<< HEAD
     // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
     $('input:checkbox').on('change', function() {
         var status = $('input:checkbox[name="pos"]:checked').map(function() {
@@ -958,6 +1232,20 @@ $('.btn-vehicle-data').click(function() {
         }
     });
 })
+=======
+        $('.installed').click(function() {
+            $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
+        });
+
+        $('.waiting').click(function() {
+            $('#example').DataTable().columns(20).search('Aguardando_Instalacao', true, false, true).draw();
+        });
+
+        $('.vehiclesTotal').click(function() {
+            $('#example').DataTable().columns(20).search('').draw();
+        });
+
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
 /**
  * Update Timeline cliente Santander
@@ -970,6 +1258,7 @@ function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, d
         $('#dt_entrada').html('Aguarde...')
     }
 
+<<<<<<< HEAD
     if (dt_tecnico_acionado != '') {
         $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/,
             '$3.$2.$1 $4:$5:$6'))
@@ -985,6 +1274,135 @@ function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, d
     } else {
         $('#dt_inicio_instalacao').html('Aguarde...')
     }
+=======
+        /* Details vehicle */
+        $(document).on("click", ".btn-vehicle-data", function() {
+            var chassi = $(this).data('chassi');
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/find/" + chassi,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response)
+                    $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
+                    $('.placa').val(response.placa)
+                    $('.empresa').val(response.empresa)
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_longitude').val(response.lp_longitude)
+                    $('.estado').val(response.estado)
+                    $('.lp_latitude').val(response.lp_latitude)
+                    $('.telefone').val(response.telefone)
+                    $('.status').val(response.status)
+                    $('.iccid').val(response.iccid)
+                    $('.chassis').val(response.chassis)
+                    $('.modelo_veiculo').val(response.modelo_veiculo)
+                    $('.qtd_dispositivos').val(response.qtd_dispositivos)
+                    $('.categoria_veiculo').val(response.categoria_veiculo)
+                    $('.cidade').val(response.cidade)
+                    $('.operadora').val(response.operadora)
+                    $('.cliente').val(response.cliente)
+                    $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                    $('.cod_empresa').val(response.cod_empresa)
+                    $('.codigo_fipe').val(response.codigo_fipe)
+                    $('.modelo').val(response.modelo)
+                    $('.point').val(response.point)
+                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                    $('.versao').val(response.versao)
+                    $('.lp_satelite').val(response.lp_satelite)
+                    $('.lp_ignicao').val(response.lp_ignicao)
+                    $('.r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_voltagem').val(response.lp_voltagem)
+                    $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_velocidade').val(response.lp_velocidade + " km/h")
+                    $('#point').val(response.point)
+                    $('.filial').val(response.filial)
+                    $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#status_veiculo').val(response.status_veiculo)
+                    $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
+                    $('.end_cep').val(response.end_cep)
+                    $('.end_logradouro').val(response.end_logradouro)
+                    $('.end_bairro').val(response.end_bairro)
+                    $('.end_uf').val(response.end_uf)
+                    $('.cliente_foto').attr('src', response.cliente_foto);
+                    $('#cliente_cpf').val(response.cliente_cpf)
+                    $('#cliente_nome').val(response.cliente_nome)
+                    $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#cliente_celular').val(response.cliente_celular)
+                    $('#cliente_localdev').val(response.cliente_localdev)
+                    $('#cliente_local_retirada').val(response.cliente_local_retirada)
+                    $('#cliente_contrato').val(response.cliente_contrato)
+                    $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#cliente_email').val(response.cliente_email)
+                    $('#cliente_endereco').val(response.cliente_endereco)
+                    $('.cidade').val(response.end_cidade)
+                    $('#cliente_cnh').val(response.cliente_cnh)
+                    $('.veiculo_odometro').val(response.veiculo_odometro)
+                    $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
+                    $('.cliente_foto').attr('href', response.cliente_foto)
+
+                    if (response.status_veiculo != "LOCACAO") {
+                        $("#btn_cliente").css({
+                            "display": "none"
+                        });
+                    } else {
+                        $("#btn_cliente").css({
+                            "display": "inline"
+                        });
+                    }
+
+                    updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+                },
+                error: function(error) {
+                    if (error.responseJSON.status == "internal_error") {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+
+                    } else if (error.responseJSON.status == "validation_error") {
+                        var items = error.responseJSON.errors;
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + items,
+                            footer: ' '
+                        })
+
+                    } else {
+                        var items = error.responseJSON.errors;
+                        var errors = $.map(items, function(i) {
+                            return i.join('<br />');
+                        });
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + errors,
+                            footer: ' '
+                        })
+                    }
+                }
+            });
+        })
+    });
+
+
+    /**
+     * Update Timeline cliente Santander
+     */
+    function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, dt_termino_instalacao) {
+        if (dt_entrada != '') {
+            $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3.$2.$1 $4:$5:$6'))
+            $('#status_dt_entrada').addClass('timelinePointActive');
+        } else {
+            $('#dt_entrada').html('Aguarde...')
+        }
+>>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
     if (dt_termino_instalacao != '') {
         $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/,
