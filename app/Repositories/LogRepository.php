@@ -32,6 +32,7 @@ class LogRepository extends AbstractRepository
         $logUser = $this->model
             ->create([
                 'user_name' => $user,
+                'user_id' => Auth::user()->id,
                 'customer_id' => Auth::user()->customer_id,
                 'description' => "$data",
                 'host_ip' => "$ip",

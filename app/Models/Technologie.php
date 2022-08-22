@@ -67,4 +67,10 @@ class Technologie extends Model
     {
         return $this->HasMany('App\Models\Device', Device::class);
     }
+
+    public function technologie()
+    {
+        return $this->belongsTo('App\Models\Technologie');
+    }
+
 }

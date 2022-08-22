@@ -36,7 +36,7 @@ td {
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{url('production/devices/new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <a href="{{route('fleetslarges.alerta.new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                             <i class="la la-plus"></i> Novo
                         </a>
                     </div>
@@ -44,47 +44,33 @@ td {
             </div>
         </div>
 
+
         <!-- CONTENT -->
         <div class="kt-portlet__body">
             <table id="example" class="display">
                 <thead>
                     <tr>
                         <!-- <th scope="col"></th> -->
-                        <th scope="col">Id</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Tecnologia</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Ação</th>
+                        <th scope="col">Nome do Grupo</th>
+                        <th scope="col">Total Usuários</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach ($devices as $device)
-                    <tr id="_tr_device_{{$device->id}}">
-                        <td>{{$device->id}}</td>
-                        <td>{{$device->model}}</td>
-                        <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
-                        <td>{{$device->customer->name ?? ''}}</td>
-                        <td>{{$device->tipo ?? ''}}</td>
-                        <td class="{{$device->status <> 'disponivel' ? 'text-success' : ''}}">
-                            {{$device->status ?? ''}}
-                        </td>
+                    @foreach($grupos as $grupo)
+                    <tr id="_tr_user_{{$grupo->id}}">
+                        <td>{{$grupo->nome}}</td>
+                        <td>{{count($grupo->grupoAlertaRelacionamento)}}</td>
                         <td style="width: 200px;">
-                            <div class="pull-left">
-                                <a href="{{url('production/devices/edit')}}/{{$device->id}}">
-                                    <button type="button"
-                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
-                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
-                                    </button>
-                                </a>
-                                @if($device->status == 'disponivel')
-                                <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}"
-                                    class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
+                            <div class="pull-right">
+                                <a href="{{ route('fleetslarges.alerta.new') }}/{{$grupo->id}}"
+                                    class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span
+                                        class="fa fa-fw fa-edit"></span></a>
+                                <button type="button" title="Excluir cerca" data-id="{{$grupo->id}}"
+                                    class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-cerca">
                                     <span class="fa fa-fw fa-trash"></span>
                                 </button>
-                                @endif
                             </div>
                         </td>
                     </tr>
@@ -160,16 +146,11 @@ $(document).ready(function() {
         },
     });
 });
-
 /* Deletar */
-$('.btn-delete-device').click(function() {
+$('.btn-delete-cerca').click(function() {
     var id = $(this).data('id');
-    var url = "{{url('production/devices/delete')}}/" + id;
-    ajax_deleteDevice(id, url)
+    var url = "{{url('fleetslarges/alerta/delete')}}/" + id;
+    ajax_delete(id, url)
 })
-
-//Final da classe
 </script>
-
-
 @endsection

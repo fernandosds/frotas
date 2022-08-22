@@ -27,11 +27,16 @@ class Device extends Model
     protected $fillable = [
         'id',
         'model',
-        'contract_id',
         'uniqid',
-        'status',
+        'technologie_id',
+        'tipo',
+        'contract_id',
+        'type_id',
         'customer_id',
-        'technologie_id'
+        'status',
+        'deleted_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -42,11 +47,13 @@ class Device extends Model
         return [
             'id'                => $this->id,
             'model'             => $this->model,
-            'customer_id'       => $this->customer_id,
             'uniqid'            => $this->uniqid,
-            'status'            => $this->status,
-            'contract_id'       => $this->contract_id,
             'technologie_id'    => $this->technologie_id,
+            'tipo'              => $this->tipo,
+            'contract_id'       => $this->contract_id,
+            'type_id'           => $this->type_id,
+            'customer_id'       => $this->customer_id,
+            'status'            => $this->status,
 
         ];
     }

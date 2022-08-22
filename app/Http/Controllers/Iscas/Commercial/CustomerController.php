@@ -107,9 +107,9 @@ class CustomerController extends Controller
 
             $this->customerService->update($request, $request->id);
 
-            return response()->json(['status' => 'success'], 200);
+            return response()->json(['response' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+            return response()->json(['response' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
     }
 

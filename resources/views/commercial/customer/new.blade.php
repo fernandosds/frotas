@@ -33,25 +33,30 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputCpfCnpj">CPF / CNPJ</label>
-                                <input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj" class="form-control input_cpf_cnpj" value="{{ $customer->cpf_cnpj ?? '' }}">
+                                <input type="text" id="input_cpf_cnpj_customers" name="cpf_cnpj"
+                                    class="form-control input_cpf_cnpj" value="{{ $customer->cpf_cnpj ?? '' }}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputAddress">Endereço</label>
-                                <input type="text" class="form-control" name="address" value="{{ $customer->address ?? '' }}">
+                                <input type="text" class="form-control" name="address"
+                                    value="{{ $customer->address ?? '' }}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputAddress">CEP</label>
-                                <input type="text" id="input_cep_customers" class="form-control cep" name="cep" value="{{ $customer->cep ?? '' }}">
+                                <input type="text" id="input_cep_customers" class="form-control cep" name="cep"
+                                    value="{{ $customer->cep ?? '' }}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputComplement">Complemento</label>
-                                <input type="text" class="form-control" name="complement" value="{{ $customer->complement ?? '' }}">
+                                <input type="text" class="form-control" name="complement"
+                                    value="{{ $customer->complement ?? '' }}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputNumber">Número</label>
-                                <input type="text" class="form-control" name="number" value="{{ $customer->number ?? '' }}">
+                                <input type="text" class="form-control" name="number"
+                                    value="{{ $customer->number ?? '' }}">
                             </div>
                         </div>
                         <div class="form-row">
@@ -61,11 +66,13 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputState">Estado</label>
-                                <input type="text" class="form-control" name="state" value="{{ $customer->state ?? '' }}">
+                                <input type="text" class="form-control" name="state"
+                                    value="{{ $customer->state ?? '' }}">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputNeighborhood">Bairro</label>
-                                <input type="text" class="form-control" name="neighborhood" value="{{ $customer->neighborhood ?? '' }}">
+                                <input type="text" class="form-control" name="neighborhood"
+                                    value="{{ $customer->neighborhood ?? '' }}">
                             </div>
                         </div>
 
@@ -80,9 +87,14 @@
                                 <label class="inputType">Tipo</label>
                                 <select class="form-control" name="type">
                                     <option value=" ">Selecione um tipo</option>
-                                    <option value="embarcado" {{ ($customer->type ?? null) == 'embarcado' ? 'selected' : ''}}>Embarcado</option>
-                                    <option value="transportadora" {{ ($customer->type ?? null) == 'transportadora' ? 'selected' : ''}}>Transportadora</option>
-                                    <option value="cliente" {{ ($customer->type ?? null) == 'cliente' ? 'selected' : ''}}>Cliente</option>
+                                    <option value="embarcado"
+                                        {{ ($customer->type ?? null) == 'embarcado' ? 'selected' : ''}}>Embarcado
+                                    </option>
+                                    <option value="transportadora"
+                                        {{ ($customer->type ?? null) == 'transportadora' ? 'selected' : ''}}>
+                                        Transportadora</option>
+                                    <option value="cliente"
+                                        {{ ($customer->type ?? null) == 'cliente' ? 'selected' : ''}}>Cliente</option>
                                 </select>
                             </div>
 
@@ -98,7 +110,8 @@
                             <div class="kt-form__actions">
                                 <div class="row">
                                     <div class="col-lg-12 ml-lg-auto">
-                                        <button type="button" class="btn btn-brand" id="btn-customer-save">Cadastrar</button>
+                                        <button type="button" class="btn btn-brand"
+                                            id="btn-customer-save">Cadastrar</button>
                                         <a href="{{url('commercial/customers')}}" class="btn btn-secondary">Voltar</a>
                                     </div>
                                 </div>
@@ -116,7 +129,8 @@
                 @if (\Request::is('commercial/customers/edit/*'))
                 <div class="col-sm-12">
                     <br />
-                    <button type="button" class="btn btn-brand btn-sm pull-right" data-toggle="modal" data-target="#kt_modal_4">
+                    <button type="button" class="btn btn-brand btn-sm pull-right" data-toggle="modal"
+                        data-target="#kt_modal_4">
                         <i class="fa fa-phone" aria-hidden="true"></i> Adicionar
                     </button>
                     <h4>Contatos </h4>
@@ -145,7 +159,8 @@
 </div>
 
 <!--begin::Modal-->
-<div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -163,7 +178,8 @@
 
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">Telefone</label>
-                        <input type="text" id="input_contact_customers" name="phone" class="form-control mask_input_contact" id="phone">
+                        <input type="text" id="input_contact_customers" name="phone"
+                            class="form-control mask_input_contact" id="phone">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="form-control-label">Email</label>
@@ -185,110 +201,112 @@
 
 @section('scripts')
 <script>
-    /**
+/**
          Gravar cliente
          */
-    $(function() {
+$(function() {
 
-        $('#btn-customer-save').click(function() {
-            var customer_id = $('#id').val();
-            ajax_store(customer_id, "commercial/customers", $('#form-create-customer').serialize());
-        });
-
+    $('#btn-customer-save').click(function() {
+        var customer_id = $('#id').val();
+        ajax_store(customer_id, "commercial/customers", $('#form-create-customer').serialize());
     });
 
-    /**
-     Exibir contato
-     */
-    $(function() {
-        var id = $('#id').val();
+});
+
+/**
+ Exibir contato
+ */
+$(function() {
+    var id = $('#id').val();
+
+    $.ajax({
+        type: 'GET',
+        url: "{{url('commercial/customers/contacts/show')}}/" + id,
+        success: function(response) {
+            $('#list_contacts').html(response)
+        }
+
+    })
+})
+
+/**
+ Deletar
+ */
+$("#list_contacts").on("click", ".btn-delete-contact", function() {
+
+    var id = $(this).data('id');
+    var url = "{{url('commercial/customers/contacts/delete')}}/" + id;
+    ajax_delete(id, url)
+
+});
+
+/**
+Gravar contato
+*/
+$(function() {
+
+    $('#btn-customer-new-contact').click(function() {
+
+        var customer_id = $('#id').val();
 
         $.ajax({
-            type: 'GET',
-            url: "{{url('commercial/customers/contacts/show')}}/" + id,
+            type: 'POST',
+            dataType: 'json',
+            url: "{{url('/commercial/customers/contacts/new')}}",
+            async: true,
+            data: $('#form-create-contact').serialize(),
             success: function(response) {
-                $('#list_contacts').html(response)
-            }
 
-        })
-    })
+                if (response.status == "success") {
 
-    /**
-     Deletar
-     */
-    $("#list_contacts").on("click", ".btn-delete-contact", function() {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro salvo com sucesso',
+                        showConfirmButton: true,
+                        timer: 10000
+                    }).then((result) => {
+                        $(location).attr('href',
+                            '{{url("/commercial/customers/edit")}}/' +
+                            customer_id);
+                    })
 
-        var id = $(this).data('id');
-        var url = "{{url('commercial/customers/contacts/delete')}}/" + id;
-        ajax_delete(id, url)
-
-    });
-
-    /**
-    Gravar contato
-    */
-    $(function() {
-
-        $('#btn-customer-new-contact').click(function() {
-
-            var customer_id = $('#id').val();
-
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: "{{url('/commercial/customers/contacts/new')}}",
-                async: true,
-                data: $('#form-create-contact').serialize(),
-                success: function(response) {
-
-                    if (response.status == "success") {
-
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Registro salvo com sucesso',
-                            showConfirmButton: true,
-                            timer: 10000
-                        }).then((result) => {
-                            $(location).attr('href', '{{url("/commercial/customers/edit")}}/' + customer_id);
-                        })
-
-                    } else {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro ao tentar salvar!',
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-                    }
-
-                },
-                error: function(error) {
-
-                    if (error.responseJSON.status == "internal_error") {
-                        console.log(error.responseJSON.errors)
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-                    } else {
-                        var items = error.responseJSON.errors;
-                        var errors = $.map(items, function(i) {
-                            return i.join('<br />');
-                        });
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + errors,
-                            footer: ' '
-                        })
-                    }
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar salvar!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
                 }
-            });
+
+            },
+            error: function(error) {
+
+                if (error.responseJSON.status == "internal_error") {
+                    console.log(error.responseJSON.errors)
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                } else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+            }
         });
     });
+});
 </script>
 @endsection

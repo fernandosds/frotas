@@ -204,14 +204,11 @@ function ajax_delete(id, url) {
         cancelButtonText: 'Não!',
         reverseButtons: true
     }).then((result) => {
-
         if (result.value) {
-
             $.ajax({
                 url: url,
                 method: 'GET',
             }).done(function(data) {
-
                 if (data.status == 'error') {
                     Swal.fire({
                         type: 'error',
@@ -229,7 +226,6 @@ function ajax_delete(id, url) {
                         timer: 10000
                     })
                 }
-
             }).fail(function(data) {
                 Swal.fire({
                     type: 'error',
@@ -243,6 +239,89 @@ function ajax_delete(id, url) {
         }
     })
 }
+
+function ajax_deleteDevice(id, url) {
+    console.log("entrou id ajax_deleteDevice: " + id);
+    console.log("entrou url ajax_deleteDevice: " + url);
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+        title: 'Tem certeza?',
+        text: "Deseja realmente deletar o registro - (isca) " + id,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim!',
+        cancelButtonText: 'Não!',
+        reverseButtons: true
+    }).then((result) => {
+        console.log("entrou result.value do botão: " + result.value);
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function(response) {
+                console.log("response: " + response.status);
+                if (response.status == "success") {
+                    $('#_tr_device_' + id).hide()
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro excluido com sucesso',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar excluir! ' + response.message,
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                }
+            },
+            error: function(error) {
+                if (error.responseJSON.status == "internal_error") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else if (error.responseJSON.status == "validation_error") {
+                    var items = error.responseJSON.errors;
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                } else {
+                    var items = error.responseJSON.errors;
+
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+
+            }
+        });
+    })
+}
+
 
 /*
 INSERT FUNCTION
@@ -299,7 +378,8 @@ function ajax_store(id, route, form_data, reload = false) {
                     timer: 10000
                 })
 
-            } else if (error.responseJSON.status == "validation_error" || error.responseJSON.status ==
+            } else if (error.responseJSON.status == "validation_error" || error.responseJSON
+                .status ==
                 "error") {
                 var items = error.responseJSON.errors;
                 Swal.fire({

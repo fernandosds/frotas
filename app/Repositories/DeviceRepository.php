@@ -18,6 +18,7 @@ class DeviceRepository extends AbstractRepository
     public function __construct(Device $model)
     {
         $this->model = $model;
+
     }
 
     /**
@@ -27,7 +28,6 @@ class DeviceRepository extends AbstractRepository
     public function filter(int $customer_id)
     {
         $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
-
 
         $customer = $this->model
             ->when(!$adminSat, function ($query) {
@@ -180,6 +180,16 @@ class DeviceRepository extends AbstractRepository
             ->first();
     }
 
+    /**
+     * @param int $customer_id
+     * @return \Illuminate\Support\Collection
+     */
+    public function findDeviceid($device = null)
+    {
+        return $this->model->where('id', $device)
+            ->first();
+    }
+
     public function updateStatusDevice($device, $status)
     {
         return $this->model
@@ -187,4 +197,17 @@ class DeviceRepository extends AbstractRepository
             ->where('customer_id', '=', Auth::user()->customer_id)
             ->update(['status' =>  $status]);
     }
+
+    public function getCustomer($idDevice){
+        //dd($this->model->with('customer')->where('id', $idDevice)->first());
+        return $this->model->with('customer')->where('id', $idDevice)->first();
+
+    }
+    public function getTechnologie($idDevice){
+        //dd($idDevice, "Dentro DeviceRepository");
+        //dd($this->model->with('technologie')->where('id', $idDevice)->first());
+        return $this->model->with('technologie')->where('id', $idDevice)->first();
+
+    }
+
 }

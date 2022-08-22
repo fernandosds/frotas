@@ -4,6 +4,13 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"type="text/javascript"></script>
+<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css"rel="stylesheet" type="text/css" />
+
+
 <style>
     .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar .kt-portlet__head-wrapper,
     .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar,
@@ -144,13 +151,11 @@
         align-content: baseline;
     }
 
-    .headerGroupCar {}
-
-    .AllGroupCars {
+    .AllgroupGaragem {
         float: right;
     }
 
-    .groupCars {
+    .groupGaragem {
         border: 2px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         min-width: 34px;
@@ -293,9 +298,9 @@
 <button class="customBtnLeafLet btnSaveDraw"><i class="fa fa-save"></i></button>
 <button id="returnButton">Voltar</button>
 <button id="markerButton">Cercas</button>
-<button id="markerGroupButton">Grupos</button>
+<button id="markerGroupButton">Garagem</button>
 <div class='markerList hidden'></div>
-<div class='groupCars hidden'></div>
+<div class='groupGaragem hidden'></div>
 <div class='groupCercas hidden'></div>
 
 @endsection
@@ -312,7 +317,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js"></script>
 <script>
     $(document).ready(function() {
-
+        var garagens = new Array();
         $('.eventos').on('click', function() {
             $(this).toggleClass('active');
             $('.tableEvents').toggleClass('hidden');
@@ -454,31 +459,43 @@
                 }
                 Swal.fire({
                     title: 'Configure sua nova cerca!',
-                    html: '<div class="form-group">' +
-                        '<label> Nome da Cerca</label>' +
-                        '<input type="text" class="form-control" id="cercaName" placeholder="Nome da Cerca">' +
+                    html: 
+                        '<div class="form-group">' +
+                            '<label> Nome da Cerca</label>' +
+                            '<input type="text" class="form-control" id="cercaName" placeholder="Nome da Cerca">' +
                         '</div>' +
                         '<div class="form-group">' +
-                        '<label>Tipo de cerca</label>' +
-                        '<select class="form-control" id="cercaType">' +
-                        '<option value="in">Entrada</option>' +
-                        '<option value="out">Saída</option>' +
-                        '</select></div>' +
+                            '<label>Tipo de cerca</label>' +
+                            '<select class="form-control" id="cercaType">' +
+                                '<option value="in">Entrada</option>' +
+                                '<option value="out">Saída</option>' +
+                            '</select>'+
+                        '</div>' +
                         '<div class="form-group" style="margin-bottom:5px" >' +
-                        '<label for="stay_time">Tempo de permanencia <small>Em minutos</small></label>' +
-                        '</div><div class="form-group rowTime">' +
-                        '<input type="text" class="form-control rowTimeItem lenght_of_stay" name="lenght_of_stay">' +
+                            '<label for="stay_time">Tempo de permanencia <small>Em minutos</small></label>' +
+                        '</div>'+
+                        '<div class="form-group rowTime">' +
+                            '<input type="text" class="form-control rowTimeItem lenght_of_stay" name="lenght_of_stay">' +
+                        '</div>' +
+                        '<div class="form-group">' +
+                            '<label>Garagens para as cercas</label>' +
+                            '<select class="form-control" id="garagemCercas" data-live-search="true" multiple size="5" name="garagens[]">' +
+                                garagens.map(function(element){
+                                    return ('<option data-tokens="'+element.nome+'" value="'+element.nome+'">'+element.nome+'</option>')
+                                })
+                            +'</select>'+
                         '</div>' +
                         '<div class="form-check">' +
-                        '<input type="checkbox" class="form-check-input 24hrs" id="to_deliver" name="24hr">' +
-                        '<label class="form-check-label" for="24hrs">Alertar somente se entrega do veículo for nas próximas 24hrs</label>' +
+                            '<input type="checkbox" class="form-check-input 24hrs" id="to_deliver" name="24hr">' +
+                            '<label class="form-check-label" for="24hrs">Alertar somente se entrega do veículo for nas próximas 24hrs</label>' +
                         '</div>',
                     showCancelButton: true,
                     confirmButtonText: 'Salvar',
                     showLoaderOnConfirm: true,
                     preConfirm: (value) => {
-                        payload.data.name = $('#cercaName').val();
-                        payload.data.type = $('#cercaType').val();
+                        payload.data.name       = $('#cercaName').val();
+                        payload.data.type       = $('#cercaType').val();
+                        payload.data.garagens   = $(`#garagemCercas option:selected`).toArray().map(o => o.innerHTML);
                         payload.data.lenght_of_stay = $('.lenght_of_stay').val();
                         payload.data.to_deliver = $('#to_deliver').is(':checked');
                         return fetch("{{route('map.markers.poligono.save')}}", {
@@ -553,7 +570,7 @@
         });
 
         $("#markerGroupButton").click(function() {
-            $('.groupCars').toggleClass("hidden");
+            $('.groupGaragem').toggleClass("hidden");
         });
 
         let listLayers = [];
@@ -622,7 +639,7 @@
         });
 
         //Exibe o grupo de veículos
-        $('.groupCars').on('click', '.checkMarkersGrupo', function() {
+        $('.groupGaragem').on('click', '.checkMarkersGrupo', function() {
             const idLayer = $(this).val();
 
             var grupo = new Array();
@@ -751,9 +768,10 @@
                 })
                 .done(function(response) {
                     const grupos = response.data;
-                    $('.groupCars').empty();
+                    garagens = response.data;
+                    $('.groupGaragem').empty();
                     grupos.map(function(element) {
-                        $('.groupCars').append(
+                        $('.groupGaragem').append(
                             '<div class="markerItemGrupo">' +
                                 '<div class="styleMakerGrupo">'+
                                     '<input type="checkbox" class="checkMarkersGrupo"' +'id="' + element.id + '" value="' + element.id + '">' +

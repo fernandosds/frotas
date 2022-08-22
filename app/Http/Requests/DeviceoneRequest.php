@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class DeviceRequest extends FormRequest
+class DeviceoneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,7 +21,7 @@ class DeviceRequest extends FormRequest
     {
 
         $return = [
-            'file' => 'required|mimes:xlsx, xls',
+            'model' => 'required|min:1|min:8',
         ];
 
         return $return;

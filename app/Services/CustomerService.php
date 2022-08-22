@@ -77,7 +77,6 @@ class CustomerService
      */
     public function show(Int $id)
     {
-
         $customer =  $this->customerRepository->showid($id);
         saveLog(['value' => $customer->name, 'type' => 'Monitorou_o_cliente', 'local' => 'CustomerService', 'funcao' => 'update']);
         return ($customer) ? $customer : abort(404);

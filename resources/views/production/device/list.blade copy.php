@@ -1,23 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@section('styles')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
-<style>
-    .hidden {
-        display: none;
-    }
-
-    th {
-        font-size: 12px;
-    }
-
-    td {
-        font-size: 12px;
-    }
-</style>
-@endsection
 
 <div class="kt-portlet">
     <div class="kt-portlet kt-portlet--mobile">
@@ -36,7 +19,7 @@
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{route('fleetslarges.cerca.new')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <a href="{{url('production/devices/new')}}/" class="btn btn-brand btn-elevate btn-icon-sm">
                             <i class="la la-plus"></i> Novo
                         </a>
                     </div>
@@ -44,38 +27,48 @@
             </div>
         </div>
 
-
         <!-- CONTENT -->
         <div class="kt-portlet__body">
             <table id="example" class="display">
                 <thead>
                     <tr>
-                        <!-- <th scope="col"></th> -->
-                        <th scope="col">Nome da Garagem</th>
-                        <th scope="col">Total Veículos</th>
-                        <th scope="col">Total Usuários</th>
-                        <th scope="col"></th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Tecnologia</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
-
-                    @foreach($grupos as $grupo)
-                    <tr id="_tr_user_{{$grupo->id}}">
-                        <td>{{$grupo->nome}}</td>
-                        <td>{{count($grupo->grupoCercaRelacionamento)}}</td>
-                        <td>{{count($grupo->grupoUsuarioRelacionamento)}}</td>
-                        <td style="width: 200px;">
+                    @foreach ($devices as $device)
+                    <tr id="_tr_user_{{$device->id}}">
+                        <td>{{$device->model}}</td>
+                        <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
+                        <td>{{$device->customer->name ?? ''}}</td>
+                        <td>{{$device->status ?? ''}}</td>
+                        <td>
                             <div class="pull-right">
-                                <a href="{{ route('fleetslarges.cerca.new') }}/{{$grupo->id}}" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar"><span class="fa fa-fw fa-edit"></span></a>
-                                <button type="button" title="Excluir cerca" data-id="{{$grupo->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-cerca">
-                                    <span class="fa fa-fw fa-trash"></span>
-                                </button>
+                                <a href="{{url('production/devices/edit')}}/{{$device->id}}">
+                                    <button type="button"
+                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                    </button>
+                                </a>
+                                <a href="{{url('production/devices/delete')}}/{{$device->id}}">
+                                    <button type="button"
+                                        class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-cerca"
+                                        title="Excluir isca" id="btn-delete-device">
+                                        <span class="fa fa-fw fa-trash"></span>
+                                    </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                {!! $devices->links() !!}
+            </div>
         </div>
     </div>
 </div>
@@ -83,11 +76,8 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 <script>
+$(function() {
     $(document).ready(function() {
         columns = [0, 1, 2];
         columsPdf = [0, 1];
@@ -147,8 +137,10 @@
     /* Deletar */
     $('.btn-delete-cerca').click(function() {
         var id = $(this).data('id');
-        var url = "{{url('fleetslarges/cercas/delete')}}/" + id;
+        var url = "{{url('fleetslarges/alerta/delete')}}/" + id;
         ajax_delete(id, url)
     })
+
+});
 </script>
 @endsection

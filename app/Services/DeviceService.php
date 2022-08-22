@@ -4,17 +4,21 @@
 namespace App\Services;
 
 use App\Repositories\DeviceRepository;
+use App\Repositories\LogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use mysql_xdevapi\Exception;
+use Carbon\Carbon;
+
 
 class DeviceService
 {
-    public function __construct(DeviceRepository $device)
+    public function __construct(DeviceRepository $deviceRepository, LogRepository $log)
     {
-        $this->device = $device;
+        $this->deviceRepository = $deviceRepository;
+        $this->log = $log;
     }
 
     /**
@@ -22,7 +26,7 @@ class DeviceService
      */
     public function all()
     {
-        return $this->device->all();
+        return $this->deviceRepository->all();
     }
 
     /**
@@ -31,7 +35,7 @@ class DeviceService
      */
     public function paginate(Int $limit = 15)
     {
-        return $this->device->paginate($limit);
+        return $this->deviceRepository->paginate($limit);
     }
 
     /**
@@ -42,34 +46,68 @@ class DeviceService
     {
         $dados = $request->all();
 
-        return $this->device->create($dados)->orderBy('id')->get();
+        return $this->deviceRepository->create($dados)->orderBy('id')->get();
     }
 
     /**
      * @param array $array
      * @return mixed
      */
-    public function save(array $array)
+    public function saveone(Request $request)
     {
 
+        //dd($request->model);
+
+        if ($this->deviceRepository->exists($request->model)) {
+
+            return abort(404);
+
+        } else {
+
+            $arr_insert[] = [
+                'model'          => trim($request->model),
+                'technologie_id' => (int)$request->technologie_id,
+                'customer_id'    => (int)$request->customer_id,
+                'tipo'           => trim($request->tipo),
+                'uniqid'         => md5(uniqid("")),
+                'status'         => 'disponivel',
+                'created_at'     => Carbon::now(),
+            ];
+
+            $device = DB::table('devices')->insert($arr_insert);
+            saveLog(['value' => $request['model'], 'type' => 'Acessou e Criou nova Isca', 'local' => 'DeviceService', 'funcao' => 'saveone']);
+            return $device;
+
+        }
+
+    }
+
+    /**
+     * @param array $array
+     * @return mixed
+     */
+    public function save(array $array, $customer, $tipo)
+    {
         $arr_insert = [];
-        foreach ($array[0] as $item) {
+        foreach ($array as $item) {
 
-            if ($this->device->exists(trim($item[0])) == 0) {
-
-                if ($item[0] != "" && (int)$item[1] > 0) {
-                    $arr_insert[] = [
-                        'model'          => trim($item[0]),
-                        'technologie_id' => (int)$item[1],
-                        'uniqid'         => md5(uniqid(""))
-                    ];
-                }
+            if(isset($item[0])){
+                $arr_insert[] = [
+                'model'          => trim($item[0]),
+                'technologie_id' => (int)$item[1],
+                'customer_id'    => (int)$customer,
+                'tipo'           => trim($tipo),
+                'uniqid'         => md5(uniqid("")),
+                'status'         => 'disponivel',
+                'created_at'     => Carbon::now(),
+                ];
             }
         }
 
         $device = DB::table('devices')->insert($arr_insert);
 
         return ($device) ? $arr_insert : abort(404);
+
     }
 
     /**
@@ -79,9 +117,16 @@ class DeviceService
      */
     public function update(Request $request, $id)
     {
-        $device = $this->device->update($id, $request->all());
 
-        return $device;
+        if ($this->deviceRepository->findDeviceid($id)) {
+
+            $device = $this->deviceRepository->update($id, $request->all());
+            return $device;
+
+        } else {
+            return false;
+        }
+
     }
 
     /**
@@ -91,7 +136,17 @@ class DeviceService
     public function findByModel(String $device)
     {
 
-        return $this->device->findByModel($device);
+        return $this->deviceRepository->findByModel($device);
+    }
+
+     /**
+     * @param String $device
+     * @return array
+     */
+    public function findDevice(String $device)
+    {
+
+        return $this->deviceRepository->findDevice($device);
     }
 
     /**
@@ -100,7 +155,7 @@ class DeviceService
      */
     public function findByUniqid(String $uniqid)
     {
-        return $this->device->findByUniqid($uniqid);
+        return $this->deviceRepository->findByUniqid($uniqid);
     }
 
     /**
@@ -110,7 +165,7 @@ class DeviceService
     public function show(Int $id)
     {
 
-        $device =  $this->device->find($id);
+        $device =  $this->deviceRepository->find($id);
 
         return ($device) ? $device : abort(404);
     }
@@ -122,8 +177,8 @@ class DeviceService
     public function destroy(Int $id)
     {
 
-        if ($this->device->available($id) > 0) {
-            return $this->device->delete($id);
+        if ($this->deviceRepository->findDeviceid($id)) {
+            return $this->deviceRepository->delete($id);
         } else {
             return false;
         }
@@ -135,7 +190,7 @@ class DeviceService
      */
     public function edit($id)
     {
-        return $this->device->find($id);
+        return $this->deviceRepository->find($id);
     }
 
     /**
@@ -144,7 +199,7 @@ class DeviceService
      */
     public function filter($customer_id)
     {
-        return $this->device->filter($customer_id);
+        return $this->deviceRepository->filter($customer_id);
     }
 
     /**
@@ -153,7 +208,7 @@ class DeviceService
      */
     public function attachDevices(Int $id, $object)
     {
-        return $this->device->attachDevices($object);
+        return $this->deviceRepository->attachDevices($object);
     }
 
     /**
@@ -162,7 +217,7 @@ class DeviceService
      */
     public function filterByContractDevice($contract_devices)
     {
-        return $this->device->filterByContractDevice($contract_devices);
+        return $this->deviceRepository->filterByContractDevice($contract_devices);
     }
 
     /**
@@ -171,7 +226,7 @@ class DeviceService
      */
     public function validDevice(String $device)
     {
-        return $this->device->validDevice($device);
+        return $this->deviceRepository->validDevice($device);
     }
 
     /**
@@ -180,7 +235,16 @@ class DeviceService
      */
     public function updateStatusDevice($device, $status)
     {
-        $device =  $this->device->updateStatusDevice($device, $status);
+        $device =  $this->deviceRepository->updateStatusDevice($device, $status);
         return $device;
     }
+
+    public function getCustomer($idDevice){
+        return $this->deviceRepository->getCustomer($idDevice);
+    }
+    public function getTechnologie($idDevice){
+        //dd($idDevice, "Achou getTechnologie");
+        return $this->deviceRepository->getTechnologie($idDevice);
+    }
+
 }

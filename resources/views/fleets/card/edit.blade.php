@@ -46,7 +46,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputName">Nº de série</label>
-                                <input type="text" name="serial_number" class="form-control" value="{{ $card->serial_number ?? '' }}">
+                                <input type="text" name="serial_number" class="form-control"
+                                    value="{{ $card->serial_number ?? '' }}">
                             </div>
                         </div>
 
@@ -54,7 +55,8 @@
                             <div class="kt-form__actions">
                                 <div class="row">
                                     <div class="col-lg-12 ml-lg-auto">
-                                        <button type="button" class="btn btn-brand" id="btn-card-save">Cadastrar</button>
+                                        <button type="button" class="btn btn-brand"
+                                            id="btn-card-save">Cadastrar</button>
                                         <a href="{{url('fleets/cards')}}" class="btn btn-secondary">Voltar</a>
                                     </div>
                                 </div>
@@ -69,7 +71,9 @@
                 <div class="col-sm-5 border-left">
 
                     <br />
-                    <h4>Veículos Vinculados <a href="{{url('fleets/cards/edit')}}/{{$card->id}}" class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i> Atualizar</a> </h4>
+                    <h4>Veículos Vinculados <a href="{{url('fleets/cards/edit')}}/{{$card->id}}"
+                            class="btn btn-sm btn-default" id="btn-refresh-status"><i class="fa fa-redo"></i>
+                            Atualizar</a> </h4>
 
                     @if($cars_linkeds->count() == 0)
                     Nenhum veículo vinculado a este cartão.
@@ -84,16 +88,19 @@
                                 <div class="alert-text" id="text-close-{{$car->car->id ?? ''}}">{{$car->car->placa}}
 
                                     @if($car->status == "Iniciado")
-                                        <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando comando...</span>
+                                    <br /><span class="text-warning"> <i class="fa fa-pulse fa-spinner"></i> Enviando
+                                        comando...</span>
                                     @elseif($car->status == "sucesso")
-                                        <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
+                                    <br /><span class="text-success"> <i class="fa fa-check"></i> Vinculado!</span>
                                     @else
-                                        <br /><span class="text-danger"> <i class="fa fa-times"></i> Erro, tente novamente!</span>
+                                    <br /><span class="text-danger"> <i class="fa fa-times"></i> Erro, tente
+                                        novamente!</span>
                                     @endif
 
                                 </div>
                                 <div class="alert-close">
-                                    <button type="button" class="close btn-close-card" data-car_id="{{$car->car->id}}" data-card_id="{{$card->id}}">
+                                    <button type="button" class="close btn-close-card" data-car_id="{{$car->car->id}}"
+                                        data-card_id="{{$card->id}}">
                                         <span aria-hidden="true"><i class="la la-close"></i></span>
                                     </button>
                                 </div>
@@ -104,7 +111,9 @@
 
                         <div class="col-sm-12">
                             <hr />
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado"><i class="fa fa-plus"></i> Vincular Veículos</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#ExemploModalCentralizado"><i class="fa fa-plus"></i> Vincular
+                                Veículos</button>
                         </div>
 
                     </div>
@@ -118,7 +127,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog"
+    aria-labelledby="TituloModalCentralizado" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,83 +169,87 @@
 
 @section('scripts')
 <script>
+// Update Status
+@if(isset($cars_linkeds))
+var devices = [
+    @foreach($cars_linkeds as $card_linked) {
+        {
+            $card_linked - > id
+        }
+    },
+    @endforeach
+];
 
-    // Update Status
-    @if(isset($cars_linkeds))
-        var devices = [
-            @foreach( $cars_linkeds as $card_linked )
-                {{$card_linked->id}},
-            @endforeach
-        ];
+$.ajax({
+    url: "{{url('/api/fleets/cards/update-status')}}",
+    method: 'POST',
+    data: {
+        devices: devices
+    }
+});
+$('#btn-refresh-status').click(function() {
+    $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...')
+})
+@endif
+// Fim - update status
 
-        $.ajax({
-            url: "{{url('/api/fleets/cards/update-status')}}",
-            method: 'POST',
-            data: {devices: devices}
-        });
-        $('#btn-refresh-status').click(function(){
-            $(this).html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...')
-        })
-    @endif
-    // Fim - update status
+$('#btn-add-cars').click(function() {
+    var data = $('#form-cars').serialize() + '&card_id={{$card->id}}';
+    $('#btn-add-cars').html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...');
 
-    $('#btn-add-cars').click(function() {
-        var data = $('#form-cars').serialize() + '&card_id={{$card->id}}';
-        $('#btn-add-cars').html('<i class="fa fa-spinner fa-pulse"></i> Aguarde...');
-
-        $.ajax({
-            url: "{{url('fleets/cards/add-cars')}}",
-            method: 'POST',
-            data: data,
-            success: function(response) {
-                location.reload();
-            },
-            error: function(error) {
-                $('#btn-add-cars').html('Salvar');
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                    showConfirmButton: true,
-                    timer: 10000
-                })
-            }
-        });
-    })
-
-    $('.btn-close-card').click(function() {
-        var car_id = $(this).data('car_id')
-        var card_id = $(this).data('card_id')
-
-        $('#text-close-' + car_id).html('<i class="fa fa-spinner fa-pulse"></i> Removendo...')
-
-        $.ajax({
-            url: "{{url('fleets/cards/remove-car')}}/" + car_id + "/" + card_id,
-            method: 'GET',
-            success: function(response) {
-                //$('#div-car-' + car_id).hide()
-            },
-            error: function(error) {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                    showConfirmButton: true,
-                    timer: 10000
-                })
-            }
-        });
-    })
-
-
-    /**
-     Gravar cartão
-     */
-    $(function() {
-        var card_id = $('#id').val();
-        $('#btn-card-save').click(function() {
-            ajax_store(card_id, "fleets/cards", $('#form-create-card').serialize());
-        });
+    $.ajax({
+        url: "{{url('fleets/cards/add-cars')}}",
+        method: 'POST',
+        data: data,
+        success: function(response) {
+            location.reload();
+        },
+        error: function(error) {
+            $('#btn-add-cars').html('Salvar');
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                showConfirmButton: true,
+                timer: 10000
+            })
+        }
     });
+})
+
+$('.btn-close-card').click(function() {
+    var car_id = $(this).data('car_id')
+    var card_id = $(this).data('card_id')
+
+    $('#text-close-' + car_id).html('<i class="fa fa-spinner fa-pulse"></i> Removendo...')
+
+    $.ajax({
+        url: "{{url('fleets/cards/remove-car')}}/" + car_id + "/" + card_id,
+        method: 'GET',
+        success: function(response) {
+            //$('#div-car-' + car_id).hide()
+        },
+        error: function(error) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                showConfirmButton: true,
+                timer: 10000
+            })
+        }
+    });
+})
+
+
+/**
+ Gravar cartão
+ */
+$(function() {
+    var card_id = $('#id').val();
+    $('#btn-card-save').click(function() {
+        ajax_store(card_id, "fleets/cards", $('#form-create-card').serialize());
+    });
+});
 </script>
 @endsection
