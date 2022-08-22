@@ -5,235 +5,235 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
 <style>
-.highcharts-figure,
-.highcharts-data-table table {
-    min-width: 320px;
-    max-width: 800px;
-    margin: 1em auto;
-}
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 320px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
 
-.highcharts-data-table table {
-    font-family: Verdana, sans-serif;
-    border-collapse: collapse;
-    border: 1px solid #EBEBEB;
-    margin: 10px auto;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-}
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #EBEBEB;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
 
-.highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
-}
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
 
-.highcharts-data-table th {
-    font-weight: 600;
-    padding: 0.5em;
-}
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
 
-.highcharts-data-table td,
-.highcharts-data-table th,
-.highcharts-data-table caption {
-    padding: 0.5em;
-}
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
 
-.highcharts-data-table thead tr,
-.highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
 
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
-
-
-input[type="number"] {
-    min-width: 50px;
-}
-
-div.dataTables_wrapper {
-    margin-bottom: 3em;
-}
-
-.modal-personalizado {
-    min-width: 80%;
-    margin-left: 100;
-}
-
-.modal-personalizado.modal-content {
-    min-height: 70vh;
-}
-
-div.dt-buttons {
-    float: right;
-    margin-left: 10px;
-}
-
-.hidden {
-    display: none;
-}
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
 
 
-.time-line-box {
-    height: 100px;
-    padding: 100px 0;
-    width: 100%;
+    input[type="number"] {
+        min-width: 50px;
+    }
 
-}
+    div.dataTables_wrapper {
+        margin-bottom: 3em;
+    }
 
-.time-line-box .timeline {
-    list-style-type: none;
-    display: flex;
-    padding: 0;
-    text-align: center;
-}
+    .modal-personalizado {
+        min-width: 80%;
+        margin-left: 100;
+    }
 
-.time-line-box .timestamp {
-    margin: auto;
-    margin-bottom: 5px;
-    padding: 0px 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .modal-personalizado.modal-content {
+        min-height: 70vh;
+    }
 
-.time-line-box .status {
-    padding: 0px 10px;
-    display: flex;
-    justify-content: center;
-    border-top: 3px solid #6959CD;
-    position: relative;
-    transition: all 200ms ease-in;
-}
+    div.dt-buttons {
+        float: right;
+        margin-left: 10px;
+    }
 
-.time-line-box .status span {
-    padding-top: 8px;
-}
+    .hidden {
+        display: none;
+    }
 
-.status span:before {
-    content: '';
-    width: 12px;
-    height: 12px;
-    background-color: #ecf0f5;
-    border-radius: 12px;
-    border: 2px solid #6959CD;
-    position: absolute;
-    left: 50%;
-    top: 0%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    transition: all 200ms ease-in;
-}
 
-.timelinePointActive span:before {
-    background-color: #6959CD !important;
-}
+    .time-line-box {
+        height: 100px;
+        padding: 100px 0;
+        width: 100%;
 
-.swiper-container {
-    width: 95%;
-    margin: auto;
-    overflow-y: auto;
-}
+    }
 
-.swiper-wrapper {
-    display: inline-flex;
-    flex-direction: row;
-    overflow-y: auto;
-    justify-content: center;
-}
+    .time-line-box .timeline {
+        list-style-type: none;
+        display: flex;
+        padding: 0;
+        text-align: center;
+    }
 
-.swiper-container::-webkit-scrollbar-track {
-    background: #a8a8a8b6;
-}
+    .time-line-box .timestamp {
+        margin: auto;
+        margin-bottom: 5px;
+        padding: 0px 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.swiper-container::-webkit-scrollbar {
-    height: 2px;
-}
+    .time-line-box .status {
+        padding: 0px 10px;
+        display: flex;
+        justify-content: center;
+        border-top: 3px solid #6959CD;
+        position: relative;
+        transition: all 200ms ease-in;
+    }
 
-.swiper-container::-webkit-scrollbar-thumb {
-    background: #4F4F4F !important;
-}
+    .time-line-box .status span {
+        padding-top: 8px;
+    }
 
-.swiper-slide {
-    text-align: center;
-    font-size: 12px;
-    width: 200px;
-    height: 100%;
-    position: relative;
-}
+    .status span:before {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background-color: #ecf0f5;
+        border-radius: 12px;
+        border: 2px solid #6959CD;
+        position: absolute;
+        left: 50%;
+        top: 0%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        transition: all 200ms ease-in;
+    }
 
-.text-white {
-    color: #fff !important;
-    border-radius: 10px;
-    box-shadow: 0 6px 6px 2px #9898
-}
+    .timelinePointActive span:before {
+        background-color: #6959CD !important;
+    }
 
-.row {
-    margin-top: 17px;
-}
+    .swiper-container {
+        width: 95%;
+        margin: auto;
+        overflow-y: auto;
+    }
 
-.card-total {
-    margin-top: -52px;
-    text-align: center;
-}
+    .swiper-wrapper {
+        display: inline-flex;
+        flex-direction: row;
+        overflow-y: auto;
+        justify-content: center;
+    }
 
-.spanText {
-    cursor: pointer;
-}
+    .swiper-container::-webkit-scrollbar-track {
+        background: #a8a8a8b6;
+    }
 
-.btn-excel {
-    padding: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    border: 2px solid #fff;
-}
+    .swiper-container::-webkit-scrollbar {
+        height: 2px;
+    }
 
-.no-link {
-    text-decoration: none;
-    color: #fff !important;
-}
+    .swiper-container::-webkit-scrollbar-thumb {
+        background: #4F4F4F !important;
+    }
 
-.installed,
-.waiting,
-.vehiclesTotal {
-    cursor: pointer;
-}
+    .swiper-slide {
+        text-align: center;
+        font-size: 12px;
+        width: 200px;
+        height: 100%;
+        position: relative;
+    }
 
-.installed:hover,
-.waiting:hover,
-.vehiclesTotal:hover {
-    background-color: #4556df !important;
-}
+    .text-white {
+        color: #fff !important;
+        border-radius: 10px;
+        box-shadow: 0 6px 6px 2px #9898
+    }
 
-.grid-status {
-    display: flex;
-    flex-wrap: wrap;
+    .row {
+        margin-top: 17px;
+    }
 
-}
+    .card-total {
+        margin-top: -52px;
+        text-align: center;
+    }
 
-.grid-item {
-    padding: 20px;
-    text-align: left;
-    display: flex;
-    column-gap: 10px;
-}
+    .spanText {
+        cursor: pointer;
+    }
 
-.checkbox {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ebedf2;
-}
+    .btn-excel {
+        padding: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        border: 2px solid #fff;
+    }
 
-th {
-    font-size: 12px;
-}
+    .no-link {
+        text-decoration: none;
+        color: #fff !important;
+    }
 
-td {
-    font-size: 12px;
-}
+    .installed,
+    .waiting,
+    .vehiclesTotal {
+        cursor: pointer;
+    }
+
+    .installed:hover,
+    .waiting:hover,
+    .vehiclesTotal:hover {
+        background-color: #4556df !important;
+    }
+
+    .grid-status {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    .grid-item {
+        padding: 20px;
+        text-align: left;
+        display: flex;
+        column-gap: 10px;
+    }
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ebedf2;
+    }
+
+    th {
+        font-size: 12px;
+    }
+
+    td {
+        font-size: 12px;
+    }
 </style>
 @endsection
 
@@ -242,8 +242,7 @@ td {
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
-            id="progress_bar_fleetlarge"></div>
+        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
 
@@ -253,8 +252,7 @@ td {
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada"
-                        value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
+                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
             </div>
         </div>
     </div>
@@ -263,8 +261,7 @@ td {
             <div class="card-body card-total">
                 <br />
                 <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao"
-                        value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
+                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao" value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
             </div>
         </div>
     </div>
@@ -282,8 +279,7 @@ td {
 <div class="row">
     <div class="col-md-12">
         <div class="btn-success text-white center btn-excel col-md-12">
-            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"
-                class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
+            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
         </div>
     </div>
 </div>
@@ -311,8 +307,7 @@ td {
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
                         <label>Data de entrada:</label>
                         <div class="input-group">
-                            <input type="text" name="dates" id="reportrange" class="form-control" readonly=""
-                                placeholder="Período de datas">
+                            <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
                             </div>
@@ -322,14 +317,10 @@ td {
                         <label>Projeto:</label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span
-                                    class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span
-                                        id="renegociacao"></span>&nbsp; RENEG</span>
+                                <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
                             </div>
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span
-                                    class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span
-                                        id="financeira"></span>&nbsp; FINANCEIRA</span>
+                                <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
                             </div>
                         </div>
                         <div class="obs">
@@ -365,82 +356,7 @@ td {
                             <th class="hidden">Status_Geral</th>
                         </tr>
                     </thead>
-<<<<<<< HEAD
-                    <tbody id="tbodyVehicle">
-                        @foreach ($carros as $driver)
-                        <tr id='_tr_car_{{$driver->chassis}}'>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('H:i:s')}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('H:i:s')}}
-                            </td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('H:i:s')}}
-                            </td>
-                            <td class="hidden">
-                                {{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('H:i:s')}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y')}}</td>
-                            <td class="hidden">{{$driver->status_situacao}}</td>
-                            <td>{{$driver->placa}}</td>
-                            <td>{{$driver->placa_mercosul}}</td>
-                            <td class="hidden">{{$driver->chassis}}</td>
-                            <td>{{$driver->modelo_veiculo}}</td>
-                            <td class="hidden">{{$driver->lp_latitude}}</td>
-                            <td class="hidden">{{$driver->lp_longitude}}</td>
-                            <td class="hidden">{{$driver->end_logradouro}}, {{$driver->end_bairro}} -
-                                {{$driver->end_cidade}} {{$driver->end_uf}}</td>
-                            <td class="hidden">{{$driver->estado}}</td>
-                            <td class="hidden">{{$driver->lp_velocidade}}</td>
-                            <td class="hidden">
-                                {{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
-                            <td><span
-                                    style="display:none">{{$driver->lp_ultima_transmissao}}</span>{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}
-                            </td>
-                            <td>{{$driver->cliente}}</td>
-                            <td>{{$driver->contrato}}</td>
-                            <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}
-                            </td>
-                            <td><span
-                                    style="display:none">{{$driver->dt_entrada}}</span>{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}
-                            </td>
-                            <td class="hidden">
-                                {{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
-                            <td><span
-                                    style="display:none">{{$driver->dt_tecnico_acionado}}</span>{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}
-                            </td>
-                            <td class="hidden">
-                                {{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
-                            <td><span
-                                    style="display:none">{{$driver->dt_inicio_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}
-                            </td>
-                            <td class="hidden">
-                                {{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
-                            <td><span
-                                    style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}
-                            </td>
-                            @if ($driver->projeto == 'RENEGOCIACAO')
-                            <td><span
-                                    class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>
-                            </td>
-                            @elseif ($driver->projeto == 'FINANCEIRA')
-                            <td><span
-                                    class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span>
-                            </td>
-                            @endif
-                            <td class="hidden">{{$driver->situacao}}</td>
-                            <td>
-                                <button type="button"
-                                    class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data"
-                                    data-toggle="modal" data-target="#modalVehicle" data-chassi="{{$driver->chassis}}">
-                                    <i class="fa fa-search-plus"></i>
-                                </button>
-                                <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}"
-                                    class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span
-                                        class="fa fa-map-marked-alt"></span></a>
-
-                            </td>
-                        </tr>
-                        @endforeach
-=======
                     <tbody>
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                     </tbody>
                 </table>
                 <!--end: Datatable -->
@@ -454,158 +370,13 @@ td {
 @endsection
 
 @section('scripts')
-<<<<<<< HEAD
-<script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}"
-    type="text/javascript"></script>
-<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin="">
-</script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-=======
 <script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
 
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script>
-<<<<<<< HEAD
-resetGrid()
-/**
- * Rastrea isca automaticamente
- */
-$(document).ready(function() {
-    // reloadValue()
-})
-
-$('#timeline').removeClass('hidden');
-
-
-function resetGrid() {
-    // Progress bar
-    $('#div-progress-bar-fleetlarge').show();
-    progressBar = 100;
-    setInterval(function() {
-        $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
-        if (progressBar < 11) {
-            $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-primary');
-            $('#progress_bar_fleetlarge').addClass("progress-bar kt-bg-danger");
-        }
-        if (progressBar == 0) {
-            $('#progress_bar_fleetlarge').removeClass('progress-bar kt-bg-danger');
-            $('#progress_bar_fleetlarge').addClass('progress-bar kt-bg-primary');
-            // reloadValue()
-            progressBar = 100;
-        } else {
-            progressBar = progressBar - 1;
-        }
-        $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
-    }, 1000);
-}
-
-
-$(document).ready(function() {
-    columns = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 21, 23, 25, 27, 28];
-    columsPdf = [6, 7, 8, 9, 10, 11, 12, 13, 14];
-    var date = $.datepicker.formatDate('dd_mm_yy', new Date());
-    var oTable = $('#example').DataTable({
-        //"bDestroy": true,
-        "footerCallback": function(row, data, start, end, display) {
-            var api = this.api(),
-                data;
-
-            // Total de linhas
-            var info = api.page.info();
-            var total = info.recordsTotal;
-            var count = info.recordsDisplay;
-            $('#gridTotal').html(total);
-
-            // Total over all pages
-            total_ID_Entrada = api.column(0).data().reduce(function(a, b) {
-                return ~~a + ~~b;
-            }, 0);
-
-            total_Duration_Entrada = api.column(0).data().reduce(function(a, b) {
-                return moment.duration(a).asSeconds() + moment.duration(b).asSeconds();
-            }, 0);
-
-            total_ID_Ac_Tecnico = api.column(1).data().reduce(function(a, b) {
-                return ~~a + ~~b;
-            }, 0);
-
-            total_Duration_Ac_Tecnico = api.column(1).data().reduce(function(a, b) {
-                return moment.duration(a).asSeconds() + moment.duration(b).asSeconds();
-            }, 0);
-
-
-            total_ID_Ini_Inst = api.column(2).data().reduce(function(a, b) {
-                return ~~a + ~~b;
-            }, 0);
-
-            total_Duration_Ini_Inst = api.column(2).data().reduce(function(a, b) {
-                return moment.duration(a).asSeconds() + moment.duration(b).asSeconds();
-            }, 0);
-
-            total_ID_Term_Inst = api.column(3).data().reduce(function(a, b) {
-                return ~~a + ~~b;
-            }, 0);
-
-            total_Duration_Term_Inst = api.column(3).data().reduce(function(a, b) {
-                return moment.duration(a).asSeconds() + moment.duration(b).asSeconds();
-            }, 0);
-
-            /* Divisão do cálculo */
-            var calculoEntrada = total_Duration_Entrada / count
-            var calculoAcTecnico = total_Duration_Ac_Tecnico / count
-            var calculoIniInst = total_Duration_Ini_Inst / count
-            var calculoTermInst = total_Duration_Term_Inst / count
-
-            /*Conversão do resultado para hora */
-            totalGeralEntrada = totalFormatted(calculoEntrada);
-            totalGeralAcTecnico = totalFormatted(calculoAcTecnico);
-            totalGeralIniInst = totalFormatted(calculoIniInst);
-            totalGeralTermInst = totalFormatted(calculoTermInst);
-
-            /* O cálculo é feito em segundos */
-            function totalFormatted(pageTotal_Duration) {
-                return [
-                    parseInt(pageTotal_Duration / 3600),
-                    parseInt((pageTotal_Duration / 60) % 60),
-                    parseInt(pageTotal_Duration % 60)
-                ].join(":").replace(/\b(\d)\b/g, "0$1");
-
-            }
-
-            $('#tempoMedio').html(totalGeralEntrada);
-            $('#tempoDeslocamento').html(totalGeralAcTecnico);
-            $('#tempoTecnico').html(totalGeralIniInst);
-            $('#tempoAtendimento').html(totalGeralTermInst);
-
-            if (totalGeralEntrada == 'NaN:NaN:NaN') {
-                $('#tempoMedio').html('00:00:00');
-            }
-
-            if (totalGeralAcTecnico == 'NaN:NaN:NaN') {
-                $('#tempoDeslocamento').html('00:00:00');
-            }
-
-            if (totalGeralIniInst == 'NaN:NaN:NaN') {
-                $('#tempoTecnico').html('00:00:00');
-            }
-
-            if (totalGeralTermInst == 'NaN:NaN:NaN') {
-                $('#tempoAtendimento').html('00:00:00');
-            }
-        },
-        dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
-            "<'row'<'col-md-6'><'col-md-6'>>" +
-            "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-        buttons: [{
-                extend: 'pdf',
-                title: 'SAT Company :: Grid de Veiculos_' + date,
-                exportOptions: {
-                    columns: columsPdf
-=======
     $.ajaxSetup({
         headers: {
             'X-CSRF-Token': $('meta[name=_token]').attr('content')
@@ -796,61 +567,13 @@ $(document).ready(function() {
                     "sLast": "Último",
                     "sNext": "Seguinte",
                     "sPrevious": "Anterior"
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                 },
-                orientation: 'landscape',
-            },
-            {
-                extend: 'excel',
-                title: 'SAT Company :: Grid de Veiculos_' + date,
-                exportOptions: {
-                    columns: columns
+                "oAria": {
+                    "sSortAscending": ": Ativar para ordenar a coluna de maneira ascendente",
+                    "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
                 }
-            }
-        ],
-        "language": {
-            "sProcessing": "Procesando...",
-            "sLengthMenu": "Mostrar _MENU_ registros",
-            "sZeroRecords": "Nenhum registro encontrado",
-            "sEmptyTable": "Nenhum registro disponível nesta tabela",
-            "sInfo": "Mostrando registros de _START_ até _END_ de um total de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando registros de 0 até 0 de um total de 0 registros",
-            "sInfoFiltered": "(filtrado de um total de _MAX_ registros)",
-            "sInfoPostFix": "",
-            "sSearch": "Buscar:",
-            "sUrl": "",
-            "sInfoThousands": ",",
-            "sLoadingRecords": "Carregando...",
-            "oPaginate": {
-                "sFirst": "Primeiro",
-                "sLast": "Último",
-                "sNext": "Seguinte",
-                "sPrevious": "Anterior"
             },
-            "oAria": {
-                "sSortAscending": ": Ativar para ordenar a coluna de maneira ascendente",
-                "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
-            }
-        },
 
-<<<<<<< HEAD
-    });
-
-    // INICIO DATARANGEPICKER
-    var startdate;
-    var enddate;
-    $('input[name="dates"]').daterangepicker({
-            "singleDatePicker": false,
-            ranges: {
-                "Todos": [moment().subtract(5, 'years'), moment()],
-                "Hoje": [moment(), moment()],
-                'Dia anterior': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
-                'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
-                'Este mês': [moment().startOf('month'), moment().endOf('month')],
-                'Mês passado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                    'month').endOf('month')]
-=======
         });
 
         // INICIO DATARANGEPICKER
@@ -901,76 +624,13 @@ $(document).ready(function() {
                     ],
                     "firstDay": 0
                 }
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
             },
-            "opens": "right",
-            "locale": {
-                "format": "DD/MM/YYYY",
-                "separator": " - ",
-                "applyLabel": "Aplicar",
-                "cancelLabel": "Cancelar",
-                "fromLabel": "De",
-                "toLabel": "Até",
-                "customRangeLabel": "Definir período",
-                "daysOfWeek": [
-                    "Dom",
-                    "Seg",
-                    "Ter",
-                    "Qua",
-                    "Qui",
-                    "Sex",
-                    "Sáb"
-                ],
-                "monthNames": [
-                    "Janeiro",
-                    "Fevereiro",
-                    "Março",
-                    "Abril",
-                    "Maio",
-                    "Junho",
-                    "Julho",
-                    "Agosto",
-                    "Setembro",
-                    "Outubro",
-                    "Novembro",
-                    "Dezembro"
-                ],
-                "firstDay": 0
+            function(start, end, label) {
+                var s = moment(start.toISOString());
+                var e = moment(end.toISOString());
+                startdate = s.format("YYYY-MM-DD");
+                enddate = e.format("YYYY-MM-DD");
             }
-<<<<<<< HEAD
-        },
-        function(start, end, label) {
-            var s = moment(start.toISOString());
-            var e = moment(end.toISOString());
-            startdate = s.format("YYYY-MM-DD");
-            enddate = e.format("YYYY-MM-DD");
-        }
-    );
-
-    // FILTRO POR DATA DE ENTRADA
-    //Filter the datatable on the datepicker apply event with reportage 1
-    $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-        startdate = picker.startDate.format('YYYY-MM-DD');
-        enddate = picker.endDate.format('YYYY-MM-DD');
-        $.fn.dataTableExt.afnFiltering.push(
-            function(oSettings, aData, iDataIndex) {
-                if (startdate != undefined) {
-                    var coldate = aData[4].split("/");
-                    var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
-                    var date = moment(d.toISOString());
-                    date = date.format("YYYY-MM-DD");
-                    dateMin = startdate.replace(/-/g, "");
-                    dateMax = enddate.replace(/-/g, "");
-                    date = date.replace(/-/g, "");
-                    if (dateMin == "" && date <= dateMax) {
-                        return true;
-                    } else if (dateMin == "" && date <= dateMax) {
-                        return true;
-                    } else if (dateMin <= date && "" == dateMax) {
-                        return true;
-                    } else if (dateMin <= date && date <= dateMax) {
-                        return true;
-=======
         );
 
         // FILTRO POR DATA DE ENTRADA
@@ -998,51 +658,33 @@ $(document).ready(function() {
                             return true;
                         }
                         return false;
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
                     }
-                    return false;
                 }
-            }
-        );
-        oTable.draw();
-    });
+            );
+            oTable.draw();
+        });
 
-    let totalRowCount = new Array();
+        let totalRowCount = new Array();
 
-    oTable.on('draw', function() {
-        totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
-            search: 'applied'
-        }).count();
+        oTable.on('draw', function() {
+            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
+                search: 'applied'
+            }).count();
 
-<<<<<<< HEAD
-        totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
-            search: 'applied'
-        }).count();
-=======
+            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
+                search: 'applied'
+            }).count();
+
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
+        });
+
         function tableOneRowCount() {
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
-        $('#financeira').html(totalRowCount['financeira']);
-        $('#renegociacao').html(totalRowCount['renegociacao']);
-    });
+            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
+                search: 'applied'
+            }).count();
 
-<<<<<<< HEAD
-    function tableOneRowCount() {
-        totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
-        totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
-
-        totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
-            search: 'applied'
-        }).count();
-
-        totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
-            search: 'applied'
-        }).count();
-        console.log(totalRowCount['gridInstalacaoEfetuada'])
-
-        $('#financeira').html(totalRowCount['financeira']);
-        $('#renegociacao').html(totalRowCount['renegociacao']);
-=======
             totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")', {
                 search: 'applied'
             }).count();
@@ -1055,16 +697,8 @@ $(document).ready(function() {
             console.log(totalRowCount)
             return totalRowCount;
         }
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
-        $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-        $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
 
-<<<<<<< HEAD
-        return totalRowCount;
-    }
-
-=======
         setTimeout(function() {
             tableOneRowCount();
         }, 15000);
@@ -1078,161 +712,8 @@ $(document).ready(function() {
             }).get().join('|');
             $('#example').DataTable().column(16).search(status, true, false, false).draw();
         });
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
-
-    tableOneRowCount();
-
-<<<<<<< HEAD
-    // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
-    $('input:checkbox').on('change', function() {
-        var status = $('input:checkbox[name="pos"]:checked').map(function() {
-            return '^' + this.value + '$';
-        }).get().join('|');
-        $('#example').DataTable().column(27).search(status, true, false, false).draw();
-    });
 
 
-});
-
-
-$('.installed').click(function() {
-    $('#example').DataTable().columns(5).search("Instalacao_Efetuada", true, false, true).draw();
-});
-
-$('.waiting').click(function() {
-    $('#example').DataTable().columns(5).search('Aguardando_Instalacao', true, false, true).draw();
-});
-
-$('.vehiclesTotal').click(function() {
-    $('#example').DataTable().columns(5).search('').draw();
-});
-
-
-
-/* Details vehicle */
-$('.btn-vehicle-data').click(function() {
-    var chassi = $(this).data('chassi');
-    $.ajax({
-        url: "{{url('')}}/fleetslarges/find/" + chassi,
-        type: 'GET',
-        success: function(response) {
-            console.log(response)
-            $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
-            $('.placa').val(response.placa)
-            $('.empresa').val(response.empresa)
-            $('#r12s_proximos').val(response.r12s_proximos)
-            $('#dif_date').val(response.dif_date)
-            $('.lp_longitude').val(response.lp_longitude)
-            $('.estado').val(response.estado)
-            $('.lp_latitude').val(response.lp_latitude)
-            $('.telefone').val(response.telefone)
-            $('.status').val(response.status)
-            $('.iccid').val(response.iccid)
-            $('.chassis').val(response.chassis)
-            $('.modelo_veiculo').val(response.modelo_veiculo)
-            $('.qtd_dispositivos').val(response.qtd_dispositivos)
-            $('.categoria_veiculo').val(response.categoria_veiculo)
-            $('.cidade').val(response.cidade)
-            $('.operadora').val(response.operadora)
-            $('.cliente').val(response.cliente)
-            $('.data_instalacao').val(response.data_instalacao.replace(
-                /(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-            $('.cod_empresa').val(response.cod_empresa)
-            $('.codigo_fipe').val(response.codigo_fipe)
-            $('.modelo').val(response.modelo)
-            $('.point').val(response.point)
-            $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(
-                /(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-            $('.versao').val(response.versao)
-            $('.lp_satelite').val(response.lp_satelite)
-            $('.lp_ignicao').val(response.lp_ignicao)
-            $('.r12s_proximos').val(response.r12s_proximos)
-            $('#dif_date').val(response.dif_date)
-            $('.lp_voltagem').val(response.lp_voltagem)
-            $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
-            $('#r12s_proximos').val(response.r12s_proximos)
-            $('#dif_date').val(response.dif_date)
-            $('.lp_velocidade').val(response.lp_velocidade + " km/h")
-            $('#point').val(response.point)
-            $('.filial').val(response.filial)
-            $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(
-                /(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/,
-                '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-            $('#status_veiculo').val(response.status_veiculo)
-            $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
-            $('.end_cep').val(response.end_cep)
-            $('.end_logradouro').val(response.end_logradouro)
-            $('.end_bairro').val(response.end_bairro)
-            $('.end_uf').val(response.end_uf)
-            $('.cliente_foto').attr('src', response.cliente_foto);
-            $('#cliente_cpf').val(response.cliente_cpf)
-            $('#cliente_nome').val(response.cliente_nome)
-            $('#cliente_datadev').val(response.cliente_datadev.replace(
-                /(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/,
-                '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-            $('#cliente_celular').val(response.cliente_celular)
-            $('#cliente_localdev').val(response.cliente_localdev)
-            $('#cliente_local_retirada').val(response.cliente_local_retirada)
-            $('#cliente_contrato').val(response.cliente_contrato)
-            $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(
-                /(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/,
-                '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-            $('#cliente_email').val(response.cliente_email)
-            $('#cliente_endereco').val(response.cliente_endereco)
-            $('.cidade').val(response.end_cidade)
-            $('#cliente_cnh').val(response.cliente_cnh)
-            $('.veiculo_odometro').val(response.veiculo_odometro)
-            $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
-            $('.cliente_foto').attr('href', response.cliente_foto)
-
-            if (response.status_veiculo != "LOCACAO") {
-                $("#btn_cliente").css({
-                    "display": "none"
-                });
-            } else {
-                $("#btn_cliente").css({
-                    "display": "inline"
-                });
-            }
-
-            updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response
-                .dt_tecnico_acionado, response.dt_termino_instalacao)
-        },
-        error: function(error) {
-            if (error.responseJSON.status == "internal_error") {
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                    showConfirmButton: true,
-                    timer: 10000
-                })
-
-            } else if (error.responseJSON.status == "validation_error") {
-                var items = error.responseJSON.errors;
-                Swal.fire({
-                    type: 'error',
-                    title: 'Erro!',
-                    html: 'Os seguintes erros foram encontrados: ' + items,
-                    footer: ' '
-                })
-
-            } else {
-                var items = error.responseJSON.errors;
-                var errors = $.map(items, function(i) {
-                    return i.join('<br />');
-                });
-                Swal.fire({
-                    type: 'error',
-                    title: 'Erro!',
-                    html: 'Os seguintes erros foram encontrados: ' + errors,
-                    footer: ' '
-                })
-            }
-        }
-    });
-})
-=======
         $('.installed').click(function() {
             $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
         });
@@ -1245,36 +726,8 @@ $('.btn-vehicle-data').click(function() {
             $('#example').DataTable().columns(20).search('').draw();
         });
 
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
-/**
- * Update Timeline cliente Santander
- */
-function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, dt_termino_instalacao) {
-    if (dt_entrada != '') {
-        $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3.$2.$1 $4:$5:$6'))
-        $('#status_dt_entrada').addClass('timelinePointActive');
-    } else {
-        $('#dt_entrada').html('Aguarde...')
-    }
 
-<<<<<<< HEAD
-    if (dt_tecnico_acionado != '') {
-        $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/,
-            '$3.$2.$1 $4:$5:$6'))
-        $('#status_dt_tecnico_acionado').addClass('timelinePointActive');
-    } else {
-        $('#dt_tecnico_acionado').html('Aguarde...')
-    }
-
-    if (dt_inicio_instalacao != '') {
-        $('#dt_inicio_instalacao').html(dt_inicio_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/,
-            '$3.$2.$1 $4:$5:$6'))
-        $('#status_dt_inicio_instalacao').addClass('timelinePointActive');
-    } else {
-        $('#dt_inicio_instalacao').html('Aguarde...')
-    }
-=======
         /* Details vehicle */
         $(document).on("click", ".btn-vehicle-data", function() {
             var chassi = $(this).data('chassi');
@@ -1402,36 +855,48 @@ function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, d
         } else {
             $('#dt_entrada').html('Aguarde...')
         }
->>>>>>> 849ee5a616b92f5cd6ee7e610afa4535e81aa3d6
 
-    if (dt_termino_instalacao != '') {
-        $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/,
-            '$3.$2.$1 $4:$5:$6'))
-        $('#status_dt_termino_instalacao').addClass('timelinePointActive');
-    } else {
-        $('#dt_termino_instalacao').html('Aguarde...')
+        if (dt_tecnico_acionado != '') {
+            $('#dt_tecnico_acionado').html(dt_tecnico_acionado.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3.$2.$1 $4:$5:$6'))
+            $('#status_dt_tecnico_acionado').addClass('timelinePointActive');
+        } else {
+            $('#dt_tecnico_acionado').html('Aguarde...')
+        }
+
+        if (dt_inicio_instalacao != '') {
+            $('#dt_inicio_instalacao').html(dt_inicio_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3.$2.$1 $4:$5:$6'))
+            $('#status_dt_inicio_instalacao').addClass('timelinePointActive');
+        } else {
+            $('#dt_inicio_instalacao').html('Aguarde...')
+        }
+
+        if (dt_termino_instalacao != '') {
+            $('#dt_termino_instalacao').html(dt_termino_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3.$2.$1 $4:$5:$6'))
+            $('#status_dt_termino_instalacao').addClass('timelinePointActive');
+        } else {
+            $('#dt_termino_instalacao').html('Aguarde...')
+        }
+
     }
 
-}
-
-$.extend($.fn.dataTableExt.oStdClasses, {
-    "sFilterInput": "textName",
-});
-
-$(document).on('click', '.spanText', function() {
-    if ($(this).attr('value') == 'instalado') {
-        $('.textName').val('instalado').focus().click()
-    }
-});
-
-
-//Log Relatório de Telemetria
-$('.no-link').click(function() {
-    var chassi = $(this).data('chassi');
-    $.ajax({
-        url: "{{route('fleetslarges.telemetria')}}",
-        type: 'GET',
+    $.extend($.fn.dataTableExt.oStdClasses, {
+        "sFilterInput": "textName",
     });
-})
+
+    $(document).on('click', '.spanText', function() {
+        if ($(this).attr('value') == 'instalado') {
+            $('.textName').val('instalado').focus().click()
+        }
+    });
+
+
+    //Log Relatório de Telemetria
+    $('.no-link').click(function() {
+        var chassi = $(this).data('chassi');
+        $.ajax({
+            url: "{{route('fleetslarges.telemetria')}}",
+            type: 'GET',
+        });
+    })
 </script>
 @endsection
