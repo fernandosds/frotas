@@ -90,7 +90,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
 
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '2048M');
         $customer = $this->customerService->show(Auth::user()->customer_id);
 
 
@@ -107,8 +107,7 @@ class DashboardController extends Controller
 
         // Entrar no dashboard Santander
         if (Auth::user()->customer_id == 8) {
-            $data['carros'] = $this->santanderService->all();
-            return response()->view('fleetslarge.dashboard.santander', $data);
+            return response()->view('fleetslarge.dashboard.santander');
         }
 
 
@@ -187,11 +186,47 @@ class DashboardController extends Controller
 
         // Entrar no dashboard banco PSA
         if (Auth::user()->customer_id == 14) {
-            $data['carros'] = $this->psaService->all();
+            $data['data'] = $this->psaService->all();
             return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
     }
 
+    public function dataSantander()
+    {
+        ini_set('memory_limit', '512M');
+        $data = $this->santanderService->all();
+        return response()->json($data);
+
+        //$customer = $this->customerService->show(Auth::user()->customer_id);
+        //$data = $this->apiFleetLargeService->allCars($customer->hash);
+        // $cars = $this->apiFleetLargeService->allCars($customer->hash);
+        /*
+        $data = new stdClass();
+        $jsonString = json_encode($cars);
+        $items = collect(json_decode($jsonString));
+        $result = $items->all();
+
+        $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
+        $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
+        $today = date("Y-m-d H:i:s");
+
+        foreach ($items as $item) {
+            $item->dt_tecnico_acionado = ($item->dt_tecnico_acionado == "") ? $today : $item->dt_tecnico_acionado;
+            $item->dt_termino_instalacao = ($item->dt_termino_instalacao == "") ? $today : $item->dt_termino_instalacao;
+            $item->dt_inicio_instalacao = ($item->dt_inicio_instalacao == "") ? $today : $item->dt_inicio_instalacao;
+
+            $item->placa_mercosul =  fixPlate($item->placa);
+            if (in_array($item->situacao, $aguardando_instalacao)) {
+                $item->status_situacao = "Aguardando_Instalacao";
+            }
+            if (in_array($item->situacao, $instalado)) {
+                $item->status_situacao = "Instalacao_Efetuada";
+            }
+        }
+        $data = $result;
+*/
+       // return response()->json($data);
+    }
     public function situacaoInstalado($items)
     {
 

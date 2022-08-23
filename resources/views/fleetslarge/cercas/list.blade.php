@@ -51,7 +51,7 @@
                 <thead>
                     <tr>
                         <!-- <th scope="col"></th> -->
-                        <th scope="col">Nome da Cerca</th>
+                        <th scope="col">Nome da Garagem</th>
                         <th scope="col">Total Veículos</th>
                         <th scope="col">Total Usuários</th>
                         <th scope="col"></th>

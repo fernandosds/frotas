@@ -20,6 +20,11 @@ class SantanderRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    public function table($limit)
+    {
+        return $this->model->limit($limit)->get();
+    }
+
     /**
      * Find one register
      *
@@ -45,7 +50,8 @@ class SantanderRepository extends AbstractRepository
             ->get();
     }
 
-    public function removePlates($removePlate){
+    public function removePlates($removePlate)
+    {
         return $this->model->whereNotIn('placa', $removePlate)->get();
     }
 }

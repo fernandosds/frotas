@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('styles')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
 <style>
@@ -245,7 +244,6 @@
         <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-4">
         <div class="card text-white bg-primary col-md-12 installed">
@@ -329,7 +327,7 @@
                     </div>
                 </div>
                 <!--begin: Datatable -->
-                <table id="example" class="display" style="width:100%">
+                <table id="example" class="display" style="width:50%">
                     <thead>
                         <tr>
                             <th>Placa</th>
@@ -375,13 +373,7 @@
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-Token': $('meta[name=_token]').attr('content')
-        }
-    });
     resetGrid()
     /**
      * Rastrea isca automaticamente
@@ -421,20 +413,11 @@
         columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
         columsPdf = [1, 2, 3, 6, 7, 9, 12, 13, 14, 15];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
-        var dateTime = moment(new Date()); //.format('DD/MM/YYYY HH:mm:ss');
+        var dateTime = moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
         var oTable = $('#example').DataTable({
-            processing: true,
-            //serverSide: true,
+            // ajax: "{{route('fleetslarges.data.santander')}}",
             ajax: {
-                header: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: 'POST',
-
-                url: "{{url('')}}/fleetslarges/data/santander",
-                data: ({
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                }),
+                url: "{{route('fleetslarges.data.santander')}}",
                 dataSrc: "",
             },
             order: [
@@ -443,7 +426,8 @@
             columnDefs: [{
                     className: "hidden",
                     "targets": [20]
-                }, {
+                },
+                {
                     orderable: false,
                     targets: 18
                 }, {
@@ -462,13 +446,12 @@
             columns: [{
                 "data": "placa"
             }, {
-                "data": "placa"
+                "data": "placa_mercosul"
             }, {
                 "data": "chassis",
                 visible: false
             }, {
-                "data": "modelo_veiculo",
-                "width": "40px",
+                "data": "modelo_veiculo"
             }, {
                 "data": "lp_latitude",
                 visible: false
@@ -496,17 +479,16 @@
             }, {
                 "data": "dt_entrada"
             }, {
-                "data": "dt_tecnico_acionado",
+                "data": "dt_tecnico_acionado"
             }, {
-                "data": "dt_inicio_instalacao",
-
+                "data": "dt_inicio_instalacao"
             }, {
                 "data": "dt_termino_instalacao",
             }, {
                 "data": "projeto",
                 "width": "50px",
                 render: function(data, type, row, meta) {
-                    if (row.projeto == 'RENEGOCIACAO') {
+                    if (row.projeto == 'RENEG') {
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
                     } else {
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
@@ -529,6 +511,8 @@
             }, {
                 "data": "status_situacao"
             }, ],
+
+
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
@@ -575,6 +559,8 @@
             },
 
         });
+
+
 
         // INICIO DATARANGEPICKER
         var startdate;
@@ -692,7 +678,7 @@
             setTimeout(function() {
                 $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
                 $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
-            }, 16000);
+            }, 21000);
 
             console.log(totalRowCount)
             return totalRowCount;
@@ -701,7 +687,7 @@
 
         setTimeout(function() {
             tableOneRowCount();
-        }, 15000);
+        }, 20000);
 
 
 

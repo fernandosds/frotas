@@ -51,7 +51,7 @@
                 <thead>
                     <tr>
                         <!-- <th scope="col"></th> -->
-                        <th scope="col">Nome da Cerca</th>
+                        <th scope="col">Nome da Garagem</th>
                         <th scope="col">Total Veículos</th>
                         <th scope="col"></th>
                     </tr>
@@ -87,7 +87,7 @@
 
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2];
+        columns = [0, 1];
         columsPdf = [0, 1];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var oTable = $('#example').DataTable({
