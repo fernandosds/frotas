@@ -107,8 +107,10 @@ class CercasRepository extends AbstractRepository
     }
 
     public function getAllCercas($id_cerca){
+        
         $arrAll = [];
         $markers = MapMarkerSantander::where('_id', $id_cerca)->get();
+        
         $garagem = CercaGaragem::where('id_cerca', $id_cerca)->with('grupoAlertaGaragem')->get();
 
         $arrAll = [

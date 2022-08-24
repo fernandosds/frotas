@@ -19,7 +19,6 @@ class ApiFleetLargeSantanderService
     }
     public function allGrupoSantander()
     {
-
         $allGrupo = $this->cerca->getAllGrupoCercaSantander();
         $geojson = new stdClass();
         $geojson->type = "FeatureCollection";
@@ -28,6 +27,8 @@ class ApiFleetLargeSantanderService
         $items = json_decode($allGrupo);
 
         foreach ($items as $item) {
+            // echo $item->santander->lp_ignicao . PHP_EOL;
+
             $feature = new stdClass();
             $feature->type = "Feature";
             $feature->properties = new stdClass();
@@ -55,7 +56,7 @@ class ApiFleetLargeSantanderService
 
     public function groupSelected($collectionObject){
 
-        $allGrupo = $collectionObject;//$this->cerca->getAllGrupoCercaSantander();
+        $allGrupo = $collectionObject;
         $geojson = new stdClass();
         $geojson->type = "FeatureCollection";
         $geojson->features = [];
@@ -63,11 +64,11 @@ class ApiFleetLargeSantanderService
         $items = json_decode($allGrupo);
 
         foreach ($items as $item) {
-
+            // dd($item);
             $feature = new stdClass();
             $feature->type = "Feature";
             $feature->properties = new stdClass();
-            $feature->properties->id = $item->santander->modelo;
+            $feature->properties->id = $item->santander->modelo ?? "";
             $feature->properties->ignicao = $item->santander->lp_ignicao == '1' ? 'ON' : 'OFF';
             $feature->properties->chassis = $item->santander->chassis ?? "";
             $feature->properties->modelo_veiculo = $item->santander->modelo_veiculo ?? "";
@@ -87,6 +88,5 @@ class ApiFleetLargeSantanderService
         }
 
         return $geojson;
-
     }
 }

@@ -509,7 +509,6 @@
                             .then(response => {
                                 if (!response.ok) {
                                     return response.json().then(text => {
-                                        console.log(text.errors);
                                         let errors = [];
                                         if (text.errors['data.name']) {
                                             errors.push(text.errors['data.name'][0]);
@@ -722,7 +721,6 @@
                     .done(function(response) {
                         var arrGaragem = new Array();
                         response.result.markers.map(function(result) {
-
                             const data = result;
                             const myData = data.markers;
                             const layerName = data.name;
@@ -749,7 +747,6 @@
                         response.result.garagem.map(function(garagem){
                             arrGaragem.push(garagem.id_garagem);
                         })
-
                         var form_data_garagem = {
                             _token: '{{csrf_token()}}',
                             grupo: arrGaragem,
@@ -760,8 +757,8 @@
                             method: "POST",
                             data: form_data_garagem
                         })
-                        .done(function(response) {
-                            const data = response.data;
+                        .done(function(responseG) {
+                            const data = responseG.data;
                             const myData = data;
 
                             var myStyle = {
@@ -774,8 +771,7 @@
                                 pointToLayer: function(feature, latlng) {
                                     let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
 
-                                    return 
-                                        L.marker(latlng, {
+                                    return L.marker(latlng, {
                                             'icon': carIcon
                                         })
 
@@ -787,12 +783,12 @@
 
                                 }
                             }, subgroup).addTo(map);
-
+                            
                             listLayersGaragem.push({
                                 "id": idLayerGaragem,
-                                "layer": geojson
+                                "layer": geojson,
+                                'id_layer': idLayer
                             });
-
                         })
                         .fail(function() {});
 
@@ -803,32 +799,24 @@
                 const layer = listLayers.filter(item => item.id == idLayer);
                 layer[0].layer.clearLayers();
 
-
                 for (let i = 0; i < listLayers.length; i++) {
                     if (listLayers[i].id == idLayer) {
                         listLayers.splice(i, 1);
+                        listLayersGaragem.map(function(garagem, y){
+                            if(garagem.id_layer == idLayer){
+                                listLayersGaragem[y].layer.clearLayers();
+                            }
+                        });
                         continue;
                     }
                 }
 
-                listLayersGaragem.map(function(i, garagem){
-                    console.log(i, garagem);
-                });
+                // const layerGaragem = listLayersGaragem.filter(item => item.id == idLayer);
+                // console.log(layerGaragem);
 
-                const layerGaragem = listLayersGaragem.filter(item => item.id == idLayerGaragem);
-
-
-                // for (let i = 0; i < listLayersGaragem.length; i++) {
-
-                //     if (listLayersGaragem[i].id == idLayer) {
-                //         listLayersGaragem.splice(i, 1);
-                //         continue;
-                //     }
-                // }
             }
         });
         //ADICIONAR NO LIST MARKERS
-
 
         // $('.markerList').on('click', '.checkMarkers', function() {
         //     const idLayer = $(this).val();
