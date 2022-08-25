@@ -2,41 +2,41 @@
 
 @section('styles')
 <style>
-    #div-paring {
-        display: none;
-    }
+#div-paring {
+    display: none;
+}
 
-    #div-paring-tracker {
-        display: none;
-    }
+#div-paring-tracker {
+    display: none;
+}
 
-    #div-unavailable-mobile {
-        display: none;
-        background-color: #DCDCDC;
-    }
+#div-unavailable-mobile {
+    display: none;
+    background-color: #DCDCDC;
+}
 
-    #div-paring-mobile {
-        background-color: #DCDCDC;
-    }
+#div-paring-mobile {
+    background-color: #DCDCDC;
+}
 
-    .focus-input {
-        background-color: #fff0d5 !important;
-    }
+.focus-input {
+    background-color: #fff0d5 !important;
+}
 
-    .ui-autocomplete {
-        color: black;
-        padding: 5px;
-    }
+.ui-autocomplete {
+    color: black;
+    padding: 5px;
+}
 
-    .ui-menu-item {
-        background-color: white;
-        width: 202px;
-        padding: 8px;
-    }
+.ui-menu-item {
+    background-color: white;
+    width: 202px;
+    padding: 8px;
+}
 
-    .ui-menu-item .ui-state-focus {
-        color: red;
-    }
+.ui-menu-item .ui-state-focus {
+    color: red;
+}
 </style>
 @endsection
 
@@ -60,11 +60,13 @@
         <div class="form-row">
             <div class="form-group col-md-2">
                 <label for="">&nbsp;</label>
-                <input type="text" name="device_number" id="device_number" class="form-control" maxlength="20" placeholder="Nº da Ísca">
+                <input type="text" name="device_number" id="device_number" class="form-control" maxlength="20"
+                    placeholder="Nº da Ísca">
             </div>
             <div class="form-group col-md-2">
                 <label for="">&nbsp;</label><br />
-                <button type="button" class="btn btn-primary" id="btn-find-device"><i class="fa fa-search"></i> Pesquisar </button>
+                <button type="button" class="btn btn-primary" id="btn-find-device"><i class="fa fa-search"></i>
+                    Pesquisar </button>
             </div>
 
             <div class="form-group col-xs-6 col-md-2">
@@ -88,7 +90,8 @@
                 <h4 for="" id="device-tipo">---</h4>
             </div>
             <div class="kt-portlet hidden" id="div-button-history">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTickets" data-backdrop="static">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTickets"
+                    data-backdrop="static">
                     Registrar Atendimento
                 </button>
             </div>
@@ -117,19 +120,23 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inpuCity">CPF/CNPJ</label>
-                                <input type="text" class="form-control input_cpf_cnpj" name="cpf_cnpj" value="{{ $boarding->cpf_cnpj ?? '' }}">
+                                <input type="text" class="form-control input_cpf_cnpj" name="cpf_cnpj"
+                                    value="{{ $boarding->cpf_cnpj ?? '' }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputAddress">Nome da Transportador</label>
-                                <input type="text" class="form-control" name="transporter" value="{{ $boarding->transporter ?? '' }}">
+                                <input type="text" class="form-control" name="transporter"
+                                    value="{{ $boarding->transporter ?? '' }}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputAddress">Telefone</label>
-                                <input type="text" id="input_cep_customers" class="form-control mask_input_contact" name="telephone" value="{{ $boarding->telephone ?? '' }}">
+                                <input type="text" id="input_cep_customers" class="form-control mask_input_contact"
+                                    name="telephone" value="{{ $boarding->telephone ?? '' }}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputState">Tel. Cel:</label>
-                                <input type="text" class="form-control mask_input_contact" name="cell_phone" value="{{ $boarding->cell_phone ?? '' }}">
+                                <input type="text" class="form-control mask_input_contact" name="cell_phone"
+                                    value="{{ $boarding->cell_phone ?? '' }}">
                             </div>
                         </div>
 
@@ -143,25 +150,30 @@
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="inputName">Origem</label>
-                                <input type="text" name="source" class="form-control" value="{{ $boarding->source ?? '' }}">
+                                <input type="text" name="source" class="form-control"
+                                    value="{{ $boarding->source ?? '' }}">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputState">Destino</label>
-                                <input type="text" class="form-control" name="destiny" value="{{ $boarding->destiny ?? '' }}">
+                                <input type="text" class="form-control" name="destiny"
+                                    value="{{ $boarding->destiny ?? '' }}">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="inputState">Duração aprox. (Horas)</label>
-                                <input type="number" max="1" min="50" class="form-control" id="duration" name="duration" value="{{ $boarding->duration ?? '1' }}" required="required">
+                                <input type="number" max="1" min="50" class="form-control" id="duration" name="duration"
+                                    value="{{ $boarding->duration ?? '1' }}" required="required">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="inputState">Nº Ordem de Transporte</label>
-                                <input type="text" class="form-control" name="transport_order" value="{{ $boarding->transport_order ?? '' }}">
+                                <input type="text" class="form-control" name="transport_order"
+                                    value="{{ $boarding->transport_order ?? '' }}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputNeighborhood">Valor Transportado</label>
-                                <input type="text" class="form-control" name="amount_carried" value="{{ $boarding->amount_carried ?? '' }}">
+                                <input type="text" class="form-control" name="amount_carried"
+                                    value="{{ $boarding->amount_carried ?? '' }}">
                             </div>
                         </div>
 
@@ -178,13 +190,15 @@
 
                             <div class="form-group col-md-2">
                                 <label for="inputComplement">Placa</label>
-                                <input type="text" class="form-control" name="board" maxlength="7" value="{{ $boarding->board ?? '' }}" id="input-placa">
+                                <input type="text" class="form-control" name="board" maxlength="7"
+                                    value="{{ $boarding->board ?? '' }}" id="input-placa">
                                 <span id="search-placa"></span>
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="inputComplement">Dispositivo</label>
-                                <input type="text" class="form-control" name="pair_device[]" value="" id="input_pair_device" readonly="readonly">
+                                <input type="text" class="form-control" name="pair_device[]" value=""
+                                    id="input_pair_device" readonly="readonly">
                                 <span id="search-placa"></span>
                             </div>
 
@@ -208,16 +222,19 @@
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="inputNeighborhood">Marca</label>
-                                <input type="text" class="form-control" name="brand" id="brand" value="{{ $boarding->brand ?? '' }}">
+                                <input type="text" class="form-control" name="brand" id="brand"
+                                    value="{{ $boarding->brand ?? '' }}">
                             </div>
 
                             <div class="form-group col-md-3">
                                 <label for="inputNumber">Chassis</label>
-                                <input type="text" class="form-control" name="chassis" id="chassi" value="{{ $boarding->chassis ?? '' }}">
+                                <input type="text" class="form-control" name="chassis" id="chassi"
+                                    value="{{ $boarding->chassis ?? '' }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inpuCity">Modelo</label>
-                                <input type="text" class="form-control" name="model" id="model" value="{{ $boarding->model ?? '' }}">
+                                <input type="text" class="form-control" name="model" id="model"
+                                    value="{{ $boarding->model ?? '' }}">
                             </div>
 
                             <div class="form-group col-md-3">
@@ -232,10 +249,12 @@
 
                             <div class="form-group col-md-3">
                                 <label class="inputType">Local de Acomodação</label>
-                                <select id="accommodation_location_id" class="form-control" name="accommodation_location_id">
+                                <select id="accommodation_location_id" class="form-control"
+                                    name="accommodation_location_id">
                                     <option value=" ">Selecione um tipo</option>
                                     @foreach ($accommodationlocations as $accommodationlocation)
-                                    <option value="{{$accommodationlocation->id}}">{{$accommodationlocation->type}}</option>
+                                    <option value="{{$accommodationlocation->id}}">{{$accommodationlocation->type}}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -251,7 +270,8 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4">
                                     <label for="inpuCity">Insira abaixo o código gerado no Google Authenticator.</label>
-                                    <input type="text" class="form-control" name="token_validation" id="token_validation" value="" maxlength="6">
+                                    <input type="text" class="form-control" name="token_validation"
+                                        id="token_validation" value="" maxlength="6">
                                 </div>
                             </div>
                         </div>
@@ -269,7 +289,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inpuCity">Número do Dispositivo</label>
-                                <input type="text" class="form-control" name="pair_device[]" value="" id="input-tracker"><span id="search-tracker"></span>
+                                <input type="text" class="form-control" name="pair_device[]" value=""
+                                    id="input-tracker"><span id="search-tracker"></span>
                             </div>
                             <div class="col-md-8" id="div-paring-tracker">
                                 <div class="row">
@@ -279,7 +300,8 @@
                                             <div class="kt-section__content">
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>ATENÇÃO! </strong> <i class="fa fa-hand-o-left"></i>
-                                                    &nbsp; Este dispositivo está disponível. Ative o embarque para pareá-lo.
+                                                    &nbsp; Este dispositivo está disponível. Ative o embarque para
+                                                    pareá-lo.
                                                 </div>
                                             </div>
                                         </div>
@@ -322,7 +344,8 @@
                     <div class="col-sm-12 center">
                         <hr />
                         <div class="col-lg-12 ml-lg-auto">
-                            <button type="button" class="btn btn-brand" id="btn-boarding-save"><i class="fa fa-fire"></i> Ativar</button>
+                            <button type="button" class="btn btn-brand" id="btn-boarding-save"><i
+                                    class="fa fa-fire"></i> Ativar</button>
                             <a href="{{route('index')}}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
@@ -342,324 +365,329 @@
 
 @section('scripts')
 <script>
-    $('#myModal').on('shown.bs.modal', function() {
-        $('#myInput').trigger('focus')
-    });
+$('#myModal').on('shown.bs.modal', function() {
+    $('#myInput').trigger('focus')
+});
 
-    /**
-         Função para atualizar a div do atendimento
-    */
-    function refreshListHistory(device_number) {
+/**
+     Função para atualizar a div do atendimento
+*/
+function refreshListHistory(device_number) {
+    $.ajax({
+        type: 'GET',
+        url: "{{url('boardings/history/show')}}/" + device_number,
+        success: function(response) {
+            $('#list_history').html(response)
+        }
+    })
+}
+
+/**
+   Função que executa o auto complete do input do dispositivo movel
+*/
+$("#input-tracker").autocomplete({
+    minLength: 1,
+    delay: 500,
+    source: function(request, response) {
         $.ajax({
-            type: 'GET',
-            url: "{{url('boardings/history/show')}}/" + device_number,
-            success: function(response) {
-                $('#list_history').html(response)
-            }
-        })
-    }
-
-    /**
-       Função que executa o auto complete do input do dispositivo movel
-    */
-    $("#input-tracker").autocomplete({
-        minLength: 1,
-        delay: 500,
-        source: function(request, response) {
-            $.ajax({
-                url: '{{url("boardings/trackers/verify")}}',
-                type: 'post',
-                dataType: "json",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    search: request.term
-                },
-                success: function(data) {
-                    if (data.status == "success") {
-                        $('#search-tracker').hide();
-                        response(data.response);
-                    }
+            url: '{{url("boardings/trackers/verify")}}',
+            type: 'post',
+            dataType: "json",
+            data: {
+                _token: "{{ csrf_token() }}",
+                search: request.term
+            },
+            success: function(data) {
+                if (data.status == "success") {
+                    $('#search-tracker').hide();
+                    response(data.response);
                 }
-            });
+            }
+        });
+    }
+});
+
+
+/**
+         Exibir historicos atendimentos
+    */
+
+$('#btn-find-device').click(function() {
+    var device_number = $('#device_number').val();
+    refreshListHistory(device_number);
+})
+/**
+     Gravar Historico Atendimento
+     */
+$(function() {
+    $('#btn-history-save').click(function() {
+        $.ajax({
+            url: "{{url('')}}/boardings/history/save",
+            type: 'POST',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "device_number": $('#device_number').val(),
+                "message": $('#formTextArea').val(),
+            },
+            success: function(response) {
+                if (response.status == "success") {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro salvo com sucesso',
+                        showConfirmButton: true,
+                        timer: 10000
+                    }).then((result) => {
+                        refreshListHistory(device_number);
+                        $("#formTextArea").val("");
+                    })
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar salvar! ' + response.message,
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                }
+
+            },
+            error: function(error) {
+                $('#btn-history-save').prop('disabled', false);
+                if (error.responseJSON.status == "internal_error") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+
+                } else if (error.responseJSON.status == "validation_error") {
+                    var items = error.responseJSON.errors;
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + items,
+                        footer: ' '
+                    })
+
+                } else {
+                    var items = error.responseJSON.errors;
+                    var errors = $.map(items, function(i) {
+                        return i.join('<br />');
+                    });
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Erro!',
+                        html: 'Os seguintes erros foram encontrados: ' + errors,
+                        footer: ' '
+                    })
+                }
+
+            }
+        });
+    });
+});
+
+
+
+$(function() {
+
+    $.ajax({
+        type: 'GET',
+        url: '{{route("unavailabletracker")}}',
+        success: function(response) {
+            if (response.status == "success") {
+                $('#div-unavailable-mobile').show();
+            }
+        },
+        error: function(error) {
+            if (error.responseJSON.status == "validation_error") {
+                $('#div-unavailable-mobile').hide();
+            }
         }
     });
 
-
-    /**
-             Exibir historicos atendimentos
-        */
-
-    $('#btn-find-device').click(function() {
-        var device_number = $('#device_number').val();
-        refreshListHistory(device_number);
-    })
-    /**
-         Gravar Historico Atendimento
-         */
-    $(function() {
-        $('#btn-history-save').click(function() {
-            $.ajax({
-                url: "{{url('')}}/boardings/history/save",
-                type: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "device_number": $('#device_number').val(),
-                    "message": $('#formTextArea').val(),
-                },
-                success: function(response) {
-                    if (response.status == "success") {
-                        Swal.fire({
-                            type: 'success',
-                            title: 'Registro salvo com sucesso',
-                            showConfirmButton: true,
-                            timer: 10000
-                        }).then((result) => {
-                            refreshListHistory(device_number);
-                            $("#formTextArea").val("");
-                        })
-                    } else {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro ao tentar salvar! ' + response.message,
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-                    }
-
-                },
-                error: function(error) {
-                    $('#btn-history-save').prop('disabled', false);
-                    if (error.responseJSON.status == "internal_error") {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                            showConfirmButton: true,
-                            timer: 10000
-                        })
-
-                    } else if (error.responseJSON.status == "validation_error") {
-                        var items = error.responseJSON.errors;
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + items,
-                            footer: ' '
-                        })
-
-                    } else {
-                        var items = error.responseJSON.errors;
-                        var errors = $.map(items, function(i) {
-                            return i.join('<br />');
-                        });
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Erro!',
-                            html: 'Os seguintes erros foram encontrados: ' + errors,
-                            footer: ' '
-                        })
-                    }
-
-                }
-            });
-        });
-    });
-
-
-
-    $(function() {
-
+    function searchTrackerMobile(tracker) {
         $.ajax({
             type: 'GET',
-            url: '{{route("unavailabletracker")}}',
+            url: '{{url("boardings/trackers/verify")}}/' + tracker,
             success: function(response) {
+
                 if (response.status == "success") {
-                    $('#div-unavailable-mobile').show();
+                    $('#search-tracker').hide();
+                    $('#div-paring-tracker').show();
+                    $('#input-tracker').val()
                 }
             },
             error: function(error) {
                 if (error.responseJSON.status == "validation_error") {
-                    $('#div-unavailable-mobile').hide();
+                    var items = error.responseJSON.errors;
+                    $('#div-paring-tracker').hide();
+                    $('#div-paring').hide();
+                    $('#input-tracker').val('');
+                    $('#search-tracker').show().html('<i class="fa fa-warning"></i>' + items)
                 }
+
             }
         });
+    }
 
-        function searchTrackerMobile(tracker) {
+    /**
+     Pesquisar O Rastreador Movel
+     */
+    $('#input-tracker').focusout(function() {
+        $('#search-tracker').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando dispositivo...')
+        var tracker = $('#input-tracker').val();
+        searchTrackerMobile(tracker)
+    })
+
+
+
+    $('#input-placa').focusout(function() {
+
+        $('#search-placa').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando rastreador...')
+
+        var placa = $('#input-placa').val();
+
+        if (placa.length > 5) {
+
             $.ajax({
                 type: 'GET',
-                url: '{{url("boardings/trackers/verify")}}/' + tracker,
+                url: '{{url("api-device/get-device")}}/' + placa,
                 success: function(response) {
 
                     if (response.status == "success") {
-                        $('#search-tracker').hide();
-                        $('#div-paring-tracker').show();
-                        $('#input-tracker').val()
-                    }
-                },
-                error: function(error) {
-                    if (error.responseJSON.status == "validation_error") {
-                        var items = error.responseJSON.errors;
-                        $('#div-paring-tracker').hide();
-                        $('#div-paring').hide();
-                        $('#input-tracker').val('');
-                        $('#search-tracker').show().html('<i class="fa fa-warning"></i>' + items)
-                    }
+                        $('#search-placa').remove();
+                        $('#div-paring').show()
 
+                        $('#input_pair_device').val(response.data.device)
+                        $('#brand').val(response.data.marca)
+                        $('#chassi').val(response.data.chassi)
+                        $('#model').val(response.data.modelo)
+
+                    } else {
+                        $('#div-paring').hide()
+
+                        $('#input_pair_device').val('')
+                        $('#brand').val('')
+                        $('#chassi').val('')
+                        $('#model').val('')
+
+                        $('#search-placa').html(
+                            '<i class="fa fa-warning"></i> Este veículo não possui rastreador.'
+                            )
+                    }
                 }
             });
         }
+    })
 
-        /**
-         Pesquisar O Rastreador Movel
-         */
-        $('#input-tracker').focusout(function() {
-            $('#search-tracker').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando dispositivo...')
-            var tracker = $('#input-tracker').val();
-            searchTrackerMobile(tracker)
-        })
+    $('#btn-find-device').click(function() {
 
+        if ($('#device_number').val() != "") {
 
+            device_number = $('#device_number').val();
 
-        $('#input-placa').focusout(function() {
+            var loading = '<i class="fa fa-spinner fa-pulse"></i>';
+            $("#test-device-code").html(loading);
+            $("#device-tipo").html(loading);
+            $('#last-transmission').html(loading)
+            $('#nivel-bateria').html(loading)
 
-            $('#search-placa').html('<i class="fa fa-spinner fa-pulse"></i> Pesquisando rastreador...')
+            $.ajax({
+                type: 'GET',
+                url: '{{url("boardings/test-device")}}/' + device_number,
+                success: function(response) {
 
-            var placa = $('#input-placa').val();
+                    if (response.status == "success") {
 
-            if (placa.length > 5) {
+                        $("#div-new-boarding").removeClass('hidden');
+                        $("#div-button-history").removeClass('hidden');
 
-                $.ajax({
-                    type: 'GET',
-                    url: '{{url("api-device/get-device")}}/' + placa,
-                    success: function(response) {
+                        $('#device_uniqid').val(response.uniqid);
+                        $('#contract_id').val(response.contract_id);
 
-                        if (response.status == "success") {
-                            $('#search-placa').remove();
-                            $('#div-paring').show()
+                        var battery_level = response.battery_level;
 
-                            $('#input_pair_device').val(response.data.device)
-                            $('#brand').val(response.data.marca)
-                            $('#chassi').val(response.data.chassi)
-                            $('#model').val(response.data.modelo)
+                        $("#test-device-code").html(response.model);
+                        $('#last-transmission').html(response.last_transmission)
+                        $('#nivel-bateria').html(battery_level)
+                        $('#device-tipo').html(response.device_type)
 
+                        $('#battery_level').val(battery_level)
+
+                        $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-empty');
+                        $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-quarter');
+                        $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-half');
+                        $('#icon-nivel-bateria').removeClass(
+                            'fa fa-2x fa-battery-three-quarters');
+                        $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-full');
+
+                        if (parseInt(battery_level) < 20) {
+                            $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-empty');
+                        } else if (parseInt(battery_level) < 40) {
+                            $('#icon-nivel-bateria').addClass(
+                            'fa fa-2x fa-battery-quarter');
+                        } else if (parseInt(battery_level) < 60) {
+                            $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-half');
+                        } else if (parseInt(battery_level) < 80) {
+                            $('#icon-nivel-bateria').addClass(
+                                'fa fa-2x fa-battery-three-quarters');
                         } else {
-                            $('#div-paring').hide()
-
-                            $('#input_pair_device').val('')
-                            $('#brand').val('')
-                            $('#chassi').val('')
-                            $('#model').val('')
-
-                            $('#search-placa').html('<i class="fa fa-warning"></i> Este veículo não possui rastreador.')
+                            $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
                         }
-                    }
-                });
-            }
-        })
 
-        $('#btn-find-device').click(function() {
+                    } else {
 
-            if ($('#device_number').val() != "") {
+                        $("#test-device-code").html('---');
+                        $("#device-tipo").html('---');
+                        $('#last-transmission').html('---')
+                        $('#nivel-bateria').html('---')
 
-                device_number = $('#device_number').val();
-
-                var loading = '<i class="fa fa-spinner fa-pulse"></i>';
-                $("#test-device-code").html(loading);
-                $("#device-tipo").html(loading);
-                $('#last-transmission').html(loading)
-                $('#nivel-bateria').html(loading)
-
-                $.ajax({
-                    type: 'GET',
-                    url: '{{url("boardings/test-device")}}/' + device_number,
-                    success: function(response) {
-
-                        if (response.status == "success") {
-
-                            $("#div-new-boarding").removeClass('hidden');
-                            $("#div-button-history").removeClass('hidden');
-
-                            $('#device_uniqid').val(response.uniqid);
-                            $('#contract_id').val(response.contract_id);
-
-                            var battery_level = response.battery_level;
-
-                            $("#test-device-code").html(response.model);
-                            $('#last-transmission').html(response.last_transmission)
-                            $('#nivel-bateria').html(battery_level)
-                            $('#device-tipo').html(response.device_type)
-
-                            $('#battery_level').val(battery_level)
-
-                            $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-empty');
-                            $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-quarter');
-                            $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-half');
-                            $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-three-quarters');
-                            $('#icon-nivel-bateria').removeClass('fa fa-2x fa-battery-full');
-
-                            if (parseInt(battery_level) < 20) {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-empty');
-                            } else if (parseInt(battery_level) < 40) {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-quarter');
-                            } else if (parseInt(battery_level) < 60) {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-half');
-                            } else if (parseInt(battery_level) < 80) {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-three-quarters');
-                            } else {
-                                $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
-                            }
-
-                        } else {
-
-                            $("#test-device-code").html('---');
-                            $("#device-tipo").html('---');
-                            $('#last-transmission').html('---')
-                            $('#nivel-bateria').html('---')
-
-                            if (alert) {
-                                Swal.fire({
-                                    type: 'error',
-                                    title: 'Oops...',
-                                    text: response.message,
-                                    showConfirmButton: true,
-                                    timer: 10000
-                                })
-                            }
-
+                        if (alert) {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: response.message,
+                                showConfirmButton: true,
+                                timer: 10000
+                            })
                         }
 
                     }
-                })
+
+                }
+            })
 
 
-            } else {
-                Swal.fire({
-                    type: 'warning',
-                    title: 'Oops...',
-                    text: 'Informe o número da Ísca',
-                    showConfirmButton: true,
-                    timer: 10000
-                })
-            }
-        })
+        } else {
+            Swal.fire({
+                type: 'warning',
+                title: 'Oops...',
+                text: 'Informe o número da Ísca',
+                showConfirmButton: true,
+                timer: 10000
+            })
+        }
+    })
+});
+
+/**
+    Gravar Embarques
+*/
+
+$(function() {
+
+    $('#btn-boarding-save').click(function() {
+        $('#btn-boarding-save').prop('disabled', true);
+        if ($('#duration').val() == "") {
+            $('#duration').focus();
+            $('#duration').addClass('focus-input')
+        }
+        var boarding_id = $('#id').val();
+        ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
     });
-
-    /**
-        Gravar Embarques
-    */
-
-    $(function() {
-
-        $('#btn-boarding-save').click(function() {
-            $('#btn-boarding-save').prop('disabled', true);
-            if ($('#duration').val() == "") {
-                $('#duration').focus();
-                $('#duration').addClass('focus-input')
-            }
-            var boarding_id = $('#id').val();
-            ajax_store(boarding_id, "boardings", $('#form-create-boarding').serialize());
-        });
-    });
+});
 </script>
 @endsection

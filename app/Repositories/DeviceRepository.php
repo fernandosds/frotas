@@ -108,10 +108,11 @@ class DeviceRepository extends AbstractRepository
         try {
             $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
             $data = DB::table('devices')
-                ->join('contracts', 'contracts.id', '=', 'devices.contract_id')
+                //->join('contracts', 'contracts.id', '=', 'devices.contract_id')
                 ->join('technologies', 'technologies.id', '=', 'devices.technologie_id')
-                ->select('devices.uniqid', 'devices.id', 'devices.contract_id AS contract_id', 'contracts.status', 'devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
-                ->where('contracts.status', 1)
+                //->select('devices.uniqid', 'devices.id', 'devices.contract_id AS contract_id', 'contracts.status', 'devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
+                ->select('devices.uniqid', 'devices.id', 'devices.model', 'devices.technologie_id', 'technologies.type AS technologie')
+                //->where('contracts.status', 1)
                 ->where('devices.model', $device)
                 ->when(!$adminSat, function ($query) {
                     return $query->where('devices.customer_id', Auth::user()->customer_id);
@@ -119,7 +120,6 @@ class DeviceRepository extends AbstractRepository
                 ->first();
 
             if ($data) {
-
                 return ['status' => 'success', 'message' => '', 'data' => $data];
             } else {
                 return ['status' => 'error', 'message' => 'Ísca não encontrada'];
