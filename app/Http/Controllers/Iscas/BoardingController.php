@@ -287,7 +287,7 @@ class BoardingController extends Controller
             $return['device_type'] = $device['data']->technologie;
             $return['model'] = $device['data']->model;
             $return['device_id'] = $device['data']->id;
-            $return['contract_id'] = $device['data']->contract_id;
+            //$return['contract_id'] = $device['data']->contract_id;
             $return['uniqid'] = $device['data']->uniqid;
             $test_device = $this->apiDeviceServic->getLastPosition($model);
 
