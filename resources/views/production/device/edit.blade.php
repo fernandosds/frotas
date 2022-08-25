@@ -79,7 +79,7 @@
                             <div class="form-row">
                                 <label for="input">Selecione tipo de bateria</label>
                                 <select class="form-control" name="technologie_id" id="technologie_id">
-                                    <option value="">
+                                    <option value="{{$technologieRel->technologie->id ?? ''}}">
                                         {{ isset($technologieRel->technologie->type) ? $technologieRel->technologie->type : null }}
                                     </option>
                                     @foreach( $technologies as $technologie )
