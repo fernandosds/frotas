@@ -34,16 +34,12 @@
                 </span>
                 <h3 class="kt-portlet__head-title">
 
-                    @if (!isset($device->id))
                     {{$title}} <small>Novo</small>
-                    @else
-                    {{$title}} <small>Alterar</small>
-                    @endif
 
                 </h3>
             </div>
         </div>
-        @if (!isset($device->id))
+
         <div class="row">
             <div class="col-sm-12">
                 <form class="kt-form kt-form--label-right" id="form-create-device" method="post"
@@ -80,7 +76,7 @@
                                             </option>
                                             @foreach( $customers as $customer )
                                             <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
-                                                {{$customer->name}}
+                                                {{$customer->id}}-{{$customer->name}}
                                             </option>
                                             @endforeach
                                         </select>
@@ -206,87 +202,7 @@
                 </form>
             </div>
         </div>
-        @else
-        <form class="kt-form kt-form--label-right" id="form-create-device" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="kt-portlet__body">
-                <div class="row kt-margin-b-20">
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <div class="kt-portlet__body">
-                            <label>Registro:</label>
-                            <input type="text" readonly name="registro" id="registro" class="form-control pull-right"
-                                value="{{$device->id ?? ''}}" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <div class="kt-portlet__body">
-                            <div class="form-row">
-                                <label for="input">Selecione um cliente</label>
-                                <select class="form-control" name="acustomer_id" id="acustomer_id">
-                                    <option value="">{{$deviceRel->customer->name}}</option>
-                                    @foreach( $customers as $customer )
-                                    <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
-                                        {{$customer->id}}-{{$customer->name}}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <div class="kt-portlet__body">
-                            <div class="form-row">
-                                <label>Modelo:</label>
-                                <input type="text" readonly name="amodel" id="amodel" class="form-control pull-right"
-                                    value="{{$device->model ?? ''}}" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <div class="kt-portlet__body">
-                            <div class="form-row">
-                                <label for="input">Selecione tipo de bateria</label>
-                                <select class="form-control" name="atechnologie_id" id="atechnologie_id">
-                                    <option value="">
-                                        {{ isset($technologieRel->technologie->type) ? $technologieRel->technologie->type : null }}
-                                    </option>
-                                    @foreach( $technologies as $technologie )
-                                    <option value=" {{$technologie->id}}" {{ $technologie->id == $technologie->id}}>
-                                        {{$technologie->type}}
-                                    </option>
-                                    @endforeach
-                                </select><br /><br />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <div class="kt-portlet__body">
-                            <div class="form-row">
-                                @if ($device->status == "em andamento")
-                                <label>Status:</label>
-                                <input type="text" readonly name="astatus" id="astatus" class="form-control pull-right"
-                                    value="{{$device->status ?? ''}}" />
-                                @else
-                                <label for="input">Selecione status</label>
-                                <select class="form-control" name="astatus" id="astatus">
-                                    <option selected {{$device->status}}>
-                                        {{ isset($device->status) ? $device->status : null }}</option>
-                                    <option value="disponivel">disponivel</option>
-                                    <option value="em andamento">em andamento</option>
-                                    <option value="indisponivel">indisponivel</option>
-                                </select><br /><br />
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="{{url('production/devices')}}" class="btn btn-secondary">Voltar</a>
-                <button type="button" class="btn btn-primary" id="btn-device-alterar">Alterar</button>
-            </div>
-        </form>
-        @endif
+
     </div>
 </div>
 
@@ -412,80 +328,6 @@ $(function() {
 
     });
 
-    $('#btn-device-alterar').click(function() {
-        console.log('Vc apertou botão alterar');
-        console.log('Registro : ' + $('#registro').val());
-        console.log('aModel : ' + $('#amodel').val());
-        console.log('aTechnologie_id : ' + $('#atechnologie_id').val());
-        console.log('aCustomer_id : ' + $('#acustomer_id').val());
-        console.log('aTipo : ' + $('#atipo').val());
-        console.log('aStatus : ' + $('#astatus').val());
-
-        $.ajax({
-            url: '{{url("/production/devices/update")}}' + "/" + $('#registro').val(),
-            type: 'PUT',
-            data: {
-                "_token": "{{ csrf_token() }}",
-                'model': $('#amodel').val(),
-                'technologie_id': $('#atechnologie_id').val(),
-                'customer_id': $('#acustomerI_id').val(),
-                'tipo': $('#atipoI').val(),
-                'status': $('#astatus').val(),
-            },
-            success: function(response) {
-                console.log("response: " + response.status);
-                if (response.status == "success") {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Registro salvo com sucesso',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar salvar! ' + response.message,
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-                }
-            },
-            error: function(error) {
-                if (error.responseJSON.response == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-
-                } else if (error.responseJSON.response == "validation_error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
-
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-            }
-        });
-    });
-
     $('#btn-device-newone').click(function() {
         // console.log('Vc apertou botão new one');
         // console.log('Model : ' + $('#nmodel').val());
@@ -515,21 +357,21 @@ $(function() {
             })
             return false;
         }
-        if ($('#ntechnologie_id')[0].value == "") {
-            Swal.fire({
-                type: 'warning',
-                title: 'Ops...',
-                text: 'Selecione uma bateria !',
-                showConfirmButton: true,
-                timer: 10000
-            })
-            return false;
-        }
         if ($('#ntipo')[0].value == "") {
             Swal.fire({
                 type: 'warning',
                 title: 'Ops...',
                 text: 'Selecione um tipo !',
+                showConfirmButton: true,
+                timer: 10000
+            })
+            return false;
+        }
+        if ($('#ntechnologie_id')[0].value == "") {
+            Swal.fire({
+                type: 'warning',
+                title: 'Ops...',
+                text: 'Selecione uma bateria !',
                 showConfirmButton: true,
                 timer: 10000
             })

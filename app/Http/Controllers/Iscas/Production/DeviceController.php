@@ -78,7 +78,7 @@ class DeviceController extends Controller
 
         $data = $this->data;
         $data['technologies'] = $this->technologieService->all();
-        $data['customers'] = $this->customerService->all();
+        $data['customers'] = $this->customerService->getAllCustomerDevice(); // getAllCustomerDevice
         $data['devices'] = $this->deviceService->all();
 
         //dd($data['customers']);
@@ -173,7 +173,8 @@ class DeviceController extends Controller
         $data['technologieRel'] = $this->deviceService->getTechnologie($id);
         $data['customers'] = $this->customerService->getAllCustomerDevice(); // getAllCustomerDevice
 
-        return view('production.device.new', $data);
+        //dd($data['technologieRel']);
+        return view('production.device.edit', $data);
 
     }
 
