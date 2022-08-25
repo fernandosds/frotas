@@ -168,12 +168,10 @@ class DeviceController extends Controller
         $data = $this->data;
         $data['device'] = $this->deviceService->show($id);
         $data['deviceRel'] = $this->deviceService->getCustomer($id);
-        // dd($data['deviceRel']->customer->name);
         $data['devices'] = $this->deviceService->all($id);
         $data['technologies'] = $this->technologieService->all();
         $data['technologieRel'] = $this->deviceService->getTechnologie($id);
-        //dd($this->deviceService->getTechnologie($id));
-        $data['customers'] = $this->customerService->all();
+        $data['customers'] = $this->customerService->getAllCustomerDevice(); // getAllCustomerDevice
 
         return view('production.device.new', $data);
 

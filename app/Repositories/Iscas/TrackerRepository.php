@@ -62,7 +62,6 @@ class TrackerRepository extends AbstractRepository
     public function attachDevices($object)
     {
         $trackerDevices = $this->model
-            ->whereNull('contract_id')
             ->whereNull('customer_id')
             ->limit($object->quantity);
 
@@ -70,7 +69,6 @@ class TrackerRepository extends AbstractRepository
             return ['status' => 'error', 'message' => 'Quantidade de dispositivos insuficiente no estoque'];
         } else {
             $trackerDevices->update([
-                'contract_id' => $object->contract_id,
                 'customer_id' => $object->contract->customer_id,
                 'status'      => 'disponivel'
             ]);
