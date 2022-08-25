@@ -342,6 +342,9 @@
                             <div class="grid-item">
                                 <input class="checkbox" type="checkbox" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA VIOLADA</span>
                             </div>
+                            <div class="grid-item hidden">
+                                <input id="batViolada" class="checkbox " type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
+                            </div>
                             <div class="grid-item">
                                 <input class="checkbox" type="checkbox" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 7 DIAS</span>
                             </div>
@@ -527,7 +530,7 @@
                     "data": "dt_inicio_instalacao",
 
                 }, {
-                    "data": "dt_termino_instalacao",
+                    "data": "dt_termino_instalacao", // 15
                 }, {
                     "data": "projeto",
                     "width": "50px",
@@ -541,30 +544,30 @@
                     "data": "situacao",
                     visible: false
                 }, {
-                    "data": " ",
+                    "data": " ", //18
                     "width": "70px",
                     render: function(data, type, row, meta) {
                         return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
                             ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
                     }
                 }, {
-                    "data": "dt_entrada",
+                    "data": "dt_entrada", //19
                     visible: false
                 }, {
-                    "data": "status_situacao"
+                    "data": "status_situacao" //20
                 }, {
-                    "data": "event_violacao",
+                    "data": "event_violacao", //21
                     "width": "40px",
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
                             return '<div class="fa-stack-modificado" ><label title="Bateria Violada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
                         } else {
-                            return null
+                            return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
                         }
 
                     }
                 },
-                 // campo oculto
+                // campo oculto
                 {
                     "data": "event_violacao",
                     render: function(data, type, row, meta) {
@@ -734,6 +737,10 @@
                 search: 'applied'
             }).count();
 
+            totalRowCount['bateria_nao_violada'] = oTable.rows(':contains("bateria_nao_violada")', {
+                search: 'applied'
+            }).count();
+
             totalRowCount['equipamento_manutencao'] = oTable.rows(':contains("equipamento_manutencao")', {
                 search: 'applied'
             }).count();
@@ -741,6 +748,7 @@
             $('#financeira').html(totalRowCount['financeira']);
             $('#renegociacao').html(totalRowCount['renegociacao']);
             $('#bateria_violada').html(totalRowCount['bateria_violada']);
+            $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
             $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
         });
 
@@ -768,6 +776,10 @@
             tableOneRowCount();
         }, 15000);
 
+        // Adicionar checked após 10 segundos
+        setTimeout(function() {
+            $('#batViolada')[0].click()
+        }, 20000);
 
 
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
@@ -791,6 +803,7 @@
             }).get().join('|');
             $('#example').DataTable().column(23).search(status, true, false, false).draw();
         });
+
 
         $('.installed').click(function() {
             $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
