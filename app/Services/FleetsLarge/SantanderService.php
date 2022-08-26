@@ -35,6 +35,7 @@ class SantanderService
             $car->data_inst = $car->periodo[0];
             $car->hora_inst = $car->periodo[1] ?? "00:00:00";
 
+            
 
 
             if ($car->event_violacao == "true") {
