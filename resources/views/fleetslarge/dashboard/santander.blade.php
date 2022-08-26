@@ -317,7 +317,7 @@
             <div class="kt-portlet__body">
                 <div class="row kt-margin-b-20">
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
-                        <label>Data de entrada:</label>
+                        <label><b>Data de entrada:</b></label>
                         <div class="input-group">
                             <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
                             <div class="input-group-append">
@@ -327,7 +327,7 @@
                     </div>
                     <!-- <div class="row"> -->
                         <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile grid-style">
-                            <label>Projeto:</label>
+                            <label><b>Projeto:</b></label>
                             <div class="kt-checkbox-inline grid-status">
                                 <div class="grid-item">
                                     <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
@@ -341,7 +341,7 @@
                             </div>
                         </div>
                         <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
-                            <label>Manutenção:</label>
+                            <label><b>Manutenção:</b></label>
                             <div class="kt-checkbox-inline grid-status">
                                 <div class="grid-item">
                                     <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA VIOLADA</span>
