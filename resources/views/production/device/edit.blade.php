@@ -54,14 +54,19 @@
                         <div class="kt-portlet__body">
                             <div class="form-row">
                                 <label for="input">Selecione um cliente</label>
-                                <select class="form-control" name="acustomer_id" id="acustomer_id">
-                                    <option value="">{{$deviceRel->customer->name}}</option>
-                                    @foreach( $customers as $customer )
-                                    <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
-                                        {{$customer->id}}-{{$customer->name}}
-                                    </option>
-                                    @endforeach
-                                </select>
+                                @if ($device->status <> "disponivel")
+                                    <input type="text" readonly name="acustomer_id" id="acustomer_id"
+                                        class="form-control pull-right" value="{{$deviceRel->customer->name}}" />
+                                    @else
+                                    <select class="form-control" name="acustomer_id" id="acustomer_id">
+                                        <option value="">{{$deviceRel->customer->name}}</option>
+                                        @foreach( $customers as $customer )
+                                        <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
+                                            {{$customer->id}}-{{$customer->name}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @endif
                             </div>
                         </div>
                     </div>
@@ -78,37 +83,43 @@
                         <div class="kt-portlet__body">
                             <div class="form-row">
                                 <label for="input">Selecione tipo de bateria</label>
-                                <select class="form-control" name="technologie_id" id="technologie_id">
-                                    <option value="{{$technologieRel->technologie->id ?? ''}}">
-                                        {{ isset($technologieRel->technologie->type) ? $technologieRel->technologie->type : null }}
-                                    </option>
-                                    @foreach( $technologies as $technologie )
-                                    <option value=" {{$technologie->id}}" {{ $technologie->id == $technologie->id}}>
-                                        {{$technologie->type}}
-                                    </option>
-                                    @endforeach
-                                </select><br /><br />
+                                @if ($device->status <> "disponivel")
+                                    <input type="text" readonly name="technologie_id" id="technologie_id"
+                                        class="form-control pull-right"
+                                        value="{{ isset($technologieRel->technologie->type) ? $technologieRel->technologie->type : null }}" />
+                                    @else
+                                    <select class="form-control" name="technologie_id" id="technologie_id">
+                                        <option value="{{$technologieRel->technologie->id ?? ''}}">
+                                            {{ isset($technologieRel->technologie->type) ? $technologieRel->technologie->type : null }}
+                                        </option>
+                                        @foreach( $technologies as $technologie )
+                                        <option value=" {{$technologie->id}}" {{ $technologie->id == $technologie->id}}>
+                                            {{$technologie->type}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @endif
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <div class="kt-portlet__body">
                             <div class="form-row">
-                                @if ($device->status == "em andamento")
-                                <label>Status:</label>
-                                <input type="text" readonly name="astatus" id="astatus" class="form-control pull-right"
-                                    value="{{$device->status ?? ''}}" />
-                                @else
-                                <label for="input">Selecione status</label>
-                                <select class="form-control" name="astatus" id="astatus">
-                                    <option selected {{$device->status}}>
-                                        {{ isset($device->status) ? $device->status : null }}</option>
-                                    <option value="disponivel">disponivel</option>
-                                    <option value="em andamento">em andamento</option>
-                                    <option value="indisponivel">indisponivel</option>
-                                </select><br /><br />
+                                @if ($device->status <> "disponivel")
+                                    <label>Status:</label>
+                                    <input type="text" readonly name="astatus" id="astatus"
+                                        class="form-control pull-right" value="{{$device->status ?? ''}}" />
+                                    @else
+                                    <label for="input">Selecione status</label>
+                                    <select class="form-control" name="astatus" id="astatus">
+                                        <option selected {{$device->status}}>
+                                            {{ isset($device->status) ? $device->status : null }}</option>
+                                        <option value="disponivel">disponivel</option>
+                                        <option value="em andamento">em andamento</option>
+                                        <option value="indisponivel">indisponivel</option>
+                                    </select><br /><br />
+                                    @endif
                             </div>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -204,6 +215,7 @@ $(function() {
 
 });
 </script>
+
 
 
 @endsection

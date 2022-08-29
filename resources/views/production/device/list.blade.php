@@ -28,7 +28,7 @@ td {
                 <span class="kt-menu__link-icon"><i class="fa fa-solid fa-wrench"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    <span class="kt-menu__link-text">Lista de iscas</span>
+                    <span class="kt-menu__link-text"> Lista de iscas</span>
                 </h3>
             </div>
 
@@ -87,18 +87,19 @@ td {
                         @endif
                         <td style="width: 200px;">
                             <div class="pull-left">
-                                <a href="{{url('production/devices/edit')}}/{{$device->id}}">
-                                    <button type="button"
-                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
-                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                @if($device->status <> 'disponivel')
+                                    <a href="{{url('production/devices/edit')}}/{{$device->id}}">
+                                        <button type="button"
+                                            class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                            title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                        </button>
+                                    </a>
+                                    <button type="button" title="Excluir produto" id="device_id"
+                                        data-id="{{$device->id}}"
+                                        class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
+                                        <span class="fa fa-fw fa-trash"></span>
                                     </button>
-                                </a>
-                                @if($device->status == 'disponivel')
-                                <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}"
-                                    class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
-                                    <span class="fa fa-fw fa-trash"></span>
-                                </button>
-                                @endif
+                                    @endif
                             </div>
                         </td>
                     </tr>
