@@ -35,12 +35,13 @@ class DeviceController extends Controller
      * @param TechnologieService $technologieService
      * @var LogService
      */
-    public function __construct(DeviceService $deviceService,
-                                TechnologieService $technologieService,
-                                TrackerService $trackerService,
-                                CustomerService $customerService,
-                                LogRepository $log,
-                                LogService $logService
+    public function __construct(
+        DeviceService $deviceService,
+        TechnologieService $technologieService,
+        TrackerService $trackerService,
+        CustomerService $customerService,
+        LogRepository $log,
+        LogService $logService
     ) {
         $this->deviceService = $deviceService;
         $this->technologieService = $technologieService;
@@ -84,7 +85,6 @@ class DeviceController extends Controller
         //dd($data['customers']);
 
         return view('production.device.new', $data);
-
     }
 
     /**
@@ -102,7 +102,6 @@ class DeviceController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
-
     }
 
     /**
@@ -112,11 +111,12 @@ class DeviceController extends Controller
     public function save(DeviceRequest $request)
     {
 
+        //dd($request['tipo']);
+
         ini_set('memory_limit', '1024M');
         ini_set('max_execution_time', 180); //3 minutes
 
-        if($request->hasFile('file')){
-
+        if ($request->hasFile('file')) {
             $tipo = $request['tipo'];
             $customerId = $request['select'];
 
@@ -124,24 +124,24 @@ class DeviceController extends Controller
             $sheet = $spreadsheets->getSheet($spreadsheets->getFirstSheetIndex());
             $data = $sheet->toArray();
 
-            foreach($data as $index => $cells){
-                foreach($cells as $i => $cell){
-                     if(!is_null($cell)){
-                        if($i >= 2){
+            foreach ($data as $index => $cells) {
+                foreach ($cells as $i => $cell) {
+                    if (!is_null($cell)) {
+                        if ($i >= 2) {
                             continue;
-                        }else{
+                        } else {
                             //dd($cell);
                             $validaModelo = $this->deviceService->findDevice($cell);
-                            if(!$validaModelo){
+                            if (!$validaModelo) {
                                 //dd($validaModelo);
                                 $arraydata[$index][$i] = (string)$cell;
                             }
                         }
-                     }
+                    }
                 }
             }
 
-            //dd($arraydata);
+            //dd($arraydata, $customerId, $tipo);
 
             $inserts = $this->deviceService->save($arraydata, $customerId, $tipo);
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e importou planilha de isca cliente id: ' . $customerId, 'DeviceService', 'save');
@@ -150,19 +150,17 @@ class DeviceController extends Controller
                  'status' => 'success',
                  'message' => count($inserts)
             ], 200);
-
-        }else{
+        } else {
             exit('Falha ao abrir arquivo.');
             //dd("não entrou");
         }
-
     }
 
     /**
      * @param Int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Int $id)
+    public function edit(int $id)
     {
 
         $data = $this->data;
@@ -175,7 +173,6 @@ class DeviceController extends Controller
 
         //dd($data['technologieRel']);
         return view('production.device.edit', $data);
-
     }
 
     /**
@@ -189,7 +186,6 @@ class DeviceController extends Controller
         //dd($request->id);
 
         try {
-
             $this->deviceService->update($request, $request->id);
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e alterou isca ' . $request->model, 'DeviceService', 'update');
 
@@ -203,7 +199,7 @@ class DeviceController extends Controller
      * @param Int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Int $id)
+    public function destroy(int $id)
     {
 
         $destroy = $this->deviceService->destroy($id);
@@ -221,7 +217,7 @@ class DeviceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function delete(Int $id)
+    public function delete(int $id)
     {
         // $data = $this->data;
         // $data['devices'] = $this->deviceService->paginate();
@@ -236,7 +232,5 @@ class DeviceController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => $destroy . ' O dispositivo esta em uso por um cliente!']);
         }
-
     }
-
 }

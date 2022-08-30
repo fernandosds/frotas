@@ -87,6 +87,14 @@ td {
                         @endif
                         <td style="width: 200px;">
                             <div class="pull-left">
+                                @if($device->status == null)
+                                <a href="{{url('production/devices/edit')}}/{{$device->id}}">
+                                    <button type="button"
+                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                    </button>
+                                </a>
+                                @endif
                                 @if($device->status == 'disponivel')
                                 <a href="{{url('production/devices/edit')}}/{{$device->id}}">
                                     <button type="button"

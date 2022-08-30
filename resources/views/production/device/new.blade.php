@@ -39,12 +39,12 @@
                 </h3>
             </div>
         </div>
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="row">
             <div class="col-sm-12">
                 <form class="kt-form kt-form--label-right" id="form-create-device" method="post"
                     enctype="multipart/form-data">
-                    @csrf
+
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -213,10 +213,10 @@
 $(function() {
 
     $('#btn-device-import').click(function() {
-        // console.log('Vc apertou botão import');
-        // console.log('Arquivo : ' + $('#xlsfile').val());
-        // console.log('Customer_id : ' + $('#customer_id').val());
-        // console.log('Tipo : ' + $('#tipo').val());
+        console.log('Vc apertou botão import');
+        console.log('Arquivo : ' + $('#xlsfile').val());
+        console.log('Customer_id : ' + $('#customer_id').val());
+        console.log('Tipo : ' + $('#tipo').val());
 
         if (typeof($('#xlsfile')[0].files[0]) == 'undefined') {
             Swal.fire({
@@ -252,13 +252,14 @@ $(function() {
         }
 
         var file_data = $('#xlsfile')[0].files[0];
-        var optionSelected = $('#customer_id option:selected').val();
+        var optionSelectedcustomer = $('#customer_id option:selected').val();
+        var optionSelectedtipo = $('#tipo option:selected').val();
 
         //console.log(file_data)
         var form_data = new FormData();
         //form_data.append('file', file_data, 'file', optionSelected);
-        form_data.append('tipo', tipo);
-        form_data.append('select', optionSelected);
+        form_data.append('tipo', optionSelectedtipo);
+        form_data.append('select', optionSelectedcustomer);
         form_data.append('file', file_data);
 
         //console.log($customer_id);
