@@ -18,8 +18,8 @@ class LogRepository extends AbstractRepository
         $this->model = $model;
     }
 
-    public function table($limit){
-        return $this->model->orderBy('id', 'desc')->limit($limit)->get();
+    public function table($limit, $customer_id = null){
+        return $this->model->where('customer_id', $customer_id)->orderBy('id', 'desc')->limit($limit)->get();
     }
 
     public function saveLog($user, $data, $ip = null)

@@ -48,7 +48,6 @@
         background: #f1f7ff;
     }
 
-
     input[type="number"] {
         min-width: 50px;
     }
@@ -243,6 +242,9 @@
     td {
         font-size: 12px;
     }
+    .grid-style{
+        border-right: 1px solid lightgray;
+    }
 </style>
 @endsection
 
@@ -251,11 +253,11 @@
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
+        <div class="progressebar-tooltip" role="progressbar" data-toggle="tooltip" style="width: 100%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-4">
         <div class="card text-white bg-primary col-md-12 installed">
             <div class="card-body card-total">
@@ -283,15 +285,15 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="btn-success text-white center btn-excel col-md-12">
             <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="row">
@@ -306,15 +308,15 @@
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Relatório Gerencial
+                        Dashboard
                     </h3>
                 </div>
             </div>
 
             <div class="kt-portlet__body">
                 <div class="row kt-margin-b-20">
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                        <label>Data de entrada:</label>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Data de entrada:</b></label>
                         <div class="input-group">
                             <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
                             <div class="input-group-append">
@@ -322,37 +324,39 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                        <label>Projeto:</label>
-                        <div class="kt-checkbox-inline grid-status">
-                            <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
+                    <!-- <div class="row"> -->
+                        <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile grid-style">
+                            <label><b>Projeto:</b></label>
+                            <div class="kt-checkbox-inline grid-status">
+                                <div class="grid-item">
+                                    <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
+                                </div>
+                                <div class="grid-item">
+                                    <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
+                                </div>
                             </div>
-                            <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
-                            </div>
-                        </div>
-                        <div class="obs">
-                            <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <label>Manutenção:</label>
-                        <div class="kt-checkbox-inline grid-status">
-                            <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA VIOLADA</span>
-                            </div>
-                            <div class="grid-item hidden">
-                                <input id="batViolada" class="checkbox " type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
-                            </div>
-                            <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 7 DIAS</span>
+                            <div class="obs">
+                                <label><i class="flaticon-alert"></i>OBS: Desmarcar as opções para listar todos.</label>
                             </div>
                         </div>
-                        <div class="obs">
-                            <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
+                        <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
+                            <label><b>Manutenção:</b></label>
+                            <div class="kt-checkbox-inline grid-status">
+                                <div class="grid-item">
+                                    <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
+                                </div>
+                                <div class="grid-item hidden">
+                                    <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
+                                </div>
+                                <div class="grid-item">
+                                    <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 7 DIAS</span>
+                                </div>
+                            </div>
+                            <div class="obs">
+                                <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
+                            </div>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
                 <table id="example" class="display" style="width:100%">
@@ -421,7 +425,6 @@
 
     $('#timeline').removeClass('hidden');
 
-
     function resetGrid() {
         // Progress bar
         $('#div-progress-bar-fleetlarge').show();
@@ -441,6 +444,7 @@
                 progressBar = progressBar - 1;
             }
             $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+            $('#progress_bar_fleetlarge').attr("title", "Tempo" + progressBar + "%")
         }, 1000);
     }
 
@@ -555,16 +559,15 @@
                     visible: false
                 }, {
                     "data": "status_situacao" //20
-                }, {
+                }, 
+                {
                     "data": "event_violacao", //21
                     "width": "40px",
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
-                            return '<div class="fa-stack-modificado" ><label title="Bateria Violada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
-                        } else {
-                            return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
+                            return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
                         }
-
+                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
                     }
                 },
                 // campo oculto
@@ -574,6 +577,7 @@
                         if (row.event_violacao == 'bateria_violada') {
                             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
                         }
+                        
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
                     }
                 },
@@ -583,6 +587,7 @@
                         if (row.manutencao == 'equipamento_manutencao') {
                             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
                         }
+
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
                     }
                 },
@@ -723,8 +728,10 @@
         });
 
         let totalRowCount = new Array();
-
+        const total_violada = 0;
+        const total_financeira = 0;
         oTable.on('draw', function() {
+
             totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
                 search: 'applied'
             }).count();
@@ -745,11 +752,12 @@
                 search: 'applied'
             }).count();
 
-            $('#financeira').html(totalRowCount['financeira']);
-            $('#renegociacao').html(totalRowCount['renegociacao']);
-            $('#bateria_violada').html(totalRowCount['bateria_violada']);
-            $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
-            $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
+            // $('#financeira').html(totalRowCount['financeira']);
+            // $('#renegociacao').html(totalRowCount['renegociacao']);
+            // $('#bateria_violada').html(totalRowCount['bateria_violada']);
+            // $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
+            // $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
+
         });
 
         function tableOneRowCount() {
@@ -767,10 +775,8 @@
                 $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
             }, 16000);
 
-            console.log(totalRowCount)
             return totalRowCount;
         }
-
 
         setTimeout(function() {
             tableOneRowCount();
@@ -778,9 +784,19 @@
 
         // Adicionar checked após 10 segundos
         setTimeout(function() {
-            $('#batViolada')[0].click()
+            $('#batNaoViolada')[0].click();
         }, 20000);
 
+        $('input[name="bat"]').change(function(){
+            if($('#batViolada').is(':checked')){
+                $('#batNaoViolada').attr('checked', false);
+                $('#batViolada').attr('checked', true);
+            }else{
+                $('#batViolada').attr('checked', false);
+                $('#batNaoViolada')[0].click();
+                // $('#batNaoViolada').attr('checked', true);
+            }
+        });
 
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {
@@ -797,13 +813,13 @@
             $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
+
         $('input:checkbox').on('change', function() {
             var status = $('input:checkbox[name="man"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
             $('#example').DataTable().column(23).search(status, true, false, false).draw();
         });
-
 
         $('.installed').click(function() {
             $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
@@ -826,7 +842,6 @@
                 url: "{{url('')}}/fleetslarges/find/" + chassi,
                 type: 'GET',
                 success: function(response) {
-                    console.log(response)
                     $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
                     $('.placa').val(response.placa)
                     $('.empresa').val(response.empresa)
@@ -989,5 +1004,9 @@
             type: 'GET',
         });
     })
+
+    $(document).ready(function(){
+        $('.hidden').css('display', 'none');
+    });
 </script>
 @endsection

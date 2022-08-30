@@ -14,7 +14,8 @@ class SantanderService
     /**
      * @return mixed
      */
-    public function all($limit = 25000)
+    // public function all($limit = 25000)
+    public function all($limit = 30000)
     {
         $cars = $this->santander->table($limit);
 
@@ -38,7 +39,8 @@ class SantanderService
 
 
 
-            if ($car->event_violacao == "true") {
+
+            if ($car->event_violacao == "true" && $car->event_encerrado == '0') {
                 $car->event_violacao = "bateria_violada";
             } else {
                 $car->event_violacao = "bateria_nao_violada";

@@ -25,7 +25,7 @@ class LogService
 
     public function table(Int $limit = 100)
     {
-        return $this->log->table($limit);
+        return $this->log->table($limit, Auth::user()->customer_id);
     }
 
     /**
