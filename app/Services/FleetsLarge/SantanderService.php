@@ -16,7 +16,7 @@ class SantanderService
      * @return mixed
      */
     // public function all($limit = 25000)
-    public function all($limit = 100)
+    public function all($limit = 25000)
     {
         $cars = $this->santander->table($limit);
 
@@ -36,7 +36,7 @@ class SantanderService
             $car->data_inst = $car->periodo[0];
             $car->hora_inst = $car->periodo[1] ?? "00:00:00";
 
-            
+
 
 
             if ($car->event_violacao == "true") {

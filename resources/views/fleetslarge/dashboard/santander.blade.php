@@ -308,7 +308,7 @@
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Gestão
+                        Dashboard
                     </h3>
                 </div>
             </div>
@@ -559,10 +559,10 @@
                 }, {
                     "data": "dt_entrada", //19
                     visible: false
-                }, 
+                },
                 // {
                 //     "data": "status_situacao" //20
-                // }, 
+                // },
                 // {
                 //     "data": "event_violacao", //21
                 //     "width": "40px",
@@ -580,7 +580,7 @@
                 //         if (row.event_violacao == 'bateria_violada') {
                 //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
                 //         }
-                        
+
                 //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
                 //     }
                 // },
@@ -755,8 +755,8 @@
                 search: 'applied'
             }).count();
 
-            // $('#financeira').html(totalRowCount['financeira']);
-            // $('#renegociacao').html(totalRowCount['renegociacao']);
+             $('#financeira').html(totalRowCount['financeira']);
+             $('#renegociacao').html(totalRowCount['renegociacao']);
             // $('#bateria_violada').html(totalRowCount['bateria_violada']);
             // $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
             // $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);

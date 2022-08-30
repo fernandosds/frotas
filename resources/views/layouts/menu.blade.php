@@ -8,14 +8,14 @@
     background: rgba(0, 0, 0, 0.7);
     transition: opacity 0.2s;
     }
-    
+
     /* (B) CENTER LOADING SPINNER */
     #spinner .spinner-menu {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%);
     }
-    
+
     /* (C) SHOW & HIDE */
     #spinner {
     visibility: hidden;
@@ -480,7 +480,7 @@
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()" href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
                     </ul>
                 </div>
             </li>
@@ -644,13 +644,13 @@
             if (!resp.ok) {
                 throw new Error("HTTP status " + resp.status);
             }
-    
+
             return resp.json();
         };
-        
+
         console.log(xlsRequest);
-        // const resp = await fetch("https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"); 
-        // const jsonData = await resp.json(); 
-        // console.log("jsonData: ", jsonData ); 
+        // const resp = await fetch("https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx");
+        // const jsonData = await resp.json();
+        // console.log("jsonData: ", jsonData );
     }
 </script>
