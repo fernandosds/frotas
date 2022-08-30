@@ -48,7 +48,6 @@
         background: #f1f7ff;
     }
 
-
     input[type="number"] {
         min-width: 50px;
     }
@@ -254,7 +253,7 @@
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
+        <div class="progressebar-tooltip" role="progressbar" data-toggle="tooltip" style="width: 100%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
 
@@ -288,13 +287,13 @@
     </div>
 </div> -->
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="btn-success text-white center btn-excel col-md-12">
             <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="row">
@@ -309,7 +308,7 @@
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Relatório Gerencial
+                        Gestão
                     </h3>
                 </div>
             </div>
@@ -344,7 +343,7 @@
                             <label><b>Manutenção:</b></label>
                             <div class="kt-checkbox-inline grid-status">
                                 <div class="grid-item">
-                                    <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA VIOLADA</span>
+                                    <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
                                 </div>
                                 <div class="grid-item hidden">
                                     <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
@@ -426,7 +425,6 @@
 
     $('#timeline').removeClass('hidden');
 
-
     function resetGrid() {
         // Progress bar
         $('#div-progress-bar-fleetlarge').show();
@@ -446,6 +444,7 @@
                 progressBar = progressBar - 1;
             }
             $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+            $('#progress_bar_fleetlarge').attr("title", "Tempo para atualizar dados" + progressBar + "%")
         }, 1000);
     }
 
@@ -566,7 +565,7 @@
                     "width": "40px",
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
-                            return '<div class="fa-stack-modificado"><label title="Bateria Violada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
+                            return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
                         }
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
                     }
@@ -759,7 +758,6 @@
             // $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
             // $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
 
-
         });
 
         function tableOneRowCount() {
@@ -780,7 +778,6 @@
             return totalRowCount;
         }
 
-
         setTimeout(function() {
             tableOneRowCount();
         }, 15000);
@@ -792,11 +789,9 @@
 
         $('input[name="bat"]').change(function(){
             if($('#batViolada').is(':checked')){
-                console.log("batViolada está marcado");
                 $('#batNaoViolada').attr('checked', false);
                 $('#batViolada').attr('checked', true);
             }else{
-                console.log("batViolada está desmarcado");
                 $('#batViolada').attr('checked', false);
                 $('#batNaoViolada')[0].click();
                 // $('#batNaoViolada').attr('checked', true);
@@ -810,7 +805,6 @@
             }).get().join('|');
             $('#example').DataTable().column(16).search(status, true, false, false).draw();
         });
-        
 
         $('input:checkbox').on('change', function() {
             var status = $('input:checkbox[name="bat"]:checked').map(function() {
@@ -826,7 +820,6 @@
             }).get().join('|');
             $('#example').DataTable().column(23).search(status, true, false, false).draw();
         });
-
 
         $('.installed').click(function() {
             $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
@@ -849,7 +842,6 @@
                 url: "{{url('')}}/fleetslarges/find/" + chassi,
                 type: 'GET',
                 success: function(response) {
-                    console.log(response)
                     $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
                     $('.placa').val(response.placa)
                     $('.empresa').val(response.empresa)
