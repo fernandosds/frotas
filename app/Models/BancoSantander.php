@@ -67,6 +67,7 @@ class BancoSantander extends Model
         'situacao',
         'lp_ultima_transmissao_real',
         'event_violacao',
+        'event_encerrado',
         'manutencao'
 
 
