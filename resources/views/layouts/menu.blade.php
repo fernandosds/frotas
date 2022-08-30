@@ -470,9 +470,9 @@
                 </div>
             </li>
 
-            <!-- <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"> -->
+            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <!-- RELATÓRIOS  -->
-                <!-- <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="far fa-file-excel"></i></span>
                     <span class="kt-menu__link-text">Relatórios</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
@@ -483,7 +483,7 @@
                         <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()" href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
                     </ul>
                 </div>
-            </li> -->
+            </li>
 
             @if( Auth::user()->customer_id == 8)
                 <li class="kt-menu__section ">

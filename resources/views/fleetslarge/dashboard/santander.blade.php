@@ -242,9 +242,9 @@
     td {
         font-size: 12px;
     }
-    .grid-style{
+    /* .grid-style{
         border-right: 1px solid lightgray;
-    }
+    } */
 </style>
 @endsection
 
@@ -339,7 +339,7 @@
                                 <label><i class="flaticon-alert"></i>OBS: Desmarcar as opções para listar todos.</label>
                             </div>
                         </div>
-                        <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
+                        <!-- <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
                             <label><b>Manutenção:</b></label>
                             <div class="kt-checkbox-inline grid-status">
                                 <div class="grid-item">
@@ -355,7 +355,7 @@
                             <div class="obs">
                                 <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                             </div>
-                        </div>
+                        </div> -->
                     <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
@@ -473,12 +473,14 @@
             order: [
                 [12, 'desc']
             ],
-            columnDefs: [{
-                    className: "hidden",
-                    "targets": [20, 22, 23]
-                }, {
+            columnDefs: [
+                // {
+                //     className: "hidden",
+                //     "targets": [20, 22, 23]
+                // },
+                {
                     orderable: false,
-                    targets: [18, 21],
+                    targets: [18],// add 21
                 }, {
                     targets: [9, 12, 13, 14, 15],
                     render: function(data) {
@@ -557,40 +559,41 @@
                 }, {
                     "data": "dt_entrada", //19
                     visible: false
-                }, {
-                    "data": "status_situacao" //20
                 }, 
-                {
-                    "data": "event_violacao", //21
-                    "width": "40px",
-                    render: function(data, type, row, meta) {
-                        if (row.event_violacao == 'bateria_violada') {
-                            return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
-                        }
-                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
-                    }
-                },
-                // campo oculto
-                {
-                    "data": "event_violacao",
-                    render: function(data, type, row, meta) {
-                        if (row.event_violacao == 'bateria_violada') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
-                        }
+                // {
+                //     "data": "status_situacao" //20
+                // }, 
+                // {
+                //     "data": "event_violacao", //21
+                //     "width": "40px",
+                //     render: function(data, type, row, meta) {
+                //         if (row.event_violacao == 'bateria_violada') {
+                //             return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
+                //         }
+                //         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
+                //     }
+                // },
+                // // campo oculto
+                // {
+                //     "data": "event_violacao",
+                //     render: function(data, type, row, meta) {
+                //         if (row.event_violacao == 'bateria_violada') {
+                //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
+                //         }
                         
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
-                    }
-                },
-                {
-                    "data": "manutencao",
-                    render: function(data, type, row, meta) {
-                        if (row.manutencao == 'equipamento_manutencao') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
-                        }
+                //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
+                //     }
+                // },
+                // {
+                //     "data": "manutencao",
+                //     render: function(data, type, row, meta) {
+                //         if (row.manutencao == 'equipamento_manutencao') {
+                //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
+                //         }
 
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
-                    }
-                },
+                //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
+                //     }
+                // },
             ],
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
@@ -740,13 +743,13 @@
                 search: 'applied'
             }).count();
 
-            totalRowCount['bateria_violada'] = oTable.rows(':contains("bateria_violada")', {
-                search: 'applied'
-            }).count();
+            // totalRowCount['bateria_violada'] = oTable.rows(':contains("bateria_violada")', {
+            //     search: 'applied'
+            // }).count();
 
-            totalRowCount['bateria_nao_violada'] = oTable.rows(':contains("bateria_nao_violada")', {
-                search: 'applied'
-            }).count();
+            // totalRowCount['bateria_nao_violada'] = oTable.rows(':contains("bateria_nao_violada")', {
+            //     search: 'applied'
+            // }).count();
 
             totalRowCount['equipamento_manutencao'] = oTable.rows(':contains("equipamento_manutencao")', {
                 search: 'applied'
