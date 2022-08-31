@@ -14,6 +14,7 @@ use App\Services\DeviceService;
 use App\Services\CustomerService;
 use App\Services\Iscas\TrackerService;
 use App\Models\Customer;
+use App\Models\Technologie;
 //use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,9 +89,9 @@ class DeviceController extends Controller
     }
 
     /**
-    * @param DeviceoneRequest $request
-    * @return \Illuminate\Http\JsonResponse
-    */
+     * @param DeviceoneRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function saveone(DeviceoneRequest $request)
     {
 
@@ -147,8 +148,8 @@ class DeviceController extends Controller
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e importou planilha de isca cliente id: ' . $customerId, 'DeviceService', 'save');
 
             return response()->json([
-                 'status' => 'success',
-                 'message' => count($inserts)
+                'status' => 'success',
+                'message' => count($inserts)
             ], 200);
         } else {
             exit('Falha ao abrir arquivo.');
@@ -165,11 +166,19 @@ class DeviceController extends Controller
 
         $data = $this->data;
         $data['device'] = $this->deviceService->show($id);
-        $data['deviceRel'] = $this->deviceService->getCustomer($id);
-        $data['devices'] = $this->deviceService->all($id);
+
         $data['technologies'] = $this->technologieService->all();
+        $data['customers'] = $this->customerService->getAllCustomerDevice();
+
+
+        //var_dump($data['device']); die();
+
+        //dd(Technologie::with('devices'));die();
+        //$data['deviceRel'] = $this->deviceService->getCustomer($id);
+        //$data['devices'] = $this->deviceService->all($id);
+
         $data['technologieRel'] = $this->deviceService->getTechnologie($id);
-        $data['customers'] = $this->customerService->getAllCustomerDevice(); // getAllCustomerDevice
+        // getAllCustomerDevice
 
         //dd($data['technologieRel']);
         return view('production.device.edit', $data);
@@ -212,7 +221,7 @@ class DeviceController extends Controller
         }
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

@@ -28,7 +28,7 @@ td {
                 <span class="kt-menu__link-icon"><i class="fa fa-solid fa-wrench"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    <span class="kt-menu__link-text"> Lista de iscas</span>
+                    <span class="kt-menu__link-text">&nbsp; Lista de iscas</span>
                 </h3>
             </div>
 
