@@ -19,7 +19,7 @@ class Device extends Model
     /**
      * @var string
      */
-    protected $with = ["boardings"];
+    protected $with = ["boardings", "technologie"];
 
     /**
      * @var array

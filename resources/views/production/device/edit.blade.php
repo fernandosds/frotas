@@ -75,13 +75,19 @@
                                 <label for="input">Selecione tipo de bateria</label>
 
                                 <select class="form-control" name="technologie_id" id="technologie_id">
-
-                                    @foreach( $technologies as $technologie )
-
-                                    <option value=" {{$technologie->id}}" {{ $technologie->id == $technologie->id}}>
-                                        {{$technologie->type}}
-                                    </option>
-                                    @endforeach
+                                    @if(isset($device->technologie))
+                                        @foreach($technologies as $technologie)
+                                            @if($technologie->id == $device->technologie->id)
+                                                <option value="{{$device->model}}" selected>
+                                                    {{$device->technologie->type}}
+                                                </option>
+                                            @else
+                                                <option value="{{$device->model}}">
+                                                    {{$technologie->type}}
+                                                </option>  
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </select>
 
                             </div>
