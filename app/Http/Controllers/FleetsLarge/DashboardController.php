@@ -186,7 +186,7 @@ class DashboardController extends Controller
 
         // Entrar no dashboard banco PSA
         if (Auth::user()->customer_id == 14) {
-            $data['data'] = $this->psaService->all();
+            $data['carros'] = $this->psaService->all();
             return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
     }
