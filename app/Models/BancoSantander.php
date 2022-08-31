@@ -65,6 +65,10 @@ class BancoSantander extends Model
         't_solicitado_instalado',
         'projeto',
         'situacao',
+        'lp_ultima_transmissao_real',
+        'event_violacao',
+        'event_encerrado',
+        'manutencao'
 
 
     ];

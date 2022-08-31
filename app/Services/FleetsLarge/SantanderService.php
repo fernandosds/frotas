@@ -15,7 +15,8 @@ class SantanderService
     /**
      * @return mixed
      */
-    public function all($limit = 25000)
+    // public function all($limit = 25000)
+    public function all($limit = 35000)
     {
         $cars = $this->santander->table($limit);
 
@@ -34,6 +35,22 @@ class SantanderService
 
             $car->data_inst = $car->periodo[0];
             $car->hora_inst = $car->periodo[1] ?? "00:00:00";
+
+
+
+
+            if ($car->event_violacao == "true" && $car->event_encerrado == '0') {
+                $car->event_violacao = "bateria_violada";
+            } else {
+                $car->event_violacao = "bateria_nao_violada";
+            }
+
+
+
+            if ($car->manutencao == "true") {
+                $car->manutencao = "equipamento_manutencao";
+            }
+
 
             if (in_array($car->situacao, $aguardando_instalacao)) {
                 $car->status_situacao = "Aguardando_Instalacao";

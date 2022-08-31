@@ -48,7 +48,6 @@
         background: #f1f7ff;
     }
 
-
     input[type="number"] {
         min-width: 50px;
     }
@@ -227,12 +226,25 @@
         border: 1px solid #ebedf2;
     }
 
+    .fa-stack-modificado {
+        display: inline-block;
+        height: 2em;
+        position: relative;
+        vertical-align: middle;
+        width: 2em;
+        color: red;
+    }
+
     th {
         font-size: 12px;
     }
 
     td {
         font-size: 12px;
+    }
+
+    .grid-style {
+        border-right: 1px solid lightgray;
     }
 </style>
 @endsection
@@ -242,48 +254,9 @@
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
+        <div class="progressebar-tooltip" role="progressbar" data-toggle="tooltip" style="width: 100%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 installed">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 waiting">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao" value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> TOTAL </h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="btn-success text-white center btn-excel col-md-12">
-            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
-        </div>
-    </div>
-</div>
-
 
 <div class="row">
 
@@ -297,15 +270,15 @@
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Relatório Gerencial
+                        Dashboard
                     </h3>
                 </div>
             </div>
 
             <div class="kt-portlet__body">
                 <div class="row kt-margin-b-20">
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                        <label>Data de entrada:</label>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Data de entrada:</b></label>
                         <div class="input-group">
                             <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
                             <div class="input-group-append">
@@ -313,47 +286,67 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <label>Projeto:</label>
+                    <!-- <div class="row"> -->
+                    <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Projeto:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
                             </div>
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
+                            </div>
+                        </div>
+                        <div class="obs">
+                            <label><i class="flaticon-alert"></i>OBS: Desmarcar as opções para listar todos.</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
+                        <label><b>Manutenção:</b></label>
+                        <div class="kt-checkbox-inline grid-status">
+                            <div class="grid-item">
+                                <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
+                            </div>
+                            <div class="grid-item hidden">
+                                <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
+                            </div>
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 30 DIAS</span>
                             </div>
                         </div>
                         <div class="obs">
                             <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
                     </div>
+                    <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
                 <table id="example" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Placa</th>
-                            <th>Placa - Mercosul</th>
-                            <th class="hidden">Chassis</th>
-                            <th style="width: 80px;">Modelo</th>
-                            <th class="hidden">Latitude</th>
-                            <th class="hidden">Longitude</th>
-                            <th class="hidden">Endereço</th>
-                            <th class="hidden">Estado</th>
-                            <th class="hidden">Velocidade</th>
-                            <!-- 9 -->
-                            <th>Última Transmissão</th>
-                            <th style="width: 78px;">Loja</th>
-                            <th>Nº Proposta</th>
-                            <th>Data de entrada</th>
-                            <th>Data de acionamento Técnico</th>
-                            <th>Data de início de instalação</th>
-                            <th>Data de término de instalação</th>
-                            <th>Projeto</th>
-                            <th class="hidden">Situação</th>
-                            <th></th>
-                            <th class="hidden">Filtro - Dt. Entrada</th>
-                            <th class="hidden">Status_Geral</th>
+                            <th>Placa</th><!-- 0 -->
+                            <th>Placa - Mercosul</th> <!-- 1 -->
+                            <th class="hidden">Chassis</th> <!-- 2 -->
+                            <th style="width: 80px;">Modelo</th> <!-- 3 -->
+                            <th class="hidden">Latitude</th> <!-- 4 -->
+                            <th class="hidden">Longitude</th> <!-- 5 -->
+                            <th class="hidden">Endereço</th> <!-- 6 -->
+                            <th class="hidden">Estado</th><!-- 7 -->
+                            <th class="hidden">Velocidade</th> <!-- 8 -->
+                            <th>Última Transmissão</th> <!-- 9 -->
+                            <th style="width: 78px;">Loja</th> <!-- 10 -->
+                            <th>Nº Proposta</th> <!-- 11 -->
+                            <th>Data de entrada</th> <!-- 12 -->
+                            <th>Data de acionamento Técnico</th> <!-- 13 -->
+                            <th>Data de início de instalação</th> <!-- 14 -->
+                            <th>Data de término de instalação</th> <!-- 15 -->
+                            <th>Projeto</th> <!-- 16 -->
+                            <th class="hidden">Situação</th> <!-- 17 -->
+                            <th></th> <!-- 18 -->
+                            <th class="hidden">Filtro - Dt. Entrada</th> <!-- 19 -->
+                            <th></th> <!-- 20 -->
+                            <th class="hidden">Event_Violacao</th> <!-- 21 -->
+                            <th class="hidden">Manutencao</th> <!-- 22 -->
                         </tr>
                     </thead>
                     <tbody>
@@ -370,6 +363,7 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
@@ -392,7 +386,6 @@
 
     $('#timeline').removeClass('hidden');
 
-
     function resetGrid() {
         // Progress bar
         $('#div-progress-bar-fleetlarge').show();
@@ -412,6 +405,7 @@
                 progressBar = progressBar - 1;
             }
             $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+            $('#progress_bar_fleetlarge').attr("title", "Tempo" + progressBar + "%")
         }, 1000);
     }
 
@@ -442,10 +436,10 @@
             ],
             columnDefs: [{
                     className: "hidden",
-                    "targets": [20]
+                    "targets": [19, 21, 22]
                 }, {
                     orderable: false,
-                    targets: 18
+                    targets: [18, 20],
                 }, {
                     targets: [9, 12, 13, 14, 15],
                     render: function(data) {
@@ -453,82 +447,106 @@
                     }
                 },
                 {
-                    targets: 19,
+                    targets: [19],
                     render: function(data) {
                         return moment(data).format('DD/MM/YYYY');
                     }
                 },
-            ], //  "data": "dt_termino_instalacao",
+            ],
             columns: [{
-                "data": "placa"
-            }, {
-                "data": "placa"
-            }, {
-                "data": "chassis",
-                visible: false
-            }, {
-                "data": "modelo_veiculo",
-                "width": "40px",
-            }, {
-                "data": "lp_latitude",
-                visible: false
-            }, {
-                "data": "lp_longitude",
-                visible: false
-            }, {
-                "data": '',
-                render: function(data, type, row) {
-                    return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
-                },
-                visible: false
-            }, {
-                "data": "estado",
-                visible: false
-            }, {
-                "data": "lp_velocidade",
-                visible: false
-            }, {
-                "data": "lp_ultima_transmissao"
-            }, {
-                "data": "cliente" // loja
-            }, {
-                "data": "contrato"
-            }, {
-                "data": "dt_entrada"
-            }, {
-                "data": "dt_tecnico_acionado",
-            }, {
-                "data": "dt_inicio_instalacao",
-
-            }, {
-                "data": "dt_termino_instalacao",
-            }, {
-                "data": "projeto",
-                "width": "50px",
-                render: function(data, type, row, meta) {
-                    if (row.projeto == 'RENEGOCIACAO') {
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
-                    } else {
+                    "data": "placa", //0
+                }, {
+                    "data": "placa_mercosul", //1
+                }, {
+                    "data": "chassis", //2
+                    visible: false
+                }, {
+                    "data": "modelo_veiculo", //3
+                    "width": "40px",
+                }, {
+                    "data": "lp_latitude", //4
+                    visible: false
+                }, {
+                    "data": "lp_longitude", //5
+                    visible: false
+                }, {
+                    "data": '', //6
+                    render: function(data, type, row) {
+                        return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
+                    },
+                    visible: false
+                }, {
+                    "data": "estado", //7
+                    visible: false
+                }, {
+                    "data": "lp_velocidade", //8
+                    visible: false
+                }, {
+                    "data": "lp_ultima_transmissao", //9
+                }, {
+                    "data": "cliente", //10 loja
+                }, {
+                    "data": "contrato", //11
+                }, {
+                    "data": "dt_entrada", //12
+                }, {
+                    "data": "dt_tecnico_acionado", //13
+                }, {
+                    "data": "dt_inicio_instalacao", //14
+                }, {
+                    "data": "dt_termino_instalacao", // 15
+                }, {
+                    "data": "projeto", //16
+                    "width": "50px",
+                    render: function(data, type, row, meta) {
+                        if (row.projeto == 'RENEGOCIACAO') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
+                        }
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
                     }
+                }, {
+                    "data": "situacao", //17
+                    visible: false
+                }, {
+                    "data": " ", //18
+                    "width": "70px",
+                    render: function(data, type, row, meta) {
+                        return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
+                            ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
+                    }
+                }, {
+                    "data": "dt_entrada", //19
+                }, {
+                    "data": "event_violacao", //20
+                    "width": "40px",
+                    render: function(data, type, row, meta) {
+                        if (row.event_violacao == 'bateria_violada') {
+                            return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
+                        }
+                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
+                    }
+                },
+                // campo oculto
+                {
+                    "data": "event_violacao", //21
+                    render: function(data, type, row, meta) {
+                        if (row.event_violacao == 'bateria_violada') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
+                        }
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
+                    }
+                },
+                {
+                    "data": "manutencao", //22
+                    render: function(data, type, row, meta) {
+                        if (row.manutencao == 'equipamento_manutencao') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
+                        }
 
-                }
-            }, {
-                "data": "situacao",
-                visible: false
-            }, {
-                "data": " ",
-                "width": "100px",
-                render: function(data, type, row, meta) {
-                    return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
-                        ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
-                }
-            }, {
-                "data": "dt_entrada",
-                visible: false
-            }, {
-                "data": "status_situacao"
-            }, ],
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
+                    }
+                },
+            ],
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
@@ -665,8 +683,10 @@
         });
 
         let totalRowCount = new Array();
-
+        const total_violada = 0;
+        const total_financeira = 0;
         oTable.on('draw', function() {
+
             totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
                 search: 'applied'
             }).count();
@@ -675,8 +695,24 @@
                 search: 'applied'
             }).count();
 
-            $('#financeira').html(totalRowCount['financeira']);
-            $('#renegociacao').html(totalRowCount['renegociacao']);
+            totalRowCount['bateria_violada'] = oTable.rows(':contains("bateria_violada")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['bateria_nao_violada'] = oTable.rows(':contains("bateria_nao_violada")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['equipamento_manutencao'] = oTable.rows(':contains("equipamento_manutencao")', {
+                search: 'applied'
+            }).count();
+
+            // $('#financeira').html(totalRowCount['financeira']);
+            // $('#renegociacao').html(totalRowCount['renegociacao']);
+            // $('#bateria_violada').html(totalRowCount['bateria_violada']);
+            // $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
+            // $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
+
         });
 
         function tableOneRowCount() {
@@ -694,16 +730,27 @@
                 $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
             }, 16000);
 
-            console.log(totalRowCount)
             return totalRowCount;
         }
-
 
         setTimeout(function() {
             tableOneRowCount();
         }, 15000);
 
+        // Adicionar checked após 10 segundos
+        setTimeout(function() {
+            $('#batNaoViolada')[0].click();
+        }, 20000);
 
+        $('input[name="bat"]').change(function() {
+            if ($('#batViolada').is(':checked')) {
+                $('#batNaoViolada').attr('checked', false);
+                $('#batViolada').attr('checked', true);
+            } else {
+                $('#batViolada').attr('checked', false);
+                $('#batNaoViolada')[0].click();
+            }
+        });
 
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {
@@ -713,17 +760,19 @@
             $('#example').DataTable().column(16).search(status, true, false, false).draw();
         });
 
-
-        $('.installed').click(function() {
-            $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="bat"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(21).search(status, true, false, false).draw();
         });
 
-        $('.waiting').click(function() {
-            $('#example').DataTable().columns(20).search('Aguardando_Instalacao', true, false, true).draw();
-        });
 
-        $('.vehiclesTotal').click(function() {
-            $('#example').DataTable().columns(20).search('').draw();
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="man"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
 
@@ -735,7 +784,6 @@
                 url: "{{url('')}}/fleetslarges/find/" + chassi,
                 type: 'GET',
                 success: function(response) {
-                    console.log(response)
                     $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
                     $('.placa').val(response.placa)
                     $('.empresa').val(response.empresa)
@@ -898,5 +946,9 @@
             type: 'GET',
         });
     })
+
+    $(document).ready(function() {
+        $('.hidden').css('display', 'none');
+    });
 </script>
 @endsection
