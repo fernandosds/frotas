@@ -495,7 +495,7 @@
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
 
-          <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"> -->
+          <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <!-- GRANDES FROTAS -->
               <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <span class="kt-menu__link-icon"><i class="fa fa-map-marker-alt"></i></span>
