@@ -186,7 +186,7 @@ class DashboardController extends Controller
 
         // Entrar no dashboard banco PSA
         if (Auth::user()->customer_id == 14) {
-            $data['data'] = $this->psaService->all();
+            $data['carros'] = $this->psaService->all();
             return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
     }
@@ -514,6 +514,11 @@ class DashboardController extends Controller
         if (Route::currentRouteName() == 'fleetslarges.analyzeBase') {
             $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou a análise de Base.');
             $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
+        }
+
+        if (Route::currentRouteName() == 'fleetslarges.analyzeSla') {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou o dashboard sla santander.');
+            $data['hash'] = 'de49d52c-3c2b-4250-8ed5-2622c5c310c8';
         }
 
         // Iframe com os dados da base -- MOVIDA
