@@ -1,3 +1,45 @@
+@include('fleetslarge.dashboard.modalRelatorio')
+<style>
+    /* (A) FULL SCREEN WRAPPER */
+    #spinner {
+    position: fixed;
+    top: 0; left: 0; z-index: 9999;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.2s;
+    }
+
+    /* (B) CENTER LOADING SPINNER */
+    #spinner .spinner-menu {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%);
+    }
+
+    /* (C) SHOW & HIDE */
+    #spinner {
+    visibility: hidden;
+    opacity: 0;
+    }
+    #spinner.show {
+    visibility: visible;
+    opacity: 1;
+    }
+</style>
+<div id="spinner">
+  <!-- <img src="{{asset('/assets/spinner.gif')}}"/> -->
+    <!-- <div class="center-spinner"> -->
+        <div class="fa-3x spinner-menu">
+            <i class="fas fa-spinner fa-pulse" style="margin-left: 55px;"></i><br>
+            <span style="color: #fff;font-size: 12px;">
+                <b>Gerando arquivo,</b>
+            </span>
+            <span style="color: #fff;font-size: 12px;">
+                <b>aguarde...</b>
+            </span>
+        </div>
+    <!-- </div> -->
+</div>
 <!-- begin:: Aside -->
 <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
     <div class="kt-aside__brand-logo">
@@ -427,34 +469,49 @@
                 </div>
             </li>
 
-            @if( Auth::user()->customer_id == 8)
-           <!-- <li class="kt-menu__section ">
-                <h4 class="kt-menu__section-text">MONITORAMENTO</h4>
-                <i class="kt-menu__section-icon flaticon-more-v2"></i>
-            </li> -->
-
-          <!--  <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"> -->
-                <!-- GRANDES FROTAS -->
-             <!--   <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <span class="kt-menu__link-icon"><i class="fa fa-map-marker-alt"></i></span>
-                    <span class="kt-menu__link-text">Central de Monitoramento</span>
+            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <!-- RELATÓRIOS  -->
+                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                    <span class="kt-menu__link-icon"><i class="far fa-file-excel"></i></span>
+                    <span class="kt-menu__link-text">Relatórios</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.garagem.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Garagem</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.alerta.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Grupo Alerta</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()" href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
                     </ul>
                 </div>
             </li>
 
-            <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}>
-                <a href="{{route('fleetslarges.poligono.index')}}" class="kt-menu__link ">
-                    <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span>
-                    <span class="kt-menu__link-text">Mapa Monitoramento</span>
-                </a>
-            </li> -->
+            @if( Auth::user()->customer_id == 8)
+                <!-- <li class="kt-menu__section "> -->
+                    <!-- <h4 class="kt-menu__section-text">MONITORAMENTO</h4> -->
+                    <!-- <i class="kt-menu__section-icon flaticon-more-v2"></i> -->
+                <!-- </li> -->
+
+                <!-- <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_monitoramento ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"> -->
+                    <!-- GRANDES FROTAS -->
+                <!-- <a href="javascript:;" class="kt-menu__link kt-menu__toggle"> -->
+                        <!-- <span class="kt-menu__link-icon"><i class="fa fa-map-marker-alt"></i></span> -->
+                        <!-- <span class="kt-menu__link-text">Central de Monitoramento</span> -->
+                        <!-- <i class="kt-menu__ver-arrow la la-angle-right"></i> -->
+                    <!-- </a> -->
+                    <!-- <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span> -->
+                        <!-- <ul class="kt-menu__subnav"> -->
+                            <!-- <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li> -->
+                            <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.garagem.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Garagem</span></a></li> -->
+                            <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.alerta.list')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Grupo Alerta</span></a></li> -->
+                        <!-- </ul> -->
+                    <!-- </div> -->
+                <!-- </li> -->
+
+                <!-- <li class="kt-menu__item " aria-haspopup="true" {{$menu_open_fleets_dashbaord ?? ''}}> -->
+                    <!-- <a href="{{route('fleetslarges.poligono.index')}}" class="kt-menu__link "> -->
+                        <!-- <span class="kt-menu__link-icon"><i class="fas fa-map-marked-alt"></i></span> -->
+                        <!-- <span class="kt-menu__link-text">Mapa Monitoramento</span> -->
+                    <!-- </a> -->
+                <!-- </li> -->
             @endif
 
             <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
@@ -477,9 +534,12 @@
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeInstallation')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Instalações</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeCar')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Veículos (Telemetria)</span></a></li>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeBase')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Base</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeInstallation')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Instalações</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeSla')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Sla Santander</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeCar')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Veículos (Telemetria)</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
+                        
                     </ul>
                 </div>
             </li>
@@ -569,3 +629,29 @@
         </ul>
     </div>
 </div>
+<script>
+    async function showSpinner(){
+
+        // document.getElementById("spinner").classList.add("show");
+        // var oReq = new XMLHttpRequest();
+        // oReq.onload = reqListener;
+        // oReq.open("GET", "https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx", true);
+        // oReq.send();
+        // document.getElementById("spinner").classList.remove("show");
+
+        var url = "https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx";
+
+        const apiRequest = async (url) => {
+            const resp = await fetch(url);
+            if (!resp.ok) {
+                throw new Error("HTTP status " + resp.status);
+            }
+    
+            return resp.json();
+        };
+        
+        // const resp = await fetch("https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"); 
+        // const jsonData = await resp.json(); 
+        // console.log("jsonData: ", jsonData ); 
+    }
+</script>
