@@ -38,7 +38,6 @@
                 <b>aguarde...</b>
             </span>
         </div>
-
     <!-- </div> -->
 </div>
 <!-- begin:: Aside -->
@@ -470,21 +469,6 @@
                 </div>
             </li>
 
-            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                <!-- RELATÓRIOS  -->
-                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <span class="kt-menu__link-icon"><i class="far fa-file-excel"></i></span>
-                    <span class="kt-menu__link-text">Relatórios</span>
-                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-                    <ul class="kt-menu__subnav">
-                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()" href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
-                    </ul>
-                </div>
-            </li>
-
             @if( Auth::user()->customer_id == 8)
                 <!-- <li class="kt-menu__section "> -->
                     <!-- <h4 class="kt-menu__section-text">MONITORAMENTO</h4> -->
@@ -535,9 +519,12 @@
                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
                         <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeInstallation')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Instalações</span></a></li>
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeCar')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Veículos (Telemetria)</span></a></li>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeBase')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Base</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeInstallation')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Instalações</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeSla')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Sla Santander</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeCar')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Veículos (Telemetria)</span></a></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li>
+                        
                     </ul>
                 </div>
             </li>
@@ -629,27 +616,50 @@
 </div>
 <script>
     async function showSpinner(){
-
-        // document.getElementById("spinner").classList.add("show");
-        // var oReq = new XMLHttpRequest();
-        // oReq.onload = reqListener;
-        // oReq.open("GET", "https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx", true);
-        // oReq.send();
-        // document.getElementById("spinner").classList.remove("show");
-
-        var url = "https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx";
-
-        const apiRequest = async (url) => {
-            const resp = await fetch(url);
-            if (!resp.ok) {
-                throw new Error("HTTP status " + resp.status);
+        try{
+            // let myPromise = new Promise(function(resolve) {
+                // let req = new XMLHttpRequest();
+                // req.open("GET", "https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx");
+                // req.onload = function() {
+                // if (req.status == 200) {
+                //     resolve(req.response);
+                // } else {
+                //     resolve("File not Found");
+                // }
+                // };
+                // req.send();
+            // });
+            // const config = {
+            //     method: 'GET',
+            //     headers: {
+            //         'Access-Control-Allow-Origin' : '*',
+            //         'Access-Control-Allow-Headers' : 'Content-Type, Authorization',
+            //         'Access-Control-Allow-Credentials': 'true'
+            //     },
+            // }
+            var settings = {
+                'cache': false,
+                'dataType': "jsonp",
+                "async": true,
+                "crossDomain": true,
+                "url": "https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx",
+                "method": "GET",
+                "headers": {
+                    "accept": "application/json",
+                    "Access-Control-Allow-Origin":"*"
+                },
+                "beforeSend":function(){
+                    console.log("Começou a executar");
+                }
             }
-    
-            return resp.json();
-        };
-        
-        // const resp = await fetch("https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx"); 
-        // const jsonData = await resp.json(); 
-        // console.log("jsonData: ", jsonData ); 
+            $.ajax(settings).done(function(reponse){
+                console.log("Terminou");
+            });
+            // console.log("Executou");
+            // await fetch('https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx', { method: "GET", mode: "no-cors" })
+            
+        }catch(err){
+            console.log(err);
+        }
     }
 </script>

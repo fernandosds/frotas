@@ -516,6 +516,11 @@ class DashboardController extends Controller
             $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
         }
 
+        if (Route::currentRouteName() == 'fleetslarges.analyzeSla') {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou o dashboard sla santander.');
+            $data['hash'] = 'de49d52c-3c2b-4250-8ed5-2622c5c310c8';
+        }
+
         // Iframe com os dados da base -- MOVIDA
         if (Route::currentRouteName() == 'fleetslarges.analyzeFrota') {
             $data['hash'] = '71f1dfc6-4d1c-451a-aa52-47cfbd54cb33';
