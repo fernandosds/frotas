@@ -254,48 +254,9 @@
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
+        <div class="progressebar-tooltip" role="progressbar" data-toggle="tooltip" style="width: 100%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
-
-<!-- <div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 installed">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="gridInstalacaoEfetuada"></span> INSTALAÇÕES EFETUADAS </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 waiting">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao" value="gridAguardandoInstalacao"></span> AGUARDANDO INSTALAÇÃO </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> TOTAL </h3>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="btn-success text-white center btn-excel col-md-12">
-            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
-        </div>
-    </div>
-</div>
-
 
 <div class="row">
 
@@ -326,37 +287,37 @@
                         </div>
                     </div>
                     <!-- <div class="row"> -->
-                        <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile grid-style">
-                            <label><b>Projeto:</b></label>
-                            <div class="kt-checkbox-inline grid-status">
-                                <div class="grid-item">
-                                    <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
-                                </div>
-                                <div class="grid-item">
-                                    <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
-                                </div>
+                    <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Projeto:</b></label>
+                        <div class="kt-checkbox-inline grid-status">
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
                             </div>
-                            <div class="obs">
-                                <label><i class="flaticon-alert"></i>OBS: Desmarcar as opções para listar todos.</label>
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
                             </div>
                         </div>
-                        <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
-                            <label><b>Manutenção:</b></label>
-                            <div class="kt-checkbox-inline grid-status">
-                                <div class="grid-item">
-                                    <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA VIOLADA</span>
-                                </div>
-                                <div class="grid-item hidden">
-                                    <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
-                                </div>
-                                <div class="grid-item">
-                                    <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 7 DIAS</span>
-                                </div>
+                        <div class="obs">
+                            <label><i class="flaticon-alert"></i>OBS: Desmarcar as opções para listar todos.</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
+                        <label><b>Manutenção:</b></label>
+                        <div class="kt-checkbox-inline grid-status">
+                            <div class="grid-item">
+                                <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
                             </div>
-                            <div class="obs">
-                                <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
+                            <div class="grid-item hidden">
+                                <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
+                            </div>
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 30 DIAS</span>
                             </div>
                         </div>
+                        <div class="obs">
+                            <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
+                        </div>
+                    </div>
                     <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
@@ -781,13 +742,11 @@
             $('#batNaoViolada')[0].click();
         }, 20000);
 
-        $('input[name="bat"]').change(function(){
-            if($('#batViolada').is(':checked')){
-                console.log("batViolada está marcado");
+        $('input[name="bat"]').change(function() {
+            if ($('#batViolada').is(':checked')) {
                 $('#batNaoViolada').attr('checked', false);
                 $('#batViolada').attr('checked', true);
-            }else{
-                console.log("batViolada está desmarcado");
+            } else {
                 $('#batViolada').attr('checked', false);
                 $('#batNaoViolada')[0].click();
             }
@@ -813,20 +772,7 @@
             var status = $('input:checkbox[name="man"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
-            $('#example').DataTable().column(23).search(status, true, false, false).draw();
-        });
-
-
-        $('.installed').click(function() {
-            $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
-        });
-
-        $('.waiting').click(function() {
-            $('#example').DataTable().columns(20).search('Aguardando_Instalacao', true, false, true).draw();
-        });
-
-        $('.vehiclesTotal').click(function() {
-            $('#example').DataTable().columns(20).search('').draw();
+            $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
 
