@@ -19,7 +19,6 @@ class ApiFleetLargeSantanderService
     }
     public function allGrupoSantander()
     {
-
         $allGrupo = $this->cerca->getAllGrupoCercaSantander();
         $geojson = new stdClass();
         $geojson->type = "FeatureCollection";
@@ -28,6 +27,8 @@ class ApiFleetLargeSantanderService
         $items = json_decode($allGrupo);
 
         foreach ($items as $item) {
+            // echo $item->santander->lp_ignicao . PHP_EOL;
+
             $feature = new stdClass();
             $feature->type = "Feature";
             $feature->properties = new stdClass();
@@ -55,18 +56,19 @@ class ApiFleetLargeSantanderService
 
     public function groupSelected($collectionObject){
 
-        $allGrupo = $collectionObject;//$this->cerca->getAllGrupoCercaSantander();
+        $allGrupo = $collectionObject;
         $geojson = new stdClass();
         $geojson->type = "FeatureCollection";
         $geojson->features = [];
 
         $items = json_decode($allGrupo);
-        
+
         foreach ($items as $item) {
+            // dd($item);
             $feature = new stdClass();
             $feature->type = "Feature";
             $feature->properties = new stdClass();
-            $feature->properties->id = $item->santander->modelo;
+            $feature->properties->id = $item->santander->modelo ?? "";
             $feature->properties->ignicao = $item->santander->lp_ignicao == '1' ? 'ON' : 'OFF';
             $feature->properties->chassis = $item->santander->chassis ?? "";
             $feature->properties->modelo_veiculo = $item->santander->modelo_veiculo ?? "";
@@ -77,7 +79,6 @@ class ApiFleetLargeSantanderService
             $feature->properties->id_grupo = $item->grupo_id ?? "";
             $feature->properties->nome_grupo = $item->grupo_cerca->nome ?? "";
 
-
             $geometry = new stdClass();
             $geometry->type = "Point";
             $geometry->coordinates = [(float)$item->santander->lp_longitude, (float) $item->santander->lp_latitude];
@@ -85,8 +86,7 @@ class ApiFleetLargeSantanderService
 
             $geojson->features[] = $feature;
         }
-        // dd($geojson);
-        return $geojson;
 
+        return $geojson;
     }
 }

@@ -168,6 +168,9 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    $(document).ready(function(){
+        $('.filter-option').html("NADA SELECIONADO");
+    });
     function moveSelected(classNAme) {
         if('seguradoresLeft' === classNAme){
             $("#rightSeg").empty();
@@ -210,23 +213,24 @@
             $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
         }
         const $allOptions = $("." + classNAmeU).find('option').clone();
-        console.log($allOptions);
+
         if('usuariosLeft' === classNAmeU){
-            
             var $optionsU = $("." + classNAmeU).find('option:selected').clone();
             var $optionsUadd = $("." + classNAmeU).find('option');
-            $("." + 'usuariosRight').append($optionsU);
-            $optionsU.map(function(i, option){
-                $optionsUadd.map(function(iA, optionAdd){
-                    if(option.value === optionAdd.value){
-                        // $optionsU.append(optionAdd);
-                        $optionsUadd[iA].remove();
+
+            $optionsUadd.map(function(iA, optionAdd){
+                $optionsU.map(function(i, option){
+                    console.log(option)
+                    if(optionAdd.value === option.value){
+                        $(".usuariosRight option[value="+optionAdd.value+"]").remove();
+
                     }
                 })
-            });
-            // $("." + classNAmeU).find('option:selected').remove();
-            
-            // $("." + 'usuariosRight').find('option:selected').remove();
+            })
+            $("." + 'usuariosRight').append($optionsU);
+
+            $('.filter-option').html("NADA SELECIONADO");
+            $('.selected').toggleClass('selected ');
             $("." + 'selectpicker').empty();
             $("." + 'selectpicker').append($allOptions);
 
@@ -235,14 +239,8 @@
             var $optionsU = $("." + classNAmeU).find('option:selected').clone();
             var $optionsUadd = $("." + classNAmeU).find('option');
 
-            // $("." + classNAmeU).find('option:selected').remove();
-
             $("." + 'usuariosRight').find('option:selected').remove();
 
-            $("." + 'selectpicker').remove();
-            $("." + 'pickerUser').append('<select class="form-control col-md-10 selectpicker leftBoxU usuariosLeft user" id="usuariosRight" multiple size="10" data-live-search="true" ></select>');
-            // $("." + 'selectpicker').append($allOptions);
-            
         }
 
         if('usuariosLeft' === classNAmeU){

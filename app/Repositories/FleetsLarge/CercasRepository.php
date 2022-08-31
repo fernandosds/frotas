@@ -12,6 +12,8 @@ use App\Models\GrupoAlertaRelacionamento;
 use App\Models\GrupoCerca;
 use App\Models\GrupoCercaRelacionamento;
 use App\Models\GrupoUsuarioRelacionamento;
+
+use App\Models\CercaGaragem;
 use App\Models\MapMarkerSantander;
 use App\Repositories\AbstractRepository;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +28,8 @@ class CercasRepository extends AbstractRepository
         GrupoAlertaRelacionamento $modelAlertaRelacionamento, 
         GrupoCercaRelacionamento $modelCercaRelacionamento, 
         GrupoGaragemRelacionamento $modelGaragemRelacionamento, 
-        GrupoUsuarioRelacionamento $modelUsuarioRelacionamento)
-    {
+        GrupoUsuarioRelacionamento $modelUsuarioRelacionamento
+    ){
         $this->model = $model;
         $this->modelGaragem = $modelGaragem;
         $this->modelAlerta = $modelAlerta;
@@ -100,11 +102,22 @@ class CercasRepository extends AbstractRepository
     }
 
     public function all(){
+        
         return GrupoGaragem::with('grupoGaragemRelacionamento')->get();
     }
 
-    public function getAllCercas($arrCercas){
-        $markers = MapMarkerSantander::where('_id', $arrCercas)->get();
-        return $markers;
+    public function getAllCercas($id_cerca){
+        
+        $arrAll = [];
+        $markers = MapMarkerSantander::where('_id', $id_cerca)->get();
+        
+        $garagem = CercaGaragem::where('id_cerca', $id_cerca)->with('grupoAlertaGaragem')->get();
+
+        $arrAll = [
+            'markers' => $markers,
+            'garagem' => $garagem
+        ];
+        
+        return $arrAll;
     }
 }
