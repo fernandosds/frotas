@@ -12,7 +12,7 @@
                     <div class="col-12">
                         <label><b>Data de entrada:</b></label>
                         <div class="input-group">
-                            <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
+                            <input type="text" name="dates" id="reportRelatorio" class="form-control" readonly="" placeholder="Período de datas">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
                             </div>
@@ -23,7 +23,7 @@
                     <div class="col-12">
                         <button style="text-decoration: none;" class="btn-success">Gerar relatório</button>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
     </div>
