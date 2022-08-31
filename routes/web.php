@@ -347,9 +347,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/telemetria', 'FleetsLarge\DashboardController@logTelemetria')->name('fleetslarges.telemetria');
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
-        Route::get('/data/santander', 'FleetsLarge\DashboardController@dataSantander')->name('fleetslarges.data.santander');
+        Route::post('/data/santander', 'FleetsLarge\DashboardController@dataSantander');
         Route::get('/analyze/installation', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeInstallation');
         Route::get('/analyzes/car', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeCar');
+        Route::get('/analyzes/sla', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeSla');
         Route::get('/analyzes/base', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeBase');
         Route::get('/analyzes/frota', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeFrota'); // Movida
         Route::get('/analyzes/eventos', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeEventos'); // Movida

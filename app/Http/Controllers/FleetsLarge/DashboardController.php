@@ -186,35 +186,15 @@ class DashboardController extends Controller
 
         // Entrar no dashboard banco PSA
         if (Auth::user()->customer_id == 14) {
-            $data['data'] = $this->psaService->all();
+            $data['carros'] = $this->psaService->all();
             return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
     }
 
     public function dataSantander()
     {
-        $customer = $this->customerService->show(Auth::user()->customer_id);
-        $cars = $this->apiFleetLargeService->allCars($customer->hash);
-
-        $data = new stdClass();
-        $jsonString = json_encode($cars);
-        $items = collect(json_decode($jsonString));
-        $result = $items->all();
-
-        $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
-        $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
-
-        foreach ($items as $item) {
-            $item->placa_mercosul =  fixPlate($item->placa);
-            if (in_array($item->situacao, $aguardando_instalacao)) {
-                $item->status_situacao = "Aguardando_Instalacao";
-            }
-            if (in_array($item->situacao, $instalado)) {
-                $item->status_situacao = "Instalacao_Efetuada";
-            }
-        }
-        $data = $result;
-
+        ini_set('memory_limit', '-1');
+        $data = $this->santanderService->all();
         return response()->json($data);
     }
     public function situacaoInstalado($items)
@@ -534,6 +514,11 @@ class DashboardController extends Controller
         if (Route::currentRouteName() == 'fleetslarges.analyzeBase') {
             $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou a análise de Base.');
             $data['hash'] = 'ec4820de-0ecb-43f3-942e-532760810a85';
+        }
+
+        if (Route::currentRouteName() == 'fleetslarges.analyzeSla') {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou o dashboard sla santander.');
+            $data['hash'] = 'de49d52c-3c2b-4250-8ed5-2622c5c310c8';
         }
 
         // Iframe com os dados da base -- MOVIDA
