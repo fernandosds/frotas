@@ -242,7 +242,8 @@
     td {
         font-size: 12px;
     }
-    .grid-style{
+
+    .grid-style {
         border-right: 1px solid lightgray;
     }
 </style>
@@ -253,7 +254,7 @@
 <div class="kt-section " id="div-progress-bar-fleetlarge">
     <br />
     <div class="progress progress-sm">
-        <div class="progressebar-tooltip" role="progressbar" data-toggle="tooltip" style="width: 100%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
+        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
     </div>
 </div>
 
@@ -287,13 +288,13 @@
     </div>
 </div> -->
 
-<!-- <div class="row">
+<div class="row">
     <div class="col-md-12">
         <div class="btn-success text-white center btn-excel col-md-12">
             <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
         </div>
     </div>
-</div> -->
+</div>
 
 
 <div class="row">
@@ -343,7 +344,7 @@
                             <label><b>Manutenção:</b></label>
                             <div class="kt-checkbox-inline grid-status">
                                 <div class="grid-item">
-                                    <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
+                                    <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA VIOLADA</span>
                                 </div>
                                 <div class="grid-item hidden">
                                     <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
@@ -362,31 +363,29 @@
                 <table id="example" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Placa</th>
-                            <th>Placa - Mercosul</th>
-                            <th class="hidden">Chassis</th>
-                            <th style="width: 80px;">Modelo</th>
-                            <th class="hidden">Latitude</th>
-                            <th class="hidden">Longitude</th>
-                            <th class="hidden">Endereço</th>
-                            <th class="hidden">Estado</th>
-                            <th class="hidden">Velocidade</th>
-                            <!-- 9 -->
-                            <th>Última Transmissão</th>
-                            <th style="width: 78px;">Loja</th>
-                            <th>Nº Proposta</th>
-                            <th>Data de entrada</th>
-                            <th>Data de acionamento Técnico</th>
-                            <th>Data de início de instalação</th>
-                            <th>Data de término de instalação</th>
-                            <th>Projeto</th>
-                            <th class="hidden">Situação</th>
-                            <th></th>
-                            <th class="hidden">Filtro - Dt. Entrada</th>
-                            <th class="hidden">Status_Geral</th>
-                            <th></th>
-                            <th class="hidden">Event_Violacao</th> <!-- 22 -->
-                            <th class="hidden">Manutencao</th>
+                            <th>Placa</th><!-- 0 -->
+                            <th>Placa - Mercosul</th> <!-- 1 -->
+                            <th class="hidden">Chassis</th> <!-- 2 -->
+                            <th style="width: 80px;">Modelo</th> <!-- 3 -->
+                            <th class="hidden">Latitude</th> <!-- 4 -->
+                            <th class="hidden">Longitude</th> <!-- 5 -->
+                            <th class="hidden">Endereço</th> <!-- 6 -->
+                            <th class="hidden">Estado</th><!-- 7 -->
+                            <th class="hidden">Velocidade</th> <!-- 8 -->
+                            <th>Última Transmissão</th> <!-- 9 -->
+                            <th style="width: 78px;">Loja</th> <!-- 10 -->
+                            <th>Nº Proposta</th> <!-- 11 -->
+                            <th>Data de entrada</th> <!-- 12 -->
+                            <th>Data de acionamento Técnico</th> <!-- 13 -->
+                            <th>Data de início de instalação</th> <!-- 14 -->
+                            <th>Data de término de instalação</th> <!-- 15 -->
+                            <th>Projeto</th> <!-- 16 -->
+                            <th class="hidden">Situação</th> <!-- 17 -->
+                            <th></th> <!-- 18 -->
+                            <th class="hidden">Filtro - Dt. Entrada</th> <!-- 19 -->
+                            <th></th> <!-- 20 -->
+                            <th class="hidden">Event_Violacao</th> <!-- 21 -->
+                            <th class="hidden">Manutencao</th> <!-- 22 -->
                         </tr>
                     </thead>
                     <tbody>
@@ -403,6 +402,7 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
@@ -475,10 +475,10 @@
             ],
             columnDefs: [{
                     className: "hidden",
-                    "targets": [20, 22, 23]
+                    "targets": [19, 21, 22]
                 }, {
                     orderable: false,
-                    targets: [18, 21],
+                    targets: [18, 20],
                 }, {
                     targets: [9, 12, 13, 14, 15],
                     render: function(data) {
@@ -486,57 +486,56 @@
                     }
                 },
                 {
-                    targets: 19,
+                    targets: [19],
                     render: function(data) {
                         return moment(data).format('DD/MM/YYYY');
                     }
                 },
-            ], //  "data": "dt_termino_instalacao",
+            ],
             columns: [{
-                    "data": "placa"
+                    "data": "placa", //0
                 }, {
-                    "data": "placa"
+                    "data": "placa_mercosul", //1
                 }, {
-                    "data": "chassis",
+                    "data": "chassis", //2
                     visible: false
                 }, {
-                    "data": "modelo_veiculo",
+                    "data": "modelo_veiculo", //3
                     "width": "40px",
                 }, {
-                    "data": "lp_latitude",
+                    "data": "lp_latitude", //4
                     visible: false
                 }, {
-                    "data": "lp_longitude",
+                    "data": "lp_longitude", //5
                     visible: false
                 }, {
-                    "data": '',
+                    "data": '', //6
                     render: function(data, type, row) {
                         return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
                     },
                     visible: false
                 }, {
-                    "data": "estado",
+                    "data": "estado", //7
                     visible: false
                 }, {
-                    "data": "lp_velocidade",
+                    "data": "lp_velocidade", //8
                     visible: false
                 }, {
-                    "data": "lp_ultima_transmissao"
+                    "data": "lp_ultima_transmissao", //9
                 }, {
-                    "data": "cliente" // loja
+                    "data": "cliente", //10 loja
                 }, {
-                    "data": "contrato"
+                    "data": "contrato", //11
                 }, {
-                    "data": "dt_entrada"
+                    "data": "dt_entrada", //12
                 }, {
-                    "data": "dt_tecnico_acionado",
+                    "data": "dt_tecnico_acionado", //13
                 }, {
-                    "data": "dt_inicio_instalacao",
-
+                    "data": "dt_inicio_instalacao", //14
                 }, {
                     "data": "dt_termino_instalacao", // 15
                 }, {
-                    "data": "projeto",
+                    "data": "projeto", //16
                     "width": "50px",
                     render: function(data, type, row, meta) {
                         if (row.projeto == 'RENEGOCIACAO') {
@@ -545,7 +544,7 @@
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
                     }
                 }, {
-                    "data": "situacao",
+                    "data": "situacao", //17
                     visible: false
                 }, {
                     "data": " ", //18
@@ -556,12 +555,8 @@
                     }
                 }, {
                     "data": "dt_entrada", //19
-                    visible: false
                 }, {
-                    "data": "status_situacao" //20
-                }, 
-                {
-                    "data": "event_violacao", //21
+                    "data": "event_violacao", //20
                     "width": "40px",
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
@@ -572,17 +567,16 @@
                 },
                 // campo oculto
                 {
-                    "data": "event_violacao",
+                    "data": "event_violacao", //21
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
                             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
                         }
-                        
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
                     }
                 },
                 {
-                    "data": "manutencao",
+                    "data": "manutencao", //22
                     render: function(data, type, row, meta) {
                         if (row.manutencao == 'equipamento_manutencao') {
                             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
@@ -789,12 +783,13 @@
 
         $('input[name="bat"]').change(function(){
             if($('#batViolada').is(':checked')){
+                console.log("batViolada está marcado");
                 $('#batNaoViolada').attr('checked', false);
                 $('#batViolada').attr('checked', true);
             }else{
+                console.log("batViolada está desmarcado");
                 $('#batViolada').attr('checked', false);
                 $('#batNaoViolada')[0].click();
-                // $('#batNaoViolada').attr('checked', true);
             }
         });
 
@@ -810,7 +805,7 @@
             var status = $('input:checkbox[name="bat"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
-            $('#example').DataTable().column(22).search(status, true, false, false).draw();
+            $('#example').DataTable().column(21).search(status, true, false, false).draw();
         });
 
 
@@ -820,6 +815,7 @@
             }).get().join('|');
             $('#example').DataTable().column(23).search(status, true, false, false).draw();
         });
+
 
         $('.installed').click(function() {
             $('#example').DataTable().columns(20).search("Instalacao_Efetuada", true, false, true).draw();
@@ -1005,7 +1001,7 @@
         });
     })
 
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('.hidden').css('display', 'none');
     });
 </script>
