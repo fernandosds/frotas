@@ -163,13 +163,12 @@ class DeviceController extends Controller
      */
     public function edit(int $id)
     {
-
+ 
         $data = $this->data;
         $data['device'] = $this->deviceService->show($id);
-
+        
         $data['technologies'] = $this->technologieService->all();
         $data['customers'] = $this->customerService->getAllCustomerDevice();
-
 
         //var_dump($data['device']); die();
 
@@ -191,8 +190,6 @@ class DeviceController extends Controller
      */
     public function update(Request $request)
     {
-
-        //dd($request->id);
 
         try {
             $this->deviceService->update($request, $request->id);

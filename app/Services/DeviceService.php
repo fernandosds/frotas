@@ -166,7 +166,6 @@ class DeviceService
     {
 
         $device =  $this->deviceRepository->find($id);
-
         return ($device) ? $device : abort(404);
     }
 
