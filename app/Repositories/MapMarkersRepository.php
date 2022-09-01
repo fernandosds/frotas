@@ -8,6 +8,7 @@ use App\Models\MapMarkerMovida;
 use App\Models\MapMarkerSantander;
 use App\Models\MapMarkerMapfre;
 
+
 class MapMarkersRepository extends AbstractRepository
 {
 
@@ -21,15 +22,17 @@ class MapMarkersRepository extends AbstractRepository
      */
     public function __construct(MapMarkerMovida $modelMovida, MapMarkerSantander $modelSantander, MapMarkerMapfre $modelMapfre)
     {
-        $this->modelMovida = $modelMovida;
-        $this->modelSantander = $modelSantander;
-        $this->modelMapfre = $modelMapfre;
+        $this->modelMovida       = $modelMovida;
+        $this->modelSantander    = $modelSantander;
+        $this->modelMapfre       = $modelMapfre;
     }
 
     public function create(array $data)
     {
+        
         try {
             $this->fixModel();
+
             $this->model->name = $data['name'];
             $this->model->type = $data['type'];
             $this->model->lenght_of_stay = $data['lenght_of_stay'];
@@ -42,7 +45,7 @@ class MapMarkersRepository extends AbstractRepository
             if (Auth::user()->customer_id == 11) {
                 $this->model->customer = 11;
             }
-            $this->model->save();
+            
             return $this->model;
         } catch (\Exception $e) {
             return $e;

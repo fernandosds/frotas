@@ -409,13 +409,13 @@ Route::group(['middleware' => 'auth'], function () {
 
             //CERCAS
             Route::get('/map/markers/all/grupos', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.all.grupos');
-            Route::post('/map/markers/all/cercas', 'FleetsLarge\MapMarkersSantanderController@allGrupoCercas')->name('map.markers.all.cercas'); //acabar depois
+            Route::post('/map/markers/all/cercas', 'FleetsLarge\MapMarkersSantanderController@allGrupoCercas')->name('map.markers.all.cercas'); 
             // Rotas para Grupo de usuários cercas Santander
+            
             Route::group(['prefix' => 'cars'], function () {
                 Route::get('/grupos/lista', 'FleetsLarge\MonitoringCercaSantanderController@index')->name('fleetslarges.poligono.cars.index');
             });
         });
-
 
         Route::group(['prefix' => 'monitoring'], function () {
             Route::get('/{chassis?}', 'FleetsLarge\MonitoringController@index')->name('fleetslarges.monitoring.index');

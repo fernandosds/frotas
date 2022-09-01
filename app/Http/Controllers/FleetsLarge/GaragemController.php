@@ -16,9 +16,6 @@ use App\Models\GrupoAlerta;
 
 use App\Models\GrupoAlertaGaragem;
 
-use App\Models\GrupoCerca;
-use App\Models\GrupoCercaRelacionamento;
-use App\Models\GrupoUsuarioRelacionamento;
 use App\Models\BancoSantander;
 use App\Services\LogService;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +50,7 @@ class GaragemController extends Controller
         $data = $this->data;
         $data['grupos']         = GrupoGaragem::with('grupoGaragemRelacionamento')->get();
         $data['gruposAlerta']   = GrupoAlerta::with('grupoAlertaRelacionamento')->get();
+
 
         return view('fleetslarge.garagem.list', $data);
     }

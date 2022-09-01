@@ -90,7 +90,7 @@
                 <div class="col-lg-4" style="margin-top: 5px;">
                     <label for="exampleSelect2" class="col-form-label">Usuarios: </label></br>
                     <div class="pickerUser">
-                        <select class="form-control col-md-10 leftBoxU usuariosLeft" id="usuariosRight" multiple size="10" data-live-search="true" >
+                        <select class="form-control col-md-10 leftBoxU usuariosLeft selectpicker" id="usuariosRight" multiple size="10" data-live-search="true" >
                             @foreach($users as $user)
                                 <option data-tokens="{{$user->name}}" value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
@@ -141,82 +141,29 @@
 
 <script>
 
-    function moveSelectedUsuarios(classNAmeU){
-        if('usuariosLeft' === classNAmeU){
-            console.log("Entrou!");
-            $("#rightUser").empty();
-            $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-        }else if('usuariosRight' === classNAmeU){
-            console.log("if else")
-            $("#leftUser").empty();
-            $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
-        }
-        const leftBoxU = $('.' + classNAmeU);
-        
-        var $optionsU = $("." + classNAmeU).find('option:selected').clone();
-        $('.' + leftBoxU.attr('id')).append($optionsU);
-        $("." + classNAmeU).find('option:selected').remove();
-        var my_optionsU = $('.' + leftBoxU.attr('id') + " option");
-        my_optionsU.sort(function(a, b) {
-            if (a.text > b.text) return 1;
-            else if (a.text < b.text) return -1;
-            else return 0
-        })
-        my_optionsU.sort();
-        $('.' + leftBoxU.attr('id')).empty().append(my_optionsU);
-        if('usuariosLeft' === classNAmeU){
-            $("#rightUser").empty();
-            $("#rightUser").append('<i class="la la-arrow-right">');
-        }else{
-            $("#leftUser").empty();
-            $("#leftUser").append('<i class="la la-arrow-left"></i>');
-        } 
-    }
-
-    // function moveSelectedUsuarios(classNAmeU) {
+    // function moveSelectedUsuarios(classNAmeU){
     //     if('usuariosLeft' === classNAmeU){
+    //         console.log("Entrou!");
     //         $("#rightUser").empty();
     //         $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
     //     }else if('usuariosRight' === classNAmeU){
+    //         console.log("if else")
     //         $("#leftUser").empty();
     //         $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
     //     }
-    //     const $allOptions = $("." + classNAmeU).find('option').clone();
-    //     console.log($allOptions);
-    //     if('usuariosLeft' === classNAmeU){
-            
-    //         var $optionsU = $("." + classNAmeU).find('option:selected').clone();
-    //         var $optionsUadd = $("." + classNAmeU).find('option');
-    //         $("." + 'usuariosRight').append($optionsU);
-    //         $optionsU.map(function(i, option){
-    //             $optionsUadd.map(function(iA, optionAdd){
-    //                 if(option.value === optionAdd.value){
-    //                     // $optionsU.append(optionAdd);
-    //                     $optionsUadd[iA].remove();
-    //                 }
-    //             })
-    //         });
-    //         // $("." + classNAmeU).find('option:selected').remove();
-            
-    //         // $("." + 'usuariosRight').find('option:selected').remove();
-    //         $("." + 'selectpicker').empty();
-    //         $("." + 'selectpicker').append($allOptions);
-
-    //     }else{
-
-    //         var $optionsU = $("." + classNAmeU).find('option:selected').clone();
-    //         var $optionsUadd = $("." + classNAmeU).find('option');
-
-    //         // $("." + classNAmeU).find('option:selected').remove();
-
-    //         $("." + 'usuariosRight').find('option:selected').remove();
-
-    //         $("." + 'selectpicker').remove();
-    //         $("." + 'pickerUser').append('<select class="form-control col-md-10 selectpicker leftBoxU usuariosLeft user" id="usuariosRight" multiple size="10" data-live-search="true" ></select>');
-    //         // $("." + 'selectpicker').append($allOptions);
-            
-    //     }
-
+    //     const leftBoxU = $('.' + classNAmeU);
+        
+    //     var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+    //     $('.' + leftBoxU.attr('id')).append($optionsU);
+    //     $("." + classNAmeU).find('option:selected').remove();
+    //     var my_optionsU = $('.' + leftBoxU.attr('id') + " option");
+    //     my_optionsU.sort(function(a, b) {
+    //         if (a.text > b.text) return 1;
+    //         else if (a.text < b.text) return -1;
+    //         else return 0
+    //     })
+    //     my_optionsU.sort();
+    //     $('.' + leftBoxU.attr('id')).empty().append(my_optionsU);
     //     if('usuariosLeft' === classNAmeU){
     //         $("#rightUser").empty();
     //         $("#rightUser").append('<i class="la la-arrow-right">');
@@ -224,8 +171,56 @@
     //         $("#leftUser").empty();
     //         $("#leftUser").append('<i class="la la-arrow-left"></i>');
     //     } 
-        
     // }
+
+    function moveSelectedUsuarios(classNAmeU) {
+        if('usuariosLeft' === classNAmeU){
+            $("#rightUser").empty();
+            $("#rightUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }else if('usuariosRight' === classNAmeU){
+            $("#leftUser").empty();
+            $("#leftUser").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
+        }
+        const $allOptions = $("." + classNAmeU).find('option').clone();
+
+        if('usuariosLeft' === classNAmeU){
+            var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+            var $optionsUadd = $("." + classNAmeU).find('option');
+
+            $optionsUadd.map(function(iA, optionAdd){
+                $optionsU.map(function(i, option){
+                    console.log(option)
+                    if(optionAdd.value === option.value){
+                        $(".usuariosRight option[value="+optionAdd.value+"]").remove();
+                    }
+                })
+            })
+            $("." + 'usuariosRight').append($optionsU);
+
+            $('.filter-option').html("NADA SELECIONADO");
+            $('.selected').toggleClass('selected ');
+            $("." + 'selectpicker').empty();
+            $("." + 'selectpicker').append($allOptions);
+
+        }else{
+
+            var $optionsU = $("." + classNAmeU).find('option:selected').clone();
+            var $optionsUadd = $("." + classNAmeU).find('option');
+
+            $("." + 'usuariosRight').find('option:selected').remove();
+
+        }
+
+        if('usuariosLeft' === classNAmeU){
+            $("#rightUser").empty();
+            $("#rightUser").append('<i class="la la-arrow-right">');
+        }else{
+            $("#leftUser").empty();
+            $("#leftUser").append('<i class="la la-arrow-left"></i>');
+        } 
+        
+    }
+
 
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2();

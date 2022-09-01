@@ -509,7 +509,6 @@
                             .then(response => {
                                 if (!response.ok) {
                                     return response.json().then(text => {
-                                        console.log(text.errors);
                                         let errors = [];
                                         if (text.errors['data.name']) {
                                             errors.push(text.errors['data.name'][0]);
@@ -574,6 +573,7 @@
         });
 
         let listLayers = [];
+        let listLayersGaragem = [];
 
         // Remove a cerca criada
         $('.markerList').on('click', '.btnRemove', function() {
@@ -704,6 +704,7 @@
 
         $('.markerList').on('click', '.checkMarkers', function() {
             const idLayer = $(this).val();
+            const idLayerGaragem = new Array();
             var cercas = new Array();
             $('input.checkMarkers:checkbox:checked').each(function() {
                 cercas.push($(this).val());
@@ -718,8 +719,8 @@
                         data: form_data
                     })
                     .done(function(response) {
-                        response.result.map(function(result) {
-
+                        var arrGaragem = new Array();
+                        response.result.markers.map(function(result) {
                             const data = result;
                             const myData = data.markers;
                             const layerName = data.name;
@@ -742,27 +743,141 @@
                             });
 
                         })
+                        //REQUISIÇÃO DENTRO DO GET MARKERS PARA PEGAR AS GARAGENS
+                        response.result.garagem.map(function(garagem){
+                            arrGaragem.push(garagem.id_garagem);
+                        })
+                        var form_data_garagem = {
+                            _token: '{{csrf_token()}}',
+                            grupo: arrGaragem,
+                        };
 
-                    })
-                    .fail(function() {});
+                        idLayerGaragem.push(arrGaragem);
+                        $.ajax("{{route('map.markers.grupoRelacionamento')}}", {
+                            method: "POST",
+                            data: form_data_garagem
+                        })
+                        .done(function(responseG) {
+                            const data = responseG.data;
+                            const myData = data;
+
+                            var myStyle = {
+                                "color": "#ff7800",
+                                "weight": 5,
+                                "opacity": 0.65
+                            };
+                            var geojson = L.geoJson(data, {
+                                style: myStyle,
+                                pointToLayer: function(feature, latlng) {
+                                    let carIcon = feature.properties.ignicao == 'ON' ? greenCarIcon : redCarIcon;
+
+                                    return L.marker(latlng, {
+                                            'icon': carIcon
+                                        })
+
+                                        .bindPopup('<strong>' + feature.properties.placa + '</strong>' +
+                                            '<br /><strong><br>Modelo do veículo:</strong>  ' + feature.properties.modelo_veiculo + ' ' +
+                                            '<br /><strong><br>Chassis:</strong>  ' + feature.properties.chassis.toUpperCase() + ' ' +
+                                            '<br /><strong><br>Velocidade:</strong>  ' + (feature.properties.lp_velocidade ? feature.properties.lp_velocidade + ' km/h' : ' ') + ' ' +
+                                            ' ');
+
+                                }
+                            }, subgroup).addTo(map);
+                            
+                            listLayersGaragem.push({
+                                "id": idLayerGaragem,
+                                "layer": geojson,
+                                'id_layer': idLayer
+                            });
+                        })
+                        .fail(function() {});
+
+                })
+                .fail(function() {});
             } else {
 
                 const layer = listLayers.filter(item => item.id == idLayer);
                 layer[0].layer.clearLayers();
 
                 for (let i = 0; i < listLayers.length; i++) {
-
                     if (listLayers[i].id == idLayer) {
                         listLayers.splice(i, 1);
+                        listLayersGaragem.map(function(garagem, y){
+                            if(garagem.id_layer == idLayer){
+                                listLayersGaragem[y].layer.clearLayers();
+                            }
+                        });
                         continue;
                     }
                 }
+
+                // const layerGaragem = listLayersGaragem.filter(item => item.id == idLayer);
+                // console.log(layerGaragem);
+
             }
         });
+        //ADICIONAR NO LIST MARKERS
+
+        // $('.markerList').on('click', '.checkMarkers', function() {
+        //     const idLayer = $(this).val();
+        //     var cercas = new Array();
+        //     $('input.checkMarkers:checkbox:checked').each(function() {
+        //         cercas.push($(this).val());
+        //     });
+        //     var form_data = {
+        //         _token: '{{csrf_token()}}',
+        //         cercas: $(this).val(),
+        //     };
+        //     if ($(this).is(':checked')) {
+        //         $.ajax("{{route('map.markers.all.cercas')}}", {
+        //                 method: "POST",
+        //                 data: form_data
+        //             })
+        //             .done(function(response) {
+        //                 response.result.map(function(result) {
+
+        //                     const data = result;
+        //                     const myData = data.markers;
+        //                     const layerName = data.name;
+        //                     const layerType = data.type == 'in' ? "Entrada" : 'Saída';
+
+        //                     var myStyle = {
+        //                         "color": "#ff7800",
+        //                         "weight": 5,
+        //                         "opacity": 0.65
+        //                     };
+        //                     var geojson = L.geoJson(data.markers, {
+        //                         style: myStyle,
+        //                         onEachFeature: function(feature, layer) {
+        //                             layer.bindPopup('Cerca:<b>' + layerName + '</b> - Tipo:<b>' + layerType + '</b>');
+        //                         }
+        //                     }).addTo(map);
+        //                     listLayers.push({
+        //                         "id": idLayer,
+        //                         "layer": geojson
+        //                     });
+
+        //                 })
+
+        //             })
+        //             .fail(function() {});
+        //     } else {
+
+        //         const layer = listLayers.filter(item => item.id == idLayer);
+        //         layer[0].layer.clearLayers();
+
+        //         for (let i = 0; i < listLayers.length; i++) {
+
+        //             if (listLayers[i].id == idLayer) {
+        //                 listLayers.splice(i, 1);
+        //                 continue;
+        //             }
+        //         }
+        //     }
+        // });
 
         // Exibe a lista de grupos
         function getListGrupo() {
-
             $.ajax("{{route('map.markers.all')}}", {
                     method: "GET",
                 })
@@ -782,6 +897,7 @@
                     });
                 })
                 .fail(function() {});
+
         }
 
         // Exibe a lista de poligonos / cercas
@@ -797,10 +913,10 @@
                             '<div class="markerItem">' +
                                 '<div class="row">'+
                                     '<div class="md-col-2">'+
-                                        '<i class="fa fa-trash btnRemove" data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
+                                        '<i class="fa fa-trash btnRemove " data-id="' + element._id + '" data-name="' + element.name + '"></i>' +
                                     '</div>'+
                                     '<div class="md-col-10">'+
-                                        '<input type="checkbox" class="checkMarkers"' + 'id="' + element._id + '"  value="' + element._id + '">' +
+                                        '<input type="checkbox" class="checkMarkers "' + 'id="' + element._id + '"  value="' + element._id + '">' +
                                         '<label class="marker-check-label" for="' + element._id + '">' + element.name + '</label>' +
                                     '</div>'+
                                 '</div>'
