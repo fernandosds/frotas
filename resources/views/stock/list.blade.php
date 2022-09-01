@@ -7,6 +7,28 @@
         <!--begin::Portlet-->
         <div class="kt-portlet kt-portlet--mobile">
 
+        <!-- HEADER -->
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-menu__link-icon"><i class="fa fa-solid fa-wrench"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    <span class="kt-menu__link-text">&nbsp; Lista de iscas</span>
+                </h3>
+            </div>
+
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <a href="#">
+                        <button type="button" class="btn btn-primary btn-pill"
+                            title="Importar planilha"><i class="fa fa-file-excel"></i>
+                            <span> Cadastrar Isca</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
             <br />
             <div class="kt-portlet kt-portlet--mobile" id="kt_content">
 
@@ -22,6 +44,7 @@
                                 <th scope="col">Status</th>
                                 <th scope="col">Data de embarque</th>
                                 <th scope="col">Data de encerramento</th>
+                                <th scope="col" style="width: 170px;">Ação</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyVehicle">
@@ -34,6 +57,16 @@
                                 <td>{{$device->status ?? ''}}</td>
                                 <td>{{$device->boardings[0]->created_at ?? ''}}</td>
                                 <td>{{$device->boardings[0]->finished_at ?? ''}}</td>
+                                <td style="width: 200px;">
+                                    @if($device->status == 'disponivel' || $device->status == '')
+                                        <div class="">
+                                            <a href="#" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar isca"><span class="fa fa-fw fa-edit"></span></a>
+                                                <button type="button" title="Excluir isca" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle">
+                                                    <span class="fa fa-fw fa-trash"></span>
+                                                </button>
+                                        </div>
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                             @foreach ($trackers as $tracker)
@@ -56,7 +89,7 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4];
+        columns = [0, 1, 2, 3, 4, 5];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#stock').DataTable({
             "search": {
