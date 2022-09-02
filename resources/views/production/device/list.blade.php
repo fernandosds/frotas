@@ -82,7 +82,7 @@ td {
                         @endif
                         @if($device->status == null)
                         <td class="{{$device->status == null ? 'text-danger' : ''}}">
-                            {{'falta status'}}
+                            {{'A definir'}}
                         </td>
                         @endif
                         <td style="width: 200px;">

@@ -115,17 +115,11 @@ class DeviceService
      * @param $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
 
-        if ($this->deviceRepository->findDeviceid($id)) {
-
-            $device = $this->deviceRepository->update($id, $request->all());
-            return $device;
-
-        } else {
-            return false;
-        }
+        $device = $this->deviceRepository->updateDevice($request);
+        return $device;
 
     }
 
@@ -175,12 +169,7 @@ class DeviceService
      */
     public function destroy(Int $id)
     {
-
-        if ($this->deviceRepository->findDeviceid($id)) {
-            return $this->deviceRepository->delete($id);
-        } else {
-            return false;
-        }
+        return $this->deviceRepository->deleteDevice($id);
     }
 
     /**

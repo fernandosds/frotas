@@ -19,7 +19,7 @@
 
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
-                    <a href="#">
+                    <a href="{{url('stocks/new')}}">
                         <button type="button" class="btn btn-primary btn-pill"
                             title="Importar planilha"><i class="fa fa-file-excel"></i>
                             <span> Cadastrar Isca</span>
@@ -36,46 +36,68 @@
                     <br />
                     <table id="stock" class="display" style="width:50%">
                         <thead>
-                            <tr class="headerTable">
-                                <th scope="col">Produto</th>
-                                <th scope="col">Cliente</th>
+                            <tr>
+                                <!-- <th scope="col"></th> -->
+                                <th scope="col">Id</th>
                                 <th scope="col">Modelo</th>
-                                <th scope="col">Tipo</th>
+                                <th scope="col">Tecnologia</th>
+                                <th scope="col">Cliente</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Data de embarque</th>
-                                <th scope="col">Data de encerramento</th>
-                                <th scope="col" style="width: 170px;">Ação</th>
+                                <th scope="col">Ação</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyVehicle">
+                        <tbody>
                             @foreach ($devices as $device)
-                            <tr id="_tr_user_{{$device->id}}">
-                                <td>{{'Iscas'}}</td>
-                                <td>{{$device->customer->name}}</td>
-                                <td>{{$device->model}}</td>
-                                <td>{{$device->technologie->type ?? ''}}</td>
-                                <td>{{$device->status ?? ''}}</td>
-                                <td>{{$device->boardings[0]->created_at ?? ''}}</td>
-                                <td>{{$device->boardings[0]->finished_at ?? ''}}</td>
-                                <td style="width: 200px;">
-                                    @if($device->status == 'disponivel' || $device->status == '')
-                                        <div class="">
-                                            <a href="#" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar isca"><span class="fa fa-fw fa-edit"></span></a>
-                                                <button type="button" title="Excluir isca" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle">
-                                                    <span class="fa fa-fw fa-trash"></span>
-                                                </button>
-                                        </div>
+                                <tr id="_tr_device_{{$device->id}}">
+                                    <td>{{$device->id}}</td>
+                                    <td>{{$device->model}}</td>
+                                    <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
+                                    <td>{{$device->customer->name ?? ''}}</td>
+                                    @if($device->status == 'disponivel')
+                                    <td class="{{$device->status == 'disponivel' ? 'text-success' : ''}}">
+                                        {{$device->status ?? ''}}
+                                    </td>
                                     @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                            @foreach ($trackers as $tracker)
-                            <tr id="_tr_user_{{$tracker->id}}">
-                                <td>{{'Disp. Móvel'}}</td>
-                                <td>{{$tracker->model ?? ''}}</td>
-                                <td> --- </td>
-                                <td>{{$tracker->status ?? ''}}</td>
-                            </tr>
+                                    @if($device->status == 'indisponivel')
+                                    <td class="{{$device->status == 'indisponivel' ? 'text-danger' : ''}}">
+                                        {{$device->status ?? ''}}
+                                    </td>
+                                    @endif
+                                    @if($device->status == 'em andamento')
+                                    <td class="{{$device->status == 'em andamento' ? 'text-warning' : ''}}">
+                                        {{$device->status ?? ''}}
+                                    </td>
+                                    @endif
+                                    @if($device->status == null)
+                                    <td class="{{$device->status == null ? 'text-danger' : ''}}">
+                                        {{'A definir'}}
+                                    </td>
+                                    @endif
+                                    <td style="width: 200px;">
+                                        <div class="pull-left">
+                                            @if($device->status == null)
+                                            <a href="{{url('stocks/edit')}}/{{$device->id}}">
+                                                <button type="button"
+                                                    class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                                    title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                                </button>
+                                            </a>
+                                            @endif
+                                            @if($device->status == 'disponivel')
+                                            <a href="{{url('stocks/edit')}}/{{$device->id}}">
+                                                <button type="button"
+                                                    class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                                    title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                                </button>
+                                            </a>
+                                            <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}"
+                                                class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
+                                                <span class="fa fa-fw fa-trash"></span>
+                                            </button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -141,6 +163,40 @@
 
         });
 
+    });
+
+    $('.btn-delete-device').click(function() {
+        var id = $(this).data('id');
+        var url = "{{url('stocks/delete')}}";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                "_token"        : "{{ csrf_token() }}",
+                'id': id,
+            },
+            success: function(response) {
+                console.log("response: " + response.status);
+                if (response.status == "success") {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Registro salvo com sucesso',
+                        showConfirmButton: true,
+                        timer: 10000
+                    }).then(function(){
+                        $(location).attr('href', '{{url("stocks")}}/');
+                    })
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao tentar salvar! ' + response.message,
+                        showConfirmButton: true,
+                        timer: 10000
+                    })
+                }
+            }
+        })
     });
 </script>
 @endsection
