@@ -55,17 +55,17 @@
                                     <td>{{$device->customer->name ?? ''}}</td>
                                     @if($device->status == 'disponivel')
                                     <td class="{{$device->status == 'disponivel' ? 'text-success' : ''}}">
-                                        {{$device->status ?? ''}}
+                                        {{'Disponivel'}}
                                     </td>
                                     @endif
                                     @if($device->status == 'indisponivel')
                                     <td class="{{$device->status == 'indisponivel' ? 'text-danger' : ''}}">
-                                        {{$device->status ?? ''}}
+                                        {{'Indisponivel'}}
                                     </td>
                                     @endif
                                     @if($device->status == 'em andamento')
                                     <td class="{{$device->status == 'em andamento' ? 'text-warning' : ''}}">
-                                        {{$device->status ?? ''}}
+                                        {{'Em andamento'}}
                                     </td>
                                     @endif
                                     @if($device->status == null)
