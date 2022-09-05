@@ -298,7 +298,7 @@
                             </div>
                         </div>
                         <div class="obs">
-                            <label><i class="flaticon-alert"></i>OBS: Desmarcar as opções para listar todos.</label>
+                            <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
                     </div>
                     <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
@@ -315,7 +315,7 @@
                             </div>
                         </div>
                         <div class="obs">
-                            <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
+                            <label><i class="flaticon-alert"></i> OBS: Marcar para listar bateria desconectada.</label>
                         </div>
                     </div>
                     <!-- </div> -->
@@ -707,11 +707,11 @@
                 search: 'applied'
             }).count();
 
-            // $('#financeira').html(totalRowCount['financeira']);
-            // $('#renegociacao').html(totalRowCount['renegociacao']);
-            // $('#bateria_violada').html(totalRowCount['bateria_violada']);
-            // $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
-            // $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
+            $('#bateria_violada').html(totalRowCount['bateria_violada']);
+            $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
+            $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
 
         });
 
