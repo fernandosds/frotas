@@ -15,11 +15,8 @@ class SantanderService
      * @return mixed
      */
     // public function all($limit = 25000)
-<<<<<<< HEAD
-    public function all($limit = 25000)
-=======
     public function all($limit = 30000)
->>>>>>> c563eba031249d866d82f233a32165484a2fbe40
+
     {
         $cars = $this->santander->table($limit);
 

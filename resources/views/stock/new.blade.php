@@ -75,7 +75,7 @@
                                             <option selected>
                                             </option>
                                             @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
+                                            <option value="{{$customer->id}}">
                                                 {{$customer->id}}-{{$customer->name}}
                                             </option>
                                             @endforeach
@@ -96,9 +96,9 @@
                                             <option selected>
                                             </option>
                                             @foreach( $technologies as $technologie )
-                                                <option value=" {{$technologie->id}}">
-                                                    {{$technologie->type}}
-                                                </option>
+                                            <option value=" {{$technologie->id}}">
+                                                {{$technologie->type}}
+                                            </option>
                                             @endforeach
 
                                         </select>
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="{{url('production/devices')}}" class="btn btn-secondary">Voltar</a>
+                                <a href="{{url('stocks/')}}" class="btn btn-secondary">Voltar</a>
                                 <button type="button" class="btn btn-primary" id="btn-device-newone">Salvar</button>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                                                 {{ isset($device->customer->name) ? $device->customer->name : null }}
                                             </option>
                                             @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
+                                            <option value="{{$customer->id}}">
                                                 {{$customer->name}}
                                             </option>
                                             @endforeach
@@ -142,7 +142,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="{{url('production/devices')}}" class="btn btn-secondary">Voltar</a>
+                                <a href="{{url('stocks/')}}" class="btn btn-secondary">Voltar</a>
                                 <button type="button" class="btn btn-brand" id="btn-device-import"><i
                                         class="fas fa-upload"></i>Importar</button>
                             </div>
@@ -265,7 +265,7 @@ $(function() {
         //console.log($customer_id);
 
         $.ajax({
-            url: '{{url("/production/devices/save")}}',
+            url: '{{url("/stocks/save")}}',
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -284,7 +284,7 @@ $(function() {
                             showConfirmButton: true,
                             timer: 10000
                         })
-                        window.location.href = '{{url("/production/devices")}}'
+                        window.location.href = '{{url("/stocks/")}}'
                     } else {
                         Swal.fire({
                             type: 'warning',
@@ -380,7 +380,7 @@ $(function() {
         }
 
         $.ajax({
-            url: '{{url("/production/devices/saveone")}}',
+            url: '{{url("/stocks/saveone")}}',
             type: 'POST',
             data: {
                 "_token": "{{ csrf_token() }}",

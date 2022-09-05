@@ -149,6 +149,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'stocks'], function () {
         Route::get('/', 'Iscas\StockController@index');
         Route::get('/history', 'Iscas\StockController@historyContract');
+
+        Route::get('/new', 'Iscas\StockController@new');
+        Route::post('/update/{id}', 'Iscas\StockController@update');
+        Route::get('/edit/{id}', 'Iscas\StockController@edit');
+        Route::post('/delete', 'Iscas\StockController@delete');
+        Route::post('/save', 'Iscas\StockController@save');
+        Route::post('/saveone', 'Iscas\StockController@saveone');
+        
+        Route::group(['prefix' => 'technologies'], function () {
+            Route::get('/', 'Iscas\Production\TechnologieController@index');
+            Route::get('/new', 'Iscas\Production\TechnologieController@new');
+            Route::post('/save', 'Iscas\Production\TechnologieController@save');
+            Route::put('/update/{id}', 'Iscas\Production\TechnologieController@update');
+            Route::get('/edit/{id}', 'Iscas\Production\TechnologieController@edit');
+            Route::get('/delete/{id}', 'Iscas\Production\TechnologieController@destroy');
+        });
     });
 
     /**
@@ -202,14 +218,14 @@ Route::group(['middleware' => 'auth'], function () {
             /**
              * Technologies routes
              */
-            Route::group(['prefix' => 'technologies'], function () {
-                Route::get('/', 'Iscas\Production\TechnologieController@index');
-                Route::get('/new', 'Iscas\Production\TechnologieController@new');
-                Route::post('/save', 'Iscas\Production\TechnologieController@save');
-                Route::put('/update/{id}', 'Iscas\Production\TechnologieController@update');
-                Route::get('/edit/{id}', 'Iscas\Production\TechnologieController@edit');
-                Route::get('/delete/{id}', 'Iscas\Production\TechnologieController@destroy');
-            });
+            // Route::group(['prefix' => 'technologies'], function () {
+            //     Route::get('/', 'Iscas\Production\TechnologieController@index');
+            //     Route::get('/new', 'Iscas\Production\TechnologieController@new');
+            //     Route::post('/save', 'Iscas\Production\TechnologieController@save');
+            //     Route::put('/update/{id}', 'Iscas\Production\TechnologieController@update');
+            //     Route::get('/edit/{id}', 'Iscas\Production\TechnologieController@edit');
+            //     Route::get('/delete/{id}', 'Iscas\Production\TechnologieController@destroy');
+            // });
         });
     });
 

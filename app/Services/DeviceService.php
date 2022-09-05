@@ -56,8 +56,7 @@ class DeviceService
     public function saveone(Request $request)
     {
 
-        //dd($request->model);
-
+        
         if ($this->deviceRepository->exists($request->model)) {
 
             return abort(404);
@@ -65,7 +64,7 @@ class DeviceService
         } else {
 
             $arr_insert[] = [
-                'model'          => trim($request->model),
+                'model'          => trim(strtoupper($request->model)),
                 'technologie_id' => (int)$request->technologie_id,
                 'customer_id'    => (int)$request->customer_id,
                 'tipo'           => trim($request->tipo),
@@ -89,21 +88,34 @@ class DeviceService
     public function save(array $array, $customer, $tipo)
     {
         $arr_insert = [];
+        $arr_bad_format = [];
         foreach ($array as $item) {
 
-            if(isset($item[0])){
-                $arr_insert[] = [
-                'model'          => trim($item[0]),
-                'technologie_id' => (int)$item[1],
-                'customer_id'    => (int)$customer,
-                'tipo'           => trim($tipo),
-                'uniqid'         => md5(uniqid("")),
-                'status'         => 'disponivel',
-                'created_at'     => Carbon::now(),
-                ];
+            if(strlen($item[0]) > 8){
+                $arr_bad_format[] = $item[0];
+            }else{
+                if(isset($item[0])){
+                    $arr_insert[] = [
+                    'model'          => trim(strtoupper($item[0])),
+                    'technologie_id' => (int)$item[1],
+                    'customer_id'    => (int)$customer,
+                    'tipo'           => trim($tipo),
+                    'uniqid'         => md5(uniqid("")),
+                    'status'         => 'disponivel',
+                    'created_at'     => Carbon::now(),
+                    ];
+                }
             }
         }
 
+
+        // if(!empty($arr_bad_format) || !is_null($arr_bad_format)){
+        //     $message = '';
+        //     foreach($arr_bad_format as $format){
+        //         $message .= ','.$format . PHP_EOL;
+        //     }
+            // return response()->json(['status' => 'success', 'message' => "Esses modelos estão no formato errado {$message}"], 200);
+        // }
         $device = DB::table('devices')->insert($arr_insert);
 
         return ($device) ? $arr_insert : abort(404);
@@ -115,17 +127,11 @@ class DeviceService
      * @param $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
 
-        if ($this->deviceRepository->findDeviceid($id)) {
-
-            $device = $this->deviceRepository->update($id, $request->all());
-            return $device;
-
-        } else {
-            return false;
-        }
+        $device = $this->deviceRepository->updateDevice($request);
+        return $device;
 
     }
 
@@ -175,12 +181,7 @@ class DeviceService
      */
     public function destroy(Int $id)
     {
-
-        if ($this->deviceRepository->findDeviceid($id)) {
-            return $this->deviceRepository->delete($id);
-        } else {
-            return false;
-        }
+        return $this->deviceRepository->deleteDevice($id);
     }
 
     /**

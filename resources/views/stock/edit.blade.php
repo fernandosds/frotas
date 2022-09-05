@@ -54,9 +54,15 @@
                             <div class="form-row">
                                 <label for="input">Selecione um cliente</label>
                                 <select class="form-control" name="acustomer_id" id="acustomer_id">
-                                    @foreach($customers as $customer)
-                                        <option value="{{$customer->id}}" @if( isset( $user ) ) {{ ($user->customer_id == $customer->id) ? 'selected' : '' }} @endif>{{$customer->name}}</option>
-                                    @endforeach
+                                    @if(isset($device->customer))
+                                        @foreach($customers as $customer)
+                                            @if($device->customer->id == $customer->id)
+                                                <option value="{{$customer->id}}" selected>{{$customer->name}}</option>
+                                            @else
+                                                <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -78,11 +84,11 @@
                                     @if(isset($device->technologie))
                                         @foreach($technologies as $technologie)
                                             @if($technologie->id == $device->technologie->id)
-                                                <option value="{{$device->model}}" selected>
+                                                <option value="{{$technologie->id}}" selected>
                                                     {{$device->technologie->type}}
                                                 </option>
                                             @else
-                                                <option value="{{$device->model}}">
+                                                <option value="{{$technologie->id}}">
                                                     {{$technologie->type}}
                                                 </option>  
                                             @endif
@@ -103,7 +109,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="{{url('production/devices')}}" class="btn btn-secondary">Voltar</a>
+                <a href="{{url('stocks/')}}" class="btn btn-secondary">Voltar</a>
                 <button type="button" class="btn btn-primary" id="btn-device-alterar">Alterar</button>
             </div>
         </form>
@@ -118,25 +124,17 @@
     $(function() {
 
         $('#btn-device-alterar').click(function() {
-            console.log('Vc apertou botão alterar');
-            console.log('Registro : ' + $('#registro').val());
-            console.log('aModel : ' + $('#amodel').val());
-            console.log('Technologie_id : ' + $('#technologie_id').val());
-            console.log('aCustomer_id : ' + $('#acustomer_id').val());
-            console.log('aTipo : ' + $('#atipo').val());
-            console.log('aStatus : ' + $('#astatus').val());
-
+            var form_data = {
+                "_token"        : "{{ csrf_token() }}",
+                'registro'      : $('#registro').val(),
+                'model'         : $('#amodel').val(),
+                'technologie_id': $('#technologie_id option:selected').val(),
+                'customer_id'   : $('#acustomer_id option:selected').val(),
+            };
             $.ajax({
-                url: '{{url("/production/devices/update")}}' + "/" + $('#registro').val(),
-                type: 'PUT',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'model': $('#amodel').val(),
-                    'technologie_id': $('#technologie_id').val(),
-                    'customer_id': $('#acustomerI_id').val(),
-                    'tipo': $('#atipoI').val(),
-                    'status': $('#astatus').val(),
-                },
+                url: '{{url("/stocks/update")}}' + "/" + $('#registro').val(),
+                type: 'POST',
+                data: form_data,
                 success: function(response) {
                     console.log("response: " + response.status);
                     if (response.status == "success") {
@@ -145,6 +143,8 @@
                             title: 'Registro salvo com sucesso',
                             showConfirmButton: true,
                             timer: 10000
+                        }).then(function(){
+                            $(location).attr('href', '{{url("stocks")}}/');
                         })
                     } else {
                         Swal.fire({

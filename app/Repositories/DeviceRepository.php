@@ -11,19 +11,11 @@ use Illuminate\Support\Facades\DB;
 class DeviceRepository extends AbstractRepository
 {
 
-    /**
-     * UserRepository constructor.
-     * @param Device $model
-     */
     public function __construct(Device $model)
     {
         $this->model = $model;
     }
 
-    /**
-     * @param int $customer_id
-     * @return \Illuminate\Support\Collection
-     */
     public function filter(int $customer_id)
     {
         $adminSat = Auth::user()->email == 'admin@satcompany.com.br';
@@ -37,20 +29,11 @@ class DeviceRepository extends AbstractRepository
         return $customer;
     }
 
-    /**
-     * @param String $model
-     * @return mixed
-     */
     public function exists(String $model)
     {
         return $this->model->where('model', $model)->count();
     }
 
-    /**
-     * @param String $uniqid
-     * @param Int $id
-     * @return mixed
-     */
     public function findByUniqid(String $uniqid)
     {
         return $this->model->where('uniqid', $uniqid)
@@ -58,10 +41,6 @@ class DeviceRepository extends AbstractRepository
             ->first();
     }
 
-    /**
-     * @param Int $id
-     * @return mixed
-     */
     public function available(Int $id)
     {
         return $this->model->where('id', $id)
@@ -70,13 +49,8 @@ class DeviceRepository extends AbstractRepository
             ->count();
     }
 
-    /**
-     * @param String $model
-     * @return mixed
-     */
     public function attachDevices($object)
     {
-
         $devices = $this->model
             ->whereNull('contract_id')
             ->whereNull('customer_id')
@@ -97,10 +71,6 @@ class DeviceRepository extends AbstractRepository
         }
     }
 
-    /**
-     * @param String $device
-     * @return array
-     */
     public function findByModel(String $device)
     {
 
@@ -126,10 +96,6 @@ class DeviceRepository extends AbstractRepository
         }
     }
 
-    /**
-     * @param int $customer_id
-     * @return \Illuminate\Support\Collection
-     */
     public function filterByContractDevice($contract_devices)
     {
         try {
@@ -147,10 +113,6 @@ class DeviceRepository extends AbstractRepository
         }
     }
 
-    /**
-     * @param String $device
-     * @return mixed
-     */
     public function validDevice(String $device)
     {
 
@@ -166,24 +128,15 @@ class DeviceRepository extends AbstractRepository
             ->count();
     }
 
-    /**
-     * @param int $customer_id
-     * @return \Illuminate\Support\Collection
-     */
     public function findDevice($device = null)
     {
         return $this->model->where('model', $device)
             ->first();
     }
 
-    /**
-     * @param int $customer_id
-     * @return \Illuminate\Support\Collection
-     */
     public function findDeviceid($device = null)
     {
-        return $this->model->where('id', $device)
-            ->first();
+        return $this->model->where('id', $device)->first();
     }
 
     public function updateStatusDevice($device, $status)
@@ -196,13 +149,41 @@ class DeviceRepository extends AbstractRepository
 
     public function getCustomer($idDevice)
     {
-        //dd($this->model->with('customer')->where('id', $idDevice)->first());
         return $this->model->with('customer')->where('id', $idDevice)->first();
     }
     public function getTechnologie($idDevice)
     {
-        //dd($idDevice, "Dentro DeviceRepository");
-        //dd($this->model->with('technologie')->where('id', $idDevice)->first());
         return $this->model->with('technologie')->where('id', $idDevice)->first();
     }
+
+    public function updateDevice($request){
+        try{
+            $findModel = $this->model->find($request->registro);
+            $findModel->technologie_id = $request->technologie_id;
+            $findModel->customer_id = $request->customer_id;
+            if($findModel->save()){
+                return response()->json(['status' => 200, 'message' => 'Alterado com sucesso!']);
+            }
+            return response()->json(['status' => 500, 'message' => 'Não foi possivel alterar a isca']);
+        }catch(\Exception $e){
+            return response()->json(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function deleteDevice($id){
+        try{
+
+            $deleteDevice = Device::find($id);
+            
+            $result = ($deleteDevice->delete()) ? true : false;
+            if($deleteDevice){
+                return response()->json(['status' => 200, 'message' => 'Excluído com sucesso!']);
+            }else{
+                return response()->json(['status' => 500, 'message' => 'Não foi possivel alterar a isca']);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
 }
