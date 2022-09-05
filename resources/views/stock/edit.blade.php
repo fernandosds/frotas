@@ -102,6 +102,41 @@
                     <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <div class="kt-portlet__body">
                             <div class="form-row">
+                                <label for="input">Selecione o status:</label>
+
+                                <select class="form-control" name="status" id="status">
+                                    @if($device->status === 'a definir')
+                                        <option value="a definir" selected>A definir</option>
+                                    @else
+                                        <option value="a definir">A definir</option>
+                                    @endif
+
+                                    @if($device->status === 'disponivel')
+                                        <option value="disponivel" selected>Disponivel</option>
+                                    @else
+                                        <option value="disponivel">Disponivel</option>
+                                    @endif
+
+                                    @if($device->status === 'em andamento')
+                                        <option value="em andamento" selected>Em andamento</option>
+                                    @else
+                                        <option value="em andamento">Em andamento</option>
+                                    @endif
+
+                                    @if($device->status === 'indisponivel')
+                                        <option value="indisponivel" selected>indisponivel</option>
+                                    @else
+                                        <option value="indisponivel">indisponivel</option>
+                                    @endif
+                                    
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <div class="kt-portlet__body">
+                            <div class="form-row">
 
                             </div>
                         </div>
@@ -128,6 +163,7 @@
                 "_token"        : "{{ csrf_token() }}",
                 'registro'      : $('#registro').val(),
                 'model'         : $('#amodel').val(),
+                'status'        : $('#status option:selected').val(),
                 'technologie_id': $('#technologie_id option:selected').val(),
                 'customer_id'   : $('#acustomer_id option:selected').val(),
             };

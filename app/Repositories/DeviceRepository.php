@@ -159,8 +159,9 @@ class DeviceRepository extends AbstractRepository
     public function updateDevice($request){
         try{
             $findModel = $this->model->find($request->registro);
-            $findModel->technologie_id = $request->technologie_id;
-            $findModel->customer_id = $request->customer_id;
+            $findModel->technologie_id  = $request->technologie_id;
+            $findModel->customer_id     = $request->customer_id;
+            $findModel->status          = $request->status;
             if($findModel->save()){
                 return response()->json(['status' => 200, 'message' => 'Alterado com sucesso!']);
             }
