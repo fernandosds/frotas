@@ -96,9 +96,9 @@
                                             <option selected>
                                             </option>
                                             @foreach( $technologies as $technologie )
-                                            <option value=" {{$technologie->id}}">
-                                                {{$technologie->type}}
-                                            </option>
+                                                <option value=" {{$technologie->id}}">
+                                                    {{$technologie->type}}
+                                                </option>
                                             @endforeach
 
                                         </select>

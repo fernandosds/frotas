@@ -75,7 +75,7 @@
                                             <option selected>
                                             </option>
                                             @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
+                                            <option value="{{$customer->id}}">
                                                 {{$customer->id}}-{{$customer->name}}
                                             </option>
                                             @endforeach
@@ -124,7 +124,7 @@
                                                 {{ isset($device->customer->name) ? $device->customer->name : null }}
                                             </option>
                                             @foreach( $customers as $customer )
-                                            <option value="{{$customer->id}}" {{ $customer->id == $customer->id}}>
+                                            <option value="{{$customer->id}}">
                                                 {{$customer->name}}
                                             </option>
                                             @endforeach

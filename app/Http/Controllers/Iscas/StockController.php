@@ -120,7 +120,6 @@ class StockController extends Controller
                         if ($i >= 2) {
                             continue;
                         } else {
-
                             $validaModelo = $this->deviceService->findDevice($cell);
                             if (!$validaModelo) {
                                 $arraydata[$index][$i] = (string)$cell;
@@ -132,7 +131,7 @@ class StockController extends Controller
 
             $inserts = $this->deviceService->save($arraydata, $customerId, $tipo);
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e importou planilha de isca cliente id: ' . $customerId, 'DeviceService', 'save');
-
+            
             return response()->json(['status' => 'success','message' => count($inserts)], 200);
         } else {
             exit('Falha ao abrir arquivo.');

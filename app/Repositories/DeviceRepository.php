@@ -172,9 +172,11 @@ class DeviceRepository extends AbstractRepository
 
     public function deleteDevice($id){
         try{
-            $deleteDevice = $this->model->find($id);
+
+            $deleteDevice = Device::find($id);
+            
             $result = ($deleteDevice->delete()) ? true : false;
-            if($result){
+            if($deleteDevice){
                 return response()->json(['status' => 200, 'message' => 'Excluído com sucesso!']);
             }else{
                 return response()->json(['status' => 500, 'message' => 'Não foi possivel alterar a isca']);

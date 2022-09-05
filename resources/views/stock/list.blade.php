@@ -76,24 +76,24 @@
                                     <td style="width: 200px;">
                                         <div class="pull-left">
                                             @if($device->status == null)
-                                            <a href="{{url('stocks/edit')}}/{{$device->id}}">
-                                                <button type="button"
-                                                    class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
-                                                    title="Editar isca"><span class="fa fa-fw fa-edit"></span>
-                                                </button>
-                                            </a>
+                                                <a href="{{url('stocks/edit')}}/{{$device->id}}">
+                                                    <button type="button"
+                                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                                    </button>
+                                                </a>
                                             @endif
                                             @if($device->status == 'disponivel')
-                                            <a href="{{url('stocks/edit')}}/{{$device->id}}">
-                                                <button type="button"
-                                                    class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
-                                                    title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                                <a href="{{url('stocks/edit')}}/{{$device->id}}">
+                                                    <button type="button"
+                                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
+                                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                                    </button>
+                                                </a>
+                                                <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}"
+                                                    class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
+                                                    <span class="fa fa-fw fa-trash"></span>
                                                 </button>
-                                            </a>
-                                            <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}"
-                                                class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
-                                                <span class="fa fa-fw fa-trash"></span>
-                                            </button>
                                             @endif
                                         </div>
                                     </td>
@@ -177,24 +177,6 @@
             },
             success: function(response) {
                 console.log("response: " + response.status);
-                if (response.status == "success") {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'Registro salvo com sucesso',
-                        showConfirmButton: true,
-                        timer: 10000
-                    }).then(function(){
-                        $(location).attr('href', '{{url("stocks")}}/');
-                    })
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro ao tentar salvar! ' + response.message,
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-                }
             }
         })
     });

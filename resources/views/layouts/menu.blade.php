@@ -123,7 +123,7 @@
 
             <!-- GESTÃO DE ISCAS-->
             @if (Auth::user()->email == 'admin@satcompany.com.br')
-            <li class="kt-menu__section ">
+            <!-- <li class="kt-menu__section ">
                 <h4 class="kt-menu__section-text">ADMINISTRAÇÃO</h4>
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
@@ -139,7 +139,7 @@
                         <li class="kt-menu__item " aria-haspopup="true"><a href="{{url('production/devices/')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Em Andamento</span></a></li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
             @endif
 
             <li class="kt-menu__item " aria-haspopup="true">
