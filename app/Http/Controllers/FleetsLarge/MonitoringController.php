@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FleetsLarge;
 use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
+use App\Services\FleetsLarge\SantanderService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use App\Services\LogService;
@@ -21,8 +22,10 @@ class MonitoringController extends Controller
     /**
      * @var $apiFleetLargeService
      * @var ApiFleetLargeService
+     * @var SantanderService
      */
     private $apiFleetLargeService;
+    private $santanderService;
 
     /**
      * @var ApiDeviceService
@@ -46,7 +49,8 @@ class MonitoringController extends Controller
         CustomerService $customerService,
         LogRepository $log,
         PsaService $psaService,
-        LogService $logService
+        LogService $logService,
+        SantanderService $santanderService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
@@ -55,6 +59,7 @@ class MonitoringController extends Controller
         $this->log = $log;
         $this->psaService = $psaService;
         $this->logService = $logService;
+        $this->santanderService = $santanderService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -131,8 +136,62 @@ class MonitoringController extends Controller
      * @param String $device
      * @return array|\Illuminate\Http\JsonResponse
      */
+    // public function lastPosition(String $chassi)
+    // {
+    // $customer = $this->customerService->show(Auth::user()->customer_id);
+    // $chassi = $this->santanderService->findByChassi($chassi);
+    // $endereco = $this->apiDeviceServic->getAddress($chassi->lp_latitude, $chassi->lp_longitude);
+
+
+    // $value = [
+    // "chassi" => $chassi->chassis,
+    // "categoria_veiculo" => $chassi->categoria_veiculo,
+    // "cidade" => $chassi->cidade,
+    // "end_bairro" => $chassi->end_bairro,
+    // "end_cep" => $chassi->end_cep,
+    // "end_cidade" => $chassi->end_cidade,
+    // "end_logradouro" => $chassi->end_logradouro,
+    // "end_uf" => $chassi->end_uf,
+    // "estado" => $chassi->estado,
+    // "iccid" => $chassi->iccid,
+    // "lp_ignicao" => $chassi->lp_ignicao,
+    // "lp_latitude" => $chassi->lp_latitude,
+    // "lp_longitude" => $chassi->lp_longitude,
+    // "data_instalacao" => $chassi->data_instalacao,
+    // "codigo_fipe" => $chassi->codigo_fipe,
+    // "cod_empresa" => $chassi->cod_empresa,
+    // "lp_ultima_transmissao" => $chassi->lp_ultima_transmissao,
+    // "lp_velocidade" => $chassi->lp_velocidade,
+    // "lp_voltagem" => $chassi->lp_voltagem,
+    // "modelo" => $chassi->modelo,
+    // "modelo_veiculo" => $chassi->modelo_veiculo,
+    // "operadora" => $chassi->operadora,
+    // "placa" => $chassi->placa,
+    // "qtd_dispositivos" => $chassi->qtd_dispositivos,
+    // "sinistrado" => $chassi->sinistrado,
+    // "status" => $chassi->status,
+    // "telefone" => $chassi->telefone,
+    // "versao" => $chassi->versao,
+    // "endereco" => $endereco,
+    // ];
+
+    //$data = json_encode($value);
+    //var_dump($data);
+    //die();
+    // $data = array_merge(
+    // (array)  $chassi,
+    // (array) $endereco
+    // );
+
+
+    //return response()->json(['status' => 'success', 'data' => $value], 200);
+    //
+    // return response()->json(['status' => 'success'], 200);
+    // }
+
     public function lastPosition(String $chassi)
     {
+
         $customer = $this->customerService->show(Auth::user()->customer_id);
 
         $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
@@ -201,6 +260,7 @@ class MonitoringController extends Controller
                 $veiculo = $arr;
             }
         }
+
 
         return response()->json(['status' => 'success'], 200);
     }

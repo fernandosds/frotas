@@ -421,6 +421,7 @@
             url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
             type: 'GET',
             success: function(data) {
+
                 searchRouteBlock = false;
                 if (data.lp_ignicao == "1") {
                     $("#lp_ignicao").css({

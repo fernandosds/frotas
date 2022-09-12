@@ -307,9 +307,7 @@
                             <div class="grid-item">
                                 <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
                             </div>
-                            <div class="grid-item hidden">
-                                <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
-                            </div>
+
                             <div class="grid-item">
                                 <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 30 DIAS</span>
                             </div>
@@ -736,21 +734,6 @@
         setTimeout(function() {
             tableOneRowCount();
         }, 15000);
-
-         // Adicionar checked após 10 segundos
-         setTimeout(function() {
-            $('#batNaoViolada')[0].click();
-        }, 20000);
-
-        $('input[name="bat"]').change(function() {
-            if ($('#batViolada').is(':checked')) {
-                $('#batNaoViolada').attr('checked', false);
-                $('#batViolada').attr('checked', true);
-            } else {
-                $('#batViolada').attr('checked', false);
-                $('#batNaoViolada')[0].click();
-            }
-        });
 
         // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {
