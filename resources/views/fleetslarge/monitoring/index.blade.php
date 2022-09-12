@@ -58,7 +58,8 @@
         margin-bottom: 0px !important;
     }
 
-    .hidden, .load {
+    .hidden,
+    .load {
         display: none;
     }
 
@@ -66,7 +67,7 @@
         width: 1000px;
     }
 
-    .streetViewBtn{
+    .streetViewBtn {
         position: absolute;
         top: 265px;
         left: 10px;
@@ -86,12 +87,12 @@
         cursor: pointer;
     }
 
-    .streetViewBtn:hover{
+    .streetViewBtn:hover {
         font-size: 28px;
         text-shadow: 1px 1px 5px black;
     }
 
-    .btnSearchRoute{
+    .btnSearchRoute {
         background-color: #eee;
         background-clip: padding-box;
         border-radius: 5px;
@@ -106,15 +107,17 @@
         bottom: 1px;
     }
 
-    .noBorder{
-        border:none !important;
+    .noBorder {
+        border: none !important;
     }
 
-    .inputError{
+    .inputError {
         border: 1px solid rgb(255, 0, 0);
     }
 
-    .dis{pointer-events:none}
+    .dis {
+        pointer-events: none
+    }
 
     path.leaflet-interactive.animate {
         stroke-dasharray: 1920;
@@ -128,7 +131,7 @@
         }
     }
 
-    .gradient{
+    .gradient {
         position: absolute;
         z-index: 455;
         width: 15vw;
@@ -140,12 +143,12 @@
         flex-direction: row;
     }
 
-    .gradientItem{
-        flex:1;
+    .gradientItem {
+        flex: 1;
     }
 
     .hidden {
-            display: none;
+        display: none;
     }
 </style>
 @endsection
@@ -309,7 +312,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.polyline.snakeanim@0.2.0/L.Polyline.SnakeAnim.min.js"></script>
 <script>
     /**
@@ -421,9 +424,8 @@
             url: "{{url('')}}/fleetslarges/monitoring/last-position/" + chassi_device,
             type: 'GET',
             success: function(data) {
-
                 searchRouteBlock = false;
-                if (data.lp_ignicao == "1") {
+                if (data.data.lp_ignicao == "1") {
                     $("#lp_ignicao").css({
                         "color": "green"
                     });
@@ -433,16 +435,16 @@
                     });
                 }
 
-                $("#placa").html(data.placa);
-                $("#lp_ignicao").html(data.lp_ignicao != "1" ? "OFF" : "ON");
-                $("#lp_velocidade").html(data.lp_velocidade + " km/h");
-                $("#chassis").html(data.chassis);
-                $("#modelo_veiculo").html(data.modelo_veiculo);
-                $("#categoria_veiculo").html(data.categoria_veiculo);
-                $("#lp_ultima_transmissao").html(data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'));
-                $(".modelo").html(data.modelo);
+                $("#placa").html(data.data.placa);
+                $("#lp_ignicao").html(data.data.lp_ignicao != "1" ? "OFF" : "ON");
+                $("#lp_velocidade").html(data.data.lp_velocidade + " km/h");
+                $("#chassis").html(data.data.chassi);
+                $("#modelo_veiculo").html(data.data.modelo_veiculo);
+                $("#categoria_veiculo").html(data.data.categoria_veiculo);
+                $("#lp_ultima_transmissao").html(data.data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'));
+                $(".modelo").html(data.data.modelo);
 
-                modelo = data.modelo;
+                modelo = data.data.modelo;
 
                 if (mymap.hasLayer(marker)) {
                     mymap.removeLayer(marker);
@@ -459,16 +461,16 @@
                     mymap.removeLayer(marker_event);
                 }
 
-                streetPositionLink = 'http://maps.google.com/maps?q=&cbll=' + data.lp_latitude + ',' + data.lp_longitude +'&layer=c';
+                streetPositionLink = 'http://maps.google.com/maps?q=&cbll=' + data.data.lp_latitude + ',' + data.data.lp_longitude + '&layer=c';
 
-                mymap.panTo(new L.LatLng(data.lp_latitude, data.lp_longitude));
+                mymap.panTo(new L.LatLng(data.data.lp_latitude, data.data.lp_longitude));
 
-                marker = L.marker([data.lp_latitude, data.lp_longitude], {
+                marker = L.marker([data.data.lp_latitude, data.data.lp_longitude], {
                     icon: truckIcon
                 }).addTo(mymap);
 
                 $('#last-address').html(
-                    '<b>Último endereço válido:</b> ' + data.endereco
+                    '<b>Último endereço válido:</b> ' + data.data.endereco
                 );
                 Swal.close()
             }
@@ -480,17 +482,17 @@
 
     var searchRouteGroup = L.featureGroup().addTo(mymap);
 
-    $('.btnSearchRoute').click(function(){
+    $('.btnSearchRoute').click(function() {
 
         $('.date_route').removeClass('inputError');
-        if(searchRouteBlock){
+        if (searchRouteBlock) {
             return;
         }
-        if($("#start_date_route").val() == '' || $("#last_date_route").val() == ''){
-            if($("#start_date_route").val() == ''){
+        if ($("#start_date_route").val() == '' || $("#last_date_route").val() == '') {
+            if ($("#start_date_route").val() == '') {
                 $("#start_date_route").addClass('inputError');
             }
-            if($("#last_date_route").val() == ''){
+            if ($("#last_date_route").val() == '') {
                 $("#last_date_route").addClass('inputError');
             }
             return;
@@ -507,11 +509,11 @@
             "chassis": chassi_url,
             "modelo": modelo,
         }
-         $.ajax({
+        $.ajax({
             url: "{{route('fleetslarges.monitoring.routes')}}",
             type: 'POST',
-            data:payload,
-            success: function (data) {
+            data: payload,
+            success: function(data) {
                 searchRouteGroup.clearLayers();
                 const points = data.positions;
                 markersToShowPopUp = [];
@@ -520,33 +522,33 @@
                 let yourWaypoints = [];
                 let aux = 0;
                 $('.gradient').toggleClass('hidden');
-                points.map((point) =>{
-                    if(!isNaN(point.latitude) && !isNaN(point.longitude)){
-                        $('.gradient').append('<div class="gradientItem" data-item="' + aux + '" style="background-color:'+ colors[aux] +'"></div>');
+                points.map((point) => {
+                    if (!isNaN(point.latitude) && !isNaN(point.longitude)) {
+                        $('.gradient').append('<div class="gradientItem" data-item="' + aux + '" style="background-color:' + colors[aux] + '"></div>');
                         const pointB = new L.LatLng(point.latitude, point.longitude);
                         yourWaypoints.push(pointB);
                         let markerCustom = L.circleMarker([point.latitude, point.longitude], {
-                            radius: 15,
-                            fillOpacity: 0.5,
-                            color: colors[aux],
-                            className: 'gradientItem' + aux
-                        }).bindPopup('<strong>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
-                        .on('mouseover', function (e) {
-                            e.target.setStyle({
-                                radius: 20
+                                radius: 15,
+                                fillOpacity: 0.5,
+                                color: colors[aux],
+                                className: 'gradientItem' + aux
+                            }).bindPopup('<strong>Data da posição:</strong> ' + moment(point.data_gps).format('DD/MM/YYYY HH:mm:ss'))
+                            .on('mouseover', function(e) {
+                                e.target.setStyle({
+                                    radius: 20
 
-                            });
+                                });
 
-                            this.openPopup();
+                                this.openPopup();
 
-                        })
-                        .on('mouseout', function (e) {
-                            e.target.setStyle({
-                                radius: 15
+                            })
+                            .on('mouseout', function(e) {
+                                e.target.setStyle({
+                                    radius: 15
 
-                            });
-                            this.closePopup();
-                        }).addTo(searchRouteGroup);
+                                });
+                                this.closePopup();
+                            }).addTo(searchRouteGroup);
 
                         marker._icon.classList.add("className");
                         markersToShowPopUp.push(markerCustom);
@@ -562,7 +564,7 @@
                     snakingSpeed: 200
                 }).addTo(searchRouteGroup).snakeIn();
             },
-            complete:function(){
+            complete: function() {
                 $('.find').show();
                 $('.load').hide();
                 $(".btnSearchRoute").removeClass("dis");
@@ -619,7 +621,7 @@
         $('#categoria_veiculo').html('---');
     }
 
-    $(".streetViewBtn").click(function(){
+    $(".streetViewBtn").click(function() {
         window.open(streetPositionLink, '_blank');
     });
 
@@ -638,11 +640,11 @@
                 "first_date": $('#first_date').val(),
                 "last_date": $('#last_date').val()
             },
-            beforeSend : function(){
+            beforeSend: function() {
                 $("#message").append('<div class="fa-3x"><i class="fas fa-spinner fa-pulse"></i></div>');
                 $("response").empty();
             },
-            complete : function(){
+            complete: function() {
                 $("message").empty();
             },
             success: function(response) {
@@ -690,7 +692,7 @@
 
 
 
-    $('.gradient').on('mouseover', '.gradientItem', function () {
+    $('.gradient').on('mouseover', '.gradientItem', function() {
         let gradientItemIndex = $(this).data('item');
         markersToShowPopUp[gradientItemIndex].openPopup();
     });

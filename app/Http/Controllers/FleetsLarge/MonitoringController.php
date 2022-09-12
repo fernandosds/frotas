@@ -136,133 +136,45 @@ class MonitoringController extends Controller
      * @param String $device
      * @return array|\Illuminate\Http\JsonResponse
      */
-    // public function lastPosition(String $chassi)
-    // {
-    // $customer = $this->customerService->show(Auth::user()->customer_id);
-    // $chassi = $this->santanderService->findByChassi($chassi);
-    // $endereco = $this->apiDeviceServic->getAddress($chassi->lp_latitude, $chassi->lp_longitude);
-
-
-    // $value = [
-    // "chassi" => $chassi->chassis,
-    // "categoria_veiculo" => $chassi->categoria_veiculo,
-    // "cidade" => $chassi->cidade,
-    // "end_bairro" => $chassi->end_bairro,
-    // "end_cep" => $chassi->end_cep,
-    // "end_cidade" => $chassi->end_cidade,
-    // "end_logradouro" => $chassi->end_logradouro,
-    // "end_uf" => $chassi->end_uf,
-    // "estado" => $chassi->estado,
-    // "iccid" => $chassi->iccid,
-    // "lp_ignicao" => $chassi->lp_ignicao,
-    // "lp_latitude" => $chassi->lp_latitude,
-    // "lp_longitude" => $chassi->lp_longitude,
-    // "data_instalacao" => $chassi->data_instalacao,
-    // "codigo_fipe" => $chassi->codigo_fipe,
-    // "cod_empresa" => $chassi->cod_empresa,
-    // "lp_ultima_transmissao" => $chassi->lp_ultima_transmissao,
-    // "lp_velocidade" => $chassi->lp_velocidade,
-    // "lp_voltagem" => $chassi->lp_voltagem,
-    // "modelo" => $chassi->modelo,
-    // "modelo_veiculo" => $chassi->modelo_veiculo,
-    // "operadora" => $chassi->operadora,
-    // "placa" => $chassi->placa,
-    // "qtd_dispositivos" => $chassi->qtd_dispositivos,
-    // "sinistrado" => $chassi->sinistrado,
-    // "status" => $chassi->status,
-    // "telefone" => $chassi->telefone,
-    // "versao" => $chassi->versao,
-    // "endereco" => $endereco,
-    // ];
-
-    //$data = json_encode($value);
-    //var_dump($data);
-    //die();
-    // $data = array_merge(
-    // (array)  $chassi,
-    // (array) $endereco
-    // );
-
-
-    //return response()->json(['status' => 'success', 'data' => $value], 200);
-    //
-    // return response()->json(['status' => 'success'], 200);
-    // }
-
     public function lastPosition(String $chassi)
     {
-
         $customer = $this->customerService->show(Auth::user()->customer_id);
+        $chassi = $this->santanderService->findByChassi($chassi);
+        $endereco = $this->apiDeviceServic->getAddress($chassi->lp_latitude, $chassi->lp_longitude);
 
-        $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
-        $veiculo[] = '';
-        foreach ($fleetslarge as $data => $dat) {
-            if ($chassi == $dat['chassis']) {
+        $data = [
+            "chassi" => $chassi->chassis,
+            "categoria_veiculo" => $chassi->categoria_veiculo,
+            "cidade" => $chassi->cidade,
+            "end_bairro" => $chassi->end_bairro,
+            "end_cep" => $chassi->end_cep,
+            "end_cidade" => $chassi->end_cidade,
+            "end_logradouro" => $chassi->end_logradouro,
+            "end_uf" => $chassi->end_uf,
+            "estado" => $chassi->estado,
+            "iccid" => $chassi->iccid,
+            "lp_ignicao" => $chassi->lp_ignicao,
+            "lp_latitude" => $chassi->lp_latitude,
+            "lp_longitude" => $chassi->lp_longitude,
+            "data_instalacao" => $chassi->data_instalacao,
+            "codigo_fipe" => $chassi->codigo_fipe,
+            "cod_empresa" => $chassi->cod_empresa,
+            "lp_ultima_transmissao" => $chassi->lp_ultima_transmissao,
+            "lp_velocidade" => $chassi->lp_velocidade,
+            "lp_voltagem" => $chassi->lp_voltagem,
+            "modelo" => $chassi->modelo,
+            "modelo_veiculo" => $chassi->modelo_veiculo,
+            "operadora" => $chassi->operadora,
+            "placa" => $chassi->placa,
+            "qtd_dispositivos" => $chassi->qtd_dispositivos,
+            "sinistrado" => $chassi->sinistrado,
+            "status" => $chassi->status,
+            "telefone" => $chassi->telefone,
+            "versao" => $chassi->versao,
+            "endereco" => $endereco,
+        ];
 
-                return  $arr = ([
-                    "lp_satelite"               => $dat['lp_satelite'] ?? '',
-                    "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
-                    "dif_date"                  => $dat['dif_date'] ?? '',
-                    "status_veiculo"            => $dat['status_veiculo'] ?? '',
-                    "lp_voltagem"               => $dat['lp_voltagem'] ?? '',
-                    "sinistrado"                => $dat['sinistrado'] ?? '',
-                    "filial"                    => $dat['filial'] ?? '',
-                    "status_veiculo"            => $dat['status_veiculo'] ?? '',
-                    "status_veiculo_dt"         => $dat['status_veiculo_dt'] ?? '',
-                    "modelo_veiculo_aprimorado" => $dat['modelo_veiculo_aprimorado'] ?? '',
-                    "placa"                     => $dat['placa'] ?? '',
-                    "empresa"                   => $dat['empresa'] ?? '',
-                    "r12s_proximos"             => $dat['r12s_proximos'] ?? '',
-                    "dif_date"                  => $dat['dif_date'] ?? '',
-                    "lp_longitude"              => $dat['lp_longitude'] ?? '',
-                    "estado"                    => $dat['estado'] ?? '',
-                    "lp_latitude"               => $dat['lp_latitude'] ?? '',
-                    "telefone"                  => $dat['telefone'] ?? '',
-                    "status"                    => $dat['status'] ?? '',
-                    "iccid"                     => $dat['iccid'] ?? '',
-                    "chassis"                   => $dat['chassis'] ?? '',
-                    "modelo_veiculo"            => $dat['modelo_veiculo'] ?? '',
-                    "qtd_dispositivos"          => $dat['qtd_dispositivos'] ?? '',
-                    "categoria_veiculo"         => $dat['categoria_veiculo'] ?? '',
-                    "cidade"                    => $dat['cidade'] ?? '',
-                    "end_cidade"                => $dat['end_cidade'] ?? '',
-                    "end_logradouro"            => $dat['end_logradouro'] ?? '',
-                    "end_bairro"                => $dat['end_bairro'] ?? '',
-                    "end_cep"                   => $dat['end_cep'] ?? '',
-                    "end_uf"                    => $dat['end_uf'] ?? '',
-                    "operadora"                 => $dat['operadora'] ?? '',
-                    "cliente"                   => $dat['cliente'] ?? '',
-                    "data_instalacao"           => $dat['data_instalacao'] ?? '',
-                    "cod_empresa"               => $dat['cod_empresa'] ?? '',
-                    "codigo_fipe"               => $dat['codigo_fipe'] ?? '',
-                    "modelo"                    => $dat['modelo'] ?? '',
-                    "point"                     => $dat['point'] ?? '',
-                    "lp_ultima_transmissao"     => $dat['lp_ultima_transmissao'] ?? '',
-                    "versao"                    => $dat['versao'] ?? '',
-                    "cliente_foto"              => $dat['cliente_foto'] ?? '',
-                    "cliente_cpf"               => $dat['cliente_cpf'] ?? '',
-                    "cliente_nome"              => $dat['cliente_nome'] ?? '',
-                    "cliente_datadev"           => $dat['cliente_datadev'] ?? '',
-                    "cliente_celular"           => $dat['cliente_celular'] ?? '',
-                    "cliente_localdev"          => $dat['cliente_localdev'] ?? '',
-                    "cliente_local_retirada"    => $dat['cliente_local_retirada'] ?? '',
-                    "cliente_contrato"          => $dat['cliente_contrato'] ?? '',
-                    "cliente_dataretirada"      => $dat['cliente_dataretirada'] ?? '',
-                    "cliente_email"             => $dat['cliente_email'] ?? '',
-                    "cliente_endereco"          => $dat['cliente_endereco'] ?? '',
-                    "cliente_foto_cnh"          => $dat['cliente_foto_cnh'] ?? '',
-                    "cliente_cnh"               => $dat['cliente_cnh'] ?? '',
-                    "veiculo_odometro"          => $dat['veiculo_odometro'] ?? '',
-                    "lp_velocidade"             => $dat['lp_velocidade'] ?? '',
-                    "modelo_fipe_tab"           => $dat['BI_FIPE_TAB → modelo'] ?? '',
-                    "endereco"                  => $this->apiDeviceServic->getAddress($dat['lp_latitude'], $dat['lp_longitude'])
-                ]);
-                $veiculo = $arr;
-            }
-        }
-
-
-        return response()->json(['status' => 'success'], 200);
+        return response()->json(['status' => 'success', 'data' => $data], 200);
     }
 
     /**
