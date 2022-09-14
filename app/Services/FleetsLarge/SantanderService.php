@@ -45,6 +45,12 @@ class SantanderService
                 $car->event_violacao = "bateria_nao_violada";
             }
 
+            if ($car->sinistrado == "TRUE") {
+                $car->sinistrado = "veiculo_sinistrado";
+            } else {
+                $car->sinistrado = "veiculo_nao_sinistrado";
+            }
+
 
 
             if ($car->manutencao == "true") {
@@ -66,7 +72,6 @@ class SantanderService
                 $car->projeto = 'FINANCEIRA';
             }
         }
-
         return $cars;
     }
 

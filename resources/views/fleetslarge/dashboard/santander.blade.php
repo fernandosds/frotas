@@ -251,13 +251,6 @@
 
 @section('content')
 
-<div class="kt-section " id="div-progress-bar-fleetlarge">
-    <br />
-    <div class="progress progress-sm">
-        <div class="progressebar-tooltip" role="progressbar" data-toggle="tooltip" style="width: 100%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
-    </div>
-</div>
-
 <div class="row">
 
     <!--begin::Portlet-->
@@ -287,7 +280,7 @@
                         </div>
                     </div>
                     <!-- <div class="row"> -->
-                    <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile grid-style">
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Projeto:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item">
@@ -301,14 +294,14 @@
                             <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
                     </div>
-                    <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile ">
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Manutenção:</b></label>
                         <div class="kt-checkbox-inline grid-status">
-                            <div class="grid-item">
-                                <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
-                            </div>
                             <div class="grid-item hidden">
                                 <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
+                            </div>
+                            <div class="grid-item">
+                                <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
                             </div>
                             <div class="grid-item">
                                 <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 30 DIAS</span>
@@ -316,6 +309,14 @@
                         </div>
                         <div class="obs">
                             <label><i class="flaticon-alert"></i> OBS: Marcar para listar bateria desconectada.</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile ">
+                        <label><b>Evento:</b></label>
+                        <div class="kt-checkbox-inline grid-status">
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_roubado"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="veiculo_roubado"></span>&nbsp; VEÍCULO ROUBADO</span>
+                            </div>
                         </div>
                     </div>
                     <!-- </div> -->
@@ -347,6 +348,8 @@
                             <th></th> <!-- 20 -->
                             <th class="hidden">Event_Violacao</th> <!-- 21 -->
                             <th class="hidden">Manutencao</th> <!-- 22 -->
+                            <th class="hidden">Event_Sinistrado</th> <!-- 23 -->
+                            <th></th> <!-- 24 -->
                         </tr>
                     </thead>
                     <tbody>
@@ -436,10 +439,10 @@
             ],
             columnDefs: [{
                     className: "hidden",
-                    "targets": [19, 21, 22]
+                    "targets": [19, 21, 22, 23]
                 }, {
                     orderable: false,
-                    targets: [18, 20],
+                    targets: [18, 20, 23, 24],
                 }, {
                     targets: [9, 12, 13, 14, 15],
                     render: function(data) {
@@ -518,7 +521,6 @@
                     "data": "dt_entrada", //19
                 }, {
                     "data": "event_violacao", //20
-                    "width": "40px",
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
                             return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
@@ -544,6 +546,24 @@
                         }
 
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
+                    }
+                },
+                {
+                    "data": "sinistrado", //23
+                    render: function(data, type, row, meta) {
+                        if (row.sinistrado == 'veiculo_sinistrado') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_roubado</span>'
+                        }
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_nao_roubado</span>'
+                    }
+                },
+                {
+                    "data": "sinistrado", //24
+                    render: function(data, type, row, meta) {
+                        if (row.sinistrado == 'veiculo_sinistrado') {
+                            return '<div class="fa-stack-modificado"><label title="Veículo Roubado"><i class="fas fa-2x fa-car"></i></label></div>'
+                        }
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_sinistrado</span>'
                     }
                 },
             ],
@@ -707,11 +727,16 @@
                 search: 'applied'
             }).count();
 
+            totalRowCount['veiculo_roubado'] = oTable.rows(':contains("veiculo_roubado")', {
+                search: 'applied'
+            }).count();
+
             $('#financeira').html(totalRowCount['financeira']);
             $('#renegociacao').html(totalRowCount['renegociacao']);
             $('#bateria_violada').html(totalRowCount['bateria_violada']);
             $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
             $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
+            $('#veiculo_roubado').html(totalRowCount['veiculo_roubado']);
 
         });
 
@@ -737,8 +762,8 @@
             tableOneRowCount();
         }, 15000);
 
-         // Adicionar checked após 10 segundos
-         setTimeout(function() {
+        // Adicionar checked após 10 segundos
+        setTimeout(function() {
             $('#batNaoViolada')[0].click();
         }, 20000);
 
@@ -773,6 +798,13 @@
                 return '^' + this.value + '$';
             }).get().join('|');
             $('#example').DataTable().column(22).search(status, true, false, false).draw();
+        });
+
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="vei"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(23).search(status, true, false, false).draw();
         });
 
 
