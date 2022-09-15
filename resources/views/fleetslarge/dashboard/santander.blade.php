@@ -4,6 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     .highcharts-figure,
     .highcharts-data-table table {
@@ -561,7 +562,7 @@
                     "data": "sinistrado", //24
                     render: function(data, type, row, meta) {
                         if (row.sinistrado == 'veiculo_sinistrado') {
-                            return '<div class="fa-stack-modificado"><label title="Veículo Roubado"><i class="fas fa-2x fa-car"></i></label></div>'
+                            return '<div class="fa-stack-modificado"><label title="Veículo Roubado"><i class="fas fa-2x fa-car-on"></i></label></div>'
                         }
                         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_sinistrado</span>'
                     }
