@@ -45,10 +45,10 @@ class SantanderService
                 $car->event_violacao = "bateria_nao_violada";
             }
 
-            if ($car->sinistrado == "TRUE") {
-                $car->sinistrado = "veiculo_sinistrado";
+            if ($car->sinistrado == "RECUPERADO") {
+                $car->sinistrado = "veiculo_recuperado";
             } else {
-                $car->sinistrado = "veiculo_nao_sinistrado";
+                $car->sinistrado = "veiculo_nao_recuperado";
             }
 
 

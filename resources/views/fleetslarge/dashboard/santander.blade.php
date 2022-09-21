@@ -233,7 +233,16 @@
         position: relative;
         vertical-align: middle;
         width: 2em;
+    }
+
+    .fa-stack-modificado,
+    #iconRed {
         color: red;
+    }
+
+    .fa-stack-modificado,
+    #iconGreen {
+        color: green;
     }
 
     th {
@@ -316,7 +325,7 @@
                         <label><b>Evento:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_roubado"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="veiculo_roubado"></span>&nbsp; VEÍCULO ROUBADO</span>
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_recuperado"> <span class="kt-badge kt-badge--success  kt-badge--inline kt-badge--pill"><span id="veiculo_recuperado"></span>&nbsp; VEÍCULO RECUPERADO</span>
                             </div>
                         </div>
                     </div>
@@ -349,7 +358,7 @@
                             <th></th> <!-- 20 -->
                             <th class="hidden">Event_Violacao</th> <!-- 21 -->
                             <th class="hidden">Manutencao</th> <!-- 22 -->
-                            <th class="hidden">Event_Sinistrado</th> <!-- 23 -->
+                            <th class="hidden">Event_Recuperado</th> <!-- 23 -->
                             <th></th> <!-- 24 -->
                         </tr>
                     </thead>
@@ -524,7 +533,7 @@
                     "data": "event_violacao", //20
                     render: function(data, type, row, meta) {
                         if (row.event_violacao == 'bateria_violada') {
-                            return '<div class="fa-stack-modificado"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
+                            return '<div class="fa-stack-modificado" id="iconRed"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
                         }
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
                     }
@@ -552,19 +561,19 @@
                 {
                     "data": "sinistrado", //23
                     render: function(data, type, row, meta) {
-                        if (row.sinistrado == 'veiculo_sinistrado') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_roubado</span>'
+                        if (row.sinistrado == 'veiculo_recuperado') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_recuperado</span>'
                         }
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_nao_roubado</span>'
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_nao_recuperado</span>'
                     }
                 },
                 {
                     "data": "sinistrado", //24
                     render: function(data, type, row, meta) {
-                        if (row.sinistrado == 'veiculo_sinistrado') {
-                            return '<div class="fa-stack-modificado"><label title="Veículo Roubado"><i class="fas fa-2x fa-car-on"></i></label></div>'
+                        if (row.sinistrado == 'veiculo_recuperado') {
+                            return '<div class="fa-stack-modificado" id="iconGreen"><label title="Veículo Recuperado""><i class="fas fa-2x fa-car"></i></label></div>'
                         }
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_sinistrado</span>'
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_recuperado</span>'
                     }
                 },
             ],
@@ -728,7 +737,7 @@
                 search: 'applied'
             }).count();
 
-            totalRowCount['veiculo_roubado'] = oTable.rows(':contains("veiculo_roubado")', {
+            totalRowCount['veiculo_recuperado'] = oTable.rows(':contains("veiculo_recuperado")', {
                 search: 'applied'
             }).count();
 
@@ -737,7 +746,7 @@
             $('#bateria_violada').html(totalRowCount['bateria_violada']);
             $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
             $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
-            $('#veiculo_roubado').html(totalRowCount['veiculo_roubado']);
+            $('#veiculo_recuperado').html(totalRowCount['veiculo_recuperado']);
 
         });
 
