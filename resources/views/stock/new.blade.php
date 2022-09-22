@@ -72,11 +72,11 @@
                                     <div class="form-group col-md-6">
                                         <label for="input">Selecione um cliente</label>
                                         <select class="form-control" name="ncustomerI_id" id="ncustomerI_id">
-                                            <option selected>
-                                            </option>
+                                            <option value="">SELECIONE</option>
                                             @foreach( $customers as $customer )
                                             <option value="{{$customer->id}}">
-                                                {{$customer->id}}-{{$customer->name}}
+                                                {{$customer->id}} - {{strtoupper($customer->name)}}
+                                                
                                             </option>
                                             @endforeach
                                         </select>
@@ -84,23 +84,20 @@
                                     <div class="form-group col-md-3">
                                         <label for="input">Selecione Tipo</label>
                                         <select class="form-control" name="ntipo" id="ntipo">
-                                            <option selected>
-                                                {{ isset($device->tipo) ? $device->tipo : null }}</option>
-                                            <option value="isca">isca</option>
-                                            <option value="dispositivo">dispositivo</option>
+                                            <option value="">SELECIONE</option>
+                                            <option value="isca">ISCAS</option>
+                                            <option value="dispositivo">DISPOSITIVO</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="input">Selecione uma bateria</label>
                                         <select class="form-control" name="ntechnologie_id" id="ntechnologie_id">
-                                            <option selected>
-                                            </option>
+                                            <option value="">SELECIONE</option>
                                             @foreach( $technologies as $technologie )
-                                            <option value=" {{$technologie->id}}">
-                                                {{$technologie->type}}
-                                            </option>
+                                                <option value=" {{$technologie->id}}">
+                                                    {{$technologie->type}}
+                                                </option>
                                             @endforeach
-
                                         </select>
                                     </div>
                                 </div>
@@ -120,9 +117,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="input">Selecione um cliente</label>
                                         <select class="form-control" name="customer_id" id="customer_id">
-                                            <option selected>
-                                                {{ isset($device->customer->name) ? $device->customer->name : null }}
-                                            </option>
+                                            <option value="">SELECIONE</option>
                                             @foreach( $customers as $customer )
                                             <option value="{{$customer->id}}">
                                                 {{$customer->name}}
@@ -133,8 +128,7 @@
                                     <div class="form-group col-md-3">
                                         <label for="input">Selecione Tipo</label>
                                         <select class="form-control" name="tipo" id="tipo">
-                                            <option selected>
-                                                {{ isset($device->tipo) ? $device->tipo : null }}</option>
+                                            <option value="">SELECIONE</option>
                                             <option value="isca">isca</option>
                                             <option value="dispositivo">dispositivo</option>
                                         </select>
@@ -213,10 +207,6 @@
 $(function() {
 
     $('#btn-device-import').click(function() {
-        console.log('Vc apertou botão import');
-        console.log('Arquivo : ' + $('#xlsfile').val());
-        console.log('Customer_id : ' + $('#customer_id').val());
-        console.log('Tipo : ' + $('#tipo').val());
 
         if (typeof($('#xlsfile')[0].files[0]) == 'undefined') {
             Swal.fire({
@@ -255,15 +245,12 @@ $(function() {
         var optionSelectedcustomer = $('#customer_id option:selected').val();
         var optionSelectedtipo = $('#tipo option:selected').val();
 
-        //console.log(file_data)
         var form_data = new FormData();
-        //form_data.append('file', file_data, 'file', optionSelected);
+
         form_data.append('tipo', optionSelectedtipo);
         form_data.append('select', optionSelectedcustomer);
         form_data.append('file', file_data);
-
-        //console.log($customer_id);
-
+        
         $.ajax({
             url: '{{url("/stocks/save")}}',
             type: 'POST',
@@ -275,33 +262,38 @@ $(function() {
             },
             data: form_data,
             success: function(response) {
+                console.log(response.message)
                 if (response.status == "success") {
                     if (response.message > 0) {
                         Swal.fire({
                             type: 'success',
-                            title: response.message +
-                                " dispositivos importados!",
+                            title: " dispositivos importados!",
+                            text: response.message,
                             showConfirmButton: true,
-                            timer: 10000
                         })
                         window.location.href = '{{url("/stocks/")}}'
                     } else {
                         Swal.fire({
                             type: 'warning',
                             title: 'Nenhum arquivo importado!',
-                            text: 'Os dispositivos já devem existir no sistema ou a planilha esta fora do padrão!',
+                            // text: 'Os dispositivos já devem existir no sistema ou a planilha esta fora do padrão!',
+                            text: response.message, 
                             showConfirmButton: true,
-                            timer: 10000
                         })
                     }
 
                 } else {
+                    let message = response.message.split('|');
+                    let new_message;
+                    message.map(function(text){
+                        new_message = "\n" +text +"\n" + new_message
+                    });
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
-                        text: 'Erro ao tentar salvar!' + response.message,
+                        //text: 'Erro ao tentar salvar!' + response.message,
+                        text: new_message, 
                         showConfirmButton: true,
-                        timer: 10000
                     })
                 }
             },
@@ -330,12 +322,6 @@ $(function() {
     });
 
     $('#btn-device-newone').click(function() {
-        // console.log('Vc apertou botão new one');
-        // console.log('Model : ' + $('#nmodel').val());
-        // console.log('Technologie_id : ' + $('#ntechnologie_id').val());
-        // console.log('Customer_id : ' + $('#ncustomerI_id').val());
-        // console.log('Tipo : ' + $('#ntipo').val());
-        // console.log('Status : ' + 'disponivel');
 
         if ($('#nmodel')[0].value == "") {
             Swal.fire({
@@ -399,6 +385,7 @@ $(function() {
                         showConfirmButton: true,
                         timer: 10000
                     })
+                    window.location.href = '{{url("/stocks/")}}'
                 } else {
                     Swal.fire({
                         type: 'error',
@@ -430,10 +417,10 @@ $(function() {
 
                 } else {
                     var items = error.responseJSON.errors;
-
                     var errors = $.map(items, function(i) {
                         return i.join('<br />');
                     });
+
                     Swal.fire({
                         type: 'error',
                         title: 'Erro!',

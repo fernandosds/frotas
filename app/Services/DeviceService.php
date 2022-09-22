@@ -59,10 +59,11 @@ class DeviceService
         
         if ($this->deviceRepository->exists($request->model)) {
 
-            return abort(404);
+            return abort(500);
 
         } else {
-
+            if(!strlen($request->model) == 8)
+                return response()->json(['status' => 'internal_error', 'errors' => "Quantidade de caracters do modelo, menor/maior que 8"], 400);
             $arr_insert[] = [
                 'model'          => trim(strtoupper($request->model)),
                 'technologie_id' => (int)$request->technologie_id,
@@ -74,6 +75,7 @@ class DeviceService
             ];
 
             $device = DB::table('devices')->insert($arr_insert);
+
             saveLog(['value' => $request['model'], 'type' => 'Acessou e Criou nova Isca', 'local' => 'DeviceService', 'funcao' => 'saveone']);
             return $device;
 
@@ -89,10 +91,9 @@ class DeviceService
     {
         $arr_insert = [];
         $arr_bad_format = [];
-        foreach ($array as $item) {
-
+        foreach ($array as $index => $item) {
             if(strlen($item[0]) > 8){
-                $arr_bad_format[] = $item[0];
+                $arr_bad_format[$index] = $item[0];
             }else{
                 if(isset($item[0])){
                     $arr_insert[] = [
@@ -108,31 +109,28 @@ class DeviceService
             }
         }
 
+        if(!empty($arr_bad_format) || !is_null($arr_bad_format)){
+            $message = '';
+            $message .= "Números de dispositivos errados: |";
+            
+            foreach($arr_bad_format as $index => $format){
+                $num_linha = $index + 1;
+                $message .= "LINHA {$num_linha} - " . strtoupper($format) . "|";
+            }
 
-        // if(!empty($arr_bad_format) || !is_null($arr_bad_format)){
-        //     $message = '';
-        //     foreach($arr_bad_format as $format){
-        //         $message .= ','.$format . PHP_EOL;
-        //     }
-            // return response()->json(['status' => 'success', 'message' => "Esses modelos estão no formato errado {$message}"], 200);
-        // }
+            return response()->json(['status' => 'error', 'message' => $message], 200);
+            
+        }
         $device = DB::table('devices')->insert($arr_insert);
 
         return ($device) ? $arr_insert : abort(404);
 
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
     public function update(Request $request)
     {
-
         $device = $this->deviceRepository->updateDevice($request);
         return $device;
-
     }
 
     /**
@@ -141,7 +139,6 @@ class DeviceService
      */
     public function findByModel(String $device)
     {
-
         return $this->deviceRepository->findByModel($device);
     }
 
@@ -151,7 +148,6 @@ class DeviceService
      */
     public function findDevice(String $device)
     {
-
         return $this->deviceRepository->findDevice($device);
     }
 
@@ -170,7 +166,6 @@ class DeviceService
      */
     public function show(Int $id)
     {
-
         $device =  $this->deviceRepository->find($id);
         return ($device) ? $device : abort(404);
     }
@@ -243,7 +238,6 @@ class DeviceService
         return $this->deviceRepository->getCustomer($idDevice);
     }
     public function getTechnologie($idDevice){
-        //dd($idDevice, "Achou getTechnologie");
         return $this->deviceRepository->getTechnologie($idDevice);
     }
 

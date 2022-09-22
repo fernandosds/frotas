@@ -104,7 +104,7 @@ class StockController extends Controller
     {
 
         ini_set('memory_limit', '1024M');
-        ini_set('max_execution_time', 180); //3 minutes
+        ini_set('max_execution_time', 180);
 
         if ($request->hasFile('file')) {
             $tipo = $request['tipo'];
@@ -129,10 +129,10 @@ class StockController extends Controller
                 }
             }
 
-            $inserts = $this->deviceService->save($arraydata, $customerId, $tipo);
+            return $this->deviceService->save($arraydata, $customerId, $tipo);
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e importou planilha de isca cliente id: ' . $customerId, 'DeviceService', 'save');
             
-            return response()->json(['status' => 'success','message' => count($inserts)], 200);
+            // return response()->json(['status' => 'success','message' => count($inserts)], 200);
         } else {
             exit('Falha ao abrir arquivo.');
         }
@@ -141,16 +141,13 @@ class StockController extends Controller
 
     public function saveone(DeviceoneRequest $request)
     {
-
-        $this->deviceService->saveone($request);
-        $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e criou nova isca : ' . $request->model, 'DeviceService', 'saveone');
-
         try {
-            return response()->json(['status' => 'success'], 200);
+            $this->deviceService->saveone($request);
+            $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e criou nova isca : ' . $request->model, 'DeviceService', 'saveone');
+            return response()->json(['status' => 'success', 'message' => 'Dispositivo salvo com sucesso!'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }
-
     }
 
 }
