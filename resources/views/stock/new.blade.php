@@ -262,7 +262,6 @@ $(function() {
             },
             data: form_data,
             success: function(response) {
-                console.log(response.message)
                 if (response.status == "success") {
                     if (response.message > 0) {
                         Swal.fire({
@@ -284,15 +283,15 @@ $(function() {
 
                 } else {
                     let message = response.message.split('|');
-                    let new_message;
+                    var new_message = '';
                     message.map(function(text){
-                        new_message = "\n" +text +"\n" + new_message
+                        new_message += "<br>" + text + "</br>";
                     });
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
                         //text: 'Erro ao tentar salvar!' + response.message,
-                        text: new_message, 
+                        html: new_message, 
                         showConfirmButton: true,
                     })
                 }
