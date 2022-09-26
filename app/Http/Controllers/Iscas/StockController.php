@@ -130,12 +130,10 @@ class StockController extends Controller
                     }
                 }
             }  
-
             
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e importou planilha de isca cliente id: ' . $customerId, 'DeviceService', 'save');
             return $this->deviceService->save($arraydata, $customerId, $tipo, $arrExistInModel);           
             
-            // return response()->json(['status' => 'success','message' => count($inserts)], 200);
         } else {
             exit('Falha ao abrir arquivo.');
         }

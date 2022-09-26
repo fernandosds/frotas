@@ -117,15 +117,16 @@ class DeviceService
 
         $device = DB::table('devices')->insert($arr_insert);
         
-        if(!empty($arrExistInModel)){
-            $message = "Modelo(s) não cadastrado(s)  porque já existe os Modelo(s): ";
-            foreach($arrExistInModel as $existModel){
-                $message .= $existModel .', ';
-            };
-            $format_message = substr($message, 0, -2);
+        //MOSTRA OS MODELOS QUE JÁ ESTÃO CADASTRADAS
+        // if(!empty($arrExistInModel)){
+        //     $message = "Modelo(s) não cadastrado(s)  porque já existe os Modelo(s): ";
+        //     foreach($arrExistInModel as $existModel){
+        //         $message .= $existModel .', ';
+        //     };
+        //     $format_message = substr($message, 0, -2);
 
-            return response()->json(['status' => 'error', 'message' => $format_message], 200);
-        }
+        //     return response()->json(['status' => 'error', 'message' => $format_message], 200);
+        // }
         if(!empty($arr_bad_format)){
             $message = '';
             $message .= "Números de dispositivos errados: |";

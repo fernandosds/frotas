@@ -166,17 +166,48 @@
     });
 
     $('.btn-delete-device').click(function() {
-        var id = $(this).data('id');
-        var url = "{{url('stocks/delete')}}";
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                "_token"        : "{{ csrf_token() }}",
-                'id': id,
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
             },
-            success: function(response) {
-                console.log("response: " + response.status);
+            buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+            title: 'Tem certeza que deseja excluir ?',
+            // text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, excluir!',
+            cancelButtonText: 'Não, cancelar!',
+            reverseButtons: true
+            }).then((result) => {
+                console.log(result);
+            if (result.value) {
+                var id = $(this).data('id');
+                var url = "{{url('stocks/delete')}}";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        'id': id,
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Registro excluido com sucesso',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+                    }
+                })
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+
             }
         })
     });
