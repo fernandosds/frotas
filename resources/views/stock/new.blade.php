@@ -112,7 +112,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="input">Selecione um arquivo</label>
-                                        <input id="xlsfile" name="file" type="file" class="form-control" required />
+                                        <input id="xlsfile" name="file" type="file" class="form-control" required accept=".xlsx, .xls"/>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="input">Selecione um cliente</label>

@@ -91,14 +91,7 @@ class DeviceService
         $arr_insert = [];
         $arr_bad_format = [];
 
-        if(!empty($arrExistInModel)){
-            $message = "Modelo(s) já cadastrado(s): ";
-            foreach($arrExistInModel as $existModel){
-                $message .= $existModel .', ';
-            };
-            $format_message = substr($message, 0, -2);
-            return response()->json(['status' => 'error', 'message' => $format_message], 200);
-        }
+
         foreach ($array as $index => $item) {
             if(isset($item[0])){
                 if(strlen($item[0]) > 8){
@@ -117,12 +110,22 @@ class DeviceService
                     }
                 }
             }else{
-                return response()->json(['status' => 'success', 'message' => 'Not found index offset'], 500);
+                continue;
+                //return response()->json(['status' => 'error', 'message' => 'Models já existem ou estão errados'], 200);
             }
         }
 
         $device = DB::table('devices')->insert($arr_insert);
+        
+        if(!empty($arrExistInModel)){
+            $message = "Modelo(s) não cadastrado(s)  porque já existe os Modelo(s): ";
+            foreach($arrExistInModel as $existModel){
+                $message .= $existModel .', ';
+            };
+            $format_message = substr($message, 0, -2);
 
+            return response()->json(['status' => 'error', 'message' => $format_message], 200);
+        }
         if(!empty($arr_bad_format)){
             $message = '';
             $message .= "Números de dispositivos errados: |";
