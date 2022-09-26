@@ -41,10 +41,16 @@ class SantanderService
 
 
 
-            if ($car->event_violacao == "true" && $car->event_encerrado == '0') {
+            if ($car->event_violacao == "true" && $car->event_encerrado == '0' && $car->manutencao == "true") {
                 $car->event_violacao = "bateria_violada";
             } else {
                 $car->event_violacao = "bateria_nao_violada";
+            }
+
+            if ($car->sinistrado == "RECUPERADO") {
+                $car->sinistrado = "veiculo_recuperado";
+            } else {
+                $car->sinistrado = "veiculo_nao_recuperado";
             }
 
 
@@ -69,7 +75,6 @@ class SantanderService
             }
             ++$total_instalacao;
         }
-
         return $cars;
     }
 
@@ -78,7 +83,7 @@ class SantanderService
      */
     public function findByChassi($chassis)
     {
-        $chassi = $this->psa->findByChassi($chassis);
+        $chassi = $this->santander->findByChassi($chassis);
         return $chassi;
     }
 }

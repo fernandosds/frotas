@@ -425,9 +425,9 @@ Route::group(['middleware' => 'auth'], function () {
 
             //CERCAS
             Route::get('/map/markers/all/grupos', 'FleetsLarge\MapMarkersSantanderController@allGrupo')->name('map.markers.all.grupos');
-            Route::post('/map/markers/all/cercas', 'FleetsLarge\MapMarkersSantanderController@allGrupoCercas')->name('map.markers.all.cercas'); 
+            Route::post('/map/markers/all/cercas', 'FleetsLarge\MapMarkersSantanderController@allGrupoCercas')->name('map.markers.all.cercas');
             // Rotas para Grupo de usuários cercas Santander
-            
+
             Route::group(['prefix' => 'cars'], function () {
                 Route::get('/grupos/lista', 'FleetsLarge\MonitoringCercaSantanderController@index')->name('fleetslarges.poligono.cars.index');
             });
@@ -440,6 +440,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/cars/deliver/{deliver?}', 'FleetsLarge\MonitoringController@carsForDeliver')->name('fleetslarges.monitoring.carsForDeliver');
             Route::get('/cars/loyalty/{loyalty?}', 'FleetsLarge\MonitoringController@carsForLoyalty')->name('fleetslarges.monitoring.carsLoyalty');
             Route::get('/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPosition')->name('fleetslarges.monitoring.lastPosition');
+            Route::get('/last-position/movida/{chassis}', 'FleetsLarge\MonitoringController@lastPositionMovida')->name('fleetslarges.monitoring.lastPositionMovida');
             Route::get('/cars/events', 'FleetsLarge\MonitoringController@events')->name('fleetslarges.monitoring.events');
             Route::get('/movida/lojas', 'FleetsLarge\MonitoringController@movidaPosition')->name('fleetslarges.monitoring.movidaPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');
