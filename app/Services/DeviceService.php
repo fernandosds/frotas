@@ -56,7 +56,6 @@ class DeviceService
     public function saveone(Request $request)
     {
 
-        
         if ($this->deviceRepository->exists($request->model)) {
 
             return abort(500);
@@ -87,29 +86,44 @@ class DeviceService
      * @param array $array
      * @return mixed
      */
-    public function save(array $array, $customer, $tipo)
+    public function save(array $array, $customer, $tipo, $arrExistInModel)
     {
         $arr_insert = [];
         $arr_bad_format = [];
+
+        if(!empty($arrExistInModel)){
+            $message = "Modelo(s) já cadastrado(s): ";
+            foreach($arrExistInModel as $existModel){
+                $message .= $existModel .', ';
+            };
+            $format_message = substr($message, 0, -2);
+            return response()->json(['status' => 'error', 'message' => $format_message], 200);
+        }
         foreach ($array as $index => $item) {
-            if(strlen($item[0]) > 8){
-                $arr_bad_format[$index] = $item[0];
-            }else{
-                if(isset($item[0])){
-                    $arr_insert[] = [
-                    'model'          => trim(strtoupper($item[0])),
-                    'technologie_id' => (int)$item[1],
-                    'customer_id'    => (int)$customer,
-                    'tipo'           => trim($tipo),
-                    'uniqid'         => md5(uniqid("")),
-                    'status'         => 'disponivel',
-                    'created_at'     => Carbon::now(),
-                    ];
+            if(isset($item[0])){
+                if(strlen($item[0]) > 8){
+                    $arr_bad_format[$index] = $item[0];
+                }else{
+                    if(isset($item[0])){
+                        $arr_insert[] = [
+                        'model'          => trim(strtoupper($item[0])),
+                        'technologie_id' => (int)$item[1],
+                        'customer_id'    => (int)$customer,
+                        'tipo'           => trim($tipo),
+                        'uniqid'         => md5(uniqid("")),
+                        'status'         => 'disponivel',
+                        'created_at'     => Carbon::now(),
+                        ];
+                    }
                 }
+            }else{
+                return response()->json(['status' => 'success', 'message' => 'Not found index offset'], 500);
             }
         }
 
-        if(!empty($arr_bad_format) || !is_null($arr_bad_format)){
+        $device = DB::table('devices')->insert($arr_insert);
+
+        if(!empty($arr_bad_format)){
             $message = '';
             $message .= "Números de dispositivos errados: |";
             
@@ -121,9 +135,8 @@ class DeviceService
             return response()->json(['status' => 'error', 'message' => $message], 200);
             
         }
-        $device = DB::table('devices')->insert($arr_insert);
-
-        return ($device) ? $arr_insert : abort(404);
+        
+        return ($device) ?  response()->json(['status' => 'success', 'message' => "Inserido com sucesso!"], 200) : response()->json(['status' => 'error', 'message' => "Não foi possivel salvar. tente novamente mais tarde."], 200);
 
     }
 

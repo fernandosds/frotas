@@ -263,7 +263,6 @@ $(function() {
             data: form_data,
             success: function(response) {
                 if (response.status == "success") {
-                    if (response.message > 0) {
                         Swal.fire({
                             type: 'success',
                             title: " dispositivos importados!",
@@ -271,16 +270,6 @@ $(function() {
                             showConfirmButton: true,
                         })
                         window.location.href = '{{url("/stocks/")}}'
-                    } else {
-                        Swal.fire({
-                            type: 'warning',
-                            title: 'Nenhum arquivo importado!',
-                            // text: 'Os dispositivos já devem existir no sistema ou a planilha esta fora do padrão!',
-                            text: response.message, 
-                            showConfirmButton: true,
-                        })
-                    }
-
                 } else {
                     let message = response.message.split('|');
                     var new_message = '';

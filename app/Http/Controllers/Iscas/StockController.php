@@ -109,28 +109,31 @@ class StockController extends Controller
         if ($request->hasFile('file')) {
             $tipo = $request['tipo'];
             $customerId = $request['select'];
-
             $spreadsheets = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file('file')->getPathname());
             $sheet = $spreadsheets->getSheet($spreadsheets->getFirstSheetIndex());
             $data = $sheet->toArray();
 
+            $arrExistInModel = [];
             foreach ($data as $index => $cells) {
                 foreach ($cells as $i => $cell) {
                     if (!is_null($cell)) {
                         if ($i >= 2) {
                             continue;
                         } else {
-                            $validaModelo = $this->deviceService->findDevice($cell);
+                            $validaModelo = $this->deviceService->findDevice($cell) ? true : false;
                             if (!$validaModelo) {
-                                $arraydata[$index][$i] = (string)$cell;
+                                $arraydata[$index][$i] = $cell;
+                            }else{
+                                $arrExistInModel[] = $cell;
                             }
                         }
                     }
                 }
-            }
+            }  
 
-            return $this->deviceService->save($arraydata, $customerId, $tipo);
+            
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e importou planilha de isca cliente id: ' . $customerId, 'DeviceService', 'save');
+            return $this->deviceService->save($arraydata, $customerId, $tipo, $arrExistInModel);           
             
             // return response()->json(['status' => 'success','message' => count($inserts)], 200);
         } else {
