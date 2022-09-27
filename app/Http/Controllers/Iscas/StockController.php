@@ -143,9 +143,9 @@ class StockController extends Controller
     public function saveone(DeviceoneRequest $request)
     {
         try {
-            $this->deviceService->saveone($request);
             $this->logService->saveLog(strval(Auth::user()->name), 'Acessou e criou nova isca : ' . $request->model, 'DeviceService', 'saveone');
-            return response()->json(['status' => 'success', 'message' => 'Dispositivo salvo com sucesso!'], 200);
+            return $this->deviceService->saveone($request);
+            // return response()->json(['status' => 'success', 'message' => 'Dispositivo salvo com sucesso!'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
         }

@@ -58,11 +58,11 @@ class DeviceService
 
         if ($this->deviceRepository->exists($request->model)) {
 
-            return abort(500);
+            return response()->json(['status' => 'internal_error', 'message' => "Modelo já existe, tente outro numero de modelo."], 200);
 
         } else {
             if(!strlen($request->model) == 8)
-                return response()->json(['status' => 'internal_error', 'errors' => "Quantidade de caracters do modelo, menor/maior que 8"], 400);
+                return response()->json(['status' => 'internal_error', 'errors' => "Quantidade de caracters do modelo, menor/maior que 8"], 200);
             $arr_insert[] = [
                 'model'          => trim(strtoupper($request->model)),
                 'technologie_id' => (int)$request->technologie_id,
@@ -76,7 +76,8 @@ class DeviceService
             $device = DB::table('devices')->insert($arr_insert);
 
             saveLog(['value' => $request['model'], 'type' => 'Acessou e Criou nova Isca', 'local' => 'DeviceService', 'funcao' => 'saveone']);
-            return $device;
+            return response()->json(['status' => 'success', 'message' => "Modelo inserido com sucesso!"], 200);
+            // return $device;
 
         }
 

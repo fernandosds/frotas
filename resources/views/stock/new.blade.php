@@ -365,7 +365,6 @@ $(function() {
                 'status': 'disponivel',
             },
             success: function(response) {
-                console.log("response: " + response.status);
                 if (response.status == "success") {
                     Swal.fire({
                         type: 'success',
@@ -378,7 +377,7 @@ $(function() {
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
-                        text: 'Erro ao tentar salvar! ' + response.message,
+                        text: "Modelo de isca já registrado!",
                         showConfirmButton: true,
                         timer: 10000
                     })
@@ -389,7 +388,7 @@ $(function() {
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                        text: error.erros,
                         showConfirmButton: true,
                         timer: 10000
                     })
