@@ -23,7 +23,7 @@ class LogService
         return $this->log->all();
     }
 
-    public function table(Int $limit = 100)
+    public function table(Int $limit = 5000)
     {
         return $this->log->table($limit, Auth::user()->customer_id);
     }

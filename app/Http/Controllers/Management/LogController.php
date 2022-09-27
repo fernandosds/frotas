@@ -44,7 +44,7 @@ class LogController extends Controller
 
     public function data(){
 
-        $data['data'] = $this->logService->table(100);
+        $data['data'] = $this->logService->table(5000);
         return response()->json($data);
     }
 

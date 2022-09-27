@@ -7,27 +7,26 @@
         <!--begin::Portlet-->
         <div class="kt-portlet kt-portlet--mobile">
 
-        <!-- HEADER -->
-        <div class="kt-portlet__head kt-portlet__head--lg">
-            <div class="kt-portlet__head-label">
-                <span class="kt-menu__link-icon"><i class="fa fa-solid fa-wrench"></i>
-                </span>
-                <h3 class="kt-portlet__head-title">
-                    <span class="kt-menu__link-text">&nbsp; Lista de iscas</span>
-                </h3>
-            </div>
+            <!-- HEADER -->
+            <div class="kt-portlet__head kt-portlet__head--lg">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-menu__link-icon"><i class="fa fa-solid fa-wrench"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        <span class="kt-menu__link-text">&nbsp; Lista de iscas</span>
+                    </h3>
+                </div>
 
-            <div class="kt-portlet__head-toolbar">
-                <div class="kt-portlet__head-wrapper">
-                    <a href="{{url('stocks/new')}}">
-                        <button type="button" class="btn btn-primary btn-pill"
-                            title="Importar planilha"><i class="fa fa-file-excel"></i>
-                            <span> Cadastrar Isca</span>
-                        </button>
-                    </a>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <a href="{{url('stocks/new')}}">
+                            <button type="button" class="btn btn-primary btn-pill" title="Importar planilha"><i class="fa fa-file-excel"></i>
+                                <span> Cadastrar Isca</span>
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <br />
             <div class="kt-portlet kt-portlet--mobile" id="kt_content">
@@ -48,34 +47,34 @@
                         </thead>
                         <tbody>
                             @foreach ($devices as $device)
-                                <tr id="_tr_device_{{$device->id}}">
-                                    <td>{{$device->id}}</td>
-                                    <td>{{$device->model}}</td>
-                                    <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
-                                    <td>{{$device->customer->name ?? ''}}</td>
-                                    @if($device->status == 'disponivel')
-                                    <td class="{{$device->status == 'disponivel' ? 'text-success' : ''}}">
-                                        <b>{{'Disponivel'}}</b>
-                                    </td>
-                                    @endif
-                                    @if($device->status == 'indisponivel')
-                                    <td style="color: {{$device->status == 'indisponivel' ? '#6C7293' : ''}}">
-                                        <b>{{'Indisponivel'}}</b>
-                                    </td>
-                                    @endif
-                                    @if($device->status == 'em andamento')
-                                    <td class="{{$device->status == 'em andamento' ? 'text-warning' : ''}}">
-                                        <b>{{'Em andamento'}}</b>
-                                    </td>
-                                    @endif
-                                    @if($device->status == null)
-                                    <td style="color: {{$device->status == null ? '#f74747' : ''}}">
-                                        <b>{{'A definir'}}</b>
-                                    </td>
-                                    @endif
-                                    <td style="width: 200px;">
-                                        <div class="pull-left">
-                                            <!-- @if($device->status == null)
+                            <tr id="_tr_device_{{$device->id}}">
+                                <td>{{$device->id}}</td>
+                                <td>{{$device->model}}</td>
+                                <td>@if($device->technologie) {{$device->technologie->type ?? ''}} @endif</td>
+                                <td>{{$device->customer->name ?? ''}}</td>
+                                @if($device->status == 'disponivel')
+                                <td class="{{$device->status == 'disponivel' ? 'text-success' : ''}}">
+                                    <b>{{'Disponivel'}}</b>
+                                </td>
+                                @endif
+                                @if($device->status == 'indisponivel')
+                                <td style="color: {{$device->status == 'indisponivel' ? '#6C7293' : ''}}">
+                                    <b>{{'Indisponivel'}}</b>
+                                </td>
+                                @endif
+                                @if($device->status == 'em andamento')
+                                <td class="{{$device->status == 'em andamento' ? 'text-warning' : ''}}">
+                                    <b>{{'Em andamento'}}</b>
+                                </td>
+                                @endif
+                                @if($device->status == null)
+                                <td style="color: {{$device->status == null ? '#f74747' : ''}}">
+                                    <b>{{'A definir'}}</b>
+                                </td>
+                                @endif
+                                <td style="width: 200px;">
+                                    <div class="pull-left">
+                                        <!-- @if($device->status == null)
                                                 <a href="{{url('stocks/edit')}}/{{$device->id}}">
                                                     <button type="button"
                                                         class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
@@ -83,21 +82,18 @@
                                                     </button>
                                                 </a>
                                             @endif -->
-                                            @if($device->status == 'disponivel' || $device->status == null)
-                                                <a href="{{url('stocks/edit')}}/{{$device->id}}">
-                                                    <button type="button"
-                                                        class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle"
-                                                        title="Editar isca"><span class="fa fa-fw fa-edit"></span>
-                                                    </button>
-                                                </a>
-                                                <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}"
-                                                    class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
-                                                    <span class="fa fa-fw fa-trash"></span>
-                                                </button>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
+                                        @if($device->status == 'disponivel' || $device->status == null)
+                                        <a href="{{url('stocks/edit')}}/{{$device->id}}">
+                                            <button type="button" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                            </button>
+                                        </a>
+                                        <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
+                                            <span class="fa fa-fw fa-trash"></span>
+                                        </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -114,6 +110,7 @@
         columns = [0, 1, 2, 3, 4, 5];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         $('#stock').DataTable({
+
             "search": {
                 "search": ''
             },
@@ -173,9 +170,9 @@
                 cancelButton: 'btn btn-danger'
             },
             buttonsStyling: false
-            })
+        })
 
-            swalWithBootstrapButtons.fire({
+        swalWithBootstrapButtons.fire({
             title: 'Tem certeza que deseja excluir ?',
             // text: "You won't be able to revert this!",
             icon: 'warning',
@@ -183,16 +180,17 @@
             confirmButtonText: 'Sim, excluir!',
             cancelButtonText: 'Não, cancelar!',
             reverseButtons: true
-            }).then((result) => {
-                console.log(result);
+        }).then((result) => {
+            console.log(result);
             if (result.value) {
                 var id = $(this).data('id');
+                $('#_tr_device_' + id).hide()
                 var url = "{{url('stocks/delete')}}";
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {
-                        "_token" : "{{ csrf_token() }}",
+                        "_token": "{{ csrf_token() }}",
                         'id': id,
                     },
                     success: function(response) {
