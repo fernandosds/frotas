@@ -159,7 +159,7 @@
             @endif
             @if (Auth::user()->email != 'admin@satcompany.com.br')
 
-            @if( Auth::user()->access_level == 'management' )
+            @if( Auth::user()->access_level == 'management' && Auth::user()->customer_id != 15)
 
             <!-- ADMIN. SISTEMA ______________________________________________________________________________________________________________________ -->
             <li class="kt-menu__section ">

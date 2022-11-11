@@ -18,6 +18,7 @@ use stdClass;
 
 // Conectando o fleetslarge através do banco
 use App\Services\FleetsLarge\PsaService;
+use App\Services\FleetsLarge\BvService;
 use App\Services\FleetsLarge\SantanderService;
 
 
@@ -45,6 +46,7 @@ class DashboardController extends Controller
      * @var PsaService
      * @var LogService
      * @var SantanderService
+     * @var BvService
      */
     private $apiDeviceServic;
 
@@ -62,7 +64,8 @@ class DashboardController extends Controller
         CustomerService $customerService,
         PsaService $psaService,
         LogService $logService,
-        SantanderService $santanderService
+        SantanderService $santanderService,
+        BvService $bvService
 
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
@@ -74,6 +77,7 @@ class DashboardController extends Controller
         $this->psaService = $psaService;
         $this->logService = $logService;
         $this->santanderService = $santanderService;
+        $this->bvService = $bvService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -93,7 +97,6 @@ class DashboardController extends Controller
         ini_set('memory_limit', '2048M');
         $customer = $this->customerService->show(Auth::user()->customer_id);
 
-
         if (empty($customer->hash)) {
             return redirect('access_denied');
         }
@@ -109,6 +112,12 @@ class DashboardController extends Controller
         if (Auth::user()->customer_id == 8) {
             return response()->view('fleetslarge.dashboard.santander');
         }
+
+        // Entrar no dashboard Santander
+        if (Auth::user()->customer_id == 15) {
+            return response()->view('fleetslarge.dashboard.bv');
+        }
+        
 
 
         // TESTE PARA O ITAU
@@ -189,12 +198,25 @@ class DashboardController extends Controller
             $data['carros'] = $this->psaService->all();
             return response()->view('fleetslarge.dashboard.bancopsa', $data);
         }
+
+        // Entrar no dashboard banco BV
+        if (Auth::user()->customer_id == 15) {
+            $data['carros'] = $this->bvService->all();
+            return response()->view('fleetslarge.dashboard.bv', $data);
+        }
     }
 
     public function dataSantander()
     {
         ini_set('memory_limit', '-1');
         $data = $this->santanderService->all();
+        return response()->json($data);
+    }
+
+    public function databv()
+    {
+        ini_set('memory_limit', '-1');
+        $data = $this->bvService->all();
         return response()->json($data);
     }
     public function situacaoInstalado($items)

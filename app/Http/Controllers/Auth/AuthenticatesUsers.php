@@ -73,7 +73,7 @@ trait AuthenticatesUsers
     {
         $var = new UserController();
         $user = $var->receiveData($request->email);
-
+        
         $data = Carbon::now()->format('d/m/Y');
         $hora = Carbon::now()->format('H:m:s');
 

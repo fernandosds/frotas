@@ -46,11 +46,12 @@ class UserController extends Controller
      */
     public function receiveData($email)
     {
-        return  DB::table('users')
+        return DB::table('users')
             ->select('name', 'status', 'email', 'customer_id', 'deleted_at')
             ->where('email', $email)
             // ->whereNull('deleted_at')
             ->first();
+            
     }
 
     /**
@@ -73,7 +74,6 @@ class UserController extends Controller
             $ip = strval($_COOKIE['ipClient']);
         }
 
-        //dd($data);
         $values =  [
             'user_name' => strval($data['name']),
             'customer_id' => $data['customer_id'],

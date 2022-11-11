@@ -275,7 +275,6 @@ Route::group(['middleware' => 'auth'], function () {
      * Accommodation Locations routes
      */
     Route::group(['middleware' => ['user.admin'], 'prefix' => 'accommodationlocations'], function () {
-
         Route::get('/', 'Iscas\AccommodationLocationsController@index');
         Route::get('/new', 'Iscas\AccommodationLocationsController@new');
         Route::post('/save', 'Iscas\AccommodationLocationsController@save');
@@ -362,6 +361,12 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Fleets Large routes
      */
+
+    Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
+        Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
+        Route::post('/data/bv', 'FleetsLarge\DashboardController@databv');
+    });
+
     Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/telemetria', 'FleetsLarge\DashboardController@logTelemetria')->name('fleetslarges.telemetria');
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
