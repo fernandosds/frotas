@@ -27,7 +27,7 @@ class BoardingRequest extends FormRequest
     {
 
         return [
-            'contract_id'                => 'string|required',
+           // 'contract_id'                => 'string|required',
             'device_uniqid'              => 'string|required',
             'source'                     => 'nullable|string|max:255',
             'destiny'                    => 'nullable|string|max:255',

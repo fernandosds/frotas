@@ -76,7 +76,7 @@ class BoardingRepository extends AbstractRepository
                 return $query->where('device_id', $device_id->id);
             })
             ->orderBy('customer_id', 'asc')
-            ->paginate(100);
+            ->paginate(200);
     }
 
 
