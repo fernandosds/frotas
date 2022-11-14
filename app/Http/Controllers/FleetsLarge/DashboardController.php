@@ -276,7 +276,7 @@ class DashboardController extends Controller
             $arr[] = '';
             foreach ($fleetslarge as $data => $dat) {
                 if ($chassis == $dat['chassis']) {
-                    return  $arr = ([
+                    $arr = ([
                         "lp_satelite"               => $dat['lp_satelite'] ?? '',
                         "lp_ignicao"                => $dat['lp_ignicao'] ?? '',
                         "dif_date"                  => $dat['dif_date'] ?? '',

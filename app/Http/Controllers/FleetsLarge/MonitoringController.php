@@ -97,6 +97,11 @@ class MonitoringController extends Controller
             saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
             return view('fleetslarge.monitoring.sompo.index', ['chassi' => $chassi]);
         }
+
+        if (Auth::user()->customer_id == 16) {
+            saveLog(['value' => $chassi, 'type' => 'Monitorou o veiculo', 'local' => 'MonitoringController', 'funcao' => 'index']);
+            return view('fleetslarge.monitoring.index_alfa', ['chassi' => $chassi]);
+        }
     }
 
     /**
