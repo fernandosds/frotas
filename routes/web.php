@@ -365,6 +365,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
         Route::post('/data/bv', 'FleetsLarge\DashboardController@databv');
+        Route::post('/data/alfa', 'FleetsLarge\DashboardController@dataAlfa');
     });
 
     Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {

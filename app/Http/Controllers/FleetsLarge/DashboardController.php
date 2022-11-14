@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use stdClass;
 
 // Conectando o fleetslarge através do banco
+use App\Services\FleetsLarge\AlfaService;
 use App\Services\FleetsLarge\PsaService;
 use App\Services\FleetsLarge\BvService;
 use App\Services\FleetsLarge\SantanderService;
@@ -30,6 +31,8 @@ class DashboardController extends Controller
     private $fleetLargeSompoService;
 
     private $fleetLargeMovidaService;
+
+    private $fleetLargeAlfaService;
 
     private $fleetslargeDashboardService;
 
@@ -65,7 +68,8 @@ class DashboardController extends Controller
         PsaService $psaService,
         LogService $logService,
         SantanderService $santanderService,
-        BvService $bvService
+        BvService $bvService,
+        AlfaService $alfaService
 
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
@@ -78,6 +82,7 @@ class DashboardController extends Controller
         $this->logService = $logService;
         $this->santanderService = $santanderService;
         $this->bvService = $bvService;
+        $this->alfaService = $alfaService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -113,9 +118,14 @@ class DashboardController extends Controller
             return response()->view('fleetslarge.dashboard.santander');
         }
 
-        // Entrar no dashboard Santander
+        // Entrar no dashboard BV
         if (Auth::user()->customer_id == 15) {
             return response()->view('fleetslarge.dashboard.bv');
+        }
+
+        // Entrar no dashboard Alfa
+        if (Auth::user()->customer_id == 16) {
+            return response()->view('fleetslarge.dashboard.alfa');
         }
         
 
@@ -204,6 +214,12 @@ class DashboardController extends Controller
             $data['carros'] = $this->bvService->all();
             return response()->view('fleetslarge.dashboard.bv', $data);
         }
+
+        // Entrar no dashboard Alfa
+        if (Auth::user()->customer_id == 16) {
+            $data['carros'] = $this->alfaService->all();
+            return response()->view('fleetslarge.dashboard.alfa', $data);
+        }
     }
 
     public function dataSantander()
@@ -217,6 +233,13 @@ class DashboardController extends Controller
     {
         ini_set('memory_limit', '-1');
         $data = $this->bvService->all();
+        return response()->json($data);
+    }
+
+    public function dataAlfa()
+    {
+        ini_set('memory_limit', '-1');
+        $data = $this->alfaService->all();
         return response()->json($data);
     }
     public function situacaoInstalado($items)

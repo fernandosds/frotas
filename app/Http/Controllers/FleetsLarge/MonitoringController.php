@@ -293,7 +293,6 @@ class MonitoringController extends Controller
 
     public function route(Request $request)
     {
-
         $positions = $this->apiFleetLargeService->getRoutePath($request->start_date, $request->last_date, $request->modelo);
         return response()->json(['status' => 'success', 'positions' => $positions], 200);
     }
