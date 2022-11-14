@@ -371,7 +371,7 @@
     </div>
 </div>
 
-@include('fleetslarge.dashboard.modalVehicleAlfa')
+@include('fleetslarge.dashboard.modalVehicle')
 
 @endsection
 
