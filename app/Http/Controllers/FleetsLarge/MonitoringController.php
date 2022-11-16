@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Services\ApiFleetLargeService;
 use App\Services\FleetLargeMovidaService;
 use App\Services\FleetsLarge\SantanderService;
+use App\Services\FleetsLarge\AlfaService;
+use App\Services\FleetsLarge\BvService;
 use App\Services\ApiDeviceService;
 use App\Services\CustomerService;
 use App\Services\LogService;
@@ -23,6 +25,8 @@ class MonitoringController extends Controller
      * @var $apiFleetLargeService
      * @var ApiFleetLargeService
      * @var SantanderService
+     * @var AlfaService
+     * @var BvService
      */
     private $apiFleetLargeService;
     private $santanderService;
@@ -35,7 +39,8 @@ class MonitoringController extends Controller
     private $apiDeviceServic;
     private $psaService;
     private $logService;
-
+    private $alfaService;
+    private $bvService;
     /**
      * BoardingController constructor.
      * @param DashboardController $apiFleetLargeService
@@ -50,7 +55,9 @@ class MonitoringController extends Controller
         LogRepository $log,
         PsaService $psaService,
         LogService $logService,
-        SantanderService $santanderService
+        SantanderService $santanderService,
+        AlfaService $alfaService,
+        BvService $bvService
     ) {
         $this->apiFleetLargeService = $apiFleetLargeService;
         $this->fleetLargeMovidaService = $fleetLargeMovidaService;
@@ -60,6 +67,8 @@ class MonitoringController extends Controller
         $this->psaService = $psaService;
         $this->logService = $logService;
         $this->santanderService = $santanderService;
+        $this->alfaService = $alfaService;
+        $this->bvService = $bvService;
 
         $this->data = [
             'icon' => 'fa-car-alt',
@@ -188,11 +197,94 @@ class MonitoringController extends Controller
         return response()->json(['status' => 'success', 'data' => $data], 200);
     }
 
+    public function lastPositionAlfa(String $chassi)
+    {
+        $customer   = $this->customerService->show(Auth::user()->customer_id);
+        $chassi     = $this->alfaService->findByChassi($chassi);
+        $endereco   = $this->apiDeviceServic->getAddress($chassi->lp_latitude, $chassi->lp_longitude);
+
+        $data = [
+            "chassi" => $chassi->chassis,
+            "categoria_veiculo" => $chassi->categoria_veiculo,
+            "cidade" => $chassi->cidade,
+            "end_bairro" => $chassi->end_bairro,
+            "end_cep" => $chassi->end_cep,
+            "end_cidade" => $chassi->end_cidade,
+            "end_logradouro" => $chassi->end_logradouro,
+            "end_uf" => $chassi->end_uf,
+            "estado" => $chassi->estado,
+            "iccid" => $chassi->iccid,
+            "lp_ignicao" => $chassi->lp_ignicao,
+            "lp_latitude" => $chassi->lp_latitude,
+            "lp_longitude" => $chassi->lp_longitude,
+            "data_instalacao" => $chassi->data_instalacao,
+            "codigo_fipe" => $chassi->codigo_fipe,
+            "cod_empresa" => $chassi->cod_empresa,
+            "lp_ultima_transmissao" => $chassi->lp_ultima_transmissao,
+            "lp_velocidade" => $chassi->lp_velocidade,
+            "lp_voltagem" => $chassi->lp_voltagem,
+            "modelo" => $chassi->modelo,
+            "modelo_veiculo" => $chassi->modelo_veiculo,
+            "operadora" => $chassi->operadora,
+            "placa" => $chassi->placa,
+            "qtd_dispositivos" => $chassi->qtd_dispositivos,
+            "sinistrado" => $chassi->sinistrado,
+            "status" => $chassi->status,
+            "telefone" => $chassi->telefone,
+            "versao" => $chassi->versao,
+            "endereco" => $endereco,
+        ];
+
+        return response()->json(['status' => 'success', 'data' => $data], 200);
+    }
+
+    public function lastPositionBv(String $chassi)
+    {
+        $customer   = $this->customerService->show(Auth::user()->customer_id);
+        $chassi     = $this->bvService->findByChassi($chassi);
+        $endereco   = $this->apiDeviceServic->getAddress($chassi->lp_latitude, $chassi->lp_longitude);
+
+        $data = [
+            "chassi" => $chassi->chassis,
+            "categoria_veiculo" => $chassi->categoria_veiculo,
+            "cidade" => $chassi->cidade,
+            "end_bairro" => $chassi->end_bairro,
+            "end_cep" => $chassi->end_cep,
+            "end_cidade" => $chassi->end_cidade,
+            "end_logradouro" => $chassi->end_logradouro,
+            "end_uf" => $chassi->end_uf,
+            "estado" => $chassi->estado,
+            "iccid" => $chassi->iccid,
+            "lp_ignicao" => $chassi->lp_ignicao,
+            "lp_latitude" => $chassi->lp_latitude,
+            "lp_longitude" => $chassi->lp_longitude,
+            "data_instalacao" => $chassi->data_instalacao,
+            "codigo_fipe" => $chassi->codigo_fipe,
+            "cod_empresa" => $chassi->cod_empresa,
+            "lp_ultima_transmissao" => $chassi->lp_ultima_transmissao,
+            "lp_velocidade" => $chassi->lp_velocidade,
+            "lp_voltagem" => $chassi->lp_voltagem,
+            "modelo" => $chassi->modelo,
+            "modelo_veiculo" => $chassi->modelo_veiculo,
+            "operadora" => $chassi->operadora,
+            "placa" => $chassi->placa,
+            "qtd_dispositivos" => $chassi->qtd_dispositivos,
+            "sinistrado" => $chassi->sinistrado,
+            "status" => $chassi->status,
+            "telefone" => $chassi->telefone,
+            "versao" => $chassi->versao,
+            "endereco" => $endereco,
+        ];
+
+        return response()->json(['status' => 'success', 'data' => $data], 200);
+    }
+
     public function lastPositionMovida(String $chassi)
     {
         $customer = $this->customerService->show(Auth::user()->customer_id);
 
         $fleetslarge = $this->apiFleetLargeService->allCars($customer->hash);
+
         $veiculo[] = '';
         foreach ($fleetslarge as $data => $dat) {
             if ($chassi == $dat['chassis']) {

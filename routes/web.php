@@ -380,6 +380,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/analyzes/eventos', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeEventos'); // Movida
         Route::get('/analyzes/sompo/frota', 'FleetsLarge\DashboardController@analyze')->name('fleetslarges.analyzeFrotaSompo'); // SOMPO
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
+        Route::get('/find/alfa/{chassis}', 'FleetsLarge\DashboardController@findByChassiAlfa')->name('fleetslarges.findByChassiAlfa');
+        Route::get('/find/bv/{chassis}', 'FleetsLarge\DashboardController@findByChassiBv')->name('fleetslarges.findByChassiBv');
         Route::get('/show/event/{placa}', 'FleetsLarge\DashboardController@showEventPlaca')->name('fleetslarges.showEventPlaca');
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');
         Route::get('/show/status/ocorrence', 'FleetsLarge\DashboardController@showOcorrenceStatus')->name('fleetslarges.showOcorrenceStatus');
@@ -447,6 +449,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/cars/loyalty/{loyalty?}', 'FleetsLarge\MonitoringController@carsForLoyalty')->name('fleetslarges.monitoring.carsLoyalty');
             Route::get('/last-position/{chassis}', 'FleetsLarge\MonitoringController@lastPosition')->name('fleetslarges.monitoring.lastPosition');
             Route::get('/last-position/movida/{chassis}', 'FleetsLarge\MonitoringController@lastPositionMovida')->name('fleetslarges.monitoring.lastPositionMovida');
+            Route::get('/last-position/alfa/{chassis}', 'FleetsLarge\MonitoringController@lastPositionAlfa')->name('fleetslarges.monitoring.lastPositionAlfa');
+            Route::get('/last-position/bv/{chassis}', 'FleetsLarge\MonitoringController@lastPositionBv')->name('fleetslarges.monitoring.lastPositionBv');
             Route::get('/cars/events', 'FleetsLarge\MonitoringController@events')->name('fleetslarges.monitoring.events');
             Route::get('/movida/lojas', 'FleetsLarge\MonitoringController@movidaPosition')->name('fleetslarges.monitoring.movidaPosition');
             Route::post('/grid', 'FleetsLarge\MonitoringController@grid')->name('fleetslarges.monitoring.grid');

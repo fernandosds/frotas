@@ -418,7 +418,7 @@
      */
     function lastPosition(chassi_device) {
         $.ajax({
-            url: "{{url('')}}/fleetslarges/monitoring/last-position/alfa/" + chassi_device,
+            url: "{{url('')}}/fleetslarges/monitoring/last-position/bv/" + chassi_device,
             type: 'GET',
             success: function(data) {
                 console.log(data);

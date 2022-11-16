@@ -79,7 +79,7 @@ class AlfaService
      */
     public function findByChassi($chassis)
     {
-        $chassi = $this->bv->findByChassi($chassis);
+        $chassi = $this->alfa->findByChassi($chassis);
         return $chassi;
     }
 }
