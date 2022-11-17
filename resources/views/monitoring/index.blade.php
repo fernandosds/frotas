@@ -424,7 +424,7 @@
                                     let radius = 850;
                                     var myRenderer = L.canvas({ padding: 0.5 });
                                     var ltln = getRandomLatLng();
-                                        L.circle([position.Latitude, position.Longitude], position.radius,{
+                                        L.circle([position.Latitude, position.Longitude], position.Radius,{
                                         renderer: myRenderer
                                     }).addTo(mymap);
 
@@ -447,7 +447,7 @@
                                     let radius = 850;
                                     var myRenderer = L.canvas({ padding: 0.5 });
                                     var ltln = getRandomLatLng();
-                                        L.circle([position.Latitude, position.Longitude], radius,{
+                                        L.circle([position.Latitude, position.Longitude], position.Radius,{
                                         renderer: myRenderer
                                     }).addTo(mymap);
 
