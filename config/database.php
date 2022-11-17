@@ -43,6 +43,18 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
+        'telemil' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_TELEMIL_HOST', '10.20.1.30'),
+            'database'  => env('DB_TELEMIL_DATABASE', 'telemil'),
+            'username'  => env('DB_TELEMIL_USERNAME', 'newsiscon'),
+            'password'  => env('DB_TELEMIL_PASSWORD', '@FpRmL2017'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),

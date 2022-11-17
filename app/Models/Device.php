@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Dispositivos;
 
 class Device extends Model
 {
@@ -19,7 +20,7 @@ class Device extends Model
     /**
      * @var string
      */
-    protected $with = ["boardings", "technologie", "customer"];
+    protected $with = ["boardings", "technologie", "customer", "dispositivos"];
 
     /**
      * @var array
@@ -105,5 +106,9 @@ class Device extends Model
     {
         return $this->HasMany('App\Models\Boarding')
             ->orderBy('created_at', 'desc');
+    }
+
+    public function dispositivos(){
+        return $this->hasOne(Dispositivos::class, 'modelo', 'model');
     }
 }

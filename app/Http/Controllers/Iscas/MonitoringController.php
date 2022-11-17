@@ -8,6 +8,7 @@ use App\Services\LogService;
 use App\Services\Iscas\BoardingService;
 use App\Http\Controllers\Iscas\FunctionController;
 use App\Services\DeviceService;
+use App\Models\Dispositivos;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,11 +74,14 @@ class MonitoringController extends Controller
     public function lastPosition(String $device)
     {
 
+        $telemil_dispositivo = Dispositivos::where('MODELO', $device)->first();
         // Verifica se a isca é válida
         if ($this->deviceService->validDevice($device)) {
 
             // Verifica se o embarque é válido
             $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+
+
             $time_left = (isset($boarding->finished_at)) ? timeLeft($boarding->finished_at) : '';
 
             if ($boarding) {
@@ -134,7 +138,8 @@ class MonitoringController extends Controller
             if (isset($last_positions['body'][0])) {
                 $address = $this->apiDeviceService->getAddress($last_positions['body'][0]['Latitude'], $last_positions['body'][0]['Longitude']);
             }
-
+            $last_positions['body'][0]['codigo_produto'] = $telemil_dispositivo->CODIGO_PRODUTO;
+            
             return ['last_positions' => $last_positions, 'pairing' => $pairing, 'time_left' => $time_left, 'address' => $address];
         } else {
 

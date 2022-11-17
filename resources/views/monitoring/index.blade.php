@@ -358,7 +358,12 @@
                 }
             });
         }
-
+        function getRandomLatLng() {
+            return [
+                -90 + 180 * Math.random(),
+                -180 + 360 * Math.random()
+            ];
+        }
         /**
          * Marker - Última posição válida
          */
@@ -369,7 +374,6 @@
                 url: "{{url('/monitoring/map/last-position')}}/" + chassi_device,
                 type: 'GET',
                 success: function (data) {
-                    console.log(data.pairing)
                     if(data.status == "error"){
                         Swal.fire({
                             type: 'error',
@@ -402,7 +406,6 @@
 
                         // Posição aproximada
                         if( position.Atualizado == 0 && position.Satelites < 4 ){
-
                             circle = L.circle([position.Latitude, position.Longitude], {
                                 color: 'gray',
                                 fillColor: '#f03',
@@ -416,15 +419,50 @@
 
                             // Despareado - Box marker
                             if(data.pairing.status == "error") {
-                                marker = L.marker([position.Latitude, position.Longitude], {icon: boxIcon}).addTo(mymap);
 
+                                if(position.Satelites == "15" && position.codigo_produto >= 100){
+                                    let radius = 850;
+                                    var myRenderer = L.canvas({ padding: 0.5 });
+                                    var ltln = getRandomLatLng();
+                                        L.circle([position.Latitude, position.Longitude], radius,{
+                                        renderer: myRenderer
+                                    }).addTo(mymap);
+
+
+                                    var ltln = getRandomLatLng();
+                                        L.marker([position.Latitude, position.Longitude],{
+                                        icon: truckIcon
+                                    }).addTo(mymap);
+                                    L.marker(ltln).addTo(mymap);
+
+                                }else{
+                                    marker = L.marker([position.Latitude, position.Longitude], {icon: boxIcon}).addTo(mymap);
+                                }
                             // Pareado - Truck marker
                             }else{
-                                marker = L.marker([position.Latitude, position.Longitude], {icon: truckIcon}).addTo(mymap);
+                                // circle = L.circle({radius : 200}).addTo(mymap);
+                                // marker = L.circleMarker([position.Latitude, position.Longitude], {icon: truckIcon}).addTo(mymap);
+                                // let radius = 50;
+                                if(position.Satelites == "15" && position.codigo_produto >= 100){
+                                    let radius = 850;
+                                    var myRenderer = L.canvas({ padding: 0.5 });
+                                    var ltln = getRandomLatLng();
+                                        L.circle([position.Latitude, position.Longitude], radius,{
+                                        renderer: myRenderer
+                                    }).addTo(mymap);
+
+
+                                    var ltln = getRandomLatLng();
+                                        L.marker([position.Latitude, position.Longitude],{
+                                        icon: truckIcon
+                                    }).addTo(mymap);
+                                    L.marker(ltln).addTo(mymap);
+
+                                }else{
+                                    marker = L.marker([position.Latitude, position.Longitude], {icon: truckIcon}).addTo(mymap);
+                                }
                             }
                         }
-
-                        console.log(data.pairing)
 
                         // Mostra evento de despareamento
                         if(data.pairing.status == "error") {
@@ -433,13 +471,12 @@
                             marker_event = L.marker([data.pairing.event.position.lat, data.pairing.event.position.lon], {icon: eventIcon}).addTo(mymap);
 
                             // Truck marker
-                            marker_truck = L.marker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: truckIcon}).addTo(mymap);
+                            marker_truck = L.circleMarker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: truckIcon}).addTo(mymap);
 
                         }
 
                         $('#last-address').html(
                             '<b>Último endereço válido:</b> '+data.address+
-
                             '<b> - Satélites:</b> '+position.Satelites+
                             '<b> - Modo:</b> '+position.Modo
                         );
