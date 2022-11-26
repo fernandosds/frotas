@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "fideloper/proxy": "^4.2",
-        "fruitcake/laravel-cors": "^3.0",
+        "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "jenssegers/mongodb": "3.7",
         "laravel-lang/lang": "~7.0",
@@ -56,6 +56,12 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "conflict": {
+        "psr/container": "1.1"
+    },
+    "provide" : {
+        "ext-mongodb": "*"
+    },
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
