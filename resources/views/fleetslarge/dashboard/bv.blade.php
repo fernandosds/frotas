@@ -823,7 +823,7 @@
         $(document).on("click", ".btn-vehicle-data", function() {
             var chassi = $(this).data('chassi');
             $.ajax({
-                url: "{{url('')}}/fleetslarges/find/bv" + chassi,
+                url: "{{url('')}}/fleetslarges/find/bv/" + chassi,
                 type: 'GET',
                 success: function(response) {
                     $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
