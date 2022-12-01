@@ -304,7 +304,7 @@
                             <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
                     </div>
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                    <!-- <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Manutenção:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item hidden">
@@ -328,7 +328,7 @@
                                 <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_recuperado"> <span class="kt-badge kt-badge--success  kt-badge--inline kt-badge--pill"><span id="veiculo_recuperado"></span>&nbsp; VEÍCULO RECUPERADO</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
@@ -508,7 +508,8 @@
                     "data": "dt_inicio_instalacao", //14
                 }, {
                     "data": "dt_termino_instalacao", // 15
-                }, {
+                }, 
+                {
                     "data": "projeto", //16
                     "width": "50px",
                     render: function(data, type, row, meta) {
@@ -517,7 +518,8 @@
                         }
                         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
                     }
-                }, {
+                }, 
+                {
                     "data": "situacao", //17
                     visible: false
                 }, {

@@ -290,7 +290,7 @@
                         </div>
                     </div>
                     <!-- <div class="row"> -->
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                    <!-- <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Projeto:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item">
@@ -303,8 +303,8 @@
                         <div class="obs">
                             <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
-                    </div>
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                    </div> -->
+                    <!-- <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Manutenção:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item hidden">
@@ -328,7 +328,7 @@
                                 <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_recuperado"> <span class="kt-badge kt-badge--success  kt-badge--inline kt-badge--pill"><span id="veiculo_recuperado"></span>&nbsp; VEÍCULO RECUPERADO</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
@@ -351,7 +351,7 @@
                             <th>Data de acionamento Técnico</th> <!-- 13 -->
                             <th>Data de início de instalação</th> <!-- 14 -->
                             <th>Data de término de instalação</th> <!-- 15 -->
-                            <th>Projeto</th> <!-- 16 -->
+                            <!--<th>Projeto</th>--> <!-- 16 -->
                             <th class="hidden">Situação</th> <!-- 17 -->
                             <th></th> <!-- 18 -->
                             <th class="hidden">Filtro - Dt. Entrada</th> <!-- 19 -->
@@ -425,7 +425,7 @@
     // 2022-08-16 09:54:49.000
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
         columsPdf = [1, 2, 3, 6, 7, 9, 12, 13, 14, 15];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
         var dateTime = moment(new Date()); //.format('DD/MM/YYYY HH:mm:ss');
@@ -448,23 +448,25 @@
                 [12, 'desc']
             ],
             columnDefs: [{
-                    className: "hidden",
-                    "targets": [19, 21, 22, 23]
-                }, {
+                    // className: "hidden",
+                //     "targets": [19, 21, 22, 23]
+                // }, 
+                // {
                     orderable: false,
-                    targets: [18, 20, 23, 24],
-                }, {
-                    targets: [9, 12, 13, 14, 15],
-                    render: function(data) {
-                        return moment(data).format('DD/MM/YYYY HH:mm:ss');
-                    }
-                },
-                {
-                    targets: [19],
-                    render: function(data) {
-                        return moment(data).format('DD/MM/YYYY');
-                    }
-                },
+                    targets: [17],//, 20, 23, 24
+                }
+                //  {
+                //     targets: [9, 12, 13, 14, 15],
+                //     render: function(data) {
+                //         return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                //     }
+                // },
+                // {
+                //     targets: [19],
+                //     render: function(data) {
+                //         return moment(data).format('DD/MM/YYYY');
+                //     }
+                // },
             ],
             columns: [{
                     "data": "placa", //0
@@ -508,74 +510,78 @@
                     "data": "dt_inicio_instalacao", //14
                 }, {
                     "data": "dt_termino_instalacao", // 15
-                }, {
-                    "data": "projeto", //16
-                    "width": "50px",
-                    render: function(data, type, row, meta) {
-                        if (row.projeto == 'RENEGOCIACAO') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
-                        }
-                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
-                    }
-                }, {
+                }, 
+                // {
+                //     "data": "projeto", //16
+                //     "width": "50px",
+                //     render: function(data, type, row, meta) {
+                //         if (row.projeto == 'RENEGOCIACAO') {
+                //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
+                //         }
+                //         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
+                //     }
+                // }, 
+                {
                     "data": "situacao", //17
                     visible: false
-                }, {
+                }, 
+                {
                     "data": " ", //18
-                    "width": "70px",
+                    "width": "120px",
                     render: function(data, type, row, meta) {
                         return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
                             ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
                     }
-                }, {
-                    "data": "dt_entrada", //19
-                }, {
-                    "data": "event_violacao", //20
-                    render: function(data, type, row, meta) {
-                        if (row.event_violacao == 'bateria_violada') {
-                            return '<div class="fa-stack-modificado" id="iconRed"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
-                        }
-                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
-                    }
-                },
-                // campo oculto
-                {
-                    "data": "event_violacao", //21
-                    render: function(data, type, row, meta) {
-                        if (row.event_violacao == 'bateria_violada') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
-                        }
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
-                    }
-                },
-                {
-                    "data": "manutencao", //22
-                    render: function(data, type, row, meta) {
-                        if (row.manutencao == 'equipamento_manutencao') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
-                        }
+                }
+                // , {
+                //     "data": "dt_entrada", //19
+                // }, {
+                //     "data": "event_violacao", //20
+                //     render: function(data, type, row, meta) {
+                //         if (row.event_violacao == 'bateria_violada') {
+                //             return '<div class="fa-stack-modificado" id="iconRed"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
+                //         }
+                //         return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
+                //     }
+                // },
+                // // campo oculto
+                // {
+                //     "data": "event_violacao", //21
+                //     render: function(data, type, row, meta) {
+                //         if (row.event_violacao == 'bateria_violada') {
+                //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
+                //         }
+                //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
+                //     }
+                // },
+                // {
+                //     "data": "manutencao", //22
+                //     render: function(data, type, row, meta) {
+                //         if (row.manutencao == 'equipamento_manutencao') {
+                //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
+                //         }
 
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
-                    }
-                },
-                {
-                    "data": "sinistrado", //23
-                    render: function(data, type, row, meta) {
-                        if (row.sinistrado == 'veiculo_recuperado') {
-                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_recuperado</span>'
-                        }
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_nao_recuperado</span>'
-                    }
-                },
-                {
-                    "data": "sinistrado", //24
-                    render: function(data, type, row, meta) {
-                        if (row.sinistrado == 'veiculo_recuperado') {
-                            return '<div class="fa-stack-modificado" id="iconGreen"><label title="Veículo Recuperado""><i class="fas fa-2x fa-car"></i></label></div>'
-                        }
-                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_recuperado</span>'
-                    }
-                },
+                //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
+                //     }
+                // },
+                // {
+                //     "data": "sinistrado", //23
+                //     render: function(data, type, row, meta) {
+                //         if (row.sinistrado == 'veiculo_recuperado') {
+                //             return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_recuperado</span>'
+                //         }
+                //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_nao_recuperado</span>'
+                //     }
+                // },
+                // {
+                //     "data": "sinistrado", //24
+                //     render: function(data, type, row, meta) {
+                //         if (row.sinistrado == 'veiculo_recuperado') {
+                //             return '<div class="fa-stack-modificado" id="iconGreen"><label title="Veículo Recuperado""><i class="fas fa-2x fa-car"></i></label></div>'
+                //         }
+                //         return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_recuperado</span>'
+                //     }
+                // },
             ],
             //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
@@ -773,9 +779,9 @@
         }, 15000);
 
         // Adicionar checked após 10 segundos
-        setTimeout(function() {
-            $('#batNaoViolada')[0].click();
-        }, 20000);
+        // setTimeout(function() {
+        //     $('#batNaoViolada')[0].click();
+        // }, 20000);
 
         $('input[name="bat"]').change(function() {
             if ($('#batViolada').is(':checked')) {
