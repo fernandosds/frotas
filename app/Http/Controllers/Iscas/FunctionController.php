@@ -42,7 +42,11 @@ class FunctionController extends Controller
                 if(Auth::user()->id != 102){
                     if(Auth::user()->id != 88){
                         return 'R: ' . $bateriaReal . '% | P: ' . round($y, 0) . '%';
+                    }else{
+                        return 'P: ' . round($y, 0) . '%';
                     }
+                }else{
+                    return 'P: ' . round($y, 0) . '%';
                 }
             } else {
                 return 'P: ' . round($y, 0) . '%';
