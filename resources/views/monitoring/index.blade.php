@@ -76,11 +76,13 @@
                             <i class="fa fa-signal"></i> <label for="">Última Transmissão</label><br />
                             <b for="" id="last-transmission">---</b>
                         </div>
-
+                        <!-- Condição adaptada temporariamente -->
+                        @if(Auth::user()->id != 102 || Auth::user()->id != 88 || Auth::user()->id != 133)
                         <div class="col-sm-2 col-6">
                             <i class="fa fa-battery-empty" id="icon-nivel-bateria"></i> <label for=""> Nível de Bateria</label><br />
                             <b for="" id="nivel-bateria">---</b>
                         </div>
+                        @endif
 
                         <div class="col-sm-2 col-6">
                             <i class="fa  fa-cube"></i> <label for="">Tipo de ísca</label><br />

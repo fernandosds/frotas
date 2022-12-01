@@ -34,7 +34,10 @@
             <th>Atualizado</th>
             <th>Ísca</th>
             <th>Hospedeiro</th>
+             <!-- Condição adaptada temporariamente -->
+             @if(Auth::user()->id != 102 || Auth::user()->id != 88 || Auth::user()->id != 133)
             <th>Nível da bateria</th>
+            @endif
             <th>RSSI Hospedeiro</th>
             <th>Endereço</th>
             <th>Latitude</th>
@@ -63,6 +66,8 @@
                         {{ $position["id_hospedeiro"] }}
                     @endif
                 </td>
+                 <!-- Condição adaptada temporariamente -->
+                 @if(Auth::user()->id != 102 || Auth::user()->id != 88 || Auth::user()->id != 133)
                 <td>
 
                     @if( $position["nivel_bateria"] == "100.00%" )
@@ -76,6 +81,7 @@
                     @endif
 
                 </td>
+                @endif
                 <td>{{ $position["rssi_hospedeiro"] }}</td>
                 <td>{{ $position["endereco"] }}</td>
                 <td>{{ $position["latitude_hospede"] }}</td>
