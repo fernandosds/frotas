@@ -36,8 +36,17 @@ class FunctionController extends Controller
 
 
         preg_match('/@(.*)/', Auth::user()->email, $out);
+        // Condição adaptada temporariamente para que os usuários abaixo, não vejam o nível real da bateria, apenas o Promédio
         if ($out[1] == 'satcompany.com.br') {
-            return 'R: ' . $bateriaReal . '% | P: ' . round($y, 0) . '%';
+            if(Auth::user()->id != 133){
+                if(Auth::user()->id != 102){
+                    if(Auth::user()->id != 88){
+                        return 'R: ' . $bateriaReal . '% | P: ' . round($y, 0) . '%';
+                    }
+                }
+            } else {
+                return 'P: ' . round($y, 0) . '%';
+            }
         } else {
             return round($y, 0) . '%';
         }
