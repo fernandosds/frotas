@@ -32,7 +32,6 @@ class ApiDeviceService
             $this->host = "http://10.20.3.36:6526";
             $this->host_apis = "https://api.satcompany.com.br";
         } else {
-
             $this->host_siscon = "http://201.91.1.155:83/siscon/new-siscon/public/";
             $this->host = "http://189.16.50.195:6526";
             $this->host_apis = "https://api.satcompany.com.br";
@@ -58,6 +57,13 @@ class ApiDeviceService
         $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1";
         return ClientHttp($url);
     }
+
+    public function getAllPosition(String $device)
+    {
+        $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'";
+        return ClientHttp($url);
+    }
+
 
     /**
      * @param String $device
@@ -134,7 +140,6 @@ class ApiDeviceService
      */
     public function printGrid(String $device, String $from, String $to)
     {
-
         $url = $this->host . "/hospedeiros&{$device}[type=ADDR,PER='{$from}/{$to}']";
         return ClientHttp($url);
     }

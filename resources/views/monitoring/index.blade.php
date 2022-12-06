@@ -339,26 +339,82 @@
                 minutes = $('#minutes').val();
             }
 
-            // Map
             $.ajax({
-                url: "{{url('monitoring/map/heat')}}/"+chassi_device+'/'+minutes,
+                url: "{{url('/monitoring/map/exist-lorawan')}}/" + chassi_device,
                 type: 'GET',
-                success: function(data) {
+                success: function (data) {
+                    // if(data.status == "error"){
 
-                    if(mymap.hasLayer(heat)){
-                        mymap.removeLayer(heat);
+                    //     Swal.fire({
+                    //         type: 'error',
+                    //         title: 'Oops...',
+                    //         text: 'Ísca não embarcada',
+                    //         showConfirmButton: true,
+                    //         timer: 10000
+                    //     });
+
+                    //     return false;
+                    // }
+                    
+                    if(data.isLorawan){
+                        $.ajax({
+                            url: "{{url('monitoring/map/heat-lorawan')}}/"+chassi_device,
+                            type: 'GET',
+                            success: function(data) {
+                                // console.log(data);
+                                if(mymap.hasLayer(heat)){
+                                    mymap.removeLayer(heat);
+                                }
+                                // Mapa de calor
+                                heat = L.heatLayer(data, {
+                                    radius: 20,
+                                    max: 1.0,
+                                    blur: 15,
+                                    minOpacity: 0.7
+                                }).addTo(mymap);
+
+                            }
+                        });
+                    }else{
+                        $.ajax({
+                            url: "{{url('monitoring/map/heat')}}/"+chassi_device+'/'+minutes,
+                            type: 'GET',
+                            success: function(data) {
+                                if(mymap.hasLayer(heat)){
+                                    mymap.removeLayer(heat);
+                                }
+                                // Mapa de calor
+                                heat = L.heatLayer(data, {
+                                    radius: 20,
+                                    max: 1.0,
+                                    blur: 15,
+                                    minOpacity: 0.7
+                                }).addTo(mymap);
+
+                            }
+                        });
                     }
-
-                    // Mapa de calor
-                    heat = L.heatLayer(data, {
-                        radius: 20,
-                        max: 1.0,
-                        blur: 15,
-                        minOpacity: 0.7
-                    }).addTo(mymap);
-
                 }
             });
+            // // Map
+            // $.ajax({
+            //     url: "{{url('monitoring/map/heat')}}/"+chassi_device+'/'+minutes,
+            //     type: 'GET',
+            //     success: function(data) {
+            //         console.log(data);
+            //         if(mymap.hasLayer(heat)){
+            //             mymap.removeLayer(heat);
+            //         }
+            //         // Mapa de calor
+            //         heat = L.heatLayer(data, {
+            //             radius: 20,
+            //             max: 1.0,
+            //             blur: 15,
+            //             minOpacity: 0.7
+            //         }).addTo(mymap);
+
+            //     }
+            // });
         }
         function getRandomLatLng() {
             return [

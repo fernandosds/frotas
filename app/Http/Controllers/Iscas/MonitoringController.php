@@ -75,6 +75,7 @@ class MonitoringController extends Controller
     {
 
         $telemil_dispositivo = Dispositivos::where('MODELO', $device)->first();
+
         // Verifica se a isca é válida
         if ($this->deviceService->validDevice($device)) {
 
@@ -182,6 +183,48 @@ class MonitoringController extends Controller
         return $arr_heat_positions;
     }
 
+    public function getExistsLorawan($model){
+        try{
+
+            $lorawan = $this->apiDeviceService->getLastPosition($model);
+
+            $telemil_dispositivo = Dispositivos::where('MODELO', $model)->first();
+
+            $lorawan['body'][0]['codigo_produto'] = $telemil_dispositivo->CODIGO_PRODUTO;
+
+            if($lorawan['body'][0]['Satelites'] == '15' && $lorawan['body'][0]['codigo_produto'] >= 100){
+                return Response()->json(['status' => 'success', 'isLorawan' => true], 200);
+            }else{
+                return Response()->json(['status' => 'success', 'isLorawan' => false], 200);
+            }
+
+        }catch(\Exception $e){
+            return Response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+
+    }
+
+        /**
+     * @param String $device
+     * @return array
+     */
+    public function heatLorawan(String $device)
+    {
+        $heat_positions = $this->apiDeviceService->getAllPosition($device);
+
+        $arr_heat_positions = [];
+        foreach($heat_positions['body'] as $position){
+            $arr_heat_positions[] = [
+                $position['Latitude'],
+                $position['Longitude'],
+                0.1
+            ];
+        }
+
+        return $arr_heat_positions;
+
+    }
+
 
     /**
      * @param String $model
@@ -228,6 +271,7 @@ class MonitoringController extends Controller
      */
     public function getGrid(String $device, Int $minutes)
     {
+
         $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
 
         if ($boarding) {

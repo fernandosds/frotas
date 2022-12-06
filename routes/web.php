@@ -70,7 +70,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['user.access_level:management'], 'prefix' => 'monitoring'], function () {
         Route::get('/{device?}', 'Iscas\MonitoringController@index');
         Route::get('/map/last-position/{device}', 'Iscas\MonitoringController@lastPosition');
+        Route::get('/map/exist-lorawan/{device}', 'Iscas\MonitoringController@getExistsLorawan');
         Route::get('/map/heat/{device}/{minutes?}', 'Iscas\MonitoringController@heat');
+        Route::get('/map/heat-lorawan/{device}', 'Iscas\MonitoringController@heatLorawan');
         Route::get('/get-grid/{model}/{minutes}', 'Iscas\MonitoringController@getGrid');
         Route::get('/get-grid/print/{model}/{from}/{to}', 'Iscas\MonitoringController@printGrid');
         Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
