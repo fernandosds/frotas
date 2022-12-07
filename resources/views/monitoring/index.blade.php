@@ -257,9 +257,9 @@
         var chassi_device = '';
 
         /* Icons */
-        var boxIcon = new L.Icon({ iconUrl: '{{url("markers/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
-        var eventIcon = new L.Icon({ iconUrl: '{{url("markers/marker-event-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
-        var truckIcon = new L.Icon({ iconUrl: '{{url("markers/marker-truck-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var boxIcon     = new L.Icon({ iconUrl: '{{url("markers/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var eventIcon   = new L.Icon({ iconUrl: '{{url("markers/marker-event-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
+        var truckIcon   = new L.Icon({ iconUrl: '{{url("markers/marker-truck-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
 
         var mymap = L.map('mapid').setView([-23.55007382401638, -46.63422236151765], 15);
 
@@ -343,18 +343,6 @@
                 url: "{{url('/monitoring/map/exist-lorawan')}}/" + chassi_device,
                 type: 'GET',
                 success: function (data) {
-                    // if(data.status == "error"){
-
-                    //     Swal.fire({
-                    //         type: 'error',
-                    //         title: 'Oops...',
-                    //         text: 'Ísca não embarcada',
-                    //         showConfirmButton: true,
-                    //         timer: 10000
-                    //     });
-
-                    //     return false;
-                    // }
                     
                     if(data.isLorawan){
                         $.ajax({
@@ -461,7 +449,6 @@
                         position = data.last_positions['body'][0];
 
                         mymap.panTo(new L.LatLng(position.Latitude, position.Longitude));
-
                         // Posição aproximada
                         if( position.Atualizado == 0 && position.Satelites < 4 ){
                             circle = L.circle([position.Latitude, position.Longitude], {
@@ -485,7 +472,6 @@
                                         L.circle([position.Latitude, position.Longitude], position.Radius,{
                                         renderer: myRenderer
                                     }).addTo(mymap);
-
 
                                     var ltln = getRandomLatLng();
                                         L.marker([position.Latitude, position.Longitude],{

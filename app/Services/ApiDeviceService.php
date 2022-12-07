@@ -60,7 +60,7 @@ class ApiDeviceService
 
     public function getAllPosition(String $device)
     {
-        $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'";
+        $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+160";
         return ClientHttp($url);
     }
 
