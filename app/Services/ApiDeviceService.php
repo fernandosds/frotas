@@ -133,6 +133,17 @@ class ApiDeviceService
         return ClientHttp($url);
     }
 
+        /**
+     * @param String $device
+     * @param Int $minutes
+     * @return array
+     */
+    public function getGridLorawan(String $device)
+    {
+        $url = $this->host . "/listjson&grid_rastreamento[*]+id='{$device}'+limit+1500";
+        return ClientHttp($url);
+    }
+
     /**
      * @param String $device
      * @param Int $minutes

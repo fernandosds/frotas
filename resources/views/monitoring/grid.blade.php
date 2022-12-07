@@ -19,22 +19,30 @@
         <?php $cont = 1; ?>
             @foreach($return['positions'] as $position)
                 <tr>
-                    <td>{{ $position["DATA_GPS_HOSPEDE"] }}</td>
+                    <td>{{ isset($position["DATA_GPS_HOSPEDE"]) ? $position["DATA_GPS_HOSPEDE"] : $position["Data_GPS"] }}</td>
                     <td>
-                        @if( $position["atualizado"] == 0 )
-                            <i class="fa fa-frown-o"></i> Inválido
-                        @elseif( $position["atualizado"] == 1 )
-                            <i class="fa fa-smile-o"></i> Válido
-                        @else
-                            <i class="fa fa-ofmeh-o"></i> Impreciso
-                        @endif
+                        @if(isset($position["atualizado"]))
+                            @if( $position["atualizado"] == 0 )
+                                <i class="fa fa-frown-o"></i> Inválido
+                            @elseif( $position["atualizado"] == 1 )
+                                <i class="fa fa-smile-o"></i> Válido
+                            @else
+                                <i class="fa fa-ofmeh-o"></i> Impreciso
+                            @endif
+                        @else 
+                            <p></p>
+                        @endif 
                     </td>
-                    <td>{{ $position["id"] }}</td>
+                    <td>{{ isset($position["id"]) ? $position["id"] : $position["ID"] }}</td>
                     <td>
-                        @if( $position["id_hospedeiro"] == $return['pair_device'] )
-                            <span class="text-success">{{ $position["id_hospedeiro"] }}</span> <i class="fa fa-check-circle text-success"></i>
-                        @else
-                            {{ $position["id_hospedeiro"] }}
+                        @if(isset($position["id_hospedeiro"]))
+                            @if( $position["id_hospedeiro"] == $return['pair_device'] )
+                                <span class="text-success">{{ $position["id_hospedeiro"] }}</span> <i class="fa fa-check-circle text-success"></i>
+                            @else
+                                {{ $position["id_hospedeiro"] }}
+                            @endif
+                        @else 
+                          <p></p>
                         @endif
                     </td>
                     <td>
@@ -50,29 +58,30 @@
                         @endif
 
                     </td>
-                    <td>{{ $position["rssi_hospedeiro"] }}
-                        <div class="progress progress-sm">
+                    <td>
+                        @if(isset($position["rssi_hospedeiro"]))
+                            {{ $position["rssi_hospedeiro"] }}
+                            <div class="progress progress-sm">
 
+                                <?php
+                                    if( $position["rssi_hospedeiro"] < 50 ){
+                                        $class = "danger";
+                                    }elseif( $position["rssi_hospedeiro"] < 75 ){
+                                        $class = "warning";
+                                    }else{
+                                        $class = "success";
+                                    }
+                                ?>
 
-                            <?php
-                                if( $position["rssi_hospedeiro"] < 50 ){
-                                    $class = "danger";
-                                }elseif( $position["rssi_hospedeiro"] < 75 ){
-                                    $class = "warning";
-                                }else{
-                                    $class = "success";
-                                }
-
-                            ?>
-
-
-                            <div class="progress-bar kt-bg-{{$class}}" role="progressbar" style="width: {{ $position["rssi_hospedeiro"] / 1.27 }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
-                        </div>
+                                <div class="progress-bar kt-bg-{{$class}}" role="progressbar" style="width: {{ ($position['rssi_hospedeiro'] / 1.27) }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar"></div>
+                            </div>
+                        @else 
+                            <p></p>
+                        @endif
                     </td>
 
-
                     <td id="span-address-{{$cont}}">
-                        <button type="button" class="btn btn-default btn-sm pull-rigth btn-see-address" data-cont={{$cont}} data-lat="{{$position["latitude_hospede"]}}" data-lng="{{$position["longitude_hospede"]}}">Ver Endereço</button>
+                        <button type="button" class="btn btn-default btn-sm pull-rigth btn-see-address" data-cont={{$cont}} data-lat="{{ isset($position['latitude_hospede']) ? $position['latitude_hospede'] : $position['Latitude']}}" data-lng="{{isset($position['longitude_hospede']) ? $position['longitude_hospede'] : $position['Longitude']}}">Ver Endereço</button>
                     </td>
                 </tr>
                 <?php $cont ++; ?>
@@ -90,24 +99,22 @@
 </div>
 
 <script>
-
-
     $(document).ready(function () {
-    $('#table-grid').DataTable({
-        "aoColumns": [
-            { "sType": "date" },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        dom: 'Bfrtip',
-        buttons: [
-            'print'
-        ],
-        "aaSorting": [0, 'desc']
-    });
+        $('#table-grid').DataTable({
+            "aoColumns": [
+                { "sType": "date" },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'print'
+            ],
+            "aaSorting": [0, 'desc']
+        });
     });
 </script>

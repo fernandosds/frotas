@@ -283,8 +283,7 @@ class MonitoringController extends Controller
         if ($grid['status'] == "sucesso") {
             $dataTable = [];
             foreach ($grid['body'] as $row) {
-                $row['nivel_bateria'] =
-                    $this->functionController->getStatus($row['nivel_bateria'], $row['DATA_GPS_HOSPEDE'], $boarding->created_at);
+                $row['nivel_bateria'] = $this->functionController->getStatus($row['nivel_bateria'], $row['DATA_GPS_HOSPEDE'], $boarding->created_at);
                 $dataTable[] = $row;
             }
             $data['return'] = [
@@ -297,6 +296,31 @@ class MonitoringController extends Controller
             $data['return'] = [
                 'status' => 'error',
                 'message' => "Nenhuma posição encontrada para a ísca {$device}, no período de {$minutes} minutos."
+            ];
+        }
+
+        return view('monitoring.grid', $data);
+    }
+    public function getGridLorawan(String $device)
+    {
+        $boarding = $this->boardingService->getCurrentBoardingByDevice($device);
+        $grid = $this->apiDeviceService->getGridLorawan($device);
+        
+        $dataTable = [];
+        if(count($grid) > 0){
+            foreach ($grid['body'] as $row) {
+                $row['nivel_bateria'] = $this->functionController->getStatus($row['Tensão'], $row['Data_GPS'], $boarding->created_at);
+                $dataTable[] = $row;
+            }
+
+            $data['return'] = [
+                'status'    => 'success',
+                'positions' =>  $dataTable
+            ];
+        }else{
+            $data['return'] = [
+                'status' => 'error',
+                'message' => "Nenhuma posição encontrada para a ísca {$device}."
             ];
         }
 

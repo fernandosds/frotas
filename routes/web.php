@@ -74,6 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/map/heat/{device}/{minutes?}', 'Iscas\MonitoringController@heat');
         Route::get('/map/heat-lorawan/{device}', 'Iscas\MonitoringController@heatLorawan');
         Route::get('/get-grid/{model}/{minutes}', 'Iscas\MonitoringController@getGrid');
+        Route::get('/get-grid-lorawan/{model}/', 'Iscas\MonitoringController@getGridLorawan');
         Route::get('/get-grid/print/{model}/{from}/{to}', 'Iscas\MonitoringController@printGrid');
         Route::get('/get-address/{lat}/{lng}', 'Iscas\MonitoringController@getAddress');
         Route::get('/check-pairing/{device}/{pair_device}', 'Iscas\MonitoringController@checkPairing');

@@ -587,12 +587,31 @@
         $('.modal-grid').click(function(){
 
             $.ajax({
-                url: "{{url('monitoring/get-grid')}}/" + chassi_device+"/"+minutes,
+                url: "{{url('/monitoring/map/last-position')}}/" + chassi_device,
                 type: 'GET',
                 success: function (data) {
+                    position = data.last_positions['body'][0];
+                    if(position.Satelites == "15" && position.codigo_produto >= 100){
 
-                    $('#modal-content').html(data)
+                        $.ajax({
+                            url: "{{url('monitoring/get-grid-lorawan')}}/" + chassi_device,
+                            type: 'GET',
+                            success: function (data) {
+                                $('#modal-content').html(data)
+                            }
+                        })
+                        
+                    }else{
 
+                        $.ajax({
+                            url: "{{url('monitoring/get-grid')}}/" + chassi_device+"/"+minutes,
+                            type: 'GET',
+                            success: function (data) {
+                                $('#modal-content').html(data)
+                            }
+                        })
+                        
+                    }
                 }
             })
 
