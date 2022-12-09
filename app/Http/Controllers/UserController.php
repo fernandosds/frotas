@@ -75,14 +75,14 @@ class UserController extends Controller
         }
 
         $values =  [
-            'user_name' => strval($data['name']),
-            'customer_id' => $data['customer_id'],
+            'user_name' => isset($data['name']) ? strval($data['name']) : '',
+            'customer_id' => isset($data['customer_id']) ? $data['customer_id'] : '',
             'description' => "$message",
             'created_at' => $timestamps,
             'updated_at' => $timestamps,
             'host_ip' => "$ip",
         ];
-
+        
         $logUser =   DB::table('logs')->insertGetId($values);
 
         return $logUser;

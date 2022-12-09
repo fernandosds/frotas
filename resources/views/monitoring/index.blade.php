@@ -518,22 +518,26 @@
                             marker_truck = L.circleMarker([data.pairing.r12.last_position.lat, data.pairing.r12.last_position.lon], {icon: truckIcon}).addTo(mymap);
 
                         }
-
-                        $('#last-address').html(
-                            '<b>Último endereço válido:</b> '+data.address+
-                            '<b> - Satélites:</b> '+position.Satelites+
-                            '<b> - Modo:</b> '+position.Modo
-                        );
+                        if(position.Satelites == "15" && position.codigo_produto >= 100){
+                            $('#last-address').html(
+                                '<b>Último endereço válido:</b> '+data.address+
+                                '<b> - Satélites:</b> '+position.Satelites+
+                                '<b> - Modo:</b>  LORAWAN/P2P'
+                            );
+                        }else{
+                            $('#last-address').html(
+                                '<b>Último endereço válido:</b> '+data.address+
+                                '<b> - Satélites:</b> '+position.Satelites+
+                                '<b> - Modo:</b> '+position.Modo
+                            );
+                        }
 
                         if(data.pairing.status == "error"){
-                            $('#pairing-alert').html('<div class="alert alert-danger center blink" role="alert">' +
-                                '<strong><i class="fa fa-unlink"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
+                            $('#pairing-alert').html('<div class="alert alert-danger center blink" role="alert">' + '<strong><i class="fa fa-unlink"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }else if( data.pairing.status == "success" ){
-                            $('#pairing-alert').html('<div class="alert alert-success center blink" role="alert">' +
-                                '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
+                            $('#pairing-alert').html('<div class="alert alert-success center blink" role="alert">' + '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }else{
-                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' +
-                                '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
+                            $('#pairing-alert').html('<div class="alert alert-warning center blink" role="alert">' + '<strong><i class="fa fa-link"></i> ATENÇÃO!</strong> &nbsp; '+data.pairing.message+'</div>');
                         }
 
                         $('#time-left').html(data.time_left);

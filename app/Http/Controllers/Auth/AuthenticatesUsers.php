@@ -86,7 +86,7 @@ trait AuthenticatesUsers
             ]);
 
             if ($request->status == 0) {
-                $var->registerLog($request->all(), 'Bloqueio: O usuário bloqueado: ' . strval($request->name) . ' tentou efetuar um login às: ' .  $data . ' às ' . $hora);
+                // $var->registerLog($request->all(), 'Bloqueio: O usuário bloqueado: ' . strval($request->name) . ' tentou efetuar um login às: ' .  $data . ' às ' . $hora);
                 return $this->sendBloquedLoginResponse($request);
             }
         }
@@ -171,7 +171,7 @@ trait AuthenticatesUsers
         $data = Carbon::now()->format('d/m/Y');
         $hora = Carbon::now()->format('H:m:s');
 
-        $var->registerLog($request->all(), 'Login: O usuário: ' . strval($request->name) . ' tentou efetuar um login às: ' .  $data . ' às ' . $hora);
+        // $var->registerLog($request->all(), 'Login: O usuário: ' . strval($request->name) . ' tentou efetuar um login às: ' .  $data . ' às ' . $hora);
 
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
