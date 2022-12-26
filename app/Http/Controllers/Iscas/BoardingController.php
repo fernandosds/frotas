@@ -279,10 +279,10 @@ class BoardingController extends Controller
         $can_use = $this->deviceService->findDevice($model);
 
         if($can_use->status == 'indisponivel'){
-            return ['message' => 'Dispositivo encontrado, porém já foi utilizado em outro embarque, informe outro dispositivo ou encerre o embarque anterior.'];
+            return ['message' => 'Dispositivo encontrado, porém já foi utilizado em outro embarque, informe outro dispositivo.'];
         }
         if ($in_use) {
-            return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo ou encerre o embarque anterior.'];
+            return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo.'];
         }
 
         $return['status'] = $device['status'];
