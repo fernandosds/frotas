@@ -602,9 +602,6 @@ $(function() {
 
                     if (response.status == "success") {
 
-                        $("#div-new-boarding").removeClass('hidden');
-                        $("#div-button-history").removeClass('hidden');
-
                         $('#device_uniqid').val(response.uniqid);
                         $('#contract_id').val(response.contract_id);
 
@@ -636,6 +633,20 @@ $(function() {
                                 'fa fa-2x fa-battery-three-quarters');
                         } else {
                             $('#icon-nivel-bateria').addClass('fa fa-2x fa-battery-full');
+                        }
+                        if(response.canShipped){
+                            $("#div-button-history").removeClass('hidden');
+                            $("#div-new-boarding").removeClass('hidden');
+                        }else{
+                            $("#div-button-history").addClass('hidden');
+                            $("#div-new-boarding").addClass('hidden');
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: "Dispositivo encontrado, porém não pode ser embarcado, pois o mesmo não obteve última transmissão hoje.",
+                                showConfirmButton: true,
+                                timer: 10000
+                            })
                         }
 
                     } else {

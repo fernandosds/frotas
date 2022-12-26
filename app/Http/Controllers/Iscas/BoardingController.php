@@ -275,8 +275,12 @@ class BoardingController extends Controller
     public function testDevice(String $model)
     {
         $device = $this->deviceService->findByModel($model);
-
         $in_use = $this->boardingService->getCurrentBoardingByDevice($model);
+        $can_use = $this->deviceService->findDevice($model);
+
+        if($can_use->status == 'indisponivel'){
+            return ['message' => 'Dispositivo encontrado, porém já foi utilizado em outro embarque, informe outro dispositivo ou encerre o embarque anterior.'];
+        }
         if ($in_use) {
             return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo ou encerre o embarque anterior.'];
         }
@@ -294,16 +298,23 @@ class BoardingController extends Controller
             if ($test_device['status'] == "sucesso") {
 
                 $return['last_transmission'] = $test_device['body'][0]['Data_GPS'];
+                $data_atual = strtotime(date('Y-m-d 00:00:00'));
+                $data_gps = strtotime(str_replace('/', '-', $test_device['body'][0]['Data_GPS']));
+
+                //verifica se o dispositivo teve transmissão hoje, se não 
+                $return['canShipped'] = true;
+                if($data_gps < $data_atual){
+                    $return['canShipped'] = false;
+                }
                 $return['battery_level'] = $this->functionController->getStatus($test_device['body'][0]['Tensão'], $test_device['body'][0]['Data_Rec'], Carbon::now());
             } else {
                 $return['last_transmission'] = '';
                 $return['battery_level'] = '';
             }
         } else {
-
             $return['message'] = $device['message'];
         }
-
+        
         return $return;
     }
 
