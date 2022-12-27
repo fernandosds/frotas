@@ -32,7 +32,7 @@ class BoardingRequest extends FormRequest
             'source'                     => 'nullable|string|max:255',
             'destiny'                    => 'nullable|string|max:255',
             'transporter'                => 'nullable|string|max:255',
-            'duration'                   => 'required|integer|min:1|max:99999',
+            'duration'                   => 'required|integer|min:240|max:240',
             'telephone'                  => 'nullable|max:14',
             'cell_phone'                 => 'nullable|max:14',
             'board'                      => 'nullable|string|max:255',
@@ -53,9 +53,9 @@ class BoardingRequest extends FormRequest
     {
         return [
             'duration:required' => 'O campo "Duração aproximada (Horas)" é obrigatório',
-            'duration:integer' => 'O campo "Duração aproximada (Horas)" deve ser um numero inteiro entre 1 e 99999',
-            'duration:min' => 'O campo "Duração aproximada (Horas)" deve ser maior que 1',
-            'duration:max' => 'O campo "Duração aproximada (Horas)" deve ser menor que 99999',
+            'duration:integer' => 'O campo "Duração aproximada (Horas)" deve ser 240 horas',
+            'duration:min' => 'O campo "Duração aproximada (Horas)" deve ser igual a 240',
+            'duration:max' => 'O campo "Duração aproximada (Horas)" deve ser igual a 240',
         ];
     }
 

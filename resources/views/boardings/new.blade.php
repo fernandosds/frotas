@@ -148,12 +148,12 @@
                         <hr />
 
                         <div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-5">
                                 <label for="inputName">Origem</label>
                                 <input type="text" name="source" class="form-control"
                                     value="{{ $boarding->source ?? '' }}">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-5">
                                 <label for="inputState">Destino</label>
                                 <input type="text" class="form-control" name="destiny"
                                     value="{{ $boarding->destiny ?? '' }}">
@@ -161,16 +161,17 @@
 
                             <div class="form-group col-md-2">
                                 <label for="inputState">Duração aprox. (Horas)</label>
-                                <input type="number" max="1" min="50" class="form-control" id="duration" name="duration"
-                                    value="{{ $boarding->duration ?? '1' }}" required="required">
+                                <input type="text" class="form-control" id="duration" name="duration"
+                                    value="{{ $boarding->duration ?? '240' }}" required="required">
                             </div>
-
-                            <div class="form-group col-md-2">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
                                 <label for="inputState">Nº Ordem de Transporte</label>
                                 <input type="text" class="form-control" name="transport_order"
                                     value="{{ $boarding->transport_order ?? '' }}">
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-4">
                                 <label for="inputNeighborhood">Valor Transportado</label>
                                 <input type="text" class="form-control" name="amount_carried"
                                     value="{{ $boarding->amount_carried ?? '' }}">
