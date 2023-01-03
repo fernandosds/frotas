@@ -82,14 +82,14 @@
                                                     </button>
                                                 </a>
                                             @endif -->
-                                        @if($device->status == 'disponivel' || $device->status == null)
-                                        <a href="{{url('stocks/edit')}}/{{$device->id}}">
-                                            <button type="button" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                        @if($device->status == 'disponivel' || $device->status == null || Auth::user()->email == 'raphael.falcao@satcompany.com.br' || Auth::user()->email == 'jhonatas@satcompany.com.br')
+                                            <a href="{{url('stocks/edit')}}/{{$device->id}}">
+                                                <button type="button" class="btn btn-outline-hover-brand  btn-sm btn-icon btn-circle" title="Editar isca"><span class="fa fa-fw fa-edit"></span>
+                                                </button>
+                                            </a>
+                                            <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
+                                                <span class="fa fa-fw fa-trash"></span>
                                             </button>
-                                        </a>
-                                        <button type="button" title="Excluir produto" id="device_id" data-id="{{$device->id}}" class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle btn-delete-device">
-                                            <span class="fa fa-fw fa-trash"></span>
-                                        </button>
                                         @endif
                                     </div>
                                 </td>

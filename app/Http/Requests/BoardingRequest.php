@@ -53,9 +53,9 @@ class BoardingRequest extends FormRequest
     {
         return [
             'duration:required' => 'O campo "Duração aproximada (Horas)" é obrigatório',
-            'duration:integer' => 'O campo "Duração aproximada (Horas)" deve ser 240 horas',
-            'duration:min' => 'O campo "Duração aproximada (Horas)" deve ser igual a 240',
-            'duration:max' => 'O campo "Duração aproximada (Horas)" deve ser igual a 240',
+            'duration:integer'  => 'O campo "Duração aproximada (Horas)" deve ser 240 horas',
+            'duration:min'      => 'O campo "Duração aproximada (Horas)" deve ser igual a 240',
+            'duration:max'      => 'O campo "Duração aproximada (Horas)" deve ser igual a 240',
         ];
     }
 
