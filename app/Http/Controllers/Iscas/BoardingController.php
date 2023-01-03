@@ -283,7 +283,7 @@ class BoardingController extends Controller
         }
 
         //acesso administrador pode ignorar o $in_use
-        if(!Auth::user()->email == "raphael.falcao@satcompany.com.br" || !Auth::user()->email == 'jhonatas@satcompany.com.br'){
+        if(!Auth::user()->email == "raphael.falcao@satcompany.com.br" || !Auth::user()->email == 'jhonatas.claro@satcompany.com.br'){
             if ($in_use) {
                 return ['message' => 'Dispositivo encontrado, porém esta sendo utilizado no embarque nº ' . $in_use->id . ', informe outro dispositivo.'];
             }
