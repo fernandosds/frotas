@@ -3,6 +3,7 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <style>
         .kt-portlet .kt-portlet__head .kt-portlet__head-toolbar .kt-portlet__head-wrapper,
@@ -58,7 +59,7 @@
     <script src="https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js" integrity="sha512-K0Vddb4QdnVOAuPJBHkgrua+/A9Moyv8AQEWi0xndQ+fqbRfAFd47z4A9u1AW/spLO0gEaiE1z98PK1gl5mC5Q==" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
-
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.6/dist/leaflet.markercluster-src.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" integrity="" crossorigin=""></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js" integrity="" crossorigin=""></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js" integrity="" crossorigin=""></script>
@@ -87,6 +88,7 @@
             accessToken: 'your.mapbox.access.token'
         }).addTo(mymap);
 
+        var marker = {};
         // var markers = L.markerClusterGroup();
         
         function heatMap()
@@ -95,23 +97,24 @@
                 url: "{{route('heat.monitoring.heatmaplastpositon')}}",
                 type: 'GET',
                 success: function (data) {
-                    
                     if(mymap.hasLayer(heat)){
                         mymap.removeLayer(heat);
                     }
 
-                    // const marker = L.marker(data);
-                    // markers.addLayer()
-
+                    var markers = new L.markerClusterGroup();
+                    data.map(function(latlng){
+                        markers.addLayer(L.marker(latlng));
+                        mymap.addLayer(markers)
+                    })
+                    
                     // Mapa de calor
                     heat = L.heatLayer(data, {
-                        radius: 20,
+                        radius: 12,
                         max: 1.0,
                         blur: 15,
                         minOpacity: 0.7
                     }).addTo(mymap);
 
-                    // clusterGroup = L.markerClusterGroup().addTo(mymap);
                    
                 }
             });
