@@ -14,7 +14,7 @@ class MonitoringController extends Controller
     }
     public function heatMapLastPositon(){
         
-        $activeBase = ActiveBase::all('latitude as lat', 'longitude as lng');
+        $activeBase = ActiveBase::all('latitude as lat', 'longitude as lng', 'modelo');
 
         $collectionLatLng = array();
         foreach($activeBase as $index => $latlng){

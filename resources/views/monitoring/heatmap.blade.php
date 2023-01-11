@@ -1,6 +1,5 @@
 @extends('layouts.app_map')
 @section("styles")
-
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     
@@ -52,6 +51,8 @@
 
 @endsection
 
+@include('monitoring.geojson_brasil')
+@include('monitoring.geojson_ocean')
 @section('scripts')
 
     <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -63,14 +64,16 @@
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" integrity="" crossorigin=""></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js" integrity="" crossorigin=""></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js" integrity="" crossorigin=""></script>
+    <script src="https://cdn.rawgit.com/hayeswise/Leaflet.PointInPolygon/v1.0.0/wise-leaflet-pip.js"></script>
+
 
 
     <script>
-
         var heat = {};
         var circle = {};
         var minutes = 10;
         var chassi_device = '';
+        var marker_geojson = {};
 
         /* Icons */
         var boxIcon     = new L.Icon({ iconUrl: '{{url("markers/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
@@ -89,7 +92,24 @@
         }).addTo(mymap);
 
         var marker = {};
-        // var markers = L.markerClusterGroup();
+
+        // L.geoJson(geojson_ocean).addTo(mymap);
+        var drawPolyline = [
+                    [81.030056,-169.042643],
+                    [82.206278,181.723083],
+                    [-67.113025,183.398246],
+                    [-76.079665,-24.648093],
+                    [15.067401,-29.690451],
+                    [14.576505,-84.657995],
+                    [-70.160248,-77.901446],
+                    [-67.090240,-162.975425],
+                    [83.019103,-160.161081]
+                ];
+
+        var polygon = L.polygon(drawPolyline, {color: "#fff", opacity: 0, fillOpacity: 0}).addTo(mymap);
+        // var polygonBrazil = L.polygon(only_brazil).addTo(mymap);
+        // console.log(polygonBrazil);
+        var popup = L.popup();
         
         function heatMap()
         {
@@ -103,17 +123,37 @@
 
                     var markers = new L.markerClusterGroup();
                     data.map(function(latlng){
-                        markers.addLayer(L.marker(latlng));
-                        mymap.addLayer(markers)
+                        let lat = latlng[0];
+                        let lng = latlng[1]; 
+                        // let dispositivo = latlng[2];
+                        //Remover posição zero
+                        if(lat == 0 || lng == 0){   
+                            return true;                   
+                        }
+
+                        let confirmMaker = L.marker([lat, lng]);
+                        let verifyPositionArea = polygon.contains(confirmMaker.getLatLng());
+                        // let verifyAreaOcean = polygonBrazil.contains(confirmMaker.getLatLng());
+                        console.log(verifyPositionArea);
+                        if(verifyPositionArea != true){
+                            markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng));
+                            mymap.addLayer(markers);
+                        }
+
                     })
                     
-                    // Mapa de calor
-                    heat = L.heatLayer(data, {
-                        radius: 12,
-                        max: 1.0,
-                        blur: 15,
-                        minOpacity: 0.7
-                    }).addTo(mymap);
+                    // // Mapa de calor
+                    // heat = L.heatLayer(data.map(function(latlng){
+                    //     let verifyPositionArea = polygon.contains(confirmMaker.getLatLng());
+                    //     if(verifyPositionArea != true){
+
+                    //     }
+                    // }), {
+                    //     radius: 12,
+                    //     max: 1.0,
+                    //     blur: 15,
+                    //     minOpacity: 0.7
+                    // }).addTo(mymap);
 
                    
                 }
