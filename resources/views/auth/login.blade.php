@@ -20,7 +20,7 @@
 
         </div>
         <div class="form-group">
-            <input id="password" type="password" id="password" placeholder="Senha" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+            <input id="password" type="password" id="password" placeholder="Senha" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" maxlength="8">
 
             @error('password')
             <span class="invalid-feedback" role="alert">
