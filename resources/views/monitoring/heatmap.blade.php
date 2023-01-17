@@ -38,6 +38,226 @@
         .alert, .kt-portlet{
             margin-bottom: 0px !important;
         }
+        .eventos {
+        width: 34px;
+        height: 34px;
+        background: #f0f0f0;
+        position: absolute;
+        top: 256px;
+        left: 10px;
+        z-index: 455;
+        display: flex;
+        border-radius: 4px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        transition: all .2s ease-in-out;
+    }
+
+    .eventos.active {
+        height: 35vh;
+        width: 45vw;
+        opacity: 0.8;
+    }
+
+    .iconEvent {
+        font-size: 13px;
+        color: #000;
+        padding: 7px 10px;
+        cursor: pointer;
+    }
+
+    .tableEvents {
+        flex: 1;
+        justify-content: flex-start;
+        align-items: flex-start;
+        display: flex;
+        margin: 0 auto;
+        overflow-y: scroll;
+    }
+
+    .rowTime {
+        flex-direction: row;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .rowTimeItem {
+        width: 70px;
+        margin: 0 5px;
+    }
+
+    .form-group label,
+    .form-check label {
+        color: #666 !important;
+    }
+    .customBtnLeafLet {
+        box-sizing: border-box;
+        background-clip: padding-box;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        width: 34px;
+        height: 34px;
+        position: absolute;
+        z-index: 4444;
+        left: 10px;
+        top: 223px;
+    }
+
+    .markerList {
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        min-width: 34px;
+        min-height: 34px;
+        position: absolute;
+        padding: 5px 15px;
+        z-index: 4445;
+        left: 125px;
+        top: 60px;
+        background: #f0f0f0;
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+        color: #000;
+        font-weight: bold;
+        width: 25vw;
+        max-height: 50vh;
+        overflow: scroll;
+        overflow-x: hidden;
+        justify-content: space-between;
+        align-items: baseline;
+        align-content: baseline;
+    }
+
+    .AllgroupGaragem {
+        float: right;
+    }
+
+    .groupGaragem {
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        min-width: 34px;
+        min-height: 34px;
+        position: absolute;
+        padding: 5px 15px;
+        z-index: 4445;
+        left: 205px;
+        top: 60px;
+        background: #f0f0f0;
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+        color: #000;
+        font-weight: bold;
+        width: 25vw;
+        max-height: 50vh;
+        overflow: scroll;
+        overflow-x: hidden;
+        justify-content: space-between;
+        align-items: baseline;
+        align-content: baseline;
+    }
+
+    .markerItem {
+        padding: 5px 0px;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+    .markerItemGrupo {
+        padding: 5px 0px;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+    .markerItemGrupoCercas {
+        padding: 5px 0px;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+    .marker-check-label {
+        padding-left: 5px;
+        white-space: nowrap;
+        overflow: clip;
+        text-overflow: ellipsis;
+        width: 60%;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .btnRemove {
+        margin-right: 10px;
+        color: rgb(255, 0, 0);
+        cursor: pointer;
+    }
+    .hidden {
+        display: none;
+    }
+
+    #returnButton {
+        position: absolute;
+        top: 10px;
+        left: 55px;
+        padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        z-index: 400;
+    }
+
+    #markerButton {
+        position: absolute;
+        top: 10px;
+        left: 125px;
+        padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        z-index: 400;
+
+    }
+
+    #markerQtdeButton {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        z-index: 400;
+
+    }
+    #checklist {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        padding: 10px;
+        z-index: 400;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border-radius: 5px;
+        z-index: 400;
+
+    }
+
+    .content {
+        background-color: #666;
+    }
+
+    #mymap {
+        height: 100vh;
+        width: 100vw;
+    }
+    .color-check {
+        color: #fff;
+        font-weight: bold;
+    }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.6/dist/MarkerCluster.css" />
@@ -47,12 +267,36 @@
 
 @section('content')
 
-    <div id="mapid" style="width: 100%; height: 900px;float:left;"></div>
+    <div id="mapid" style="width: 100%; height: 1000px;float:left;"></div>
+    
+    <fieldset id="markerQtdeButton" style="border-color: #fff;">
+        <legend>Filtros</legend>
+        <div>
+        <input type="checkbox" id="one" value="10000" onclick="filterCar(10000)" name="one" checked>
+        <label for="one" class="color-check">10.000</label>
+        </div>
+        <div>
+        <input type="checkbox" value="20000" id="two" onclick="filterCar(20000)"name="one">
+        <label for="two" class="color-check">20.000</label>
+        </div>
+        <div>
+        <input type="checkbox" value="40000" id="four" onclick="filterCar(40000)" name="one">
+        <label for="four" class="color-check">40.000</label>
+        </div>
+        <div>
+        <input type="checkbox" id="allcars" name="one" onclick="filterCar(true)">
+        <label for="allcars" class="color-check">Todos os veículos</label>
+        </div>
+    </fieldset>
+    <div id="loading" style="display: block;">
+        <i class="fa fa-spinner fa-pulse"></i> Aguarde...
+    </div>
+
 
 @endsection
 
 @include('monitoring.geojson_brasil')
-@include('monitoring.geojson_ocean')
+
 @section('scripts')
 
     <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -69,11 +313,30 @@
 
 
     <script>
+        var filter = 10000;
+        $("input:checkbox").on('click', function() {
+            var $box = $(this);
+            if ($box.is(":checked")) {
+                var group = "input:checkbox[name='" + $box.attr("name") + "']";
+
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+            } else {
+                $box.prop("checked", false);
+                filter = 10000;
+            }
+        });
+
+        
+        function filterCar(filters){
+            heatMap(filters);
+        }
         var heat = {};
         var circle = {};
         var minutes = 10;
         var chassi_device = '';
         var marker_geojson = {};
+        var layer_group = {};
 
         /* Icons */
         var boxIcon     = new L.Icon({ iconUrl: '{{url("markers/marker-box-64.png")}}', iconSize: [64, 64], iconAnchor: [35, 62], popupAnchor: [1, -34], });
@@ -92,55 +355,56 @@
         }).addTo(mymap);
 
         var marker = {};
+        var layer = L.geoJson(arr_brasil).addTo(mymap);
 
-        // L.geoJson(geojson_ocean).addTo(mymap);
-        var drawPolyline = [
-                    [81.030056,-169.042643],
-                    [82.206278,181.723083],
-                    [-67.113025,183.398246],
-                    [-76.079665,-24.648093],
-                    [15.067401,-29.690451],
-                    [14.576505,-84.657995],
-                    [-70.160248,-77.901446],
-                    [-67.090240,-162.975425],
-                    [83.019103,-160.161081]
-                ];
-
-        var polygon = L.polygon(drawPolyline, {color: "#fff", opacity: 0, fillOpacity: 0}).addTo(mymap);
-        // var polygonBrazil = L.polygon(only_brazil).addTo(mymap);
-        // console.log(polygonBrazil);
         var popup = L.popup();
         
-        function heatMap()
+        function heatMap(filter)
         {
             $.ajax({
                 url: "{{route('heat.monitoring.heatmaplastpositon')}}",
                 type: 'GET',
+                data: {filter: filter},
+                beforeSend: function(){
+                    swal.fire({
+                        title: 'Aguarde...',
+                        text: 'Está sendo processado as informações!',
+                        onOpen: function() {
+                            swal.showLoading()
+                        }
+                    })
+                },
                 success: function (data) {
-                    if(mymap.hasLayer(heat)){
-                        mymap.removeLayer(heat);
+                    var arr_marker = new Array();
+                    if(mymap.hasLayer(layer_group)){
+                        mymap.removeLayer(layer_group);
                     }
 
                     var markers = new L.markerClusterGroup();
                     data.map(function(latlng){
                         let lat = latlng[0];
                         let lng = latlng[1]; 
-                        // let dispositivo = latlng[2];
+
                         //Remover posição zero
                         if(lat == 0 || lng == 0){   
                             return true;                   
                         }
 
                         let confirmMaker = L.marker([lat, lng]);
-                        let verifyPositionArea = polygon.contains(confirmMaker.getLatLng());
-                        // let verifyAreaOcean = polygonBrazil.contains(confirmMaker.getLatLng());
-                        console.log(verifyPositionArea);
-                        if(verifyPositionArea != true){
-                            markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng));
-                            mymap.addLayer(markers);
-                        }
+                        
+                        layer.eachLayer(function(memberLayer) {
+                            if (memberLayer.contains(confirmMaker.getLatLng())) {
+                                // markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng));
+                                arr_marker.push(markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng)));
+                                // mymap.addLayer(markers);
+                            }
+                        });
 
-                    })
+
+                    });
+                    layer_group = L.layerGroup(arr_marker);
+                    layer_group.addTo(mymap);
+                    console.log(arr_marker);
                     
                     // // Mapa de calor
                     // heat = L.heatLayer(data.map(function(latlng){
@@ -156,12 +420,21 @@
                     // }).addTo(mymap);
 
                    
+                }, complete: function(){
+                    swal.fire({
+                        title: 'Dados processados',
+                        timer: 5000,
+                        showConfirmButton: true,
+                        onClose: function() {
+                            swal.hideLoading()
+                        }
+                    })
                 }
             });
         }
 
         $(document).ready(function(){
-            heatMap();
+            heatMap(10000);
         });
         
     </script>
