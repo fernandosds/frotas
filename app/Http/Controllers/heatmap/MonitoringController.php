@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use stdClass;
 use App\Http\Controllers\heatmap\GeojsonController;
+use Illuminate\Support\Facades\Redis;
 
 class MonitoringController extends Controller
 {
@@ -15,34 +16,62 @@ class MonitoringController extends Controller
     public function heatmap(){
         return view('monitoring.heatmap');
     }
-    public function heatMapLastPositon(Request $request){
-        set_time_limit(0);
-        $geojson_states = new GeojsonController();
-        $states = $geojson_states->states();
-        $filter = isset($request->filter) ? $request->filter : 10000;
-        if($filter == "true"){
-            $activeBase = ActiveBase::whereIn('versao',['H12 RF 1.0', 'R12 RF PROT SAT','R12 RF MOTO SAT'])->select('latitude as lat', 'longitude as lng')->get();
-        }else{
-            $activeBase = ActiveBase::whereIn('versao',['H12 RF 1.0', 'R12 RF PROT SAT','R12 RF MOTO SAT'])->select('latitude as lat', 'longitude as lng')
-            ->limit($filter)->get();
-        }
+    public function heatMapLastPositon(){
+        
+        set_time_limit('-1');
+        
+        // $r_redis = json_decode(Redis::get('geo_json'));
+
+        $activeBase = ActiveBase::whereIn('versao',['H12 RF 1.0', 'R12 RF PROT SAT','R12 RF MOTO SAT'])->select('latitude as lat', 'longitude as lng')
+        ->limit(57000)->get();
         $collectionLatLng = array();
-        foreach($activeBase as $index => $latlng){
-            $collectionLatLng[] = array($latlng->lat, $latlng->lng);
+
+        foreach($activeBase as $i_base => $latlng){
+            // $result_inside = $this->separateLatLng($latlng, $r_redis);
+            // if(!is_null($result_inside)){
+                $collectionLatLng[] = array($latlng->lat, $latlng->lng);
+            // }
+        }
+        return $collectionLatLng;
+    }
+
+    public function separateLatLng($latlng, $r_redis){
+        foreach($r_redis->features as $states){
+            $verifyPolygon = array();
+            $verifyLatLng = array('x' => $latlng->lat, 'y' => $latlng->lng);
+            // foreach($states->geometry->coordinates[0][0] as $coordinates){
+            //     $verifyPolygon[] = array('x' => $coordinates[1], 'y' => $coordinates[0]);
+            // };
+            $verifyPolygon = $this->separetePolygon($states->geometry->coordinates[0][0]);
+            $isInside = $this->pointInPolygon($verifyLatLng, $verifyPolygon, true);
+
+            if($isInside == "inside"){
+                $collectionLatLng = array($latlng->lat, $latlng->lng);
+            }else{
+                $collectionLatLng = null;
+            }
         }
 
         return $collectionLatLng;
+    }
+    public function separetePolygon($polygons){
+        $verifyPolygon = array();
+        foreach($polygons as $coordinates){
+            $verifyPolygon[] = array('x' => $coordinates[1], 'y' => $coordinates[0]);
+        };
+
+        return $verifyPolygon;
     }
 
     public function pointInPolygon($point, $polygon, $pointOnVertex = true) {
         $this->pointOnVertex = $pointOnVertex;
     
         // Transform string coordinates into arrays with x and y values
-        $point = $point;//$this->pointStringToCoordinates($point);
+        $point = $point;
         $vertices = array(); 
-        // foreach ($polygon as $vertex) {
-            $vertices = $polygon;//$this->pointStringToCoordinates($vertex); 
-        // }
+
+            $vertices = $polygon;
+
         // Check if the lat lng sits exactly on a vertex
         if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) {
             return "vertex";
@@ -78,9 +107,9 @@ class MonitoringController extends Controller
     
     public function pointOnVertex($point, $vertices) {
       foreach($vertices as $vertex) {
-          if ($point == $vertex) {
-              return true;
-          }
+        if ($point == $vertex) {
+            return true;
+        }
       }
     
     }

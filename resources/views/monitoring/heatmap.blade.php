@@ -269,7 +269,7 @@
 
     <div id="mapid" style="width: 100%; height: 1000px;float:left;"></div>
     
-    <fieldset id="markerQtdeButton" style="border-color: #fff;">
+    <!-- <fieldset id="markerQtdeButton" style="border-color: #fff;">
         <legend>Filtros</legend>
         <div>
         <input type="checkbox" id="one" value="10000" onclick="filterCar(10000)" name="one" checked>
@@ -290,7 +290,7 @@
     </fieldset>
     <div id="loading" style="display: block;">
         <i class="fa fa-spinner fa-pulse"></i> Aguarde...
-    </div>
+    </div> -->
 
 
 @endsection
@@ -331,6 +331,7 @@
         function filterCar(filters){
             heatMap(filters);
         }
+        
         var heat = {};
         var circle = {};
         var minutes = 10;
@@ -355,10 +356,16 @@
         }).addTo(mymap);
 
         var marker = {};
-        var layer = L.geoJson(arr_brasil).addTo(mymap);
+        var layer = L.geoJson(arr_brasil,{color: "#ffffff"}).addTo(mymap);
+
+        var layer_teste = L.geoJson(brasil_teste, {opacity: 0, fillOpacity : 0}).addTo(mymap);
+
+        var layer_sao_paulo = L.geoJson(sao_paulo,{color: "#ffffff"}).addTo(mymap);//{opacity: 0, fillOpacity : 0}
 
         var popup = L.popup();
-        
+
+        var arr_heatmap = new Array();
+        console.log(sao_paulo);
         function heatMap(filter)
         {
             $.ajax({
@@ -379,7 +386,6 @@
                     if(mymap.hasLayer(layer_group)){
                         mymap.removeLayer(layer_group);
                     }
-
                     var markers = new L.markerClusterGroup();
                     data.map(function(latlng){
                         let lat = latlng[0];
@@ -391,33 +397,31 @@
                         }
 
                         let confirmMaker = L.marker([lat, lng]);
+
+                        // layer_sao_paulo.eachLayer(function(sao_paulo){
+                        //     if (sao_paulo.contains(confirmMaker.getLatLng())) {
+                        //         arr_marker.push(markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng)));
+                        //         arr_heatmap.push([lat, lng]);
+                        //     }  
+                        // });
                         
-                        layer.eachLayer(function(memberLayer) {
+                        layer_teste.eachLayer(function(memberLayer, index) {
                             if (memberLayer.contains(confirmMaker.getLatLng())) {
-                                // markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng));
                                 arr_marker.push(markers.addLayer(L.marker(latlng).bindPopup("lat: " + lat +" lng: "+lng)));
-                                // mymap.addLayer(markers);
+                                arr_heatmap.push([lat, lng]);
                             }
                         });
-
 
                     });
                     layer_group = L.layerGroup(arr_marker);
                     layer_group.addTo(mymap);
-                    console.log(arr_marker);
-                    
                     // // Mapa de calor
-                    // heat = L.heatLayer(data.map(function(latlng){
-                    //     let verifyPositionArea = polygon.contains(confirmMaker.getLatLng());
-                    //     if(verifyPositionArea != true){
-
-                    //     }
-                    // }), {
-                    //     radius: 12,
-                    //     max: 1.0,
-                    //     blur: 15,
-                    //     minOpacity: 0.7
-                    // }).addTo(mymap);
+                    heat = L.heatLayer(arr_heatmap, {
+                        radius: 12,
+                        max: 1.0,
+                        blur: 15,
+                        minOpacity: 0.7
+                    }).addTo(mymap);
 
                    
                 }, complete: function(){
