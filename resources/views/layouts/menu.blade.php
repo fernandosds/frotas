@@ -79,6 +79,14 @@
 <div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
     <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
         <ul class="kt-menu__nav ">
+            @if (Auth::user()->email == 'heatmap@satcompany.com.br')
+                <li class="kt-menu__item " aria-haspopup="true">
+                    <a href="{{route('heat.monitoring.heatmap')}}" class="kt-menu__link ">
+                        <span class="kt-menu__link-icon"><i class="fa fa-box-open"></i></span>
+                        <span class="kt-menu__link-text">MAPA DE CALOR</span>
+                    </a>
+                </li>
+            @else
 
             @if( Auth::user()->type == 'sat' || Auth::user()->type == 'ext')
             <!-- CLIENTE EXTERNO ______________________________________________________________________________________________________________________ -->
@@ -628,6 +636,7 @@
                 </div>
             </li>
 -->
+            @endif
             @endif
         </ul>
     </div>
