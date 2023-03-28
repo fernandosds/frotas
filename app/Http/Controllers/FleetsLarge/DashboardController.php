@@ -607,6 +607,11 @@ class DashboardController extends Controller
             $data['hash'] = '277a22c0-5a64-46bc-93f1-832cfa7b46b9';
         }
 
+        if (Route::currentRouteName() == 'fleetslarges.analyzeSlaPSA') {
+            $this->logService->saveLog(strval(Auth::user()->name), 'Análise: Acessou o dashboard SLA Psa.');
+            $data['hash'] = 'a4b01f55-2d8a-42f0-96af-64b10da9d187';
+        }
+
         return response()->view('fleetslarge.iframe.dashboardSantander', $data);
     }
 

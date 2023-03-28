@@ -637,6 +637,28 @@
             </li>
 -->
             @endif
+            @if( Auth::user()->customer_id == 14)
+            <li class="kt-menu__section ">
+                <h4 class="kt-menu__section-text">ANÁLISE DE DADOS</h4>
+                <i class="kt-menu__section-icon flaticon-more-v2"></i>
+            </li>
+
+            <li class="kt-menu__item  kt-menu__item--submenu {{$menu_open_fleetslarges_iframe ?? ''}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                    <span class="kt-menu__link-icon"><i class="fa fa-chart-bar"></i></span>
+                    <span class="kt-menu__link-text">Análise</span>
+                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                    <ul class="kt-menu__subnav">
+                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Subheaders</span></span></li>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('fleetslarges.analyzeSlaPSA')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">SLA Instalação</span></a></li>
+                        <!-- <li class="kt-menu__item " aria-haspopup="true"><a class="kt-menu__link no-link" onClick="showSpinner()"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Relatório Telemetria</span></a></li> -->
+
+                    </ul>
+                </div>
+            </li>
+            @endif
             @endif
         </ul>
     </div>
