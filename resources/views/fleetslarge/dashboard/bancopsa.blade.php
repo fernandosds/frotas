@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('styles')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     .highcharts-figure,
     .highcharts-data-table table {
@@ -46,7 +48,6 @@
     .highcharts-data-table tr:hover {
         background: #f1f7ff;
     }
-
 
     input[type="number"] {
         min-width: 50px;
@@ -226,107 +227,42 @@
         border: 1px solid #ebedf2;
     }
 
+    .fa-stack-modificado {
+        display: inline-block;
+        height: 2em;
+        position: relative;
+        vertical-align: middle;
+        width: 2em;
+    }
 
-    div #datatable {
-        width: 80% !important;
+    .fa-stack-modificado,
+    #iconRed {
+        color: red;
+    }
+
+    .fa-stack-modificado,
+    #iconGreen {
+        color: green;
+    }
+
+    th {
+        font-size: 12px;
+    }
+
+    td {
+        font-size: 12px;
+    }
+
+    .grid-style {
+        border-right: 1px solid lightgray;
     }
 </style>
 @endsection
 
 @section('content')
 
-
-<!--
-<div class="kt-section " id="div-progress-bar-fleetlarge">
-    <br />
-    <div class="progress progress-sm">
-        <div class="" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="progress_bar_fleetlarge"></div>
-    </div>
-</div>
-
-<div class="row" id="div-grid-vehicle">
-    <div class="col-md-6" id="divCard01">
-        <div class="card text-white col-md-12 bg-primary" id="divColor01">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"> <span id="grid04"></span></h1>
-                <p class="card-text h5"><span id="statusCard01">TEMPO MÉDIO DE INSTALAÇÃO</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id="divCard02">
-        <div class="card text-white col-md-12 bg-primary" id="divColor02">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="grid01"></span></h1>
-                <p class="card-text h5"><span id="statusCard02">TEMPO MÉDIO PARA ACIONAR TECNICO</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row" id="div-grid-vehicle2">
-    <div class="col-md-6" id="divCard04">
-        <div class="card text-white col-md-12 bg-primary" id="divColor04">
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="grid02"></span></h1>
-                <p class="card-text h5"><span id="statusCard04">TEMPO MÉDIO DE DESLOCAMENTO</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6" id='divCard05'>
-        <div class="card text-white col-md-12 bg-primary" id='divColor05'>
-            <div class="card-body">
-                <br />
-                <h1 class="card-title display-4"><span id="grid03"></span></h1>
-                <p class="card-text h5"><span id="statusCard05">TEMPO MÉDIO DE ATENDIMENTO</p>
-            </div>
-        </div>
-    </div>
-</div>
--->
 <div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 installed">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridInstalacaoEfetuada" value="instalado"></span> INSTALAÇÕES EFETUADAS </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 waiting">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridAguardandoInstalacao"></span>&nbsp; AGUARDANDO INSTALAÇÃO </h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary col-md-12 vehiclesTotal">
-            <div class="card-body card-total">
-                <br />
-                <h1 class="card-title display-12">&nbsp;</span> </h1>
-                <h3 class="card-title display-12"><span class="spanText" id="gridTotal"></span> &nbsp; TOTAL DE REGISTROS </h3>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!--
-<div class="row">
-    <div class="col-md-12">
-        <div class="btn-success text-white center btn-excel col-md-12">
-            <a href="https://bi.satcompany.com.br/public/question/d1aa64fe-7aad-4ee4-ab24-6b67468e9d92.xlsx" class="no-link">Gerar Relatório Telemetria <i class="far fa-file-excel"></i></a>
-        </div>
-    </div>
-</div>
---->
-
-<div class="row">
     <!--begin::Portlet-->
     <div class="kt-portlet kt-portlet--mobile">
         <br />
@@ -337,15 +273,15 @@
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Relatório Gerencial
+                        Dashboard
                     </h3>
                 </div>
             </div>
 
             <div class="kt-portlet__body">
                 <div class="row kt-margin-b-20">
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                        <label>Data de entrada:</label>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Data de entrada:</b></label>
                         <div class="input-group">
                             <input type="text" name="dates" id="reportrange" class="form-control" readonly="" placeholder="Período de datas">
                             <div class="input-group-append">
@@ -353,97 +289,81 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <label>Projeto:</label>
+                    <!-- <div class="row"> -->
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Projeto:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="(RENEG)"> <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill"><span id="renegociacao"></span>&nbsp; RENEG</span>
                             </div>
                             <div class="grid-item">
-                                <input class="checkbox" type="checkbox" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="pos" value="FINANCEIRA"> <span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill"><span id="financeira"></span>&nbsp; FINANCEIRA</span>
                             </div>
                         </div>
                         <div class="obs">
                             <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
                     </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                        <label><b>Manutenção:</b></label>
+                        <div class="kt-checkbox-inline grid-status">
+                            <div class="grid-item hidden">
+                                <input class="checkbox" id="batNaoViolada" style="cursor: pointer;" type="checkbox" name="bat" value="bateria_nao_violada"> <span><span id="bateria_nao_violada"></span>&nbsp; DESMARQUE PARA LISTAR BATERIAS VIOLADAS</span>
+                            </div>
+                            <div class="grid-item">
+                                <input class="checkbox" id="batViolada" type="checkbox" style="cursor: pointer;" name="bat" value="bateria_violada"> <span class="kt-badge kt-badge--danger  kt-badge--inline kt-badge--pill"><span id="bateria_violada"></span>&nbsp; BATERIA DESCONECTADA</span>
+                            </div>
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="man" value="equipamento_manutencao"> <span class="kt-badge kt-badge--dark  kt-badge--inline kt-badge--pill"><span id="equipamento_manutencao"></span>&nbsp; SEM POSIÇÃO POR MAIS DE 30 DIAS</span>
+                            </div>
+                        </div>
+                        <div class="obs">
+                            <label><i class="flaticon-alert"></i> OBS: Marcar para listar bateria desconectada.</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile ">
+                        <label><b>Evento:</b></label>
+                        <div class="kt-checkbox-inline grid-status">
+                            <div class="grid-item">
+                                <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_recuperado"> <span class="kt-badge kt-badge--success  kt-badge--inline kt-badge--pill"><span id="veiculo_recuperado"></span>&nbsp; VEÍCULO RECUPERADO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
                 </div>
                 <!--begin: Datatable -->
-
-                <table id="example" class="display">
-                    <div id="datatable">
-                        <thead>
-                            <tr class="headerTable">
-                                <th>Placa</th>
-                                <th>Placa - Mercosul</th>
-                                <th class="hidden">Chassis</th>
-                                <th>Modelo</th>
-                                <th class="hidden">Data - Instalacao</th>
-                                <th class="hidden">Latitude</th>
-                                <th class="hidden">Longitude</th>
-                                <th class="hidden">Endereço</th>
-                                <th class="hidden">Estado</th>
-                                <th class="hidden">Velocidade</th>
-                                <th class="hidden">Última Transmissão</th>
-                                <th>Última Transmissão</th>
-                                <th style="width: 78px;">Loja</th>
-                                <th>Nº Proposta</th>
-                                <th class="hidden">Data de entrada</th>
-                                <th>Data de entrada</th>
-                                <th class="hidden">Data de acionamento Técnico</th>
-                                <th>Data de acionamento Técnico</th>
-                                <th class="hidden">Data de início de instalação</th>
-                                <th>Data de início de instalação</th>
-                                <th class="hidden">Data de término de instalação</th>
-                                <th>Data de término de instalação</th>
-                                <th>Projeto</th>
-                                <th class="hidden">Situação</th>
-                                <th class="hidden">Status_Geral</th>
-                                <th style="width: 200px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodyVehicle">
-                            @foreach ($carros as $driver)
-                            <tr id='_tr_car_{{$driver->chassis}}'>
-                                <td>{{$driver->placa}}</td>
-                                <td>{{$driver->placa_mercosul}}</td>
-                                <td class="hidden">{{$driver->chassis}}</td>
-                                <td>{{$driver->modelo_veiculo}}</td>
-                                <td class="hidden">{{\Carbon\Carbon::parse($driver->data_inst)->format('d/m/Y')}}</td>
-                                <td class="hidden">{{$driver->lp_latitude}}</td>
-                                <td class="hidden">{{$driver->lp_longitude}}</td>
-                                <td class="hidden">{{$driver->end_logradouro}}, {{$driver->end_bairro}} - {{$driver->end_cidade}} {{$driver->end_uf}}</td>
-                                <td class="hidden">{{$driver->estado}}</td>
-                                <td class="hidden">{{$driver->lp_velocidade}}</td>
-                                <td class="hidden">{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
-                                <td><span style="display:none">{{$driver->lp_ultima_transmissao}}</span>{{\Carbon\Carbon::parse($driver->lp_ultima_transmissao)->format('d/m/Y H:i:s')}}</td>
-                                <td>{{$driver->cliente}}</td>
-                                <td>{{$driver->contrato}}</td>
-                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
-                                <td><span style="display:none">{{$driver->dt_entrada}}</span>{{\Carbon\Carbon::parse($driver->dt_entrada)->format('d/m/Y H:i:s')}}</td>
-                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
-                                <td><span style="display:none">{{$driver->dt_tecnico_acionado}}</span>{{\Carbon\Carbon::parse($driver->dt_tecnico_acionado)->format('d/m/Y H:i:s')}}</td>
-                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
-                                <td><span style="display:none">{{$driver->dt_inicio_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_inicio_instalacao)->format('d/m/Y H:i:s')}}</td>
-                                <td class="hidden">{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
-                                <td><span style="display:none">{{$driver->dt_termino_instalacao}}</span>{{\Carbon\Carbon::parse($driver->dt_termino_instalacao)->format('d/m/Y H:i:s')}}</td>
-                                @if ($driver->projeto == 'RENEGOCIACAO')
-                                <td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span></td>
-                                @elseif ($driver->projeto == 'FINANCEIRA')
-                                <td><span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">{{$driver->projeto}}</span></td>
-                                @endif
-                                <td class="hidden">{{$driver->situacao}}</td>
-                                <td class="hidden">{{$driver->status_situacao}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehiclePSA" data-chassi="{{$driver->chassis}}">
-                                        <i class="fa fa-search-plus"></i>
-                                    </button>
-                                    <a href="{{route('fleetslarges.monitoring.index')}}/{{$driver->chassis}}" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </div>
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Placa</th><!-- 0 -->
+                            <th>Placa - Mercosul</th> <!-- 1 -->
+                            <th class="hidden">Chassis</th> <!-- 2 -->
+                            <th style="width: 80px;">Modelo</th> <!-- 3 -->
+                            <th class="hidden">Latitude</th> <!-- 4 -->
+                            <th class="hidden">Longitude</th> <!-- 5 -->
+                            <th class="hidden">Endereço</th> <!-- 6 -->
+                            <th class="hidden">Estado</th><!-- 7 -->
+                            <th class="hidden">Velocidade</th> <!-- 8 -->
+                            <th>Última Transmissão</th> <!-- 9 -->
+                            <th style="width: 78px;">Loja</th> <!-- 10 -->
+                            <th>Nº Proposta</th> <!-- 11 -->
+                            <th>Data de entrada</th> <!-- 12 -->
+                            <th>Data de acionamento Técnico</th> <!-- 13 -->
+                            <th>Data de início de instalação</th> <!-- 14 -->
+                            <th>Data de término de instalação</th> <!-- 15 -->
+                            <th>Projeto</th> <!-- 16 -->
+                            <th class="hidden">Situação</th> <!-- 17 -->
+                            <th></th> <!-- 18 -->
+                            <th class="hidden">Filtro - Dt. Entrada</th> <!-- 19 -->
+                            <th></th> <!-- 20 -->
+                            <th class="hidden">Event_Violacao</th> <!-- 21 -->
+                            <th class="hidden">Manutencao</th> <!-- 22 -->
+                            <th class="hidden">Event_Recuperado</th> <!-- 23 -->
+                            <th></th> <!-- 24 -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
                 </table>
                 <!--end: Datatable -->
             </div>
@@ -451,19 +371,24 @@
     </div>
 </div>
 
-@include('fleetslarge.dashboard.modalVehiclePSA')
+@include('fleetslarge.dashboard.modalVehicle')
 
 @endsection
 
 @section('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="{{asset('/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.ptBr.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js" integrity="" crossorigin=""></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-
-
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name=_token]').attr('content')
+        }
+    });
     resetGrid()
     /**
      * Rastrea isca automaticamente
@@ -473,7 +398,6 @@
     })
 
     $('#timeline').removeClass('hidden');
-
 
     function resetGrid() {
         // Progress bar
@@ -494,18 +418,166 @@
                 progressBar = progressBar - 1;
             }
             $('#progress_bar_fleetlarge').attr("style", "width:" + progressBar + "%")
+            $('#progress_bar_fleetlarge').attr("title", "Tempo" + progressBar + "%")
         }, 1000);
     }
 
-
+    // 2022-08-16 09:54:49.000
 
     $(document).ready(function() {
-        columns = [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14, 16, 18, 20, 22, 23];
-        columsPdf = [0, 1, 2, 3, 7, 8, 10, 14, 16, 18, 20];
+        columns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+        columsPdf = [1, 2, 3, 6, 7, 9, 12, 13, 14, 15];
         var date = $.datepicker.formatDate('dd_mm_yy', new Date());
+        var dateTime = moment(new Date()); //.format('DD/MM/YYYY HH:mm:ss');
         var oTable = $('#example').DataTable({
-            //"bDestroy": true,
-            "order": [19, 'desc'],
+            processing: true,
+            //serverSide: true,
+            ajax: {
+                header: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+
+                url: "{{url('')}}/fleetslarges/data/psa",
+                data: ({
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }),
+                dataSrc: "",
+            },
+            order: [
+                [12, 'desc']
+            ],
+            columnDefs: [{
+                    className: "hidden",
+                    "targets": [19, 21, 22, 23]
+                }, {
+                    orderable: false,
+                    targets: [18, 20, 23, 24],
+                }, {
+                    targets: [9, 12, 13, 14, 15],
+                    render: function(data) {
+                        return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                    }
+                },
+                {
+                    targets: [19],
+                    render: function(data) {
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                },
+            ],
+            columns: [{
+                    "data": "placa", //0
+                }, {
+                    "data": "placa_mercosul", //1
+                }, {
+                    "data": "chassis", //2
+                    visible: false
+                }, {
+                    "data": "modelo_veiculo", //3
+                    "width": "40px",
+                }, {
+                    "data": "lp_latitude", //4
+                    visible: false
+                }, {
+                    "data": "lp_longitude", //5
+                    visible: false
+                }, {
+                    "data": '', //6
+                    render: function(data, type, row) {
+                        return row.end_logradouro + ', ' + row.end_bairro + ' - ' + row.end_cidade + ' ' + row.end_uf;
+                    },
+                    visible: false
+                }, {
+                    "data": "estado", //7
+                    visible: false
+                }, {
+                    "data": "lp_velocidade", //8
+                    visible: false
+                }, {
+                    "data": "lp_ultima_transmissao", //9
+                }, {
+                    "data": "cliente", //10 loja
+                }, {
+                    "data": "contrato", //11
+                }, {
+                    "data": "dt_entrada", //12
+                }, {
+                    "data": "dt_tecnico_acionado", //13
+                }, {
+                    "data": "dt_inicio_instalacao", //14
+                }, {
+                    "data": "dt_termino_instalacao", // 15
+                }, {
+                    "data": "projeto", //16
+                    "width": "50px",
+                    render: function(data, type, row, meta) {
+                        if (row.projeto == 'RENEGOCIACAO') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">RENEG</span>'
+                        }
+                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill texto">FINANCEIRA</span>'
+                    }
+                }, {
+                    "data": "situacao", //17
+                    visible: false
+                }, {
+                    "data": " ", //18
+                    "width": "70px",
+                    render: function(data, type, row, meta) {
+                        return '<button type="button" class="btn btn-outline-hover-info  btn-sm btn-icon btn-circle btn-vehicle-data" data-toggle="modal" data-target="#modalVehicle" data-chassi="' + row.chassis + '"><i class="fa fa-search-plus"></i></button>' +
+                            ' <a href="{{route("fleetslarges.monitoring.index")}}/' + row.chassis + '" class="btn btn-outline-hover-warning  btn-sm btn-icon btn-circle"><span class="fa fa-map-marked-alt"></span></a>'
+                    }
+                }, {
+                    "data": "dt_entrada", //19
+                }, {
+                    "data": "event_violacao", //20
+                    render: function(data, type, row, meta) {
+                        if (row.event_violacao == 'bateria_violada') {
+                            return '<div class="fa-stack-modificado" id="iconRed"><label title="Bateria desconectada"><i class="fas fa-2x fa-car-battery"></i></label></div>'
+                        }
+                        return '<span class="kt-badge kt-badge--warning  kt-badge--inline kt-badge--pill hidden">bateria_nao_violada</span>'
+                    }
+                },
+                // campo oculto
+                {
+                    "data": "event_violacao", //21
+                    render: function(data, type, row, meta) {
+                        if (row.event_violacao == 'bateria_violada') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_violada</span>'
+                        }
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">bateria_nao_violada</span>'
+                    }
+                },
+                {
+                    "data": "manutencao", //22
+                    render: function(data, type, row, meta) {
+                        if (row.manutencao == 'equipamento_manutencao') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_manutencao</span>'
+                        }
+
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">equipamento_nao_manutencao</span>'
+                    }
+                },
+                {
+                    "data": "sinistrado", //23
+                    render: function(data, type, row, meta) {
+                        if (row.sinistrado == 'veiculo_recuperado') {
+                            return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_recuperado</span>'
+                        }
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto">veiculo_nao_recuperado</span>'
+                    }
+                },
+                {
+                    "data": "sinistrado", //24
+                    render: function(data, type, row, meta) {
+                        if (row.sinistrado == 'veiculo_recuperado') {
+                            return '<div class="fa-stack-modificado" id="iconGreen"><label title="Veículo Recuperado""><i class="fas fa-2x fa-car"></i></label></div>'
+                        }
+                        return '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill texto hidden">veiculo_nao_recuperado</span>'
+                    }
+                },
+            ],
+            //"order": [1, 'asc'],
             dom: "<'row'<'col-md-6'l><'col-md-6'Bf>>" +
                 "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
@@ -551,7 +623,6 @@
             },
 
         });
-
 
         // INICIO DATARANGEPICKER
         var startdate;
@@ -618,7 +689,7 @@
             $.fn.dataTableExt.afnFiltering.push(
                 function(oSettings, aData, iDataIndex) {
                     if (startdate != undefined) {
-                        var coldate = aData[4].split("/");
+                        var coldate = aData[19].split("/");
                         var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                         var date = moment(d.toISOString());
                         date = date.format("YYYY-MM-DD");
@@ -642,8 +713,10 @@
         });
 
         let totalRowCount = new Array();
-
+        const total_violada = 0;
+        const total_financeira = 0;
         oTable.on('draw', function() {
+
             totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")', {
                 search: 'applied'
             }).count();
@@ -651,6 +724,33 @@
             totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")', {
                 search: 'applied'
             }).count();
+
+            totalRowCount['bateria_violada'] = oTable.rows(':contains("bateria_violada")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['bateria_nao_violada'] = oTable.rows(':contains("bateria_nao_violada")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['equipamento_manutencao'] = oTable.rows(':contains("equipamento_manutencao")', {
+                search: 'applied'
+            }).count();
+
+            totalRowCount['veiculo_recuperado'] = oTable.rows(':contains("veiculo_recuperado")', {
+                search: 'applied'
+            }).count();
+
+            $('#financeira').html(totalRowCount['financeira']);
+            $('#renegociacao').html(totalRowCount['renegociacao']);
+            $('#bateria_violada').html(totalRowCount['bateria_violada']);
+            $('#bateria_nao_violada').html(totalRowCount['bateria_nao_violada']);
+            $('#equipamento_manutencao').html(totalRowCount['equipamento_manutencao']);
+            $('#veiculo_recuperado').html(totalRowCount['veiculo_recuperado']);
+
+        });
+
+        function tableOneRowCount() {
 
             totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")', {
                 search: 'applied'
@@ -660,165 +760,185 @@
                 search: 'applied'
             }).count();
 
-
-            $('#financeira').html(totalRowCount['financeira']);
-            $('#renegociacao').html(totalRowCount['renegociacao']);
-
-
-            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
-
-
-
-        });
-
-        var info = oTable.page.info();
-        var count = info.recordsTotal;
-        $('#gridTotal').html(count);
-
-
-        function tableOneRowCount() {
-            totalRowCount['financeira'] = oTable.rows(':contains("FINANCEIRA")').data().length;
-            totalRowCount['renegociacao'] = oTable.rows(':contains("(RENEG)")').data().length;
-            totalRowCount['gridAguardandoInstalacao'] = oTable.rows(':contains("Aguardando_Instalacao")').data().length;
-            totalRowCount['gridInstalacaoEfetuada'] = oTable.rows(':contains("Instalacao_Efetuada")').data().length;
-
-            $('#financeira').html(totalRowCount['financeira']);
-            $('#renegociacao').html(totalRowCount['renegociacao']);
-            $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
-            $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+            setTimeout(function() {
+                $('#gridAguardandoInstalacao').html(totalRowCount['gridAguardandoInstalacao']);
+                $('#gridInstalacaoEfetuada').html(totalRowCount['gridInstalacaoEfetuada']);
+            }, 16000);
 
             return totalRowCount;
         }
 
-        tableOneRowCount();
+        setTimeout(function() {
+            tableOneRowCount();
+        }, 15000);
 
-        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS (RENEG OU FINANCEIRA)
+        // Adicionar checked após 10 segundos
+        setTimeout(function() {
+            $('#batNaoViolada')[0].click();
+        }, 20000);
+
+        $('input[name="bat"]').change(function() {
+            if ($('#batViolada').is(':checked')) {
+                $('#batNaoViolada').attr('checked', false);
+                $('#batViolada').attr('checked', true);
+            } else {
+                $('#batViolada').attr('checked', false);
+                $('#batNaoViolada')[0].click();
+            }
+        });
+
+        // FUNÇÃO PARA ALTERAR CHECKBOX STATUS OS
         $('input:checkbox').on('change', function() {
             var status = $('input:checkbox[name="pos"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(16).search(status, true, false, false).draw();
+        });
+
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="bat"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(21).search(status, true, false, false).draw();
+        });
+
+
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="man"]:checked').map(function() {
                 return '^' + this.value + '$';
             }).get().join('|');
             $('#example').DataTable().column(22).search(status, true, false, false).draw();
         });
 
-
-    });
-
-
-
-
-    $('.installed').click(function() {
-        $('#example').DataTable().columns(24).search("Instalacao_Efetuada", true, false, true).draw();
-    });
-
-    $('.waiting').click(function() {
-        $('#example').DataTable().columns(24).search('Aguardando_Instalacao', true, false, true).draw();
-    });
-
-    $('.vehiclesTotal').click(function() {
-        $('#example').DataTable().columns(24).search('').draw();
-    });
-
-
-
-    /* Details vehicle */
-    $('.btn-vehicle-data').click(function() {
-        var chassi = $(this).data('chassi');
-        $.ajax({
-            url: "{{url('')}}/fleetslarges/psa/find/" + chassi,
-            type: 'GET',
-            success: function(response) {
-                console.log(response.data)
-                $('.categoria_veiculo').val(response.data.categoria_veiculo)
-                $('.chassis').val(response.data.chassis)
-                $('.cidade').val(response.data.cidade)
-                $('.cliente').val(response.data.cliente)
-                $('.cod_empresa').val(response.data.cod_empresa)
-                $('.codigo_fipe').val(response.data.codigo_fipe)
-                if (response.data.data_instalacao) {
-                    $('.data_instalacao').val(response.data.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                }
-                $('#dif_date').val(response.data.dif_date)
-                $('.empresa').val(response.data.empresa)
-                $('.end_bairro').val(response.data.end_bairro)
-                $('.end_cep').val(response.data.end_cep)
-                $('.end_cidade').val(response.data.end_cidade)
-                $('.end_logradouro').val(response.data.end_logradouro)
-                $('.end_uf').val(response.data.end_uf)
-                $('.estado').val(response.data.estado)
-                $('.filial').val(response.data.filial)
-                $('.iccid').val(response.data.iccid)
-                $('.lp_ignicao').val(response.data.lp_ignicao)
-                $('.lp_latitude').val(response.data.lp_latitude)
-                $('.lp_longitude').val(response.data.lp_longitude)
-                $('.lp_satelite').val(response.data.lp_satelite)
-                if (response.data.lp_ultima_transmissao) {
-                    $('.lp_ultima_transmissao').val(response.data.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
-                }
-                $('.lp_velocidade').val(response.data.lp_velocidade + " km/h")
-                $('.lp_voltagem').val(response.data.lp_voltagem)
-                $('.modelo').val(response.data.modelo)
-                $('.modelo_veiculo').val(response.data.modelo_veiculo)
-                $('#modelo_veiculo_aprimorado').val(response.data.modelo_veiculo_aprimorado)
-                $('.operadora').val(response.data.operadora)
-                $('.placa').val(response.data.placa)
-                $('.point').val(response.data.point)
-                $('.qtd_dispositivos').val(response.data.qtd_dispositivos)
-                $('.r12s_proximos').val(response.data.r12s_proximos)
-                $('#sinistrado').val(response.data.sinistrado != "FALSE" ? "SIM" : "NÃO")
-                $('.status').val(response.data.status)
-                $('#status_veiculo').val(response.data.status_veiculo)
-                if (response.data.status_veiculo_dt) {
-                    $('#status_veiculo_dt').val(response.data.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
-
-                }
-                $('.telefone').val(response.data.telefone)
-                $('.versao').val(response.data.versao)
-                $('.contrato').val(response.data.contrato)
-
-                updateTimeline(response.data.dt_entrada, response.data.dt_inicio_instalacao, response.data.dt_tecnico_acionado, response.data.dt_termino_instalacao)
-
-            },
-            error: function(error) {
-                if (error.responseJSON.status == "internal_error") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
-                        showConfirmButton: true,
-                        timer: 10000
-                    })
-
-                } else if (error.responseJSON.status == "validation_error") {
-                    var items = error.responseJSON.errors;
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + items,
-                        footer: ' '
-                    })
-
-                } else {
-                    var items = error.responseJSON.errors;
-                    var errors = $.map(items, function(i) {
-                        return i.join('<br />');
-                    });
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Erro!',
-                        html: 'Os seguintes erros foram encontrados: ' + errors,
-                        footer: ' '
-                    })
-                }
-            }
+        $('input:checkbox').on('change', function() {
+            var status = $('input:checkbox[name="vei"]:checked').map(function() {
+                return '^' + this.value + '$';
+            }).get().join('|');
+            $('#example').DataTable().column(23).search(status, true, false, false).draw();
         });
-    })
+
+
+
+        /* Details vehicle */
+        $(document).on("click", ".btn-vehicle-data", function() {
+            var chassi = $(this).data('chassi');
+            $.ajax({
+                url: "{{url('')}}/fleetslarges/find/" + chassi,
+                type: 'GET',
+                success: function(response) {
+                    $('#modelo_veiculo_aprimorado').val(response.modelo_veiculo_aprimorado)
+                    $('.placa').val(response.placa)
+                    $('.empresa').val(response.empresa)
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_longitude').val(response.lp_longitude)
+                    $('.estado').val(response.estado)
+                    $('.lp_latitude').val(response.lp_latitude)
+                    $('.telefone').val(response.telefone)
+                    $('.status').val(response.status)
+                    $('.iccid').val(response.iccid)
+                    $('.chassis').val(response.chassis)
+                    $('.modelo_veiculo').val(response.modelo_veiculo)
+                    $('.qtd_dispositivos').val(response.qtd_dispositivos)
+                    $('.categoria_veiculo').val(response.categoria_veiculo)
+                    $('.cidade').val(response.cidade)
+                    $('.operadora').val(response.operadora)
+                    $('.cliente').val(response.cliente)
+                    $('.data_instalacao').val(response.data_instalacao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                    $('.cod_empresa').val(response.cod_empresa)
+                    $('.codigo_fipe').val(response.codigo_fipe)
+                    $('.modelo').val(response.modelo)
+                    $('.point').val(response.point)
+                    $('.lp_ultima_transmissao').val(response.lp_ultima_transmissao.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3/$2/$1 $4:$5:$6'))
+                    $('.versao').val(response.versao)
+                    $('.lp_satelite').val(response.lp_satelite)
+                    $('.lp_ignicao').val(response.lp_ignicao)
+                    $('.r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_voltagem').val(response.lp_voltagem)
+                    $('#veiculo_em_loja').val(response.veiculo_em_loja != "" ? "NÃO" : "SIM")
+                    $('#r12s_proximos').val(response.r12s_proximos)
+                    $('#dif_date').val(response.dif_date)
+                    $('.lp_velocidade').val(response.lp_velocidade + " km/h")
+                    $('#point').val(response.point)
+                    $('.filial').val(response.filial)
+                    $('#status_veiculo_dt').val(response.status_veiculo_dt.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#status_veiculo').val(response.status_veiculo)
+                    $('#sinistrado').val(response.sinistrado != "FALSE" ? "SIM" : "NÃO")
+                    $('.end_cep').val(response.end_cep)
+                    $('.end_logradouro').val(response.end_logradouro)
+                    $('.end_bairro').val(response.end_bairro)
+                    $('.end_uf').val(response.end_uf)
+                    $('.cliente_foto').attr('src', response.cliente_foto);
+                    $('#cliente_cpf').val(response.cliente_cpf)
+                    $('#cliente_nome').val(response.cliente_nome)
+                    $('#cliente_datadev').val(response.cliente_datadev.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#cliente_celular').val(response.cliente_celular)
+                    $('#cliente_localdev').val(response.cliente_localdev)
+                    $('#cliente_local_retirada').val(response.cliente_local_retirada)
+                    $('#cliente_contrato').val(response.cliente_contrato)
+                    $('#cliente_dataretirada').val(response.cliente_dataretirada.replace(/(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)-(\d*):(\d*).*/, '$3/$2/$1 T $4:$5:$6 - $7:$8'))
+                    $('#cliente_email').val(response.cliente_email)
+                    $('#cliente_endereco').val(response.cliente_endereco)
+                    $('.cidade').val(response.end_cidade)
+                    $('#cliente_cnh').val(response.cliente_cnh)
+                    $('.veiculo_odometro').val(response.veiculo_odometro)
+                    $('#cliente_foto_cnh').attr('href', response.cliente_foto_cnh);
+                    $('.cliente_foto').attr('href', response.cliente_foto)
+
+                    if (response.status_veiculo != "LOCACAO") {
+                        $("#btn_cliente").css({
+                            "display": "none"
+                        });
+                    } else {
+                        $("#btn_cliente").css({
+                            "display": "inline"
+                        });
+                    }
+
+                    updateTimeline(response.dt_entrada, response.dt_inicio_instalacao, response.dt_tecnico_acionado, response.dt_termino_instalacao)
+                },
+                error: function(error) {
+                    if (error.responseJSON.status == "internal_error") {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Erro interno, entre em contato com o desenvolvedor do sistema!',
+                            showConfirmButton: true,
+                            timer: 10000
+                        })
+
+                    } else if (error.responseJSON.status == "validation_error") {
+                        var items = error.responseJSON.errors;
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + items,
+                            footer: ' '
+                        })
+
+                    } else {
+                        var items = error.responseJSON.errors;
+                        var errors = $.map(items, function(i) {
+                            return i.join('<br />');
+                        });
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            html: 'Os seguintes erros foram encontrados: ' + errors,
+                            footer: ' '
+                        })
+                    }
+                }
+            });
+        })
+    });
+
 
     /**
      * Update Timeline cliente Santander
      */
     function updateTimeline(dt_entrada, dt_inicio_instalacao, dt_tecnico_acionado, dt_termino_instalacao) {
-
         if (dt_entrada != '') {
             $('#dt_entrada').html(dt_entrada.replace(/(\d*)-(\d*)-(\d*) (\d*):(\d*):(\d*).*/, '$3.$2.$1 $4:$5:$6'))
             $('#status_dt_entrada').addClass('timelinePointActive');
@@ -851,6 +971,26 @@
 
     $.extend($.fn.dataTableExt.oStdClasses, {
         "sFilterInput": "textName",
+    });
+
+    $(document).on('click', '.spanText', function() {
+        if ($(this).attr('value') == 'instalado') {
+            $('.textName').val('instalado').focus().click()
+        }
+    });
+
+
+    //Log Relatório de Telemetria
+    $('.no-link').click(function() {
+        var chassi = $(this).data('chassi');
+        $.ajax({
+            url: "{{route('fleetslarges.telemetria')}}",
+            type: 'GET',
+        });
+    })
+
+    $(document).ready(function() {
+        $('.hidden').css('display', 'none');
     });
 </script>
 @endsection

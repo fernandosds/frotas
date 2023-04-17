@@ -20,6 +20,11 @@ class PsaRepository extends AbstractRepository
         $this->model = $model;
     }
 
+    public function table($limit)
+    {
+        return $this->model->limit($limit)->get();
+    }
+
     /**
      * Find one register
      *

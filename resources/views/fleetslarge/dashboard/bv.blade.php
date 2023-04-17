@@ -289,7 +289,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row"> -->
+                   <!--- <div class="row"> --->
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Projeto:</b></label>
                         <div class="kt-checkbox-inline grid-status">
@@ -304,7 +304,7 @@
                             <label><i class="flaticon-alert"></i> OBS: Desmarcar as opções para listar todos.</label>
                         </div>
                     </div>
-                    <!-- <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile grid-style">
                         <label><b>Manutenção:</b></label>
                         <div class="kt-checkbox-inline grid-status">
                             <div class="grid-item hidden">
@@ -320,7 +320,7 @@
                         <div class="obs">
                             <label><i class="flaticon-alert"></i> OBS: Marcar para listar bateria desconectada.</label>
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile ">
                         <label><b>Evento:</b></label>
                         <div class="kt-checkbox-inline grid-status">
@@ -328,9 +328,9 @@
                                 <input class="checkbox" type="checkbox" style="cursor: pointer;" name="vei" value="veiculo_recuperado"> <span class="kt-badge kt-badge--success  kt-badge--inline kt-badge--pill"><span id="veiculo_recuperado"></span>&nbsp; VEÍCULO RECUPERADO</span>
                             </div>
                         </div>
-                    </div> -->
-                    <!-- </div> -->
-                </div>
+                    </div>
+                    </div>
+                <!-- </div> -->
                 <!--begin: Datatable -->
                 <table id="example" class="display" style="width:100%">
                     <thead>

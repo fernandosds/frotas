@@ -369,6 +369,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'FleetsLarge\DashboardController@index')->name('fleetslarges.index');
         Route::post('/data/bv', 'FleetsLarge\DashboardController@databv');
         Route::post('/data/alfa', 'FleetsLarge\DashboardController@dataAlfa');
+        Route::post('/data/psa', 'FleetsLarge\DashboardController@dataPSA');
     });
 
     Route::group(['middleware' => ['user.access_level:fleetslarge', 'user.admin'], 'prefix' => 'fleetslarges'], function () {
@@ -386,6 +387,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/find/{chassis}', 'FleetsLarge\DashboardController@findByChassi')->name('fleetslarges.findByChassi');
         Route::get('/find/alfa/{chassis}', 'FleetsLarge\DashboardController@findByChassiAlfa')->name('fleetslarges.findByChassiAlfa');
         Route::get('/find/bv/{chassis}', 'FleetsLarge\DashboardController@findByChassiBv')->name('fleetslarges.findByChassiBv');
+        Route::get('/find/psa/{chassis}', 'FleetsLarge\DashboardController@findByChassiPSA')->name('fleetslarges.findByChassiPSA');
         Route::get('/show/event/{placa}', 'FleetsLarge\DashboardController@showEventPlaca')->name('fleetslarges.showEventPlaca');
         Route::get('/show/status/all', 'FleetsLarge\DashboardController@showAllStatus')->name('fleetslarges.showAllStatus');
         Route::get('/show/status/ocorrence', 'FleetsLarge\DashboardController@showOcorrenceStatus')->name('fleetslarges.showOcorrenceStatus');

@@ -242,6 +242,12 @@ class DashboardController extends Controller
         $data = $this->alfaService->all();
         return response()->json($data);
     }
+    public function dataPSA()
+    {
+        ini_set('memory_limit', '-1');
+        $data = $this->psaService->all();
+        return response()->json($data);
+    }
     public function situacaoInstalado($items)
     {
 
@@ -369,6 +375,19 @@ class DashboardController extends Controller
         $this->logService->saveLog(strval(Auth::user()->name), 'Dashboard: Verificou o registro do veículo chassi: ' . $chassis);
         try {
             $data = $this->bvService->findByChassi($chassis);
+            saveLog(['value' => $chassis, 'type' => 'Verificou o chassi', 'local' => 'DashboardController', 'funcao' => 'findByChassi']);
+            return response()->json(['status' => 'success', 'data' => $data], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'internal_error', 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    public function findByChassiPSA()
+    {
+        $chassis = Route::getCurrentRoute()->parameters()['chassis'];
+        $this->logService->saveLog(strval(Auth::user()->name), 'Dashboard: Verificou o registro do veículo chassi: ' . $chassis);
+        try {
+            $data = $this->psaService->findByChassi($chassis);
             saveLog(['value' => $chassis, 'type' => 'Verificou o chassi', 'local' => 'DashboardController', 'funcao' => 'findByChassi']);
             return response()->json(['status' => 'success', 'data' => $data], 200);
         } catch (\Exception $e) {

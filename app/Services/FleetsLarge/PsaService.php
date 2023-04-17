@@ -15,18 +15,50 @@ class PsaService
     /**
      * @return mixed
      */
-    public function all()
+    public function all($limit = 30000)
+
     {
-        $cars = $this->psa->all();
+        $cars = $this->psa->table($limit);
 
         $aguardando_instalacao = ["REAGENDAMENTO", "OS ABERTA DE INSTALAçãO", "VEICULO INDISPONIVEL", ""];
         $instalado = ["INSTALADO", "OS ABERTA DE RETIRADA", "RETIRADO"];
+        $today = date("Y-m-d H:i:s");
+
+        $total_instalacao = 0;
 
         foreach ($cars as $car) {
+
+            $car->dt_tecnico_acionado = ($car->dt_tecnico_acionado == "") ? $today : $car->dt_tecnico_acionado;
+            $car->dt_termino_instalacao = ($car->dt_termino_instalacao == "") ? $today : $car->dt_termino_instalacao;
+            $car->dt_inicio_instalacao = ($car->dt_inicio_instalacao == "") ? $today : $car->dt_inicio_instalacao;
+
             $car->placa_mercosul = fixPlate($car->placa);
             $car->periodo = explode(" ",  $car->data_instalacao);
+
             $car->data_inst = $car->periodo[0];
             $car->hora_inst = $car->periodo[1] ?? "00:00:00";
+
+
+
+
+            if ($car->event_violacao == "true" && $car->event_encerrado == '0' && $car->manutencao == "true") {
+                $car->event_violacao = "bateria_violada";
+            } else {
+                $car->event_violacao = "bateria_nao_violada";
+            }
+
+            if ($car->sinistrado == "RECUPERADO") {
+                $car->sinistrado = "veiculo_recuperado";
+            } else {
+                $car->sinistrado = "veiculo_nao_recuperado";
+            }
+
+
+
+            if ($car->manutencao == "true") {
+                $car->manutencao = "equipamento_manutencao";
+            }
+
 
             if (in_array($car->situacao, $aguardando_instalacao)) {
                 $car->status_situacao = "Aguardando_Instalacao";
@@ -41,7 +73,11 @@ class PsaService
             } else {
                 $car->projeto = 'FINANCEIRA';
             }
+            ++$total_instalacao;
         }
+
+
+        // dd($cars[0]);
         return $cars;
     }
 
